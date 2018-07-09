@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "hmcts-ccd-payment-list-web-component": {
+    "ccpay-web-component": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/hmcts-ccd-payment-list-web-component",
+            "outputPath": "dist/ccpay-web-component",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -23,7 +23,8 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "styles.css",
+              "node_modules/bootstrap/dist/css/bootstrap.css"
             ],
             "scripts": []
           },
@@ -50,18 +51,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "hmcts-ccd-payment-list-web-component:build"
+            "browserTarget": "ccpay-web-component:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "hmcts-ccd-payment-list-web-component:build:production"
+              "browserTarget": "ccpay-web-component:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "hmcts-ccd-payment-list-web-component:build"
+            "browserTarget": "ccpay-web-component:build"
           }
         },
         "test": {
@@ -72,7 +73,8 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "styles": [
-              "src/styles.css"
+              "styles.css",
+              "node_modules/bootstrap/dist/css/bootstrap.css"
             ],
             "scripts": [],
             "assets": [
@@ -95,7 +97,7 @@
         }
       }
     },
-    "hmcts-ccd-payment-list-web-component-e2e": {
+    "ccpay-web-component-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -103,11 +105,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "hmcts-ccd-payment-list-web-component:serve"
+            "devServerTarget": "ccpay-web-component:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "hmcts-ccd-payment-list-web-component:serve:production"
+              "devServerTarget": "ccpay-web-component:serve:production"
             }
           }
         },
@@ -123,5 +125,5 @@
       }
     }
   },
-  "defaultProject": "hmcts-ccd-payment-list-web-component"
+  "defaultProject": "ccpay-web-component"
 }
