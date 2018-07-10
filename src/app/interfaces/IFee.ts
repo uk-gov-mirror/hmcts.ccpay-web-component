@@ -1,7 +1,6 @@
 export interface IFee {
-    'feeCode': string;
-    'feeAmount': string;
-    'netAmount': string;
-    'description': string;
-
+  code: string;
+  version: string;
+  volume: number;
+  calculated_amount: number;
 }

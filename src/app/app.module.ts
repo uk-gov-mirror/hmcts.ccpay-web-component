@@ -12,6 +12,7 @@ import { PageNotFoundComponent } from './components/home/page-not-found.componen
 import { CaseListComponent } from './components/case-list/case-list.component';
 import { PaymentListComponent } from './components/payment-list/payment-list.component';
 import { PaymentViewComponent } from './components/payment-view/payment-view.component';
+import { CardDetailsComponent } from './components/card-details/card-details.component';
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import { PaymentViewComponent } from './components/payment-view/payment-view.com
     PageNotFoundComponent,
     CaseListComponent,
     PaymentListComponent,
-    PaymentViewComponent
+    PaymentViewComponent,
+    CardDetailsComponent
   ],
   bootstrap: [ AppComponent ]
 })

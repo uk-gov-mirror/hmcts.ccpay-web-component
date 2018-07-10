@@ -1,6 +1,7 @@
 export interface ICardDetails {
-    'type': string;
-    'name': string;
-    'cardNumber': string;
-    'cardExpiry': string;
+  card_brand: string;
+  cardholder_name: string;
+  email: string;
+  expiry_date: string;
+  last_digits_card_number: string;
 }

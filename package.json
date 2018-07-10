@@ -3,13 +3,13 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve -o",
+    "start": "ng serve",
     "build": "ng build --prod --output-hashing=none",
     "package": "cat dist/ccpay-web-component/{runtime,polyfills,scripts,main}.js | gzip > elements.js.gz",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "packagr": "ng-packagr -p ng-package.json"
+    "packagr": "ng-packagr -p package.json"
   },
   "private": true,
   "dependencies": {
@@ -27,8 +27,7 @@
     "zone.js": "^0.8.26",
     "bootstrap": "^3.3.7",
     "govuk-elements-sass": "^3.1.2",
-    "govuk_template_jinja": "^0.24.0",
-    "express": "^4.16.3"
+    "govuk_template_jinja": "^0.24.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.6.8",

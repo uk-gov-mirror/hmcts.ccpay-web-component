@@ -4,106 +4,65 @@
   </div>
 </div>
 
-<!--<div class="container">-->
-  <!--<fieldset class="col-md-12">-->
-    <!--<a routerLink="/cases/{{ paymentDetails.caseNumber }}">Back</a>-->
-  <!--</fieldset>-->
-<!--</div>-->
-
 <div class="container">
   <fieldset class="col-md-12">
     <legend><h2>Payment summary</h2></legend>
     <div class="row">
       <div class="col-md-2">Payment reference:</div>
-      <div class="col-md-10">{{ paymentDetails.payment.paymentReference }}</div>
+      <div class="col-md-10">{{ payment.reference }}</div>
     </div>
     <legend></legend>
     <div class="row">
       <div class="col-md-2">Total payment amount:</div>
-      <div class="col-md-10">{{ paymentDetails.payment.paymentAmount }}</div>
+      <div class="col-md-10">{{ payment.amount }}</div>
+    </div>
+    <legend></legend>
+    <div class="row">
+      <div class="col-md-2">Payment method:</div>
+      <div class="col-md-10">
+        <a href="/card-details/{{ payment.reference }}">{{ payment.method }}</a>
+      </div>
+    </div>
+    <legend></legend>
+    <div class="row">
+      <div class="col-md-2">Payment channel:</div>
+      <div class="col-md-10">{{ payment.channel }}</div>
     </div>
     <legend></legend>
   </fieldset>
 </div>
 
-  <div class="container">
-    <fieldset class="col-md-12">
-      <legend><h3>Fee details</h3></legend>
+<div class="container">
+  <fieldset class="col-md-12">
+    <legend><h3>Fee details</h3></legend>
+    <div *ngFor="let fee of payment.fees">
       <div class="row">
         <div class="col-md-2">Fee code:</div>
-        <div class="col-md-10">{{ paymentDetails.fees.feeCode }}</div>
+        <div class="col-md-10">{{ fee.code }}</div>
       </div>
       <legend></legend>
       <div class="row">
         <div class="col-md-2">Fee amount:</div>
-        <div class="col-md-10">{{ paymentDetails.fees.feeAmount }}</div>
+        <div class="col-md-10">£{{ fee.calculated_amount }}</div>
       </div>
       <legend></legend>
       <div class="row">
-        <div class="col-md-2">Net amount:</div>
-        <div class="col-md-10">{{ paymentDetails.fees.netAmount }}</div>
+        <div class="col-md-2">Version</div>
+        <div class="col-md-10">{{ fee.version }}</div>
       </div>
       <legend></legend>
       <div class="row">
-        <div class="col-md-2">Description:</div>
-        <div class="col-md-10">{{ paymentDetails.fees.description }}</div>
+        <div class="col-md-2">Volume:</div>
+        <div class="col-md-10">{{ fee.volume }}</div>
       </div>
       <legend></legend>
-    </fieldset>
-  </div>
-
-
-<div class="container">
-  <fieldset class="col-md-12">
-    <legend><h2>{{ paymentDetails.payment.paymentReference }}</h2></legend>
-    <div class="media-heading"><legend><h3>Card details</h3></legend></div>
-    <div class="row">
-      <div class="col-md-2">Type:</div>
-      <div class="col-md-10">{{ paymentDetails.cardDetails.type }}</div>
     </div>
-    <legend></legend>
-    <div class="row">
-      <div class="col-md-2">Name:</div>
-      <div class="col-md-10">{{ paymentDetails.cardDetails.name }}</div>
-    </div>
-    <legend></legend>
-    <div class="row">
-      <div class="col-md-2">Card number:</div>
-      <div class="col-md-10">{{ paymentDetails.cardDetails.cardNumber }}</div>
-    </div>
-    <legend></legend>
-    <div class="row">
-      <div class="col-md-2">Card expiry:</div>
-      <div class="col-md-10">{{ paymentDetails.cardDetails.cardExpiry }}</div>
-    </div>
-    <legend></legend>
   </fieldset>
 </div>
 
 <div class="container">
   <fieldset class="col-md-12">
-    <h3>Payment history</h3>
-    <table class="table">
-      <tr>
-        <th>Payment status</th>
-        <th>Payment amount</th>
-        <th>Date created</th>
-      </tr>
-      <tr *ngFor="let paymentHistory of paymentDetails.paymentHistories">
-        <td>{{ paymentHistory.paymentStatus }}</td>
-        <td>{{ paymentHistory.paymentAmount }}</td>
-        <td>{{ paymentHistory.dateCreated }}</td>
-      </tr>
-    </table>
+    <button routerLink="/payments/{{ payment.reference }}" class="btn btn-success btn-lg">Back</button>
   </fieldset>
 </div>
 
-<div class="container">
-  <fieldset class="col-md-12">
-    <button routerLink="/cases/{{ paymentDetails.caseNumber }}" class="btn btn-success btn-lg">Back</button>
-
-  </fieldset>
-</div>
-
-
-<router-outlet></router-outlet>

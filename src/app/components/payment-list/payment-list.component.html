@@ -1,14 +1,8 @@
 <div class="panel panel-primary">
   <div class="panel-heading">
-    {{pageTitle}}
+    {{ pageTitle }}
   </div>
 </div>
-
-<!--<div class="container">-->
-  <!--<fieldset class="col-md-12">-->
-    <!--<a routerLink="/cases">Back</a>-->
-  <!--</fieldset>-->
-<!--</div>-->
 
 <div class="container">
     <table class="table">
@@ -19,13 +13,13 @@
         <th>Payment amount</th>
         <th>Status</th>
       </tr>
-      <tr *ngFor="let payment of casePayments.payments">
+      <tr>
         <td>
-          <a routerLink="/payments/{{ payment.paymentReference }}">{{ payment.paymentReference }}</a>
+          <a href="/payment-view/{{ payment.reference }}">{{ payment.reference }}</a>
         </td>
-        <td>{{ payment.dateCreated }}</td>
-        <td>{{ payment.paymentMethod }}</td>
-        <td>{{ payment.paymentAmount }}</td>
+        <td>No created</td>
+        <td>{{ payment.method }}</td>
+        <td>£{{ payment.amount }}</td>
         <td>{{ payment.status }}</td>
       </tr>
     </table>

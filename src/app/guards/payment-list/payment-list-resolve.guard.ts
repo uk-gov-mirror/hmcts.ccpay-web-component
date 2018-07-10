@@ -16,6 +16,6 @@ export class PaymentListResolveGuard implements Resolve<ICasePayments[]> {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): ICasePayments[] {
 
-      return this.paymentListService.getPayments();
+      return null;
   }
 }

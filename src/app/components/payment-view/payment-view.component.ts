@@ -1,28 +1,27 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 
-import { IPaymentDetails } from '../../interfaces/IPaymentDetails';
-import { PaymentViewService  } from '../../services/payment-view/payment-view.service';
+import {PaymentViewService} from '../../services/payment-view/payment-view.service';
+import {ActivatedRoute} from '@angular/router';
+import {IPayment} from '../../interfaces/IPayment';
 
 @Component({
-  selector: 'app-payment',
+  selector: 'app-payment-view',
   templateUrl: './payment-view.component.html',
   styleUrls: ['./payment-view.component.css']
 })
 export class PaymentViewComponent implements OnInit {
-  pageTitle: string = 'Payment details'
-  paymentDetails: IPaymentDetails;
+  pageTitle: string = 'Payment summary';
+  payment: IPayment;
 
-  constructor(private activatedRoute: ActivatedRoute,
-              private paymentSerivce: PaymentViewService) { }
+  constructor(private paymentViewService: PaymentViewService,
+              private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
-
     this.activatedRoute.params.subscribe((params) => {
-      console.log('Payment details for the reference: ', params);
-      this.paymentDetails = this.paymentSerivce.getPaymentDetails().filter((p) => {
-        return p.payment.paymentReference === params.paymentReference;
-      })[0];
+      console.log('Payment view component...', params.paymentReference);
+      this.paymentViewService.getPaymentDetails(params.paymentReference).subscribe(
+        payment => this.payment = payment
+      );
     });
   }
 

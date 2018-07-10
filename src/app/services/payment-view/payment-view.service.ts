@@ -1,16 +1,19 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import {Observable} from 'rxjs/internal/Observable';
+import {IPayment} from '../../interfaces/IPayment';
 
-import { IPaymentDetails } from '../../interfaces/IPaymentDetails';
-import { PAYMENTDETAILS } from '../../components/payment-view/mock-payment-details-data';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PaymentViewService {
 
-  constructor() { }
+  _rootURL: string = 'http://localhost:9999/card-payments/';
 
-  getPaymentDetails(): IPaymentDetails[] {
-    return PAYMENTDETAILS;
+  constructor(private http: HttpClient) { }
+
+  getPaymentDetails(paymentReference: string): Observable<IPayment> {
+    return this.http.get<IPayment>(this._rootURL + paymentReference);
   }
 }
