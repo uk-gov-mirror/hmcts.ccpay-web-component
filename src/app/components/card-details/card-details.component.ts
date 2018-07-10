@@ -17,7 +17,7 @@ export class CardDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.params.subscribe((params) => {
-      this.cardDetailsService.getCardDetails().subscribe(
+      this.cardDetailsService.getCardDetails(params.paymentReference).subscribe(
         cardDetails => this.cardDetails = cardDetails
       );
     });

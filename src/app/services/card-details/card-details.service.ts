@@ -1,18 +1,21 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {ICardDetails} from '../../interfaces/ICardDetails';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs/internal/Observable';
+import { environment } from '../../../environments/environment';
+
+import {ICardDetails} from '../../interfaces/ICardDetails';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class CardDetailsService {
 
-  _rootURL: string = 'http://localhost:9999/card-payments/RC-1531-0089-8858-9692/details';
+  API_URL: string = environment.API_URL;
 
   constructor(private http: HttpClient) { }
 
-  getCardDetails(): Observable<ICardDetails> {
-    return this.http.get<ICardDetails>(this._rootURL);
+  getCardDetails(paymentReference: string): Observable<ICardDetails> {
+    return this.http.get<ICardDetails>(`${this.API_URL}/card-payments/${paymentReference}/details`);
   }
 }

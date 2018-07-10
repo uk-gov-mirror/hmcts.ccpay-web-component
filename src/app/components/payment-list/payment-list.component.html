@@ -1,3 +1,4 @@
+
 <div class="panel panel-primary">
   <div class="panel-heading">
     {{ pageTitle }}
@@ -5,24 +6,24 @@
 </div>
 
 <div class="container">
-    <table class="table">
-      <tr>
-        <th>Payment reference</th>
-        <th>Date created</th>
-        <th>Payment method</th>
-        <th>Payment amount</th>
-        <th>Status</th>
-      </tr>
-      <tr>
-        <td>
-          <a href="/payment-view/{{ payment.reference }}">{{ payment.reference }}</a>
-        </td>
-        <td>No created</td>
-        <td>{{ payment.method }}</td>
-        <td>£{{ payment.amount }}</td>
-        <td>{{ payment.status }}</td>
-      </tr>
-    </table>
+  <table class="table">
+    <tr>
+      <th>Payment reference</th>
+      <th>Date created</th>
+      <th>Payment method</th>
+      <th>Payment amount</th>
+      <th>Status</th>
+    </tr>
+    <tr>
+      <td>
+        <a href="/payment-view/{{ payment.reference }}">{{ payment.reference }}</a>
+      </td>
+      <td>No created</td>
+      <td>{{ payment.method }}</td>
+      <td>£{{ payment.amount }}</td>
+      <td>{{ payment.status }}</td>
+    </tr>
+  </table>
 </div>
 
 <div class="container">

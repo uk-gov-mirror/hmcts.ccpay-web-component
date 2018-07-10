@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {Observable} from 'rxjs/internal/Observable';
+import { Observable } from 'rxjs/internal/Observable';
+import { environment } from '../../../environments/environment';
+
 import {IPayment} from '../../interfaces/IPayment';
 
 
@@ -9,11 +11,11 @@ import {IPayment} from '../../interfaces/IPayment';
 })
 export class PaymentViewService {
 
-  _rootURL: string = 'http://localhost:9999/card-payments/';
+  API_URL: string = environment.API_URL + '/card-payments/';
 
   constructor(private http: HttpClient) { }
 
   getPaymentDetails(paymentReference: string): Observable<IPayment> {
-    return this.http.get<IPayment>(this._rootURL + paymentReference);
+    return this.http.get<IPayment>(this.API_URL + paymentReference);
   }
 }

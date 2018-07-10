@@ -33,4 +33,5 @@ import { CardDetailsComponent } from './components/card-details/card-details.com
   ],
   bootstrap: [ AppComponent ]
 })
-export class AppModule { }
+export class AppModule {
+}
