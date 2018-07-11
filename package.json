@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "build:library": "ng build payment-lib",
     "build": "ng build --prod --output-hashing=none",
     "package": "cat dist/ccpay-web-component/{runtime,polyfills,scripts,main}.js | gzip > elements.js.gz",
     "test": "ng test",
