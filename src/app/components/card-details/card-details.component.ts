@@ -9,7 +9,7 @@ import {ICardDetails} from '../../interfaces/ICardDetails';
   styleUrls: ['./card-details.component.css']
 })
 export class CardDetailsComponent implements OnInit {
-  pageTitle: 'Card details';
+  pageTitle: string = 'Card details';
   cardDetails: ICardDetails;
 
   constructor(private cardDetailsService: CardDetailsService,
