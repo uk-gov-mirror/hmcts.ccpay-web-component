@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app';
+  pageTitle = 'Payment-web-component';
+  API_ROOT = 'http://localhost:9999';
 }
