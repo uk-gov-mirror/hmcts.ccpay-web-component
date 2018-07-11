@@ -1,0 +1,18 @@
+language: node_js
+sudo: required
+services:
+- docker
+script:
+- yarn install
+- yarn run build:library
+before_deploy:
+  - cd dist
+deploy:
+  skip_cleanup: true
+  provider: npm
+  email: jenkins-reform@hmcts.net
+  api_key:
+    secure: "DeycxAL6JKn7xmGpasgMSkLg/1NSvPCkOMZYBtcq7MvRdapNpz9ihMTZ286qoOagzndi/4g6lFHepouVhaFliPWvjHZuPHuSohGmruhBQdldsaut8P++jB/7+LqAMBb35hBZCQE2r+06ntRtEL0gifC/uST6dle/YrYhY2vptJrGncDeVu5d86EpNZ/Hk8lxT/j2rQn+VJlIrAfj0OT1zj7vZAUVjRaRDGgiwOUgr5ZdyVOi9C8RWF3G9Eh7KqifcSaCKJJgr/j5gEWIll9eF+it68KWi8WbPvOv4jOacuIlPXMAsfJ/jJAKKkOLTxdSFAwqXBwUEiADo2k2A8JoDqE+pmjK6LrGszLpHSUmrVGegsXb/AfO4IUHiun+AdO94uKoUNaEAAvXU4n4r3yuQwSJLpG0XbJP6BiyNpAo8bW2X8Cmr0+3nL4pdqr3l+cOH9NCM/X6J8mZvdbk+krjsj3G9qoD9puLuaAAd+MMBzt6ZNACzuBuyL2eINLW7ixmudptCkCCkwUvbMcz/HKXfK2VTzOAzUYN3BHWAtVITlmPV2DF9idv8T8Zr4hdwzgtTJd7Bhyr2SOdrAciCybWwjY1oSm3Rjk/p9pH3eNdX30g/ZCi6bKe3bPFmHUPrznZcCRKnAjWtwWKRsbf+aHy63AKlczySIHmDqbwPjqTKRI="
+  on:
+    tags: true
+repo: hmcts/ccpay-web-component
