@@ -12,7 +12,7 @@ const appRoutes: Routes = [
     { path: 'payments/:paymentReference', component: PaymentListComponent },
     { path: 'payment-view/:paymentReference', component: PaymentViewComponent },
     { path: 'card-details/:paymentReference', component: CardDetailsComponent },
-    { path: '**', component: PageNotFoundComponent },
+    { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({

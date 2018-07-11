@@ -24,7 +24,7 @@
             ],
             "styles": [
               "styles.css",
-              "node_modules/bootstrap/dist/css/bootstrap.css"
+              "./src/assets/stylesheets/main.scss"
             ],
             "scripts": []
           },
@@ -74,7 +74,7 @@
             "karmaConfig": "src/karma.conf.js",
             "styles": [
               "styles.css",
-              "node_modules/bootstrap/dist/css/bootstrap.css"
+              "./src/assets/stylesheets/main.scss"
             ],
             "scripts": [],
             "assets": [
