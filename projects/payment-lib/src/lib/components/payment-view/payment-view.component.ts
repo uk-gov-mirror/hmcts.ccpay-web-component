@@ -18,7 +18,6 @@ export class PaymentViewComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.params.subscribe((params) => {
-      console.log('Payment view component...', params.paymentReference);
       this.paymentViewService.getPaymentDetails(params.paymentReference).subscribe(
         payment => this.payment = payment
       );

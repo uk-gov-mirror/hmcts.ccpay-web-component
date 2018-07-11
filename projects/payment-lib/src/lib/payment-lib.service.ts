@@ -8,9 +8,13 @@ import {PaymentLibComponent} from './payment-lib.component';
 export class PaymentLibService {
   API_ROOT: string;
 
-  constructor(private paymentLibComponent: PaymentLibComponent) { }
+  constructor() { }
 
-  getApiRootUrl(apiRoot: string): string {
-    return this.paymentLibComponent.API_ROOT;
+  setApiRootUrl(apiRoot: string): void {
+    this.API_ROOT = apiRoot;
+  }
+
+  getApiRootUrl(): string {
+    return this.API_ROOT;
   }
 }
