@@ -5,7 +5,7 @@ import { PaymentListService } from '../../services/payment-list/payment-list.ser
 import { IPayment } from '../../interfaces/IPayment';
 
 @Component({
-  selector: 'app-payment-list',
+  selector: 'ccpay-payment-list',
   templateUrl: './payment-list.component.html',
   styleUrls: ['./payment-list.component.css']
 })

@@ -4,7 +4,7 @@ import {ActivatedRoute} from '@angular/router';
 import {ICardDetails} from '../../interfaces/ICardDetails';
 
 @Component({
-  selector: 'app-card-details',
+  selector: 'ccpay-card-details',
   templateUrl: './card-details.component.html',
   styleUrls: ['./card-details.component.css']
 })
