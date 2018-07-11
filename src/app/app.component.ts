@@ -7,4 +7,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   pageTitle = 'Payment-web-component';
+  API_ROOT = 'http://localhost:9999';
 }

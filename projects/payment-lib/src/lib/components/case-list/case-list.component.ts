@@ -4,7 +4,7 @@ import { CaseListService } from '../../services/case-list/case-list.service';
 import { ICase } from '../../interfaces/ICase';
 
 @Component({
-  selector: 'app-case-list',
+  selector: 'ccpay-case-list',
   templateUrl: './case-list.component.html',
   styleUrls: ['./case-list.component.css']
 })

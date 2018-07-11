@@ -5,7 +5,7 @@ import {ActivatedRoute} from '@angular/router';
 import {IPayment} from '../../interfaces/IPayment';
 
 @Component({
-  selector: 'app-payment-view',
+  selector: 'ccpay-payment-view',
   templateUrl: './payment-view.component.html',
   styleUrls: ['./payment-view.component.css']
 })
