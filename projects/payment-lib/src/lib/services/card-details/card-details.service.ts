@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs/internal/Observable';
-import { environment } from '../../../environments/environment';
 
 import {ICardDetails} from '../../interfaces/ICardDetails';
 
@@ -11,7 +10,7 @@ import {ICardDetails} from '../../interfaces/ICardDetails';
 })
 export class CardDetailsService {
 
-  API_URL: string = environment.API_URL;
+  API_URL: string = 'http://localhost:9999';
 
   constructor(private http: HttpClient) { }
 

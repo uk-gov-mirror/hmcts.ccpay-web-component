@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
-import { environment } from '../../../environments/environment';
 
 import {IPayment} from '../../interfaces/IPayment';
 import { Observable } from 'rxjs/internal/Observable';
@@ -10,7 +9,7 @@ import { Observable } from 'rxjs/internal/Observable';
 })
 export class PaymentListService {
 
-  API_URL: string = environment.API_URL;
+  API_URL: string = 'http://localhost:9999';
 
   constructor(private http: HttpClient) { }
 
