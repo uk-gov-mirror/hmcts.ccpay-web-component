@@ -18,7 +18,6 @@ export class PaymentListComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.params.subscribe((params) => {
-      console.log('Payments for the case number: ', params);
       this.paymentListService.getPaymentByReference(params.paymentReference).subscribe(
         payment => this.payment = payment
       );

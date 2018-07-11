@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
 
 import {IPayment} from '../../interfaces/IPayment';
+import {PaymentLibService} from '../../payment-lib.service';
 
 
 @Injectable({
@@ -10,11 +11,10 @@ import {IPayment} from '../../interfaces/IPayment';
 })
 export class PaymentViewService {
 
-  API_URL: string = 'http://localhost:9999' + '/card-payments/';
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private paymentLibService: PaymentLibService) { }
 
   getPaymentDetails(paymentReference: string): Observable<IPayment> {
-    return this.http.get<IPayment>(this.API_URL + paymentReference);
+    return this.http.get<IPayment>(`${this.paymentLibService.API_ROOT}/card-payments/${paymentReference}`);
   }
 }
