@@ -1,15 +1,13 @@
 {
   "name": "ccpay-web-component",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build --prod --output-hashing=none",
-    "package": "cat dist/ccpay-web-component/{runtime,polyfills,scripts,main}.js | gzip > elements.js.gz",
+    "start": "ng serve -o",
+    "build": "ng build --prod payment-lib",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e",
-    "packagr": "ng-packagr -p package.json"
+    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {
