@@ -15,7 +15,7 @@
       </tr>
       <tr *ngFor="let case of cases">
         <td>
-          <a routerLink="/payments/{{ case.paymentReference }}">{{ case.paymentReference }}</a>
+          <a routerLink="/payments/{{ case.paymentReference }}">{{ case.caseNumber }}</a>
         </td>
         <td>{{ case.petitioner }}</td>
         <td>{{ case.respondent }}</td>

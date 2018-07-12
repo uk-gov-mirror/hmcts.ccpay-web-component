@@ -11,16 +11,22 @@ import {ICardDetails} from '../../interfaces/ICardDetails';
 export class CardDetailsComponent implements OnInit {
   pageTitle: string = 'Card details';
   cardDetails: ICardDetails;
+  paymentReference: string;
 
   constructor(private cardDetailsService: CardDetailsService,
               private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe((params) => {
+      this.paymentReference = params.paymentReference;
       this.cardDetailsService.getCardDetails(params.paymentReference).subscribe(
         cardDetails => this.cardDetails = cardDetails
       );
     });
+  }
+
+  get getPaymentReference(): string {
+    return this.paymentReference;
   }
 
 }

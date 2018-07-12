@@ -1,0 +1,21 @@
+<header role="banner" id="global-header" class="">
+  <div class="center-content">
+    <div class="bar-header">
+      <ul class="bar-header__list bar-header-left">
+        <li class="title">
+          <a routerLink="/" title="Go to the GOV.UK homepage" class="content">
+            <span id="proposition-name">Manage payments</span>
+          </a>
+        </li>
+      </ul>
+
+      <ul class="bar-header__list bar-header-right">
+        <li>{{ todaysDate | date:'dd/MMM/yyyy' }}</li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<div [class]="'second-nav ' + navigationClass">
+  <div class="second-nav__menu"></div>
+</div>

@@ -1,42 +1,38 @@
 <div class="panel panel-primary">
   <div class="panel-heading">
-    Card details
+    Card summary
   </div>
 </div>
 
-<div class="container">
-  <fieldset class="col-md-12">
-    <legend><h2>Card details</h2></legend>
-    <div class="row">
-      <div class="col-md-2">Cardholder name:</div>
-      <div class="col-md-10">{{ cardDetails.cardholder_name }}</div>
-    </div>
-    <legend></legend>
-    <div class="row">
-      <div class="col-md-2">Card number:</div>
-      <div class="col-md-10">{{ cardDetails.last_digits_card_number }}</div>
-    </div>
-    <legend></legend>
-    <div class="row">
-      <div class="col-md-2">Card expiry date:</div>
-      <div class="col-md-10">{{ cardDetails.expiry_date }}</div>
-    </div>
-    <legend></legend>
-    <div class="row">
-      <div class="col-md-2">Card brand:</div>
-      <div class="col-md-10">{{ cardDetails.card_brand }}</div>
-    </div>
-    <legend></legend>
-    <div class="row">
-      <div class="col-md-2">Email:</div>
-      <div class="col-md-10">{{ cardDetails.email }}</div>
-    </div>
-    <legend></legend>
-  </fieldset>
+<div class="gird-row">
+  <div class="column">
+    <h2 class="heading-medium">
+      <label class="bold">Card details</label>
+    </h2>
+  </div>
 </div>
+
+<div class="grid-row">
+  <div class="column-full">
+    <label class="bold">Cardholder name:</label> {{ cardDetails.cardholder_name }}
+  </div>
+  <div class="column-full">
+    <label class="bold">Card number:</label> {{ cardDetails.last_digits_card_number }}
+  </div>
+  <div class="column-full">
+    <label class="bold">Card expiry date:</label> {{ cardDetails.expiry_date }}
+  </div>
+  <div class="column-full">
+    <label class="bold">Card brand:</label> {{ cardDetails.card_brand }}
+  </div>
+  <div class="column-full">
+    <label class="bold">Email:</label> {{ cardDetails.email }}
+  </div>
+</div>
+
 
 <div class="container">
   <fieldset class="col-md-12">
-    <button class="btn btn-success btn-lg">Back</button>
+    <button class="button" routerLink="/payment-view/{{ getPaymentReference }}">Back</button>
   </fieldset>
 </div>

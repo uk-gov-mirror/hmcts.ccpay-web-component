@@ -4,65 +4,64 @@
   </div>
 </div>
 
-<div class="container">
-  <fieldset class="col-md-12">
-    <legend><h2>Payment summary</h2></legend>
-    <div class="row">
-      <div class="col-md-2">Payment reference:</div>
-      <div class="col-md-10">{{ payment.reference }}</div>
-    </div>
-    <legend></legend>
-    <div class="row">
-      <div class="col-md-2">Total payment amount:</div>
-      <div class="col-md-10">{{ payment.amount }}</div>
-    </div>
-    <legend></legend>
-    <div class="row">
-      <div class="col-md-2">Payment method:</div>
-      <div class="col-md-10">
-        <a href="/card-details/{{ payment.reference }}">{{ payment.method }}</a>
-      </div>
-    </div>
-    <legend></legend>
-    <div class="row">
-      <div class="col-md-2">Payment channel:</div>
-      <div class="col-md-10">{{ payment.channel }}</div>
-    </div>
-    <legend></legend>
-  </fieldset>
+
+<div class="gird-row">
+  <div class="column">
+    <h2 class="heading-medium">
+      <label class="bold">Payment details</label>
+    </h2>
+  </div>
 </div>
+
+<div class="grid-row">
+  <div class="column-full">
+    <label class="bold">Payment reference:</label> {{ payment.reference }}
+  </div>
+  <div class="column-full">
+    <label class="bold">Payment amount:</label> {{ payment.amount }}
+  </div>
+  <div class="column-full" *ngIf="isCardPayment">
+    <label class="bold">Payment method:</label> {{ payment.method }} [ <a routerLink="/card-details/{{ payment.reference }}">card details</a> ]
+  </div>
+  <div class="column-full" *ngIf="!isCardPayment">
+    <label class="bold">Payment method:</label> {{ payment.method }}
+  </div>
+  <div class="column-full">
+    <label class="bold">Payment channle:</label> {{ payment.channel }}
+  </div>
+</div>
+
+
+<div class="gird-row">
+  <legend></legend>
+  <div class="column">
+    <h2 class="heading-medium">
+      <label class="bold">Fee details</label>
+    </h2>
+  </div>
+</div>
+
+<div class="grid-row">
+  <div *ngFor="let fee of payment.fees">
+    <div class="column-full">
+      <label class="bold">Fee code:</label> {{ fee.code }}
+    </div>
+    <div class="column-full">
+      <label class="bold">Fee amount:</label> {{ fee.calculated_amount }}
+    </div>
+    <div class="column-full">
+      <label class="bold">Version:</label> {{ fee.version }}
+    </div>
+    <div class="column-full">
+      <label class="bold">Volume:</label> {{ fee.volume }}
+    </div>
+  </div>
+</div>
+
 
 <div class="container">
   <fieldset class="col-md-12">
-    <legend><h3>Fee details</h3></legend>
-    <div *ngFor="let fee of payment.fees">
-      <div class="row">
-        <div class="col-md-2">Fee code:</div>
-        <div class="col-md-10">{{ fee.code }}</div>
-      </div>
-      <legend></legend>
-      <div class="row">
-        <div class="col-md-2">Fee amount:</div>
-        <div class="col-md-10">£{{ fee.calculated_amount }}</div>
-      </div>
-      <legend></legend>
-      <div class="row">
-        <div class="col-md-2">Version</div>
-        <div class="col-md-10">{{ fee.version }}</div>
-      </div>
-      <legend></legend>
-      <div class="row">
-        <div class="col-md-2">Volume:</div>
-        <div class="col-md-10">{{ fee.volume }}</div>
-      </div>
-      <legend></legend>
-    </div>
-  </fieldset>
-</div>
-
-<div class="container">
-  <fieldset class="col-md-12">
-    <button routerLink="/payments/{{ payment.reference }}" class="btn btn-success btn-lg">Back</button>
+    <button routerLink="/payments/{{ payment.reference }}" class="button">Back</button>
   </fieldset>
 </div>
 
