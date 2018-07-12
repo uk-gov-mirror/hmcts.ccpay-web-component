@@ -36,5 +36,6 @@ testem.log
 
 # System Files
 .idea
+.idea/*
 .DS_Store
 Thumbs.db
