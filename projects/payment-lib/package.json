@@ -1,8 +1,25 @@
 {
-  "name": "payment-lib",
+  "name": "@hmcts/ccpay-web-component",
   "version": "0.0.1",
+  "publishConfig": {
+    "access": "public"
+  },
   "peerDependencies": {
     "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
     "@angular/core": "^6.0.0-rc.0 || ^6.0.0"
-  }
+  },
+  "license": "MIT",
+  "repository": "https://github.com/hmcts/ccpay-web-component.git",
+  "description": "Angular web component for displaying payments returned from ccpay",
+  "author": "Mateusz Swirski <mateusz.swirski@hmcts.net>",
+  "contributors": [
+    {
+      "name": "Tarun Palisetty",
+      "email": "tarun.palisetty@hmcts.net"
+    },
+    {
+      "name": "Mateusz Swirski",
+      "email": "mateusz.swirski@hmcts.net"
+    }
+  ]
 }
