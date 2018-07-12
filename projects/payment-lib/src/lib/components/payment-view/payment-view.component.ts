@@ -24,4 +24,8 @@ export class PaymentViewComponent implements OnInit {
     });
   }
 
+  get isCardPayment(): boolean {
+    return this.payment.method === 'card';
+  }
+
 }
