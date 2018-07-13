@@ -1,5 +1,5 @@
 export interface ICase {
-    caseNumber: string;
+  ccdCaseNumber: string;
     paymentReference: string;
     petitioner: string;
     respondent: string;

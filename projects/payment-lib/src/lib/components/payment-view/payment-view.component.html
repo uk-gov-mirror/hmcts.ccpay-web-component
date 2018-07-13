@@ -21,7 +21,7 @@
     <label class="bold">Payment amount:</label> {{ payment.amount }}
   </div>
   <div class="column-full" *ngIf="isCardPayment">
-    <label class="bold">Payment method:</label> {{ payment.method }} [ <a routerLink="/card-details/{{ payment.reference }}">card details</a> ]
+    <label class="bold">Payment method:</label> {{ payment.method }} [ <label class="bold"><a routerLink="/card-details/{{ payment.reference }}">card details</a></label> ]
   </div>
   <div class="column-full" *ngIf="!isCardPayment">
     <label class="bold">Payment method:</label> {{ payment.method }}
@@ -61,7 +61,7 @@
 
 <div class="container">
   <fieldset class="col-md-12">
-    <button routerLink="/payments/{{ payment.reference }}" class="button">Back</button>
+    <button routerLink="/payments/{{ payment.ccd_case_number }}" [queryParams]="{ paymentMethod: payment.method }" class="button">Back</button>
   </fieldset>
 </div>
 
