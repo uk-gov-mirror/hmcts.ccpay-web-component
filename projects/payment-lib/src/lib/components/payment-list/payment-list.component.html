@@ -14,9 +14,9 @@
       <th>Payment amount</th>
       <th>Status</th>
     </tr>
-    <tr>
+    <tr *ngFor="let payment of payments.payments">
       <td>
-        <a href="/payment-view/{{ payment.reference }}">{{ payment.reference }}</a>
+        <a routerLink="/payment-view/{{ payment.payment_reference }}">{{ payment.payment_reference }}</a>
       </td>
       <td>No created</td>
       <td>{{ payment.method }}</td>

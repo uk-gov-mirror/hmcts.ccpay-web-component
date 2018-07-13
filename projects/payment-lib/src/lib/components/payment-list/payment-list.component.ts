@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { PaymentListService } from '../../services/payment-list/payment-list.service';
 import { IPayment } from '../../interfaces/IPayment';
+import { IPayments } from '../../interfaces/IPayments'
 
 @Component({
   selector: 'ccpay-payment-list',
@@ -11,15 +12,18 @@ import { IPayment } from '../../interfaces/IPayment';
 })
 export class PaymentListComponent implements OnInit {
   pageTitle: string = 'Case payments';
-  payment: IPayment;
+  payments: IPayments;
+  paymentMethod: string;
 
   constructor(private paymentListService: PaymentListService,
               private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe((params) => {
-      this.paymentListService.getPaymentByReference(params.paymentReference).subscribe(
-        payment => this.payment = payment
+      this.paymentMethod = this.activatedRoute.snapshot.queryParams['paymentMethod'];
+      console.log('PaymentListComponent ccdCaseNumber: ', params.ccdCaseNumber, ' and paymentMethod: ', this.paymentMethod);
+      this.paymentListService.getPaymentByCcdCaseNumber(params.ccdCaseNumber, this.paymentMethod).subscribe(
+        payments => this.payments = payments
       );
     });
   }

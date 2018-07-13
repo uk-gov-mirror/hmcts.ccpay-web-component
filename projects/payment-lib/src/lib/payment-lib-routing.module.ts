@@ -9,7 +9,7 @@ import {CardDetailsComponent} from './components/card-details/card-details.compo
 
 const appRoutes: Routes = [
     { path: 'cases', component: CaseListComponent },
-    { path: 'payments/:paymentReference', component: PaymentListComponent },
+    { path: 'payments/:ccdCaseNumber', component: PaymentListComponent },
     { path: 'payment-view/:paymentReference', component: PaymentViewComponent },
     { path: 'card-details/:paymentReference', component: CardDetailsComponent },
     { path: '**', component: PageNotFoundComponent }
