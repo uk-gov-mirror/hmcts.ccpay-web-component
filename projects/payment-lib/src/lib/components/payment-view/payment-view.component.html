@@ -13,27 +13,35 @@
   </div>
 </div>
 
-<div class="grid-row">
-  <div class="column-full">
-    <label class="bold">Payment reference:</label> {{ payment.reference }}
-  </div>
-  <div class="column-full">
-    <label class="bold">Payment amount:</label> {{ payment.amount }}
-  </div>
-  <div class="column-full" *ngIf="isCardPayment">
-    <label class="bold">Payment method:</label> {{ payment.method }} [ <label class="bold"><a routerLink="/card-details/{{ payment.reference }}">card details</a></label> ]
-  </div>
-  <div class="column-full" *ngIf="!isCardPayment">
-    <label class="bold">Payment method:</label> {{ payment.method }}
-  </div>
-  <div class="column-full">
-    <label class="bold">Payment channle:</label> {{ payment.channel }}
-  </div>
-</div>
-
+<table>
+  <tbody>
+    <tr class="section">
+      <td class="bold" width="330px">Payment reference: </td>
+      <td>{{ payment.reference }}</td>
+    </tr>
+    <tr class="section">
+      <td class="bold" width="330px">Payment amount:</td>
+      <td>£{{ payment.amount }}</td>
+    </tr>
+    <tr class="section">
+      <td class="bold" width="330px">Payment method:</td>
+      <td>
+        <div *ngIf="isCardPayment">
+         {{ payment.method }} &nbsp;[<label class="bold"><a routerLink="/card-details/{{ payment.reference }}">card details</a></label>]
+        </div>
+        <div *ngIf="!isCardPayment">
+          {{ payment.method }}
+        </div>
+      </td>
+    </tr>
+    <tr class="section">
+      <td class="bold" width="330px">Payment status:</td>
+      <td>{{ payment.status }}</td>
+    </tr>
+  </tbody>
+</table>
 
 <div class="gird-row">
-  <legend></legend>
   <div class="column">
     <h2 class="heading-medium">
       <label class="bold">Fee details</label>
@@ -41,22 +49,25 @@
   </div>
 </div>
 
-<div class="grid-row">
-  <div *ngFor="let fee of payment.fees">
-    <div class="column-full">
-      <label class="bold">Fee code:</label> {{ fee.code }}
-    </div>
-    <div class="column-full">
-      <label class="bold">Fee amount:</label> {{ fee.calculated_amount }}
-    </div>
-    <div class="column-full">
-      <label class="bold">Version:</label> {{ fee.version }}
-    </div>
-    <div class="column-full">
-      <label class="bold">Volume:</label> {{ fee.volume }}
-    </div>
-  </div>
+<div *ngFor="let fee of payment.fees">
+<table class="table">
+  <tbody>
+    <tr class="section">
+      <td class="bold" width="330px">Fee code:</td>
+      <td>{{ fee.code }}</td>
+    </tr>
+    <tr class="section">
+      <td class="bold" width="330px">Fee amount:</td>
+      <td>£{{ fee.calculated_amount }}</td>
+    </tr>
+    <tr class="section">
+      <td class="bold" width="330px">Description</td>
+      <td>Application for {{ payment.service_name }}</td>
+    </tr>
+  </tbody>
+</table>
 </div>
+
 
 
 <div class="container">
