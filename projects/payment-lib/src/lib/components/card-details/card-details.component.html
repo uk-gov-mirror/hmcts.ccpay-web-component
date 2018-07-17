@@ -1,8 +1,8 @@
-<div class="panel panel-primary">
-  <div class="panel-heading">
-    Card summary
-  </div>
-</div>
+<!--<div class="panel panel-primary">-->
+  <!--<div class="panel-heading">-->
+    <!--Card summary-->
+  <!--</div>-->
+<!--</div>-->
 
 <div class="gird-row">
   <div class="column">
@@ -15,32 +15,28 @@
 <table>
   <tbody>
     <tr>
-      <td class="bold">Cardholder name:</td>
+      <td class="bold" width="330px">Name on card:</td>
       <td>{{ cardDetails.cardholder_name }}</td>
     </tr>
     <tr>
-      <td class="bold">Card number:</td>
-      <td>{{ cardDetails.last_digits_card_number }}</td>
+      <td class="bold" width="330px">Card number:</td>
+      <td>**** **** **** {{ cardDetails.last_digits_card_number }}</td>
     </tr>
     <tr>
-      <td class="bold">Card expiry date:</td>
+      <td class="bold" width="330px">Card expiry date:</td>
       <td>{{ cardDetails.expiry_date}}</td>
     </tr>
     <tr>
-      <td class="bold">Card brand:</td>
+      <td class="bold" width="330px">Type:</td>
       <td>{{ cardDetails.card_brand }}</td>
-    </tr>
-    <tr>
-      <td class="bold">Email:</td>
-      <td>{{ cardDetails.email }}</td>
     </tr>
   </tbody>
 </table>
 
 
 
-<div class="container">
-  <fieldset class="col-md-12">
-    <button class="button" routerLink="/payment-view/{{ getPaymentReference }}">Back</button>
-  </fieldset>
-</div>
+<!--<div class="container">-->
+  <!--<fieldset class="col-md-12">-->
+    <!--<button class="button" routerLink="/payment-view/{{ getPaymentReference }}">Back</button>-->
+  <!--</fieldset>-->
+<!--</div>-->

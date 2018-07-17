@@ -20,14 +20,14 @@
       <td>{{ payment.reference }}</td>
     </tr>
     <tr class="section">
-      <td class="bold" width="330px">Payment amount:</td>
+      <td class="bold" width="330px">Total payment amount:</td>
       <td>£{{ payment.amount }}</td>
     </tr>
     <tr class="section">
       <td class="bold" width="330px">Payment method:</td>
       <td>
         <div *ngIf="isCardPayment">
-         {{ payment.method }} &nbsp;[<label class="bold"><a routerLink="/card-details/{{ payment.reference }}">card details</a></label>]
+         {{ payment.method }}
         </div>
         <div *ngIf="!isCardPayment">
           {{ payment.method }}
@@ -53,6 +53,10 @@
 <table class="table">
   <tbody>
     <tr class="section">
+      <td class="bold" width="330px">Description</td>
+      <td>Application for {{ payment.service_name }}</td>
+    </tr>
+    <tr class="section">
       <td class="bold" width="330px">Fee code:</td>
       <td>{{ fee.code }}</td>
     </tr>
@@ -60,15 +64,19 @@
       <td class="bold" width="330px">Fee amount:</td>
       <td>£{{ fee.calculated_amount }}</td>
     </tr>
-    <tr class="section">
-      <td class="bold" width="330px">Description</td>
-      <td>Application for {{ payment.service_name }}</td>
+    <tr>
+      <td class="bold" width="330px">Net amount:</td>
+      <td>£{{ fee.calculated_amount }}</td>
     </tr>
   </tbody>
 </table>
 </div>
 
+<!-- card details -->
+<ccpay-card-details *ngIf="isCardPayment"></ccpay-card-details>
 
+<!-- Status histories -->
+<ccpay-payment-statuses></ccpay-payment-statuses>
 
 <div class="container">
   <fieldset class="col-md-12">
