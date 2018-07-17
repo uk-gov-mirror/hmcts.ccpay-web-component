@@ -1,0 +1,22 @@
+<div class="gird-row">
+  <div class="column">
+    <h2 class="heading-medium">
+      <label class="bold">{{ pageTitle }}</label>
+    </h2>
+  </div>
+</div>
+
+<table>
+  <tbody>
+    <tr>
+      <th class="bold">Status</th>
+      <th class="bold">Amount</th>
+      <th class="bold">Date created</th>
+    </tr>
+    <tr *ngFor="let status of statuses.status_histories">
+      <td>{{ status.status }}</td>
+      <td>£{{ statuses.amount }}</td>
+      <td>{{ status.date_created }}</td>
+    </tr>
+  </tbody>
+</table>

@@ -14,6 +14,7 @@ export class PaymentListComponent implements OnInit {
   pageTitle: string = 'Case payments';
   payments: IPayments;
   paymentMethod: string;
+  errorMessage: string;
 
   constructor(private paymentListService: PaymentListService,
               private activatedRoute: ActivatedRoute) { }
@@ -23,7 +24,10 @@ export class PaymentListComponent implements OnInit {
       this.paymentMethod = this.activatedRoute.snapshot.queryParams['paymentMethod'];
       console.log('PaymentListComponent ccdCaseNumber: ', params.ccdCaseNumber, ' and paymentMethod: ', this.paymentMethod);
       this.paymentListService.getPaymentByCcdCaseNumber(params.ccdCaseNumber, this.paymentMethod).subscribe(
-        payments => this.payments = payments
+        (payments: IPayments) => {
+          this.payments = payments
+        },
+        (error: any) => this.errorMessage = <any>error
       );
     });
   }
