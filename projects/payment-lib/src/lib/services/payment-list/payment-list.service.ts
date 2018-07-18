@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 
-import {IPayment} from '../../interfaces/IPayment';
 import { Observable } from 'rxjs/internal/Observable';
 import {PaymentLibService} from '../../payment-lib.service';
-import { IPayments } from '../../interfaces/IPayments'
+import { IPayments } from '../../interfaces/IPayments';
 
 @Injectable({
   providedIn: 'root'
