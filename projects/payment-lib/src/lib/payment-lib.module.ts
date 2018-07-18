@@ -8,7 +8,7 @@ import {PageNotFoundComponent} from './components/page-not-found.component';
 import {HttpClientModule} from '@angular/common/http';
 import {PaymentLibComponent} from './payment-lib.component';
 import {PaymentLibRoutingModule} from './payment-lib-routing.module';
-import { StatusHistoryComponent } from './components/status-history/status-history.component'
+import { StatusHistoryComponent } from './components/status-history/status-history.component';
 
 @NgModule({
   imports: [
