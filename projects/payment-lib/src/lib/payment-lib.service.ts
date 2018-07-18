@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import {PaymentLibComponent} from './payment-lib.component';
 
 @Injectable({
   providedIn: 'root'

@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { PaymentListService } from '../../services/payment-list/payment-list.service';
-import { IPayment } from '../../interfaces/IPayment';
-import { IPayments } from '../../interfaces/IPayments'
+import { IPayments } from '../../interfaces/IPayments';
 
 @Component({
   selector: 'ccpay-payment-list',
