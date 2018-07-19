@@ -4,10 +4,8 @@ import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http'
 import { Observable } from 'rxjs/internal/Observable';
 import {PaymentLibService} from '../../payment-lib.service';
 import { IPayments } from '../../interfaces/IPayments';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { _throw } from 'rxjs/observable/throw';
-import { of } from 'rxjs/observable/of';
-import { ErrorObservable } from 'rxjs-compat/observable/ErrorObservable';
 
 @Injectable({
   providedIn: 'root'
@@ -33,16 +31,16 @@ export class PaymentListService {
   }
 
   private handleError(err: HttpErrorResponse): Observable<any> {
-    console.log(err);
     let errorMessage: string;
     if (err.error instanceof Error) {
       // A client-side or network error occurred.
+      console.log('An error occurred: ', JSON.stringify(err));
       errorMessage = `An error occurred: ${err.error.message}`;
     } else {
       // The backend returned an unsuccessful response code.
-      errorMessage = `Backend returned code ${err.status}, body was: ${err.error}`;
+      console.log('Backend status error: ', err.status);
+      errorMessage = `${err.error}`;
     }
-    console.error(errorMessage);
     return _throw(errorMessage);
   }
 

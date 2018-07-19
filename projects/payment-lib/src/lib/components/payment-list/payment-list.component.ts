@@ -12,6 +12,7 @@ import { IPayments } from '../../interfaces/IPayments';
 export class PaymentListComponent implements OnInit {
   pageTitle: string = 'Case payments';
   payments: IPayments;
+  paymentReference: string;
   paymentMethod: string;
   errorMessage: string;
 
@@ -22,11 +23,11 @@ export class PaymentListComponent implements OnInit {
     this.activatedRoute.params.subscribe((params) => {
       this.paymentMethod = this.activatedRoute.snapshot.queryParams['paymentMethod'];
       console.log('PaymentListComponent ccdCaseNumber: ', params.ccdCaseNumber, ' and paymentMethod: ', this.paymentMethod);
+      this.paymentReference = params.paymentReference;
       this.paymentListService.getPaymentByCcdCaseNumber(params.ccdCaseNumber, this.paymentMethod).subscribe(
         payments => this.payments = payments,
         (error: any) => this.errorMessage = <any>error
       );
     });
   }
-
 }

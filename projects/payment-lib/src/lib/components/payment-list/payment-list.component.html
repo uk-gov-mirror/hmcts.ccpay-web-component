@@ -5,9 +5,16 @@
   </div>
 </div>
 
-<div class="has-error" *ngIf="errorMessage">{{errorMessage}}</div>
+<div class="error-summary" role="group" aria-labelledby="failure-error-summary-heading" tabindex="-1" *ngIf="errorMessage">
+  <h2 class="heading-medium error-summary-heading" id="failure-error-summary-heading">
+    There is a problem
+  </h2>
+  <div class="govuk-error-summary__body">
+    {{ errorMessage }}
+  </div>
+</div>
 
-<div class="container">
+<div class="container" *ngIf="!errorMessage">
   <table class="table">
     <tr>
       <th class="bold">Payment reference</th>
@@ -26,9 +33,7 @@
       <td>{{ payment.status }}</td>
     </tr>
   </table>
-</div>
 
-<div class="container">
   <fieldset class="col-md-12">
     <button routerLink="/cases" class="button">Back</button>
   </fieldset>
