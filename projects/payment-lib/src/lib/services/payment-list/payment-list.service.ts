@@ -6,6 +6,7 @@ import {PaymentLibService} from '../../payment-lib.service';
 import { IPayments } from '../../interfaces/IPayments';
 import { catchError } from 'rxjs/operators';
 import { _throw } from 'rxjs/observable/throw';
+import { ErrorHandlerService } from '../shared/error-handler.service'
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ export class PaymentListService {
   payments: IPayments;
 
   constructor(private http: HttpClient,
+              private errorHandlerService: ErrorHandlerService,
               private paymentLibService: PaymentLibService) { }
 
 
@@ -26,22 +28,7 @@ export class PaymentListService {
 
     return this.http.get<IPayments>(`${this.paymentLibService.API_ROOT}/payments`, { params : params })
       .pipe(
-        catchError(this.handleError)
+        catchError(this.errorHandlerService.handleError)
       );
   }
-
-  private handleError(err: HttpErrorResponse): Observable<any> {
-    let errorMessage: string;
-    if (err.error instanceof Error) {
-      // A client-side or network error occurred.
-      console.log('An error occurred: ', JSON.stringify(err));
-      errorMessage = `An error occurred: ${err.error.message}`;
-    } else {
-      // The backend returned an unsuccessful response code.
-      console.log('Backend status error: ', err.status);
-      errorMessage = `${err.error}`;
-    }
-    return _throw(errorMessage);
-  }
-
 }
