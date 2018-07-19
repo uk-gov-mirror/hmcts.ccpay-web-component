@@ -7,6 +7,7 @@ import { IPayments } from '../../interfaces/IPayments';
 import { catchError, tap } from 'rxjs/operators';
 import { _throw } from 'rxjs/observable/throw';
 import { of } from 'rxjs/observable/of';
+import { ErrorObservable } from 'rxjs-compat/observable/ErrorObservable';
 
 @Injectable({
   providedIn: 'root'
@@ -27,20 +28,22 @@ export class PaymentListService {
 
     return this.http.get<IPayments>(`${this.paymentLibService.API_ROOT}/payments`, { params : params })
       .pipe(
-        catchError(this.handleError<IPayments>('getPaymentByCcdCaseNumber'))
+        catchError(this.handleError)
       );
   }
 
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: HttpErrorResponse): Observable<T> => {
-      if (error.status === 404) {
-        console.log('Http 404 Not found error');
-        return of(result as T);
-      } else {
-        console.error(error);
-        return _throw('An error has occurred', error.error.message);
-      }
-    };
+  private handleError(err: HttpErrorResponse): Observable<any> {
+    console.log(err);
+    let errorMessage: string;
+    if (err.error instanceof Error) {
+      // A client-side or network error occurred.
+      errorMessage = `An error occurred: ${err.error.message}`;
+    } else {
+      // The backend returned an unsuccessful response code.
+      errorMessage = `Backend returned code ${err.status}, body was: ${err.error}`;
+    }
+    console.error(errorMessage);
+    return _throw(errorMessage);
   }
 
 }
