@@ -1,7 +1,7 @@
 {
-  "request": {
+    "request": {
         "method": "GET",
-        "url": "/card-payments/RC-1531-0089-8858-9692/details"
+        "url": "/card-payments/RC-1531-0089-8858-9692/statuses"
     },
     "response": {
         "status": 200,
@@ -11,12 +11,6 @@
           "Access-Control-Allow-Methods" : "*",
           "Access-Control-Allow-Headers": "Accept, Content-Type, Content-Encoding, Server, Transfer-Encoding"
         },
-        "jsonBody": {
-            "last_digits_card_number": "1111",
-            "cardholder_name": "John Smith",
-            "expiry_date": "12/20",
-            "card_brand": "Visa",
-            "email": "civilmoneyclaims+payment@gmail.com"
-        }
+        "bodyFileName": "case1/payment_status_history_response.json"
     }
 }
