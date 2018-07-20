@@ -1,0 +1,16 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/payments?ccd_case_number=0032-5362-1372-9831&payment_method=CARD"
+  },
+  "response": {
+    "status": 404,
+    "headers": {
+      "Content-type": "application/json",
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Methods" : "*",
+      "Access-Control-Allow-Headers": "Accept, Content-Type, Content-Encoding, Server, Transfer-Encoding"
+    },
+    "jsonBody": "No payment detail found!"
+  }
+}

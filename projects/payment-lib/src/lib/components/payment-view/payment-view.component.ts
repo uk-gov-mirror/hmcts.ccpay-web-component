@@ -12,6 +12,7 @@ import {IPayment} from '../../interfaces/IPayment';
 export class PaymentViewComponent implements OnInit {
   pageTitle: string = 'Payment summary';
   payment: IPayment;
+  errorMessage: string;
 
   constructor(private paymentViewService: PaymentViewService,
               private activatedRoute: ActivatedRoute) { }
@@ -19,7 +20,8 @@ export class PaymentViewComponent implements OnInit {
   ngOnInit() {
     this.activatedRoute.params.subscribe((params) => {
       this.paymentViewService.getPaymentDetails(params.paymentReference).subscribe(
-        payment => this.payment = payment
+        payment => this.payment = payment,
+        (error: any) => this.errorMessage = <any>error
       );
     });
   }

@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { PaymentLibService } from '../../payment-lib.service'
-import { HttpClient } from '@angular/common/http'
-import { IStatusHistories } from '../../interfaces/IStatusHistories'
+import { PaymentLibService } from '../../payment-lib.service';
+import { HttpClient } from '@angular/common/http';
+import { IStatusHistories } from '../../interfaces/IStatusHistories';
 import { Observable } from 'rxjs/internal/Observable';
+import { ErrorHandlerService } from '../shared/error-handler.service';
+import { catchError } from 'rxjs/operators';
 
 
 @Injectable({
@@ -11,10 +13,14 @@ import { Observable } from 'rxjs/internal/Observable';
 export class StatusHistoryService {
 
   constructor(private http: HttpClient,
+              private errorHandlerService: ErrorHandlerService,
               private paymentLibService: PaymentLibService) { }
 
 
   getPaymentStatusesByReference(paymentReference: string): Observable<IStatusHistories> {
-    return this.http.get<IStatusHistories>(`${this.paymentLibService.API_ROOT}/card-payments/${paymentReference}/statuses`);
+    return this.http.get<IStatusHistories>(`${this.paymentLibService.API_ROOT}/card-payments/${paymentReference}/statuses`)
+      .pipe(
+        catchError(this.errorHandlerService.handleError)
+      );
   }
 }

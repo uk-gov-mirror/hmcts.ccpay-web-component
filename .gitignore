@@ -93,3 +93,4 @@ fabric.properties
 .sass-cache/
 *.css.map
 
+wire-mock/wiremock-standalone-2.18.0.jar

@@ -1,0 +1,16 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/payments?ccd_case_number=2309-1129-5569-2669&payment_method=CARD"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-type": "application/json",
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Methods" : "*",
+      "Access-Control-Allow-Headers": "Accept, Content-Type, Content-Encoding, Server, Transfer-Encoding"
+    },
+    "bodyFileName": "case1/payment_list_response.json"
+  }
+}

@@ -1,16 +1,20 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { Observable } from 'rxjs/internal/Observable';
 import {PaymentLibService} from '../../payment-lib.service';
 import { IPayments } from '../../interfaces/IPayments';
+import { catchError } from 'rxjs/operators';
+import { ErrorHandlerService } from '../shared/error-handler.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PaymentListService {
+  payments: IPayments;
 
   constructor(private http: HttpClient,
+              private errorHandlerService: ErrorHandlerService,
               private paymentLibService: PaymentLibService) { }
 
 
@@ -21,6 +25,9 @@ export class PaymentListService {
     params = params.append('ccd_case_number', ccdCaseNumber);
     params = params.append('payment_method', paymentMethod.toUpperCase());
 
-    return this.http.get<IPayments>(`${this.paymentLibService.API_ROOT}/payments`, { params : params });
+    return this.http.get<IPayments>(`${this.paymentLibService.API_ROOT}/payments`, { params : params })
+      .pipe(
+        catchError(this.errorHandlerService.handleError)
+      );
   }
 }
