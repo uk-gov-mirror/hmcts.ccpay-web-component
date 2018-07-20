@@ -9,7 +9,7 @@ import { StatusHistoryService } from '../../services/status-history/status-histo
   styleUrls: ['./status-history.component.css']
 })
 export class StatusHistoryComponent implements OnInit {
-  pageTitle: string = 'Status histories';
+  pageTitle: string = 'Payment status history';
   statuses: IStatusHistories;
   errorMessage: string;
 

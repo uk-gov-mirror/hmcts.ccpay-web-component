@@ -12,6 +12,7 @@ export class CardDetailsComponent implements OnInit {
   pageTitle: string = 'Card details';
   cardDetails: ICardDetails;
   paymentReference: string;
+  errorMessage: string;
 
   constructor(private cardDetailsService: CardDetailsService,
               private activatedRoute: ActivatedRoute) { }
@@ -20,7 +21,8 @@ export class CardDetailsComponent implements OnInit {
     this.activatedRoute.params.subscribe((params) => {
       this.paymentReference = params.paymentReference;
       this.cardDetailsService.getCardDetails(params.paymentReference).subscribe(
-        cardDetails => this.cardDetails = cardDetails
+        cardDetails => this.cardDetails = cardDetails,
+        (error: any) => this.errorMessage = <any>error
       );
     });
   }
