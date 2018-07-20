@@ -4,7 +4,17 @@
   </div>
 </div>
 
+<div class="error-summary" role="group" aria-labelledby="failure-error-summary-heading" tabindex="-1" *ngIf="errorMessage">
+  <h2 class="heading-medium error-summary-heading" id="failure-error-summary-heading">
+    There is a problem
+  </h2>
+  <div class="govuk-error-summary__body">
+    {{ errorMessage }}
+  </div>
+</div>
 
+
+<div *ngIf="!errorMessage">
 <div class="gird-row">
   <div class="column">
     <h2 class="heading-medium">
@@ -16,27 +26,12 @@
 <table>
   <tbody>
     <tr class="section">
-      <td class="bold" width="330px">Payment reference: </td>
+      <td class="bold" width="330px">Payment reference</td>
       <td>{{ payment.reference }}</td>
     </tr>
     <tr class="section">
-      <td class="bold" width="330px">Total payment amount:</td>
+      <td class="bold" width="330px">Total payment amount</td>
       <td>£{{ payment.amount }}</td>
-    </tr>
-    <tr class="section">
-      <td class="bold" width="330px">Payment method:</td>
-      <td>
-        <div *ngIf="isCardPayment">
-         {{ payment.method }}
-        </div>
-        <div *ngIf="!isCardPayment">
-          {{ payment.method }}
-        </div>
-      </td>
-    </tr>
-    <tr class="section">
-      <td class="bold" width="330px">Payment status:</td>
-      <td>{{ payment.status }}</td>
     </tr>
   </tbody>
 </table>
@@ -57,15 +52,15 @@
       <td>Application for {{ payment.service_name }}</td>
     </tr>
     <tr class="section">
-      <td class="bold" width="330px">Fee code:</td>
+      <td class="bold" width="330px">Fee code</td>
       <td>{{ fee.code }}</td>
     </tr>
     <tr class="section">
-      <td class="bold" width="330px">Fee amount:</td>
+      <td class="bold" width="330px">Fee amount</td>
       <td>£{{ fee.calculated_amount }}</td>
     </tr>
     <tr>
-      <td class="bold" width="330px">Net amount:</td>
+      <td class="bold" width="330px">Net amount</td>
       <td>£{{ fee.calculated_amount }}</td>
     </tr>
   </tbody>
@@ -82,5 +77,6 @@
   <fieldset class="col-md-12">
     <button routerLink="/payments/{{ payment.ccd_case_number }}" [queryParams]="{ paymentMethod: payment.method }" class="button">Back</button>
   </fieldset>
+</div>
 </div>
 

@@ -11,6 +11,7 @@ import { StatusHistoryService } from '../../services/status-history/status-histo
 export class StatusHistoryComponent implements OnInit {
   pageTitle: string = 'Status histories';
   statuses: IStatusHistories;
+  errorMessage: string;
 
   constructor(private statusHistoryService: StatusHistoryService,
               private activateRoute: ActivatedRoute) { }
@@ -19,7 +20,8 @@ export class StatusHistoryComponent implements OnInit {
     this.activateRoute.params.subscribe((params) => {
       console.log('Status histories component: ', params.paymentReference);
       this.statusHistoryService.getPaymentStatusesByReference(params.paymentReference).subscribe(
-        statuses => this.statuses = statuses
+        statuses => this.statuses = statuses,
+        (error: any) => this.errorMessage = <any>error
       );
     });
   }
