@@ -6,7 +6,7 @@ import { CaseListComponent } from './components/case-list/case-list.component';
 import { PaymentListComponent } from './components/payment-list/payment-list.component';
 import {PaymentViewComponent} from './components/payment-view/payment-view.component';
 import {CardDetailsComponent} from './components/card-details/card-details.component';
-import { StatusHistoryComponent } from './components/status-history/status-history.component'
+import { StatusHistoryComponent } from './components/status-history/status-history.component';
 
 const appRoutes: Routes = [
     { path: 'cases', component: CaseListComponent },
