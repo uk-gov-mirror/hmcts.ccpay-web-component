@@ -13,6 +13,7 @@ export class PaymentListComponent implements OnInit {
   pageTitle: string = 'Case payments';
   payments: IPayments;
   paymentReference: string;
+  paymentMethod: string;
   errorMessage: string;
 
   constructor(private paymentListService: PaymentListService,
@@ -20,9 +21,11 @@ export class PaymentListComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.params.subscribe((params) => {
-      console.log('PaymentListComponent ccdCaseNumber: ', params.ccdCaseNumber);
+      this.paymentMethod = this.activatedRoute.snapshot.queryParams['payment_method'];
+      console.log('Payment-list-component ccdCaseNumber: ', params.ccdCaseNumber);
+      console.log('Payment-list-component paymentMethod: ', this.paymentMethod);
       this.paymentReference = params.paymentReference;
-      this.paymentListService.getPaymentByCcdCaseNumber(params.ccdCaseNumber).subscribe(
+      this.paymentListService.getPaymentByCcdCaseNumber(params.ccdCaseNumber, this.paymentMethod).subscribe(
         payments => this.payments = payments,
         (error: any) => this.errorMessage = <any>error
       );

@@ -10,7 +10,6 @@ import { Router } from '@angular/router'
   styleUrls: ['./case-list.component.css']
 })
 export class CaseListComponent implements OnInit {
-
   pageTitle: string = 'Case list';
   cases: ICase[];
 

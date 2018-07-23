@@ -17,9 +17,7 @@ export class PaymentLibComponent implements OnInit {
 
   ngOnInit() {
     this.paymentLibService.setApiRootUrl(this.API_ROOT);
-    this.paymentLibService.setCcdCaseNumber(this.CCD_CASE_NUMBER);
-    this.paymentLibService.setPaymentMethod(this.PAYMENT_METHOD);
-    this.router.navigate([`/payments/${this.CCD_CASE_NUMBER}`]);
+    this.router.navigate([`/payments/${this.CCD_CASE_NUMBER}`], { queryParams : { payment_method: this.PAYMENT_METHOD } });
   }
 
 }

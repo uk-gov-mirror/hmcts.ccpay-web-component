@@ -12,20 +12,18 @@ import { ErrorHandlerService } from '../shared/error-handler.service';
 })
 export class PaymentListService {
   payments: IPayments;
-  paymentMethod: string;
 
   constructor(private http: HttpClient,
               private errorHandlerService: ErrorHandlerService,
               private paymentLibService: PaymentLibService) { }
 
 
-  getPaymentByCcdCaseNumber(ccdCaseNumber: string): Observable<IPayments> {
+  getPaymentByCcdCaseNumber(ccdCaseNumber: string, paymentMethod: string): Observable<IPayments> {
     console.log('Payment service get payment by ccd case number: ', ccdCaseNumber);
-    this.paymentMethod = this.paymentLibService.getPaymentMethod();
 
     let params = new HttpParams();
     params = params.append('ccd_case_number', ccdCaseNumber);
-    params = params.append('payment_method', this.paymentMethod.toUpperCase());
+    params = params.append('payment_method', paymentMethod.toUpperCase());
 
     return this.http.get<IPayments>(`${this.paymentLibService.API_ROOT}/payments`, { params : params })
       .pipe(
