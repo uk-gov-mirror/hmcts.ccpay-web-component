@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import {IPayment} from '../../interfaces/IPayment';
 import {PaymentLibService} from '../../payment-lib.service';
 import { ErrorHandlerService } from '../shared/error-handler.service';
-import { catchError } from 'rxjs/operators'
+import { catchError } from 'rxjs/operators';
 
 
 @Injectable({

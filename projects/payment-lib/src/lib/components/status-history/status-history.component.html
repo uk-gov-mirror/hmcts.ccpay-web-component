@@ -21,8 +21,8 @@
     <tbody>
       <tr *ngFor="let status of statuses.status_histories">
         <td class="bold">Payment {{ status.status }}</td>
-        <td>£{{ statuses.amount }}</td>
-        <td>{{ status.date_created }}</td>
+        <td>£{{ statuses.amount | number:'.2' }}</td>
+        <td>{{ status.date_created | date:'dd-MM-yyyy hh:mm'}}</td>
       </tr>
     </tbody>
   </table>

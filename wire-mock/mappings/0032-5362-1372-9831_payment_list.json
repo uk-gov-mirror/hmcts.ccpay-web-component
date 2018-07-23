@@ -11,6 +11,6 @@
       "Access-Control-Allow-Methods" : "*",
       "Access-Control-Allow-Headers": "Accept, Content-Type, Content-Encoding, Server, Transfer-Encoding"
     },
-    "jsonBody": "No payment detail found!"
+    "jsonBody": "No payments found!"
   }
 }

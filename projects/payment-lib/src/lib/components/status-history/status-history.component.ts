@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { IStatusHistories } from '../../interfaces/IStatusHistories'
-import { ActivatedRoute } from '@angular/router'
-import { StatusHistoryService } from '../../services/status-history/status-history.service'
+import { IStatusHistories } from '../../interfaces/IStatusHistories';
+import { ActivatedRoute } from '@angular/router';
+import { StatusHistoryService } from '../../services/status-history/status-history.service';
 
 @Component({
   selector: 'ccpay-payment-statuses',

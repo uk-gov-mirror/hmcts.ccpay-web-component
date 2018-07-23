@@ -37,7 +37,7 @@
     </tr>
     <tr class="section">
       <td class="bold" width="330px">Total payment amount</td>
-      <td>£{{ payment.amount }}</td>
+      <td>£{{ payment.amount | number:'.2' }}</td>
     </tr>
   </tbody>
 </table>
@@ -63,11 +63,11 @@
     </tr>
     <tr class="section">
       <td class="bold" width="330px">Fee amount</td>
-      <td>£{{ fee.calculated_amount }}</td>
+      <td>£{{ fee.calculated_amount | number:'.2' }}</td>
     </tr>
     <tr>
       <td class="bold" width="330px">Net amount</td>
-      <td>£{{ fee.calculated_amount }}</td>
+      <td>£{{ fee.calculated_amount | number:'.2' }}</td>
     </tr>
   </tbody>
 </table>
