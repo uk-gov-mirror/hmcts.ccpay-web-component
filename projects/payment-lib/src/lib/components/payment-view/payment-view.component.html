@@ -4,13 +4,19 @@
   </div>
 </div>
 
-<div class="error-summary" role="group" aria-labelledby="failure-error-summary-heading" tabindex="-1" *ngIf="errorMessage">
-  <h2 class="heading-medium error-summary-heading" id="failure-error-summary-heading">
-    There is a problem
-  </h2>
-  <div class="govuk-error-summary__body">
-    {{ errorMessage }}
+<div *ngIf="errorMessage">
+  <div class="error-summary" role="group" aria-labelledby="failure-error-summary-heading" tabindex="-1">
+    <h2 class="heading-medium error-summary-heading" id="failure-error-summary-heading">
+      There is a problem
+    </h2>
+    <div class="govuk-error-summary__body">
+      {{ errorMessage }}
+    </div>
+
   </div>
+  <fieldset class="col-md-12">
+    <button routerLink="/cases" class="button">Back</button>
+  </fieldset>
 </div>
 
 
@@ -75,7 +81,7 @@
 
 <div class="container">
   <fieldset class="col-md-12">
-    <button routerLink="/payments/{{ payment.ccd_case_number }}" [queryParams]="{ paymentMethod: payment.method }" class="button">Back</button>
+    <button routerLink="/payments/{{ payment.ccd_case_number }}" [queryParams]="{ payment_method: payment.method }" class="button">Back</button>
   </fieldset>
 </div>
 </div>

@@ -1,22 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 
-import { CaseListService } from '../../services/case-list/case-list.service';
 import { ICase } from '../../interfaces/ICase';
+import { CASES } from './mock-case-data';
+import { Router } from '@angular/router'
 
 @Component({
-  selector: 'ccpay-case-list',
+  selector: 'app-case-list',
   templateUrl: './case-list.component.html',
   styleUrls: ['./case-list.component.css']
 })
 export class CaseListComponent implements OnInit {
-
   pageTitle: string = 'Case list';
   cases: ICase[];
 
-  constructor(private caseListSerivce: CaseListService) { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
-    this.cases = this.caseListSerivce.getCases();
+    this.cases = CASES;
   }
 
 }
