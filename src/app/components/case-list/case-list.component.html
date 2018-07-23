@@ -15,7 +15,7 @@
       </tr>
       <tr *ngFor="let case of cases">
         <td>
-          <a routerLink="/payments/{{ case.ccdCaseNumber }}" [queryParams]="{ paymentMethod: 'card' }">{{ case.ccdCaseNumber }}</a>
+          <a routerLink="/payment-lib-int/{{ case.ccdCaseNumber }}" [queryParams]="{ paymentMethod: 'card' }">{{ case.ccdCaseNumber }}</a>
         </td>
         <td>{{ case.petitioner }}</td>
         <td>{{ case.respondent }}</td>
@@ -24,5 +24,3 @@
       </tr>
     </table>
 </div>
-
-<router-outlet></router-outlet>
