@@ -29,7 +29,7 @@
       </td>
       <td>No created</td>
       <td>{{ payment.method }}</td>
-      <td>£{{ payment.amount }}</td>
+      <td>£{{ payment.amount | number:'.2' }}</td>
       <td>{{ payment.status }}</td>
     </tr>
   </table>
