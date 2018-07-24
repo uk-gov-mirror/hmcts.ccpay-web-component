@@ -29,7 +29,8 @@
     "bootstrap": "^3.3.7",
     "govuk-elements-sass": "^3.1.2",
     "govuk_template_jinja": "^0.24.0",
-    "govuk_frontend_toolkit": "^7.1.0"
+    "govuk_frontend_toolkit": "^7.1.0",
+    "govuk-frontend": "^1.1.1"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.6.8",

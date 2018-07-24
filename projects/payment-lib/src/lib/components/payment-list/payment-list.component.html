@@ -1,44 +1,54 @@
+<div class="govuk-breadcrumbs" *ngIf="!errorMessage">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-back-link" routerLink="/cases">Back</a>
+    </li>
+  </ol>
+</div>
 
-<div class="panel panel-primary">
-  <div class="panel-heading">
-    {{ pageTitle }}
+<main class="govuk-main-wrapper " id="main-content" role="main">
+<div class="govuk-width-container">
+  <div>
+    <h1 class="govuk-heading-xl">{{ pageTitle }}</h1>
   </div>
-</div>
 
-<div class="error-summary" role="group" aria-labelledby="failure-error-summary-heading" tabindex="-1" *ngIf="errorMessage">
-  <h2 class="heading-medium error-summary-heading" id="failure-error-summary-heading">
-    There is a problem
-  </h2>
-  <div class="govuk-error-summary__body">
-    {{ errorMessage }}
+  <div class="error-summary" role="group" aria-labelledby="failure-error-summary-heading" tabindex="-1" *ngIf="errorMessage">
+    <h2 class="heading-medium error-summary-heading" id="failure-error-summary-heading">
+      There is a problem
+    </h2>
+    <div class="govuk-error-summary__body">
+      {{ errorMessage }}
+    </div>
   </div>
+
+  <div *ngIf="!errorMessage">
+
+    <table class="table">
+      <tr>
+        <th class="bold">Payment reference</th>
+        <th class="bold">Date created</th>
+        <th class="bold">Method</th>
+        <th class="bold">Amount</th>
+        <th class="bold">Status</th>
+      </tr>
+      <tr *ngFor="let payment of payments.payments">
+        <td>
+          <a routerLink="/payment-view/{{ payment.payment_reference }}">{{ payment.payment_reference }}</a>
+        </td>
+        <td>No created</td>
+        <td>{{ payment.method }}</td>
+        <td>£{{ payment.amount | number:'.2' }}</td>
+        <td>{{ payment.status }}</td>
+      </tr>
+    </table>
+
+  </div>
+
+  <fieldset class="col-md-12">
+    <button routerLink="/cases" class="button">Back</button>
+  </fieldset>
 </div>
-
-<div class="container" *ngIf="!errorMessage">
-  <table class="table">
-    <tr>
-      <th class="bold">Payment reference</th>
-      <th class="bold">Date created</th>
-      <th class="bold">Method</th>
-      <th class="bold">Amount</th>
-      <th class="bold">Status</th>
-    </tr>
-    <tr *ngFor="let payment of payments.payments">
-      <td>
-        <a routerLink="/payment-view/{{ payment.payment_reference }}">{{ payment.payment_reference }}</a>
-      </td>
-      <td>No created</td>
-      <td>{{ payment.method }}</td>
-      <td>£{{ payment.amount | number:'.2' }}</td>
-      <td>{{ payment.status }}</td>
-    </tr>
-  </table>
-
-</div>
-
-<fieldset class="col-md-12">
-  <button routerLink="/cases" class="button">Back</button>
-</fieldset>
+</main>
 
 
 <router-outlet></router-outlet>

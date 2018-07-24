@@ -22,6 +22,7 @@ export class ErrorHandlerService {
     } else {
       // The backend returned an unsuccessful response code.
       console.log('Backend status error: ', err.status);
+      console.error('Backend error: ', err.error);
       errorMessage = `${err.error}`;
     }
     return _throw(errorMessage);
