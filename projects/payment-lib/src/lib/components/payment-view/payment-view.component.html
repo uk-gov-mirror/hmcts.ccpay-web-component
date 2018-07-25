@@ -1,7 +1,14 @@
-<div class="panel panel-primary">
-  <div class="panel-heading">
-    {{ pageTitle }}
-  </div>
+<div class="govuk-breadcrumbs" *ngIf="!errorMessage">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <a routerLink="/payments/{{ payment.ccd_case_number }}" [queryParams]="{ payment_method: payment.method }" class="govuk-back-link">Back</a>
+    </li>
+  </ol>
+</div>
+
+<main class="govuk-main-wrapper " id="main-content" role="main">
+<div>
+  <h1 class="govuk-heading-xl">{{ pageTitle }}</h1>
 </div>
 
 <div *ngIf="errorMessage">
@@ -21,6 +28,7 @@
 
 
 <div *ngIf="!errorMessage">
+
 <div class="gird-row">
   <div class="column">
     <h2 class="heading-medium">
@@ -86,3 +94,4 @@
 </div>
 </div>
 
+</main>

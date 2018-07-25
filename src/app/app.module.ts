@@ -3,11 +3,13 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import {PaymentLibModule} from 'payment-lib';
-import {PhaseBannerComponent} from './components/phase-banner/phase-banner.component';
-import { NavigationComponent } from './components/navigation/navigation.component';
+import {PhaseBannerComponent} from './components/shared/phase-banner/phase-banner.component';
+import { NavigationComponent } from './components/shared/navigation/navigation.component';
 import { CaseListComponent } from './components/case-list/case-list.component';
 import { PaymentLibIntComponent } from './components/payment-lib-int/payment-lib-int.component';
-import { AppRoutingModule } from './app-routing.module'
+import { AppRoutingModule } from './app-routing.module';
+import { HeaderComponent } from './components/shared/header/header.component';
+import { FooterComponent } from './components/shared/footer/footer.component'
 
 @NgModule({
   declarations: [
@@ -15,7 +17,9 @@ import { AppRoutingModule } from './app-routing.module'
     PhaseBannerComponent,
     NavigationComponent,
     CaseListComponent,
-    PaymentLibIntComponent
+    PaymentLibIntComponent,
+    HeaderComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

@@ -23,7 +23,6 @@ export class PaymentListComponent implements OnInit {
     this.activatedRoute.params.subscribe((params) => {
       this.paymentMethod = this.activatedRoute.snapshot.queryParams['payment_method'];
       console.log('Payment-list-component ccdCaseNumber: ', params.ccdCaseNumber);
-      console.log('Payment-list-component paymentMethod: ', this.paymentMethod);
       this.paymentReference = params.paymentReference;
       this.paymentListService.getPaymentByCcdCaseNumber(params.ccdCaseNumber, this.paymentMethod).subscribe(
         payments => this.payments = payments,
