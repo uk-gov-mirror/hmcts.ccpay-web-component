@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 import {BrowserModule} from '@angular/platform-browser';
 
-import {PaymentLibRoutingModule} from './payment-lib-routing.module';
-
 import {PaymentListComponent} from './components/payment-list/payment-list.component';
 import {PaymentViewComponent} from './components/payment-view/payment-view.component';
 import {CardDetailsComponent} from './components/card-details/card-details.component';
@@ -14,8 +12,7 @@ import { StatusHistoryComponent } from './components/status-history/status-histo
 @NgModule({
   imports: [
     BrowserModule,
-    HttpClientModule,
-    PaymentLibRoutingModule
+    HttpClientModule
   ],
   declarations: [
     PaymentLibComponent,

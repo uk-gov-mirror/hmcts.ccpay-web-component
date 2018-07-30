@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CardDetailsService } from '../../services/card-details/card-details.service';
 import {ActivatedRoute} from '@angular/router';
 import {ICardDetails} from '../../interfaces/ICardDetails';
+import { PaymentLibComponent } from '../../payment-lib.component'
 
 @Component({
   selector: 'ccpay-card-details',
@@ -15,16 +16,13 @@ export class CardDetailsComponent implements OnInit {
   errorMessage: string;
 
   constructor(private cardDetailsService: CardDetailsService,
-              private activatedRoute: ActivatedRoute) { }
+              private paymentLibComponent: PaymentLibComponent) { }
 
   ngOnInit() {
-    this.activatedRoute.params.subscribe((params) => {
-      this.paymentReference = params.paymentReference;
-      this.cardDetailsService.getCardDetails(params.paymentReference).subscribe(
-        cardDetails => this.cardDetails = cardDetails,
-        (error: any) => this.errorMessage = <any>error
-      );
-    });
+    this.cardDetailsService.getCardDetails(this.paymentLibComponent.paymentReference).subscribe(
+      cardDetails => this.cardDetails = cardDetails,
+      (error: any) => this.errorMessage = <any>error
+    );
   }
 
   get getPaymentReference(): string {

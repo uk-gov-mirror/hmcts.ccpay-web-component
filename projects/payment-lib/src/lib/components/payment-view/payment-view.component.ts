@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 import {PaymentViewService} from '../../services/payment-view/payment-view.service';
-import {ActivatedRoute} from '@angular/router';
 import {IPayment} from '../../interfaces/IPayment';
+import { PaymentLibComponent } from '../../payment-lib.component';
 
 @Component({
   selector: 'ccpay-payment-view',
@@ -15,15 +15,13 @@ export class PaymentViewComponent implements OnInit {
   errorMessage: string;
 
   constructor(private paymentViewService: PaymentViewService,
-              private activatedRoute: ActivatedRoute) { }
+              private paymentLibComponent: PaymentLibComponent) { }
 
   ngOnInit() {
-    this.activatedRoute.params.subscribe((params) => {
-      this.paymentViewService.getPaymentDetails(params.paymentReference).subscribe(
-        payment => this.payment = payment,
-        (error: any) => this.errorMessage = <any>error
-      );
-    });
+    this.paymentViewService.getPaymentDetails(this.paymentLibComponent.paymentReference).subscribe(
+      payment => this.payment = payment,
+      (error: any) => this.errorMessage = <any>error
+    );
   }
 
   get isCardPayment(): boolean {

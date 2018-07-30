@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 
 import { PaymentListService } from '../../services/payment-list/payment-list.service';
 import { IPayments } from '../../interfaces/IPayments';
+import { PaymentLibService } from '../../payment-lib.service'
+import { PaymentLibComponent } from '../../payment-lib.component'
 
 @Component({
   selector: 'ccpay-payment-list',
@@ -17,17 +18,19 @@ export class PaymentListComponent implements OnInit {
   errorMessage: string;
 
   constructor(private paymentListService: PaymentListService,
-              private activatedRoute: ActivatedRoute) { }
+              private paymentLibComponent: PaymentLibComponent) { }
 
   ngOnInit() {
-    this.activatedRoute.params.subscribe((params) => {
-      this.paymentMethod = this.activatedRoute.snapshot.queryParams['payment_method'];
-      console.log('Payment-list-component ccdCaseNumber: ', params.ccdCaseNumber);
-      this.paymentReference = params.paymentReference;
-      this.paymentListService.getPaymentByCcdCaseNumber(params.ccdCaseNumber, this.paymentMethod).subscribe(
-        payments => this.payments = payments,
-        (error: any) => this.errorMessage = <any>error
-      );
-    });
+    this.paymentListService.getPaymentByCcdCaseNumber(this.paymentLibComponent.CCD_CASE_NUMBER, this.paymentLibComponent.PAYMENT_METHOD)
+      .subscribe(
+      payments => this.payments = payments,
+      (error: any) => this.errorMessage = <any>error
+    );
+  }
+
+
+  loadPaymentViewComponent(paymentReference: string) {
+    this.paymentLibComponent.paymentReference = paymentReference;
+    this.paymentLibComponent.viewName = 'payment-view';
   }
 }
