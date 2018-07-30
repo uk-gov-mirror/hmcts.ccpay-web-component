@@ -4,7 +4,10 @@ import {PaymentLibService} from './payment-lib.service';
 
 @Component({
   selector: 'ccpay-payment-lib',
-  templateUrl: './payment-lib.component.html'
+  template: `
+    <ccpay-payment-list *ngIf="viewName === 'payment-list'"></ccpay-payment-list>
+    <ccpay-payment-view *ngIf="viewName === 'payment-view'"></ccpay-payment-view>
+  `
 })
 
 export class PaymentLibComponent implements OnInit {
@@ -12,12 +15,14 @@ export class PaymentLibComponent implements OnInit {
   @Input('CCD_CASE_NUMBER') CCD_CASE_NUMBER: string;
   @Input('PAYMENT_METHOD') PAYMENT_METHOD: string;
 
+  paymentReference: string;
+  viewName: string = 'payment-list';
+
   constructor(private router: Router,
               private paymentLibService: PaymentLibService) { }
 
   ngOnInit() {
     this.paymentLibService.setApiRootUrl(this.API_ROOT);
-    this.router.navigate([`/payments/${this.CCD_CASE_NUMBER}`], { queryParams : { payment_method: this.PAYMENT_METHOD } });
   }
 
 }

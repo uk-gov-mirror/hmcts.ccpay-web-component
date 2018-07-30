@@ -1,7 +1,7 @@
 <div class="govuk-breadcrumbs" *ngIf="!errorMessage">
   <ol class="govuk-breadcrumbs__list">
     <li class="govuk-breadcrumbs__list-item">
-      <a routerLink="/payments/{{ payment.ccd_case_number }}" [queryParams]="{ payment_method: payment.method }" class="govuk-back-link">Back</a>
+      <a href="#" class="govuk-back-link">Back</a>
     </li>
   </ol>
 </div>
@@ -22,7 +22,7 @@
 
   </div>
   <fieldset class="col-md-12">
-    <button routerLink="/cases" class="button">Back</button>
+    <a href="/cases" class="button">Back</a>
   </fieldset>
 </div>
 
@@ -87,11 +87,6 @@
 <!-- Status histories -->
 <ccpay-payment-statuses></ccpay-payment-statuses>
 
-<div class="container">
-  <fieldset class="col-md-12">
-    <button routerLink="/payments/{{ payment.ccd_case_number }}" [queryParams]="{ payment_method: payment.method }" class="button">Back</button>
-  </fieldset>
-</div>
 </div>
 
 </main>
