@@ -28,4 +28,8 @@ export class PaymentViewComponent implements OnInit {
     return this.payment.method === 'card';
   }
 
+  public goToPaymentList(): void {
+    this.paymentLibComponent.viewName = 'payment-list';
+  }
+
 }
