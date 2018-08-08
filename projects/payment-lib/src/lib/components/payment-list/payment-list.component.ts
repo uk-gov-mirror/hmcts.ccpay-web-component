@@ -11,7 +11,6 @@ import { PaymentLibComponent } from '../../payment-lib.component'
   styleUrls: ['./payment-list.component.css']
 })
 export class PaymentListComponent implements OnInit {
-  pageTitle: string = 'Case payments';
   payments: IPayments;
   paymentReference: string;
   paymentMethod: string;

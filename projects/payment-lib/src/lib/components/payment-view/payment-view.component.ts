@@ -10,7 +10,6 @@ import { PaymentLibComponent } from '../../payment-lib.component';
   styleUrls: ['./payment-view.component.css']
 })
 export class PaymentViewComponent implements OnInit {
-  pageTitle: string = 'Payment summary';
   payment: IPayment;
   errorMessage: string;
 
