@@ -29,7 +29,7 @@
       </tr>
       <tr *ngFor="let payment of payments.payments">
         <td>
-          <a (click)="loadPaymentViewComponent(payment.payment_reference)">{{ payment.payment_reference }}</a>
+          <a href="javascript:void(0)" (click)="loadPaymentViewComponent(payment.payment_reference)">{{ payment.payment_reference }}</a>
         </td>
         <td>No created</td>
         <td>{{ payment.method }}</td>
