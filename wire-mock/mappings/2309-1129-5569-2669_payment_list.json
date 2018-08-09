@@ -1,7 +1,7 @@
 {
   "request": {
     "method": "GET",
-    "url": "/payments?ccd_case_number=2309-1129-5569-2669&payment_method=CARD"
+    "url": "/cases/2309-1129-5569-2669/payments"
   },
   "response": {
     "status": 200,
