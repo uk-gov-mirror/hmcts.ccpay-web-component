@@ -18,7 +18,9 @@ export class StatusHistoryService {
 
 
   getPaymentStatusesByReference(paymentReference: string): Observable<IStatusHistories> {
-    return this.http.get<IStatusHistories>(`${this.paymentLibService.API_ROOT}/card-payments/${paymentReference}/statuses`)
+    return this.http.get<IStatusHistories>(`${this.paymentLibService.API_ROOT}/card-payments/${paymentReference}/statuses`, {
+        withCredentials: true
+      })
       .pipe(
         catchError(this.errorHandlerService.handleError)
       );

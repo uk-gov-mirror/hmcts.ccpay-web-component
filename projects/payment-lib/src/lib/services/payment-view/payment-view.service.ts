@@ -18,7 +18,9 @@ export class PaymentViewService {
               private paymentLibService: PaymentLibService) { }
 
   getPaymentDetails(paymentReference: string): Observable<IPayment> {
-    return this.http.get<IPayment>(`${this.paymentLibService.API_ROOT}/card-payments/${paymentReference}`)
+    return this.http.get<IPayment>(`${this.paymentLibService.API_ROOT}/card-payments/${paymentReference}`, {
+        withCredentials: true
+      })
       .pipe(
         catchError(this.errorHandlerService.handleError)
       );
