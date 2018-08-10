@@ -1,31 +1,30 @@
-<main class="govuk-main-wrapper " id="main-content" role="main">
-<div>
-  <h1 class="govuk-heading-xl">{{ pageTitle }}</h1>
+
+<div class="govuk-breadcrumbs">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <a href="javascript:void(0)" (click)="goToPaymentList()" class="govuk-back-link">Back to payments</a>
+    </li>
+  </ol>
 </div>
+
+<main class="govuk-main-wrapper " id="main-content" role="main">
 
 <div *ngIf="errorMessage">
   <div class="error-summary" role="group" aria-labelledby="failure-error-summary-heading" tabindex="-1">
     <h2 class="heading-medium error-summary-heading" id="failure-error-summary-heading">
-      There is a problem
+      Payment details could not be retrieved
     </h2>
     <div class="govuk-error-summary__body">
       {{ errorMessage }}
     </div>
-
   </div>
-  <fieldset class="col-md-12">
-    <a href="/cases" class="button">Back</a>
-  </fieldset>
 </div>
-
 
 <div *ngIf="!errorMessage">
 
-<div class="gird-row">
+<div class="grid-row">
   <div class="column">
-    <h2 class="heading-medium">
-      <label class="bold">Payment details</label>
-    </h2>
+    <h2 class="heading-medium">Payment details</h2>
   </div>
 </div>
 
@@ -42,11 +41,9 @@
   </tbody>
 </table>
 
-<div class="gird-row">
+<div class="grid-row">
   <div class="column">
-    <h2 class="heading-medium">
-      <label class="bold">Fee details</label>
-    </h2>
+    <h2 class="heading-medium">Fee details</h2>
   </div>
 </div>
 

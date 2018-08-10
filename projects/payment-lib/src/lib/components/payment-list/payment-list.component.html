@@ -1,22 +1,14 @@
 <main class="govuk-main-wrapper " id="main-content" role="main">
 <div class="govuk-width-container">
-  <div>
-    <h1 class="govuk-heading-xl">{{ pageTitle }}</h1>
-  </div>
 
   <div *ngIf="errorMessage">
     <div class="error-summary" role="group" aria-labelledby="failure-error-summary-heading" tabindex="-1">
       <h2 class="heading-medium error-summary-heading" id="failure-error-summary-heading">
-        There is a problem
+        Payments list could not be retrieved
       </h2>
       <div class="govuk-error-summary__body">
         {{ errorMessage }}
       </div>
-    </div>
-    <div>
-      <fieldset class="col-md-12">
-        <a href="/cases" class="button">Back</a>
-      </fieldset>
     </div>
   </div>
 
@@ -32,7 +24,7 @@
       </tr>
       <tr *ngFor="let payment of payments.payments">
         <td>
-          <a (click)="loadPaymentViewComponent(payment.payment_reference)">{{ payment.payment_reference }}</a>
+          <a href="javascript:void(0)" (click)="loadPaymentViewComponent(payment.payment_reference)">{{ payment.payment_reference }}</a>
         </td>
         <td>No created</td>
         <td>{{ payment.method }}</td>

@@ -1,15 +1,13 @@
-<div class="gird-row">
+<div class="grid-row">
   <div class="column">
-    <h2 class="heading-medium">
-      <label class="bold">{{ pageTitle }}</label>
-    </h2>
+    <h2 class="heading-medium">{{ pageTitle }}</h2>
   </div>
 </div>
 
 
 <div class="error-summary" role="group" aria-labelledby="failure-error-summary-heading" tabindex="-1" *ngIf="errorMessage">
   <h2 class="heading-medium error-summary-heading" id="failure-error-summary-heading">
-    There is a problem
+    Payment status history could not be retrieved
   </h2>
   <div class="govuk-error-summary__body">
     {{ errorMessage }}
