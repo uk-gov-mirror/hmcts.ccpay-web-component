@@ -14,7 +14,7 @@
   </div>
 </div>
 
-<div *ngIf="!errorMessage">
+<div *ngIf="!errorMessage && statuses">
   <table>
     <tbody>
       <tr *ngFor="let status of statuses.status_histories">
