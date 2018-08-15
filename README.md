@@ -31,4 +31,4 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 cd wire-mock
 
-java -jar wiremock-standalone-2.18.0.jar --port 9999 --verbose
+java -jar wiremock-standalone-2.18.0.jar --port 9999 --verbose --match-headers basicAuthCredentails username=payment password=payment
