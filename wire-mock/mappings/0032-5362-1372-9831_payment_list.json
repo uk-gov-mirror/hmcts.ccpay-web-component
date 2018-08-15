@@ -1,15 +1,19 @@
 {
   "request": {
     "method": "GET",
-    "url": "/payments?ccd_case_number=0032-5362-1372-9831&payment_method=CARD"
+    "url": "/cases/0032-5362-1372-9831/payments"
   },
   "response": {
     "status": 404,
     "headers": {
-      "Content-type": "application/json",
-      "Access-Control-Allow-Origin" : "*",
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin" : "http://localhost:4200",
       "Access-Control-Allow-Methods" : "*",
-      "Access-Control-Allow-Headers": "Accept, Content-Type, Content-Encoding, Server, Transfer-Encoding"
+      "Access-Control-Allow-Headers": "Accept, Content-Type, Content-Encoding, Server, Transfer-Encoding, X-Requested-With, X-Authorization",
+      "X-Content-Type-Options" : "nosniff",
+      "x-frame-options" : "DENY",
+      "x-xss-protection" : "1; mode=block",
+      "Access-Control-Allow-Credentials": "true"
     },
     "jsonBody": "No payments found!"
   }
