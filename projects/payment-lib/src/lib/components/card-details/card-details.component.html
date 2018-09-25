@@ -10,13 +10,8 @@
   </div>
 </div>
 
-<div class="error-summary" role="group" aria-labelledby="failure-error-summary-heading" tabindex="-1" *ngIf="errorMessage">
-  <h2 class="heading-medium error-summary-heading" id="failure-error-summary-heading">
-    Payment method could not be retrieved
-  </h2>
-  <div class="govuk-error-summary__body">
-    {{ errorMessage }}
-  </div>
+<div role="group" aria-labelledby="failure-error-summary-heading" tabindex="-1" *ngIf="errorMessage">
+    Payment method unavailable, The payment has either expired or unsuccessful.
 </div>
 
 <div *ngIf="!errorMessage && cardDetails">

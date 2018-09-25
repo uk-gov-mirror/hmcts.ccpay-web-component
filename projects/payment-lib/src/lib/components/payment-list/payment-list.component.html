@@ -26,7 +26,7 @@
         <td>
           <a href="javascript:void(0)" (click)="loadPaymentViewComponent(payment.payment_reference)">{{ payment.payment_reference }}</a>
         </td>
-        <td>No created</td>
+        <td>{{ payment.date_created | date:'dd-MM-yyyy hh:mm' }}</td>
         <td>{{ payment.method }}</td>
         <td>£{{ payment.amount | number:'.2' }}</td>
         <td>{{ payment.status }}</td>

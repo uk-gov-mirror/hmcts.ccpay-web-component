@@ -5,6 +5,8 @@ export interface IPayment {
   description: string;
   reference: string;
   currency: string;
+  date_created: string;
+  date_updated: string;
   ccd_case_number: string;
   case_reference: string;
   channel: string;
