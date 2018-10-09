@@ -19,8 +19,6 @@ export class PaymentListService {
 
 
   getPaymentByCcdCaseNumber(ccdCaseNumber: string, paymentMethod: string): Observable<IPayments> {
-    console.log('Payment service get payment by ccd case number: ', ccdCaseNumber);
-
     return this.http.get<IPayments>(`${this.paymentLibService.API_ROOT}/cases/${ccdCaseNumber}/payments`, {
         withCredentials: true
       })
