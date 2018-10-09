@@ -1,0 +1,29 @@
+{
+  "amount": 185,
+  "description": "Money Claims fees",
+  "reference": "RC-1531-0089-8858-9692",
+  "currency": "GBP",
+  "ccd_case_number": "2309-1129-5569-2669",
+  "case_reference": "ae968e79-3603-4fd0-aa3f-82d8062bee3d",
+  "channel": "online",
+  "method": "card",
+  "external_provider": "gov pay",
+  "status": "Success",
+  "external_reference": "gcdos5dcri28k73t4ov8ml9t39",
+  "site_id": "AA00",
+  "service_name": "Civil Money Claims",
+  "fees": [
+    {
+      "code": "FEE0216",
+      "version": "3",
+      "volume": 1,
+      "calculated_amount": 185
+    }
+  ],
+  "_links": {
+    "self": {
+      "href": "https://test-proxy.payments.reform.hmcts.net/card-payments/RC-1531-0089-8858-9692",
+      "method": "GET"
+    }
+  }
+}

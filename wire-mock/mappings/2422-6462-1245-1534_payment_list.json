@@ -4,7 +4,7 @@
     "url": "/cases/2422-6462-1245-1534/payments"
   },
   "response": {
-    "status": 404,
+    "status": 200,
     "headers": {
       "Content-Type": "application/json",
       "Access-Control-Allow-Origin" : "http://localhost:4200",
@@ -15,6 +15,6 @@
       "x-xss-protection" : "1; mode=block",
       "Access-Control-Allow-Credentials": "true"
     },
-    "jsonBody": "No payments found!"
+    "bodyFileName": "card2/payment_list_response.json"
   }
 }
