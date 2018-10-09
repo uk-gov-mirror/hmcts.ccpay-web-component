@@ -15,6 +15,6 @@
       "x-xss-protection" : "1; mode=block",
       "Access-Control-Allow-Credentials": "true"
     },
-    "bodyFileName": "case1/payment_list_response.json"
+    "bodyFileName": "card1/payment_list_response.json"
   }
 }

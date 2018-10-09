@@ -7,7 +7,7 @@
         Payments list could not be retrieved
       </h2>
       <div class="govuk-error-summary__body">
-        {{ errorMessage }}
+        <strong>Message:</strong> {{ errorMessage }}
       </div>
     </div>
   </div>
@@ -24,7 +24,7 @@
       </tr>
       <tr *ngFor="let payment of payments.payments">
         <td>
-          <a href="javascript:void(0)" (click)="loadPaymentViewComponent(payment.payment_reference)">{{ payment.payment_reference }}</a>
+          <a href="javascript:void(0)" (click)="loadPaymentViewComponent(payment.payment_reference, payment.method)">{{ payment.payment_reference }}</a>
         </td>
         <td>{{ payment.date_created | date:'dd-MM-yyyy hh:mm' }}</td>
         <td>{{ payment.method }}</td>

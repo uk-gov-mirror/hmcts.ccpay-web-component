@@ -17,7 +17,7 @@ export class PaymentViewComponent implements OnInit {
               private paymentLibComponent: PaymentLibComponent) { }
 
   ngOnInit() {
-    this.paymentViewService.getPaymentDetails(this.paymentLibComponent.paymentReference).subscribe(
+    this.paymentViewService.getPaymentDetails(this.paymentLibComponent.paymentReference, this.paymentLibComponent.paymentMethod).subscribe(
       payment => this.payment = payment,
       (error: any) => this.errorMessage = <any>error
     );

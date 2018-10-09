@@ -1,10 +1,10 @@
 {
   "request": {
     "method": "GET",
-    "url": "/cases/0032-5362-1372-9831/payments"
+    "url": "/cases/2422-6462-1245-1534/payments"
   },
   "response": {
-    "status": 200,
+    "status": 404,
     "headers": {
       "Content-Type": "application/json",
       "Access-Control-Allow-Origin" : "http://localhost:4200",
@@ -15,6 +15,6 @@
       "x-xss-protection" : "1; mode=block",
       "Access-Control-Allow-Credentials": "true"
     },
-    "bodyFileName": "pba1/payment_list_response.json"
+    "jsonBody": "No payments found!"
   }
 }
