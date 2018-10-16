@@ -17,8 +17,10 @@ export class StatusHistoryService {
               private paymentLibService: PaymentLibService) { }
 
 
-  getPaymentStatusesByReference(paymentReference: string): Observable<IStatusHistories> {
-    return this.http.get<IStatusHistories>(`${this.paymentLibService.API_ROOT}/card-payments/${paymentReference}/statuses`, {
+  getPaymentStatusesByReference(paymentReference: string, paymentMethod: string): Observable<IStatusHistories> {
+    return this.http.get<IStatusHistories>(paymentMethod === 'card' ?
+          `${this.paymentLibService.API_ROOT}/card-payments/${paymentReference}/statuses` :
+          `${this.paymentLibService.API_ROOT}/credit-account-payments/${paymentReference}/statuses`, {
         withCredentials: true
       })
       .pipe(

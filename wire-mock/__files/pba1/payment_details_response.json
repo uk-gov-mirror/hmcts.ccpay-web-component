@@ -1,0 +1,31 @@
+{
+  "amount": 550,
+  "description": "New passport application",
+  "reference": "RC-1538-1321-2165-7795",
+  "date_created": "2018-10-15T16:34:08.872+0000",
+  "currency": "GBP",
+  "ccd_case_number": "1517833758870511",
+  "case_reference": "aCaseReference",
+  "channel": "online",
+  "method": "payment by account",
+  "status": "Pending",
+  "site_id": "AA101",
+  "service_name": "Civil Money Claims",
+  "customer_reference": "CUST101",
+  "account_number": "AC101010",
+  "organisation_name": "ORG101",
+  "fees": [
+    {
+      "code": "FEE001",
+      "version": "1",
+      "volume": 1,
+      "calculated_amount": 550
+    }
+  ],
+  "_links": {
+    "self": {
+      "href": "https://payment-api-aat.service.core-compute-aat.internal/credit-account-payments/RC-1539-6212-4886-7526",
+      "method": "GET"
+    }
+  }
+}

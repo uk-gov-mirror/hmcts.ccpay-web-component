@@ -1,0 +1,11 @@
+{
+  "amount": 550,
+  "reference": "RC-1538-1321-2165-7795",
+  "status": "Pending",
+  "status_histories": [
+    {
+      "status": "Pending",
+      "date_created": "2018-10-15T16:34:08.872+0000"
+    }
+  ]
+}

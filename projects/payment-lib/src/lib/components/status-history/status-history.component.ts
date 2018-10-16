@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IStatusHistories } from '../../interfaces/IStatusHistories';
-import { ActivatedRoute } from '@angular/router';
 import { StatusHistoryService } from '../../services/status-history/status-history.service';
-import { PaymentLibComponent } from '../../payment-lib.component'
+import { PaymentLibComponent } from '../../payment-lib.component';
 
 @Component({
   selector: 'ccpay-payment-statuses',
@@ -18,7 +17,7 @@ export class StatusHistoryComponent implements OnInit {
               private paymentLibComponent: PaymentLibComponent) { }
 
   ngOnInit() {
-    this.statusHistoryService.getPaymentStatusesByReference(this.paymentLibComponent.paymentReference).subscribe(
+    this.statusHistoryService.getPaymentStatusesByReference(this.paymentLibComponent.paymentReference, this.paymentLibComponent.paymentMethod).subscribe(
       statuses => this.statuses = statuses,
       (error: any) => this.errorMessage = <any>error
     );
