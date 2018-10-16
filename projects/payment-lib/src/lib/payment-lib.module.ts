@@ -8,6 +8,7 @@ import {CardDetailsComponent} from './components/card-details/card-details.compo
 import {PageNotFoundComponent} from './components/page-not-found.component';
 import {PaymentLibComponent} from './payment-lib.component';
 import { StatusHistoryComponent } from './components/status-history/status-history.component';
+import { PbaDetailsComponent } from './components/pba-details/pba-details.component';
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import { StatusHistoryComponent } from './components/status-history/status-histo
     PaymentViewComponent,
     CardDetailsComponent,
     PageNotFoundComponent,
-    StatusHistoryComponent
+    StatusHistoryComponent,
+    PbaDetailsComponent
   ],
   exports: [ PaymentLibComponent ]
 })

@@ -16,5 +16,8 @@ export interface IPayment {
   external_reference: string;
   site_id: string;
   service_name: string;
+  account_number: string;
+  customer_reference: string;
+  organisation_name: string;
   fees: IFee[];
 }
