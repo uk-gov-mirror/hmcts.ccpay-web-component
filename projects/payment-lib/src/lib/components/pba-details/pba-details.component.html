@@ -10,7 +10,7 @@
     <tbody>
     <tr>
       <td class="bold" width="330px">Method</td>
-      <td>Pay by account</td>
+      <td>{{ payment.method | titlecase }}</td>
     </tr>
     <tr>
       <td class="bold" width="330px">Type</td>
@@ -18,7 +18,7 @@
     </tr>
     <tr>
       <td class="bold" width="330px">PBA account name</td>
-      <td>NA</td>
+      <td>{{ payment.organisation_name }}</td>
     </tr>
     <tr>
       <td class="bold" width="330px">PBA number</td>
