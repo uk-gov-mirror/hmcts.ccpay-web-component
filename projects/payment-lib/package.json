@@ -10,7 +10,7 @@
   },
   "license": "MIT",
   "repository": "https://github.com/hmcts/ccpay-web-component.git",
-  "description": "Angular web component for displaying payments returned from ccpay",
+  "description": "Angular web component for displaying payments returned from ccpay api",
   "author": "Mateusz Swirski <mateusz.swirski@hmcts.net>",
   "contributors": [
     {
