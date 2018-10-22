@@ -2,7 +2,7 @@
   "payments": [
     {
       "amount": 200,
-      "date_created": "2018-07-08T00:16:29.042+0000",
+      "date_created": "2018-02-08T10:16:29.042+0000",
       "date_updated": "2018-07-08T00:16:36.409+0000",
       "currency": "GBP",
       "ccd_case_number": "2309-1129-5569-2669",

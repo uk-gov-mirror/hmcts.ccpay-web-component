@@ -73,6 +73,9 @@
 <!-- card details -->
 <ccpay-card-details *ngIf="isCardPayment"></ccpay-card-details>
 
+<!-- pba details -->
+<ccpay-pba-details *ngIf="!isCardPayment" [payment]="payment"></ccpay-pba-details>
+
 <!-- Status histories -->
 <ccpay-payment-statuses></ccpay-payment-statuses>
 

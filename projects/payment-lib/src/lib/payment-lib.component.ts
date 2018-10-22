@@ -15,6 +15,7 @@ export class PaymentLibComponent implements OnInit {
   @Input('CCD_CASE_NUMBER') CCD_CASE_NUMBER: string;
   @Input('PAYMENT_METHOD') PAYMENT_METHOD: string;
 
+  paymentMethod: string;
   paymentReference: string;
   viewName: string = 'payment-list';
 

@@ -24,10 +24,10 @@
       </tr>
       <tr *ngFor="let payment of payments.payments">
         <td>
-          <a href="javascript:void(0)" (click)="loadPaymentViewComponent(payment.payment_reference)">{{ payment.payment_reference }}</a>
+          <a href="javascript:void(0)" (click)="loadPaymentViewComponent(payment.payment_reference, payment.method)">{{ payment.payment_reference }}</a>
         </td>
-        <td>{{ payment.date_created | date:'dd-MM-yyyy hh:mm' }}</td>
-        <td>{{ payment.method }}</td>
+        <td>{{ payment.date_created | date:'dd MMM yyyy hh:mm:ss' }}</td>
+        <td>{{ payment.method | titlecase }}</td>
         <td>£{{ payment.amount | number:'.2' }}</td>
         <td>{{ payment.status }}</td>
       </tr>

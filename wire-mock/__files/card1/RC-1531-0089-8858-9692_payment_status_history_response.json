@@ -1,0 +1,17 @@
+{
+  "amount": 200,
+  "reference": "RC-1531-0089-8858-9692",
+  "status": "Success",
+  "status_histories": [
+    {
+      "status": "Initiated",
+      "external_status": "created",
+      "date_created": "2018-07-08T00:16:29.057+0000"
+    },
+    {
+      "status": "Success",
+      "external_status": "success",
+      "date_created": "2018-07-08T00:16:36.393+0000"
+    }
+  ]
+}

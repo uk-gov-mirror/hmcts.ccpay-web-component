@@ -1,7 +1,7 @@
 {
   "request": {
     "method": "GET",
-    "url": "/cases/0032-5362-1372-9831/payments"
+    "url": "/credit-account-payments/RC-1538-1321-2165-7795/statuses"
   },
   "response": {
     "status": 200,
@@ -15,6 +15,6 @@
       "x-xss-protection" : "1; mode=block",
       "Access-Control-Allow-Credentials": "true"
     },
-    "bodyFileName": "pba1/payment_list_response.json"
+    "bodyFileName": "pba1/payment_status_history_response.json"
   }
 }

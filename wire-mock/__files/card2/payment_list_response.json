@@ -1,0 +1,50 @@
+{
+  "payments": [
+    {
+      "amount": 200,
+      "date_created": "2018-02-08T10:16:29.042+0000",
+      "date_updated": "2018-07-08T00:16:36.409+0000",
+      "currency": "GBP",
+      "ccd_case_number": "2309-1129-5569-2669",
+      "case_reference": "ae968e79-3603-4fd0-aa3f-82d8062bee3d",
+      "payment_reference": "RC-1520-6061-3264-3745",
+      "channel": "online",
+      "method": "card",
+      "status": "Failed",
+      "site_id": "AA00",
+      "service_name": "Civil Money Claims",
+      "payment_group_reference": "2018-15310089885",
+      "fees": [
+        {
+          "code": "FEE0216",
+          "version": "3",
+          "volume": 1,
+          "calculated_amount": 185
+        }
+      ]
+    },
+    {
+      "amount": 185,
+      "date_created": "2018-07-07T00:16:29.042+0000",
+      "date_updated": "2018-07-07T00:16:36.409+0000",
+      "currency": "GBP",
+      "ccd_case_number": "2309-1129-5569-2669",
+      "case_reference": "ae968e79-3603-4fd0-aa3f-82d8062bee3d",
+      "payment_reference": "RC-1536-1409-3072-4773",
+      "channel": "online",
+      "method": "card",
+      "status": "Failed",
+      "site_id": "AA00",
+      "service_name": "Civil Money Claims",
+      "payment_group_reference": "2018-15310089895",
+      "fees": [
+        {
+          "code": "FEE0216",
+          "version": "3",
+          "volume": 1,
+          "calculated_amount": 185
+        }
+      ]
+    }
+  ]
+}

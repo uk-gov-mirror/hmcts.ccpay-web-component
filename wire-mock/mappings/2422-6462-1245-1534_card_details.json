@@ -1,10 +1,10 @@
 {
-    "request": {
+  "request": {
         "method": "GET",
-        "url": "/card-payments/RC-1531-0089-8858-9692"
+        "url": "/card-payments/RC-1520-6061-3264-3745/details"
     },
     "response": {
-        "status": 200,
+        "status": 404,
         "headers": {
           "Content-Type": "application/json",
           "Access-Control-Allow-Origin" : "http://localhost:4200",
@@ -15,6 +15,6 @@
           "x-xss-protection" : "1; mode=block",
           "Access-Control-Allow-Credentials": "true"
         },
-        "bodyFileName": "card1/RC-1531-0089-8858-9692_payment_details_response.json"
+        "jsonBody": "No card details found!"
     }
 }

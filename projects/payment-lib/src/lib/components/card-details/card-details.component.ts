@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CardDetailsService } from '../../services/card-details/card-details.service';
-import {ActivatedRoute} from '@angular/router';
 import {ICardDetails} from '../../interfaces/ICardDetails';
-import { PaymentLibComponent } from '../../payment-lib.component'
+import { PaymentLibComponent } from '../../payment-lib.component';
 
 @Component({
   selector: 'ccpay-card-details',

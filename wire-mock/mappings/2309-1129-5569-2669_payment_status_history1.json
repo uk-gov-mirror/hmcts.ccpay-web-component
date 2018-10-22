@@ -1,7 +1,7 @@
 {
     "request": {
         "method": "GET",
-        "url": "/card-payments/RC-1531-0089-8858-9692"
+        "url": "/card-payments/RC-1531-0089-8858-9692/statuses"
     },
     "response": {
         "status": 200,
@@ -15,6 +15,6 @@
           "x-xss-protection" : "1; mode=block",
           "Access-Control-Allow-Credentials": "true"
         },
-        "bodyFileName": "card1/RC-1531-0089-8858-9692_payment_details_response.json"
+        "bodyFileName": "card1/RC-1531-0089-8858-9692_payment_status_history_response.json"
     }
 }
