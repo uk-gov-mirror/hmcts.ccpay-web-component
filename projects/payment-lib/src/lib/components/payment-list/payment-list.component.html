@@ -29,7 +29,14 @@
         <td>{{ payment.date_created | date:'dd MMM yyyy hh:mm:ss' }}</td>
         <td>{{ payment.method | titlecase }}</td>
         <td>£{{ payment.amount | number:'.2' }}</td>
-        <td>{{ payment.status }}</td>
+        <td>
+          <details>
+            <summary><span class="summary">{{ payment.status }}</span></summary>
+            <div class="panel panel-border-narrow" *ngIf="payment.status === 'Pending' && payment.method !== 'card'">
+              <p class="font-xsmall">This means the transaction is being processed by Liberata.</p>
+            </div>
+          </details>
+        </td>
       </tr>
     </table>
 
