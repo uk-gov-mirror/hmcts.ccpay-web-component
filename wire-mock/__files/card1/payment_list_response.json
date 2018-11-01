@@ -21,6 +21,18 @@
           "volume": 1,
           "calculated_amount": 185
         }
+      ],
+      "status_histories": [
+        {
+          "status": "Initiated",
+          "external_status": "created",
+          "date_created": "2018-07-08T00:16:29.057+0000"
+        },
+        {
+          "status": "Success",
+          "external_status": "success",
+          "date_created": "2018-07-08T00:16:36.393+0000"
+        }
       ]
     },
     {
@@ -43,6 +55,20 @@
           "version": "3",
           "volume": 1,
           "calculated_amount": 185
+        }
+      ],
+      "status_histories": [
+        {
+          "status": "Initiated",
+          "external_status": "created",
+          "date_created": "2018-07-08T00:16:29.057+0000"
+        },
+        {
+          "status": "Failed",
+          "external_status": "failed",
+          "date_created": "2018-07-08T00:16:36.393+0000",
+          "error_code": "P0020",
+          "error_message": "Payment has expired"
         }
       ]
     }

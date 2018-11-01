@@ -1,4 +1,4 @@
-import { IStatusHistory } from './IStatusHistory'
+import { IStatusHistory } from './IStatusHistory';
 
 export interface IStatusHistories {
   amount: number;
