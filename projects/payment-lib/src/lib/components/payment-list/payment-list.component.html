@@ -31,20 +31,22 @@
         <td>£{{ payment.amount | number:'.2' }}</td>
         <td *ngIf="payment.method === 'card'">
           <details>
-            <summary><span class="summary" (click)="getFailureReasonCode(payment.status_histories)">{{ payment.status }}</span></summary>
+            <summary><span class="summary">{{ payment.status }}</span></summary>
             <div class="panel panel-border-narrow" *ngIf="payment.status === 'Failed'">
-              <p class="font-xsmall" *ngIf="code === 'P0010'">
-                Payment rejected due to payment method selected or payment information entered, for example, failed fraud check, a 3D Secure authentication failure, or the user does not have enough money in account
-              </p>
-              <p class="font-xsmall" *ngIf="code === 'P0020'">
-                Payment was not confirmed and completed within 90 minutes of being created
-              </p>
-              <p class="font-xsmall" *ngIf="code === 'P0030'">
-                User clicked on the “Cancel payment” button during the payment journey
-              </p>
-              <p class="font-xsmall" *ngIf="code === 'P0050'">
-                Multiple possible causes, for example a configuration problem with the payment provider, or incorrect login credentials
-              </p>
+              <div *ngFor="let statusHistory of payment.status_histories">
+                <p class="font-xsmall" *ngIf="statusHistory.error_code === 'P0010'">
+                  Payment rejected due to payment method selected or payment information entered, for example, failed fraud check, a 3D Secure authentication failure, or the user does not have enough money in account
+                </p>
+                <p class="font-xsmall" *ngIf="statusHistory.error_code === 'P0020'">
+                  Payment was not confirmed and completed within 90 minutes of being created
+                </p>
+                <p class="font-xsmall" *ngIf="statusHistory.error_code === 'P0030'">
+                  User clicked on the “Cancel payment” button during the payment journey
+                </p>
+                <p class="font-xsmall" *ngIf="statusHistory.error_code === 'P0050'">
+                  Multiple possible causes, for example a configuration problem with the payment provider, or incorrect login credentials
+                </p>
+              </div>
             </div>
           </details>
         </td>
