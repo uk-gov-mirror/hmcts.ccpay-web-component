@@ -26,14 +26,6 @@ export class PaymentListComponent implements OnInit {
     );
   }
 
-  getFailureReasonCode(statusHistories: IStatusHistory[]) {
-    for (const statusHistory of statusHistories) {
-      if (statusHistory.external_status === 'failed') {
-        this.code = statusHistory.error_code;
-      }
-    }
-  }
-
   loadPaymentViewComponent(paymentReference: string, paymentMethod: string) {
     this.paymentLibComponent.paymentMethod = paymentMethod;
     this.paymentLibComponent.paymentReference = paymentReference;
