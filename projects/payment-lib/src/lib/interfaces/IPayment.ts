@@ -1,4 +1,5 @@
 import {IFee} from './IFee';
+import {IStatusHistory} from './IStatusHistory';
 
 export interface IPayment {
   amount: number;
@@ -20,4 +21,5 @@ export interface IPayment {
   customer_reference: string;
   organisation_name: string;
   fees: IFee[];
+  status_histories: IStatusHistory[];
 }
