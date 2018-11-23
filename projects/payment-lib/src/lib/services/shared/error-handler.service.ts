@@ -17,11 +17,9 @@ export class ErrorHandlerService {
     let errorMessage: string;
     if (err.error instanceof Error) {
       // A client-side or network error occurred.
-      console.log('An error occurred: ', JSON.stringify(err));
       errorMessage = `An error occurred: ${err.error.message}`;
     } else {
       // The backend returned an unsuccessful response code.
-      console.log('Backend status error: ', err.status);
       if (err.status === 404) {
         if (!err.error) {
           errorMessage = 'Not found';
