@@ -18,6 +18,7 @@
       <tr>
         <th class="bold">Payment reference</th>
         <th class="bold">Date created</th>
+        <th class="bold">Channel</th>
         <th class="bold">Method</th>
         <th class="bold">Amount</th>
         <th class="bold">Status</th>
@@ -27,9 +28,10 @@
           <a href="javascript:void(0)" (click)="loadPaymentViewComponent(payment.payment_reference, payment.method)">{{ payment.payment_reference }}</a>
         </td>
         <td>{{ payment.date_created | date:'dd MMM yyyy hh:mm:ss' }}</td>
+        <td>{{ payment.channel | titlecase }}</td>
         <td>{{ payment.method | titlecase }}</td>
         <td>£{{ payment.amount | number:'.2' }}</td>
-        <td *ngIf="payment.method === 'card'">
+        <td *ngIf="payment.method === 'card' && payment.channel === 'online'">
           <details>
             <summary><span class="summary">{{ payment.status }}</span></summary>
             <div class="panel panel-border-narrow" *ngIf="payment.status === 'Failed'">
@@ -50,7 +52,10 @@
             </div>
           </details>
         </td>
-        <td *ngIf="payment.method !== 'card'">
+        <td *ngIf="payment.method === 'card' && payment.channel === 'telephony'">
+          {{ payment.status}}
+        </td>
+        <td *ngIf="payment.method === 'payment by account'">
           <details>
             <summary><span class="summary">{{ payment.status }}</span></summary>
             <div class="panel panel-border-narrow" *ngIf="payment.status === 'Pending'">

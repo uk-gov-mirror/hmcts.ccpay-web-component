@@ -1,7 +1,7 @@
 {
     "request": {
         "method": "GET",
-        "url": "/card-payments/RC-1520-6061-3264-3745"
+        "url": "/card-payments/RC-1549-6299-2737-3862"
     },
     "response": {
         "status": 200,
@@ -15,6 +15,6 @@
           "x-xss-protection" : "1; mode=block",
           "Access-Control-Allow-Credentials": "true"
         },
-        "bodyFileName": "card2/payment_details_response.json"
+        "bodyFileName": "telephony1/payment_details_response.json"
     }
 }

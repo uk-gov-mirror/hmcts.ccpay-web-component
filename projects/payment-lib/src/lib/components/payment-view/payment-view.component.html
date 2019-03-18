@@ -30,6 +30,10 @@
 
 <table>
   <tbody>
+    <tr class="section" *ngIf="payment.channel === 'telephony'">
+      <td class="bold" width="330px">Payment group reference</td>
+      <td>{{ payment.payment_group_reference }}</td>
+    </tr>
     <tr class="section">
       <td class="bold" width="330px">Payment reference</td>
       <td>{{ payment.reference }}</td>
