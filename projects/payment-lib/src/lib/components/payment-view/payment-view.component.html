@@ -66,7 +66,7 @@
       <td class="bold" width="330px">Fee amount</td>
       <td>£{{ fee.calculated_amount | number:'.2' }}</td>
     </tr>
-    <tr>
+    <tr *ngIf="!isTelephonyPayment">
       <td class="bold" width="330px">Net amount</td>
       <td>£{{ fee.calculated_amount | number:'.2' }}</td>
     </tr>
@@ -75,7 +75,7 @@
 </div>
 
 <!-- card details -->
-<ccpay-card-details *ngIf="isCardPayment"></ccpay-card-details>
+<ccpay-card-details *ngIf="isCardPayment && !isTelephonyPayment"></ccpay-card-details>
 
 <!-- pba details -->
 <ccpay-pba-details *ngIf="!isCardPayment" [payment]="payment"></ccpay-pba-details>
