@@ -24,7 +24,7 @@ import { ICase } from '../../interfaces/ICase';
         'applicationStatus': 'Petition issued'
     }, {
         'ccdCaseNumber': '2422-6462-1245-1534',
-        'paymentReference': 'RC-1531-0089-8858-9692',
+        'paymentReference': 'RC-1549-6299-2737-3843',
         'petitioner': 'James Adams',
         'respondent': 'Harold Chapman',
         'dateOfLastCourtAction': '25 Jun 2018',

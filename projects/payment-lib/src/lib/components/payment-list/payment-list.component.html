@@ -15,22 +15,26 @@
 
     <table class="table">
       <tr>
-        <th class="bold">Payment reference</th>
-        <th class="bold">Date created</th>
-        <th class="bold">Method</th>
-        <th class="bold">Amount</th>
-        <th class="bold">Status</th>
+        <th class="bold font-xsmall">Payment Group reference</th>
+        <th class="bold font-xsmall">Payment reference</th>
+        <th class="bold font-xsmall">Date created</th>
+        <th class="bold font-xsmall">Channel</th>
+        <th class="bold font-xsmall">Method</th>
+        <th class="bold font-xsmall">Amount</th>
+        <th class="bold font-xsmall">Status</th>
       </tr>
       <tr *ngFor="let payment of payments.payments">
-        <td>
+        <td class="font-xsmall">{{ payment.payment_group_reference }}</td>
+        <td class="font-xsmall">
           <a href="javascript:void(0)" (click)="loadPaymentViewComponent(payment.payment_reference, payment.method)">{{ payment.payment_reference }}</a>
         </td>
-        <td>{{ payment.date_created | date:'dd MMM yyyy hh:mm:ss' }}</td>
-        <td>{{ payment.method | titlecase }}</td>
-        <td>£{{ payment.amount | number:'.2' }}</td>
-        <td *ngIf="payment.method === 'card'">
+        <td class="font-xsmall">{{ payment.date_created | date:'dd MMM yyyy hh:mm:ss' }}</td>
+        <td class="font-xsmall">{{ payment.channel | titlecase }}</td>
+        <td class="font-xsmall">{{ payment.method | titlecase }}</td>
+        <td class="font-xsmall">£{{ payment.amount | number:'.2' }}</td>
+        <td *ngIf="payment.method === 'card' && payment.channel === 'online'">
           <details>
-            <summary><span class="summary">{{ payment.status }}</span></summary>
+            <summary><span class="summary font-xsmall">{{ payment.status }}</span></summary>
             <div class="panel panel-border-narrow" *ngIf="payment.status === 'Failed'">
               <div *ngFor="let statusHistory of payment.status_histories">
                 <p class="font-xsmall" *ngIf="statusHistory.error_code === 'P0010'">
@@ -49,9 +53,12 @@
             </div>
           </details>
         </td>
-        <td *ngIf="payment.method !== 'card'">
+        <td *ngIf="payment.method === 'card' && payment.channel === 'telephony'" class="font-xsmall">
+          {{ payment.status}}
+        </td>
+        <td *ngIf="payment.method === 'payment by account'">
           <details>
-            <summary><span class="summary">{{ payment.status }}</span></summary>
+            <summary><span class="summary font-xsmall">{{ payment.status }}</span></summary>
             <div class="panel panel-border-narrow" *ngIf="payment.status === 'Pending'">
               <p class="font-xsmall">This means the transaction is being processed by Liberata.</p>
             </div>

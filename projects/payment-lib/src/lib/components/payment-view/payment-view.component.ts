@@ -27,6 +27,10 @@ export class PaymentViewComponent implements OnInit {
     return this.payment.method === 'card';
   }
 
+  get isTelephonyPayment(): boolean {
+    return this.payment.channel === 'telephony';
+  }
+
   public goToPaymentList(): void {
     this.paymentLibComponent.viewName = 'payment-list';
   }

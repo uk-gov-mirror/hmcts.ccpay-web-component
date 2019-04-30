@@ -1,0 +1,79 @@
+{
+  "payments": [
+    {
+      "amount": 550,
+      "date_created": "2019-03-08T12:45:27.405+0000",
+      "date_updated": "2019-03-08T12:45:27.405+0000",
+      "currency": "GBP",
+      "ccd_case_number": "2422-6462-1245-1534",
+      "payment_reference": "RC-1549-6299-2737-3862",
+      "channel": "telephony",
+      "method": "card",
+      "external_provider": "pci pal",
+      "status": "Initiated",
+      "site_id": "AA02",
+      "service_name": "Divorce",
+      "payment_group_reference": "2019-15496299273",
+      "fees": [
+        {
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159"
+        }
+      ]
+    },
+    {
+      "amount": 550,
+      "date_created": "2019-02-07T12:45:27.405+0000",
+      "date_updated": "2019-02-07T12:45:27.405+0000",
+      "currency": "GBP",
+      "ccd_case_number": "2422-6462-1245-1534",
+      "payment_reference": "RC-1549-6299-2737-3843",
+      "channel": "telephony",
+      "method": "card",
+      "external_provider": "pci pal",
+      "status": "Initiated",
+      "site_id": "AA02",
+      "service_name": "Divorce",
+      "payment_group_reference": "2019-15496299273",
+      "fees": [
+        {
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159"
+        }
+      ]
+    },
+    {
+      "amount": 550,
+      "date_created": "2019-02-06T12:45:27.405+0000",
+      "date_updated": "2019-02-06T12:45:27.405+0000",
+      "currency": "GBP",
+      "ccd_case_number": "2422-6462-1245-1534",
+      "payment_reference": "RC-1549-6299-2737-3567",
+      "channel": "telephony",
+      "method": "card",
+      "external_provider": "pci pal",
+      "status": "Initiated",
+      "site_id": "AA02",
+      "service_name": "Divorce",
+      "payment_group_reference": "2019-15496299273",
+      "fees": [
+        {
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159"
+        }
+      ]
+    }
+  ]
+}

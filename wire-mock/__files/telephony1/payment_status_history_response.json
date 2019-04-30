@@ -1,0 +1,15 @@
+{
+  "amount": 550,
+  "reference": "RC-1549-6299-2737-3862",
+  "status": "Initiated",
+  "payment_group_reference": "2019-15496299273",
+  "status_histories": [
+    {
+      "status": "Initiated",
+      "external_status": "created",
+      "error_code": "code",
+      "error_message": "message",
+      "date_created": "2019-03-08T12:45:27.405+0000"
+    }
+  ]
+}
