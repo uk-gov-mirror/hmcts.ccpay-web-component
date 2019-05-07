@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
-import {BrowserModule} from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 
 import {PaymentListComponent} from './components/payment-list/payment-list.component';
 import {PaymentViewComponent} from './components/payment-view/payment-view.component';
@@ -14,7 +14,7 @@ import { ConsoleLoggerService } from './services/shared/logger/console-logger.se
 
 @NgModule({
   imports: [
-    BrowserModule,
+    CommonModule,
     HttpClientModule
   ],
   declarations: [
