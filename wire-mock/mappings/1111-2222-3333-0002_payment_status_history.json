@@ -1,7 +1,7 @@
 {
   "request": {
     "method": "GET",
-    "url": "/card-payments/2018-15310089895"
+    "url": "/credit-account-payments/RC-1557-3125-9814-7696/statuses"
   },
   "response": {
     "status": 200,
@@ -15,6 +15,6 @@
       "x-xss-protection" : "1; mode=block",
       "Access-Control-Allow-Credentials": "true"
     },
-    "bodyFileName": "paymentGroup/payment_group_response_no_remission.json"
+    "bodyFileName": "pba1/payment_status_history_response.json"
   }
 }

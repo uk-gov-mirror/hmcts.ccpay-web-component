@@ -6,6 +6,7 @@
     "build:library": "ng build payment-lib",
     "package": "cat dist/ccpay-web-component/{runtime,polyfills,scripts,main}.js | gzip > elements.js.gz",
     "start": "ng serve -o",
+    "start:no-open": "ng serve",
     "build": "ng build --prod payment-lib",
     "test": "ng test",
     "lint": "ng lint",

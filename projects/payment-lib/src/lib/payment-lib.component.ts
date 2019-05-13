@@ -16,6 +16,7 @@ export class PaymentLibComponent implements OnInit {
   @Input('PAYMENT_METHOD') PAYMENT_METHOD: string;
 
   paymentMethod: string;
+  paymentGroupReference: string;
   paymentReference: string;
   viewName: string = 'payment-list';
 
