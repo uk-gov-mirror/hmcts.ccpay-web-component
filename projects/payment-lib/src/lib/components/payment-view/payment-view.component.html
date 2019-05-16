@@ -72,12 +72,12 @@
         </tr>
         <tr>
           <td class="bold" width="330px">Remission code</td>
-          <td *ngIf="paymentGroup.remissions[0]">{{paymentGroup.remissions[0]}}</td>
+          <td *ngIf="paymentGroup.remissions[0]">{{paymentGroup.remissions[0].hwf_reference}}</td>
           <td *ngIf="!paymentGroup.remissions[0]">-</td>
         </tr>
         <tr>
           <td class="bold" width="330px">Remission amount</td>
-          <td *ngIf="paymentGroup.remissions[0]">£{{ paymentGroup.remissions[0] | number:'.2'}}</td>
+          <td *ngIf="paymentGroup.remissions[0]">£{{ paymentGroup.remissions[0].hwf_amount | number:'.2'}}</td>
           <td *ngIf="!paymentGroup.remissions[0]">-</td>
         </tr>
         </tbody>
