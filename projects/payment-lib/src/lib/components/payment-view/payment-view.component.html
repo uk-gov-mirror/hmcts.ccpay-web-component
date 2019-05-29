@@ -70,22 +70,20 @@
           <td *ngIf="fee.net_amount">£{{ fee.net_amount | number:'.2' }}</td>
           <td *ngIf="!fee.net_amount">-</td>
         </tr>
-        <tr>
+        <tr *ngIf="paymentGroup.remissions">
           <td class="bold" width="330px">Remission code</td>
           <td *ngIf="paymentGroup.remissions[0]">{{paymentGroup.remissions[0].hwf_reference}}</td>
-          <td *ngIf="!paymentGroup.remissions[0]">-</td>
         </tr>
-        <tr>
+        <tr *ngIf="paymentGroup.remissions">
           <td class="bold" width="330px">Remission amount</td>
           <td *ngIf="paymentGroup.remissions[0]">£{{ paymentGroup.remissions[0].hwf_amount | number:'.2'}}</td>
-          <td *ngIf="!paymentGroup.remissions[0]">-</td>
         </tr>
         </tbody>
       </table>
     </div>
 
     <!-- card details -->
-    <ccpay-card-details *ngIf="isCardPayment"></ccpay-card-details>
+    <ccpay-card-details *ngIf="isCardPayment && !isTelephonyPayment"></ccpay-card-details>
 
     <!-- pba details -->
     <ccpay-pba-details *ngIf="!isCardPayment" [payment]="paymentGroup.payments[0]"></ccpay-pba-details>

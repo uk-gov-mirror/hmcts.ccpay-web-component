@@ -1,10 +1,10 @@
 {
   "request": {
     "method": "GET",
-    "url": "/cases/6535-6721-3867-2567/payments"
+    "url": "/payment-groups/2019-15496299273"
   },
   "response": {
-    "status": 500,
+    "status": 200,
     "headers": {
       "Content-Type": "application/json",
       "Access-Control-Allow-Origin" : "http://localhost:4200",
@@ -15,6 +15,6 @@
       "x-xss-protection" : "1; mode=block",
       "Access-Control-Allow-Credentials": "true"
     },
-    "jsonBody": "Internal service error!"
+    "bodyFileName": "telephony1/payment_details_response.json"
   }
 }
