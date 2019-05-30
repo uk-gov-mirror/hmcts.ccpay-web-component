@@ -65,18 +65,17 @@
           <td class="bold" width="330px">Fee amount</td>
           <td>£{{ fee.calculated_amount | number:'.2' }}</td>
         </tr>
-        <tr>
+        <tr *ngIf="fee.net_amount">
           <td class="bold" width="330px">Net amount</td>
-          <td *ngIf="fee.net_amount">£{{ fee.net_amount | number:'.2' }}</td>
-          <td *ngIf="!fee.net_amount">-</td>
+          <td>£{{ fee.net_amount | number:'.2' }}</td>
         </tr>
         <tr *ngIf="paymentGroup.remissions">
           <td class="bold" width="330px">Remission code</td>
-          <td *ngIf="paymentGroup.remissions[0]">{{paymentGroup.remissions[0].hwf_reference}}</td>
+          <td>{{paymentGroup.remissions[0].hwf_reference}}</td>
         </tr>
         <tr *ngIf="paymentGroup.remissions">
           <td class="bold" width="330px">Remission amount</td>
-          <td *ngIf="paymentGroup.remissions[0]">£{{ paymentGroup.remissions[0].hwf_amount | number:'.2'}}</td>
+          <td>£{{ paymentGroup.remissions[0].hwf_amount | number:'.2'}}</td>
         </tr>
         </tbody>
       </table>
