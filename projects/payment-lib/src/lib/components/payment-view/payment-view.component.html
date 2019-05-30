@@ -1,4 +1,3 @@
-
 <div class="govuk-breadcrumbs">
   <ol class="govuk-breadcrumbs__list">
     <li class="govuk-breadcrumbs__list-item">
@@ -9,80 +8,88 @@
 
 <main class="govuk-main-wrapper " id="main-content" role="main">
 
-<div *ngIf="errorMessage">
-  <div class="error-summary" role="group" aria-labelledby="failure-error-summary-heading" tabindex="-1">
-    <h2 class="heading-medium error-summary-heading" id="failure-error-summary-heading">
-      Payment details could not be retrieved
-    </h2>
-    <div class="govuk-error-summary__body">
-      {{ errorMessage }}
+  <div *ngIf="errorMessage">
+    <div class="error-summary" role="group" aria-labelledby="failure-error-summary-heading" tabindex="-1">
+      <h2 class="heading-medium error-summary-heading" id="failure-error-summary-heading">
+        Payment details could not be retrieved
+      </h2>
+      <div class="govuk-error-summary__body">
+        {{ errorMessage }}
+      </div>
     </div>
   </div>
-</div>
 
-<div *ngIf="!errorMessage && payment">
+  <div *ngIf="!errorMessage && paymentGroup">
 
-<div class="grid-row">
-  <div class="column">
-    <h2 class="heading-medium">Payment details</h2>
+    <div class="grid-row">
+      <div class="column">
+        <h2 class="heading-medium">Payment details</h2>
+      </div>
+    </div>
+
+    <table>
+      <tbody>
+      <tr class="section">
+        <td class="bold" width="330px">Payment group reference</td>
+        <td>{{ paymentGroup.payment_group_reference }}</td>
+      </tr>
+      <tr class="section">
+        <td class="bold" width="330px">Payment reference</td>
+        <td>{{ paymentGroup.payments[0].reference }}</td>
+      </tr>
+      <tr class="section">
+        <td class="bold" width="330px">Total payment amount</td>
+        <td>£{{ paymentGroup.payments[0].amount | number:'.2' }}</td>
+      </tr>
+      </tbody>
+    </table>
+
+    <div class="grid-row">
+      <div class="column">
+        <h2 class="heading-medium">Fee and remission details</h2>
+      </div>
+    </div>
+
+    <div *ngFor="let fee of paymentGroup.fees">
+      <table class="table">
+        <tbody>
+        <tr class="section">
+          <td class="bold" width="330px">Description</td>
+          <td>Application for {{ paymentGroup.payments[0].service_name }}</td>
+        </tr>
+        <tr class="section">
+          <td class="bold" width="330px">Fee code</td>
+          <td>{{ fee.code }}</td>
+        </tr>
+        <tr class="section">
+          <td class="bold" width="330px">Fee amount</td>
+          <td>£{{ fee.calculated_amount | number:'.2' }}</td>
+        </tr>
+        <tr *ngIf="fee.net_amount">
+          <td class="bold" width="330px">Net amount</td>
+          <td>£{{ fee.net_amount | number:'.2' }}</td>
+        </tr>
+        <tr *ngIf="paymentGroup.remissions">
+          <td class="bold" width="330px">Remission code</td>
+          <td>{{paymentGroup.remissions[0].hwf_reference}}</td>
+        </tr>
+        <tr *ngIf="paymentGroup.remissions">
+          <td class="bold" width="330px">Remission amount</td>
+          <td>£{{ paymentGroup.remissions[0].hwf_amount | number:'.2'}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- card details -->
+    <ccpay-card-details *ngIf="isCardPayment && !isTelephonyPayment"></ccpay-card-details>
+
+    <!-- pba details -->
+    <ccpay-pba-details *ngIf="!isCardPayment" [payment]="paymentGroup.payments[0]"></ccpay-pba-details>
+
+    <!-- Status histories -->
+    <ccpay-payment-statuses></ccpay-payment-statuses>
+
   </div>
-</div>
-
-<table>
-  <tbody>
-    <tr class="section" *ngIf="payment.channel === 'telephony'">
-      <td class="bold" width="330px">Payment group reference</td>
-      <td>{{ payment.payment_group_reference }}</td>
-    </tr>
-    <tr class="section">
-      <td class="bold" width="330px">Payment reference</td>
-      <td>{{ payment.reference }}</td>
-    </tr>
-    <tr class="section">
-      <td class="bold" width="330px">Total payment amount</td>
-      <td>£{{ payment.amount | number:'.2' }}</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="grid-row">
-  <div class="column">
-    <h2 class="heading-medium">Fee details</h2>
-  </div>
-</div>
-
-<div *ngFor="let fee of payment.fees">
-<table class="table">
-  <tbody>
-    <tr class="section">
-      <td class="bold" width="330px">Description</td>
-      <td>Application for {{ payment.service_name }}</td>
-    </tr>
-    <tr class="section">
-      <td class="bold" width="330px">Fee code</td>
-      <td>{{ fee.code }}</td>
-    </tr>
-    <tr class="section">
-      <td class="bold" width="330px">Fee amount</td>
-      <td>£{{ fee.calculated_amount | number:'.2' }}</td>
-    </tr>
-    <tr *ngIf="!isTelephonyPayment">
-      <td class="bold" width="330px">Net amount</td>
-      <td>£{{ fee.calculated_amount | number:'.2' }}</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-<!-- card details -->
-<ccpay-card-details *ngIf="isCardPayment"></ccpay-card-details>
-
-<!-- pba details -->
-<ccpay-pba-details *ngIf="!isCardPayment" [payment]="payment"></ccpay-pba-details>
-
-<!-- Status histories -->
-<ccpay-payment-statuses></ccpay-payment-statuses>
-
-</div>
 
 </main>

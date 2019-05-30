@@ -1,7 +1,7 @@
 {
   "request": {
     "method": "GET",
-    "url": "/credit-account-payments/RC-1538-1321-2165-7795"
+    "url": "/payment-groups/2018-15381321216"
   },
   "response": {
     "status": 200,

@@ -1,7 +1,7 @@
 {
     "request": {
         "method": "GET",
-        "url": "/card-payments/RC-1531-0089-8858-9692"
+        "url": "/payment-groups/2018-15310089885"
     },
     "response": {
         "status": 200,
