@@ -9,7 +9,9 @@ import { CaseListComponent } from './components/case-list/case-list.component';
 import { PaymentLibIntComponent } from './components/payment-lib-int/payment-lib-int.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HeaderComponent } from './components/shared/header/header.component';
-import { FooterComponent } from './components/shared/footer/footer.component'
+import { FooterComponent } from './components/shared/footer/footer.component';
+import { CcdSearchComponent } from './components/ccd-search/ccd-search.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -19,12 +21,15 @@ import { FooterComponent } from './components/shared/footer/footer.component'
     CaseListComponent,
     PaymentLibIntComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    CcdSearchComponent
   ],
   imports: [
     BrowserModule,
     PaymentLibModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

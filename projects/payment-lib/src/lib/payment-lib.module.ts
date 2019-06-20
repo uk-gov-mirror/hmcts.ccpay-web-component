@@ -11,6 +11,7 @@ import { StatusHistoryComponent } from './components/status-history/status-histo
 import { PbaDetailsComponent } from './components/pba-details/pba-details.component';
 import { LoggerService } from './services/shared/logger/logger.service';
 import { ConsoleLoggerService } from './services/shared/logger/console-logger.service';
+import { CaseTransactionsComponent } from './components/case-transactions/case-transactions.component';
 
 @NgModule({
   imports: [
@@ -24,7 +25,8 @@ import { ConsoleLoggerService } from './services/shared/logger/console-logger.se
     CardDetailsComponent,
     PageNotFoundComponent,
     StatusHistoryComponent,
-    PbaDetailsComponent
+    PbaDetailsComponent,
+    CaseTransactionsComponent
   ],
   exports: [ PaymentLibComponent ],
   providers: [ { provide: LoggerService, useClass: ConsoleLoggerService }]
