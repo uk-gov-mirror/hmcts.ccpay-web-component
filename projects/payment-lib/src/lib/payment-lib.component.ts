@@ -26,7 +26,7 @@ export class PaymentLibComponent implements OnInit {
 
   ngOnInit() {
     this.paymentLibService.setApiRootUrl(this.API_ROOT);
-    if (this.API_ROOT.includes('view=case-transactions')) {
+    if (this.PAYMENT_METHOD === 'case-transactions') {
       console.log('isCaseTransactions....');
       this.viewName = 'case-transactions';
     } else {

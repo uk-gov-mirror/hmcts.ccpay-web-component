@@ -16,8 +16,9 @@ export class PaymentLibIntComponent implements OnInit {
   ngOnInit() {
     this.activatedRoute.params.subscribe((params) => {
       this.ccdCaseNumber = params.ccdCaseNumber;
-      this.paymentMethod = this.activatedRoute.snapshot.queryParams['paymentMethod'];
-      this.apiRoot = `http://localhost:9999?view=${this.activatedRoute.snapshot.queryParams['view']}`;
+      this.paymentMethod = this.activatedRoute.snapshot.queryParams['view'];
+      console.log('viewName: ', this.paymentMethod);
+      this.apiRoot = 'http://localhost:9999';
     });
   }
 
