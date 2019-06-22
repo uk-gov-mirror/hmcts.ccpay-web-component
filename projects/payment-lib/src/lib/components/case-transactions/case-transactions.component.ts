@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {PaymentLibComponent} from '../../payment-lib.component';
-import { Router } from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 
 @Component({
@@ -12,7 +11,7 @@ export class CaseTransactionsComponent implements OnInit {
   ccdCaseNumber: string;
 
   constructor(private paymentLibComponent: PaymentLibComponent,
-              private router: Router) { }
+              private http: HttpClient) { }
 
   ngOnInit() {
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
@@ -20,11 +19,15 @@ export class CaseTransactionsComponent implements OnInit {
 
   goToCcdSearch(): void {
     console.log('.....goToCcdSearch()......');
-    this.router.navigate([`/ccd-search/${this.ccdCaseNumber}`]);
+    this.http.get(`${this.paymentLibComponent.API_ROOT}/ccd-search/${this.paymentLibComponent.CCD_CASE_NUMBER}`, {
+      withCredentials: true
+    });
   }
 
   goToAddFee(): void {
     console.log('.....goToAddFee()......');
-    this.router.navigate(['/fees']);
+    this.http.get(`${this.paymentLibComponent.API_ROOT}/fees`, {
+      withCredentials: true
+    });
   }
 }
