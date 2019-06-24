@@ -19,9 +19,7 @@ export class CaseTransactionsComponent implements OnInit {
 
   goToCcdSearch(): void {
     console.log('.....goToCcdSearch()......');
-    this.http.get(`${this.paymentLibComponent.API_ROOT}/ccd-search/${this.paymentLibComponent.CCD_CASE_NUMBER}`, {
-      withCredentials: true
-    });
+    this.http.get(`/ccd-search`);
   }
 
   goToAddFee(): void {

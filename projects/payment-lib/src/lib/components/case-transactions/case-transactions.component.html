@@ -2,7 +2,7 @@
   <div class="govuk-breadcrumbs govuk-!-padding-bottom-1">
     <ol class="govuk-breadcrumbs__list">
       <li class="govuk-breadcrumbs__list-item">
-        <a href="javascript:void(0)" (click)="goToCcdSearch()" class="govuk-back-link">Back to case search</a>
+        <a [href]="'/ccd-search'"  class="govuk-back-link">Back to case search</a>
       </li>
     </ol>
   </div>
@@ -22,7 +22,7 @@
       </div>
 
       <div class="govuk-grid-column-one-third" align="right">
-        <button class="govuk-button" (click)="goToAddFee()">Add fee</button>
+        <a [href]="'/fee-search'"  class="govuk-button">Add fee</a>
       </div>
 
 
