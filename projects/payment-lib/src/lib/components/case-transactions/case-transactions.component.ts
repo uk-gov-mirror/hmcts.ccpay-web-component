@@ -16,16 +16,4 @@ export class CaseTransactionsComponent implements OnInit {
   ngOnInit() {
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
   }
-
-  goToCcdSearch(): void {
-    console.log('.....goToCcdSearch()......');
-    this.http.get(`/ccd-search`);
-  }
-
-  goToAddFee(): void {
-    console.log('.....goToAddFee()......');
-    this.http.get(`${this.paymentLibComponent.API_ROOT}/fees`, {
-      withCredentials: true
-    });
-  }
 }
