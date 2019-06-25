@@ -20,11 +20,5 @@ export class CaseTransactionsComponent implements OnInit {
 
   ngOnInit() {
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
-
-    this.paymentListService.getPaymentByCcdCaseNumber(this.paymentLibComponent.CCD_CASE_NUMBER, this.paymentLibComponent.PAYMENT_METHOD)
-      .subscribe(
-        payments => this.payments = payments,
-        (error: any) => this.errorMessage = <any>error
-      );
   }
 }
