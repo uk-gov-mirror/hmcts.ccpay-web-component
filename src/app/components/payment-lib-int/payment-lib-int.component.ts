@@ -10,14 +10,14 @@ export class PaymentLibIntComponent implements OnInit {
   ccdCaseNumber: string;
   paymentMethod: string;
   apiRoot: string;
+  view: string;
 
   constructor(private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe((params) => {
       this.ccdCaseNumber = params.ccdCaseNumber;
-      this.paymentMethod = this.activatedRoute.snapshot.queryParams['view'];
-      console.log('viewName: ', this.paymentMethod);
+      this.view = this.activatedRoute.snapshot.queryParams['view'];
       this.apiRoot = 'http://localhost:9999';
     });
   }

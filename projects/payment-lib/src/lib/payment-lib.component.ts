@@ -15,6 +15,7 @@ export class PaymentLibComponent implements OnInit {
   @Input('API_ROOT') API_ROOT: string;
   @Input('CCD_CASE_NUMBER') CCD_CASE_NUMBER: string;
   @Input('PAYMENT_METHOD') PAYMENT_METHOD: string;
+  @Input('VIEW') VIEW: string;
 
   paymentMethod: string;
   paymentGroupReference: string;
@@ -26,7 +27,7 @@ export class PaymentLibComponent implements OnInit {
 
   ngOnInit() {
     this.paymentLibService.setApiRootUrl(this.API_ROOT);
-    if (this.PAYMENT_METHOD === 'case-transactions') {
+    if (this.VIEW === 'case-transactions') {
       console.log('isCaseTransactions....');
       this.viewName = 'case-transactions';
     } else {
