@@ -22,7 +22,7 @@
       </div>
 
       <div class="govuk-grid-column-one-third" align="right">
-        <a [href]="'/fee-search'"  class="govuk-button">Add fee</a>
+        <a [href]="'/fee-search'"  class="govuk-button">Add new fee</a>
       </div>
 
 
@@ -89,8 +89,8 @@
       </div>
     </div>
 
-    <div class="govuk-grid-row" *ngIf="payments.payments?.length > 0">
-      <div class="govuk-inset-text">
+    <div class="govuk-inset-text">
+      <div class="govuk-grid-row">
         <!-- payments -->
         <div class="govuk-govuk-grid-column-full">
             <h3 class="govuk-heading-m">Payments</h3>
@@ -116,6 +116,38 @@
               <td class="govuk-table__cell">Card</td>
               <td class="govuk-table__cell">£550.00</td>
               <td class="govuk-table__cell">Success</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="govuk-inset-text">
+      <div class="govuk-grid-row">
+        <!-- remissions -->
+        <div class="govuk-govuk-grid-column-full">
+          <h3 class="govuk-heading-m">Remissions</h3>
+        </div>
+
+        <div class="govuk-govuk-grid-column-full">
+          <table class="govuk-table">
+            <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <td class="govuk-table__header" scope="col">Remission reference</td>
+              <td class="govuk-table__header" scope="col">Date</td>
+              <td class="govuk-table__header" scope="col">Remission reference</td>
+              <td class="govuk-table__header" scope="col">Fee code</td>
+              <td class="govuk-table__header" scope="col">Amount</td>
+            </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">RC-XXXX-XXXX-XXXX-XXXX</td>
+              <td class="govuk-table__cell">24-06-2019</td>
+              <td class="govuk-table__cell">123456</td>
+              <td class="govuk-table__cell">FEE0001</td>
+              <td class="govuk-table__cell">£550.00</td>
             </tr>
             </tbody>
           </table>
