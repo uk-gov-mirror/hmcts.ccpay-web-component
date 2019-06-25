@@ -1,0 +1,176 @@
+<div class="govuk-width-container">
+  <div class="govuk-breadcrumbs govuk-!-padding-bottom-1">
+    <ol class="govuk-breadcrumbs__list">
+      <li class="govuk-breadcrumbs__list-item">
+        <a [href]="'/ccd-search'"  class="govuk-back-link">Back to case search</a>
+      </li>
+    </ol>
+  </div>
+
+  <main class="govuk-main-wrapper">
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <h1 class="govuk-heading-xl">Case transactions</h1>
+      </div>
+    </div>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds govuk-!-padding-bottom-6">
+        <h3 class="govuk-heading-m">CCD case reference number:</h3>
+        <span>{{ ccdCaseNumber }}</span>
+      </div>
+
+      <div class="govuk-grid-column-one-third" align="right">
+        <a [href]="'/fee-search'"  class="govuk-button">Add new fee</a>
+      </div>
+
+
+      <div class="govuk-grid-column-full govuk-!-padding-bottom-5">
+        <hr class="govuk-section-break govuk-section-break--visible">
+        <table class="govuk-table">
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <td class="govuk-table__header" scope="col">Total payments</td>
+              <td class="govuk-table__header" scope="col">Total remissions</td>
+              <td class="govuk-table__header" scope="col">Outstanding balance</td>
+            </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">£109.80</td>
+              <td class="govuk-table__cell">£109.80</td>
+              <td class="govuk-table__cell">£109.80</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <h3 class="govuk-heading-m">Fees</h3>
+      </div>
+
+      <div class="govuk-grid-column-two-thirds" align="left">
+        <table class="govuk-table">
+          <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <td class="govuk-table__header" scope="col">Code</td>
+            <td class="govuk-table__header" scope="col">Description</td>
+            <td class="govuk-table__header" scope="col">Volume</td>
+            <td class="govuk-table__header" scope="col">Fee total</td>
+          </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">FEE0001</td>
+            <td class="govuk-table__cell">A test fee with a long description</td>
+            <td class="govuk-table__cell">1</td>
+            <td class="govuk-table__cell">£550.00</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="govuk-grid-column-one-third" align="right">
+        <table class="govuk-table">
+          <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <td class="govuk-table__header" scope="col">Group amount outstanding</td>
+          </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">£50.00</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="govuk-inset-text">
+      <div class="govuk-grid-row">
+        <!-- payments -->
+        <div class="govuk-govuk-grid-column-full">
+            <h3 class="govuk-heading-m">Payments</h3>
+        </div>
+
+        <div class="govuk-govuk-grid-column-full">
+          <table class="govuk-table">
+            <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <td class="govuk-table__header" scope="col">Payment reference</td>
+              <td class="govuk-table__header" scope="col">Date created</td>
+              <td class="govuk-table__header" scope="col">Channel</td>
+              <td class="govuk-table__header" scope="col">Method</td>
+              <td class="govuk-table__header" scope="col">Amount</td>
+              <td class="govuk-table__header" scope="col">Status</td>
+            </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">RC-XXXX-XXXX-XXXX-XXXX</td>
+              <td class="govuk-table__cell">24-06-2019</td>
+              <td class="govuk-table__cell">Telephony</td>
+              <td class="govuk-table__cell">Card</td>
+              <td class="govuk-table__cell">£450.00</td>
+              <td class="govuk-table__cell">Success</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="govuk-inset-text">
+      <div class="govuk-grid-row">
+        <!-- remissions -->
+        <div class="govuk-govuk-grid-column-full">
+          <h3 class="govuk-heading-m">Remissions</h3>
+        </div>
+
+        <div class="govuk-govuk-grid-column-full">
+          <table class="govuk-table">
+            <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <td class="govuk-table__header" scope="col">Remission reference</td>
+              <td class="govuk-table__header" scope="col">Date</td>
+              <td class="govuk-table__header" scope="col">Remission reference</td>
+              <td class="govuk-table__header" scope="col">Fee code</td>
+              <td class="govuk-table__header" scope="col">Amount</td>
+            </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">RC-XXXX-XXXX-XXXX-XXXX</td>
+              <td class="govuk-table__cell">24-06-2019</td>
+              <td class="govuk-table__cell">123456</td>
+              <td class="govuk-table__cell">FEE0001</td>
+              <td class="govuk-table__cell">£50.00</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="govuk-grid-row" align="right">
+      <div class="govuk-grid-column-full">
+        <button type="submit" class="govuk-button govuk-!-margin-right-1">
+          Delete fee
+        </button>
+
+        <button type="submit" class="govuk-button govuk-!-margin-right-1">
+          Add payment
+        </button>
+
+        <button type="submit" class="govuk-button">
+          Add remission
+        </button>
+      </div>
+    </div>
+
+  </main>
+
+</div>
