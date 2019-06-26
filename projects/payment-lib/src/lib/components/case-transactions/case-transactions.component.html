@@ -17,12 +17,12 @@
 
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds govuk-!-padding-bottom-6">
-        <h3 class="govuk-heading-m">CCD case reference number:</h3>
+        <h3 class="heading-medium">CCD case reference number:</h3>
         <span>{{ ccdCaseNumber }}</span>
       </div>
 
       <div class="govuk-grid-column-one-third" align="right">
-        <a [href]="'/fee-search'"  class="govuk-button">Add new fee</a>
+        <a [href]="'/fee-search'"  class="button">Add new fee</a>
       </div>
 
 
@@ -49,7 +49,7 @@
 
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-full">
-        <h3 class="govuk-heading-m">Fees</h3>
+        <h3 class="heading-medium">Fees</h3>
       </div>
 
       <div class="govuk-grid-column-two-thirds" align="left">
@@ -93,7 +93,7 @@
       <div class="govuk-grid-row">
         <!-- payments -->
         <div class="govuk-govuk-grid-column-full">
-            <h3 class="govuk-heading-m">Payments</h3>
+            <h3 class="heading-medium">Payments</h3>
         </div>
 
         <div class="govuk-govuk-grid-column-full">
@@ -127,7 +127,7 @@
       <div class="govuk-grid-row">
         <!-- remissions -->
         <div class="govuk-govuk-grid-column-full">
-          <h3 class="govuk-heading-m">Remissions</h3>
+          <h3 class="heading-medium">Remissions</h3>
         </div>
 
         <div class="govuk-govuk-grid-column-full">
@@ -157,20 +157,19 @@
 
     <div class="govuk-grid-row" align="right">
       <div class="govuk-grid-column-full">
-        <button type="submit" class="govuk-button govuk-!-margin-right-1">
+        <button type="submit" disabled="disabled" aria-disabled="true" class="button button--disabled govuk-!-margin-right-1">
           Delete fee
         </button>
 
-        <button type="submit" class="govuk-button govuk-!-margin-right-1">
+        <button type="submit" disabled="disabled" aria-disabled="true" class="button button--disabled govuk-!-margin-right-1">
           Add payment
         </button>
 
-        <button type="submit" class="govuk-button">
+        <button type="submit" disabled="disabled" aria-disabled="true" class="button button--disabled">
           Add remission
         </button>
       </div>
     </div>
 
   </main>
-
 </div>
