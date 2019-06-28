@@ -12,6 +12,7 @@ import { PbaDetailsComponent } from './components/pba-details/pba-details.compon
 import { LoggerService } from './services/shared/logger/logger.service';
 import { ConsoleLoggerService } from './services/shared/logger/console-logger.service';
 import { CaseTransactionsComponent } from './components/case-transactions/case-transactions.component';
+import { FeeSummaryComponent } from './components/fee-summary/fee-summary.component';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import { CaseTransactionsComponent } from './components/case-transactions/case-t
     PageNotFoundComponent,
     StatusHistoryComponent,
     PbaDetailsComponent,
-    CaseTransactionsComponent
+    CaseTransactionsComponent,
+    FeeSummaryComponent
   ],
   exports: [ PaymentLibComponent ],
   providers: [ { provide: LoggerService, useClass: ConsoleLoggerService }]

@@ -8,6 +8,7 @@ import {PaymentLibService} from './payment-lib.service';
     <ccpay-payment-list *ngIf="viewName === 'payment-list'"></ccpay-payment-list>
     <ccpay-payment-view *ngIf="viewName === 'payment-view'"></ccpay-payment-view>
     <ccpay-case-transactions *ngIf="viewName === 'case-transactions'"></ccpay-case-transactions>
+    <ccpay-fee-summary *ngIf="viewName === 'fee-summary'"></ccpay-fee-summary>
   `
 })
 
@@ -27,9 +28,12 @@ export class PaymentLibComponent implements OnInit {
 
   ngOnInit() {
     this.paymentLibService.setApiRootUrl(this.API_ROOT);
+    console.log('VIEW IS ===> ', this.VIEW);
     if (this.VIEW === 'case-transactions') {
       console.log('isCaseTransactions....');
       this.viewName = 'case-transactions';
+    } else if (this.VIEW === 'fee-summary') {
+        this.viewName = 'fee-summary';
     } else {
       console.log('isPaymentList....');
       this.viewName = 'payment-list';
