@@ -21,7 +21,7 @@ export class PaymentViewComponent implements OnInit {
     this.paymentViewService.getPaymentGroupDetails(this.paymentLibComponent.paymentGroupReference,
       this.paymentLibComponent.paymentMethod).subscribe(
       paymentGroup => this.paymentGroup = paymentGroup,
-      (error: any) => this.errorMessage = <any>error
+      (error: any) => this.errorMessage = error
     );
   }
 
