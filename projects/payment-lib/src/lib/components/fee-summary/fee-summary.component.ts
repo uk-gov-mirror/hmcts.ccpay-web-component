@@ -11,7 +11,7 @@ import { IRemission } from '../../interfaces/IRemission';
 })
 export class FeeSummaryComponent implements OnInit {
   @Input() paymentGroupRef: string;
-  
+
   paymentGroup: IPaymentGroup;
   errorMessage: string;
 
@@ -27,12 +27,14 @@ export class FeeSummaryComponent implements OnInit {
     //     (fees: IFee[]) => this.fees = fees
     // );
 
-    this.paymentLibComponent.paymentGroupReference = '2018-15310089885';
+    // if (!this.paymentLibComponent.paymentGroupReference) {
+    //   this.paymentLibComponent.paymentGroupReference = '2018-15310089885';
+    // }
 
     this.paymentViewService.getPaymentGroupDetails(this.paymentLibComponent.paymentGroupReference,
       this.paymentLibComponent.paymentMethod).subscribe(
       paymentGroup => this.paymentGroup = paymentGroup,
-      (error: any) => this.errorMessage = <any>error
+      (error: any) => this.errorMessage = error
     );
   }
 
