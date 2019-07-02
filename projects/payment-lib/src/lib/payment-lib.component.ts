@@ -34,12 +34,10 @@ export class PaymentLibComponent implements OnInit {
     }
     console.log('VIEW IS ===> ', this.VIEW);
     if (this.VIEW === 'case-transactions') {
-      console.log('isCaseTransactions....');
       this.viewName = 'case-transactions';
     } else if (this.VIEW === 'fee-summary') {
         this.viewName = 'fee-summary';
     } else {
-      console.log('isPaymentList....');
       this.viewName = 'payment-list';
     }
   }

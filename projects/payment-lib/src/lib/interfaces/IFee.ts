@@ -4,4 +4,5 @@ export interface IFee {
   volume: number;
   calculated_amount: number;
   net_amount: number;
+  description: string;
 }

@@ -1,0 +1,55 @@
+[
+  {
+    "payment_group_reference": "2019-15573125001",
+    "payments": [
+      {
+        "amount": 250,
+        "description": "A telephony payment",
+        "reference": "RC-1557-3125-9814-8080",
+        "currency": "GBP",
+        "ccd_case_number": "1111-2222-3333-0002",
+        "channel": "telephony",
+        "method": "card",
+        "external_provider": "pci pal",
+        "status": "Initiated",
+        "site_id": "AA02",
+        "service_name": "Divorce",
+        "date_created": "2018-10-14T16:34:08.872+0000"
+      }
+    ],
+    "fees": [
+      {
+        "code": "FEE0123",
+        "version": "1",
+        "description": "Payment desription",
+        "volume": 1,
+        "calculated_amount": 300,
+        "net_amount": 300
+      }
+    ]
+  },
+  {
+    "payment_group_reference": "2019-15573125002",
+    "remissions": [
+      {
+        "remission_reference": "RM-1557-3127-5325-9091",
+        "hwf_reference": "HR2221",
+        "hwf_amount": 300,
+        "beneficiary_name": "A partial remission",
+        "ccd_case_number": "1111-2222-3333-0002",
+        "fee_code": "FEE0123",
+        "date_created": "2018-10-15T16:34:08.872+0000"
+      }
+    ],
+    "fees": [
+      {
+        "code": "FEE0245",
+        "version": "1",
+        "volume": 1,
+        "calculated_amount": 300,
+        "net_amount": 300,
+        "description": "Remission description"
+      }
+    ]
+  }
+]
