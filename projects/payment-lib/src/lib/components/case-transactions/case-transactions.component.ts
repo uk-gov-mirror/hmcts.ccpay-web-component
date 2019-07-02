@@ -18,6 +18,10 @@ export class CaseTransactionsComponent implements OnInit {
   remissions: IRemission[] = [];
   fees: IFee[] = [];
   errorMessage: string;
+  feesAmountTotal: number;
+  paymentAmountTotal: number;
+  remissionsAmountTotal: number;
+
 
   constructor(private caseTransactionsService: CaseTransactionsService,
               private paymentLibComponent: PaymentLibComponent) { }
@@ -35,19 +39,34 @@ export class CaseTransactionsComponent implements OnInit {
   }
 
   loadData(): void {
+    let feesTotal = 0.00;
+    let paymentsTotal = 0.00;
+    let remissionsTotal = 0.00;
+
     this.paymentGroups.forEach(paymentGroup => {
       if (paymentGroup.fees) {
-        paymentGroup.fees.forEach(fee => this.fees.push(fee));
+        paymentGroup.fees.forEach(fee => {
+          feesTotal = feesTotal + fee.calculated_amount;
+          this.feesAmountTotal = feesTotal;
+          this.fees.push(fee);
+        });
       }
 
       if (paymentGroup.payments) {
-        paymentGroup.payments.forEach(payment => this.payments.push(payment));
+        paymentGroup.payments.forEach(payment => {
+          paymentsTotal = paymentsTotal + payment.amount;
+          this.paymentAmountTotal = paymentsTotal;
+          this.payments.push(payment);
+        });
       }
 
       if (paymentGroup.remissions) {
-        paymentGroup.remissions.forEach(remisison => this.remissions.push(remisison));
+        paymentGroup.remissions.forEach(remisison => {
+          remissionsTotal = remissionsTotal + remisison.hwf_amount;
+          this.remissionsAmountTotal = remissionsTotal;
+          this.remissions.push(remisison);
+        });
       }
     });
   }
-
 }
