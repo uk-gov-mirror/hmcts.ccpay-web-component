@@ -1,7 +1,7 @@
 {
   "request": {
     "method": "GET",
-    "url": "/cases/1111-2222-3333-0001/paymentgroups"
+    "url": "/cases/1111-2222-3333-0002/paymentgroups"
   },
   "response": {
     "status": 200,
@@ -15,6 +15,6 @@
       "x-xss-protection" : "1; mode=block",
       "Access-Control-Allow-Credentials": "true"
     },
-    "bodyFileName": "case-txns/1111-2222-3333-0001_case_txns.json"
+    "bodyFileName": "case-txns/1111-2222-3333-0002_case_txns.json"
   }
 }

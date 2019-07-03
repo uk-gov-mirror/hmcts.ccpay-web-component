@@ -7,7 +7,7 @@
         "description": "A telephony payment",
         "reference": "RC-1557-3125-9814-8080",
         "currency": "GBP",
-        "ccd_case_number": "1111-2222-3333-0001",
+        "ccd_case_number": "1111-2222-3333-0002",
         "channel": "telephony",
         "method": "card",
         "external_provider": "pci pal",
