@@ -14,6 +14,7 @@ export class FeeSummaryComponent implements OnInit {
 
   paymentGroup: IPaymentGroup;
   errorMessage: string;
+  totalFee: number;
 
   constructor(
     private paymentViewService: PaymentViewService,
@@ -33,7 +34,15 @@ export class FeeSummaryComponent implements OnInit {
 
     this.paymentViewService.getPaymentGroupDetails(this.paymentLibComponent.paymentGroupReference,
       this.paymentLibComponent.paymentMethod).subscribe(
-      paymentGroup => this.paymentGroup = paymentGroup,
+      paymentGroup => {
+        this.paymentGroup = paymentGroup;
+        this.totalFee = 0;
+        if (this.paymentGroup.fees) {
+          this.paymentGroup.fees.forEach(function(fee) {
+            this.totalFee += fee.net_amount;
+          });
+        }
+      },
       (error: any) => this.errorMessage = error
     );
   }
