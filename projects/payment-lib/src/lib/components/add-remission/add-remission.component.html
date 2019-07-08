@@ -1,0 +1,28 @@
+<h1 class="heading-large">Add remission</h1>
+<p>Add remission to: {{ fee.code }}</p>
+
+<form novalidate>
+  <div class="govuk-form-group">
+    <form [formGroup]="remissionForm" novalidate>
+      <label class="govuk-label govuk-label--s" for="remission-code">
+        Enter remission code:
+        <span class="form-hint">For example: HWF-A1B-23C</span>
+      </label>
+      <input class="govuk-input govuk-input--width-20 govuk-!-margin-right-1" id="remission-code" name="remission-code" type="text" formControlName="remissionCode">
+      <div class="govuk-form-group">
+        <label class="govuk-label govuk-label--s" for="amount">
+          Amount left to pay by customer
+        </label>
+        
+        <div id="amount-currency" class="govuk-visually-hidden">in pounds</div>
+          <div class="hmcts-currency-input">
+          <div class="hmcts-currency-input__symbol" aria-hidden="true">£</div>
+          <input class="govuk-input govuk-input--width-10" id="amount" name="amount" type="text" aria-describedby="amount-currency " pattern="[0-9]*">
+        </div>
+      </div> 
+    </form>
+    <button class="govuk-button" type="submit" (click)="addRemission()">
+        Add remission
+      </button>
+  </div>
+</form>

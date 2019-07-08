@@ -3,17 +3,22 @@ import { IPaymentGroup } from '../../interfaces/IPaymentGroup';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import { PaymentLibComponent } from '../../payment-lib.component';
 import { IRemission } from '../../interfaces/IRemission';
+import { IFee } from 'payment-lib/lib/interfaces/IFee';
+import { ConsoleLoggerService } from '../../services/shared/logger/console-logger.service';
 
 @Component({
   selector: 'ccpay-fee-summary',
   templateUrl: './fee-summary.component.html',
   styleUrls: ['./fee-summary.component.scss']
 })
+
 export class FeeSummaryComponent implements OnInit {
   @Input() paymentGroupRef: string;
 
   paymentGroup: IPaymentGroup;
   errorMessage: string;
+  viewStatus = 'main';
+  currentFee: IFee;
 
   constructor(
     private paymentViewService: PaymentViewService,
@@ -30,6 +35,8 @@ export class FeeSummaryComponent implements OnInit {
     // if (!this.paymentLibComponent.paymentGroupReference) {
     //   this.paymentLibComponent.paymentGroupReference = '2018-15310089885';
     // }
+
+    this.viewStatus = 'main';
 
     this.paymentViewService.getPaymentGroupDetails(this.paymentLibComponent.paymentGroupReference,
       this.paymentLibComponent.paymentMethod).subscribe(
@@ -59,5 +66,16 @@ export class FeeSummaryComponent implements OnInit {
   //   }
   //   return null;
   // }
+
+  addRemission(fee: IFee) {
+    console.log('add remission');
+    console.log(fee);
+    this.currentFee = fee;
+    this.viewStatus = 'add_remission';
+  }
+
+  editRemission() {
+
+  }
 
 }
