@@ -3,7 +3,7 @@ import { IPaymentGroup } from '../../interfaces/IPaymentGroup';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import { PaymentLibComponent } from '../../payment-lib.component';
 import { IRemission } from '../../interfaces/IRemission';
-import { IFee } from 'payment-lib/lib/interfaces/IFee';
+import { IFee } from '../../interfaces/IFee';
 import { ConsoleLoggerService } from '../../services/shared/logger/console-logger.service';
 
 @Component({
@@ -74,7 +74,8 @@ export class FeeSummaryComponent implements OnInit {
     this.viewStatus = 'add_remission';
   }
 
-  editRemission() {
+  editRemission(fee: IFee) {
+    console.log('edit remission');
 
   }
 

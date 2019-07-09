@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
-import { IFee } from 'payment-lib/lib/interfaces/IFee';
+import { IFee } from '../../interfaces/IFee';
 
 @Component({
   selector: 'ccpay-add-remission',
