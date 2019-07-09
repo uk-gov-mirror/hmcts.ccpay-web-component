@@ -18,9 +18,9 @@ export class CaseTransactionsComponent implements OnInit {
   remissions: IRemission[] = [];
   fees: IFee[] = [];
   errorMessage: string;
-  feesAmountTotal: number;
-  paymentAmountTotal: number;
-  remissionsAmountTotal: number;
+  totalFees: number;
+  totalPayments: number;
+  totalRemissions: number;
 
 
   constructor(private caseTransactionsService: CaseTransactionsService,
@@ -47,26 +47,52 @@ export class CaseTransactionsComponent implements OnInit {
       if (paymentGroup.fees) {
         paymentGroup.fees.forEach(fee => {
           feesTotal = feesTotal + fee.calculated_amount;
-          this.feesAmountTotal = feesTotal;
           this.fees.push(fee);
         });
       }
+      this.totalFees = feesTotal;
 
       if (paymentGroup.payments) {
         paymentGroup.payments.forEach(payment => {
           paymentsTotal = paymentsTotal + payment.amount;
-          this.paymentAmountTotal = paymentsTotal;
           this.payments.push(payment);
         });
       }
+      this.totalPayments = paymentsTotal;
 
       if (paymentGroup.remissions) {
         paymentGroup.remissions.forEach(remisison => {
           remissionsTotal = remissionsTotal + remisison.hwf_amount;
-          this.remissionsAmountTotal = remissionsTotal;
           this.remissions.push(remisison);
         });
       }
+      this.totalRemissions = remissionsTotal;
     });
+  }
+
+  getGroupOutstandingAmount(paymentGroup: IPaymentGroup): number {
+    let feesTotal = 0.00;
+    let paymentsTotal = 0.00;
+    let remissionsTotal = 0.00;
+
+    if (paymentGroup.fees) {
+      paymentGroup.fees.forEach(fee => {
+        feesTotal = feesTotal + fee.calculated_amount;
+      });
+    }
+
+    if (paymentGroup.payments) {
+      paymentGroup.payments.forEach(payment => {
+        paymentsTotal = paymentsTotal + payment.amount;
+      });
+    }
+
+    if (paymentGroup.remissions) {
+      paymentGroup.remissions.forEach(remission => {
+        remissionsTotal = remissionsTotal + remission.hwf_amount;
+      });
+    }
+
+    return (feesTotal - remissionsTotal) - paymentsTotal;
   }
 }

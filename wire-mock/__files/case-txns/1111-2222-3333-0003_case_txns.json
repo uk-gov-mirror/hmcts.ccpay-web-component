@@ -19,12 +19,12 @@
     ],
     "remissions": [
       {
-        "remission_reference": "RM-1557-3127-5325-9091",
+        "remission_reference": "RM-1557-3127-5325-9090",
         "hwf_reference": "HR2221",
         "hwf_amount": 45.99,
         "beneficiary_name": "A partial remission",
         "ccd_case_number": "1111-2222-3333-0003",
-        "fee_code": "FEE0123",
+        "fee_code": "FEE0245",
         "date_created": "2018-10-15T16:34:08.872+0000"
       }
     ],
@@ -32,7 +32,7 @@
       {
         "code": "FEE0123",
         "version": "1",
-        "description": "Payment desription",
+        "description": "Payment description",
         "volume": 1,
         "calculated_amount": 550,
         "net_amount": 550
@@ -53,17 +53,17 @@
     "remissions": [
       {
         "remission_reference": "RM-1557-3127-5325-9091",
-        "hwf_reference": "HR2221",
+        "hwf_reference": "HR2222",
         "hwf_amount": 45.99,
         "beneficiary_name": "A partial remission",
         "ccd_case_number": "1111-2222-3333-0003",
-        "fee_code": "FEE0123",
+        "fee_code": "FEE0133",
         "date_created": "2018-10-15T16:34:08.872+0000"
       }
     ],
     "fees": [
       {
-        "code": "FEE0245",
+        "code": "FEE0133",
         "version": "1",
         "volume": 1,
         "calculated_amount": 300,
