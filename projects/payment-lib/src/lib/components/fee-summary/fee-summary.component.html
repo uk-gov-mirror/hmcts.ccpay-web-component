@@ -59,4 +59,4 @@
   </tbody>
 </table>
 
-<ccpay-add-remission *ngIf="viewStatus === 'add_remission' && currentFee" [fee]="currentFee"></ccpay-add-remission>
+<ccpay-add-remission *ngIf="viewStatus === 'add_remission' && currentFee" [fee]="currentFee" (onCancelRemission)="cancelRemission($event)"></ccpay-add-remission>

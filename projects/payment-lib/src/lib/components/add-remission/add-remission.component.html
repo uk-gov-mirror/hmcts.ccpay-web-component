@@ -1,39 +1,77 @@
 <div class="add-remission">
-  <h1 class="heading-large">Add remission</h1>
+  <ng-container *ngIf="viewStatus === 'main'">
+      <h1 class="heading-large">Add remission</h1>
   
-  <form novalidate>
-    <div class="govuk-form-group">
-      <form [formGroup]="remissionForm" novalidate>
+      <form novalidate>
         <div class="govuk-form-group">
-          <label class="govuk-label govuk-label--s" for="remission-code">
-              Add remission to {{ fee.code }} :
-            <span class="form-hint">Enter remission for reference. For example: HWF-A1B-23C</span>
-          </label>
-          <input class="govuk-input govuk-input--width-20 govuk-!-margin-right-1" id="remission-code" name="remission-code" type="text" formControlName="remissionCode">
-          <span class="error-message" *ngIf="remissionForm.controls.remissionCode.dirty && remissionForm.controls.remissionCode.errors">
-            <p>Remission code cannot be empty.</p>
-          </span>
+          <form [formGroup]="remissionForm" novalidate>
+            <div class="govuk-form-group">
+              <label class="govuk-label govuk-label--s" for="remission-code">
+                  Add remission to {{ fee.code }} :
+                <span class="form-hint">Enter remission for reference. For example: HWF-A1B-23C</span>
+              </label>
+              <input class="govuk-input govuk-input--width-20 govuk-!-margin-right-1" id="remission-code" name="remission-code" type="text" formControlName="remissionCode">
+              <span class="error-message" *ngIf="remissionForm.controls.remissionCode.dirty && remissionForm.controls.remissionCode.errors">
+                <p>Remission code cannot be empty.</p>
+              </span>
+            </div>
+            <div class="govuk-form-group">
+              <label class="govuk-label govuk-label--s" for="amount">
+                How much does the applicant need to pay?
+              </label>
+              
+              <div id="amount-currency" class="govuk-visually-hidden">in pounds</div>
+                <div class="hmcts-currency-input">
+                <div class="hmcts-currency-input__symbol" aria-hidden="true">£</div>
+                <input class="govuk-input govuk-input--width-10" id="amount" name="amount" type="text" aria-describedby="amount-currency" pattern="\d+(\.\d{2})?" formControlName="amount">
+                <span class="error-message" *ngIf="remissionForm.controls.amount.dirty && remissionForm.controls.amount.errors">
+                  <p *ngIf="remissionForm.controls.amount.errors.required">Amount cannot be empty.</p>
+                  <p *ngIf="remissionForm.controls.amount.errors.pattern">Invalid amount format.</p>
+                </span>
+              </div>
+            </div> 
+          </form>
+          <button class="govuk-button" type="submit" (click)="addRemission()" [disabled]="!remissionForm.valid">
+              Add remission
+            </button>
         </div>
-        <div class="govuk-form-group">
-          <label class="govuk-label govuk-label--s" for="amount">
-            How much does the applicant need to pay?
-          </label>
-          
-          <div id="amount-currency" class="govuk-visually-hidden">in pounds</div>
-            <div class="hmcts-currency-input">
-            <div class="hmcts-currency-input__symbol" aria-hidden="true">£</div>
-            <input class="govuk-input govuk-input--width-10" id="amount" name="amount" type="text" aria-describedby="amount-currency" pattern="\d+(\.\d{2})?" formControlName="amount">
-            <span class="error-message" *ngIf="remissionForm.controls.amount.dirty && remissionForm.controls.amount.errors">
-              <p *ngIf="remissionForm.controls.amount.errors.required">Amount cannot be empty.</p>
-              <p *ngIf="remissionForm.controls.amount.errors.pattern">Invalid amount format.</p>
-            </span>
-          </div>
-        </div> 
       </form>
-      <button class="govuk-button" type="submit" (click)="addRemission()" [disabled]="!remissionForm.valid">
-          Add remission
-        </button>
-    </div>
-  </form>
+  </ng-container>
+  <ng-container *ngIf="viewStatus === 'confirmation'">
+      <div class="govuk-warning-text">
+        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+        <strong class="govuk-warning-text__text">
+          <span class="govuk-warning-text__assistive">Warning</span>
+          Are you sure you want to add remission to this fee?
+        </strong>
+      </div>
+      <table class="govuk-table">
+        <tr class="govuk-table__row">
+            <td class="govuk-table__cell govuk-!-font-weight-bold">Remission code:</td>
+            <td class="govuk-table__cell">{{ remissionForm.controls.remissionCode.value }}</td>
+        </tr>
+        <tr class="govuk-table__row">
+            <td class="govuk-table__cell govuk-!-font-weight-bold">Fee code:</td>
+            <td class="govuk-table__cell">{{ fee.code }}</td>
+        </tr>
+        <tr class="govuk-table__row">
+            <td class="govuk-table__cell govuk-!-font-weight-bold">Fee description:</td>
+            <td class="govuk-table__cell"></td>
+        </tr>
+        <tr class="govuk-table__row">
+            <td class="govuk-table__cell govuk-!-font-weight-bold">Amount the applicant must pay:</td>
+            <td class="govuk-table__cell">{{  remissionForm.controls.amount.value  | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
+        </tr>
+      </table>
+
+      <button type="submit" class="govuk-button govuk-button--secondary" (click)="cancelRemission.emit()">
+        Cancel
+      </button>
+      <button type="submit" class="govuk-button" (click)="confirmRemission()">
+        Confirm
+      </button>
+      
+    </ng-container>
+  
 </div>
 

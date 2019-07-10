@@ -1,5 +1,17 @@
-.add-remission{
+.add-remission {
   .govuk-button {
     margin-top: 20px;
+    margin-left: 2px;
+    margin-right: 2px;
   }
+
+  td.govuk-table__cell {
+    width: 50%;
+  }
+
+  .govuk-button--secondary {
+    background-color: #dee0e2;
+    box-shadow: 0 2px 0 #858688;
+    color: #0b0c0c;
+}
 }

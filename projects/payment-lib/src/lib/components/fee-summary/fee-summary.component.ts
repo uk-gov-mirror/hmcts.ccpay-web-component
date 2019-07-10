@@ -79,4 +79,8 @@ export class FeeSummaryComponent implements OnInit {
 
   }
 
+  cancelRemission() {
+    this.viewStatus = 'main';
+  }
+
 }

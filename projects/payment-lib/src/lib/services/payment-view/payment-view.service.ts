@@ -43,4 +43,6 @@ export class PaymentViewService {
         catchError(this.errorHandlerService.handleError)
       );
   }
+
+  getRemissio
 }

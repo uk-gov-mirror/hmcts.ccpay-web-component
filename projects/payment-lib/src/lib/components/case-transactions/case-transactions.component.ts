@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {PaymentLibComponent} from '../../payment-lib.component';
-import {HttpClient} from '@angular/common/http';
 import {PaymentListService} from '../../services/payment-list/payment-list.service';
 import {IPayments} from '../../interfaces/IPayments';
 
