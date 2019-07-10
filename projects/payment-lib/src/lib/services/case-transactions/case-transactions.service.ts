@@ -20,7 +20,6 @@ export class CaseTransactionsService {
 
   getPaymentGroups(ccdCaseNumber: string): Observable<IPaymentGroup[]> {
     this.logger.info('Case-transactions-service getPaymentGroups for: ', ccdCaseNumber);
-    console.log('Case-transactions-service getPaymentGroups for: ', ccdCaseNumber);
 
     return this.http.get<IPaymentGroup[]>(`${this.paymentLibService.API_ROOT}/cases/${ccdCaseNumber}/paymentgroups`, {
       withCredentials: true
