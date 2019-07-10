@@ -136,13 +136,13 @@
     </div>
 
       <div class="govuk-inset-text" *ngIf="paymentGroup.payments?.length > 0">
-      <div class="govuk-grid-row">
+        <div class="govuk-grid-row">
         <!-- payments -->
         <div class="govuk-govuk-grid-column-full">
             <h3 class="heading-medium">Payments</h3>
         </div>
 
-        <div class="govuk-govuk-grid-column-full">
+        <div class="govuk-govuk-grid-column-full govuk-!-padding-bottom-6">
           <table class="govuk-table">
             <thead class="govuk-table__head">
             <tr class="govuk-table__row">
@@ -154,8 +154,8 @@
               <td class="govuk-table__header" scope="col">Status</td>
             </tr>
             </thead>
-            <tbody class="govuk-table__body" *ngFor="let payment of paymentGroup.payments">
-            <tr class="govuk-table__row">
+            <tbody class="govuk-table__body" *ngIf="paymentGroup.payments?.length > 0">
+            <tr class="govuk-table__row"  *ngFor="let payment of paymentGroup.payments">
               <td class="govuk-table__cell">{{ payment.reference }}</td>
               <td class="govuk-table__cell">{{ payment.date_created | date:'dd MMM yyyy hh:mm:ss' }}</td>
               <td class="govuk-table__cell">{{ payment.channel }}</td>
@@ -167,10 +167,8 @@
           </table>
         </div>
       </div>
-    </div>
 
-      <div class="govuk-inset-text" *ngIf="paymentGroup.remissions?.length > 0">
-      <div class="govuk-grid-row">
+        <div class="govuk-grid-row">
         <!-- remissions -->
         <div class="govuk-govuk-grid-column-full">
           <h3 class="heading-medium">Remissions</h3>
@@ -187,7 +185,7 @@
               <td class="govuk-table__header" scope="col">Amount</td>
             </tr>
             </thead>
-            <tbody class="govuk-table__body">
+            <tbody class="govuk-table__body" *ngIf="paymentGroup.remissions?.length > 0">
             <tr class="govuk-table__row" *ngFor="let remission of paymentGroup.remissions">
               <td class="govuk-table__cell">{{ remission.remission_reference }}</td>
               <td class="govuk-table__cell">{{ remission.date_created | date:'dd MMM yyyy hh:mm:ss' }}</td>
@@ -196,10 +194,13 @@
               <td class="govuk-table__cell">{{ remission.hwf_amount }}</td>
             </tr>
             </tbody>
+            <tbody class="govuk-table__body" *ngIf="paymentGroup.remissions?.length === 0">
+              <td class="govuk-table__cell" colspan="5">No remissions recorded</td>
+            </tbody>
           </table>
         </div>
       </div>
-    </div>
+      </div>
     </div>
 
     <div class="govuk-grid-row" align="right">
