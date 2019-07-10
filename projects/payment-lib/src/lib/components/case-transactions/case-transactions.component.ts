@@ -42,7 +42,6 @@ export class CaseTransactionsComponent implements OnInit {
   }
 
   setDefaults(): void {
-    console.log('set defaults called...');
     this.totalPayments = 0.00;
     this.totalRemissions = 0.00;
     this.totalFees = 0.00;
