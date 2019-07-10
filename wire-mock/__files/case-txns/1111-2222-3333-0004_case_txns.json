@@ -46,5 +46,30 @@
         "description": "Remission description"
       }
     ]
+  },
+  {
+    "payment_group_reference": "2019-15573125002",
+    "payments": [],
+    "remissions": [
+      {
+        "remission_reference": "RM-1557-3127-5325-9091",
+        "hwf_reference": "HR2222",
+        "hwf_amount": 45.99,
+        "beneficiary_name": "A partial remission",
+        "ccd_case_number": "1111-2222-3333-0003",
+        "fee_code": "FEE0133",
+        "date_created": "2018-10-15T16:34:08.872+0000"
+      }
+    ],
+    "fees": [
+      {
+        "code": "FEE0133",
+        "version": "1",
+        "volume": 1,
+        "calculated_amount": 300,
+        "net_amount": 300,
+        "description": "Remission description"
+      }
+    ]
   }
 ]

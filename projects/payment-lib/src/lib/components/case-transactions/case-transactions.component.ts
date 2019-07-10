@@ -32,13 +32,23 @@ export class CaseTransactionsComponent implements OnInit {
     this.caseTransactionsService.getPaymentGroups(this.ccdCaseNumber).subscribe(
       paymentGroups => {
         this.paymentGroups = paymentGroups;
-        this.loadData();
+        this.calculateAmounts();
       },
-      (error: any) => this.errorMessage = <any>error
+      (error: any) => {
+        this.errorMessage = <any>error;
+        this.setDefaults();
+      }
     );
   }
 
-  loadData(): void {
+  setDefaults(): void {
+    console.log('set defaults called...');
+    this.totalPayments = 0.00;
+    this.totalRemissions = 0.00;
+    this.totalFees = 0.00;
+}
+
+  calculateAmounts(): void {
     let feesTotal = 0.00;
     let paymentsTotal = 0.00;
     let remissionsTotal = 0.00;

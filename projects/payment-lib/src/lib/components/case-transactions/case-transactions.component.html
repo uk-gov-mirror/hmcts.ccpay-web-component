@@ -47,6 +47,51 @@
       </div>
     </div>
 
+
+    <!-- No fees start -->
+    <div *ngIf="paymentGroups?.length === 0">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+          <h3 class="heading-medium">Fees</h3>
+        </div>
+
+        <div class="govuk-grid-column-two-thirds" align="left">
+          <table class="govuk-table">
+            <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <td class="govuk-table__header" scope="col">Code</td>
+              <td class="govuk-table__header" scope="col">Description</td>
+              <td class="govuk-table__header" scope="col">Volume</td>
+              <td class="govuk-table__header" scope="col">Fee total</td>
+            </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell" colspan="4">No fees recorded</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="govuk-grid-column-one-third" align="right">
+          <table class="govuk-table">
+            <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <td class="govuk-table__header" scope="col">Group amount outstanding</td>
+            </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">£0.00</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- No fees end -->
+
     <div *ngFor="let paymentGroup of paymentGroups">
       <div class="govuk-grid-row">
       <div class="govuk-grid-column-full">
