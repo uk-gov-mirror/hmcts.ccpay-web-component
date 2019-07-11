@@ -13,11 +13,15 @@ import { LoggerService } from './services/shared/logger/logger.service';
 import { ConsoleLoggerService } from './services/shared/logger/console-logger.service';
 import { CaseTransactionsComponent } from './components/case-transactions/case-transactions.component';
 import { FeeSummaryComponent } from './components/fee-summary/fee-summary.component';
+import { AddRemissionComponent } from './components/add-remission/add-remission.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   declarations: [
     PaymentLibComponent,
@@ -28,7 +32,8 @@ import { FeeSummaryComponent } from './components/fee-summary/fee-summary.compon
     StatusHistoryComponent,
     PbaDetailsComponent,
     CaseTransactionsComponent,
-    FeeSummaryComponent
+    FeeSummaryComponent,
+    AddRemissionComponent
   ],
   exports: [ PaymentLibComponent ],
   providers: [ { provide: LoggerService, useClass: ConsoleLoggerService }]
