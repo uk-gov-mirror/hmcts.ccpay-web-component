@@ -5,4 +5,5 @@ export interface IRemission {
   beneficiary_name: string;
   ccd_case_number: string;
   fee_code: string;
+  date_created: string;
 }

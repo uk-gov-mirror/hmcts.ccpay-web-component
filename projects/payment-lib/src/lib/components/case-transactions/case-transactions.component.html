@@ -10,8 +10,12 @@
   <main class="govuk-main-wrapper">
 
     <div class="govuk-grid-row">
-      <div class="govuk-grid-column-full">
+      <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-xl">Case transactions</h1>
+      </div>
+
+      <div class="govuk-grid-column-one-third" align="right">
+        <a [href]="'/fee-search'"  class="button">Add new fee</a>
       </div>
     </div>
 
@@ -21,12 +25,8 @@
         <span>{{ ccdCaseNumber }}</span>
       </div>
 
-      <div class="govuk-grid-column-one-third" align="right">
-        <a [href]="'/fee-search'"  class="button">Add new fee</a>
-      </div>
 
-
-      <div class="govuk-grid-column-full govuk-!-padding-bottom-5">
+      <div class="govuk-grid-column-full govuk-!-padding-bottom-3">
         <hr class="govuk-section-break govuk-section-break--visible">
         <table class="govuk-table">
           <thead class="govuk-table__head">
@@ -38,21 +38,67 @@
           </thead>
           <tbody class="govuk-table__body">
             <tr class="govuk-table__row">
-              <td class="govuk-table__cell">£109.80</td>
-              <td class="govuk-table__cell">£109.80</td>
-              <td class="govuk-table__cell">£109.80</td>
+              <td class="govuk-table__cell">{{ totalPayments | currency :'GBP':'symbol':'1.2-2' }}</td>
+              <td class="govuk-table__cell">{{ totalRemissions | currency :'GBP':'symbol':'1.2-2' }}</td>
+              <td class="govuk-table__cell">{{ (totalFees - totalRemissions) - totalPayments | currency :'GBP':'symbol':'1.2-2'}}</td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
 
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-full">
-        <h3 class="heading-medium">Fees</h3>
-      </div>
 
-      <div class="govuk-grid-column-two-thirds" align="left">
+    <!-- No fees start -->
+    <div *ngIf="paymentGroups?.length === 0">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+          <h3 class="heading-medium">Fees</h3>
+        </div>
+
+        <div class="govuk-grid-column-two-thirds" align="left">
+          <table class="govuk-table">
+            <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <td class="govuk-table__header" scope="col">Code</td>
+              <td class="govuk-table__header" scope="col">Description</td>
+              <td class="govuk-table__header" scope="col">Volume</td>
+              <td class="govuk-table__header" scope="col">Fee total</td>
+            </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell" colspan="4">No fees recorded</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="govuk-grid-column-one-third" align="right">
+          <table class="govuk-table">
+            <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <td class="govuk-table__header" scope="col">Group amount outstanding</td>
+            </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">£0.00</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- No fees end -->
+
+    <div *ngFor="let paymentGroup of paymentGroups">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+          <h2 class="heading-large">Fees</h2>
+        </div>
+
+        <div class="govuk-grid-column-two-thirds" align="left">
         <table class="govuk-table">
           <thead class="govuk-table__head">
           <tr class="govuk-table__row">
@@ -63,18 +109,18 @@
           </tr>
           </thead>
           <tbody class="govuk-table__body">
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell">FEE0001</td>
-            <td class="govuk-table__cell">A test fee with a long description</td>
-            <td class="govuk-table__cell">1</td>
-            <td class="govuk-table__cell">£550.00</td>
+          <tr class="govuk-table__row" *ngFor="let fee of paymentGroup.fees">
+            <td class="govuk-table__cell">{{ fee.code }}</td>
+            <td class="govuk-table__cell">{{ fee.description }}</td>
+            <td class="govuk-table__cell">{{ fee.volume }}</td>
+            <td class="govuk-table__cell">{{ fee.calculated_amount }}</td>
           </tr>
           </tbody>
         </table>
       </div>
 
-      <div class="govuk-grid-column-one-third" align="right">
-        <table class="govuk-table">
+        <div class="govuk-grid-column-one-third" align="right">
+          <table class="govuk-table">
           <thead class="govuk-table__head">
           <tr class="govuk-table__row">
             <td class="govuk-table__header" scope="col">Group amount outstanding</td>
@@ -82,82 +128,70 @@
           </thead>
           <tbody class="govuk-table__body">
           <tr class="govuk-table__row">
-            <td class="govuk-table__cell">£50.00</td>
+            <td class="govuk-table__cell">{{ getGroupOutstandingAmount(paymentGroup) | currency :'GBP':'symbol':'1.2-2'  }}</td>
           </tr>
           </tbody>
         </table>
+        </div>
       </div>
-    </div>
 
-    <div class="govuk-inset-text">
-      <div class="govuk-grid-row">
+      <div class="govuk-inset-text" *ngIf="paymentGroup.payments?.length > 0">
         <!-- payments -->
-        <div class="govuk-govuk-grid-column-full">
-            <h3 class="heading-medium">Payments</h3>
-        </div>
+        <table class="govuk-table">
+          <caption class="heading-medium headgovuk-table__caption">Payments</caption>
+          <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <td class="govuk-table__header" scope="col">Payment reference</td>
+                <td class="govuk-table__header" scope="col">Date created</td>
+                <td class="govuk-table__header" scope="col">Channel</td>
+                <td class="govuk-table__header" scope="col">Method</td>
+                <td class="govuk-table__header" scope="col">Amount</td>
+                <td class="govuk-table__header" scope="col">Status</td>
+              </tr>
+              </thead>
+          <tbody class="govuk-table__body" *ngIf="paymentGroup.payments?.length > 0">
+            <tr class="govuk-table__row"  *ngFor="let payment of paymentGroup.payments">
+                <td class="govuk-table__cell">{{ payment.reference }}</td>
+                <td class="govuk-table__cell">{{ payment.date_created | date:'dd MMM yyyy hh:mm:ss' }}</td>
+                <td class="govuk-table__cell">{{ payment.channel }}</td>
+                <td class="govuk-table__cell">{{ payment.method }}</td>
+                <td class="govuk-table__cell">{{ payment.amount }}</td>
+                <td class="govuk-table__cell">{{ payment.status }}</td>
+              </tr>
+          </tbody>
+        </table>
 
-        <div class="govuk-govuk-grid-column-full">
-          <table class="govuk-table">
-            <thead class="govuk-table__head">
-            <tr class="govuk-table__row">
-              <td class="govuk-table__header" scope="col">Payment reference</td>
-              <td class="govuk-table__header" scope="col">Date created</td>
-              <td class="govuk-table__header" scope="col">Channel</td>
-              <td class="govuk-table__header" scope="col">Method</td>
-              <td class="govuk-table__header" scope="col">Amount</td>
-              <td class="govuk-table__header" scope="col">Status</td>
-            </tr>
-            </thead>
-            <tbody class="govuk-table__body">
-            <tr class="govuk-table__row">
-              <td class="govuk-table__cell">RC-XXXX-XXXX-XXXX-XXXX</td>
-              <td class="govuk-table__cell">24-06-2019</td>
-              <td class="govuk-table__cell">Telephony</td>
-              <td class="govuk-table__cell">Card</td>
-              <td class="govuk-table__cell">£450.00</td>
-              <td class="govuk-table__cell">Success</td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <div class="govuk-inset-text">
-      <div class="govuk-grid-row">
         <!-- remissions -->
-        <div class="govuk-govuk-grid-column-full">
-          <h3 class="heading-medium">Remissions</h3>
-        </div>
-
-        <div class="govuk-govuk-grid-column-full">
-          <table class="govuk-table">
-            <thead class="govuk-table__head">
-            <tr class="govuk-table__row">
-              <td class="govuk-table__header" scope="col">Remission reference</td>
-              <td class="govuk-table__header" scope="col">Date</td>
-              <td class="govuk-table__header" scope="col">Remission reference</td>
-              <td class="govuk-table__header" scope="col">Fee code</td>
-              <td class="govuk-table__header" scope="col">Amount</td>
-            </tr>
-            </thead>
-            <tbody class="govuk-table__body">
-            <tr class="govuk-table__row">
-              <td class="govuk-table__cell">RC-XXXX-XXXX-XXXX-XXXX</td>
-              <td class="govuk-table__cell">24-06-2019</td>
-              <td class="govuk-table__cell">123456</td>
-              <td class="govuk-table__cell">FEE0001</td>
-              <td class="govuk-table__cell">£50.00</td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
+        <table class="govuk-table">
+          <caption class="heading-medium headgovuk-table__caption">Remissions</caption>
+          <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <td class="govuk-table__header" scope="col">Remission reference</td>
+                <td class="govuk-table__header" scope="col">Date</td>
+                <td class="govuk-table__header" scope="col">Hwf reference</td>
+                <td class="govuk-table__header" scope="col">Fee code</td>
+                <td class="govuk-table__header" scope="col">Amount</td>
+              </tr>
+              </thead>
+          <tbody class="govuk-table__body" *ngIf="paymentGroup.remissions?.length > 0">
+              <tr class="govuk-table__row" *ngFor="let remission of paymentGroup.remissions">
+                <td class="govuk-table__cell">{{ remission.remission_reference }}</td>
+                <td class="govuk-table__cell">{{ remission.date_created | date:'dd MMM yyyy hh:mm:ss' }}</td>
+                <td class="govuk-table__cell">{{ remission.hwf_reference }}</td>
+                <td class="govuk-table__cell">{{ remission.fee_code }}</td>
+                <td class="govuk-table__cell">{{ remission.hwf_amount }}</td>
+              </tr>
+              </tbody>
+          <tbody class="govuk-table__body" *ngIf="paymentGroup.remissions?.length === 0">
+                <td class="govuk-table__cell" colspan="5">No remissions recorded</td>
+              </tbody>
+        </table>
       </div>
     </div>
 
     <div class="govuk-grid-row" align="right">
       <div class="govuk-grid-column-full">
-        <button type="submit" disabled="disabled" aria-disabled="true" class="button button--disabled govuk-!-margin-right-1">
+        <button type="submit" disabled="disabled" aria-disabled="true" class="button button-disabled govuk-!-margin-right-1">
           Delete fee
         </button>
 
