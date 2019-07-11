@@ -10,7 +10,7 @@
   </div>
 </div>
 
-<table class="govuk-table"  *ngIf="!errorMessage && paymentGroup">
+<table class="govuk-table"  *ngIf="!errorMessage && paymentGroup && viewStatus === 'main'">
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
       <th class="govuk-table__header grey-text" scope="col">Fee Code</th>
@@ -51,7 +51,10 @@
           </tr>
         </table>
       </td>
-      <td class="govuk-table__cell"><a href="">edit remission</a></td>
+      <td class="govuk-table__cell">
+        <a *ngIf="!getRemissionByFeeCode(fee.code)" (click)="addRemission(fee)">add remission</a>
+        <a *ngIf="getRemissionByFeeCode(fee.code)" (click)="editRemission(fee)">edit remission</a>
+      </td>
       <td class="govuk-table__cell"><a href="">remove fee</a></td>
     </tr>
     <tr class="govuk-table__row">
@@ -71,3 +74,5 @@
     </tr>
   </tbody>
 </table>
+
+<ccpay-add-remission *ngIf="viewStatus === 'add_remission' && currentFee" [fee]="currentFee"></ccpay-add-remission>
