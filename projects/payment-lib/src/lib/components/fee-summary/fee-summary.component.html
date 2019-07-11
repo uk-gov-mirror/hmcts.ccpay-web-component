@@ -53,5 +53,20 @@
       <td class="govuk-table__cell"><a href="">edit remission</a></td>
       <td class="govuk-table__cell"><a href="">remove fee</a></td>
     </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell"></td>
+      <td class="govuk-table__cell"></td>
+      <td class="govuk-table__cell"></td>
+      <td class="govuk-table__cell"> 
+        <table class="govuk-table">
+          <tr class="govuk-table__row">
+            <td class="no-border no-padding grey-text govuk-!-font-weight-bold">Total to be paid</td>
+            <td class="no-border no-padding govuk-!-font-weight-bold">{{ totalFee | currency:'GBP':'symbol-narrow':'1.2-2'}}</td>
+          </tr>
+        </table>
+      </td>
+      <td class="govuk-table__cell"></td>
+      <td class="govuk-table__cell"></td>
+    </tr>
   </tbody>
 </table>
