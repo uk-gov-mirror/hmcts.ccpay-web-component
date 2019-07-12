@@ -1,0 +1,4832 @@
+{
+  "payment_groups": [
+    {
+      "payment_group_reference": "2019-15578304238",
+      "payments": [
+        {
+          "amount": 400,
+          "description": "PayBubble payment",
+          "reference": "RC-1557-8304-2381-9924",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 11,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 550,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15578305790",
+      "payments": [
+        {
+          "amount": 300,
+          "description": "PayBubble payment",
+          "reference": "RC-1557-8305-7903-1217",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 12,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 550,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15578317679",
+      "payments": [
+        {
+          "amount": 45,
+          "description": "PayBubble payment",
+          "reference": "RC-1557-8317-6796-8848",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 18,
+          "code": "FEE0387",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 245,
+          "memo_line": "RECEIPT OF FEES - Tribunal hearing other",
+          "natural_account_code": "4481102179",
+          "net_amount": 245,
+          "description": "Order w/o hrg(r46) - s84 LoPA1925(e) discharge /modify restrictive convenant"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15578421530",
+      "payments": [
+        {
+          "amount": 550,
+          "description": "PayBubble payment",
+          "reference": "RC-1557-8421-5300-6242",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 19,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 550,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15580445896",
+      "payments": [
+        {
+          "amount": 2,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-0445-8968-3350",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [
+        {
+          "remission_reference": "RM-1558-0445-8991-9952",
+          "hwf_reference": "HWF-A1B-23C",
+          "hwf_amount": 548,
+          "ccd_case_number": "1111-2222-3333-4444",
+          "fee_code": "FEE0002",
+          "date_created": "2019-05-16T22:09:49.989+0000"
+        }
+      ],
+      "fees": [
+        {
+          "id": 74,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 2,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15578475904",
+      "payments": [
+        {
+          "amount": 550,
+          "description": "PayBubble payment",
+          "reference": "RC-1557-8475-9046-5745",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 24,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 550,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15579154141",
+      "payments": [
+        {
+          "amount": 50,
+          "description": "PayBubble payment",
+          "reference": "RC-1557-9154-1416-7415",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 29,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 550,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15579155052",
+      "payments": [
+        {
+          "amount": 550,
+          "description": "PayBubble payment",
+          "reference": "RC-1557-9155-0529-2494",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 30,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 550,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15579168726",
+      "payments": [
+        {
+          "amount": 550,
+          "description": "PayBubble payment",
+          "reference": "RC-1557-9168-7269-6093",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 32,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 550,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15579175730",
+      "payments": [
+        {
+          "amount": 200,
+          "description": "PayBubble payment",
+          "reference": "RC-1557-9175-7309-8316",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 34,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 550,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15579190244",
+      "payments": [
+        {
+          "amount": 100,
+          "description": "PayBubble payment",
+          "reference": "RC-1557-9190-2444-0444",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [
+        {
+          "remission_reference": "RM-1557-9190-2474-5719",
+          "hwf_reference": "HWF-A1B-23C",
+          "hwf_amount": 450,
+          "ccd_case_number": "1111-2222-3333-4444",
+          "fee_code": "FEE0002",
+          "date_created": "2019-05-15T11:17:04.755+0000"
+        }
+      ],
+      "fees": [
+        {
+          "id": 35,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 100,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15579215400",
+      "payments": [
+        {
+          "amount": 100,
+          "description": "PayBubble payment",
+          "reference": "RC-1557-9215-4012-8891",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [
+        {
+          "remission_reference": "RM-1557-9215-4103-5897",
+          "hwf_reference": "HWF-A1B-23C",
+          "hwf_amount": 450,
+          "ccd_case_number": "1111-2222-3333-4444",
+          "fee_code": "FEE0002",
+          "date_created": "2019-05-15T11:59:01.034+0000"
+        }
+      ],
+      "fees": [
+        {
+          "id": 37,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 100,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15579250481",
+      "payments": [
+        {
+          "amount": 50,
+          "description": "PayBubble payment",
+          "reference": "RC-1557-9250-4810-0385",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [
+        {
+          "remission_reference": "RM-1557-9250-4840-9745",
+          "hwf_reference": "HWF-A1B-23C",
+          "hwf_amount": 500,
+          "ccd_case_number": "1111-2222-3333-4444",
+          "fee_code": "FEE0002",
+          "date_created": "2019-05-15T12:57:28.478+0000"
+        }
+      ],
+      "fees": [
+        {
+          "id": 44,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 50,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15579252766",
+      "payments": [
+        {
+          "amount": 90,
+          "description": "PayBubble payment",
+          "reference": "RC-1557-9252-7665-6983",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [
+        {
+          "remission_reference": "RM-1557-9252-7730-5093",
+          "hwf_reference": "HWF-A1B-23C",
+          "hwf_amount": 5,
+          "ccd_case_number": "1111-2222-3333-4444",
+          "fee_code": "FEE0232",
+          "date_created": "2019-05-15T13:01:17.309+0000"
+        }
+      ],
+      "fees": [
+        {
+          "id": 45,
+          "code": "FEE0232",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 95,
+          "memo_line": "RECEIPT OF FEES - Civil misc other",
+          "natural_account_code": "4481102157",
+          "net_amount": 90,
+          "description": "Affidavit"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15579253925",
+      "payments": [
+        {
+          "amount": 95,
+          "description": "PayBubble payment",
+          "reference": "RC-1557-9253-9255-1464",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Success",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 46,
+          "code": "FEE0232",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 95,
+          "memo_line": "RECEIPT OF FEES - Civil misc other",
+          "natural_account_code": "4481102157",
+          "net_amount": 95,
+          "description": "Affidavit"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15579257488",
+      "payments": [
+        {
+          "amount": 550,
+          "description": "PayBubble payment",
+          "reference": "RC-1557-9257-4882-4797",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 47,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 550,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15579262779",
+      "payments": [
+        {
+          "amount": 100,
+          "description": "PayBubble payment",
+          "reference": "RC-1557-9262-7790-2749",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [
+        {
+          "remission_reference": "RM-1557-9262-7849-8341",
+          "hwf_reference": "HWF-A1B-23C",
+          "hwf_amount": 450,
+          "ccd_case_number": "1111-2222-3333-4444",
+          "fee_code": "FEE0002",
+          "date_created": "2019-05-15T13:17:58.433+0000"
+        }
+      ],
+      "fees": [
+        {
+          "id": 48,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 100,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15580481284",
+      "payments": [
+        {
+          "amount": 2,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-0481-2848-4105",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [
+        {
+          "remission_reference": "RM-1558-0481-2874-8418",
+          "hwf_reference": "HWF-A1B-23C",
+          "hwf_amount": 548,
+          "ccd_case_number": "1111-2222-3333-4444",
+          "fee_code": "FEE0002",
+          "date_created": "2019-05-16T23:08:48.748+0000"
+        }
+      ],
+      "fees": [
+        {
+          "id": 75,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 2,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15580481776",
+      "payments": [
+        {
+          "amount": 40,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-0481-7765-0911",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [
+        {
+          "remission_reference": "RM-1558-0481-7795-0220",
+          "hwf_reference": "1212",
+          "hwf_amount": 510,
+          "ccd_case_number": "1111-2222-3333-4444",
+          "fee_code": "FEE0002",
+          "date_created": "2019-05-16T23:09:37.991+0000"
+        }
+      ],
+      "fees": [
+        {
+          "id": 76,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 40,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15579998838",
+      "payments": [
+        {
+          "amount": 550,
+          "description": "PayBubble payment",
+          "reference": "RC-1557-9998-8386-4926",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 56,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 550,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15579999038",
+      "payments": [
+        {
+          "amount": 200,
+          "description": "PayBubble payment",
+          "reference": "RC-1557-9999-0385-6597",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [
+        {
+          "remission_reference": "RM-1557-9999-0428-4351",
+          "hwf_reference": " HWF-A1B-23C",
+          "hwf_amount": 350,
+          "ccd_case_number": "1111-2222-3333-4444",
+          "fee_code": "FEE0002",
+          "date_created": "2019-05-16T09:45:04.269+0000"
+        }
+      ],
+      "fees": [
+        {
+          "id": 57,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 200,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15580020098",
+      "payments": [
+        {
+          "amount": 200,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-0020-0982-6736",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [
+        {
+          "remission_reference": "RM-1558-0020-1023-7576",
+          "hwf_reference": "HWF-A1B-23C",
+          "hwf_amount": 350,
+          "ccd_case_number": "1111-2222-3333-4444",
+          "fee_code": "FEE0002",
+          "date_created": "2019-05-16T10:20:10.232+0000"
+        }
+      ],
+      "fees": [
+        {
+          "id": 58,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 200,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15580021859",
+      "payments": [
+        {
+          "amount": 100,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-0021-8592-7431",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [
+        {
+          "remission_reference": "RM-1558-0021-8623-0231",
+          "hwf_reference": "HWF-A1B-23C",
+          "hwf_amount": 145,
+          "ccd_case_number": "1111-2222-3333-4444",
+          "fee_code": "FEE0387",
+          "date_created": "2019-05-16T10:23:06.203+0000"
+        }
+      ],
+      "fees": [
+        {
+          "id": 59,
+          "code": "FEE0387",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 245,
+          "memo_line": "RECEIPT OF FEES - Tribunal hearing other",
+          "natural_account_code": "4481102179",
+          "net_amount": 100,
+          "description": "Order w/o hrg(r46) - s84 LoPA1925(e) discharge /modify restrictive convenant"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15580036250",
+      "payments": [
+        {
+          "amount": 200,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-0036-2500-6265",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [
+        {
+          "remission_reference": "RM-1558-0036-2546-1973",
+          "hwf_reference": "HWF-A1B-23C",
+          "hwf_amount": 350,
+          "ccd_case_number": "1111-2222-3333-4444",
+          "fee_code": "FEE0002",
+          "date_created": "2019-05-16T10:47:05.474+0000"
+        }
+      ],
+      "fees": [
+        {
+          "id": 61,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 200,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15580040025",
+      "payments": [
+        {
+          "amount": 200,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-0040-0252-4169",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [
+        {
+          "remission_reference": "RM-1558-0040-0272-4637",
+          "hwf_reference": "HWF-A1B-23C",
+          "hwf_amount": 350,
+          "ccd_case_number": "1111-2222-3333-4444",
+          "fee_code": "FEE0002",
+          "date_created": "2019-05-16T10:53:22.720+0000"
+        }
+      ],
+      "fees": [
+        {
+          "id": 62,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 200,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15580041492",
+      "payments": [
+        {
+          "amount": 550,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-0041-4926-3234",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 63,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 550,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15580058625",
+      "payments": [
+        {
+          "amount": 30,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-0058-6258-3856",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [
+        {
+          "remission_reference": "RM-1558-0058-6288-9964",
+          "hwf_reference": "HWF-A1B-23C",
+          "hwf_amount": 225,
+          "ccd_case_number": "1111-2222-3333-4444",
+          "fee_code": "FEE0229",
+          "date_created": "2019-05-16T11:24:22.884+0000"
+        }
+      ],
+      "fees": [
+        {
+          "id": 64,
+          "code": "FEE0229",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 255,
+          "memo_line": "RECEIPT OF FEES - Family misc other",
+          "natural_account_code": "4481102177",
+          "net_amount": 30,
+          "description": "Application for a financial order"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15580115293",
+      "payments": [
+        {
+          "amount": 200,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-0115-2938-8911",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [
+        {
+          "remission_reference": "RM-1558-0115-2976-8799",
+          "hwf_reference": "HWF-A1B-23C",
+          "hwf_amount": 350,
+          "ccd_case_number": "1111-2222-3333-4444",
+          "fee_code": "FEE0002",
+          "date_created": "2019-05-16T12:58:49.733+0000"
+        }
+      ],
+      "fees": [
+        {
+          "id": 67,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 200,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15580119653",
+      "payments": [
+        {
+          "amount": 100,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-0119-6539-7129",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [
+        {
+          "remission_reference": "RM-1558-0119-6562-7376",
+          "hwf_reference": "HWF-A1B-23C",
+          "hwf_amount": 450,
+          "ccd_case_number": "1111-2222-3333-4444",
+          "fee_code": "FEE0002",
+          "date_created": "2019-05-16T13:06:05.608+0000"
+        }
+      ],
+      "fees": [
+        {
+          "id": 68,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 100,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15580129542",
+      "payments": [
+        {
+          "amount": 100,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-0129-5423-7912",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [
+        {
+          "remission_reference": "RM-1558-0129-5492-0186",
+          "hwf_reference": "HWF-A1B-23C",
+          "hwf_amount": 450,
+          "ccd_case_number": "1111-2222-3333-4444",
+          "fee_code": "FEE0002",
+          "date_created": "2019-05-16T13:22:34.957+0000"
+        }
+      ],
+      "fees": [
+        {
+          "id": 69,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 100,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15580185340",
+      "payments": [
+        {
+          "amount": 2,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-0185-3403-6260",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 70,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 550,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15580225682",
+      "payments": [
+        {
+          "amount": 1,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-0225-6826-7403",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [
+        {
+          "remission_reference": "RM-1558-0225-6883-6041",
+          "hwf_reference": "HWF-A1B-23C",
+          "hwf_amount": 549,
+          "ccd_case_number": "1111-2222-3333-4444",
+          "fee_code": "FEE0002",
+          "date_created": "2019-05-16T16:02:48.800+0000"
+        }
+      ],
+      "fees": [
+        {
+          "id": 71,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 1,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15580226280",
+      "payments": [
+        {
+          "amount": 2,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-0226-2803-1971",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [
+        {
+          "remission_reference": "RM-1558-0226-2848-8494",
+          "hwf_reference": "HWF-A1B-23C",
+          "hwf_amount": 548,
+          "ccd_case_number": "1111-2222-3333-4444",
+          "fee_code": "FEE0002",
+          "date_created": "2019-05-16T16:03:48.425+0000"
+        }
+      ],
+      "fees": [
+        {
+          "id": 72,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 2,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15580442784",
+      "payments": [
+        {
+          "amount": 50,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-0442-7842-0676",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 73,
+          "code": "FEE0228",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 50,
+          "memo_line": "RECEIPT OF FEES - Family GA other",
+          "natural_account_code": "4481102165",
+          "net_amount": 50,
+          "description": "Application (without notice)"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15580843204",
+      "payments": [
+        {
+          "amount": 2,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-0843-2042-7386",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [
+        {
+          "remission_reference": "RM-1558-0843-2202-6301",
+          "hwf_reference": "HWF-A1B-23C",
+          "hwf_amount": 548,
+          "ccd_case_number": "1111-2222-3333-4444",
+          "fee_code": "FEE0002",
+          "date_created": "2019-05-17T09:12:02.094+0000"
+        }
+      ],
+      "fees": [
+        {
+          "id": 77,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 2,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15580939555",
+      "payments": [
+        {
+          "amount": 550,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-0939-5554-1007",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 84,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 550,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15580939577",
+      "payments": [
+        {
+          "amount": 550,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-0939-5771-7761",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 85,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 550,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15580939845",
+      "payments": [
+        {
+          "amount": 3,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-0939-8450-0982",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [
+        {
+          "remission_reference": "RM-1558-0939-8473-4441",
+          "hwf_reference": "HWF-A1B-23C",
+          "hwf_amount": 547,
+          "ccd_case_number": "1111-2222-3333-4444",
+          "fee_code": "FEE0002",
+          "date_created": "2019-05-17T11:53:04.771+0000"
+        }
+      ],
+      "fees": [
+        {
+          "id": 86,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 3,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15580940667",
+      "payments": [
+        {
+          "amount": 550,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-0940-6670-0896",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 87,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 550,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15580944605",
+      "payments": [
+        {
+          "amount": 20,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-0944-6058-7964",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [
+        {
+          "remission_reference": "RM-1558-0944-6129-5716",
+          "hwf_reference": "HWF-A1B-23C",
+          "hwf_amount": 530,
+          "ccd_case_number": "1111-2222-3333-4444",
+          "fee_code": "FEE0002",
+          "date_created": "2019-05-17T12:01:01.213+0000"
+        }
+      ],
+      "fees": [
+        {
+          "id": 88,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 20,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15580982874",
+      "payments": [
+        {
+          "amount": 1,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-0982-8747-9685",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [
+        {
+          "remission_reference": "RM-1558-0982-8783-8500",
+          "hwf_reference": "HWF-A1B-23C",
+          "hwf_amount": 549,
+          "ccd_case_number": "1111-2222-3333-4444",
+          "fee_code": "FEE0002",
+          "date_created": "2019-05-17T13:04:47.830+0000"
+        }
+      ],
+      "fees": [
+        {
+          "id": 89,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 1,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15580992501",
+      "payments": [
+        {
+          "amount": 0.99,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-0992-5014-9594",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [
+        {
+          "remission_reference": "RM-1558-0992-5123-7802",
+          "hwf_reference": "HWF-A1B-23C",
+          "hwf_amount": 549.01,
+          "ccd_case_number": "1111-2222-3333-4444",
+          "fee_code": "FEE0002",
+          "date_created": "2019-05-17T13:20:51.210+0000"
+        }
+      ],
+      "fees": [
+        {
+          "id": 90,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 0.99,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15583474727",
+      "payments": [
+        {
+          "amount": 50,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-3474-7278-7497",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 94,
+          "code": "FEE0228",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 50,
+          "memo_line": "RECEIPT OF FEES - Family GA other",
+          "natural_account_code": "4481102165",
+          "net_amount": 50,
+          "description": "Application (without notice)"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15583476855",
+      "payments": [
+        {
+          "amount": 20,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-3476-8555-2373",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [
+        {
+          "remission_reference": "RM-1558-3476-8584-1602",
+          "hwf_reference": "HWF-A1B-23C",
+          "hwf_amount": 530,
+          "ccd_case_number": "1111-2222-3333-4444",
+          "fee_code": "FEE0002",
+          "date_created": "2019-05-20T10:21:25.896+0000"
+        }
+      ],
+      "fees": [
+        {
+          "id": 95,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 20,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15583491648",
+      "payments": [
+        {
+          "amount": 550,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-3491-6488-4368",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 97,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 550,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15583491856",
+      "payments": [
+        {
+          "amount": 550,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-3491-8560-9612",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 98,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 550,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15583493362",
+      "payments": [
+        {
+          "amount": 550,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-3493-3635-0280",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Success",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 99,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 550,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15583495991",
+      "payments": [
+        {
+          "amount": 550,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-3495-9918-0903",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Success",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 100,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 550,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15583509633",
+      "payments": [
+        {
+          "amount": 550,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-3509-6338-6936",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 101,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 550,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15583617407",
+      "payments": [
+        {
+          "amount": 50,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-3617-4076-1515",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Failed",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 103,
+          "code": "FEE0228",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 50,
+          "memo_line": "RECEIPT OF FEES - Family GA other",
+          "natural_account_code": "4481102165",
+          "net_amount": 50,
+          "description": "Application (without notice)"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15583622114",
+      "payments": [
+        {
+          "amount": 50,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-3622-1149-1251",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 104,
+          "code": "FEE0228",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 50,
+          "memo_line": "RECEIPT OF FEES - Family GA other",
+          "natural_account_code": "4481102165",
+          "net_amount": 50,
+          "description": "Application (without notice)"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15583623828",
+      "payments": [
+        {
+          "amount": 50,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-3623-8288-7642",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 105,
+          "code": "FEE0228",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 50,
+          "memo_line": "RECEIPT OF FEES - Family GA other",
+          "natural_account_code": "4481102165",
+          "net_amount": 50,
+          "description": "Application (without notice)"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15583623962",
+      "payments": [
+        {
+          "amount": 50,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-3623-9626-7120",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Success",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 106,
+          "code": "FEE0228",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 50,
+          "memo_line": "RECEIPT OF FEES - Family GA other",
+          "natural_account_code": "4481102165",
+          "net_amount": 50,
+          "description": "Application (without notice)"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15583626438",
+      "payments": [
+        {
+          "amount": 50,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-3626-4381-1043",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 107,
+          "code": "FEE0228",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 50,
+          "memo_line": "RECEIPT OF FEES - Family GA other",
+          "natural_account_code": "4481102165",
+          "net_amount": 50,
+          "description": "Application (without notice)"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15583626580",
+      "payments": [
+        {
+          "amount": 50,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-3626-5803-6635",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 108,
+          "code": "FEE0228",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 50,
+          "memo_line": "RECEIPT OF FEES - Family GA other",
+          "natural_account_code": "4481102165",
+          "net_amount": 50,
+          "description": "Application (without notice)"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15583626958",
+      "payments": [
+        {
+          "amount": 50,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-3626-9587-3396",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 109,
+          "code": "FEE0228",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 50,
+          "memo_line": "RECEIPT OF FEES - Family GA other",
+          "natural_account_code": "4481102165",
+          "net_amount": 50,
+          "description": "Application (without notice)"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15583627172",
+      "payments": [
+        {
+          "amount": 50,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-3627-1727-1694",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 111,
+          "code": "FEE0228",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 50,
+          "memo_line": "RECEIPT OF FEES - Family GA other",
+          "natural_account_code": "4481102165",
+          "net_amount": 50,
+          "description": "Application (without notice)"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15583630611",
+      "payments": [
+        {
+          "amount": 50,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-3630-6114-3547",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Success",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 114,
+          "code": "FEE0228",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 50,
+          "memo_line": "RECEIPT OF FEES - Family GA other",
+          "natural_account_code": "4481102165",
+          "net_amount": 50,
+          "description": "Application (without notice)"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15583652688",
+      "payments": [
+        {
+          "amount": 50,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-3652-6886-5814",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 115,
+          "code": "FEE0228",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 50,
+          "memo_line": "RECEIPT OF FEES - Family GA other",
+          "natural_account_code": "4481102165",
+          "net_amount": 50,
+          "description": "Application (without notice)"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15586280040",
+      "payments": [
+        {
+          "amount": 95,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-6280-0401-0239",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 181,
+          "code": "FEE0232",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 95,
+          "memo_line": "RECEIPT OF FEES - Civil misc other",
+          "natural_account_code": "4481102157",
+          "net_amount": 95,
+          "description": "Affidavit"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15584470794",
+      "payments": [
+        {
+          "amount": 25.99,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-4470-7948-4983",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Success",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [
+        {
+          "remission_reference": "RM-1558-4470-7973-1607",
+          "hwf_reference": "HWF-A1B-23C",
+          "hwf_amount": 24.01,
+          "ccd_case_number": "1111-2222-3333-4444",
+          "fee_code": "FEE0228",
+          "date_created": "2019-05-21T13:57:59.744+0000"
+        },
+        {
+          "remission_reference": "RM-1558-4476-9429-7604",
+          "hwf_reference": "string",
+          "hwf_amount": 0.99,
+          "beneficiary_name": "string",
+          "ccd_case_number": "string",
+          "case_reference": "string",
+          "fee_code": "FEE0228",
+          "date_created": "2019-05-21T14:08:14.253+0000"
+        }
+      ],
+      "fees": [
+        {
+          "id": 121,
+          "code": "FEE0228",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 50,
+          "memo_line": "RECEIPT OF FEES - Family GA other",
+          "natural_account_code": "4481102165",
+          "net_amount": 25,
+          "description": "Application (without notice)"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15584486293",
+      "payments": [
+        {
+          "amount": 550,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-4486-2930-6536",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Success",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 122,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 550,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15584516891",
+      "payments": [
+        {
+          "amount": 550,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-4516-8918-4959",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Success",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 124,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 550,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15584523652",
+      "payments": [
+        {
+          "amount": 550,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-4523-6532-9348",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Success",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 125,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 550,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15584532585",
+      "payments": [
+        {
+          "amount": 50.99,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-4532-5850-5408",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [
+        {
+          "remission_reference": "RM-1558-4532-5884-1738",
+          "hwf_reference": "HWF-A1B-23C",
+          "hwf_amount": 499.01,
+          "ccd_case_number": "1111-2222-3333-4444",
+          "fee_code": "FEE0002",
+          "date_created": "2019-05-21T15:40:58.878+0000"
+        }
+      ],
+      "fees": [
+        {
+          "id": 128,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 50.99,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15584535591",
+      "payments": [
+        {
+          "amount": 500,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-4535-5915-2421",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [
+        {
+          "remission_reference": "RM-1558-4535-5972-7313",
+          "hwf_reference": "HWF-A1B-23C",
+          "hwf_amount": 50,
+          "ccd_case_number": "1111-2222-3333-4444",
+          "fee_code": "FEE0002",
+          "date_created": "2019-05-21T15:45:59.767+0000"
+        }
+      ],
+      "fees": [
+        {
+          "id": 130,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 500,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15584537664",
+      "payments": [
+        {
+          "amount": 49.99,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-4537-6642-0959",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Success",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [
+        {
+          "remission_reference": "RM-1558-4537-6675-1437",
+          "hwf_reference": "HWF-A1B-23C",
+          "hwf_amount": 500.01,
+          "ccd_case_number": "1111-2222-3333-4444",
+          "fee_code": "FEE0002",
+          "date_created": "2019-05-21T15:49:26.701+0000"
+        },
+        {
+          "remission_reference": "RM-1558-4547-6337-9529",
+          "hwf_reference": "string",
+          "hwf_amount": 0.99,
+          "beneficiary_name": "string",
+          "ccd_case_number": "string",
+          "case_reference": "string",
+          "fee_code": "FEE0002",
+          "date_created": "2019-05-21T16:06:03.343+0000"
+        }
+      ],
+      "fees": [
+        {
+          "id": 131,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 49,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15584566823",
+      "payments": [
+        {
+          "amount": 550,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-4566-8239-6526",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 132,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 550,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15585181180",
+      "payments": [
+        {
+          "amount": 550,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-5181-1804-5801",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 135,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 550,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15585181396",
+      "payments": [
+        {
+          "amount": 1,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-5181-3961-0146",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [
+        {
+          "remission_reference": "RM-1558-5181-4004-2925",
+          "hwf_reference": "HWF-A1B-23C",
+          "hwf_amount": 549,
+          "ccd_case_number": "1111-2222-3333-4444",
+          "fee_code": "FEE0002",
+          "date_created": "2019-05-22T09:42:20.103+0000"
+        }
+      ],
+      "fees": [
+        {
+          "id": 136,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 1,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15585183768",
+      "payments": [
+        {
+          "amount": 1,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-5183-7685-1858",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [
+        {
+          "remission_reference": "RM-1558-5183-7710-0065",
+          "hwf_reference": "HWF-A1B-23C",
+          "hwf_amount": 549,
+          "ccd_case_number": "1111-2222-3333-4444",
+          "fee_code": "FEE0002",
+          "date_created": "2019-05-22T09:46:17.157+0000"
+        }
+      ],
+      "fees": [
+        {
+          "id": 137,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 1,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15585185849",
+      "payments": [
+        {
+          "amount": 1,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-5185-8499-4839",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Success",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [
+        {
+          "remission_reference": "RM-1558-5185-8520-1754",
+          "hwf_reference": "HWF-A1B-23C",
+          "hwf_amount": 549,
+          "ccd_case_number": "1111-2222-3333-4444",
+          "fee_code": "FEE0002",
+          "date_created": "2019-05-22T09:49:45.234+0000"
+        }
+      ],
+      "fees": [
+        {
+          "id": 138,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 1,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15585187867",
+      "payments": [
+        {
+          "amount": 550,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-5187-8675-1862",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Success",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 139,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 550,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15585194502",
+      "payments": [
+        {
+          "amount": 550,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-5194-5029-8032",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Success",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 140,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 550,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15585196077",
+      "payments": [
+        {
+          "amount": 1,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-5196-0776-6840",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [
+        {
+          "remission_reference": "RM-1558-5196-0814-7453",
+          "hwf_reference": "HWF-A1B-23C",
+          "hwf_amount": 549,
+          "ccd_case_number": "1111-2222-3333-4444",
+          "fee_code": "FEE0002",
+          "date_created": "2019-05-22T10:06:48.120+0000"
+        }
+      ],
+      "fees": [
+        {
+          "id": 141,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 1,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15585224637",
+      "payments": [
+        {
+          "amount": 1,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-5224-6372-1982",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Success",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [
+        {
+          "remission_reference": "RM-1558-5224-6411-4385",
+          "hwf_reference": "HWF-A1B-23C",
+          "hwf_amount": 549,
+          "ccd_case_number": "1111-2222-3333-4444",
+          "fee_code": "FEE0002",
+          "date_created": "2019-05-22T10:54:24.174+0000"
+        }
+      ],
+      "fees": [
+        {
+          "id": 145,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 1,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15585231522",
+      "payments": [
+        {
+          "amount": 1,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-5231-5221-0923",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Success",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [
+        {
+          "remission_reference": "RM-1558-5231-5251-8218",
+          "hwf_reference": "HWF-A1B-23C",
+          "hwf_amount": 49,
+          "ccd_case_number": "1111-2222-3333-4444",
+          "fee_code": "FEE0270",
+          "date_created": "2019-05-22T11:05:52.509+0000"
+        }
+      ],
+      "fees": [
+        {
+          "id": 148,
+          "code": "FEE0270",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 50,
+          "memo_line": "RECEIPT OF FEES - Family issue other",
+          "natural_account_code": "4481102162",
+          "net_amount": 1,
+          "description": "Application for an order of assessment of costs"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15585235149",
+      "payments": [
+        {
+          "amount": 50,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-5235-1498-2219",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 149,
+          "code": "FEE0228",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 50,
+          "memo_line": "RECEIPT OF FEES - Family GA other",
+          "natural_account_code": "4481102165",
+          "net_amount": 50,
+          "description": "Application (without notice)"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15585235495",
+      "payments": [
+        {
+          "amount": 50,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-5235-4958-6738",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 150,
+          "code": "FEE0228",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 50,
+          "memo_line": "RECEIPT OF FEES - Family GA other",
+          "natural_account_code": "4481102165",
+          "net_amount": 50,
+          "description": "Application (without notice)"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15585244788",
+      "payments": [
+        {
+          "amount": 255,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-5244-7884-3108",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Success",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 151,
+          "code": "FEE0229",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 255,
+          "memo_line": "RECEIPT OF FEES - Family misc other",
+          "natural_account_code": "4481102177",
+          "net_amount": 255,
+          "description": "Application for a financial order"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15585300045",
+      "payments": [
+        {
+          "amount": 550,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-5300-0457-3796",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 152,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 550,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15585310512",
+      "payments": [
+        {
+          "amount": 245,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-5310-5134-6755",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 153,
+          "code": "FEE0387",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 245,
+          "memo_line": "RECEIPT OF FEES - Tribunal hearing other",
+          "natural_account_code": "4481102179",
+          "net_amount": 245,
+          "description": "Order w/o hrg(r46) - s84 LoPA1925(e) discharge /modify restrictive convenant"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15585401341",
+      "payments": [
+        {
+          "amount": 0.01,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-5401-3416-4283",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [
+        {
+          "remission_reference": "RM-1558-5401-3474-1387",
+          "hwf_reference": "HWF-A1B-23C",
+          "hwf_amount": 549.99,
+          "ccd_case_number": "1111-2222-3333-4444",
+          "fee_code": "FEE0002",
+          "date_created": "2019-05-22T15:48:54.771+0000"
+        }
+      ],
+      "fees": [
+        {
+          "id": 154,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 0.01,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15586016672",
+      "payments": [
+        {
+          "amount": 245,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-6016-6729-8995",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 155,
+          "code": "FEE0387",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 245,
+          "memo_line": "RECEIPT OF FEES - Tribunal hearing other",
+          "natural_account_code": "4481102179",
+          "net_amount": 245,
+          "description": "Order w/o hrg(r46) - s84 LoPA1925(e) discharge /modify restrictive convenant"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15586058386",
+      "payments": [
+        {
+          "amount": 245,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-6058-3863-6546",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 157,
+          "code": "FEE0387",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 245,
+          "memo_line": "RECEIPT OF FEES - Tribunal hearing other",
+          "natural_account_code": "4481102179",
+          "net_amount": 245,
+          "description": "Order w/o hrg(r46) - s84 LoPA1925(e) discharge /modify restrictive convenant"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15586210152",
+      "payments": [
+        {
+          "amount": 50,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-6210-1525-0654",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 177,
+          "code": "FEE0228",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 50,
+          "memo_line": "RECEIPT OF FEES - Family GA other",
+          "natural_account_code": "4481102165",
+          "net_amount": 50,
+          "description": "Application (without notice)"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15586253395",
+      "payments": [
+        {
+          "amount": 95,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-6253-3951-9272",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 179,
+          "code": "FEE0232",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 95,
+          "memo_line": "RECEIPT OF FEES - Civil misc other",
+          "natural_account_code": "4481102157",
+          "net_amount": 95,
+          "description": "Affidavit"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15586264153",
+      "payments": [
+        {
+          "amount": 1,
+          "description": "PayBubble payment",
+          "reference": "RC-1558-6264-1532-6830",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [
+        {
+          "remission_reference": "RM-1558-6264-1645-9218",
+          "hwf_reference": "HWF-A1B-23C",
+          "hwf_amount": 549,
+          "ccd_case_number": "1111-2222-3333-4444",
+          "fee_code": "FEE0002",
+          "date_created": "2019-05-23T15:46:56.428+0000"
+        }
+      ],
+      "fees": [
+        {
+          "id": 180,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 1,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15593098022",
+      "payments": [
+        {
+          "amount": 550,
+          "description": "PayBubble payment",
+          "reference": "RC-1559-3098-0222-7973",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 201,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 550,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15593101570",
+      "payments": [
+        {
+          "amount": 550,
+          "description": "PayBubble payment",
+          "reference": "RC-1559-3101-5701-6342",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 202,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 550,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15595549900",
+      "payments": [
+        {
+          "amount": 1,
+          "description": "PayBubble payment",
+          "reference": "RC-1559-5549-9008-2413",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [
+        {
+          "remission_reference": "RM-1559-5549-9031-8379",
+          "hwf_reference": "HWF-A1B-23C",
+          "hwf_amount": 549,
+          "ccd_case_number": "1111-2222-3333-4444",
+          "fee_code": "FEE0002",
+          "date_created": "2019-06-03T09:43:10.306+0000"
+        }
+      ],
+      "fees": [
+        {
+          "id": 205,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 1,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15595663062",
+      "payments": [
+        {
+          "amount": 550,
+          "description": "PayBubble payment",
+          "reference": "RC-1559-5663-0622-3762",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 218,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 550,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15595663153",
+      "payments": [
+        {
+          "amount": 245,
+          "description": "PayBubble payment",
+          "reference": "RC-1559-5663-1532-0427",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 219,
+          "code": "FEE0387",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 245,
+          "memo_line": "RECEIPT OF FEES - Tribunal hearing other",
+          "natural_account_code": "4481102179",
+          "net_amount": 245,
+          "description": "Order w/o hrg(r46) - s84 LoPA1925(e) discharge /modify restrictive convenant"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15595663677",
+      "payments": [
+        {
+          "amount": 550,
+          "description": "PayBubble payment",
+          "reference": "RC-1559-5663-6779-8629",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 221,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 550,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15595663837",
+      "payments": [
+        {
+          "amount": 245,
+          "description": "PayBubble payment",
+          "reference": "RC-1559-5663-8371-5649",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 222,
+          "code": "FEE0387",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 245,
+          "memo_line": "RECEIPT OF FEES - Tribunal hearing other",
+          "natural_account_code": "4481102179",
+          "net_amount": 245,
+          "description": "Order w/o hrg(r46) - s84 LoPA1925(e) discharge /modify restrictive convenant"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15595669510",
+      "payments": [
+        {
+          "amount": 550,
+          "description": "PayBubble payment",
+          "reference": "RC-1559-5669-5102-9050",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 223,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 550,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15595672928",
+      "payments": [
+        {
+          "amount": 550,
+          "description": "PayBubble payment",
+          "reference": "RC-1559-5672-9286-1490",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 224,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 550,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15595676126",
+      "payments": [
+        {
+          "amount": 550,
+          "description": "PayBubble payment",
+          "reference": "RC-1559-5676-1262-4271",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 225,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 550,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15595676674",
+      "payments": [
+        {
+          "amount": 550,
+          "description": "PayBubble payment",
+          "reference": "RC-1559-5676-6743-4659",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 226,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 550,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15595680312",
+      "payments": [
+        {
+          "amount": 550,
+          "description": "PayBubble payment",
+          "reference": "RC-1559-5680-3129-7772",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 227,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 550,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15595681055",
+      "payments": [
+        {
+          "amount": 245,
+          "description": "PayBubble payment",
+          "reference": "RC-1559-5681-0551-9945",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 228,
+          "code": "FEE0387",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 245,
+          "memo_line": "RECEIPT OF FEES - Tribunal hearing other",
+          "natural_account_code": "4481102179",
+          "net_amount": 245,
+          "description": "Order w/o hrg(r46) - s84 LoPA1925(e) discharge /modify restrictive convenant"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15595685115",
+      "payments": [
+        {
+          "amount": 245,
+          "description": "PayBubble payment",
+          "reference": "RC-1559-5685-1156-6258",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 229,
+          "code": "FEE0387",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 245,
+          "memo_line": "RECEIPT OF FEES - Tribunal hearing other",
+          "natural_account_code": "4481102179",
+          "net_amount": 245,
+          "description": "Order w/o hrg(r46) - s84 LoPA1925(e) discharge /modify restrictive convenant"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15595732048",
+      "payments": [
+        {
+          "amount": 550,
+          "description": "PayBubble payment",
+          "reference": "RC-1559-5732-0488-4679",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 235,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 550,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15595755712",
+      "payments": [
+        {
+          "amount": 1,
+          "description": "PayBubble payment",
+          "reference": "RC-1559-5755-7123-0956",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [
+        {
+          "remission_reference": "RM-1559-5755-7140-9451",
+          "hwf_reference": "HWF-A1B-23C",
+          "hwf_amount": 254,
+          "ccd_case_number": "1111-2222-3333-4444",
+          "fee_code": "FEE0229",
+          "date_created": "2019-06-03T15:26:11.455+0000"
+        }
+      ],
+      "fees": [
+        {
+          "id": 237,
+          "code": "FEE0229",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 255,
+          "memo_line": "RECEIPT OF FEES - Family misc other",
+          "natural_account_code": "4481102177",
+          "net_amount": 1,
+          "description": "Application for a financial order"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15595761167",
+      "payments": [
+        {
+          "amount": 245,
+          "description": "PayBubble payment",
+          "reference": "RC-1559-5761-1673-9477",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 238,
+          "code": "FEE0387",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 245,
+          "memo_line": "RECEIPT OF FEES - Tribunal hearing other",
+          "natural_account_code": "4481102179",
+          "net_amount": 245,
+          "description": "Order w/o hrg(r46) - s84 LoPA1925(e) discharge /modify restrictive convenant"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15595774744",
+      "payments": [
+        {
+          "amount": 550,
+          "description": "PayBubble payment",
+          "reference": "RC-1559-5774-7456-7344",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 239,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 550,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15595775767",
+      "payments": [
+        {
+          "amount": 110,
+          "description": "PayBubble payment",
+          "reference": "RC-1559-5775-7677-4632",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 241,
+          "code": "FEE0391",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 110,
+          "memo_line": "RECEIPT OF FEES - Family enforcement other",
+          "natural_account_code": "4481102167",
+          "net_amount": 110,
+          "description": "Request for attempt at execution of a warrant at a new address"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15595785145",
+      "payments": [
+        {
+          "amount": 255,
+          "description": "PayBubble payment",
+          "reference": "RC-1559-5785-1454-6116",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 243,
+          "code": "FEE0229",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 255,
+          "memo_line": "RECEIPT OF FEES - Family misc other",
+          "natural_account_code": "4481102177",
+          "net_amount": 255,
+          "description": "Application for a financial order"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15595791566",
+      "payments": [
+        {
+          "amount": 255,
+          "description": "PayBubble payment",
+          "reference": "RC-1559-5791-5665-7047",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 244,
+          "code": "FEE0229",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 255,
+          "memo_line": "RECEIPT OF FEES - Family misc other",
+          "natural_account_code": "4481102177",
+          "net_amount": 255,
+          "description": "Application for a financial order"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15596451680",
+      "payments": [
+        {
+          "amount": 550,
+          "description": "PayBubble payment",
+          "reference": "RC-1559-6451-6804-4316",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 248,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 550,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15596457193",
+      "payments": [
+        {
+          "amount": 255,
+          "description": "PayBubble payment",
+          "reference": "RC-1559-6457-1939-1109",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 249,
+          "code": "FEE0229",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 255,
+          "memo_line": "RECEIPT OF FEES - Family misc other",
+          "natural_account_code": "4481102177",
+          "net_amount": 255,
+          "description": "Application for a financial order"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15596468181",
+      "payments": [
+        {
+          "amount": 255,
+          "description": "PayBubble payment",
+          "reference": "RC-1559-6468-1814-9620",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 250,
+          "code": "FEE0229",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 255,
+          "memo_line": "RECEIPT OF FEES - Family misc other",
+          "natural_account_code": "4481102177",
+          "net_amount": 255,
+          "description": "Application for a financial order"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15596478456",
+      "payments": [
+        {
+          "amount": 0.01,
+          "description": "PayBubble payment",
+          "reference": "RC-1559-6478-4569-8704",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [
+        {
+          "remission_reference": "RM-1559-6478-4590-1801",
+          "hwf_reference": "HWF-A1B-23C",
+          "hwf_amount": 549.99,
+          "ccd_case_number": "1111-2222-3333-4444",
+          "fee_code": "FEE0002",
+          "date_created": "2019-06-04T11:30:45.977+0000"
+        }
+      ],
+      "fees": [
+        {
+          "id": 251,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 0.01,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15596515611",
+      "payments": [
+        {
+          "amount": 50,
+          "description": "PayBubble payment",
+          "reference": "RC-1559-6515-6112-3434",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 252,
+          "code": "FEE0228",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 50,
+          "memo_line": "RECEIPT OF FEES - Family GA other",
+          "natural_account_code": "4481102165",
+          "net_amount": 50,
+          "description": "Application (without notice)"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15596677304",
+      "payments": [
+        {
+          "amount": 550,
+          "description": "PayBubble payment",
+          "reference": "RC-1559-6677-3041-2284",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 260,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 550,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15597290778",
+      "payments": [
+        {
+          "amount": 550,
+          "description": "PayBubble payment",
+          "reference": "RC-1559-7290-7787-0340",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 266,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "net_amount": 550,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15597398709",
+      "payments": [
+        {
+          "amount": 95,
+          "description": "PayBubble payment",
+          "reference": "RC-1559-7398-7096-9348",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 267,
+          "code": "FEE0232",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 95,
+          "memo_line": "RECEIPT OF FEES - Civil misc other",
+          "natural_account_code": "4481102157",
+          "net_amount": 95,
+          "description": "Affidavit"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15597402662",
+      "payments": [
+        {
+          "amount": 110,
+          "description": "PayBubble payment",
+          "reference": "RC-1559-7402-6621-3168",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 268,
+          "code": "FEE0391",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 110,
+          "memo_line": "RECEIPT OF FEES - Family enforcement other",
+          "natural_account_code": "4481102167",
+          "net_amount": 110,
+          "description": "Request for attempt at execution of a warrant at a new address"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15597425461",
+      "payments": [
+        {
+          "amount": 50,
+          "description": "PayBubble payment",
+          "reference": "RC-1559-7425-4611-5395",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 277,
+          "code": "FEE0228",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 50,
+          "memo_line": "RECEIPT OF FEES - Family GA other",
+          "natural_account_code": "4481102165",
+          "net_amount": 50,
+          "description": "Application (without notice)"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15597425870",
+      "payments": [
+        {
+          "amount": 1,
+          "description": "PayBubble payment",
+          "reference": "RC-1559-7425-8707-7355",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [
+        {
+          "remission_reference": "RM-1559-7425-8733-0200",
+          "hwf_reference": "HWF-A1B-23C",
+          "hwf_amount": 49,
+          "ccd_case_number": "1111-2222-3333-4444",
+          "fee_code": "FEE0228",
+          "date_created": "2019-06-05T13:49:47.362+0000"
+        }
+      ],
+      "fees": [
+        {
+          "id": 278,
+          "code": "FEE0228",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 50,
+          "memo_line": "RECEIPT OF FEES - Family GA other",
+          "natural_account_code": "4481102165",
+          "net_amount": 1,
+          "description": "Application (without notice)"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15599093264",
+      "payments": [
+        {
+          "amount": 245,
+          "description": "PayBubble payment",
+          "reference": "RC-1559-9093-2640-3461",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 304,
+          "code": "FEE0387",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 245,
+          "memo_line": "RECEIPT OF FEES - Tribunal hearing other",
+          "natural_account_code": "4481102179",
+          "net_amount": 245,
+          "description": "Order w/o hrg(r46) - s84 LoPA1925(e) discharge /modify restrictive convenant"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15607877315",
+      "payments": [
+        {
+          "amount": 550,
+          "description": "PayBubble payment",
+          "reference": "RC-1560-7877-3151-8983",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 333,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "net_amount": 550,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15608523399",
+      "payments": [
+        {
+          "amount": 550,
+          "description": "PayBubble payment",
+          "reference": "RC-1560-8523-3996-4052",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Declined",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 335,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "net_amount": 550,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15608530376",
+      "payments": [
+        {
+          "amount": 0.01,
+          "description": "PayBubble payment",
+          "reference": "RC-1560-8530-3760-5849",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Failed",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [
+        {
+          "remission_reference": "RM-1560-8530-3785-9925",
+          "hwf_reference": "HWF-A1B-23C",
+          "hwf_amount": 94.99,
+          "ccd_case_number": "1111-2222-3333-4444",
+          "fee_code": "FEE0232",
+          "date_created": "2019-06-18T10:17:17.880+0000"
+        }
+      ],
+      "fees": [
+        {
+          "id": 337,
+          "code": "FEE0232",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 95,
+          "memo_line": "RECEIPT OF FEES - Civil misc other",
+          "natural_account_code": "4481102157",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "net_amount": 0.01,
+          "description": "Affidavit"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15608541356",
+      "payments": [
+        {
+          "amount": 50,
+          "description": "PayBubble payment",
+          "reference": "RC-1560-8541-3567-0941",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 338,
+          "code": "FEE0270",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 50,
+          "memo_line": "RECEIPT OF FEES - Family issue other",
+          "natural_account_code": "4481102162",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "net_amount": 50,
+          "description": "Application for an order of assessment of costs"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15608541403",
+      "payments": [
+        {
+          "amount": 50,
+          "description": "PayBubble payment",
+          "reference": "RC-1560-8541-4034-2254",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Failed",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 339,
+          "code": "FEE0270",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 50,
+          "memo_line": "RECEIPT OF FEES - Family issue other",
+          "natural_account_code": "4481102162",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "net_amount": 50,
+          "description": "Application for an order of assessment of costs"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15608550965",
+      "payments": [
+        {
+          "amount": 550,
+          "description": "PayBubble payment",
+          "reference": "RC-1560-8550-9659-2990",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Success",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 340,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "net_amount": 550,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15616499974",
+      "payments": [
+        {
+          "amount": 0.01,
+          "description": "PayBubble payment",
+          "reference": "RC-1561-6499-9749-6453",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Failed",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [
+        {
+          "remission_reference": "RM-1561-6499-9786-4890",
+          "hwf_reference": "HWF-A1B-23C",
+          "hwf_amount": 244.99,
+          "ccd_case_number": "1111-2222-3333-4444",
+          "fee_code": "FEE0387",
+          "date_created": "2019-06-27T15:39:57.877+0000"
+        }
+      ],
+      "fees": [
+        {
+          "id": 484,
+          "code": "FEE0387",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 245,
+          "memo_line": "RECEIPT OF FEES - Tribunal hearing other",
+          "natural_account_code": "4481102179",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "net_amount": 0.01,
+          "description": "Order w/o hrg(r46) - s84 LoPA1925(e) discharge /modify restrictive convenant"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15616501594",
+      "payments": [
+        {
+          "amount": 95,
+          "description": "PayBubble payment",
+          "reference": "RC-1561-6501-5940-2602",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Failed",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 485,
+          "code": "FEE0232",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 95,
+          "memo_line": "RECEIPT OF FEES - Civil misc other",
+          "natural_account_code": "4481102157",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "net_amount": 95,
+          "description": "Affidavit"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15622539649",
+      "payments": [
+        {
+          "amount": 12,
+          "description": "PayBubble payment",
+          "reference": "RC-1562-2539-6499-0132",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [
+        {
+          "remission_reference": "RM-1562-2539-6536-9492",
+          "hwf_reference": "HWF-A1B-23C",
+          "hwf_amount": 243,
+          "ccd_case_number": "1111-2222-3333-4444",
+          "fee_code": "FEE0229",
+          "date_created": "2019-07-04T15:26:05.368+0000"
+        }
+      ],
+      "fees": [
+        {
+          "id": 509,
+          "code": "FEE0229",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 255,
+          "memo_line": "RECEIPT OF FEES - Family misc other",
+          "natural_account_code": "4481102177",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "net_amount": 12,
+          "description": "Application for a financial order"
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15626696407",
+      "payments": [
+        {
+          "amount": 550,
+          "description": "PayBubble payment",
+          "reference": "RC-1562-6696-4076-3785",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 555,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "net_amount": 550,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15626697556",
+      "payments": [
+        {
+          "amount": 550,
+          "description": "PayBubble payment",
+          "reference": "RC-1562-6697-5561-7180",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 556,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "net_amount": 550,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15626700243",
+      "payments": [
+        {
+          "amount": 550,
+          "description": "PayBubble payment",
+          "reference": "RC-1562-6700-2433-5216",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [],
+      "fees": [
+        {
+          "id": 557,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "net_amount": 550,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15628534786",
+      "payments": [
+        {
+          "amount": 1,
+          "description": "PayBubble payment",
+          "reference": "RC-1562-8534-7870-2608",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [
+        {
+          "remission_reference": "RM-1562-8534-7923-9857",
+          "hwf_reference": "HWF-A1B-23C",
+          "hwf_amount": 549,
+          "ccd_case_number": "1111-2222-3333-4444",
+          "fee_code": "FEE0002",
+          "date_created": "2019-07-11T14:57:59.290+0000"
+        }
+      ],
+      "fees": [
+        {
+          "id": 604,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "net_amount": 1,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15628537648",
+      "payments": [
+        {
+          "amount": 12,
+          "description": "PayBubble payment",
+          "reference": "RC-1562-8537-6482-2623",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [
+        {
+          "remission_reference": "RM-1562-8537-6514-0629",
+          "hwf_reference": "HWF-A1B-23C",
+          "hwf_amount": 538,
+          "ccd_case_number": "1111-2222-3333-4444",
+          "fee_code": "FEE0002",
+          "date_created": "2019-07-11T15:02:45.197+0000"
+        }
+      ],
+      "fees": [
+        {
+          "id": 605,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "net_amount": 12,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15628537668",
+      "payments": [
+        {
+          "amount": 12,
+          "description": "PayBubble payment",
+          "reference": "RC-1562-8537-6682-5137",
+          "currency": "GBP",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "channel": "telephony",
+          "method": "card",
+          "external_provider": "pci pal",
+          "status": "Initiated",
+          "site_id": "AA02",
+          "service_name": "Divorce"
+        }
+      ],
+      "remissions": [
+        {
+          "remission_reference": "RM-1562-8537-6774-4816",
+          "hwf_reference": "HWF-A1B-23C",
+          "hwf_amount": 538,
+          "ccd_case_number": "1111-2222-3333-4444",
+          "fee_code": "FEE0002",
+          "date_created": "2019-07-11T15:02:47.722+0000"
+        }
+      ],
+      "fees": [
+        {
+          "id": 606,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "net_amount": 12,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    },
+    {
+      "payment_group_reference": "2019-15607874600",
+      "remissions": [],
+      "fees": [
+        {
+          "id": 332,
+          "code": "FEE0002",
+          "version": "4",
+          "volume": 1,
+          "calculated_amount": 550,
+          "memo_line": "GOV - App for divorce/nullity of marriage or CP",
+          "natural_account_code": "4481102159",
+          "ccd_case_number": "1111-2222-3333-4444",
+          "net_amount": 550,
+          "description": "Filing an application for a divorce, nullity or civil partnership dissolution – fees order 1.2."
+        }
+      ]
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-[
+{"payment_groups": [
   {
     "payment_group_reference": "2019-15573125001",
     "payments": [
@@ -44,4 +44,4 @@
       }
     ]
   }
-]
+]}

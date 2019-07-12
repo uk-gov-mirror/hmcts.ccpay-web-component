@@ -31,7 +31,7 @@ export class CaseTransactionsComponent implements OnInit {
 
     this.caseTransactionsService.getPaymentGroups(this.ccdCaseNumber).subscribe(
       paymentGroups => {
-        this.paymentGroups = paymentGroups;
+        this.paymentGroups = paymentGroups['payment_groups'];
         this.calculateAmounts();
       },
       (error: any) => {
