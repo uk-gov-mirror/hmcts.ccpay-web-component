@@ -8,6 +8,7 @@ import { ErrorHandlerService } from '../shared/error-handler.service';
 import { catchError } from 'rxjs/operators';
 import { LoggerService } from '../shared/logger/logger.service';
 import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
+import { AddRemissionRequest } from '../../interfaces/AddRemissionRequest';
 
 
 @Injectable({
@@ -44,5 +45,9 @@ export class PaymentViewService {
       );
   }
 
-  getRemissio
+  postPaymentGroupWithRemissions(paymentGroupReference: string, feeId: number, body: AddRemissionRequest): Observable<any> {
+    return this.http.post(`${this.paymentLibService.API_ROOT}/payment-groups/${paymentGroupReference}/fees/${feeId}/remissions`, body).pipe(
+      catchError(this.errorHandlerService.handleError)
+    );
+  }
 }

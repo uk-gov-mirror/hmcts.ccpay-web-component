@@ -8,7 +8,8 @@ import {PaymentLibService} from './payment-lib.service';
     <ccpay-payment-list *ngIf="viewName === 'payment-list'"></ccpay-payment-list>
     <ccpay-payment-view *ngIf="viewName === 'payment-view'"></ccpay-payment-view>
     <ccpay-case-transactions *ngIf="viewName === 'case-transactions'"></ccpay-case-transactions>
-    <ccpay-fee-summary *ngIf="viewName === 'fee-summary'"></ccpay-fee-summary>
+    <ccpay-fee-summary *ngIf="viewName === 'fee-summary'"
+    [ccdCaseNumber]="CCD_CASE_NUMBER" [paymentGroupRef]="paymentGroupReference"></ccpay-fee-summary>
   `
 })
 

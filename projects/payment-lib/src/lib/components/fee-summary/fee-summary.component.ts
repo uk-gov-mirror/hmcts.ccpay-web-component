@@ -14,6 +14,7 @@ import { ConsoleLoggerService } from '../../services/shared/logger/console-logge
 
 export class FeeSummaryComponent implements OnInit {
   @Input() paymentGroupRef: string;
+  @Input() ccdCaseNumber: string;
 
   paymentGroup: IPaymentGroup;
   errorMessage: string;
@@ -27,19 +28,11 @@ export class FeeSummaryComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // this.feeRegisterSearchService.setURL(this.feeAPIRoot);
-    // this.feeRegisterSearchService.getFees()
-    //   .subscribe(
-    //     (fees: IFee[]) => this.fees = fees
-    // );
-
-    // if (!this.paymentLibComponent.paymentGroupReference) {
-    //   this.paymentLibComponent.paymentGroupReference = '2018-15310089885';
-    // }
-
     this.viewStatus = 'main';
+    console.log(this.ccdCaseNumber);
+    console.log(this.paymentGroupRef);
 
-    this.paymentViewService.getPaymentGroupDetails(this.paymentLibComponent.paymentGroupReference,
+    this.paymentViewService.getPaymentGroupDetails(this.paymentGroupRef,
       this.paymentLibComponent.paymentMethod).subscribe(
       paymentGroup => {
         this.paymentGroup = paymentGroup;
@@ -65,31 +58,16 @@ export class FeeSummaryComponent implements OnInit {
     return null;
   }
 
-  // getFeeByFeeCode(feeCode: string): IFee {
-  //   if (this.paymentGroup && this.fees && this.fees.length > 0) {
-  //     for (const fee of this.fees) {
-  //       if (fee.code === feeCode) {
-  //         return fee;
-  //       }
-  //     }
-  //   }
-  //   return null;
-  // }
-
   addRemission(fee: IFee) {
-    console.log('add remission');
-    console.log(fee);
     this.currentFee = fee;
     this.viewStatus = 'add_remission';
   }
 
   editRemission(fee: IFee) {
     console.log('edit remission');
-
   }
 
   cancelRemission() {
     this.viewStatus = 'main';
   }
-
 }

@@ -1,7 +1,16 @@
 <div class="add-remission">
+    <div *ngIf="errorMessage">
+      <div class="error-summary" role="group" aria-labelledby="failure-error-summary-heading" tabindex="-1">
+        <h2 class="heading-medium error-summary-heading" id="failure-error-summary-heading">
+          Error in processing the request
+        </h2>
+        <div class="govuk-error-summary__body">
+          {{ errorMessage }}
+        </div>
+      </div>
+    </div>
   <ng-container *ngIf="viewStatus === 'main'">
       <h1 class="heading-large">Add remission</h1>
-  
       <form novalidate>
         <div class="govuk-form-group">
           <form [formGroup]="remissionForm" novalidate>
@@ -26,7 +35,6 @@
                 <input class="govuk-input govuk-input--width-10" id="amount" name="amount" type="text" aria-describedby="amount-currency" pattern="\d+(\.\d{2})?" formControlName="amount">
                 <span class="error-message" *ngIf="remissionForm.controls.amount.dirty && remissionForm.controls.amount.errors">
                   <p *ngIf="remissionForm.controls.amount.errors.required">Amount cannot be empty.</p>
-                  <p *ngIf="remissionForm.controls.amount.errors.pattern">Invalid amount format.</p>
                 </span>
               </div>
             </div> 
