@@ -4,6 +4,7 @@ export interface IFee {
   volume: number;
   calculated_amount: number;
   net_amount: number;
+  description: string;
   ccd_case_number: string;
   id: number;
   jurisdiction1: string;

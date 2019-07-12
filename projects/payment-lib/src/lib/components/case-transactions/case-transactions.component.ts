@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {PaymentLibComponent} from '../../payment-lib.component';
-import {PaymentListService} from '../../services/payment-list/payment-list.service';
-import {IPayments} from '../../interfaces/IPayments';
+import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
+import {CaseTransactionsService} from '../../services/case-transactions/case-transactions.service';
+import {IFee} from '../../interfaces/IFee';
+import {IPayment} from '../../interfaces/IPayment';
+import {IRemission} from '../../interfaces/IRemission';
 
 @Component({
   selector: 'ccpay-case-transactions',
@@ -10,14 +13,95 @@ import {IPayments} from '../../interfaces/IPayments';
 })
 export class CaseTransactionsComponent implements OnInit {
   ccdCaseNumber: string;
-  payments: IPayments;
+  paymentGroups: IPaymentGroup[] = [];
+  payments: IPayment[] = [];
+  remissions: IRemission[] = [];
+  fees: IFee[] = [];
   errorMessage: string;
-  code: string;
+  totalFees: number;
+  totalPayments: number;
+  totalRemissions: number;
 
-  constructor(private paymentListService: PaymentListService,
+
+  constructor(private caseTransactionsService: CaseTransactionsService,
               private paymentLibComponent: PaymentLibComponent) { }
 
   ngOnInit() {
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
+
+    this.caseTransactionsService.getPaymentGroups(this.ccdCaseNumber).subscribe(
+      paymentGroups => {
+        this.paymentGroups = paymentGroups;
+        this.calculateAmounts();
+      },
+      (error: any) => {
+        this.errorMessage = <any>error;
+        this.setDefaults();
+      }
+    );
+  }
+
+  setDefaults(): void {
+    this.totalPayments = 0.00;
+    this.totalRemissions = 0.00;
+    this.totalFees = 0.00;
+}
+
+  calculateAmounts(): void {
+    let feesTotal = 0.00;
+    let paymentsTotal = 0.00;
+    let remissionsTotal = 0.00;
+
+    this.paymentGroups.forEach(paymentGroup => {
+      if (paymentGroup.fees) {
+        paymentGroup.fees.forEach(fee => {
+          feesTotal = feesTotal + fee.calculated_amount;
+          this.fees.push(fee);
+        });
+      }
+      this.totalFees = feesTotal;
+
+      if (paymentGroup.payments) {
+        paymentGroup.payments.forEach(payment => {
+          paymentsTotal = paymentsTotal + payment.amount;
+          this.payments.push(payment);
+        });
+      }
+      this.totalPayments = paymentsTotal;
+
+      if (paymentGroup.remissions) {
+        paymentGroup.remissions.forEach(remisison => {
+          remissionsTotal = remissionsTotal + remisison.hwf_amount;
+          this.remissions.push(remisison);
+        });
+      }
+      this.totalRemissions = remissionsTotal;
+    });
+  }
+
+  getGroupOutstandingAmount(paymentGroup: IPaymentGroup): number {
+    let feesTotal = 0.00;
+    let paymentsTotal = 0.00;
+    let remissionsTotal = 0.00;
+
+    if (paymentGroup.fees) {
+      paymentGroup.fees.forEach(fee => {
+        feesTotal = feesTotal + fee.calculated_amount;
+      });
+    }
+
+    if (paymentGroup.payments) {
+      paymentGroup.payments.forEach(payment => {
+        paymentsTotal = paymentsTotal + payment.amount;
+      });
+    }
+
+    if (paymentGroup.remissions) {
+      paymentGroup.remissions.forEach(remission => {
+        remissionsTotal = remissionsTotal + remission.hwf_amount;
+      });
+    }
+
+    return (feesTotal - remissionsTotal) - paymentsTotal;
   }
 }

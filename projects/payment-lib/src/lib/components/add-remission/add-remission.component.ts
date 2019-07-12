@@ -13,7 +13,6 @@ export class AddRemissionComponent implements OnInit {
 
   remissionForm: FormGroup;
   hasErrors = false;
-
   viewStatus = 'main';
 
   constructor(private formBuilder: FormBuilder) { }
