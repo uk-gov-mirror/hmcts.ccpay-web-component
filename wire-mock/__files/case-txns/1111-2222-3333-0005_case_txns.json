@@ -1,0 +1,30 @@
+{
+  "payment_groups": [
+    {
+      "payment_group_reference": "2019-15631925909",
+      "remissions": [
+        {
+          "remission_reference": "RM-1563-1925-9093-7183",
+          "hwf_reference": "HWF0001",
+          "hwf_amount": 250,
+          "beneficiary_name": "A remission",
+          "ccd_case_number": "1111-2222-0001-0001",
+          "fee_code": "FEE0123",
+          "date_created": "2019-07-15T12:09:50.999+0000"
+        }
+      ],
+      "fees": [
+        {
+          "id": 618,
+          "code": "FEE0123",
+          "version": "1",
+          "volume": 1,
+          "calculated_amount": 550,
+          "ccd_case_number": "1111-2222-0001-0001",
+          "reference": "12345601",
+          "net_amount": 300
+        }
+      ]
+    }
+  ]
+}
