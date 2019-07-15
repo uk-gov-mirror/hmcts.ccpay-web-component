@@ -1,3 +1,12 @@
+<div class="govuk-breadcrumbs">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <a [href]="'/fee-search'"  class="govuk-back-link govuk-label">Back</a>
+    </li>
+  </ol>
+</div>
+
+
 <h1 class="heading-large">Fee Summary</h1>
 <div *ngIf="errorMessage">
   <div class="error-summary" role="group" aria-labelledby="failure-error-summary-heading" tabindex="-1">
@@ -52,8 +61,7 @@
         </table>
       </td>
       <td class="govuk-table__cell">
-        <a *ngIf="!getRemissionByFeeCode(fee.code)" (click)="addRemission(fee)">add remission</a>
-        <a *ngIf="getRemissionByFeeCode(fee.code)" (click)="editRemission(fee)">edit remission</a>
+        <a (click)="addRemission(fee)">add remission</a>
       </td>
       <td class="govuk-table__cell"><a href="">remove fee</a></td>
     </tr>

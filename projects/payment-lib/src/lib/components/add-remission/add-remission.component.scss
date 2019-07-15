@@ -1,5 +1,5 @@
 .add-remission {
-  .govuk-button {
+  .button {
     margin-top: 20px;
     margin-left: 2px;
     margin-right: 2px;
@@ -13,5 +13,11 @@
     background-color: #dee0e2;
     box-shadow: 0 2px 0 #858688;
     color: #0b0c0c;
-}
+  }
+
+  .govuk-warning-text__text,
+  .govuk-label--s,
+  .hmcts-currency-input__symbol {
+    font-size: 19px;
+  }
 }

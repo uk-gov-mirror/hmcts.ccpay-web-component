@@ -4,7 +4,6 @@ import { PaymentViewService } from '../../services/payment-view/payment-view.ser
 import { PaymentLibComponent } from '../../payment-lib.component';
 import { IRemission } from '../../interfaces/IRemission';
 import { IFee } from '../../interfaces/IFee';
-import { ConsoleLoggerService } from '../../services/shared/logger/console-logger.service';
 
 @Component({
   selector: 'ccpay-fee-summary',
@@ -38,9 +37,9 @@ export class FeeSummaryComponent implements OnInit {
         this.paymentGroup = paymentGroup;
         this.totalFee = 0;
         if (this.paymentGroup.fees) {
-          this.paymentGroup.fees.forEach(function(fee) {
-            this.totalFee += fee.net_amount;
-          });
+          for (const fee of this.paymentGroup.fees) {
+            this.totalFee = this.totalFee + fee.net_amount;
+          }
         }
       },
       (error: any) => this.errorMessage = error

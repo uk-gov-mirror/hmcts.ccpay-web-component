@@ -34,20 +34,14 @@ export class AddRemissionComponent implements OnInit {
   }
 
   addRemission() {
-    // if (this.remissionForm.valid) {
-      console.log('next step go to add remission confirmation page');
-      this.viewStatus = 'confirmation';
-    // }
+    this.viewStatus = 'confirmation';
   }
 
   confirmRemission() {
-    console.log('confirm remission');
     this.fee.net_amount = this.remissionForm.controls.amount.value;
     const remissionAmount = this.fee.calculated_amount - this.fee.net_amount;
     const requestBody = new AddRemissionRequest
     (this.ccdCaseNumber, this.fee, remissionAmount, this.remissionForm.controls.remissionCode.value);
-    console.log('request body: ');
-    console.log(requestBody);
     this.paymentViewService.postPaymentGroupWithRemissions(this.paymentGroupRef, this.fee.id, requestBody).subscribe(
       response => {
         if (response.success) {
