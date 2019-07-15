@@ -1,4 +1,4 @@
-[
+{"payment_groups": [
   {
     "payment_group_reference": "2019-15573125001",
     "payments": [
@@ -17,7 +17,6 @@
         "date_created": "2018-10-14T16:34:08.872+0000"
       }
     ],
-    "remissions": [],
     "fees": [
       {
         "code": "FEE0123",
@@ -31,8 +30,6 @@
   },
   {
     "payment_group_reference": "2019-15573125002",
-    "payments": [],
-    "remissions": [],
     "fees": [
       {
         "code": "FEE0245",
@@ -44,4 +41,4 @@
       }
     ]
   }
-]
+]}

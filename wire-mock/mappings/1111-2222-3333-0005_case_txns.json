@@ -4,7 +4,7 @@
     "url": "/cases/1111-2222-3333-0005/paymentgroups"
   },
   "response": {
-    "status": 404,
+    "status": 200,
     "headers": {
       "Content-Type": "application/json",
       "Access-Control-Allow-Origin" : "http://localhost:4200",
@@ -15,9 +15,6 @@
       "x-xss-protection" : "1; mode=block",
       "Access-Control-Allow-Credentials": "true"
     },
-    "jsonBody": {"status":"Error","message":"Case transactions not found"},
-    "headers": {
-      "Content-Type": "application/json"
-    }
+    "bodyFileName": "case-txns/1111-2222-3333-0005_case_txns.json"
   }
 }
