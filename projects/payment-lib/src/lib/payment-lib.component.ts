@@ -9,7 +9,7 @@ import {PaymentLibService} from './payment-lib.service';
     <ccpay-payment-view *ngIf="viewName === 'payment-view'"></ccpay-payment-view>
     <ccpay-case-transactions *ngIf="viewName === 'case-transactions'"></ccpay-case-transactions>
     <ccpay-fee-summary *ngIf="viewName === 'fee-summary'"
-    [ccdCaseNumber]="CCD_CASE_NUMBER" [paymentGroupRef]="paymentGroupReference"></ccpay-fee-summary>
+                       [ccdCaseNumber]="CCD_CASE_NUMBER" [paymentGroupRef]="paymentGroupReference"></ccpay-fee-summary>
   `
 })
 
@@ -37,7 +37,7 @@ export class PaymentLibComponent implements OnInit {
     if (this.VIEW === 'case-transactions') {
       this.viewName = 'case-transactions';
     } else if (this.VIEW === 'fee-summary') {
-        this.viewName = 'fee-summary';
+      this.viewName = 'fee-summary';
     } else {
       this.viewName = 'payment-list';
     }
