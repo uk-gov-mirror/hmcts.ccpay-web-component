@@ -22,7 +22,10 @@
       "code": "FEE0216",
       "version": "3",
       "volume": 1,
-      "calculated_amount": 200
+      "calculated_amount": 200,
+      "description": "Fee description",
+      "net_amount": 0,
+      "id": 1
     }
   ]
 }
