@@ -38,8 +38,8 @@ export class AddRemissionComponent implements OnInit {
   }
 
   confirmRemission() {
-    this.fee.net_amount = this.remissionForm.controls.amount.value;
-    const remissionAmount = this.fee.calculated_amount - this.fee.net_amount;
+    const newNetAmount = this.remissionForm.controls.amount.value;
+    const remissionAmount = this.fee.net_amount - newNetAmount;
     const requestBody = new AddRemissionRequest
     (this.ccdCaseNumber, this.fee, remissionAmount, this.remissionForm.controls.remissionCode.value);
     this.paymentViewService.postPaymentGroupWithRemissions(this.paymentGroupRef, this.fee.id, requestBody).subscribe(
@@ -50,6 +50,5 @@ export class AddRemissionComponent implements OnInit {
       },
       (error: any) => this.errorMessage = error
     );
-
   }
 }
