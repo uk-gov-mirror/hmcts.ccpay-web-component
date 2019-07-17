@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {PaymentLibComponent} from '../../payment-lib.component';
 import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
 import {CaseTransactionsService} from '../../services/case-transactions/case-transactions.service';
@@ -12,6 +12,7 @@ import {IRemission} from '../../interfaces/IRemission';
   styleUrls: ['./case-transactions.component.css']
 })
 export class CaseTransactionsComponent implements OnInit {
+  @Input() readOnly: boolean;
   ccdCaseNumber: string;
   paymentGroups: IPaymentGroup[] = [];
   payments: IPayment[] = [];

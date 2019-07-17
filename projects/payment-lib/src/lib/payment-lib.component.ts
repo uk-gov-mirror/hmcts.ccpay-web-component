@@ -7,7 +7,7 @@ import {PaymentLibService} from './payment-lib.service';
   template: `
     <ccpay-payment-list *ngIf="viewName === 'payment-list'"></ccpay-payment-list>
     <ccpay-payment-view *ngIf="viewName === 'payment-view'"></ccpay-payment-view>
-    <ccpay-case-transactions *ngIf="viewName === 'case-transactions'"></ccpay-case-transactions>
+    <ccpay-case-transactions *ngIf="viewName === 'case-transactions'" [readOnly]="READONLY"></ccpay-case-transactions>
     <ccpay-fee-summary *ngIf="viewName === 'fee-summary'"
                        [ccdCaseNumber]="CCD_CASE_NUMBER" [paymentGroupRef]="paymentGroupReference"></ccpay-fee-summary>
   `
@@ -19,6 +19,8 @@ export class PaymentLibComponent implements OnInit {
   @Input('PAYMENT_METHOD') PAYMENT_METHOD: string;
   @Input('VIEW') VIEW: string;
   @Input('PAYMENT_GROUP_REF') PAYMENT_GROUP_REF?: string;
+  @Input('READONLY') READONLY: boolean;
+
 
   paymentMethod: string;
   paymentGroupReference: string;
