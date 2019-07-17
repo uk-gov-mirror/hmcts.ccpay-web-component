@@ -12,7 +12,7 @@ import {IRemission} from '../../interfaces/IRemission';
   styleUrls: ['./case-transactions.component.css']
 })
 export class CaseTransactionsComponent implements OnInit {
-  @Input() readOnly: boolean;
+  readOnly: boolean;
   ccdCaseNumber: string;
   paymentGroups: IPaymentGroup[] = [];
   payments: IPayment[] = [];
@@ -29,6 +29,7 @@ export class CaseTransactionsComponent implements OnInit {
 
   ngOnInit() {
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
+    this.readOnly = this.paymentLibComponent.READONLY;
 
     this.caseTransactionsService.getPaymentGroups(this.ccdCaseNumber).subscribe(
       paymentGroups => {
