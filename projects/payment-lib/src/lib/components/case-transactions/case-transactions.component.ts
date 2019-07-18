@@ -22,7 +22,6 @@ export class CaseTransactionsComponent implements OnInit {
   totalPayments: number;
   totalRemissions: number;
 
-
   constructor(private caseTransactionsService: CaseTransactionsService,
               private paymentLibComponent: PaymentLibComponent) { }
 
@@ -78,6 +77,7 @@ export class CaseTransactionsComponent implements OnInit {
       }
       this.totalRemissions = remissionsTotal;
     });
+
   }
 
   getGroupOutstandingAmount(paymentGroup: IPaymentGroup): number {

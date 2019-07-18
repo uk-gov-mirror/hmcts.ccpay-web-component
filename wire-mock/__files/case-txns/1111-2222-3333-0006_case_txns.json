@@ -19,7 +19,7 @@
           "code": "FEE0123",
           "version": "1",
           "volume": 1,
-          "calculated_amount": 250,
+          "calculated_amount": 550,
           "ccd_case_number": "1111-2222-0001-0001",
           "reference": "12345601",
           "net_amount": 300

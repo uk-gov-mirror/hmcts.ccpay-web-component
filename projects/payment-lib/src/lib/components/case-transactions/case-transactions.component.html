@@ -189,24 +189,19 @@
             <td class="govuk-table__cell" colspan="5">No remissions recorded</td>
           </tbody>
         </table>
+
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-full">
+            <button type="submit" [disabled]="getGroupOutstandingAmount(paymentGroup) === 0" [ngClass]="getPaymentBtnClass()">
+              Add payment
+            </button>
+
+            <button type="submit" disabled="disabled" aria-disabled="true" class="button button--disabled">
+              Add remission
+            </button>
+          </div>
+        </div>
       </div>
     </div>
-
-    <div class="govuk-grid-row" align="right">
-      <div class="govuk-grid-column-full">
-        <button type="submit" disabled="disabled" aria-disabled="true" class="button button-disabled govuk-!-margin-right-1">
-          Delete fee
-        </button>
-
-        <button type="submit" disabled="disabled" aria-disabled="true" class="button button--disabled govuk-!-margin-right-1">
-          Add payment
-        </button>
-
-        <button type="submit" disabled="disabled" aria-disabled="true" class="button button--disabled">
-          Add remission
-        </button>
-      </div>
-    </div>
-
   </main>
 </div>
