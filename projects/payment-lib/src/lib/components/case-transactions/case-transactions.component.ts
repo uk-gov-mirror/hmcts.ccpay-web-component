@@ -5,6 +5,7 @@ import {CaseTransactionsService} from '../../services/case-transactions/case-tra
 import {IFee} from '../../interfaces/IFee';
 import {IPayment} from '../../interfaces/IPayment';
 import {IRemission} from '../../interfaces/IRemission';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'ccpay-case-transactions',
@@ -12,6 +13,7 @@ import {IRemission} from '../../interfaces/IRemission';
   styleUrls: ['./case-transactions.component.css']
 })
 export class CaseTransactionsComponent implements OnInit {
+  enableButton: boolean;
   ccdCaseNumber: string;
   paymentGroups: IPaymentGroup[] = [];
   payments: IPayment[] = [];
@@ -22,11 +24,13 @@ export class CaseTransactionsComponent implements OnInit {
   totalPayments: number;
   totalRemissions: number;
 
-  constructor(private caseTransactionsService: CaseTransactionsService,
-              private paymentLibComponent: PaymentLibComponent) { }
+  constructor(private router: Router,
+    private caseTransactionsService: CaseTransactionsService,
+    private paymentLibComponent: PaymentLibComponent) { }
 
   ngOnInit() {
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
+    this.enableButton = this.paymentLibComponent.ENABLEBUTTON;
 
     this.caseTransactionsService.getPaymentGroups(this.ccdCaseNumber).subscribe(
       paymentGroups => {
@@ -104,5 +108,10 @@ export class CaseTransactionsComponent implements OnInit {
     }
 
     return (feesTotal - remissionsTotal) - paymentsTotal;
+  }
+
+  redirectToFeeSearchPage(event: any) {
+    event.preventDefault();
+    this.router.navigateByUrl(`/fee-search?ccdCaseNumber=${this.ccdCaseNumber}`);
   }
 }

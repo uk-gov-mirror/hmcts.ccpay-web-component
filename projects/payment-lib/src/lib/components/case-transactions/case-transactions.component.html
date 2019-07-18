@@ -6,7 +6,6 @@
       </li>
     </ol>
   </div>
-
   <main class="govuk-main-wrapper">
 
     <div class="govuk-grid-row">
@@ -14,8 +13,8 @@
         <h1 class="govuk-heading-xl">Case transactions</h1>
       </div>
 
-      <div class="govuk-grid-column-one-third" align="right">
-        <a [href]="'/fee-search'"  class="button">Add new fee</a>
+      <div class="govuk-grid-column-one-third" align="right" *ngIf="enableButton">
+        <a (click)="redirectToFeeSearchPage($event)" class="button">Add a new fee</a>
       </div>
     </div>
 
@@ -190,16 +189,15 @@
           </tbody>
         </table>
 
-        <div class="govuk-grid-row">
-          <div class="govuk-grid-column-full">
-            <button type="submit" [disabled]="getGroupOutstandingAmount(paymentGroup) === 0" [ngClass]="getPaymentBtnClass()">
+        <div *ngIf="enableButton">
+            <button type="submit" [disabled]="getGroupOutstandingAmount(paymentGroup) === 0"
+                                  [ngClass]='getGroupOutstandingAmount(paymentGroup) === 0 ? "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"'>
               Add payment
             </button>
 
             <button type="submit" disabled="disabled" aria-disabled="true" class="button button--disabled">
               Add remission
             </button>
-          </div>
         </div>
       </div>
     </div>
