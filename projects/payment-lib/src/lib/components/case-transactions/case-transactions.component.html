@@ -14,7 +14,7 @@
       </div>
 
       <div class="govuk-grid-column-one-third" align="right" *ngIf="enableButton">
-        <a [href]="'/fee-search'"  class="button">Add new fee</a>
+        <a (click)="redirectToFeeSearchPage($event)" class="button">Add new fee</a>
       </div>
     </div>
 
