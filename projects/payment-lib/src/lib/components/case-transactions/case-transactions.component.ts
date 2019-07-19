@@ -114,4 +114,8 @@ export class CaseTransactionsComponent implements OnInit {
     event.preventDefault();
     this.router.navigateByUrl(`/fee-search?ccdCaseNumber=${this.ccdCaseNumber}`);
   }
+
+  redirectToFeeSummaryPage(paymentGroupReference: string) {
+    this.router.navigateByUrl(`/payment-history/${this.ccdCaseNumber}?view=fee-summary&paymentGroupRef=${paymentGroupReference}`);
+  }
 }

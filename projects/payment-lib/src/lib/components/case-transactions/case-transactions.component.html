@@ -190,7 +190,8 @@
         </table>
 
         <div *ngIf="enableButton">
-            <button type="submit" [disabled]="getGroupOutstandingAmount(paymentGroup) === 0"
+            <button type="submit" (click)="redirectToFeeSummaryPage(paymentGroup.payment_group_reference)"
+                                  [disabled]="getGroupOutstandingAmount(paymentGroup) === 0"
                                   [ngClass]='getGroupOutstandingAmount(paymentGroup) === 0 ? "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"'>
               Add payment
             </button>
