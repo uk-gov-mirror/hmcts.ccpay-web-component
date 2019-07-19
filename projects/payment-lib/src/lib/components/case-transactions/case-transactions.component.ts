@@ -115,8 +115,7 @@ export class CaseTransactionsComponent implements OnInit {
     this.router.navigateByUrl(`/fee-search?ccdCaseNumber=${this.ccdCaseNumber}`);
   }
 
-  redirectToFeeSummaryPage(event: any, paymentGroupReference: string) {
-    event.preventDefault();
+  redirectToFeeSummaryPage(paymentGroupReference: string) {
     this.router.navigateByUrl(`/payment-history/${this.ccdCaseNumber}?view=fee-summary&paymentGroupRef=${paymentGroupReference}`);
   }
 }
