@@ -34,7 +34,6 @@ export class CaseTransactionsComponent implements OnInit {
 
     this.caseTransactionsService.getPaymentGroups(this.ccdCaseNumber).subscribe(
       paymentGroups => {
-        console.log('Remissions: ', JSON.stringify(paymentGroups['payment_groups']));
         this.paymentGroups = paymentGroups['payment_groups'];
         this.calculateAmounts();
       },
@@ -115,7 +114,8 @@ export class CaseTransactionsComponent implements OnInit {
     this.router.navigateByUrl(`/fee-search?ccdCaseNumber=${this.ccdCaseNumber}`);
   }
 
-  redirectToFeeSummaryPage(paymentGroupReference: string) {
-    this.router.navigateByUrl(`/payment-history/${this.ccdCaseNumber}?view=fee-summary&paymentGroupRef=${paymentGroupReference}`);
+  redirectToFeeSummaryPage(paymentGroup: IPaymentGroup) {
+    this.paymentLibComponent.paymentGroupReference = paymentGroup.payment_group_reference;
+    this.paymentLibComponent.viewName = 'fee-summary';
   }
 }
