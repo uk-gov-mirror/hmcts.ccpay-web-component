@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-ccd-search',
@@ -24,6 +24,6 @@ export class CcdSearchComponent implements OnInit {
   showCaseTransactions() {
     this.ccdCaseNumber = this.searchForm.get('searchInput').value;
     console.log('Search ccdCaseNumber: ', this.ccdCaseNumber);
-    this.router.navigateByUrl(`/payment-lib-int/${this.ccdCaseNumber}?view=case-transactions`);
+    this.router.navigateByUrl(`/payment-lib-int/${this.ccdCaseNumber}?view=case-transactions&takePayment=true`);
   }
 }
