@@ -5,6 +5,7 @@ import {CaseTransactionsService} from '../../services/case-transactions/case-tra
 import {IFee} from '../../interfaces/IFee';
 import {IPayment} from '../../interfaces/IPayment';
 import {IRemission} from '../../interfaces/IRemission';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'ccpay-case-transactions',
@@ -23,9 +24,9 @@ export class CaseTransactionsComponent implements OnInit {
   totalPayments: number;
   totalRemissions: number;
 
-
-  constructor(private caseTransactionsService: CaseTransactionsService,
-              private paymentLibComponent: PaymentLibComponent) { }
+  constructor(private router: Router,
+    private caseTransactionsService: CaseTransactionsService,
+    private paymentLibComponent: PaymentLibComponent) { }
 
   ngOnInit() {
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
@@ -33,7 +34,6 @@ export class CaseTransactionsComponent implements OnInit {
 
     this.caseTransactionsService.getPaymentGroups(this.ccdCaseNumber).subscribe(
       paymentGroups => {
-        console.log('Remissions: ', JSON.stringify(paymentGroups['payment_groups']));
         this.paymentGroups = paymentGroups['payment_groups'];
         this.calculateAmounts();
       },
@@ -80,6 +80,7 @@ export class CaseTransactionsComponent implements OnInit {
       }
       this.totalRemissions = remissionsTotal;
     });
+
   }
 
   getGroupOutstandingAmount(paymentGroup: IPaymentGroup): number {
@@ -106,5 +107,15 @@ export class CaseTransactionsComponent implements OnInit {
     }
 
     return (feesTotal - remissionsTotal) - paymentsTotal;
+  }
+
+  redirectToFeeSearchPage(event: any) {
+    event.preventDefault();
+    this.router.navigateByUrl(`/fee-search?ccdCaseNumber=${this.ccdCaseNumber}`);
+  }
+
+  loadFeeSummaryPage(paymentGroup: IPaymentGroup) {
+    this.paymentLibComponent.paymentGroupReference = paymentGroup.payment_group_reference;
+    this.paymentLibComponent.viewName = 'fee-summary';
   }
 }
