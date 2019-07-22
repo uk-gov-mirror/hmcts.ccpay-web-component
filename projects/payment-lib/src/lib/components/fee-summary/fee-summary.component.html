@@ -22,13 +22,10 @@
 <table class="govuk-table"  *ngIf="!errorMessage && paymentGroup && viewStatus === 'main'">
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
-      <th class="govuk-table__header grey-text" scope="col">Fee Code</th>
-      <th class="govuk-table__header grey-text" scope="col">Fee description</th>
-      <th class="govuk-table__header grey-text" scope="col">Remission code</th>
-      <th class="govuk-table__header grey-text" scope="col"></th>
-      <th class="govuk-table__header grey-text" scope="col"></th>
-      <th class="govuk-table__header grey-text" scope="col"></th>
-      <th class="govuk-table__header grey-text" scope="col"></th>
+      <th class="govuk-table__header govuk-!-font-weight-bold" scope="col">Fee Code</th>
+      <th class="govuk-table__header govuk-!-font-weight-bold" scope="col">Fee description</th>
+      <th class="govuk-table__header govuk-!-font-weight-bold" scope="col">Remission code</th>
+      <th class="govuk-table__header govuk-!-font-weight-bold" scope="col"></th>
     </tr>
   </thead>
   <tbody class="govuk-table__body" *ngIf="paymentGroup.fees">
@@ -39,31 +36,32 @@
       <td class="govuk-table__cell grey-text">
         <table class="govuk-table">
           <tr class="govuk-table__row">
-            <td class="no-border no-padding grey-text">Fee amount</td>
-            <td class="no-border no-padding">{{ fee.calculated_amount | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
+            <td class="no-border grey-text subcolumn-1">Fee amount:</td>
+            <td class="no-border subcolumn-2">{{ fee.calculated_amount | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
+            <td class="no-border subcolumn-3"><a href="">remove fee</a></td>
           </tr>
           <tr class="govuk-table__row">
-            <td class="no-border no-padding grey-text">Volume</td>
-            <td class="no-border no-padding">{{ fee.volume }}</td>
+            <td class="no-border grey-text subcolumn-1">Volume:</td>
+            <td class="no-border subcolumn-2">{{ fee.volume }}</td>
+            <td class="no-border subcolumn-3"></td>
           </tr>
           <tr class="govuk-table__row">
-            <td class="no-border no-padding grey-text">Fee total</td>
-            <td class="no-border no-padding">{{ fee.calculated_amount  | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
+            <td class="no-border grey-text subcolumn-1">Fee total:</td>
+            <td class="no-border subcolumn-2">{{ fee.calculated_amount  | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
+            <td class="no-border subcolumn-3"></td>
           </tr>
           <tr class="govuk-table__row">
-            <td class="no-border no-padding grey-text">Remission amount</td>
-            <td class="no-border no-padding">{{ getRemissionByFeeCode(fee.code)?.hwf_amount? ( getRemissionByFeeCode(fee.code)?.hwf_amount  | currency:'GBP':'symbol-narrow':'1.2-2') : '-' }}</td>
+            <td class="no-border grey-text subcolumn-1">Remission amount:</td>
+            <td class="no-border subcolumn-2">{{ getRemissionByFeeCode(fee.code)?.hwf_amount? ( getRemissionByFeeCode(fee.code)?.hwf_amount  | currency:'GBP':'symbol-narrow':'1.2-2') : '-' }}</td>
+            <td class="no-border subcolumn-3"> <a *ngIf="getRemissionByFeeCode(fee)=== null" (click)="addRemission(fee)">add remission</a></td>
           </tr>
           <tr class="govuk-table__row">
-            <td class="no-border no-padding grey-text">Total after remission</td>
-            <td class="no-border no-padding">{{ fee.net_amount  | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
+            <td class="no-border grey-text subcolumn-1">Total after remission:</td>
+            <td class="no-border subcolumn-2">{{ fee.net_amount  | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
+            <td class="no-border subcolumn-3"></td>
           </tr>
         </table>
       </td>
-      <td class="govuk-table__cell">
-        <a *ngIf="getRemissionByFeeCode(fee)=== null" (click)="addRemission(fee)">add remission</a>
-      </td>
-      <td class="govuk-table__cell"><a href="">remove fee</a></td>
     </tr>
     <tr class="govuk-table__row">
       <td class="govuk-table__cell"></td>
@@ -72,13 +70,12 @@
       <td class="govuk-table__cell"> 
         <table class="govuk-table">
           <tr class="govuk-table__row">
-            <td class="no-border no-padding grey-text govuk-!-font-weight-bold">Total to be paid</td>
-            <td class="no-border no-padding govuk-!-font-weight-bold">{{ totalFee | currency:'GBP':'symbol-narrow':'1.2-2'}}</td>
+            <td class="no-border govuk-!-font-weight-bold subcolumn-1">Total to be paid</td>
+            <td class="no-border subcolumn-2">{{ totalFee | currency:'GBP':'symbol-narrow':'1.2-2'}}</td>
+            <td class="no-border subcolumn-3"></td>
           </tr>
         </table>
       </td>
-      <td class="govuk-table__cell"></td>
-      <td class="govuk-table__cell"></td>
     </tr>
   </tbody>
 </table>
