@@ -61,7 +61,7 @@
         </table>
       </td>
       <td class="govuk-table__cell">
-        <a (click)="addRemission(fee)">add remission</a>
+        <a *ngIf="getRemissionByFeeCode(fee)=== null" (click)="addRemission(fee)">add remission</a>
       </td>
       <td class="govuk-table__cell"><a href="">remove fee</a></td>
     </tr>
