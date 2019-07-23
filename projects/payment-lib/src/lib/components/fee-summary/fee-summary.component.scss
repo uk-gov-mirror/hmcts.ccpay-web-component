@@ -8,7 +8,7 @@
 }
 
 table th, table td {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 500;
   vertical-align: top;
   max-width: 320px;
@@ -19,5 +19,19 @@ table th, table td {
 
   .no-padding {
     padding: 0;
+  }
+
+  .subcolumn-1 {
+    width: 40%;
+  }
+  .subcolumn-2, .subcolumn-3 {
+    width: 30%;
+  }
+
+  .subcolumn-2 {
+    text-align: right;
+  }
+  .subcolumn-3 {
+    text-align: center;
   }
 }

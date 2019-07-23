@@ -5,6 +5,9 @@ import { PaymentViewService } from '../../services/payment-view/payment-view.ser
 import { PaymentLibComponent } from '../../payment-lib.component';
 import { AddRemissionComponent } from './add-remission.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('Add remission component', () => {
   let component: AddRemissionComponent,
@@ -13,13 +16,16 @@ describe('Add remission component', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [AddRemissionComponent],
-      providers: [PaymentViewService, PaymentLibComponent],
+      providers: [PaymentViewService, PaymentLibComponent,
+        { provide: Router, useClass: class { navigate = jasmine.createSpy('navigate'); } }],
       imports: [
         CommonModule,
         HttpClientModule,
         ReactiveFormsModule,
-        FormsModule
+        FormsModule,
+        RouterTestingModule
       ],
+      schemas: [NO_ERRORS_SCHEMA]
     });
 
     fixture = TestBed.createComponent(AddRemissionComponent);
