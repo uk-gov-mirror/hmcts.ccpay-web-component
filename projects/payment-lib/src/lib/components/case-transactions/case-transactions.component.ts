@@ -13,7 +13,7 @@ import {Router} from '@angular/router';
   styleUrls: ['./case-transactions.component.css']
 })
 export class CaseTransactionsComponent implements OnInit {
-  enableButton: boolean;
+  takePayment: boolean;
   ccdCaseNumber: string;
   paymentGroups: IPaymentGroup[] = [];
   payments: IPayment[] = [];
@@ -30,7 +30,7 @@ export class CaseTransactionsComponent implements OnInit {
 
   ngOnInit() {
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
-    this.enableButton = this.paymentLibComponent.ENABLEBUTTON;
+    this.takePayment = this.paymentLibComponent.TAKEPAYMENT;
 
     this.caseTransactionsService.getPaymentGroups(this.ccdCaseNumber).subscribe(
       paymentGroups => {
