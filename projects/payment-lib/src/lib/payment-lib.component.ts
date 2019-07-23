@@ -19,7 +19,7 @@ export class PaymentLibComponent implements OnInit {
   @Input('PAYMENT_METHOD') PAYMENT_METHOD: string;
   @Input('VIEW') VIEW: string;
   @Input('PAYMENT_GROUP_REF') PAYMENT_GROUP_REF?: string;
-  @Input('ENABLEBUTTON') ENABLEBUTTON: boolean;
+  @Input('TAKEPAYMENT') TAKEPAYMENT: boolean;
 
 
   paymentMethod: string;
