@@ -1,6 +1,7 @@
 { "payment_groups": [
   {
     "payment_group_reference": "2019-15573125001",
+    "remissions": [],
     "payments": [
       {
         "amount": 249.01,
@@ -30,6 +31,8 @@
   },
   {
     "payment_group_reference": "2019-15573125002",
+    "payments": [],
+    "remissions": [],
     "fees": [
       {
         "code": "FEE0245",

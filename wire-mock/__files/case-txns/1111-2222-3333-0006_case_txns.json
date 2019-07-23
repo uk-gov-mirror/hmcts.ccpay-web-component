@@ -2,6 +2,7 @@
   "payment_groups": [
     {
       "payment_group_reference": "2019-15631925909",
+      "payments": [],
       "remissions": [
         {
           "remission_reference": "RM-1563-1925-9093-7183",

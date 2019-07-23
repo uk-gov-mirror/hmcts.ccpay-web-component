@@ -158,7 +158,7 @@
                 <td class="govuk-table__cell">{{ payment.status }}</td>
               </tr>
           </tbody>
-          <tbody class="govuk-table__body" *ngIf="!paymentGroup.payments">
+          <tbody class="govuk-table__body" *ngIf="paymentGroup.payments?.length === 0">
             <td class="govuk-table__cell" colspan="6">No payments recorded</td>
           </tbody>
         </table>
@@ -184,7 +184,7 @@
                 <td class="govuk-table__cell">{{ remission.hwf_amount }}</td>
               </tr>
           </tbody>
-          <tbody class="govuk-table__body" *ngIf="!paymentGroup.remissions">
+          <tbody class="govuk-table__body" *ngIf="paymentGroup.remissions?.length === 0">
             <td class="govuk-table__cell" colspan="5">No remissions recorded</td>
           </tbody>
         </table>
