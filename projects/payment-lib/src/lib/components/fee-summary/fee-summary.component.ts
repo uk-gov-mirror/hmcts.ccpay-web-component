@@ -36,7 +36,7 @@ export class FeeSummaryComponent implements OnInit {
 
    // this.paymentGroupRef = '2018-15310089885';
   //  this.paymentGroupRef = '2019-15496299273';
-  // this.paymentGroupRef = '2019-15573125981';
+  //this.paymentGroupRef = '2019-15573125981';
 
     this.paymentViewService.getPaymentGroupDetails(this.paymentGroupRef,
       this.paymentLibComponent.paymentMethod).subscribe(
@@ -76,7 +76,7 @@ export class FeeSummaryComponent implements OnInit {
   takePayment() {
     console.log('take payment');
     const requestBody = new PaymentToPayhubRequest(this.ccdCaseNumber, this.paymentGroup.fees, this.totalFee);
-
+    console.log(requestBody);
     this.paymentViewService.postPaymentToPayHub(requestBody).subscribe(
       response => {
         console.log('send to pay hub success');
@@ -85,11 +85,26 @@ export class FeeSummaryComponent implements OnInit {
         this.viewStatus = 'payhub_view';
       },
       (error: any) => {
-        if (error && error.err && error.err.message) {
-          this.errorMessage = error.err.message;
-        } else {
-          this.errorMessage = error;
-        }
+        console.log(error);
+        this.errorMessage = error;
+      }
+    );
+  }
+
+  takePaymentUsingPromise() {
+    console.log('take payment Promise');
+    const requestBody = new PaymentToPayhubRequest(this.ccdCaseNumber, this.paymentGroup.fees, this.totalFee);
+    console.log(requestBody);
+    this.paymentViewService.postPaymentToPayHubPromise(requestBody).then(
+      resp => {
+        console.log('send to pay hub success using promise');
+        console.log(resp);
+        this.payhubHtml = resp;
+        this.viewStatus = 'payhub_view';
+      },
+      (error: any) => {
+        console.log(error);
+        this.errorMessage = error;
       }
     );
   }
