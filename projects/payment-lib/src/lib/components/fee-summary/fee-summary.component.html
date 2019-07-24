@@ -83,7 +83,18 @@
     <tr class="govuk-table__row">
       <td class="no-border"></td>
       <td class="no-border"></td>
-      <td class="no-border"></td>
+      <td class="no-border">
+        <table class="govuk-table">
+          <tr class="govuk-table__row">
+            <td class="no-border subcolumn-2"> 
+              <button type="submit" (click)="takePaymentUsingPromise()"
+              [disabled]="totalFee <= 0"
+              [ngClass]='totalFee <= 0 ? "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"'>
+              Take payment Promise
+            </button></td>
+          </tr>
+        </table>
+      </td>
       <td class="no-border"> 
           <table class="govuk-table">
             <tr class="govuk-table__row">
@@ -101,4 +112,4 @@
   </table>
 </div>
 <ccpay-add-remission *ngIf="viewStatus === 'add_remission' && currentFee" [fee]="currentFee" [ccdCaseNumber]="ccdCaseNumber" [paymentGroupRef]="paymentGroupRef" (cancelRemission)="cancelRemission()"></ccpay-add-remission>
-<div *ngIf="viewStatus === 'payhub_view'" [innerHTML]="payhubHtml | sanitizeHtml" id="payhub-html-id"></div>
+<div *ngIf="viewStatus === 'payhub_view' && payhubHtml" [innerHTML]="payhubHtml | sanitizeHtml" id="payhub-html-id"></div>

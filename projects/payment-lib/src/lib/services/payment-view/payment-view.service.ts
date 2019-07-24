@@ -57,4 +57,8 @@ export class PaymentViewService {
       catchError(this.errorHandlerService.handleError)
     );
   }
+
+  postPaymentToPayHubPromise(body: PaymentToPayhubRequest): Promise<any> {
+    return this.http.post(`${this.paymentLibService.API_ROOT}/send-to-payhub`, body).toPromise();
+  }
 }

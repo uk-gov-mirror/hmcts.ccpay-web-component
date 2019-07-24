@@ -49,11 +49,7 @@ export class AddRemissionComponent implements OnInit {
         }
       },
       (error: any) => {
-        if (error && error.err && error.err.message) {
-          this.errorMessage = error.err.message;
-        } else {
-          this.errorMessage = error;
-        }
+        this.errorMessage = error;
       }
     );
   }
