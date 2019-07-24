@@ -5,7 +5,7 @@ export class PaymentToPayhubRequest {
   site_id = 'AA02';
   description = 'PayBubble payment';
   channel = 'telephony';
-  provider = 'pci_pal';
+  provider = 'pci pal';
   service = 'DIVORCE';
 
   ccd_case_number: string;
