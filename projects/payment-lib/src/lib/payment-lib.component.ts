@@ -35,14 +35,11 @@ export class PaymentLibComponent implements OnInit {
     if (this.PAYMENT_GROUP_REF) {
       this.paymentGroupReference = this.PAYMENT_GROUP_REF;
     }
-    console.log('VIEW IS ===> ', this.VIEW);
-    if (this.VIEW === 'case-transactions') {
-      this.viewName = 'case-transactions';
-    } else if (this.VIEW === 'fee-summary') {
+
+    if (this.VIEW === 'fee-summary') {
       this.viewName = 'fee-summary';
     } else {
-      this.viewName = 'payment-list';
+      this.viewName = 'case-transactions';
     }
   }
-
 }
