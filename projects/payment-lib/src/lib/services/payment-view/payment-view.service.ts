@@ -9,6 +9,7 @@ import { catchError } from 'rxjs/operators';
 import { LoggerService } from '../shared/logger/logger.service';
 import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
 import { AddRemissionRequest } from '../../interfaces/AddRemissionRequest';
+import { PaymentToPayhubRequest } from '../../interfaces/PaymentToPayhubRequest';
 
 
 @Injectable({
@@ -47,6 +48,12 @@ export class PaymentViewService {
 
   postPaymentGroupWithRemissions(paymentGroupReference: string, feeId: number, body: AddRemissionRequest): Observable<any> {
     return this.http.post(`${this.paymentLibService.API_ROOT}/payment-groups/${paymentGroupReference}/fees/${feeId}/remissions`, body).pipe(
+      catchError(this.errorHandlerService.handleError)
+    );
+  }
+
+  postPaymentToPayHub(body: PaymentToPayhubRequest): Observable<any> {
+    return this.http.post(`${this.paymentLibService.API_ROOT}/send-to-payhub`, body).pipe(
       catchError(this.errorHandlerService.handleError)
     );
   }

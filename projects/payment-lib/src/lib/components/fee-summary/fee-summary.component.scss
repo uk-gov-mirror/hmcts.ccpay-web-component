@@ -1,37 +1,40 @@
-.grey-text {
-  color: #6b7376;
-  font-weight: 500;
-}
 
-.govuk-table {
-  margin-bottom: 0;
-}
-
-table th, table td {
-  font-size: 16px;
-  font-weight: 500;
-  vertical-align: top;
-  max-width: 320px;
+.fee-summary {
+  .grey-text {
+    color: #6b7376;
+    font-weight: 500;
+  }
+  
+  .govuk-table {
+    margin-bottom: 0;
+  }
 
   .no-border {
     border: none;
+    border-bottom: none;
   }
 
-  .no-padding {
-    padding: 0;
-  }
-
-  .subcolumn-1 {
-    width: 40%;
-  }
-  .subcolumn-2, .subcolumn-3 {
-    width: 30%;
-  }
-
-  .subcolumn-2 {
-    text-align: right;
-  }
-  .subcolumn-3 {
-    text-align: center;
+  table th, table td {
+    font-size: 15px;
+    font-weight: 500;
+    vertical-align: top;
+    max-width: 320px;
+  
+    .no-padding {
+      padding: 0;
+    }
+  
+    .subcolumn-1 {
+      width: 45%;
+    }
+  
+    .subcolumn-2 {
+      width: 25%;
+      text-align: right;
+    }
+    .subcolumn-3 {
+      width: 30%;
+      text-align: center;
+    }
   }
 }

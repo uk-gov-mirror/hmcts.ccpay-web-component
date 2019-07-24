@@ -4,6 +4,8 @@ import { PaymentViewService } from '../../services/payment-view/payment-view.ser
 import { PaymentLibComponent } from '../../payment-lib.component';
 import { IRemission } from '../../interfaces/IRemission';
 import { IFee } from '../../interfaces/IFee';
+import { PaymentToPayhubRequest } from '../../interfaces/PaymentToPayhubRequest';
+import { SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'ccpay-fee-summary',
@@ -20,6 +22,7 @@ export class FeeSummaryComponent implements OnInit {
   viewStatus = 'main';
   currentFee: IFee;
   totalFee: number;
+  payhubHtml: SafeHtml;
 
   constructor(
     private paymentViewService: PaymentViewService,
@@ -30,6 +33,10 @@ export class FeeSummaryComponent implements OnInit {
     this.viewStatus = 'main';
     console.log(this.ccdCaseNumber);
     console.log(this.paymentGroupRef);
+
+   // this.paymentGroupRef = '2018-15310089885';
+  //  this.paymentGroupRef = '2019-15496299273';
+  // this.paymentGroupRef = '2019-15573125981';
 
     this.paymentViewService.getPaymentGroupDetails(this.paymentGroupRef,
       this.paymentLibComponent.paymentMethod).subscribe(
@@ -62,11 +69,28 @@ export class FeeSummaryComponent implements OnInit {
     this.viewStatus = 'add_remission';
   }
 
-  editRemission(fee: IFee) {
-    console.log('edit remission');
-  }
-
   cancelRemission() {
     this.viewStatus = 'main';
+  }
+
+  takePayment() {
+    console.log('take payment');
+    const requestBody = new PaymentToPayhubRequest(this.ccdCaseNumber, this.paymentGroup.fees, this.totalFee);
+
+    this.paymentViewService.postPaymentToPayHub(requestBody).subscribe(
+      response => {
+        console.log('send to pay hub success');
+        console.log(response);
+        this.payhubHtml = response;
+        this.viewStatus = 'payhub_view';
+      },
+      (error: any) => {
+        if (error && error.err && error.err.message) {
+          this.errorMessage = error.err.message;
+        } else {
+          this.errorMessage = error;
+        }
+      }
+    );
   }
 }

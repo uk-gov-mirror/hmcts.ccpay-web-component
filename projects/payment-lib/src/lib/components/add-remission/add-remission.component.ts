@@ -48,7 +48,13 @@ export class AddRemissionComponent implements OnInit {
           this.paymentLibComponent.viewName = 'case-transactions';
         }
       },
-      (error: any) => this.errorMessage = error
+      (error: any) => {
+        if (error && error.err && error.err.message) {
+          this.errorMessage = error.err.message;
+        } else {
+          this.errorMessage = error;
+        }
+      }
     );
   }
 }
