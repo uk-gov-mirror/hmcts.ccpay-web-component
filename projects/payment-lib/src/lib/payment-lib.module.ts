@@ -15,6 +15,7 @@ import { CaseTransactionsComponent } from './components/case-transactions/case-t
 import { FeeSummaryComponent } from './components/fee-summary/fee-summary.component';
 import { AddRemissionComponent } from './components/add-remission/add-remission.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SanitizeHtmlPipe } from './pipes/sanitize-html.pipe';
 
 @NgModule({
   imports: [
@@ -33,7 +34,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     PbaDetailsComponent,
     CaseTransactionsComponent,
     FeeSummaryComponent,
-    AddRemissionComponent
+    AddRemissionComponent,
+    SanitizeHtmlPipe
   ],
   exports: [ PaymentLibComponent ],
   providers: [ { provide: LoggerService, useClass: ConsoleLoggerService }]
