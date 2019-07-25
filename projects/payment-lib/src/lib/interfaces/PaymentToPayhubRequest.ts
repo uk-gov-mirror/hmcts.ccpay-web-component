@@ -9,12 +9,10 @@ export class PaymentToPayhubRequest {
   service = 'DIVORCE';
 
   ccd_case_number: string;
-  fees: IFee[];
   amount: number;
 
-  constructor(ccd_case_number: string, fee: IFee[], amount: number) {
+  constructor(ccd_case_number: string, amount: number) {
     this.ccd_case_number = ccd_case_number;
-    this.fees = fee;
     this.amount = amount;
   }
 }
