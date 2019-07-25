@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
 
 import {IPayment} from '../../interfaces/IPayment';
@@ -10,6 +10,7 @@ import { LoggerService } from '../shared/logger/logger.service';
 import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
 import { AddRemissionRequest } from '../../interfaces/AddRemissionRequest';
 import { PaymentToPayhubRequest } from '../../interfaces/PaymentToPayhubRequest';
+import { Meta } from '@angular/platform-browser';
 
 
 @Injectable({
@@ -17,10 +18,30 @@ import { PaymentToPayhubRequest } from '../../interfaces/PaymentToPayhubRequest'
 })
 export class PaymentViewService {
 
+  private meta: Meta;
+
   constructor(private http: HttpClient,
               private logger: LoggerService,
               private errorHandlerService: ErrorHandlerService,
               private paymentLibService: PaymentLibService) { }
+
+  addHeaders(options: any): any {
+    const headers = {};
+    if (options.headers) {
+      options.headers.forEach(element => {
+        headers[element] = options.headers.get(element);
+      });
+    }
+    headers['X-Requested-With'] = 'XMLHttpRequest';
+
+    if (this.meta && this.meta.getTag('name=csrf-token')) {
+      const csrfToken = this.meta.getTag('name=csrf-token');
+      headers['CSRF-Token'] = csrfToken.content;
+    }
+    options.headers = new HttpHeaders(headers);
+    options.responseType = 'text';
+    return options;
+  }
 
   getPaymentDetails(paymentReference: string, paymentMethod: string): Observable<IPayment> {
     this.logger.info('Payment-view-service getPaymentDetails for: ', paymentReference);
@@ -53,12 +74,18 @@ export class PaymentViewService {
   }
 
   postPaymentToPayHub(body: PaymentToPayhubRequest): Observable<any> {
-    return this.http.post(`${this.paymentLibService.API_ROOT}/send-to-payhub`, body).pipe(
+    const opts = {};
+    this.addHeaders(opts);
+    console.log(opts);
+    return this.http.post(`${this.paymentLibService.API_ROOT}/send-to-payhub`, body, opts).pipe(
       catchError(this.errorHandlerService.handleError)
     );
   }
 
   postPaymentToPayHubPromise(body: PaymentToPayhubRequest): Promise<any> {
-    return this.http.post(`${this.paymentLibService.API_ROOT}/send-to-payhub`, body).toPromise();
+    const opts = {};
+    this.addHeaders(opts);
+    console.log(opts);
+    return this.http.post(`${this.paymentLibService.API_ROOT}/send-to-payhub`, body, opts).toPromise();
   }
 }
