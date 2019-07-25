@@ -14,8 +14,6 @@ export class ErrorHandlerService {
 
 
   handleError(err: HttpErrorResponse): Observable<any> {
-    console.log('handle Error:');
-    console.log(err);
     let errorMessage: string;
     if (err.error instanceof Error) {
       // A client-side or network error occurred.

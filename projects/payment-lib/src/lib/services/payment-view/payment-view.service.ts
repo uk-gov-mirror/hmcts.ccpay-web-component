@@ -76,16 +76,8 @@ export class PaymentViewService {
   postPaymentToPayHub(body: PaymentToPayhubRequest): Observable<any> {
     const opts = {};
     this.addHeaders(opts);
-    console.log(opts);
     return this.http.post(`${this.paymentLibService.API_ROOT}/send-to-payhub`, body, opts).pipe(
       catchError(this.errorHandlerService.handleError)
     );
-  }
-
-  postPaymentToPayHubPromise(body: PaymentToPayhubRequest): Promise<any> {
-    const opts = {};
-    this.addHeaders(opts);
-    console.log(opts);
-    return this.http.post(`${this.paymentLibService.API_ROOT}/send-to-payhub`, body, opts).toPromise();
   }
 }

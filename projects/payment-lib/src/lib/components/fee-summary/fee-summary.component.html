@@ -1,14 +1,13 @@
-<div class="fee-summary">
   
 <div class="govuk-breadcrumbs">
-    <ol class="govuk-breadcrumbs__list">
-      <li class="govuk-breadcrumbs__list-item">
-        <a [href]="'/fee-search'"  class="govuk-back-link govuk-label">Back</a>
-      </li>
-    </ol>
-  </div>
-  
-  
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <a [href]="'/fee-search'"  class="govuk-back-link govuk-label">Back</a>
+    </li>
+  </ol>
+</div>
+
+<div class="fee-summary" *ngIf="viewStatus === 'main'">
   <h1 class="heading-large">Fee Summary</h1>
   <div *ngIf="errorMessage">
     <div class="error-summary" role="group" aria-labelledby="failure-error-summary-heading" tabindex="-1">
@@ -21,7 +20,7 @@
     </div>
   </div>
   
-  <table class="govuk-table"  *ngIf="!errorMessage && paymentGroup && viewStatus === 'main'">
+  <table class="govuk-table"  *ngIf="!errorMessage && paymentGroup">
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
         <th class="govuk-table__header govuk-!-font-weight-bold" scope="col">Fee Code</th>
@@ -83,18 +82,7 @@
     <tr class="govuk-table__row">
       <td class="no-border"></td>
       <td class="no-border"></td>
-      <td class="no-border">
-        <table class="govuk-table">
-          <tr class="govuk-table__row">
-            <td class="no-border subcolumn-2"> 
-              <button type="submit" (click)="takePaymentUsingPromise()"
-              [disabled]="totalFee <= 0"
-              [ngClass]='totalFee <= 0 ? "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"'>
-              Take payment Promise
-            </button></td>
-          </tr>
-        </table>
-      </td>
+      <td class="no-border"></td>
       <td class="no-border"> 
           <table class="govuk-table">
             <tr class="govuk-table__row">
