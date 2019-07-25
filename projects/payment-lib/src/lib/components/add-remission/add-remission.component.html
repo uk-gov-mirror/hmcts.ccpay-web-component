@@ -14,18 +14,15 @@
       <form novalidate>
         <div class="govuk-form-group">
           <form [formGroup]="remissionForm" novalidate>
-            <div class="govuk-form-group">
+            <div class="govuk-form-group" [ngClass]="{'form-group-error': remissionCodeHasError}">
               <label class="govuk-label govuk-label--s" for="remission-code">
                   Add remission to {{ fee.code }}:{{ fee.description }}
-                <span class="form-hint">Enter remission for reference. For example: HWF-A1B-23C</span>
+                <span class="form-hint" [ngClass]="{'inline-error-message': remissionCodeHasError}">Enter remission for reference. For example: HWF-A1B-23C</span>
               </label>
-              <input class="govuk-input govuk-input--width-20 govuk-!-margin-right-1" id="remission-code" name="remission-code" type="text" formControlName="remissionCode">
-              <span class="error-message" *ngIf="remissionForm.controls.remissionCode.dirty && remissionForm.controls.remissionCode.errors">
-                <p>Remission code cannot be empty.</p>
-              </span>
+              <input class="govuk-input govuk-input--width-20 govuk-!-margin-right-1" id="remissionCode" name="remissionCode" pattern="([a-zA-Z\d]{3})-([a-zA-Z\d]{3})-([a-zA-Z\d]{3})" type="text" formControlName="remissionCode">
             </div>
-            <div class="govuk-form-group">
-              <label class="govuk-label govuk-label--s" for="amount">
+            <div class="govuk-form-group" [ngClass]="{'form-group-error': amountHasError}">
+              <label class="govuk-label govuk-label--s" [ngClass]="{'inline-error-message': amountHasError}" for="amount">
                 How much does the applicant need to pay?
               </label>
               
@@ -33,9 +30,6 @@
                 <div class="hmcts-currency-input">
                 <div class="hmcts-currency-input__symbol" aria-hidden="true">£</div>
                 <input class="govuk-input govuk-input--width-10" id="amount" name="amount" type="text" aria-describedby="amount-currency" pattern="\d+(\.\d{2})?" formControlName="amount">
-                <span class="error-message" *ngIf="remissionForm.controls.amount.dirty && remissionForm.controls.amount.errors">
-                  <p *ngIf="remissionForm.controls.amount.errors.required">Amount cannot be empty.</p>
-                </span>
               </div>
             </div> 
           </form>
