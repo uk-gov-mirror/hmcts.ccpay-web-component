@@ -21,6 +21,9 @@ export class AddRemissionComponent implements OnInit {
   viewStatus = 'main';
   errorMessage = null;
 
+  remissionCodeHasError = false;
+  amountHasError = false;
+
   constructor(private formBuilder: FormBuilder,
     private paymentViewService: PaymentViewService,
     private paymentLibComponent: PaymentLibComponent) { }
@@ -34,7 +37,22 @@ export class AddRemissionComponent implements OnInit {
   }
 
   addRemission() {
-    this.viewStatus = 'confirmation';
+    this.resetRemissionForm();
+    if (this.remissionForm.dirty && this.remissionForm.valid) {
+      this.viewStatus = 'confirmation';
+    }else {
+      if(this.remissionForm.controls.remissionCode.invalid ) {
+        this.remissionCodeHasError = true;
+      }
+      if(this.remissionForm.controls.amount.invalid){
+        this.amountHasError = true;
+      }
+    }
+  }
+
+  resetRemissionForm(){
+    this.remissionCodeHasError = false;
+    this.amountHasError = false;
   }
 
   confirmRemission() {
