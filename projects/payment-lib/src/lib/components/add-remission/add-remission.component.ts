@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { IFee } from '../../interfaces/IFee';
 import { AddRemissionRequest } from '../../interfaces/AddRemissionRequest';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
@@ -30,8 +30,14 @@ export class AddRemissionComponent implements OnInit {
 
   ngOnInit() {
     this.remissionForm = this.formBuilder.group({
-      remissionCode: ['', Validators.required],
-      amount: ['', Validators.required],
+      remissionCode: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.pattern('^([a-zA-Z0-9]{3})-([a-zA-Z0-9]{3})-([a-zA-Z0-9]{3})$')
+      ])),
+      amount: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.pattern('^[0-9]+(\\.[0-9]{2})?$')
+      ]))
     });
     this.viewStatus = 'main';
   }
