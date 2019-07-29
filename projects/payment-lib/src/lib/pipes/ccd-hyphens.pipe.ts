@@ -1,8 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 @Pipe({
-  name: 'addHyphens'
+  name: 'ccdHyphens'
 })
-export class AddHyphensPipe implements PipeTransform {
+export class CcdHyphensPipe implements PipeTransform {
   constructor() {}
   transform(value: any, args?: any): any {
     const pattern = /^([0-9]{4})+([0-9]{4})+([0-9]{4})+([0-9]{4})$/;

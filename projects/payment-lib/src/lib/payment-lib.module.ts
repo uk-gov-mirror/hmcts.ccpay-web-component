@@ -15,7 +15,7 @@ import { CaseTransactionsComponent } from './components/case-transactions/case-t
 import { FeeSummaryComponent } from './components/fee-summary/fee-summary.component';
 import { AddRemissionComponent } from './components/add-remission/add-remission.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AddHyphensPipe } from './pipes/add-hyphens.pipe';
+import { CcdHyphensPipe } from './pipes/ccd-hyphens.pipe';
 import { SanitizeHtmlPipe } from './pipes/sanitize-html.pipe';
 
 
@@ -37,7 +37,7 @@ import { SanitizeHtmlPipe } from './pipes/sanitize-html.pipe';
     CaseTransactionsComponent,
     FeeSummaryComponent,
     AddRemissionComponent,
-    AddHyphensPipe,
+    CcdHyphensPipe,
     SanitizeHtmlPipe
   ],
   exports: [ PaymentLibComponent ],
