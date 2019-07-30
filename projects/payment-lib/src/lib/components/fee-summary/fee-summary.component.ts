@@ -6,6 +6,7 @@ import { IRemission } from '../../interfaces/IRemission';
 import { IFee } from '../../interfaces/IFee';
 import { PaymentToPayhubRequest } from '../../interfaces/PaymentToPayhubRequest';
 import { SafeHtml } from '@angular/platform-browser';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'ccpay-fee-summary',
@@ -25,6 +26,7 @@ export class FeeSummaryComponent implements OnInit {
   payhubHtml: SafeHtml;
 
   constructor(
+    private router: Router,
     private paymentViewService: PaymentViewService,
     private paymentLibComponent: PaymentLibComponent
   ) {}
@@ -69,7 +71,11 @@ export class FeeSummaryComponent implements OnInit {
   cancelRemission() {
     this.viewStatus = 'main';
   }
+  redirectToFeeSearchPage(event: any) {
+    event.preventDefault();
 
+    this.router.navigateByUrl(`/fee-search?ccdCaseNumber=${this.ccdCaseNumber}`);
+  }
   takePayment() {
     const requestBody = new PaymentToPayhubRequest(this.ccdCaseNumber, this.totalFee);
     this.paymentViewService.postPaymentToPayHub(requestBody).subscribe(
