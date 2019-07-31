@@ -66,8 +66,10 @@ export class CaseTransactionsComponent implements OnInit {
 
       if (paymentGroup.payments) {
         paymentGroup.payments.forEach(payment => {
-          paymentsTotal = paymentsTotal + payment.amount;
-          this.payments.push(payment);
+          if (payment.status.toUpperCase() === 'SUCCESS') {
+            paymentsTotal = paymentsTotal + payment.amount;
+            this.payments.push(payment);
+          }
         });
       }
       this.totalPayments = paymentsTotal;
@@ -96,7 +98,9 @@ export class CaseTransactionsComponent implements OnInit {
 
     if (paymentGroup.payments) {
       paymentGroup.payments.forEach(payment => {
-        paymentsTotal = paymentsTotal + payment.amount;
+        if (payment.status.toUpperCase() === 'SUCCESS') {
+          paymentsTotal = paymentsTotal + payment.amount;
+        }
       });
     }
 
