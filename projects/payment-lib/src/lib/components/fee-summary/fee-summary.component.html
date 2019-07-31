@@ -49,7 +49,7 @@
               <td class="no-border subcolumn-2">{{ fee.calculated_amount | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
               <td class="no-border subcolumn-3"><a href="">remove fee</a></td>
             </tr>
-            <tr class="govuk-table__row">
+            <tr class="govuk-table__row" *ngIf="fee.volume && fee.volume > 0">
               <td class="no-border grey-text subcolumn-1">Volume:</td>
               <td class="no-border subcolumn-2">{{ fee.volume }}</td>
               <td class="no-border subcolumn-3"></td>
