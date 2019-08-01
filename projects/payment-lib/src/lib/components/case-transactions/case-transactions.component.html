@@ -149,7 +149,9 @@
           </thead>
           <tbody class="govuk-table__body" *ngIf="paymentGroup.payments?.length > 0">
             <tr class="govuk-table__row"  *ngFor="let payment of paymentGroup.payments">
-                <td class="govuk-table__cell">{{ payment.reference }}</td>
+                <td class="govuk-table__cell">
+                  <a href="javascript:void(0)" (click)="goToPaymentViewComponent(paymentGroup.payment_group_reference, payment.payment_reference, payment.method)">{{ payment.reference }}</a>
+                </td>
                 <td class="govuk-table__cell">{{ payment.date_created | date:'dd MMM yyyy HH:mm:ss' }}</td>
                 <td class="govuk-table__cell">{{ payment.channel }}</td>
                 <td class="govuk-table__cell">{{ payment.method }}</td>

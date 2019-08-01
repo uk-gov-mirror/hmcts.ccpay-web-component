@@ -6,6 +6,7 @@ import {IFee} from '../../interfaces/IFee';
 import {IPayment} from '../../interfaces/IPayment';
 import {IRemission} from '../../interfaces/IRemission';
 import {Router} from '@angular/router';
+import {PaymentListComponent} from '../payment-list/payment-list.component';
 
 @Component({
   selector: 'ccpay-case-transactions',
@@ -121,5 +122,12 @@ export class CaseTransactionsComponent implements OnInit {
   loadFeeSummaryPage(paymentGroup: IPaymentGroup) {
     this.paymentLibComponent.paymentGroupReference = paymentGroup.payment_group_reference;
     this.paymentLibComponent.viewName = 'fee-summary';
+  }
+
+  goToPaymentViewComponent(paymentGroupReference: string, paymentReference: string, paymentMethod: string) {
+    this.paymentLibComponent.paymentMethod = paymentMethod;
+    this.paymentLibComponent.paymentGroupReference = paymentGroupReference;
+    this.paymentLibComponent.paymentReference = paymentReference;
+    this.paymentLibComponent.viewName = 'payment-view';
   }
 }
