@@ -8,7 +8,15 @@
 </div>
 
 <div class="fee-summary" *ngIf="viewStatus === 'main'">
-  <h1 class="heading-large">Fee Summary</h1>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl">Fee Summary</h1>
+    </div>
+
+    <div class="govuk-grid-column-one-third" align="right">
+      <a [href]="'/fee-search?ccdCaseNumber=' + ccdCaseNumber + '&paymentGroupRef=' + paymentGroupRef" class="button">Add a new fee</a>
+    </div>
+  </div>
   <div *ngIf="errorMessage">
     <div class="error-summary" role="group" aria-labelledby="failure-error-summary-heading" tabindex="-1">
       <h2 class="heading-medium error-summary-heading" id="failure-error-summary-heading">
@@ -41,7 +49,7 @@
               <td class="no-border subcolumn-2">{{ fee.calculated_amount | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
               <td class="no-border subcolumn-3"><a href="">remove fee</a></td>
             </tr>
-            <tr class="govuk-table__row">
+            <tr class="govuk-table__row" *ngIf="fee.volume && fee.volume > 0">
               <td class="no-border grey-text subcolumn-1">Volume:</td>
               <td class="no-border subcolumn-2">{{ fee.volume }}</td>
               <td class="no-border subcolumn-3"></td>
