@@ -1,7 +1,7 @@
 export interface IFee {
   code: string;
   version: string;
-  volume: number;
+  volume?: number;
   calculated_amount: number;
   net_amount: number;
   description: string;
@@ -11,4 +11,5 @@ export interface IFee {
   jurisdiction2: string;
   reference: string;
   memo_line: string;
+  volume_amount?: number;
 }
