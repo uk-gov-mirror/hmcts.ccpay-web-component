@@ -3,7 +3,7 @@
   <div class="govuk-breadcrumbs">
     <ol class="govuk-breadcrumbs__list">
       <li class="govuk-breadcrumbs__list-item">
-        <a href="javascript:void(0)" (click)="goToPaymentList()" class="govuk-back-link">Back to payments</a>
+        <a [href]="'/payment-history/' + ccdCaseNumber + '?view=case-transactions&takePayment=true'" class="govuk-back-link">Back</a>
       </li>
     </ol>
   </div>
