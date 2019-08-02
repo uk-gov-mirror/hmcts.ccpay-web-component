@@ -7,6 +7,7 @@ import { IFee } from '../../interfaces/IFee';
 import { PaymentToPayhubRequest } from '../../interfaces/PaymentToPayhubRequest';
 import { SafeHtml } from '@angular/platform-browser';
 import {Router} from '@angular/router';
+import { debugOutputAstAsTypeScript } from '@angular/compiler';
 
 @Component({
   selector: 'ccpay-fee-summary',
@@ -33,13 +34,15 @@ export class FeeSummaryComponent implements OnInit {
 
   ngOnInit() {
     this.viewStatus = 'main';
+    
 
-  //  this.paymentGroupRef = '2018-15310089885';
-  //  this.paymentGroupRef = '2019-15496299273';
+  // this.paymentGroupRef = '2018-15310089885';
+    //this.paymentGroupRef = '2019-15496299273';
 
     this.paymentViewService.getPaymentGroupDetails(this.paymentGroupRef,
       this.paymentLibComponent.paymentMethod).subscribe(
       paymentGroup => {
+        debugger
         this.paymentGroup = paymentGroup;
         this.totalFee = 0;
         if (this.paymentGroup.fees) {
@@ -68,12 +71,30 @@ export class FeeSummaryComponent implements OnInit {
     this.viewStatus = 'add_remission';
   }
 
+  confirmRemoveFee(fee: IFee){
+    this.currentFee = fee;
+    this.viewStatus = 'feeRemovalConfirmation';
+  }
+
+  removeFee(fee: any){
+
+    this.paymentViewService.deleteFeeFromPaymentGroup(fee).subscribe(
+      () => {
+         this.router.navigateByUrl(`payment-history/${this.ccdCaseNumber}?view=case-transactions&takePayment=true`);
+      },
+      (error: any) => this.errorMessage = error
+    );
+  }
+
   cancelRemission() {
     this.viewStatus = 'main';
   }
   redirectToFeeSearchPage(event: any) {
     event.preventDefault();
-
+    if(this.viewStatus === 'feeRemovalConfirmation' || this.viewStatus === 'add_remission') {
+      this.viewStatus = 'main';
+      return;
+    }
     this.router.navigateByUrl(`/fee-search?ccdCaseNumber=${this.ccdCaseNumber}`);
   }
   takePayment() {
