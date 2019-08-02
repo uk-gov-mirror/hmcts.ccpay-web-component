@@ -62,7 +62,7 @@
             <tr class="govuk-table__row">
               <td class="no-border grey-text subcolumn-1">Remission amount:</td>
               <td class="no-border subcolumn-2">{{ getRemissionByFeeCode(fee.code)?.hwf_amount? ( getRemissionByFeeCode(fee.code)?.hwf_amount  | currency:'GBP':'symbol-narrow':'1.2-2') : '-' }}</td>
-              <td class="no-border subcolumn-3"> <a *ngIf="getRemissionByFeeCode(fee.code) === null" (click)="addRemission(fee)">add remission</a></td>
+              <td class="no-border subcolumn-3"> <a (click)="addRemission(fee)" [ngClass]="{'remissionDisable': service==null}">add remission</a></td>
             </tr>
             <tr class="govuk-table__row">
               <td class="no-border grey-text subcolumn-1">Total after remission:</td>
@@ -86,6 +86,40 @@
           </table>
         </td>
       </tr>
+
+      <tr class="govuk-table__row">
+        <td class="no-border"></td>
+        <td class="no-border"></td>
+        <td class="no-border"></td>
+        <td class="no-border"> 
+
+          <div class="govuk-form-group">
+ 
+            <fieldset class="govuk-fieldset">
+              <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                <span class="govuk-fieldset__heading govuk-fieldset__heading--fz">
+                  What service is this fee for?
+                </span>
+              </legend>
+              <div class="govuk-radios govuk-radios--small">
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" [(ngModel)]="service" type="radio" value="AA07">
+                  <label class="govuk-label govuk-radios__label" for="changed-name">
+                    Divorce
+                  </label>
+                </div>
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" [(ngModel)]="service" type="radio" value="AA08">
+                  <label class="govuk-label govuk-radios__label" for="changed-name-2">
+                    Probate
+                  </label>
+                </div>
+              </div>
+            </fieldset>
+
+          </div>
+        </td>
+      </tr>
     </tbody>
     <tr class="govuk-table__row">
       <td class="no-border"></td>
@@ -96,7 +130,7 @@
             <tr class="govuk-table__row">
               <td class="no-border subcolumn-2"> 
                 <button type="submit" (click)="takePayment()"
-                [disabled]="totalFee <= 0"
+                [disabled]="totalFee <= 0 || !service"
                 [ngClass]='totalFee <= 0 ? "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"'>
                 Take payment
               </button></td>
@@ -128,5 +162,5 @@
       </div>
     </ng-container>
 
-<ccpay-add-remission *ngIf="viewStatus === 'add_remission' && currentFee" [fee]="currentFee" [ccdCaseNumber]="ccdCaseNumber" [paymentGroupRef]="paymentGroupRef" (cancelRemission)="cancelRemission()"></ccpay-add-remission>
+<ccpay-add-remission *ngIf="viewStatus === 'add_remission' && currentFee" [fee]="currentFee" [service]="service" [ccdCaseNumber]="ccdCaseNumber" [paymentGroupRef]="paymentGroupRef" (cancelRemission)="cancelRemission()"></ccpay-add-remission>
 <div *ngIf="viewStatus === 'payhub_view' && payhubHtml" [innerHTML]="payhubHtml | sanitizeHtml" id="payhub-html-id"></div>

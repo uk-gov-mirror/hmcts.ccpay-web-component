@@ -13,6 +13,7 @@ import { PaymentLibComponent } from '../../payment-lib.component';
 export class AddRemissionComponent implements OnInit {
   @Input() fee: IFee;
   @Input() ccdCaseNumber: string;
+  @Input() service: string;
   @Input() paymentGroupRef: string;
   @Output() cancelRemission: EventEmitter<void> = new EventEmitter();
 
@@ -65,7 +66,7 @@ export class AddRemissionComponent implements OnInit {
     const newNetAmount = this.remissionForm.controls.amount.value;
     const remissionAmount = this.fee.net_amount - newNetAmount;
     const requestBody = new AddRemissionRequest
-    (this.ccdCaseNumber, this.fee, remissionAmount, this.remissionForm.controls.remissionCode.value);
+    (this.ccdCaseNumber, this.fee, remissionAmount, this.remissionForm.controls.remissionCode.value, this.service);
     this.paymentViewService.postPaymentGroupWithRemissions(this.paymentGroupRef, this.fee.id, requestBody).subscribe(
       response => {
         if (response.success) {
