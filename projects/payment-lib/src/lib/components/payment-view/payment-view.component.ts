@@ -12,12 +12,14 @@ import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
 export class PaymentViewComponent implements OnInit {
   paymentGroup: IPaymentGroup;
   errorMessage: string;
+  ccdCaseNumber: string;
 
   constructor(private paymentViewService: PaymentViewService,
               private paymentLibComponent: PaymentLibComponent) {
   }
 
   ngOnInit() {
+    this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
     this.paymentViewService.getPaymentGroupDetails(this.paymentLibComponent.paymentGroupReference,
       this.paymentLibComponent.paymentMethod).subscribe(
       paymentGroup => this.paymentGroup = paymentGroup,
