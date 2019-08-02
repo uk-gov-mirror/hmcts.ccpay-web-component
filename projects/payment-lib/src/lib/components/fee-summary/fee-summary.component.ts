@@ -77,9 +77,10 @@ export class FeeSummaryComponent implements OnInit {
   }
 
   removeFee(fee: any){
-    debugger
+
     this.paymentViewService.deleteFeeFromPaymentGroup(fee).subscribe(
-      success => {
+      () => {
+         this.router.navigateByUrl(`payment-history/${this.ccdCaseNumber}?view=case-transactions&takePayment=true`);
       },
       (error: any) => this.errorMessage = error
     );
