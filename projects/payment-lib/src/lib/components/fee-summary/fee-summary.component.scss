@@ -38,3 +38,12 @@
     }
   }
 }
+.govuk-button-grb {
+    padding-bottom: 20px;
+    .govuk-button--secondary {
+      background-color: #dee0e2;
+      box-shadow: 0 2px 0 #858688;
+      color: #0b0c0c;
+      margin-right: 10px;
+    }
+}
