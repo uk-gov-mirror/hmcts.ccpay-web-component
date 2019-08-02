@@ -25,6 +25,7 @@ export class FeeSummaryComponent implements OnInit {
   currentFee: IFee;
   totalFee: number;
   payhubHtml: SafeHtml;
+  service: string = null;
 
   constructor(
     private router: Router,
@@ -37,7 +38,7 @@ export class FeeSummaryComponent implements OnInit {
     
 
   // this.paymentGroupRef = '2018-15310089885';
-    //this.paymentGroupRef = '2019-15496299273';
+    this.paymentGroupRef = '2019-15496299273';
 
     this.paymentViewService.getPaymentGroupDetails(this.paymentGroupRef,
       this.paymentLibComponent.paymentMethod).subscribe(
@@ -67,8 +68,10 @@ export class FeeSummaryComponent implements OnInit {
   }
 
   addRemission(fee: IFee) {
-    this.currentFee = fee;
-    this.viewStatus = 'add_remission';
+    if (this.service) {
+      this.currentFee = fee;
+      this.viewStatus = 'add_remission';
+    }
   }
 
   confirmRemoveFee(fee: IFee){
@@ -98,7 +101,8 @@ export class FeeSummaryComponent implements OnInit {
     this.router.navigateByUrl(`/fee-search?ccdCaseNumber=${this.ccdCaseNumber}`);
   }
   takePayment() {
-    const requestBody = new PaymentToPayhubRequest(this.ccdCaseNumber, this.totalFee);
+    const seriveName = this.service ==='AA07' ? 'DIVORCE': this.service ==='AA08' ? 'PROBATE' : '';
+    const requestBody = new PaymentToPayhubRequest(this.ccdCaseNumber, this.totalFee, this.service, seriveName);
     this.paymentViewService.postPaymentToPayHub(requestBody, this.paymentGroupRef).subscribe(
       response => {
         this.payhubHtml = response;
