@@ -63,7 +63,6 @@ export class AddRemissionComponent implements OnInit {
   }
 
   confirmRemission() {
-    debugger;
     const newNetAmount = this.remissionForm.controls.amount.value;
     const remissionAmount = this.fee.net_amount - newNetAmount;
     const requestBody = new AddRemissionRequest
