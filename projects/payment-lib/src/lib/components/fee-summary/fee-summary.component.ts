@@ -76,9 +76,11 @@ export class FeeSummaryComponent implements OnInit {
   }
 
   removeFee(){
-debugger
-this.currentFee;
-    //toDO
+    this.paymentViewService.deleteFeeFromPaymentGroup(<any>this.currentFee['code']).subscribe(
+      ()=> {
+      },
+      (error: any) => this.errorMessage = error
+    );
   }
 
   cancelRemission() {

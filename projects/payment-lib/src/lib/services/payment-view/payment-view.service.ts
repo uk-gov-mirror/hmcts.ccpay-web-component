@@ -73,6 +73,13 @@ export class PaymentViewService {
     );
   }
 
+  deleteFeeFromPaymentGroup(feeId: number): Observable<any> {
+        this.logger.info('Payment-view-service deleteFeeFromPaymentGroup for: ', feeId);
+    return this.http.delete(`${this.paymentLibService.API_ROOT}/fees/${feeId}`).pipe(
+      catchError(this.errorHandlerService.handleError)
+    );
+  }
+
   postPaymentToPayHub(body: PaymentToPayhubRequest): Observable<any> {
     const opts = {};
     this.addHeaders(opts);
