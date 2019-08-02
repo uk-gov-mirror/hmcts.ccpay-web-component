@@ -98,7 +98,7 @@ export class FeeSummaryComponent implements OnInit {
   }
   takePayment() {
     const requestBody = new PaymentToPayhubRequest(this.ccdCaseNumber, this.totalFee);
-    this.paymentViewService.postPaymentToPayHub(requestBody).subscribe(
+    this.paymentViewService.postPaymentToPayHub(requestBody, this.paymentGroupRef).subscribe(
       response => {
         this.payhubHtml = response;
         this.viewStatus = 'payhub_view';

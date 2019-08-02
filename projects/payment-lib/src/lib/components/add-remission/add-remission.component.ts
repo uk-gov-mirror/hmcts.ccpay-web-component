@@ -70,6 +70,7 @@ export class AddRemissionComponent implements OnInit {
       response => {
         if (response.success) {
           this.paymentLibComponent.viewName = 'case-transactions';
+          this.paymentLibComponent.TAKEPAYMENT = true;
         }
       },
       (error: any) => {
