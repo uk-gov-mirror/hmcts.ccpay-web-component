@@ -42,6 +42,7 @@ export class FeeSummaryComponent implements OnInit {
     this.paymentViewService.getPaymentGroupDetails(this.paymentGroupRef,
       this.paymentLibComponent.paymentMethod).subscribe(
       paymentGroup => {
+        debugger
         this.paymentGroup = paymentGroup;
         this.totalFee = 0;
         if (this.paymentGroup.fees) {
@@ -75,9 +76,10 @@ export class FeeSummaryComponent implements OnInit {
     this.viewStatus = 'feeRemovalConfirmation';
   }
 
-  removeFee(){
-    this.paymentViewService.deleteFeeFromPaymentGroup(<any>this.currentFee['code']).subscribe(
-      ()=> {
+  removeFee(fee: any){
+    debugger
+    this.paymentViewService.deleteFeeFromPaymentGroup(fee).subscribe(
+      success => {
       },
       (error: any) => this.errorMessage = error
     );
