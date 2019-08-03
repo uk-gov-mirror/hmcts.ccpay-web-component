@@ -35,25 +35,9 @@ export class FeeSummaryComponent implements OnInit {
 
   ngOnInit() {
     this.viewStatus = 'main';
-    
-
-  // this.paymentGroupRef = '2018-15310089885';
+    // this.paymentGroupRef = '2018-15310089885';
     //this.paymentGroupRef = '2019-15496299273';
-
-    this.paymentViewService.getPaymentGroupDetails(this.paymentGroupRef,
-      this.paymentLibComponent.paymentMethod).subscribe(
-      paymentGroup => {
-        debugger
-        this.paymentGroup = paymentGroup;
-        this.totalFee = 0;
-        if (this.paymentGroup.fees) {
-          for (const fee of this.paymentGroup.fees) {
-            this.totalFee = this.totalFee + fee.net_amount;
-          }
-        }
-      },
-      (error: any) => this.errorMessage = error
-    );
+    this.getPaymentGroup();
   }
 
   getRemissionByFeeCode(feeCode: string): IRemission {
@@ -74,21 +58,47 @@ export class FeeSummaryComponent implements OnInit {
     }
   }
 
+  getPaymentGroup() {
+    this.paymentViewService.getPaymentGroupDetails(this.paymentGroupRef,
+      this.paymentLibComponent.paymentMethod).subscribe(
+      paymentGroup => {
+        this.paymentGroup = paymentGroup;
+        this.totalFee = 0;
+        if (this.paymentGroup.fees) {
+          for (const fee of this.paymentGroup.fees) {
+            this.totalFee = this.totalFee + fee.net_amount;
+          }
+        }
+      },
+      (error: any) => this.errorMessage = error
+    );
+  }
+
   confirmRemoveFee(fee: IFee){
     this.currentFee = fee;
     this.viewStatus = 'feeRemovalConfirmation';
   }
 
   removeFee(fee: any){
-
     this.paymentViewService.deleteFeeFromPaymentGroup(fee).subscribe(
-      () => {
-         this.router.navigateByUrl(`payment-history/${this.ccdCaseNumber}?view=case-transactions&takePayment=true`);
+      (success: any) => {
+          if (this.paymentGroup.fees && this.paymentGroup.fees.length > 1){
+          this.getPaymentGroup();
+          this.viewStatus = 'main';
+          return;
+          } 
+          this.loadCaseTransactionPage();
       },
-      (error: any) => this.errorMessage = error
+      (error: any) => {
+          this.errorMessage = error;
+      }
     );
   }
 
+ loadCaseTransactionPage() {
+    this.paymentLibComponent.TAKEPAYMENT = true;
+    this.paymentLibComponent.viewName = 'case-transactions';
+  }
   cancelRemission() {
     this.viewStatus = 'main';
   }
