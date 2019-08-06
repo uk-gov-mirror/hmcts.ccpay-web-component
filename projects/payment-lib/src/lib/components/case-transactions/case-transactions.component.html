@@ -44,13 +44,13 @@
         </table>
       </div>
     </div>
-
+    
 
     <!-- No fees start -->
     <div *ngIf="paymentGroups?.length === 0">
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-          <h3 class="heading-medium">Fees</h3>
+          <span class="heading-small">Fees</span>
         </div>
 
         <div class="govuk-grid-column-two-thirds" align="left">
@@ -60,12 +60,13 @@
               <td class="govuk-table__header" scope="col">Code</td>
               <td class="govuk-table__header" scope="col">Description</td>
               <td class="govuk-table__header" scope="col">Volume</td>
-              <td class="govuk-table__header" scope="col">Fee total</td>
+              <td class="govuk-table__header" scope="col">Fee amount</td>
+              <td class="govuk-table__header" scope="col">Calculated amount</td>
             </tr>
             </thead>
             <tbody class="govuk-table__body">
             <tr class="govuk-table__row">
-              <td class="govuk-table__cell" colspan="4">No fees recorded</td>
+              <td class="govuk-table__cell" colspan="5">No fees recorded</td>
             </tr>
             </tbody>
           </table>
@@ -91,9 +92,15 @@
     <!-- No fees end -->
 
     <div *ngFor="let paymentGroup of paymentGroups">
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full govuk-grid-column-full--gr">
+        <span class="heading-medium">Group reference: {{paymentGroup.payment_group_reference}}</span>
+      </div>
+    </div>
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-          <h2 class="heading-large">Fees</h2>
+          <span class="heading-small">Fees</span>
         </div>
 
         <div class="govuk-grid-column-two-thirds" align="left">
@@ -103,7 +110,8 @@
             <td class="govuk-table__header" scope="col">Code</td>
             <td class="govuk-table__header" scope="col">Description</td>
             <td class="govuk-table__header" scope="col">Volume</td>
-            <td class="govuk-table__header" scope="col">Fee total</td>
+            <td class="govuk-table__header" scope="col">Fee amount</td>
+            <td class="govuk-table__header" scope="col">Calculated amount</td>
           </tr>
           </thead>
           <tbody class="govuk-table__body">
@@ -111,7 +119,9 @@
             <td class="govuk-table__cell">{{ fee.code }}</td>
             <td class="govuk-table__cell">{{ fee.description }}</td>
             <td class="govuk-table__cell">{{ fee.volume }}</td>
+            <td class="govuk-table__cell">{{ fee.calculated_amount/fee.volume }}</td>
             <td class="govuk-table__cell">{{ fee.calculated_amount }}</td>
+
           </tr>
           </tbody>
         </table>
