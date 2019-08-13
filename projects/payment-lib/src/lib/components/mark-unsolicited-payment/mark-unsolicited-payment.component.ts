@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { PaymentLibComponent } from '../../payment-lib.component';
+import { BulkScaningPaymentService } from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
+import { IBSPayments } from '../../interfaces/IBSPayments';
 
 @Component({
   selector: 'app-mark-unsolicited-payment',
@@ -17,13 +19,21 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
   emailIdHasError: boolean = false;
   phoneNumberHasError: boolean = false;
   costReturnHasError: boolean = false;
+  ccdCaseNumber: string;
+  bspaymentdcn: string;
+  unassignedRecord:IBSPayments[];
+
 
   constructor(private formBuilder: FormBuilder,
-  private paymentLibComponent: PaymentLibComponent) { }
+  private paymentLibComponent: PaymentLibComponent,
+  private bulkScaningPaymentService: BulkScaningPaymentService) { }
 
   ngOnInit() {
     this.resetForm();
     this.viewStatus = 'mainForm';
+    this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
+    this.bspaymentdcn = this.paymentLibComponent.bspaymentdcn;
+    this.getUnassignedPayment();
     
     this.markPaymentUnsolicitedForm = this.formBuilder.group({
       reason: new FormControl('', Validators.compose([
@@ -114,6 +124,15 @@ cancelMarkUnsolicitedPayments(type?:string){
   gotoCasetransationPage() {
     this.paymentLibComponent.viewName = 'case-transactions';
     this.paymentLibComponent.TAKEPAYMENT = true;
+  }
+   getUnassignedPayment() {
+    this.bulkScaningPaymentService.getBSPayments(this.bspaymentdcn).subscribe(
+      unassignedPayments => {
+        debugger
+        this.unassignedRecord = unassignedPayments;
+      },
+      (error: any) => this.errorMessage = error
+    );
   }
 
 }

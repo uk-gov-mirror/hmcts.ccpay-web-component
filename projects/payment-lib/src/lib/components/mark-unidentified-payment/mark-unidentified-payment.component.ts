@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { PaymentLibComponent } from '../../payment-lib.component';
+import {BulkScaningPaymentService} from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
+import { IBSPayments } from '../../interfaces/IBSPayments';
 
 @Component({
   selector: 'app-mark-unidentified-payment',
@@ -11,14 +13,21 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
   markPaymentUnidentifiedForm: FormGroup;
   viewStatus: string;
   ccdCaseNumber: string;
+  bspaymentdcn: string;
   investicationDetailHasError: boolean = false;
+  errorMessage: string;
+  unassignedRecord:IBSPayments[];
 
   constructor(private formBuilder: FormBuilder,
-  private paymentLibComponent: PaymentLibComponent) { }
+  private paymentLibComponent: PaymentLibComponent,
+  private bulkScaningPaymentService: BulkScaningPaymentService) { }
 
   ngOnInit() {
     this.viewStatus = 'mainForm';
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
+    this.bspaymentdcn = this.paymentLibComponent.bspaymentdcn;
+    this.getUnassignedPayment();
+    
     this.markPaymentUnidentifiedForm = this.formBuilder.group({
       investicationDetail: new FormControl('', Validators.compose([
         Validators.required,
@@ -26,7 +35,15 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
       ]))
     });
   }
-
+ getUnassignedPayment() {
+    this.bulkScaningPaymentService.getBSPayments(this.bspaymentdcn).subscribe(
+      unassignedPayments => {
+        debugger
+        this.unassignedRecord = unassignedPayments;
+      },
+      (error: any) => this.errorMessage = error
+    );
+  }
  saveAndContinue() {
     this.investicationDetailHasError = false;
     if (this.markPaymentUnidentifiedForm.dirty && this.markPaymentUnidentifiedForm.valid) {

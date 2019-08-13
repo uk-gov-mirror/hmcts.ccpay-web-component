@@ -1,6 +1,30 @@
 <div class="mkpay-unidentified">
   <div *ngIf="viewStatus === 'mainForm'">
   <h1 class="heading-large">Mark payment as unsolicited</h1>
+  <div class="govuk-grid-column-full govuk-!-padding-bottom-3">
+    <hr class="govuk-section-break govuk-section-break--visible">
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__header" scope="col">Reference</td>
+          <td class="govuk-table__header" scope="col">Date received</td>
+          <td class="govuk-table__header" scope="col">Amount</td>
+        <td class="govuk-table__header" scope="col">Method</td>
+        <td class="govuk-table__header" scope="col">Channel</td>
+
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">{{ unassignedRecord.ccd_ref}}</td>
+          <td class="govuk-table__cell">{{ unassignedRecord.banked_date }}</td>
+          <td class="govuk-table__cell">{{ unassignedRecord.amount | currency :'GBP':'symbol':'1.2-2'}}</td>
+          <td class="govuk-table__cell">{{ unassignedRecord.payment_method }}</td>
+          <td class="govuk-table__cell"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
   <form [formGroup]="markPaymentUnsolicitedForm" novalidate>
     <div class="govuk-form-group">
       <label class="govuk-label govuk-label--s" for="reason">
