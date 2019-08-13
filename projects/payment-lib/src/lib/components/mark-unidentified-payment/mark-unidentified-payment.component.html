@@ -1,0 +1,63 @@
+<div class="mkpay-unidentified" >
+  <div *ngIf="viewStatus === 'mainForm'">
+    <h1 class="heading-large">Mark payment as unidentified</h1>
+    <form [formGroup]="markPaymentUnidentifiedForm" novalidate>
+      <div class="govuk-form-group">
+        <p> 
+          Give a reason for marking this payment as unidentified.
+        </p>
+        <label class="heading-small" for="investicationDetail">
+          Include any investigations you've made.
+        </label>
+        <textarea class="form-control form-control-3-4" [ngClass]="{'inline-error-class': investicationDetailHasError}" name="investicationDetail" id="investicationDetail" rows="5" formControlName="investicationDetail">
+
+        </textarea>
+        <p class="inline-error-message" *ngIf="investicationDetailHasError">
+            Enter a reason for marking this payment as unidentified.
+        </p>
+      </div>
+      <div class="govuk-button--group">
+        <button type="submit" class="button" (click)="saveAndContinue()">
+          Continue
+        </button>
+        <button type="button" class="button govuk-button--secondary" (click)="cancelMarkUnidentifiedPayments('cancel')">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+   <ng-container *ngIf="viewStatus === 'unidentifiedContinueConfirm'">
+      <div class="govuk-warning-text">
+        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+        <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Warning</span>
+          Are you sure you want to mark this payment as unidentified?
+        </strong>
+      </div>
+      <div class="govuk-button--group">
+        <button type="submit" class="button">
+          Confirm
+        </button>
+        <button type="button" class="button govuk-button--secondary" (click)="cancelMarkUnidentifiedPayments()">
+          Cancel
+        </button>
+      </div>
+    </ng-container>
+      <ng-container *ngIf="viewStatus === 'unidentifiedCancelConfirm'">
+      <div class="govuk-warning-text">
+        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+        <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Warning</span>
+          Are you sure you want to cancel?
+        </strong>
+      </div>
+      <div class="govuk-button--group">
+        <button type="submit" class="button" (click)="gotoCasetransationPage()">
+          Yes
+        </button>
+        <button type="button" class="button govuk-button--secondary" (click)="cancelMarkUnidentifiedPayments()">
+          No
+        </button>
+      </div>
+    </ng-container>
+</div>

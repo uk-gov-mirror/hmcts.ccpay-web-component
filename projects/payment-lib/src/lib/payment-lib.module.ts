@@ -13,6 +13,8 @@ import { LoggerService } from './services/shared/logger/logger.service';
 import { ConsoleLoggerService } from './services/shared/logger/console-logger.service';
 import { CaseTransactionsComponent } from './components/case-transactions/case-transactions.component';
 import { FeeSummaryComponent } from './components/fee-summary/fee-summary.component';
+import { MarkUnidentifiedPaymentComponent } from './components/mark-unidentified-payment/mark-unidentified-payment.component';
+import { MarkUnsolicitedPaymentComponent } from './components/mark-unsolicited-payment/mark-unsolicited-payment.component';
 import { AddRemissionComponent } from './components/add-remission/add-remission.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CcdHyphensPipe } from './pipes/ccd-hyphens.pipe';
@@ -33,6 +35,8 @@ import { SanitizeHtmlPipe } from './pipes/sanitize-html.pipe';
     CardDetailsComponent,
     PageNotFoundComponent,
     StatusHistoryComponent,
+    MarkUnidentifiedPaymentComponent,
+    MarkUnsolicitedPaymentComponent,
     PbaDetailsComponent,
     CaseTransactionsComponent,
     FeeSummaryComponent,

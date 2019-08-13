@@ -1,0 +1,96 @@
+<div class="mkpay-unidentified">
+  <div *ngIf="viewStatus === 'mainForm'">
+  <h1 class="heading-large">Mark payment as unsolicited</h1>
+  <form [formGroup]="markPaymentUnsolicitedForm" novalidate>
+    <div class="govuk-form-group">
+      <label class="govuk-label govuk-label--s" for="reason">
+        Give a reason for marking this payment as unsolicited
+      </label>
+      <input class="govuk-input govuk-input--width-20 govuk-!-margin-right-1" [ngClass]="{'inline-error-class': reasonHasError}" id="reason" name="reason" type="text" formControlName="reason">
+      <p [ngClass]="{'inline-error-message': reasonHasError}" *ngIf="reasonHasError">Enter a reason for marking this payment as unsolicited</p>
+
+    </div>
+    <div class="govuk-form-group">
+      <label class="govuk-label govuk-label--s" for="responsibleOffice">
+        Responsible office (receiving court or bulk centre site address)
+      </label>
+      <input class="govuk-input govuk-input--width-20 govuk-!-margin-right-1" [ngClass]="{'inline-error-class': responsibleOfficeHasError}" id="responsibleOffice" name="responsibleOffice" type="text" formControlName="responsibleOffice">
+      <p [ngClass]="{'inline-error-message': responsibleOfficeHasError}" *ngIf="responsibleOfficeHasError">Enter responsible office</p>
+
+    </div>
+    <div class="govuk-form-group">
+      <label class="govuk-label govuk-label--s" for="responsiblePerson">
+        Person responsible at receiving court or bulk centre
+      </label>
+      <input class="govuk-input govuk-input--width-20 govuk-!-margin-right-1" [ngClass]="{'inline-error-class': responsiblePersonHasError}" id="responsiblePerson" name="responsiblePerson" type="text" formControlName="responsiblePerson">
+      <p [ngClass]="{'inline-error-message': responsiblePersonHasError}" *ngIf="responsiblePersonHasError">Enter person responsible at receiving court or bulk centre</p>
+
+    </div>
+    <div class="govuk-form-group">
+      <label class="govuk-label govuk-label--s" for="emailId">
+        Email address (for example, shared mailbox)
+      </label>
+      <input class="govuk-input govuk-input--width-20 govuk-!-margin-right-1" [ngClass]="{'inline-error-class': emailIdHasError}" id="emailId" name="emailId" type="text" formControlName="emailId">
+      <p [ngClass]="{'inline-error-message': emailIdHasError}" *ngIf="emailIdHasError">Enter email address</p>
+
+    </div>
+    <div class="govuk-form-group">
+      <label class="govuk-label govuk-label--s" for="phoneNumber">
+        Phone number (responsible office
+      </label>
+      <input class="govuk-input govuk-input--width-20 govuk-!-margin-right-1" [ngClass]="{'inline-error-class': phoneNumberHasError}" id="phoneNumber" name="phoneNumber" type="text" formControlName="phoneNumber">
+      <p [ngClass]="{'inline-error-message': phoneNumberHasError}" *ngIf="phoneNumberHasError">Enter phone number</p>
+
+    </div>
+    <div class="govuk-form-group" >
+      <label class="govuk-label govuk-label--s" for="costReturn">
+        Cost centre (for receiving court or bulk centre)
+      </label>
+      <input class="govuk-input govuk-input--width-20 govuk-!-margin-right-1" [ngClass]="{'inline-error-class': costReturnHasError}" id="costReturn" name="costReturn" type="text" formControlName="costReturn">
+      <p [ngClass]="{'inline-error-message': costReturnHasError}" *ngIf="costReturnHasError">Enter cost centre</p>
+    </div>
+    <div class="govuk-button--group">
+      <button type="submit" class="button" (click)="saveAndContinue()">
+        Confirm
+      </button>
+      <button type="button" class="button govuk-button--secondary" (click)="cancelMarkUnsolicitedPayments('cancel')">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>
+       <ng-container *ngIf="viewStatus === 'unsolicitedContinueConfirm'">
+      <div class="govuk-warning-text">
+        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+        <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Warning</span>
+          Are you sure you want to mark this payment as unsolicited?
+        </strong>
+      </div>
+      <div class="govuk-button--group">
+        <button type="submit" class="button">
+          Confirm
+        </button>
+        <button type="button" class="button govuk-button--secondary" (click)="cancelMarkUnsolicitedPayments()">
+          Cancel
+        </button>
+      </div>
+    </ng-container>
+      <ng-container *ngIf="viewStatus === 'unsolicitedCancelConfirm'">
+      <div class="govuk-warning-text">
+        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+        <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Warning</span>
+          Are you sure you want to cancel?
+        </strong>
+      </div>
+      <div class="govuk-button--group">
+        <button type="submit" class="button" (click)="gotoCasetransationPage()">
+          Yes
+        </button>
+        <button type="button" class="button govuk-button--secondary" (click)="cancelMarkUnsolicitedPayments()">
+          No
+        </button>
+      </div>
+    </ng-container>
+</div>

@@ -8,6 +8,8 @@ import {PaymentLibService} from './payment-lib.service';
     <ccpay-payment-list *ngIf="viewName === 'payment-list'"></ccpay-payment-list>
     <ccpay-payment-view *ngIf="viewName === 'payment-view'"></ccpay-payment-view>
     <ccpay-case-transactions *ngIf="viewName === 'case-transactions'"></ccpay-case-transactions>
+    <app-mark-unidentified-payment *ngIf="viewName === 'unidentifiedPage'"></app-mark-unidentified-payment>
+    <app-mark-unsolicited-payment *ngIf="viewName === 'unsolicitedPage'"></app-mark-unsolicited-payment>
     <ccpay-fee-summary *ngIf="viewName === 'fee-summary'"
                        [ccdCaseNumber]="CCD_CASE_NUMBER" [paymentGroupRef]="paymentGroupReference"></ccpay-fee-summary>
   `
@@ -23,6 +25,7 @@ export class PaymentLibComponent implements OnInit {
 
 
   paymentMethod: string;
+  bspaymentdcn: string;
   paymentGroupReference: string;
   paymentReference: string;
   viewName: string;
