@@ -21,8 +21,7 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
   costReturnHasError: boolean = false;
   ccdCaseNumber: string;
   bspaymentdcn: string;
-  unassignedRecord:IBSPayments[];
-
+  //unassignedRecord: IBSPayments[];
 
   constructor(private formBuilder: FormBuilder,
   private paymentLibComponent: PaymentLibComponent,
@@ -128,8 +127,7 @@ cancelMarkUnsolicitedPayments(type?:string){
    getUnassignedPayment() {
     this.bulkScaningPaymentService.getBSPayments(this.bspaymentdcn).subscribe(
       unassignedPayments => {
-        debugger
-        this.unassignedRecord = unassignedPayments;
+       // this.unassignedRecord = unassignedPayments;
       },
       (error: any) => this.errorMessage = error
     );

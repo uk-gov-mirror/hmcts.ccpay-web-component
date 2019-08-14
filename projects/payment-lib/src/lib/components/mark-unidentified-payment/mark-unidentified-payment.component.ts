@@ -19,7 +19,7 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
   investicationDetailMaxHasError: boolean = false;
 
   errorMessage: string;
-  unassignedRecord:IBSPayments[];
+  //unassignedRecord:IBSPayments[];
 
   constructor(private formBuilder: FormBuilder,
   private paymentLibComponent: PaymentLibComponent,
@@ -43,7 +43,7 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
  getUnassignedPayment() {
     this.bulkScaningPaymentService.getBSPayments(this.bspaymentdcn).subscribe(
       unassignedPayments => {
-        this.unassignedRecord = unassignedPayments;
+        //this.unassignedRecord = unassignedPayments;
       },
       (error: any) => this.errorMessage = error
     );
