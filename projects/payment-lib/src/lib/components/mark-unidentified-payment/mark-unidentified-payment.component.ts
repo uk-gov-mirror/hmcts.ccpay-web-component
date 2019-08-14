@@ -15,6 +15,9 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
   ccdCaseNumber: string;
   bspaymentdcn: string;
   investicationDetailHasError: boolean = false;
+  investicationDetailMinHasError: boolean = false;
+  investicationDetailMaxHasError: boolean = false;
+
   errorMessage: string;
   unassignedRecord:IBSPayments[];
 
@@ -27,18 +30,19 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
     this.bspaymentdcn = this.paymentLibComponent.bspaymentdcn;
     this.getUnassignedPayment();
-    
+
     this.markPaymentUnidentifiedForm = this.formBuilder.group({
       investicationDetail: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('^([a-zA-Z0-9\\s]*)$')
+        Validators.minLength(3),
+        Validators.maxLength(255),
+        Validators.pattern('^([a-zA-Z0-9\\s,\\.]*)$')
       ]))
     });
   }
  getUnassignedPayment() {
     this.bulkScaningPaymentService.getBSPayments(this.bspaymentdcn).subscribe(
       unassignedPayments => {
-        debugger
         this.unassignedRecord = unassignedPayments;
       },
       (error: any) => this.errorMessage = error
@@ -46,11 +50,22 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
   }
  saveAndContinue() {
     this.investicationDetailHasError = false;
+    const formerror = this.markPaymentUnidentifiedForm.controls.investicationDetail.errors;
     if (this.markPaymentUnidentifiedForm.dirty && this.markPaymentUnidentifiedForm.valid) {
       this.viewStatus = 'unidentifiedContinueConfirm';
     }else {
       if(this.markPaymentUnidentifiedForm.controls.investicationDetail.invalid ) {
         this.investicationDetailHasError = true;
+        this.investicationDetailMinHasError = false;
+        this.investicationDetailMaxHasError = false;
+      }
+      if(formerror.minlength && formerror.minlength.actualLength < 3 ) {
+        this.investicationDetailHasError = false;
+        this.investicationDetailMinHasError = true;
+      }
+      if(formerror.maxlength && formerror.maxlength.actualLength > 255 ) {
+        this.investicationDetailHasError = false;
+        this.investicationDetailMaxHasError = true;
       }
     }
   }

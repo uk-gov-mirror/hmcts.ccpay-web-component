@@ -16,6 +16,5 @@ export class UnsolicitedPaymentsRequest {
     this.responsible_person = responsible_person;
     this.email_id = email_id;
     this.ccd_case_number = ccd_case_number ;
-    this.investigation_message= investigation_message;
   }
 }

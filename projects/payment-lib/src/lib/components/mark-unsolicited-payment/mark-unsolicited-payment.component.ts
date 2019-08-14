@@ -12,10 +12,10 @@ import { IBSPayments } from '../../interfaces/IBSPayments';
 export class MarkUnsolicitedPaymentComponent implements OnInit {
   markPaymentUnsolicitedForm: FormGroup;
   viewStatus: string;
-  warningMessage: string;
   reasonHasError: boolean = false;
   responsibleOfficeHasError: boolean = false;
   responsiblePersonHasError: boolean = false;
+  errorMessage: string;
   emailIdHasError: boolean = false;
   phoneNumberHasError: boolean = false;
   costReturnHasError: boolean = false;
@@ -42,7 +42,7 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
       ])),
       responsibleOffice: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('^([a-zA-Z0-9\\s]*)$')
+        Validators.pattern('^([a-zA-Z0-9\\s\\n,\\.-:]*)$')
       ])),
       responsiblePerson: new FormControl('', Validators.compose([
         Validators.required,
