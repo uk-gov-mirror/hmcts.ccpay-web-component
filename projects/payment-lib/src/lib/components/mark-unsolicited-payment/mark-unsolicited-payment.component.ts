@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { PaymentLibComponent } from '../../payment-lib.component';
 import { BulkScaningPaymentService } from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
 import { IBSPayments } from '../../interfaces/IBSPayments';
+import { UnsolicitedPaymentsRequest } from '../../interfaces/UnsolicitedPaymentsRequest';
 
 @Component({
   selector: 'app-mark-unsolicited-payment',
@@ -21,7 +22,7 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
   costReturnHasError: boolean = false;
   ccdCaseNumber: string;
   bspaymentdcn: string;
-  //unassignedRecord: IBSPayments[];
+  unassignedRecord: IBSPayments;
 
   constructor(private formBuilder: FormBuilder,
   private paymentLibComponent: PaymentLibComponent,
@@ -61,7 +62,20 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
       ]))
     });
   }
-
+  confirmPayments() {
+    const controls = this.markPaymentUnsolicitedForm.controls;
+    const requestBody = new UnsolicitedPaymentsRequest
+    (this.ccdCaseNumber, this.bspaymentdcn, controls.reason.value, controls.responsibleOffice.value, controls.responsiblePerson.value, controls.emailId.value, controls.phoneNumber.value, controls.costReturn.value);
+    this.bulkScaningPaymentService.postBSUnsolicitedPayments(requestBody).subscribe(
+      response => {
+        if (response.success) {
+          this.paymentLibComponent.viewName = 'case-transactions';
+          this.paymentLibComponent.TAKEPAYMENT = true;
+        }
+      },
+      (error: any) => this.errorMessage = error
+    );
+  }
  saveAndContinue() {
     this.resetForm();
     if (this.markPaymentUnsolicitedForm.dirty && this.markPaymentUnsolicitedForm.valid) {
@@ -125,9 +139,11 @@ cancelMarkUnsolicitedPayments(type?:string){
     this.paymentLibComponent.TAKEPAYMENT = true;
   }
    getUnassignedPayment() {
+     debugger
     this.bulkScaningPaymentService.getBSPayments(this.bspaymentdcn).subscribe(
       unassignedPayments => {
-       // this.unassignedRecord = unassignedPayments;
+        debugger
+       this.unassignedRecord = unassignedPayments;
       },
       (error: any) => this.errorMessage = error
     );

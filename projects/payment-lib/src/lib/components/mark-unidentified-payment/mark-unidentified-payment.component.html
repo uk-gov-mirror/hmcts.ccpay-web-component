@@ -17,16 +17,11 @@
         </thead>
         <tbody class="govuk-table__body">
           <tr class="govuk-table__row">
-            <!-- <td class="govuk-table__cell">{{ unassignedRecord.ccd_ref}}</td>
+            <td class="govuk-table__cell">{{ unassignedRecord.ccd_ref}}</td>
             <td class="govuk-table__cell">{{ unassignedRecord.banked_date }}</td>
             <td class="govuk-table__cell">{{ unassignedRecord.amount | currency :'GBP':'symbol':'1.2-2'}}</td>
             <td class="govuk-table__cell">{{ unassignedRecord.payment_method }}</td>
-            <td class="govuk-table__cell"></td> -->
-            <td class="govuk-table__cell">-</td>
-            <td class="govuk-table__cell">-</td>
-            <td class="govuk-table__cell">-</td>
-            <td class="govuk-table__cell">-</td>
-            <td class="govuk-table__cell">-</td>
+            <td class="govuk-table__cell"></td>
           </tr>
         </tbody>
       </table>
@@ -66,7 +61,7 @@
         </strong>
       </div>
       <div class="govuk-button--group">
-        <button type="submit" class="button">
+        <button type="submit" class="button" (click)="confirmPayments()">
           Confirm
         </button>
         <button type="button" class="button govuk-button--secondary" (click)="cancelMarkUnidentifiedPayments()">

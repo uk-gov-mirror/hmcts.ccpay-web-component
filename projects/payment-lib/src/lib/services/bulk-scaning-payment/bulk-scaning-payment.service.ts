@@ -18,8 +18,8 @@ export class BulkScaningPaymentService {
               private paymentLibService: PaymentLibService
               ) { }
 
-  getBSPayments(ccdCaseNumber: string): Observable<IBSPayments[]> {
-    return this.http.get<IBSPayments[]>(`${this.paymentLibService.API_ROOT}/bulk-scaning/${ccdCaseNumber}/payments`, {
+  getBSPayments(ccdCaseNumber: string): Observable<IBSPayments> {
+    return this.http.get<IBSPayments>(`${this.paymentLibService.API_ROOT}/bulk-scaning/${ccdCaseNumber}/payments`, {
       withCredentials: true
     })
       .pipe(

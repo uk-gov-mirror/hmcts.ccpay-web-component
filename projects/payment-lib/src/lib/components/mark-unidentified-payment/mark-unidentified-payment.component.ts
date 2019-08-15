@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { PaymentLibComponent } from '../../payment-lib.component';
 import {BulkScaningPaymentService} from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
 import { IBSPayments } from '../../interfaces/IBSPayments';
+import { UnidentifiedPaymentsRequest } from '../../interfaces/UnidentifiedPaymentsRequest';
 
 @Component({
   selector: 'app-mark-unidentified-payment',
@@ -17,9 +18,8 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
   investicationDetailHasError: boolean = false;
   investicationDetailMinHasError: boolean = false;
   investicationDetailMaxHasError: boolean = false;
-
   errorMessage: string;
-  //unassignedRecord:IBSPayments[];
+  unassignedRecord:IBSPayments;
 
   constructor(private formBuilder: FormBuilder,
   private paymentLibComponent: PaymentLibComponent,
@@ -43,7 +43,7 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
  getUnassignedPayment() {
     this.bulkScaningPaymentService.getBSPayments(this.bspaymentdcn).subscribe(
       unassignedPayments => {
-        //this.unassignedRecord = unassignedPayments;
+        this.unassignedRecord = unassignedPayments;
       },
       (error: any) => this.errorMessage = error
     );
@@ -68,6 +68,19 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
         this.investicationDetailMaxHasError = true;
       }
     }
+  }
+  confirmPayments() {
+    const requestBody = new UnidentifiedPaymentsRequest
+    (this.ccdCaseNumber, this.bspaymentdcn, this.markPaymentUnidentifiedForm.controls.investicationDetail.value);
+    this.bulkScaningPaymentService.postBSUnidentifiedPayments(requestBody).subscribe(
+      response => {
+        if (response.success) {
+          this.paymentLibComponent.viewName = 'case-transactions';
+          this.paymentLibComponent.TAKEPAYMENT = true;
+        }
+      },
+      (error: any) => this.errorMessage = error
+    );
   }
   cancelMarkUnidentifiedPayments(type?:string){
     if(type && type === 'cancel') {
