@@ -1,10 +1,11 @@
 {
   "id": 11,
-  "dcn": "DCN-1111-2222-3333-4444",
+  "dcn": "11111111111111111",
   "ccd_ref": "1111-2222-3333-4444",
   "amount": 12,
   "currency": "GBP",
   "banked_date": "2018-07-08T00:16:29.057+0000",
   "giro_slip_no": "4481102159",
-  "payment_method": "Scann"
+  "payment_method": "PO",
+  "payment_channel": "Bulk scanning"
 }

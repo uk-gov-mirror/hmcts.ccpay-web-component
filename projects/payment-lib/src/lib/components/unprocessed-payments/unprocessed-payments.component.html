@@ -11,25 +11,41 @@
           </tr>
       </thead>
       <tbody class="govuk-table__body" >
-        <tr class="govuk-table__row" >
-                 <td class="govuk-table__cell">
+        <tr class="govuk-table__row" *ngFor="let unassignedRecord of unassignedRecordList">
+            <td class="govuk-table__cell">
               <div class="multiple-choice unprocessed-payments--radio-button">
-                <input id="radio-inline-1" type="radio" name="radio-inline-group" value="Yes">
+                <input [id]="formatUnassignedRecordId(unassignedRecord.id)"
+                name="unassignedRecord"
+                type="radio"
+                [(ngModel)]="recordId"
+                value="{{unassignedRecord.dcn}}" />
                 <label for="radio-inline-1"></label>
               </div>
             </td>
             <td class="govuk-table__cell">
+              {{unassignedRecord.dcn}}
             </td>
-     
-            <td class="govuk-table__cell"> - </td>
-            <td class="govuk-table__cell"> - </td>
-            <td class="govuk-table__cell"> - </td>
-            <td class="govuk-table__cell"> - </td>
+            <td class="govuk-table__cell"> {{unassignedRecord.banked_date | date:'dd MMM yyyy'}} </td>
+            <td class="govuk-table__cell"> {{unassignedRecord.amount | currency :'GBP':'symbol':'1.2-2'}}</td>
+            <td class="govuk-table__cell"> {{unassignedRecord.payment_method}}  </td>
+            <td class="govuk-table__cell"> {{unassignedRecord.payment_channel}} </td>
           </tr>
       </tbody>
-      <tbody class="govuk-table__body" *ngIf="">
+      <tbody class="govuk-table__body" *ngIf="unassignedRecordList.length < 0">
         <td class="govuk-table__cell" colspan="6">No payments recorded</td>
       </tbody>
     </table>
+    <button type="button" class="button govuk-!-margin-right-1" (click)="loadUnsolicitedPage('unidentifiedPage')">
+      Associate to a new fee
+    </button>
+    <button type="button" class="button govuk-!-margin-right-1" (click)="loadUnsolicitedPage('unsolicitedPage')">
+      Associate to an existing fee
+    </button>
+    <button type="button" class="button govuk-!-margin-right-1" (click)="loadUnsolicitedPage('unidentifiedPage')">
+      Mark as unidentified
+    </button>
+    <button type="button" class="button govuk-!-margin-right-1" (click)="loadUnsolicitedPage('unsolicitedPage')">
+      Mark as unsolicited
+    </button>
 </div>
 
