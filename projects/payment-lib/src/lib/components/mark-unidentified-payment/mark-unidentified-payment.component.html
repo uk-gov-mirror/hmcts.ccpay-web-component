@@ -7,18 +7,18 @@
       <table class="govuk-table">
         <thead class="govuk-table__head">
           <tr class="govuk-table__row">
-            <td class="govuk-table__header" scope="col">Reference</td>
+            <td class="govuk-table__header" scope="col">Payment DCN</td>
             <td class="govuk-table__header" scope="col">Date received</td>
             <td class="govuk-table__header" scope="col">Amount</td>
-          <td class="govuk-table__header" scope="col">Method</td>
-          <td class="govuk-table__header" scope="col">Channel</td>
+            <td class="govuk-table__header" scope="col">Method</td>
+            <td class="govuk-table__header" scope="col">Channel</td>
 
           </tr>
         </thead>
         <tbody class="govuk-table__body">
           <tr class="govuk-table__row">
             <td class="govuk-table__cell">{{ unassignedRecord.ccd_ref}}</td>
-            <td class="govuk-table__cell">{{ unassignedRecord.banked_date }}</td>
+            <td class="govuk-table__cell">{{ unassignedRecord.banked_date | date:'dd MMM yyyy'}}</td>
             <td class="govuk-table__cell">{{ unassignedRecord.amount | currency :'GBP':'symbol':'1.2-2'}}</td>
             <td class="govuk-table__cell">{{ unassignedRecord.payment_method }}</td>
             <td class="govuk-table__cell"></td>
@@ -28,11 +28,13 @@
     </div>
     <form [formGroup]="markPaymentUnidentifiedForm" novalidate>
       <div class="govuk-form-group">
-        <p>
+        <p class="unidentifiedSubText">
           Give a reason for marking this payment as unidentified.
+          <br/>
+          Include any investigations you've made.
         </p>
         <label class="heading-small" for="investicationDetail">
-          Include any investigations you've made.
+
         </label>
         <textarea class="form-control form-control-3-4" [ngClass]="{'inline-error-class': investicationDetailHasError || investicationDetailMinHasError || investicationDetailMaxHasError}" name="investicationDetail" id="investicationDetail" rows="5" formControlName="investicationDetail">
         </textarea>

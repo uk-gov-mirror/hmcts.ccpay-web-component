@@ -18,8 +18,6 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
   responsiblePersonHasError: boolean = false;
   errorMessage: string;
   emailIdHasError: boolean = false;
-  phoneNumberHasError: boolean = false;
-  costReturnHasError: boolean = false;
   ccdCaseNumber: string;
   bspaymentdcn: string;
   unassignedRecord: IBSPayments;
@@ -34,6 +32,8 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
     this.bspaymentdcn = this.paymentLibComponent.bspaymentdcn;
     this.getUnassignedPayment();
+
+    const emailPattern = '^[a-z0-9](\\.?[a-z0-9_-]){0,}@[a-z0-9-]+\\.([a-z]{1,6}\\.)?[a-z]{2,6}$';
     
     this.markPaymentUnsolicitedForm = this.formBuilder.group({
       reason: new FormControl('', Validators.compose([
@@ -46,26 +46,18 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
       ])),
       responsiblePerson: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('^([a-zA-Z0-9\\s]*)$')
+        Validators.pattern(emailPattern)
       ])),
       emailId: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('^[a-z0-9](\\.?[a-z0-9_-]){0,}@[a-z0-9-]+\\.([a-z]{1,6}\\.)?[a-z]{2,6}$')
-      ])),
-      phoneNumber: new FormControl('', Validators.compose([
-        Validators.required,
-        Validators.pattern('^\\s*(([+]\\s?\\d[-\\s]?\\d|0)?\\s?\\d([-\\s]?\\d){9}|[(]\\s?\\d([-\\s]?\\d)+\\s*[)]([-\\s]?\\d)+)\\s*$')
-      ])),
-      costReturn: new FormControl('', Validators.compose([
-        Validators.required,
-        Validators.pattern('^([0-9]*)$')
+        Validators.pattern(emailPattern)
       ]))
     });
   }
   confirmPayments() {
     const controls = this.markPaymentUnsolicitedForm.controls;
     const requestBody = new UnsolicitedPaymentsRequest
-    (this.ccdCaseNumber, this.bspaymentdcn, controls.reason.value, controls.responsibleOffice.value, controls.responsiblePerson.value, controls.emailId.value, controls.phoneNumber.value, controls.costReturn.value);
+    (this.ccdCaseNumber, this.bspaymentdcn, controls.reason.value, controls.responsibleOffice.value, controls.responsiblePerson.value, controls.emailId.value);
     this.bulkScaningPaymentService.postBSUnsolicitedPayments(requestBody).subscribe(
       response => {
         if (response.success) {
@@ -93,12 +85,6 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
       if(this.markPaymentUnsolicitedForm.controls.emailId.invalid) {
         this.emailIdHasError = true;
       }
-      if(this.markPaymentUnsolicitedForm.controls.phoneNumber.invalid) {
-        this.phoneNumberHasError = true;
-      }
-      if(this.markPaymentUnsolicitedForm.controls.costReturn.invalid) {
-        this.costReturnHasError = true;
-      }
     }
   }
   resetForm() {
@@ -107,8 +93,6 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
     this.responsibleOfficeHasError = false;
     this.responsiblePersonHasError = false;
     this.emailIdHasError = false;
-    this.phoneNumberHasError = false;
-    this.costReturnHasError = false;
   }
 
 cancelMarkUnsolicitedPayments(type?:string){

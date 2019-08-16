@@ -1,0 +1,35 @@
+<div class="unprocessed-payments">
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+            <td class="govuk-table__header" scope="col">Select</td>
+            <td class="govuk-table__header" scope="col">Payment DCN</td>
+            <td class="govuk-table__header" scope="col">Date received</td>
+            <td class="govuk-table__header" scope="col">Amount</td>
+            <td class="govuk-table__header" scope="col">Method</td>
+            <td class="govuk-table__header" scope="col">Channel</td>
+          </tr>
+      </thead>
+      <tbody class="govuk-table__body" >
+        <tr class="govuk-table__row" >
+                 <td class="govuk-table__cell">
+              <div class="multiple-choice unprocessed-payments--radio-button">
+                <input id="radio-inline-1" type="radio" name="radio-inline-group" value="Yes">
+                <label for="radio-inline-1"></label>
+              </div>
+            </td>
+            <td class="govuk-table__cell">
+            </td>
+     
+            <td class="govuk-table__cell"> - </td>
+            <td class="govuk-table__cell"> - </td>
+            <td class="govuk-table__cell"> - </td>
+            <td class="govuk-table__cell"> - </td>
+          </tr>
+      </tbody>
+      <tbody class="govuk-table__body" *ngIf="">
+        <td class="govuk-table__cell" colspan="6">No payments recorded</td>
+      </tbody>
+    </table>
+</div>
+

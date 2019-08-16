@@ -6,18 +6,18 @@
     <table class="govuk-table">
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
-          <td class="govuk-table__header" scope="col">Reference</td>
-          <td class="govuk-table__header" scope="col">Date received</td>
-          <td class="govuk-table__header" scope="col">Amount</td>
-        <td class="govuk-table__header" scope="col">Method</td>
-        <td class="govuk-table__header" scope="col">Channel</td>
+             <td class="govuk-table__header" scope="col">Payment DCN</td>
+            <td class="govuk-table__header" scope="col">Date received</td>
+            <td class="govuk-table__header" scope="col">Amount</td>
+            <td class="govuk-table__header" scope="col">Method</td>
+            <td class="govuk-table__header" scope="col">Channel</td>
 
         </tr>
       </thead>
       <tbody class="govuk-table__body">
         <tr class="govuk-table__row">
             <td class="govuk-table__cell">{{ unassignedRecord.ccd_ref}}</td>
-            <td class="govuk-table__cell">{{ unassignedRecord.banked_date }}</td>
+            <td class="govuk-table__cell">{{ unassignedRecord.banked_date | date:'dd MMM yyyy' }}</td>
             <td class="govuk-table__cell">{{ unassignedRecord.amount | currency :'GBP':'symbol':'1.2-2'}}</td>
             <td class="govuk-table__cell">{{ unassignedRecord.payment_method }}</td>
             <td class="govuk-table__cell"></td>
@@ -28,7 +28,7 @@
   <form [formGroup]="markPaymentUnsolicitedForm" novalidate>
     <div class="govuk-form-group">
       <label class="govuk-label govuk-label--s" for="reason">
-        Give a reason for marking this payment as unsolicited
+        Reason for payment being marked as unsolicited.     
       </label>
       <input class="govuk-input govuk-input--width-20 govuk-!-margin-right-1" [ngClass]="{'inline-error-class': reasonHasError}" id="reason" name="reason" type="text" formControlName="reason">
       <p [ngClass]="{'inline-error-message': reasonHasError}" *ngIf="reasonHasError">Enter a reason for marking this payment as unsolicited</p>
@@ -36,7 +36,7 @@
     </div>
     <div class="govuk-form-group">
       <label class="govuk-label govuk-label--s" for="responsibleOffice">
-        Responsible office (receiving court or bulk centre site address)
+        Receiving site ID (Receiving site id / Bulk centre site id)    
       </label>
       <input class="govuk-input govuk-input--width-20 govuk-!-margin-right-1" [ngClass]="{'inline-error-class': responsibleOfficeHasError}" id="responsibleOffice" name="responsibleOffice" type="text" formControlName="responsibleOffice">
       <p [ngClass]="{'inline-error-message': responsibleOfficeHasError}" *ngIf="responsibleOfficeHasError">Enter responsible office</p>
@@ -44,7 +44,7 @@
     </div>
     <div class="govuk-form-group">
       <label class="govuk-label govuk-label--s" for="responsiblePerson">
-        Person responsible at receiving court or bulk centre
+        Sending email address      
       </label>
       <input class="govuk-input govuk-input--width-20 govuk-!-margin-right-1" [ngClass]="{'inline-error-class': responsiblePersonHasError}" id="responsiblePerson" name="responsiblePerson" type="text" formControlName="responsiblePerson">
       <p [ngClass]="{'inline-error-message': responsiblePersonHasError}" *ngIf="responsiblePersonHasError">Enter person responsible at receiving court or bulk centre</p>
@@ -52,26 +52,11 @@
     </div>
     <div class="govuk-form-group">
       <label class="govuk-label govuk-label--s" for="emailId">
-        Email address (for example, shared mailbox)
+        Receiving Email address
       </label>
       <input class="govuk-input govuk-input--width-20 govuk-!-margin-right-1" [ngClass]="{'inline-error-class': emailIdHasError}" id="emailId" name="emailId" type="text" formControlName="emailId">
       <p [ngClass]="{'inline-error-message': emailIdHasError}" *ngIf="emailIdHasError">Enter email address</p>
 
-    </div>
-    <div class="govuk-form-group">
-      <label class="govuk-label govuk-label--s" for="phoneNumber">
-        Phone number (responsible office
-      </label>
-      <input class="govuk-input govuk-input--width-20 govuk-!-margin-right-1" [ngClass]="{'inline-error-class': phoneNumberHasError}" id="phoneNumber" name="phoneNumber" type="text" formControlName="phoneNumber">
-      <p [ngClass]="{'inline-error-message': phoneNumberHasError}" *ngIf="phoneNumberHasError">Enter phone number</p>
-
-    </div>
-    <div class="govuk-form-group" >
-      <label class="govuk-label govuk-label--s" for="costReturn">
-        Cost centre (for receiving court or bulk centre)
-      </label>
-      <input class="govuk-input govuk-input--width-20 govuk-!-margin-right-1" [ngClass]="{'inline-error-class': costReturnHasError}" id="costReturn" name="costReturn" type="text" formControlName="costReturn">
-      <p [ngClass]="{'inline-error-message': costReturnHasError}" *ngIf="costReturnHasError">Enter cost centre</p>
     </div>
     <div class="govuk-button--group">
       <button type="submit" class="button" (click)="saveAndContinue()">
