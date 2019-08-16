@@ -36,26 +36,26 @@
     </div>
     <div class="govuk-form-group">
       <label class="govuk-label govuk-label--s" for="responsibleOffice">
-        Receiving site ID (Receiving site id / Bulk centre site id)    
+        Receiving Site ID (Receiving Court/Bulk Centre Site ID)    
       </label>
       <input class="govuk-input govuk-input--width-20 govuk-!-margin-right-1" [ngClass]="{'inline-error-class': responsibleOfficeHasError}" id="responsibleOffice" name="responsibleOffice" type="text" formControlName="responsibleOffice">
-      <p [ngClass]="{'inline-error-message': responsibleOfficeHasError}" *ngIf="responsibleOfficeHasError">Enter responsible office</p>
+      <p [ngClass]="{'inline-error-message': responsibleOfficeHasError}" *ngIf="responsibleOfficeHasError">Enter receiving site ID</p>
 
     </div>
     <div class="govuk-form-group">
       <label class="govuk-label govuk-label--s" for="responsiblePerson">
-        Sending email address      
+        Sending e-mail Address (Team/Person responsible at receiving Court/Bulk Centre)      
       </label>
       <input class="govuk-input govuk-input--width-20 govuk-!-margin-right-1" [ngClass]="{'inline-error-class': responsiblePersonHasError}" id="responsiblePerson" name="responsiblePerson" type="text" formControlName="responsiblePerson">
-      <p [ngClass]="{'inline-error-message': responsiblePersonHasError}" *ngIf="responsiblePersonHasError">Enter person responsible at receiving court or bulk centre</p>
+      <p [ngClass]="{'inline-error-message': responsiblePersonHasError}" *ngIf="responsiblePersonHasError">Enter sending e-mail Address</p>
 
     </div>
     <div class="govuk-form-group">
       <label class="govuk-label govuk-label--s" for="emailId">
-        Receiving Email address
+        Receiving e-mail Address (Receiving email address – assuming shared mailbox)
       </label>
       <input class="govuk-input govuk-input--width-20 govuk-!-margin-right-1" [ngClass]="{'inline-error-class': emailIdHasError}" id="emailId" name="emailId" type="text" formControlName="emailId">
-      <p [ngClass]="{'inline-error-message': emailIdHasError}" *ngIf="emailIdHasError">Enter email address</p>
+      <p [ngClass]="{'inline-error-message': emailIdHasError}" *ngIf="emailIdHasError">Enter receiving e-mail Address</p>
 
     </div>
     <div class="govuk-button--group">
