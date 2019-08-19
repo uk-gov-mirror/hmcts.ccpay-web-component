@@ -19,6 +19,7 @@ export class FeeSummaryComponent implements OnInit {
   @Input() paymentGroupRef: string;
   @Input() ccdCaseNumber: string;
 
+  bsPaymentDcnNumber: string;
   paymentGroup: IPaymentGroup;
   errorMessage: string;
   viewStatus = 'main';
@@ -35,6 +36,7 @@ export class FeeSummaryComponent implements OnInit {
 
   ngOnInit() {
     this.viewStatus = 'main';
+    this.bsPaymentDcnNumber = this.paymentLibComponent.bspaymentdcn;
     // this.paymentGroupRef = '2018-15310089885';
     //this.paymentGroupRef = '2019-15496299273';
     this.getPaymentGroup();

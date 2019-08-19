@@ -22,7 +22,7 @@ export class PaymentLibComponent implements OnInit {
   @Input('VIEW') VIEW: string;
   @Input('PAYMENT_GROUP_REF') PAYMENT_GROUP_REF?: string;
   @Input('TAKEPAYMENT') TAKEPAYMENT: boolean;
-
+  @Input('DCN_NUMBER') DCN_NUMBER: string;
 
   paymentMethod: string;
   bspaymentdcn: string;
@@ -37,6 +37,9 @@ export class PaymentLibComponent implements OnInit {
     this.paymentLibService.setApiRootUrl(this.API_ROOT);
     if (this.PAYMENT_GROUP_REF) {
       this.paymentGroupReference = this.PAYMENT_GROUP_REF;
+    }
+    if (this.DCN_NUMBER) {
+      this.bspaymentdcn = this.DCN_NUMBER;
     }
 
     if (this.VIEW === 'fee-summary') {
