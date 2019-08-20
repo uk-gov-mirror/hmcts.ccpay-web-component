@@ -1,5 +1,5 @@
-  
-<div class="govuk-breadcrumbs">
+
+<div class="govuk-breadcrumbs" *ngIf="isbackenable">
   <ol class="govuk-breadcrumbs__list">
     <li class="govuk-breadcrumbs__list-item">
       <a (click)="redirectToFeeSearchPage($event)" class="govuk-back-link govuk-label">Back</a>
@@ -27,7 +27,7 @@
       </div>
     </div>
   </div>
-  
+
   <table class="govuk-table"  *ngIf="!errorMessage && paymentGroup">
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
@@ -76,7 +76,7 @@
         <td class="no-border"></td>
         <td class="no-border"></td>
         <td class="no-border"></td>
-        <td class="no-border"> 
+        <td class="no-border">
           <table class="govuk-table">
             <tr class="govuk-table__row">
               <td class="no-border govuk-!-font-weight-bold subcolumn-1">Total to be paid</td>
@@ -91,10 +91,10 @@
         <td class="no-border"></td>
         <td class="no-border"></td>
         <td class="no-border"></td>
-        <td class="no-border"> 
+        <td class="no-border">
 
           <div class="govuk-form-group govuk-form-group--mg">
- 
+
             <fieldset class="govuk-fieldset">
               <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                 <span class="govuk-fieldset__heading govuk-fieldset__heading--fz">
@@ -125,10 +125,10 @@
       <td class="no-border"></td>
       <td class="no-border"></td>
       <td class="no-border"></td>
-      <td class="no-border"> 
+      <td class="no-border">
           <table class="govuk-table">
             <tr class="govuk-table__row">
-              <td class="no-border subcolumn-2"> 
+              <td class="no-border subcolumn-2">
                 <button type="submit" (click)="takePayment()"
                 [disabled]="totalFee <= 0 || !service"
                 [ngClass]='totalFee <= 0 ? "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"'>

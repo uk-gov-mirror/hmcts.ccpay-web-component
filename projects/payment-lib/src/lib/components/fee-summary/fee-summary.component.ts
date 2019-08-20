@@ -26,6 +26,7 @@ export class FeeSummaryComponent implements OnInit {
   totalFee: number;
   payhubHtml: SafeHtml;
   service: string = null;
+  isbackenable: boolean = true;
 
   constructor(
     private router: Router,
@@ -36,7 +37,7 @@ export class FeeSummaryComponent implements OnInit {
   ngOnInit() {
     this.viewStatus = 'main';
     // this.paymentGroupRef = '2018-15310089885';
-    //this.paymentGroupRef = '2019-15496299273';
+    this.paymentGroupRef = '2019-15496299273';
     this.getPaymentGroup();
   }
 
@@ -86,7 +87,7 @@ export class FeeSummaryComponent implements OnInit {
           this.getPaymentGroup();
           this.viewStatus = 'main';
           return;
-          } 
+          }
           this.loadCaseTransactionPage();
       },
       (error: any) => {
@@ -111,12 +112,14 @@ export class FeeSummaryComponent implements OnInit {
     this.router.navigateByUrl(`/fee-search?ccdCaseNumber=${this.ccdCaseNumber}`);
   }
   takePayment() {
+
     const seriveName = this.service ==='AA07' ? 'DIVORCE': this.service ==='AA08' ? 'PROBATE' : '';
     const requestBody = new PaymentToPayhubRequest(this.ccdCaseNumber, this.totalFee, this.service, seriveName);
     this.paymentViewService.postPaymentToPayHub(requestBody, this.paymentGroupRef).subscribe(
       response => {
         this.payhubHtml = response;
         this.viewStatus = 'payhub_view';
+        this.isbackenable=false;
       },
       (error: any) => {
         this.errorMessage = error;
