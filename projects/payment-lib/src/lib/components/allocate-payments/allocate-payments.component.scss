@@ -12,4 +12,12 @@
     .govuk-table__cell--col5{
         width: 15%;
     }
+    .govuk-button-group-allocate {
+        display: flex;
+        justify-content: flex-end;
+    }
+    .govuk-button--secondary {
+        margin-left: 10px;
+        background-color: #b3b8bdf2;
+    }
 }

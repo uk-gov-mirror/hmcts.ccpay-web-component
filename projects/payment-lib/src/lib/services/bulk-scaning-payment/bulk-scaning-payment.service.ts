@@ -7,6 +7,8 @@ import {catchError} from 'rxjs/operators';
 import { IBSPayments } from '../../interfaces/IBSPayments';
 import { UnidentifiedPaymentsRequest } from '../../interfaces/UnidentifiedPaymentsRequest';
 import { UnsolicitedPaymentsRequest } from '../../interfaces/UnsolicitedPaymentsRequest';
+import { AllocatePaymentRequest } from '../../interfaces/AllocatePaymentRequest';
+
 
 @Injectable({
   providedIn: 'root'
@@ -31,8 +33,13 @@ export class BulkScaningPaymentService {
       catchError(this.errorHandlerService.handleError)
     );
   }
-    postBSUnsolicitedPayments(body: UnsolicitedPaymentsRequest): Observable<any> {
+  postBSUnsolicitedPayments(body: UnsolicitedPaymentsRequest): Observable<any> {
     return this.http.post(`${this.paymentLibService.API_ROOT}/bulk-scanning/unsolicited-payments`, body).pipe(
+      catchError(this.errorHandlerService.handleError)
+    );
+  }
+  postBSAllocatePayment(body: AllocatePaymentRequest, paymentRef: string): Observable<any> {
+    return this.http.post(`${this.paymentLibService.API_ROOT}/payment-groups/${paymentRef}/bulk-scan-payments`, body).pipe(
       catchError(this.errorHandlerService.handleError)
     );
   }

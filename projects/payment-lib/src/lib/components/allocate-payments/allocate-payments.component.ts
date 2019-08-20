@@ -4,6 +4,7 @@ import {BulkScaningPaymentService} from '../../services/bulk-scaning-payment/bul
 import {CaseTransactionsService} from '../../services/case-transactions/case-transactions.service';
 import {IPayment} from '../../interfaces/IPayment';
 import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
+import { AllocatePaymentRequest } from '../../interfaces/AllocatePaymentRequest';
 
 @Component({
   selector: 'app-allocate-payments',
@@ -72,4 +73,29 @@ export class AllocatePaymentsComponent implements OnInit {
   selectedPaymentGroup(paymentGroup: IPaymentGroup) {
     this.selectedPayment = paymentGroup;
   }
+  cancelAllocatePayment(){
+    this.viewStatus = 'mainForm';
+  }
+  confirmAllocatePayement(){
+    debugger;
+    const requestBody = new AllocatePaymentRequest
+    (this.ccdCaseNumber);
+    this.bulkScaningPaymentService.postBSAllocatePayment(requestBody, this.selectedPayment.payment_group_reference)
+    .subscribe(
+      response => {
+        if (response.success) {
+          this.paymentLibComponent.viewName = 'case-transactions';
+          this.paymentLibComponent.TAKEPAYMENT = true;
+        }
+      },
+      (error: any) => this.errorMessage = error
+    );
+  }
+
+  saveAndContinue(){
+    if(this.selectedPayment) {
+      this.viewStatus = 'allocatePaymentConfirmation';
+    }
+  }
+
 }
