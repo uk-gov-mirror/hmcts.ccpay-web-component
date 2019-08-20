@@ -1,0 +1,15 @@
+.allocate-payments {
+    margin: 20px 0 20px 0;
+    .govuk-table__cell--col1,
+    .govuk-table__cell--col3 {
+        width: 10%;
+    }
+    .govuk-table__cell--col2,
+    .govuk-table__cell--col6{
+        width: 25%;
+    }
+    .govuk-table__cell--col4,
+    .govuk-table__cell--col5{
+        width: 15%;
+    }
+}

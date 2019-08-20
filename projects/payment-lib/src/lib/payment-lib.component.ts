@@ -10,6 +10,7 @@ import {PaymentLibService} from './payment-lib.service';
     <ccpay-case-transactions *ngIf="viewName === 'case-transactions'"></ccpay-case-transactions>
     <app-mark-unidentified-payment *ngIf="viewName === 'unidentifiedPage'"></app-mark-unidentified-payment>
     <app-mark-unsolicited-payment *ngIf="viewName === 'unsolicitedPage'"></app-mark-unsolicited-payment>
+    <app-allocate-payments *ngIf="viewName === 'allocate-payments'"></app-allocate-payments>
     <ccpay-fee-summary *ngIf="viewName === 'fee-summary'"
                        [ccdCaseNumber]="CCD_CASE_NUMBER" [paymentGroupRef]="paymentGroupReference"></ccpay-fee-summary>
   `

@@ -35,9 +35,10 @@ export class FeeSummaryComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    debugger
     this.viewStatus = 'main';
     this.bsPaymentDcnNumber = this.paymentLibComponent.bspaymentdcn;
-    // this.paymentGroupRef = '2018-15310089885';
+    this.paymentGroupRef = '2018-15310089885';
     //this.paymentGroupRef = '2019-15496299273';
     this.getPaymentGroup();
   }
@@ -124,5 +125,8 @@ export class FeeSummaryComponent implements OnInit {
         this.errorMessage = error;
       }
     );
+  }
+  goToAllocatePage() {
+    this.paymentLibComponent.viewName = 'allocate-payments';
   }
 }

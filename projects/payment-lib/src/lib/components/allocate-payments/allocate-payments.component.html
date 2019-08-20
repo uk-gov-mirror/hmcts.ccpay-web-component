@@ -1,0 +1,48 @@
+<div class="allocate-payments">
+    <h2 class="govuk-heading-l">Allocate payment to fee group</h2>
+<div class="payment-group-section" *ngFor="let paymentGroup of paymentGroups let i = index">
+                <input id="'unpaiedFee-{{1}}"
+                name="unassignedRecord"
+                type="radio"
+                (click)="selectedPaymentGroup(paymentGroup)"
+              />
+            <span class="heading-medium">   
+    
+                Group reference: {{paymentGroup.payment_group_reference}}</span>
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+            <td class="govuk-table__header" scope="col">Fee code</td>
+            <td class="govuk-table__header" scope="col">Fee description</td>
+            <td class="govuk-table__header" scope="col">Volume</td>
+            <td class="govuk-table__header" scope="col">Fee amount</td>
+            <td class="govuk-table__header" scope="col">Calculated Amount</td>
+            <td class="govuk-table__header" scope="col">Fee Outstanding</td>
+          </tr>
+      </thead>
+      <tbody class="govuk-table__body" >
+        <tr class="govuk-table__row"  *ngFor="let fee of paymentGroup.fees">
+            <td class="govuk-table__cell govuk-table__cell--col1">{{fee.code}}</td>
+            <td class="govuk-table__cell govuk-table__cell--col2"> {{fee.description}} </td>
+            <td class="govuk-table__cell govuk-table__cell--col3"> {{fee.volume}} </td>
+            <td class="govuk-table__cell govuk-table__cell--col4"> {{ fee.calculated_amount/fee.volume }} </td>
+            <td class="govuk-table__cell govuk-table__cell--col5"> {{fee.calculated_amount}} </td>
+            <td class="govuk-table__cell govuk-table__cell--col6"> {{getGroupOutstandingAmount(paymentGroup)}} </td>
+
+          </tr>
+
+      </tbody>
+      <tbody class="govuk-table__body" *ngIf="isRecordExist">
+        <td class="govuk-table__cell" colspan="6">No payments recorded</td>
+      </tbody>
+    </table>
+</div>
+
+    <button type="button" class="button govuk-!-margin-right-1" (click)="loadUnsolicitedPage('unidentifiedPage')">
+      Mark as unidentified
+    </button>
+    <button type="button" class="button govuk-!-margin-right-1" (click)="loadUnsolicitedPage('unsolicitedPage')">
+      Mark as unsolicited
+    </button>
+</div>
+

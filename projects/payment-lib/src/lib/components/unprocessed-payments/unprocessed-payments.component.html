@@ -4,17 +4,17 @@
         <tr class="govuk-table__row">
             <td class="govuk-table__header" scope="col">Select</td>
             <td class="govuk-table__header" scope="col">Payment DCN</td>
-            <td class="govuk-table__header" scope="col">Date received</td>
-            <td class="govuk-table__header" scope="col">Amount</td>
             <td class="govuk-table__header" scope="col">Method</td>
-            <td class="govuk-table__header" scope="col">Channel</td>
+            <td class="govuk-table__header" scope="col">Amount</td>
+            <td class="govuk-table__header" scope="col">Banked Date</td>
+            <td class="govuk-table__header" scope="col">Payer Name</td>
           </tr>
       </thead>
       <tbody class="govuk-table__body" >
         <tr class="govuk-table__row" *ngFor="let unassignedRecord of unassignedRecordList">
             <td class="govuk-table__cell">
               <div class="multiple-choice unprocessed-payments--radio-button">
-                <input [id]="formatUnassignedRecordId(unassignedRecord.id)"
+                <input id="unpaiedFee"
                 name="unassignedRecord"
                 type="radio"
                 [(ngModel)]="recordId"

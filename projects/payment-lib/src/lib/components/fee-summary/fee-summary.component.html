@@ -134,7 +134,7 @@
                 [ngClass]='totalFee <= 0 ? "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"'>
                   Take payment
               </button>
-              <button *ngIf="bsPaymentDcnNumber" type="button" class="button govuk-!-margin-right-1">
+              <button *ngIf="bsPaymentDcnNumber" type="button" (click)="goToAllocatePage()" class="button govuk-!-margin-right-1">
                 Continue
               </button>
               </td>

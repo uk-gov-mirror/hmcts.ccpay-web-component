@@ -12,6 +12,7 @@ export class PaymentLibIntComponent implements OnInit {
   apiRoot: string;
   view: string;
   takePayment: boolean;
+  dcnNumber: string;
 
   constructor(private activatedRoute: ActivatedRoute) { }
 
@@ -19,6 +20,7 @@ export class PaymentLibIntComponent implements OnInit {
     this.activatedRoute.params.subscribe((params) => {
       this.ccdCaseNumber = params.ccdCaseNumber;
       this.view = this.activatedRoute.snapshot.queryParams['view'];
+      this.dcnNumber = this.activatedRoute.snapshot.queryParams['dcn'] ? '11111111111111111':'11111111111111111';
       this.takePayment = this.activatedRoute.snapshot.queryParams['takePayment'];
       this.apiRoot = 'http://localhost:9999';
     });
