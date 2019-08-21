@@ -20,4 +20,14 @@
         margin-left: 10px;
         background-color: #b3b8bdf2;
     }
+    .govuk-custom-warning__message {
+        font-size: 30px;
+        position: relative;
+        top: 12px;
+        font-weight: bold;
+    }
+    .govuk-warning-text-custom {
+        margin-bottom: 0 !important;
+        padding: 10px 0 5px 0;
+    }
 }

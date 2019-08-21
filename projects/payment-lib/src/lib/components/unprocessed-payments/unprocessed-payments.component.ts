@@ -40,6 +40,10 @@ export class UnprocessedPaymentsComponent implements OnInit {
   formatUnassignedRecordId(ID: Number){
     return `unassignrecord-${ID}`;
   }
+  unProcessedPayment(payment: IBSPayments) {
+    debugger
+     this.paymentLibComponent.unProcessedPayment = payment;
+  }
   redirectToFeeSearchPage(event: any) {
     event.preventDefault();
     this.router.navigateByUrl(`/fee-search?ccdCaseNumber=${this.ccdCaseNumber}&dcn=${this.recordId}`);
@@ -47,5 +51,8 @@ export class UnprocessedPaymentsComponent implements OnInit {
   loadUnsolicitedPage(viewName: string) {
     this.paymentLibComponent.bspaymentdcn = `DCN-${this.ccdCaseNumber}`;
     this.paymentLibComponent.viewName = viewName;
+  }
+  goToAllocatePage() {
+    this.paymentLibComponent.viewName = 'allocate-payments';
   }
 }

@@ -11,12 +11,13 @@
           </tr>
       </thead>
       <tbody class="govuk-table__body" >
-        <tr class="govuk-table__row" *ngFor="let unassignedRecord of unassignedRecordList">
+        <tr class="govuk-table__row" *ngFor="let unassignedRecord of unassignedRecordList; let i of index;">
             <td class="govuk-table__cell">
               <div class="multiple-choice unprocessed-payments--radio-button">
-                <input id="unpaiedFee"
+                <input id="'unpaiedFee'+i+''"
                 name="unassignedRecord"
                 type="radio"
+                (click)="unProcessedPayment(unassignedRecord)"
                 [(ngModel)]="recordId"
                 value="{{unassignedRecord.dcn}}" />
                 <label for="radio-inline-1"></label>
@@ -38,7 +39,7 @@
     <button type="button" class="button govuk-!-margin-right-1" (click)="redirectToFeeSearchPage($event)">
       Associate to a new fee
     </button>
-    <button type="button" class="button govuk-!-margin-right-1" (click)="loadUnsolicitedPage('unsolicitedPage')">
+    <button type="button" class="button govuk-!-margin-right-1" (click)="goToAllocatePage()">
       Associate to an existing fee
     </button>
     <button type="button" class="button govuk-!-margin-right-1" (click)="loadUnsolicitedPage('unidentifiedPage')">

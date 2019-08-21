@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {PaymentLibService} from './payment-lib.service';
+import { IBSPayments } from 'payment-lib/lib/interfaces/IBSPayments';
 
 @Component({
   selector: 'ccpay-payment-lib',
@@ -30,6 +31,7 @@ export class PaymentLibComponent implements OnInit {
   paymentGroupReference: string;
   paymentReference: string;
   viewName: string;
+  unProcessedPayment: IBSPayments = null;
 
   constructor(private router: Router,
               private paymentLibService: PaymentLibService) { }

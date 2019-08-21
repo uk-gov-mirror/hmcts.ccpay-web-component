@@ -4,6 +4,7 @@ import {BulkScaningPaymentService} from '../../services/bulk-scaning-payment/bul
 import {CaseTransactionsService} from '../../services/case-transactions/case-transactions.service';
 import {IPayment} from '../../interfaces/IPayment';
 import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
+import { IBSPayments } from '../../interfaces/IBSPayments';
 import { AllocatePaymentRequest } from '../../interfaces/AllocatePaymentRequest';
 
 @Component({
@@ -15,9 +16,11 @@ export class AllocatePaymentsComponent implements OnInit {
   viewStatus: string;
   ccdCaseNumber: string;
   bspaymentdcn: string;
+  unAllocatedPayment: IBSPayments = null;
   errorMessage:string;
   paymentGroups: IPayment[] = [];
   selectedPayment: IPaymentGroup;
+  remainingAmount: number;
 
   constructor(
   private caseTransactionsService: CaseTransactionsService,
@@ -28,6 +31,7 @@ export class AllocatePaymentsComponent implements OnInit {
     this.viewStatus = 'mainForm';
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
     this.bspaymentdcn = this.paymentLibComponent.bspaymentdcn;
+    this.unAllocatedPayment = this.paymentLibComponent.unProcessedPayment;
 
     this.caseTransactionsService.getPaymentGroups(this.ccdCaseNumber).subscribe(
       paymentGroups => {
@@ -38,7 +42,7 @@ export class AllocatePaymentsComponent implements OnInit {
       (error: any) => this.errorMessage = error
     );
   }
-    getGroupOutstandingAmount(paymentGroup: IPaymentGroup): number {
+  getGroupOutstandingAmount(paymentGroup: IPaymentGroup): number {
     let feesTotal = 0.00,
       paymentsTotal = 0.00,
       remissionsTotal = 0.00;
@@ -77,7 +81,6 @@ export class AllocatePaymentsComponent implements OnInit {
     this.viewStatus = 'mainForm';
   }
   confirmAllocatePayement(){
-    debugger;
     const requestBody = new AllocatePaymentRequest
     (this.ccdCaseNumber);
     this.bulkScaningPaymentService.postBSAllocatePayment(requestBody, this.selectedPayment.payment_group_reference)
@@ -91,11 +94,13 @@ export class AllocatePaymentsComponent implements OnInit {
       (error: any) => this.errorMessage = error
     );
   }
-
   saveAndContinue(){
     if(this.selectedPayment) {
+      const remainingToBeAssigned = this.unAllocatedPayment.amount - this.getGroupOutstandingAmount(this.selectedPayment);
+      this.remainingAmount = remainingToBeAssigned > 0 ? remainingToBeAssigned : 0;
       this.viewStatus = 'allocatePaymentConfirmation';
     }
   }
+
 
 }
