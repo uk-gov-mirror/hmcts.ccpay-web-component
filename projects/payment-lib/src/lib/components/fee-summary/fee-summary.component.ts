@@ -26,7 +26,7 @@ export class FeeSummaryComponent implements OnInit {
   totalFee: number;
   payhubHtml: SafeHtml;
   service: string = null;
-  isbackenable: boolean = true;
+  isBackButtonEnable: boolean = true;
 
   constructor(
     private router: Router,
@@ -37,7 +37,7 @@ export class FeeSummaryComponent implements OnInit {
   ngOnInit() {
     this.viewStatus = 'main';
     // this.paymentGroupRef = '2018-15310089885';
-    this.paymentGroupRef = '2019-15496299273';
+    //this.paymentGroupRef = '2019-15496299273';
     this.getPaymentGroup();
   }
 
@@ -119,7 +119,7 @@ export class FeeSummaryComponent implements OnInit {
       response => {
         this.payhubHtml = response;
         this.viewStatus = 'payhub_view';
-        this.isbackenable=false;
+        this.isBackButtonEnable=false;
       },
       (error: any) => {
         this.errorMessage = error;
