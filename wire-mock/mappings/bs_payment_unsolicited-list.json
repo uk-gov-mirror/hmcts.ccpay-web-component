@@ -1,7 +1,7 @@
 {
     "request": {
         "method": "GET",
-        "url": "/bulk-scaning/CCD-1111-2222-3333-4444/payments"
+        "url": "/cases/1111-2222-3333-4444"
     },
     "response": {
         "status": 200,

@@ -33,7 +33,8 @@ export class AllocatePaymentsComponent implements OnInit {
     this.viewStatus = 'mainForm';
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
     this.bspaymentdcn = this.paymentLibComponent.bspaymentdcn;
-    this.unAllocatedPayment = this.paymentLibComponent.unProcessedPayment;
+
+    this.getUnassignedPayment();
 
     this.caseTransactionsService.getPaymentGroups(this.ccdCaseNumber).subscribe(
       paymentGroups => {
@@ -106,6 +107,14 @@ export class AllocatePaymentsComponent implements OnInit {
 
       this.viewStatus = 'allocatePaymentConfirmation';
     }
+  }
+   getUnassignedPayment() {
+    this.bulkScaningPaymentService.getBSPaymentsByDCN(this.bspaymentdcn).subscribe(
+      unassignedPayments => {
+        this.unAllocatedPayment = unassignedPayments['data'].payments[0];
+      },
+      (error: any) => this.errorMessage = error
+    );
   }
 
 

@@ -20,8 +20,16 @@ export class BulkScaningPaymentService {
               private paymentLibService: PaymentLibService
               ) { }
 
-  getBSPayments(ccdCaseNumber: string): Observable<IBSPayments> {
-    return this.http.get<IBSPayments>(`${this.paymentLibService.API_ROOT}/bulk-scaning/${ccdCaseNumber}/payments`, {
+  getBSPaymentsByCCD(ccdCaseNumber: string): Observable<IBSPayments> {
+    return this.http.get<IBSPayments>(`${this.paymentLibService.API_ROOT}/cases/${ccdCaseNumber}`, {
+      withCredentials: true
+    })
+      .pipe(
+        catchError(this.errorHandlerService.handleError)
+      );
+  }
+  getBSPaymentsByDCN(dcn: string): Observable<IBSPayments> {
+    return this.http.get<IBSPayments>(`${this.paymentLibService.API_ROOT}/cases?document_control_number=${dcn}`, {
       withCredentials: true
     })
       .pipe(

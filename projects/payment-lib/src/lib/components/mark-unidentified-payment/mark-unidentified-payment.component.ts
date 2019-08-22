@@ -41,9 +41,9 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
     });
   }
  getUnassignedPayment() {
-    this.bulkScaningPaymentService.getBSPayments(this.bspaymentdcn).subscribe(
+    this.bulkScaningPaymentService.getBSPaymentsByDCN(this.bspaymentdcn).subscribe(
       unassignedPayments => {
-        this.unassignedRecord = unassignedPayments;
+        this.unassignedRecord = unassignedPayments['data'].payments[0];
       },
       (error: any) => this.errorMessage = error
     );
