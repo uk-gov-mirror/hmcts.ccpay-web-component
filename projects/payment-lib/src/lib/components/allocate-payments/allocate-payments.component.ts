@@ -21,6 +21,8 @@ export class AllocatePaymentsComponent implements OnInit {
   paymentGroups: IPayment[] = [];
   selectedPayment: IPaymentGroup;
   remainingAmount: number;
+  afterFeeAllocateOutstanding: number;
+  amountForAllocation: number;
 
   constructor(
   private caseTransactionsService: CaseTransactionsService,
@@ -96,8 +98,12 @@ export class AllocatePaymentsComponent implements OnInit {
   }
   saveAndContinue(){
     if(this.selectedPayment) {
-      const remainingToBeAssigned = this.unAllocatedPayment.amount - this.getGroupOutstandingAmount(this.selectedPayment);
+      let GroupOutstandingAmount = this.getGroupOutstandingAmount(this.selectedPayment);
+      const remainingToBeAssigned = this.unAllocatedPayment.amount - GroupOutstandingAmount;
       this.remainingAmount = remainingToBeAssigned > 0 ? remainingToBeAssigned : 0;
+      this.afterFeeAllocateOutstanding = remainingToBeAssigned >= 0 ? 0 : (remainingToBeAssigned * -1);
+      this.amountForAllocation = GroupOutstandingAmount >= this.unAllocatedPayment.amount ? this.unAllocatedPayment.amount : GroupOutstandingAmount;
+
       this.viewStatus = 'allocatePaymentConfirmation';
     }
   }

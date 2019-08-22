@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {PaymentLibService} from './payment-lib.service';
-import { IBSPayments } from 'payment-lib/lib/interfaces/IBSPayments';
+import { IBSPayments } from './interfaces/IBSPayments';
 
 @Component({
   selector: 'ccpay-payment-lib',

@@ -1,4 +1,5 @@
 export interface IBSPayments {
+  id?:string;
   dcn?: string,
   ccd_ref?: string,
   amount?: number,
