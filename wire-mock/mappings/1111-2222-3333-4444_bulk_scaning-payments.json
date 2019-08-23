@@ -1,7 +1,7 @@
 {
   "request": {
     "method": "GET",
-    "url": "/bulk-scaning/DCN-1111-2222-3333-4444/payments"
+        "url": "/cases?document_control_number=DCN123"
   },
   "response": {
     "status": 200,

@@ -1,0 +1,109 @@
+<div class="allocate-payments">
+  <div *ngIf="viewStatus==='mainForm'">
+  <div class="govuk-heading-section">
+     <h1 class="govuk-heading-xl">Allocate payment to fee group</h1>
+        <h2 class="govuk-heading-m">Amount left to be allocated: {{ unAllocatedPayment.amount | currency:'GBP':'symbol-narrow':'1.2-2' }}</h2>
+        
+  </div>
+<div class="payment-group-section" *ngFor="let paymentGroup of paymentGroups">
+  
+    <h3 class="govuk-heading-s">Group reference: {{paymentGroup.payment_group_reference}}</h3>
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+           <td class="govuk-table__header" scope="col"></td>
+            <td class="govuk-table__header" scope="col">Code</td>
+            <td class="govuk-table__header" scope="col">Description</td>
+            <td class="govuk-table__header" scope="col">Volume</td>
+            <td class="govuk-table__header" scope="col">Fee amount</td>
+            <td class="govuk-table__header" scope="col">Calculated Amount</td>
+            <td class="govuk-table__header" scope="col">Group Amount Outstanding</td>
+          </tr>
+      </thead>
+      <tbody class="govuk-table__body" >
+        <tr class="govuk-table__row"  *ngFor="let fee of paymentGroup.fees;  let i = index;">
+          <td class="govuk-table__cell govuk-table__cell--col1 govuk-table__custom--col1" [attr.rowspan]="paymentGroup.fees.length" *ngIf="i==0">  
+            <div class="multiple-choice">
+              <input id="unpaiedFee-{{i}}"
+              name="unassignedRecord"
+              type="radio"
+              (click)="selectedPaymentGroup(paymentGroup)"
+              />  
+              <label for="unpaiedFee-{{i}}"></label>
+            </div>
+          </td>
+            <td class="govuk-table__cell govuk-table__cell--col1">{{fee.code}}</td>
+            <td class="govuk-table__cell govuk-table__cell--col2"> {{fee.description}} </td>
+            <td class="govuk-table__cell govuk-table__cell--col3"> {{fee.volume}} </td>
+            <td class="govuk-table__cell govuk-table__cell--col4"> {{ fee.calculated_amount/fee.volume | currency:'GBP':'symbol-narrow':'1.2-2' }} </td>
+            <td class="govuk-table__cell govuk-table__cell--col5"> {{fee.calculated_amount | currency:'GBP':'symbol-narrow':'1.2-2' }} </td>
+            <td class="govuk-table__cell govuk-table__cell--col6 govuk-table__custom--col6" [attr.rowspan]="paymentGroup.fees.length" *ngIf="i==0"> {{getGroupOutstandingAmount(paymentGroup) | currency:'GBP':'symbol-narrow':'1.2-2' }} </td>
+
+          </tr>
+
+      </tbody>
+      <tbody class="govuk-table__body" *ngIf="paymentGroup.fees.length==0">
+        <td class="govuk-table__cell" colspan="6">No payments recorded</td>
+      </tbody>
+    </table>
+</div>
+<div class="govuk-button-group-allocate">
+    <button type="button" class="button govuk-!-margin-right-1" (click)="saveAndContinue()">
+      Continue
+    </button>
+    <button type="button" class="button govuk-button--secondary" (click)="gotoCasetransationPage()">
+      Cancel
+    </button>
+</div>
+</div>
+<ng-container *ngIf="viewStatus === 'allocatePaymentConfirmation'">
+<h1 class="govuk-heading-xl">Confirm association</h1>
+<h2 class="govuk-heading-m">Amount left to be allocated: {{ remainingAmount | currency:'GBP':'symbol-narrow':'1.2-2' }}</h2>
+<div class="payment-group-section" >
+    <h3 class="govuk-heading-s">Group reference: {{selectedPayment.payment_group_reference}}</h3>
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+            <td class="govuk-table__header" scope="col">Code</td>
+            <td class="govuk-table__header" scope="col">Description</td>
+            <td class="govuk-table__header" scope="col">Volume</td>
+            <td class="govuk-table__header" scope="col">Fee amount</td>
+            <td class="govuk-table__header" scope="col">Calculated Amount</td>
+            <td class="govuk-table__header" scope="col">Group Amount Outstanding</td>
+          </tr>
+      </thead>
+      <tbody class="govuk-table__body" >
+        <tr class="govuk-table__row"  *ngFor="let fee of selectedPayment.fees; let i = index;">
+            <td class="govuk-table__cell govuk-table__cell--col1">{{fee.code}}</td>
+            <td class="govuk-table__cell govuk-table__cell--col2"> {{fee.description}} </td>
+            <td class="govuk-table__cell govuk-table__cell--col3"> {{fee.volume}} </td>
+            <td class="govuk-table__cell govuk-table__cell--col4"> {{ fee.calculated_amount/fee.volume | currency:'GBP':'symbol-narrow':'1.2-2' }} </td>
+            <td class="govuk-table__cell govuk-table__cell--col5"> {{fee.calculated_amount | currency:'GBP':'symbol-narrow':'1.2-2'}} </td>
+            <td class="govuk-table__cell govuk-table__cell--col6" [attr.rowspan]="selectedPayment.fees.length" *ngIf="i==0"> {{afterFeeAllocateOutstanding | currency:'GBP':'symbol-narrow':'1.2-2'}} </td>
+          </tr>
+
+      </tbody>
+      <tbody class="govuk-table__body" *ngIf="selectedPayment.fees.length == 0">
+        <td class="govuk-table__cell" colspan="6">No payments recorded</td>
+      </tbody>
+    </table>
+</div>
+  <div class="govuk-warning-text">
+    <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+    <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Warning</span>
+        Are you sure you want to allocate {{amountForAllocation | currency:'GBP':'symbol-narrow':'1.2-2'}} to this group?
+    </strong>
+  </div>
+      <div class="govuk-button--group">
+        <button type="submit" class="button" (click)="confirmAllocatePayement()">
+          Confirm
+        </button>
+        <button type="button" class="button govuk-button--secondary" (click)="cancelAllocatePayment()">
+          Cancel
+        </button>
+      </div>
+    </ng-container>
+
+</div>
+

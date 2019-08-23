@@ -16,6 +16,7 @@ import { FeeSummaryComponent } from './components/fee-summary/fee-summary.compon
 import { MarkUnidentifiedPaymentComponent } from './components/mark-unidentified-payment/mark-unidentified-payment.component';
 import { MarkUnsolicitedPaymentComponent } from './components/mark-unsolicited-payment/mark-unsolicited-payment.component';
 import { UnprocessedPaymentsComponent } from './components/unprocessed-payments/unprocessed-payments.component';
+import { AllocatePaymentsComponent } from './components/allocate-payments/allocate-payments.component';
 import { AddRemissionComponent } from './components/add-remission/add-remission.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CcdHyphensPipe } from './pipes/ccd-hyphens.pipe';
@@ -39,6 +40,7 @@ import { SanitizeHtmlPipe } from './pipes/sanitize-html.pipe';
     MarkUnidentifiedPaymentComponent,
     MarkUnsolicitedPaymentComponent,
     UnprocessedPaymentsComponent,
+    AllocatePaymentsComponent,
     PbaDetailsComponent,
     CaseTransactionsComponent,
     FeeSummaryComponent,

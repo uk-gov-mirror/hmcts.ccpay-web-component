@@ -130,9 +130,4 @@ export class CaseTransactionsComponent implements OnInit {
     this.paymentLibComponent.paymentReference = paymentReference;
     this.paymentLibComponent.viewName = 'payment-view';
   }
-  loadUnsolicitedPage(viewName: string) {
-    this.paymentLibComponent.bspaymentdcn = `DCN-${this.ccdCaseNumber}`;
-    this.paymentLibComponent.viewName = viewName;
-  }
-
 }

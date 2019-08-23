@@ -1,0 +1,42 @@
+.allocate-payments {
+    margin: 20px 0 20px 0;
+    .govuk-table__cell--col1,
+    .govuk-table__cell--col3 {
+        width: 10%;
+    }
+    .govuk-table__cell--col2,
+    .govuk-table__cell--col6{
+        width: 25%;
+    }
+    .govuk-table__cell--col4,
+    .govuk-table__cell--col5{
+        width: 15%;
+    }
+    .govuk-button-group-allocate {
+        display: flex;
+        justify-content: flex-end;
+    }
+    .govuk-button--secondary {
+        margin-left: 10px;
+        background-color: #b3b8bdf2;
+    }
+    .govuk-custom-warning__message {
+        font-size: 30px;
+        position: relative;
+        top: 12px;
+        font-weight: bold;
+    }
+    .govuk-warning-text-custom {
+        margin-bottom: 0 !important;
+        padding: 10px 0 5px 0;
+    }
+    .govuk-table__custom--col1 {
+        padding-top: 0px;
+        padding-bottom: 20px;
+        padding-left: 15px;
+    }
+    .govuk-table__custom--col6 {
+        text-align: center;
+    }
+
+}

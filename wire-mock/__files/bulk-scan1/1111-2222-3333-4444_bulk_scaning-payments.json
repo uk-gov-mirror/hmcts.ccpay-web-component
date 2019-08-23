@@ -1,10 +1,69 @@
 {
-  "id": 11,
-  "dcn": "DCN-1111-2222-3333-4444",
-  "ccd_ref": "1111-2222-3333-4444",
-  "amount": 12,
-  "currency": "GBP",
-  "banked_date": "2018-07-08T00:16:29.057+0000",
-  "giro_slip_no": "4481102159",
-  "payment_method": "Scann"
+"data":{  
+    "ccd_reference":"CCD123",
+    "payments":[  
+        {  
+            "id":2,
+            "dcn_reference":"DCN123",
+            "bgc_reference":"BGC123",
+            "amount":10.00,
+            "currency":"GBP",
+            "payment_method":"CHEQUE",
+            "outbound_batch_number":"111111",
+            "dcn_case":"CCD123",
+            "case_reference":"CCD123",
+            "po_box":"11111",
+            "first_cheque_dcn_in_batch":"111111",
+            "payer_name":"AYAN",
+            "date_banked":{  
+                "year":2019,
+                "month":"AUGUST",
+                "dayOfMonth":22,
+                "dayOfWeek":"THURSDAY",
+                "dayOfYear":234,
+                "monthValue":8,
+                "hour":16,
+                "minute":56,
+                "second":1,
+                "nano":68000000,
+                "chronology":{  
+                "id":"ISO",
+                "calendarType":"iso8601"
+                }
+            },
+            "date_created":{  
+                "year":2019,
+                "month":"AUGUST",
+                "dayOfMonth":22,
+                "dayOfWeek":"THURSDAY",
+                "dayOfYear":234,
+                "monthValue":8,
+                "hour":17,
+                "minute":57,
+                "second":21,
+                "nano":900000000,
+                "chronology":{  
+                "id":"ISO",
+                "calendarType":"iso8601"
+                }
+            },
+            "date_updated":{  
+                "year":2019,
+                "month":"AUGUST",
+                "dayOfMonth":22,
+                "dayOfWeek":"THURSDAY",
+                "dayOfYear":234,
+                "monthValue":8,
+                "hour":17,
+                "minute":57,
+                "second":21,
+                "nano":900000000,
+                "chronology":{  
+                "id":"ISO",
+                "calendarType":"iso8601"
+                }
+            }
+        }
+    ]
+    }
 }

@@ -19,6 +19,7 @@ export class FeeSummaryComponent implements OnInit {
   @Input() paymentGroupRef: string;
   @Input() ccdCaseNumber: string;
 
+  bsPaymentDcnNumber: string;
   paymentGroup: IPaymentGroup;
   errorMessage: string;
   viewStatus = 'main';
@@ -34,8 +35,10 @@ export class FeeSummaryComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    debugger
     this.viewStatus = 'main';
-    // this.paymentGroupRef = '2018-15310089885';
+    this.bsPaymentDcnNumber = this.paymentLibComponent.bspaymentdcn;
+    //this.paymentGroupRef = '2018-15310089885';
     //this.paymentGroupRef = '2019-15496299273';
     this.getPaymentGroup();
   }
@@ -102,13 +105,18 @@ export class FeeSummaryComponent implements OnInit {
   cancelRemission() {
     this.viewStatus = 'main';
   }
-  redirectToFeeSearchPage(event: any) {
+  redirectToFeeSearchPage(event: any, page?: string) {
     event.preventDefault();
+    let url = `/fee-search?ccdCaseNumber=${this.ccdCaseNumber}`;
     if(this.viewStatus === 'feeRemovalConfirmation' || this.viewStatus === 'add_remission') {
       this.viewStatus = 'main';
       return;
     }
-    this.router.navigateByUrl(`/fee-search?ccdCaseNumber=${this.ccdCaseNumber}`);
+    if(page === 'summary') {
+      let dcn = this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
+      url = `/fee-search?ccdCaseNumber=${this.ccdCaseNumber}&paymentGroupRef=${this.paymentGroupRef}${dcn}`;
+    }
+    this.router.navigateByUrl(url);
   }
   takePayment() {
     const seriveName = this.service ==='AA07' ? 'DIVORCE': this.service ==='AA08' ? 'PROBATE' : '';
@@ -122,5 +130,8 @@ export class FeeSummaryComponent implements OnInit {
         this.errorMessage = error;
       }
     );
+  }
+  goToAllocatePage() {
+    this.paymentLibComponent.viewName = 'allocate-payments';
   }
 }

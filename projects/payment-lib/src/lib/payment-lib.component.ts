@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {PaymentLibService} from './payment-lib.service';
+import { IBSPayments } from './interfaces/IBSPayments';
 
 @Component({
   selector: 'ccpay-payment-lib',
@@ -10,6 +11,7 @@ import {PaymentLibService} from './payment-lib.service';
     <ccpay-case-transactions *ngIf="viewName === 'case-transactions'"></ccpay-case-transactions>
     <app-mark-unidentified-payment *ngIf="viewName === 'unidentifiedPage'"></app-mark-unidentified-payment>
     <app-mark-unsolicited-payment *ngIf="viewName === 'unsolicitedPage'"></app-mark-unsolicited-payment>
+    <app-allocate-payments *ngIf="viewName === 'allocate-payments'"></app-allocate-payments>
     <ccpay-fee-summary *ngIf="viewName === 'fee-summary'"
                        [ccdCaseNumber]="CCD_CASE_NUMBER" [paymentGroupRef]="paymentGroupReference"></ccpay-fee-summary>
   `
@@ -22,13 +24,14 @@ export class PaymentLibComponent implements OnInit {
   @Input('VIEW') VIEW: string;
   @Input('PAYMENT_GROUP_REF') PAYMENT_GROUP_REF?: string;
   @Input('TAKEPAYMENT') TAKEPAYMENT: boolean;
-
+  @Input('DCN_NUMBER') DCN_NUMBER: string;
 
   paymentMethod: string;
   bspaymentdcn: string;
   paymentGroupReference: string;
   paymentReference: string;
   viewName: string;
+  unProcessedPayment: IBSPayments = null;
 
   constructor(private router: Router,
               private paymentLibService: PaymentLibService) { }
@@ -37,6 +40,9 @@ export class PaymentLibComponent implements OnInit {
     this.paymentLibService.setApiRootUrl(this.API_ROOT);
     if (this.PAYMENT_GROUP_REF) {
       this.paymentGroupReference = this.PAYMENT_GROUP_REF;
+    }
+    if (this.DCN_NUMBER) {
+      this.bspaymentdcn = this.DCN_NUMBER;
     }
 
     if (this.VIEW === 'fee-summary') {
