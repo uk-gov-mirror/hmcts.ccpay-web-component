@@ -105,13 +105,18 @@ export class FeeSummaryComponent implements OnInit {
   cancelRemission() {
     this.viewStatus = 'main';
   }
-  redirectToFeeSearchPage(event: any) {
+  redirectToFeeSearchPage(event: any, page?: string) {
     event.preventDefault();
+    let url = `/fee-search?ccdCaseNumber=${this.ccdCaseNumber}`;
     if(this.viewStatus === 'feeRemovalConfirmation' || this.viewStatus === 'add_remission') {
       this.viewStatus = 'main';
       return;
     }
-    this.router.navigateByUrl(`/fee-search?ccdCaseNumber=${this.ccdCaseNumber}`);
+    if(page === 'summary') {
+      let dcn = this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
+      url = `/fee-search?ccdCaseNumber=${this.ccdCaseNumber}&paymentGroupRef=${this.paymentGroupRef}${dcn}`;
+    }
+    this.router.navigateByUrl(url);
   }
   takePayment() {
     const seriveName = this.service ==='AA07' ? 'DIVORCE': this.service ==='AA08' ? 'PROBATE' : '';

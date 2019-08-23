@@ -14,7 +14,7 @@
     </div>
 
     <div class="govuk-grid-column-one-third" align="right">
-      <a [href]="'/fee-search?ccdCaseNumber=' + ccdCaseNumber + '&paymentGroupRef=' + paymentGroupRef + '&dcn=' + bsPaymentDcnNumber" class="button">Add a new fee</a>
+      <a (click)="redirectToFeeSearchPage($event,'summary')" class="button">Add a new fee</a>
     </div>
   </div>
   <div *ngIf="errorMessage">
