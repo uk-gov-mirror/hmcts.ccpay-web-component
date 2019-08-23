@@ -16,6 +16,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
   ccdCaseNumber:string;
   recordId: string = null;
   isRecordExist: boolean = false;
+  dcnNumber: string = null;
 
   constructor(private router: Router,
     private bulkScaningPaymentService: BulkScaningPaymentService,
@@ -28,13 +29,24 @@ export class UnprocessedPaymentsComponent implements OnInit {
   }
 
   getUnassignedPaymentlist() {
-    this.bulkScaningPaymentService.getBSPaymentsByCCD(this.ccdCaseNumber).subscribe(
-      unassignedPayments => {
-       this.unassignedRecordList = unassignedPayments['data'].payments;
-       this.isRecordExist =  this.unassignedRecordList.length == 0;
-      },
-      (error: any) => this.errorMessage = error
-    );
+    if (this.dcnNumber) {
+      this.bulkScaningPaymentService.getBSPaymentsByDCN(this.dcnNumber).subscribe(
+        unassignedPayments => {
+        this.unassignedRecordList = unassignedPayments['data'].payments;
+        this.isRecordExist =  this.unassignedRecordList.length == 0;
+        },
+        (error: any) => this.errorMessage = error
+      );
+    }else {
+      this.bulkScaningPaymentService.getBSPaymentsByCCD(this.ccdCaseNumber).subscribe(
+        unassignedPayments => {
+        this.unassignedRecordList = unassignedPayments['data'].payments;
+        this.isRecordExist =  this.unassignedRecordList.length == 0;
+        },
+        (error: any) => this.errorMessage = error
+      );
+    }
+
   }
   formatUnassignedRecordId(ID: Number) {
     return `unassignrecord-${ID}`;
