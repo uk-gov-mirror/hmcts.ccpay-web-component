@@ -70,7 +70,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
   }
   redirectToFeeSearchPage(event: any) {
     event.preventDefault();
-    this.router.navigateByUrl(`/fee-search?ccdCaseNumber=${this.ccdCaseNumber}&dcn=${this.recordId}`);
+    this.router.navigateByUrl(`/fee-search?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}&dcn=${this.recordId}`);
   }
   loadUnsolicitedPage(viewName: string) {
     this.paymentLibComponent.bspaymentdcn = this.recordId;

@@ -114,7 +114,7 @@ export class FeeSummaryComponent implements OnInit {
     }
     if(page === 'summary') {
       let dcn = this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
-      url = `/fee-search?ccdCaseNumber=${this.ccdCaseNumber}&paymentGroupRef=${this.paymentGroupRef}${dcn}`;
+      url = `/fee-search?ccdCaseNumber=selectedOption=${this.paymentLibComponent.SELECTED_OPTION}&${this.ccdCaseNumber}&paymentGroupRef=${this.paymentGroupRef}${dcn}`;
     }
     this.router.navigateByUrl(url);
   }
