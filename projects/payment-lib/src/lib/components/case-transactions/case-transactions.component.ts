@@ -123,7 +123,7 @@ export class CaseTransactionsComponent implements OnInit {
 
   redirectToFeeSearchPage(event: any) {
     event.preventDefault();
-    this.router.navigateByUrl(`/fee-search?ccdCaseNumber=${this.ccdCaseNumber}`);
+    this.router.navigateByUrl(`/fee-search?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}`);
   }
 
   loadFeeSummaryPage(paymentGroup: IPaymentGroup) {

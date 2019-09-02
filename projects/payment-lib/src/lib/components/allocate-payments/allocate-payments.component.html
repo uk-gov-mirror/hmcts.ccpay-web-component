@@ -88,13 +88,23 @@
       </tbody>
     </table>
 </div>
-  <div class="govuk-warning-text">
-    <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-    <strong class="govuk-warning-text__text">
+<div class="govuk-form-group govuk-form-group--error" *ngIf="isRemainingAmountGtZero">
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
         <span class="govuk-warning-text__assistive">Warning</span>
-        Are you sure you want to allocate {{amountForAllocation | currency:'GBP':'symbol-narrow':'1.2-2'}} to this group?
-    </strong>
-  </div>
+        You have money left over
+      </strong>
+    </div>
+  <ul class="govuk-list govuk-list--bullet">
+    <li>You have money left over from the payment.</li>
+    <li>Please check you have selected the correct fee you wish to put payment against.</li>
+    <li>This excess money cannot be used again after this point and will be assigned as a refund.</li>
+  </ul>
+</div>
+  <label class="govuk-label govuk-label--m" for="amount">
+    Amount to be allocated to the group: {{amountForAllocation | currency:'GBP':'symbol-narrow':'1.2-2'}}
+  </label>
       <div class="govuk-button--group">
         <button type="submit" class="button" (click)="confirmAllocatePayement()">
           Confirm

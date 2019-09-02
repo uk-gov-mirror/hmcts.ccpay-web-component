@@ -21,6 +21,7 @@ export class AllocatePaymentsComponent implements OnInit {
   paymentGroups: IPayment[] = [];
   selectedPayment: IPaymentGroup;
   remainingAmount: number;
+  isRemainingAmountGtZero: boolean;
   afterFeeAllocateOutstanding: number;
   amountForAllocation: number;
 
@@ -85,7 +86,7 @@ export class AllocatePaymentsComponent implements OnInit {
   }
   confirmAllocatePayement(){
    const requestBody = new AllocatePaymentRequest
-    (this.ccdCaseNumber);
+    (this.ccdCaseNumber, this.unAllocatedPayment);
     this.bulkScaningPaymentService.postBSAllocatePayment(requestBody, this.selectedPayment.payment_group_reference)
     .subscribe(
       response => {
@@ -101,7 +102,8 @@ export class AllocatePaymentsComponent implements OnInit {
     if(this.selectedPayment) {
       let GroupOutstandingAmount = this.getGroupOutstandingAmount(this.selectedPayment);
       const remainingToBeAssigned = this.unAllocatedPayment.amount - GroupOutstandingAmount;
-      this.remainingAmount = remainingToBeAssigned > 0 ? remainingToBeAssigned : 0;
+      this.isRemainingAmountGtZero = remainingToBeAssigned > 0;
+      this.remainingAmount =  this.isRemainingAmountGtZero ? remainingToBeAssigned : 0;
       this.afterFeeAllocateOutstanding = remainingToBeAssigned >= 0 ? 0 : (remainingToBeAssigned * -1);
       this.amountForAllocation = GroupOutstandingAmount >= this.unAllocatedPayment.amount ? this.unAllocatedPayment.amount : GroupOutstandingAmount;
 
