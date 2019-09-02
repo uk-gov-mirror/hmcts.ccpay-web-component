@@ -9,9 +9,11 @@ export class AllocatePaymentRequest {
   giro_slip_no: String;
   payer_name: String;
   payment_channel: Object;
+  payment_status: Object;
   payment_method: String;
   requestor: String;
   site_id: String;
+
   constructor(ccd_case_number : string) {
     this.amount = 12;
     this.banked_date = '2018-07-09T00:16:29.057+0000';
@@ -24,7 +26,11 @@ export class AllocatePaymentRequest {
     this.payment_channel = {
       description: '',
       name: 'bulk scan'
-  };
+    };
+    this.payment_status ={
+      description: 'STATUS',
+      name: 'bulk scan payment completed'
+    }
     this.payment_method = 'CHEQUE';
     this.requestor= 'DIVORCE';
     this.site_id= 'AA07';

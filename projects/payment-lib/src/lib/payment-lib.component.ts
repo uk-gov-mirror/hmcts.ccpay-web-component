@@ -8,7 +8,7 @@ import { IBSPayments } from './interfaces/IBSPayments';
   template: `
     <ccpay-payment-list *ngIf="viewName === 'payment-list'"></ccpay-payment-list>
     <ccpay-payment-view *ngIf="viewName === 'payment-view'"></ccpay-payment-view>
-    <ccpay-case-transactions *ngIf="viewName === 'case-transactions'"></ccpay-case-transactions>
+    <ccpay-case-transactions  *ngIf="viewName === 'case-transactions'"></ccpay-case-transactions>
     <app-mark-unidentified-payment *ngIf="viewName === 'unidentifiedPage'"></app-mark-unidentified-payment>
     <app-mark-unsolicited-payment *ngIf="viewName === 'unsolicitedPage'"></app-mark-unsolicited-payment>
     <app-allocate-payments *ngIf="viewName === 'allocate-payments'"></app-allocate-payments>
@@ -19,13 +19,14 @@ import { IBSPayments } from './interfaces/IBSPayments';
 
 export class PaymentLibComponent implements OnInit {
   @Input('API_ROOT') API_ROOT: string;
+  @Input('BULKSCAN_API_ROOT') BULKSCAN_API_ROOT: string;
   @Input('CCD_CASE_NUMBER') CCD_CASE_NUMBER: string;
   @Input('PAYMENT_METHOD') PAYMENT_METHOD: string;
   @Input('VIEW') VIEW: string;
   @Input('PAYMENT_GROUP_REF') PAYMENT_GROUP_REF?: string;
   @Input('TAKEPAYMENT') TAKEPAYMENT: boolean;
   @Input('DCN_NUMBER') DCN_NUMBER: string;
-
+  @Input('SELECTED_OPTION') SELECTED_OPTION: string;
   paymentMethod: string;
   bspaymentdcn: string;
   paymentGroupReference: string;
@@ -38,6 +39,7 @@ export class PaymentLibComponent implements OnInit {
 
   ngOnInit() {
     this.paymentLibService.setApiRootUrl(this.API_ROOT);
+    this.paymentLibService.setBulkScanApiRootUrl(this.BULKSCAN_API_ROOT);
     if (this.PAYMENT_GROUP_REF) {
       this.paymentGroupReference = this.PAYMENT_GROUP_REF;
     }

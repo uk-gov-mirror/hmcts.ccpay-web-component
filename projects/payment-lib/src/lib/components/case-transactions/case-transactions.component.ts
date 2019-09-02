@@ -24,18 +24,23 @@ export class CaseTransactionsComponent implements OnInit {
   totalFees: number;
   totalPayments: number;
   totalRemissions: number;
+  selectedOption: string;
+  dcnNumber: string;
+  isAddFeeBtnEnabled: boolean = true;
+  exceptionRecordReference: string;
+  isPaymentRecordsExist: boolean = false;
 
-  constructor(private router: Router,
+    constructor(private router: Router,
     private caseTransactionsService: CaseTransactionsService,
     private paymentLibComponent: PaymentLibComponent) { }
 
   ngOnInit() {
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
     this.takePayment = this.paymentLibComponent.TAKEPAYMENT;
-
     this.caseTransactionsService.getPaymentGroups(this.ccdCaseNumber).subscribe(
       paymentGroups => {
         this.paymentGroups = paymentGroups['payment_groups'];
+        this.isPaymentRecordsExist =  this.paymentGroups.length === 0;
         this.calculateAmounts();
       },
       (error: any) => {
@@ -43,6 +48,8 @@ export class CaseTransactionsComponent implements OnInit {
         this.setDefaults();
       }
     );
+    this.dcnNumber = this.paymentLibComponent.DCN_NUMBER;
+    this.selectedOption = this.paymentLibComponent.SELECTED_OPTION.toLocaleLowerCase();
   }
 
   setDefaults(): void {
@@ -129,5 +136,11 @@ export class CaseTransactionsComponent implements OnInit {
     this.paymentLibComponent.paymentGroupReference = paymentGroupReference;
     this.paymentLibComponent.paymentReference = paymentReference;
     this.paymentLibComponent.viewName = 'payment-view';
+  }
+
+  selectedUnprocessedFeeEvent(unprocessedRecordId: string) {
+    if ( unprocessedRecordId.length > 0) {
+      this.isAddFeeBtnEnabled = false;
+    }
   }
 }

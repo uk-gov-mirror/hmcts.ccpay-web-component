@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 
 export class PaymentLibService {
   API_ROOT: string;
+  BULKSCAN_API_ROOT: string;
 
   constructor() { }
 
@@ -15,5 +16,13 @@ export class PaymentLibService {
 
   getApiRootUrl(): string {
     return this.API_ROOT;
+  }
+
+  setBulkScanApiRootUrl(bulkscanapiRoot: string): void {
+    this.BULKSCAN_API_ROOT = bulkscanapiRoot;
+  }
+
+  getBulkScanApiRootUrl(): string {
+    return this.BULKSCAN_API_ROOT;
   }
 }

@@ -19,6 +19,7 @@
                 name="unassignedRecord"
                 type="radio"
                 [(ngModel)]="recordId"
+                (click)="unprocessedPaymentSelectEvent(unassignedRecord.dcn_reference)"
                 value="{{unassignedRecord.dcn_reference}}" />
                 <label for="radio-inline-1"></label>
               </div>
@@ -36,17 +37,20 @@
         <td class="govuk-table__cell" colspan="6">No payments recorded</td>
       </tbody>
     </table>
-    <button type="button" class="button govuk-!-margin-right-1" (click)="redirectToFeeSearchPage($event)">
-      Associate to a new fee
+
+    <button type="button" [ngClass]=" !isUnprocessedRecordSelected ? 'disable' : 'button govuk-!-margin-right-1' " (click)="redirectToFeeSearchPage($event)">
+      Allocate to a new fee
     </button>
-    <button type="button" class="button govuk-!-margin-right-1" (click)="goToAllocatePage()">
-      Associate to an existing fee
+    <button type="button" [ngClass]=" isAllocateToExistingFeebtnEnabled ? 'disable' : 'button, govuk-!-margin-right-1' " (click)="goToAllocatePage()">
+      Allocate to an existing fee
     </button>
-    <button type="button" class="button govuk-!-margin-right-1" (click)="loadUnsolicitedPage('unidentifiedPage')">
+    <button type="button" [ngClass]=" isMarkAsUnidentifiedbtnEnabled ? 'disable' : 'button, govuk-!-margin-right-1' "  (click)="loadUnsolicitedPage('unidentifiedPage')">
       Mark as unidentified
     </button>
-    <button type="button" class="button govuk-!-margin-right-1" (click)="loadUnsolicitedPage('unsolicitedPage')">
+    <button type="button" [ngClass]=" isMarkAsUnsolicitedbtnEnabled ? 'disable' : 'button, govuk-!-margin-right-1' " (click)="loadUnsolicitedPage('unsolicitedPage')">
       Mark as unsolicited
     </button>
+     
+    
 </div>
 

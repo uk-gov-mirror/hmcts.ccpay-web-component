@@ -17,7 +17,7 @@ export class AllocatePaymentsComponent implements OnInit {
   ccdCaseNumber: string;
   bspaymentdcn: string;
   unAllocatedPayment: IBSPayments = null;
-  errorMessage:string;
+  errorMessage: string;
   paymentGroups: IPayment[] = [];
   selectedPayment: IPaymentGroup;
   remainingAmount: number;
@@ -84,7 +84,7 @@ export class AllocatePaymentsComponent implements OnInit {
     this.viewStatus = 'mainForm';
   }
   confirmAllocatePayement(){
-    const requestBody = new AllocatePaymentRequest
+   const requestBody = new AllocatePaymentRequest
     (this.ccdCaseNumber);
     this.bulkScaningPaymentService.postBSAllocatePayment(requestBody, this.selectedPayment.payment_group_reference)
     .subscribe(

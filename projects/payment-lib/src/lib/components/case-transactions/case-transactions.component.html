@@ -7,15 +7,16 @@
         <h1 class="govuk-heading-xl">Case transactions</h1>
       </div>
 
-      <div class="govuk-grid-column-one-third" align="right" *ngIf="takePayment">
-        <a (click)="redirectToFeeSearchPage($event)" class="button">Add a new fee</a>
-      </div>
-    </div>
+      <div  class="govuk-grid-column-one-third" align="right" *ngIf="takePayment">
+        <a [ngClass]="{ 'disable': !isAddFeeBtnEnabled} " (click)="redirectToFeeSearchPage($event)" class="button">Add a new fee</a>
+       </div>
+    </div> 
 
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds govuk-!-padding-bottom-6">
-        <h3 class="heading-medium">CCD case reference number:</h3>
-        <span>{{ ccdCaseNumber | ccdHyphens }}</span>
+        <h3 class="heading-medium">CCD reference number:</h3>
+        <span *ngIf="selectedOption !== 'dcn'"> {{ ccdCaseNumber | ccdHyphens }}</span>
+        <span *ngIf="selectedOption === 'dcn'"> {{ dcnNumber }}</span>
       </div>
 
       <div class="govuk-grid-column-full govuk-!-padding-bottom-3">
@@ -208,7 +209,7 @@
       </div>
 
     </div>
-    <app-unprocessed-payments></app-unprocessed-payments>
+    <ccpay-app-unprocessed-payments [PAYMENT_RECORDS_EXISTS]="isPaymentRecordsExist" (selectedUnprocessedFeeEvent) = "selectedUnprocessedFeeEvent($event)" ></ccpay-app-unprocessed-payments>
   </main>
 
 

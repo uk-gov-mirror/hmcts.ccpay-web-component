@@ -21,7 +21,7 @@ export class BulkScaningPaymentService {
               ) { }
 
   getBSPaymentsByCCD(ccdCaseNumber: string): Observable<IBSPayments> {
-    return this.http.get<IBSPayments>(`${this.paymentLibService.API_ROOT}/cases/${ccdCaseNumber}`, {
+      return this.http.get<IBSPayments>(`${this.paymentLibService.BULKSCAN_API_ROOT}/cases/${ccdCaseNumber}`, {
       withCredentials: true
     })
       .pipe(
@@ -29,7 +29,7 @@ export class BulkScaningPaymentService {
       );
   }
   getBSPaymentsByDCN(dcn: string): Observable<IBSPayments> {
-    return this.http.get<IBSPayments>(`${this.paymentLibService.API_ROOT}/cases?document_control_number=${dcn}`, {
+    return this.http.get<IBSPayments>(`${this.paymentLibService.BULKSCAN_API_ROOT}/cases?document_control_number=${dcn}`, {
       withCredentials: true
     })
       .pipe(
