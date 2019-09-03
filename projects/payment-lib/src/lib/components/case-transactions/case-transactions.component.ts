@@ -139,8 +139,10 @@ export class CaseTransactionsComponent implements OnInit {
   }
 
   selectedUnprocessedFeeEvent(unprocessedRecordId: string) {
-    if ( unprocessedRecordId.length > 0) {
+    if ( unprocessedRecordId ) {
       this.isAddFeeBtnEnabled = false;
+    } else {
+      this.isAddFeeBtnEnabled = true;
     }
   }
 }

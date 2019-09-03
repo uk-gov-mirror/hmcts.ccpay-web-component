@@ -1,4 +1,3 @@
-import { IBSDate } from './IBSDate';
 
 export interface IBSPayments {
   id?:string;
@@ -13,8 +12,8 @@ export interface IBSPayments {
   po_box?: string,
   first_cheque_dcn_in_batch?: string,
   payer_name?: string,
-  date_banked?: IBSDate,
-  date_created?: IBSDate,
-  date_updated?: IBSDate,
+  date_banked?: string,
+  date_created?: string,
+  date_updated?: string,
   length?: number
 }

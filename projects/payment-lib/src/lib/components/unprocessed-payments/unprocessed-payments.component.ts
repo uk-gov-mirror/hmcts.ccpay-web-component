@@ -94,5 +94,12 @@ export class UnprocessedPaymentsComponent implements OnInit {
     }
 
   }
+  unprocessedPaymentUnSelectEvent(event: any) {
+    event.preventDefault();
+    this.recordId = null;
+    this.isUnprocessedRecordSelected = false;
+    this.validateButtons();
+    this.selectedUnprocessedFeeEvent.emit('');
+  }
 
 }
