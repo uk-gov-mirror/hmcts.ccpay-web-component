@@ -10,7 +10,11 @@ import { LoggerService } from '../shared/logger/logger.service';
 import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
 import { AddRemissionRequest } from '../../interfaces/AddRemissionRequest';
 import { PaymentToPayhubRequest } from '../../interfaces/PaymentToPayhubRequest';
+import { UnidentifiedPaymentsRequest } from '../../interfaces/UnidentifiedPaymentsRequest';
+import { UnsolicitedPaymentsRequest } from '../../interfaces/UnsolicitedPaymentsRequest';
 import { Meta } from '@angular/platform-browser';
+import { AllocatePaymentRequest } from '../../interfaces/AllocatePaymentRequest';
+import { IAllocationPaymentsRequest } from '../../interfaces/IAllocationPaymentsRequest';
 
 
 @Injectable({
@@ -65,6 +69,26 @@ export class PaymentViewService {
       .pipe(
         catchError(this.errorHandlerService.handleError)
       );
+  }
+  postBSPayments(body: AllocatePaymentRequest): Observable<any> {
+    return this.http.post(`${this.paymentLibService.API_ROOT}/payment-groups/bulk-scan-payments`, body).pipe(
+      catchError(this.errorHandlerService.handleError)
+    );
+  }
+  postBSUnidentifiedPayments(body: UnidentifiedPaymentsRequest): Observable<any> {
+    return this.http.post(`${this.paymentLibService.API_ROOT}/payment-allocations`, body).pipe(
+      catchError(this.errorHandlerService.handleError)
+    );
+  }
+  postBSUnsolicitedPayments(body: UnsolicitedPaymentsRequest): Observable<any> {
+    return this.http.post(`${this.paymentLibService.API_ROOT}/payment-allocations`, body).pipe(
+      catchError(this.errorHandlerService.handleError)
+    );
+  }
+  postBSAllocationPayments(body: IAllocationPaymentsRequest): Observable<any> {
+    return this.http.post(`${this.paymentLibService.API_ROOT}/payment-allocations`, body).pipe(
+      catchError(this.errorHandlerService.handleError)
+    );
   }
 
   postPaymentGroupWithRemissions(paymentGroupReference: string, feeId: number, body: AddRemissionRequest): Observable<any> {

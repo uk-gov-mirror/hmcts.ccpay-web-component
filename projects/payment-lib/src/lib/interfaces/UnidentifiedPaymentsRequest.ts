@@ -1,12 +1,21 @@
 
 export class UnidentifiedPaymentsRequest {
-  dcn: string;
-  ccd_case_number: string;
-  investigation_message: any;
+  payment_allocation_status: any;
+  payment_group_reference: string;
+  payment_reference: string;
+  unidentified_reason: string;
 
-  constructor(dcn: string, ccd_case_number : string, investigation_message: any) {
-    this.dcn = dcn;
-    this.ccd_case_number = ccd_case_number ;
-    this.investigation_message= investigation_message;
+  constructor(payment_group_reference: string, payment_reference : string, unidentified_reason: any) {
+    this.payment_allocation_status = {
+      description: '',
+      name: "Unidentified"
+    };
+    this.payment_group_reference = payment_group_reference ;
+    this.payment_reference= payment_reference;
+    this.unidentified_reason= unidentified_reason;
+
   }
+
+
+
 }

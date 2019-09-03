@@ -4,6 +4,8 @@ import { PaymentLibComponent } from '../../payment-lib.component';
 import { BulkScaningPaymentService } from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
 import { IBSPayments } from '../../interfaces/IBSPayments';
 import { UnsolicitedPaymentsRequest } from '../../interfaces/UnsolicitedPaymentsRequest';
+import { PaymentViewService } from '../../services/payment-view/payment-view.service';
+import { AllocatePaymentRequest } from '../../interfaces/AllocatePaymentRequest';
 
 @Component({
   selector: 'app-mark-unsolicited-payment',
@@ -23,6 +25,7 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
   unassignedRecord: IBSPayments;
 
   constructor(private formBuilder: FormBuilder,
+  private paymentViewService: PaymentViewService,
   private paymentLibComponent: PaymentLibComponent,
   private bulkScaningPaymentService: BulkScaningPaymentService) { }
 
@@ -56,14 +59,22 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
   }
   confirmPayments() {
     const controls = this.markPaymentUnsolicitedForm.controls;
-    const requestBody = new UnsolicitedPaymentsRequest
-    (this.ccdCaseNumber, this.bspaymentdcn, controls.reason.value, controls.responsibleOffice.value, controls.responsiblePerson.value, controls.emailId.value);
-    this.bulkScaningPaymentService.postBSUnsolicitedPayments(requestBody).subscribe(
+    const requestBody = new AllocatePaymentRequest
+    (this.ccdCaseNumber, this.unassignedRecord);
+    this.paymentViewService.postBSPayments(requestBody).subscribe(
       response => {
-        if (response.success) {
-          this.paymentLibComponent.viewName = 'case-transactions';
-          this.paymentLibComponent.TAKEPAYMENT = true;
-        }
+        const reqBody = new UnsolicitedPaymentsRequest
+        (response['data'].payment_group_reference, response['data'].reference, controls.reason.value, controls.responsibleOffice.value, controls.responsiblePerson.value, controls.emailId.value);
+
+        this.paymentViewService.postBSUnsolicitedPayments(reqBody).subscribe(
+          res => {
+            if (res.success) {
+              this.paymentLibComponent.viewName = 'case-transactions';
+              this.paymentLibComponent.TAKEPAYMENT = true;
+            }
+          },
+          (error: any) => this.errorMessage = error
+        );
       },
       (error: any) => this.errorMessage = error
     );

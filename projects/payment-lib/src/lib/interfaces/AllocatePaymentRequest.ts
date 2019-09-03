@@ -29,8 +29,8 @@ export class AllocatePaymentRequest {
       name: 'bulk scan'
     };
     this.payment_status ={
-      description: 'SUCCESS',
-      name: 'bulk scan payment completed'
+      description: 'bulk scan payment completed',
+      name: 'success'
     }
     this.payment_method = unAllocatedPayment.payment_method;
     this.requestor= 'DIVORCE';

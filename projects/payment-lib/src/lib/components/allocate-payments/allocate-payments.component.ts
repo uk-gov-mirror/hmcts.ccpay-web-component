@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { PaymentLibComponent } from '../../payment-lib.component';
+import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import {BulkScaningPaymentService} from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
 import {CaseTransactionsService} from '../../services/case-transactions/case-transactions.service';
 import {IPayment} from '../../interfaces/IPayment';
 import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
 import { IBSPayments } from '../../interfaces/IBSPayments';
 import { AllocatePaymentRequest } from '../../interfaces/AllocatePaymentRequest';
+import { IAllocationPaymentsRequest } from '../../interfaces/IAllocationPaymentsRequest';
 
 @Component({
   selector: 'app-allocate-payments',
@@ -27,6 +29,7 @@ export class AllocatePaymentsComponent implements OnInit {
 
   constructor(
   private caseTransactionsService: CaseTransactionsService,
+  private paymentViewService: PaymentViewService,
   private paymentLibComponent: PaymentLibComponent,
   private bulkScaningPaymentService: BulkScaningPaymentService) { }
 
@@ -90,10 +93,17 @@ export class AllocatePaymentsComponent implements OnInit {
     this.bulkScaningPaymentService.postBSAllocatePayment(requestBody, this.selectedPayment.payment_group_reference)
     .subscribe(
       response => {
-        if (response.success) {
-          this.paymentLibComponent.viewName = 'case-transactions';
-          this.paymentLibComponent.TAKEPAYMENT = true;
-        }
+        const reqBody = new IAllocationPaymentsRequest
+        (response['data'].payment_group_reference, response['data'].reference);
+        this.paymentViewService.postBSAllocationPayments(reqBody).subscribe(
+          res => {
+            if (res.success) {
+              this.paymentLibComponent.viewName = 'case-transactions';
+              this.paymentLibComponent.TAKEPAYMENT = true;
+            }
+          },
+          (error: any) => this.errorMessage = error
+        );
       },
       (error: any) => this.errorMessage = error
     );
