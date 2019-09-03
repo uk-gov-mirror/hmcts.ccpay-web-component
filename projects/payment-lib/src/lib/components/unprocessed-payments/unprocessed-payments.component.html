@@ -38,6 +38,42 @@
       </tbody>
     </table>
 
+
+
+
+
+
+
+
+
+
+
+
+
+    <button type="button"
+    [disabled]="!isAllocatedToNewFeebtnEnabled"
+     [ngClass]="!isAllocatedToNewFeebtnEnabled ? 'button button--disabled govuk-!-margin-right-1' : 'button govuk-!-margin-right-1'" (click)="redirectToFeeSearchPage($event)">
+      Allocate to a new fee
+    </button>
+    <button type="button" 
+    [disabled]="!isAllocateToExistingFeebtnEnabled"
+    [ngClass]='!isAllocateToExistingFeebtnEnabled ?  "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"' (click)="goToAllocatePage()">
+      Allocate to an existing fee
+    </button>
+    <button type="button" 
+    [disabled]="!isMarkAsUnidentifiedbtnEnabled"
+    [ngClass]='!isMarkAsUnidentifiedbtnEnabled ?  "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"' (click)="loadUnsolicitedPage('unidentifiedPage')">
+      Mark as unidentified
+    </button>
+    <button type="button" 
+    [disabled]="!isMarkAsUnsolicitedbtnEnabled"
+    [ngClass]='!isMarkAsUnsolicitedbtnEnabled ?  "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"' (click)="loadUnsolicitedPage('unsolicitedPage')">
+      Mark as unsolicited
+    </button>
+
+<!-- 
+
+
     <button type="button" [ngClass]=" !isUnprocessedRecordSelected ? 'disable' : 'button govuk-!-margin-right-1' " (click)="redirectToFeeSearchPage($event)">
       Allocate to a new fee
     </button>
@@ -49,7 +85,7 @@
     </button>
     <button type="button" [ngClass]=" isMarkAsUnsolicitedbtnEnabled ? 'disable' : 'button, govuk-!-margin-right-1' " (click)="loadUnsolicitedPage('unsolicitedPage')">
       Mark as unsolicited
-    </button>
+    </button> -->
      
     
 </div>

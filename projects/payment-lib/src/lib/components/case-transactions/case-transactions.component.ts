@@ -27,6 +27,7 @@ export class CaseTransactionsComponent implements OnInit {
   selectedOption: string;
   dcnNumber: string;
   isAddFeeBtnEnabled: boolean = true;
+  isUnprocessedRecordSelected: boolean = false;
   exceptionRecordReference: string;
   isPaymentRecordsExist: boolean = false;
 
@@ -141,6 +142,7 @@ export class CaseTransactionsComponent implements OnInit {
   selectedUnprocessedFeeEvent(unprocessedRecordId: string) {
     if ( unprocessedRecordId.length > 0) {
       this.isAddFeeBtnEnabled = false;
+      this.isUnprocessedRecordSelected = true;
     }
   }
 }
