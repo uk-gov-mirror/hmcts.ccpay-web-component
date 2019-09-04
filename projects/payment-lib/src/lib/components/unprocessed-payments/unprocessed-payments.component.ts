@@ -24,7 +24,6 @@ export class UnprocessedPaymentsComponent implements OnInit {
   isUnprocessedRecordSelected: boolean = false;
   isAllocateToExistingFeebtnEnabled: boolean = false;
   isMarkAsUnidentifiedbtnEnabled: boolean = false;
-  isMarkAsUnsolicitedbtnEnabled: boolean = false;
   isAllocatedToNewFeebtnEnabled: boolean = false;
   isExceptionCase: boolean = false;
 
@@ -88,10 +87,9 @@ export class UnprocessedPaymentsComponent implements OnInit {
   }
 
   validateButtons() {
-  if ( this.isUnprocessedRecordSelected  && this.isExceptionCase) {
+  if ( this.isUnprocessedRecordSelected  && this.isExceptionCase && !this.PAYMENT_RECORDS_EXISTS) {
         this.isMarkAsUnidentifiedbtnEnabled = true;
-        this.isMarkAsUnsolicitedbtnEnabled = true;
-    } else if ( this.isUnprocessedRecordSelected  && !this.isExceptionCase) {
+    } else if ( this.isUnprocessedRecordSelected ) {
       this.isAllocateToExistingFeebtnEnabled = true;
       this.isAllocatedToNewFeebtnEnabled = true;
     }
