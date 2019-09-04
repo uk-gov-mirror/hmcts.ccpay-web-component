@@ -119,7 +119,7 @@ export class FeeSummaryComponent implements OnInit {
     const requestBody = new PaymentToPayhubRequest(this.ccdCaseNumber, this.totalFee, this.service, seriveName);
     this.paymentViewService.postPaymentToPayHub(requestBody, this.paymentGroupRef).subscribe(
       response => {
-        this.location.go(`payment-history/${this.ccdCaseNumber}?view=fee-summary`);
+        this.location.go(`payment-history?view=fee-summary`);
         this.payhubHtml = response;
         this.viewStatus = 'payhub_view';
         this.isBackButtonEnable=false;
