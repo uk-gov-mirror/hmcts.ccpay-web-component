@@ -7,6 +7,7 @@ import { IFee } from '../../interfaces/IFee';
 import { PaymentToPayhubRequest } from '../../interfaces/PaymentToPayhubRequest';
 import { SafeHtml } from '@angular/platform-browser';
 import {Router} from '@angular/router';
+import {Location} from '@angular/common';
 import { debugOutputAstAsTypeScript } from '@angular/compiler';
 
 @Component({
@@ -30,6 +31,7 @@ export class FeeSummaryComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private location: Location,
     private paymentViewService: PaymentViewService,
     private paymentLibComponent: PaymentLibComponent
   ) {}
@@ -117,6 +119,7 @@ export class FeeSummaryComponent implements OnInit {
     const requestBody = new PaymentToPayhubRequest(this.ccdCaseNumber, this.totalFee, this.service, seriveName);
     this.paymentViewService.postPaymentToPayHub(requestBody, this.paymentGroupRef).subscribe(
       response => {
+        this.location.go(`payment-history/${this.ccdCaseNumber}`);
         this.payhubHtml = response;
         this.viewStatus = 'payhub_view';
         this.isBackButtonEnable=false;
