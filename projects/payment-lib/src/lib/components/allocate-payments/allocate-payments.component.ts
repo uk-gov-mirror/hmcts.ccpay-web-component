@@ -98,8 +98,15 @@ export class AllocatePaymentsComponent implements OnInit {
         this.paymentViewService.postBSAllocationPayments(reqBody).subscribe(
           res => {
             if (res.success) {
-              this.paymentLibComponent.viewName = 'case-transactions';
-              this.paymentLibComponent.TAKEPAYMENT = true;
+              this.bulkScaningPaymentService.patchBSChangeStatus(this.unAllocatedPayment.dcn_reference, 'PROCESS').subscribe(
+                res => {
+                  if (res.success) {
+                    this.paymentLibComponent.viewName = 'case-transactions';
+                    this.paymentLibComponent.TAKEPAYMENT = true;
+                  }
+                },
+                (error: any) => this.errorMessage = error
+              );
             }
           },
           (error: any) => this.errorMessage = error
