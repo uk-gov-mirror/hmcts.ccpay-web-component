@@ -27,6 +27,7 @@ export class CaseTransactionsComponent implements OnInit {
   selectedOption: string;
   dcnNumber: string;
   isAddFeeBtnEnabled: boolean = true;
+  isUnprocessedRecordSelected: boolean = false;
   exceptionRecordReference: string;
   isPaymentRecordsExist: boolean = false;
 
@@ -40,7 +41,7 @@ export class CaseTransactionsComponent implements OnInit {
     this.caseTransactionsService.getPaymentGroups(this.ccdCaseNumber).subscribe(
       paymentGroups => {
         this.paymentGroups = paymentGroups['payment_groups'];
-        this.isPaymentRecordsExist =  this.paymentGroups.length === 0;
+      //  this.isPaymentRecordsExist =  this.paymentGroups.length === 0;
         this.calculateAmounts();
       },
       (error: any) => {
@@ -48,6 +49,17 @@ export class CaseTransactionsComponent implements OnInit {
         this.setDefaults();
       }
     );
+
+    this.paymentGroups.forEach(paymentGroup => {
+      if (paymentGroup.fees) {
+        paymentGroup.fees.forEach( fees => {
+          if (fees['code'].length > 0) {
+            this.isPaymentRecordsExist = true;
+          }
+        });
+      }
+    });
+
     this.dcnNumber = this.paymentLibComponent.DCN_NUMBER;
     this.selectedOption = this.paymentLibComponent.SELECTED_OPTION.toLocaleLowerCase();
   }
@@ -140,9 +152,11 @@ export class CaseTransactionsComponent implements OnInit {
 
   selectedUnprocessedFeeEvent(unprocessedRecordId: string) {
     if ( unprocessedRecordId ) {
-      this.isAddFeeBtnEnabled = false;
+      this.isAddFeeBtnEnabled = false
+      this.isUnprocessedRecordSelected = true;
     } else {
       this.isAddFeeBtnEnabled = true;
+      this.isUnprocessedRecordSelected = false;
     }
   }
 }

@@ -24,7 +24,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
   isUnprocessedRecordSelected: boolean = false;
   isAllocateToExistingFeebtnEnabled: boolean = false;
   isMarkAsUnidentifiedbtnEnabled: boolean = false;
-  isMarkAsUnsolicitedbtnEnabled: boolean = false;
+  isAllocatedToNewFeebtnEnabled: boolean = false;
   isExceptionCase: boolean = false;
 
   constructor(private router: Router,
@@ -44,7 +44,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
         this.bulkScaningPaymentService.getBSPaymentsByDCN(this.dcnNumber).subscribe(
         unassignedPayments => {
         this.unassignedRecordList = unassignedPayments['data'].payments;
-        if (unassignedPayments['data']['exception_record_reference'] !== undefined) {
+        if (unassignedPayments['data']['ccd_reference'] === undefined) {
           this.isExceptionCase = true;
         }
         this.isRecordExist =  this.unassignedRecordList.length === 0;
@@ -55,7 +55,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
         this.bulkScaningPaymentService.getBSPaymentsByCCD(this.ccdCaseNumber).subscribe(
         unassignedPayments => {
         this.unassignedRecordList = unassignedPayments['data'].payments;
-        if (unassignedPayments['data']['exception_record_reference'] !== undefined) {
+        if (unassignedPayments['data']['ccd_reference'] === undefined) {
           this.isExceptionCase = true;
         }
         this.isRecordExist =  this.unassignedRecordList.length === 0;
@@ -87,10 +87,11 @@ export class UnprocessedPaymentsComponent implements OnInit {
   }
 
   validateButtons() {
-  if ( this.isUnprocessedRecordSelected && this.PAYMENT_RECORDS_EXISTS  && this.isExceptionCase) {
+  if ( this.isUnprocessedRecordSelected  && this.isExceptionCase && !this.PAYMENT_RECORDS_EXISTS) {
         this.isMarkAsUnidentifiedbtnEnabled = true;
-        this.isMarkAsUnsolicitedbtnEnabled = true;
-        this.isAllocateToExistingFeebtnEnabled = true;
+    } else if ( this.isUnprocessedRecordSelected ) {
+      this.isAllocateToExistingFeebtnEnabled = true;
+      this.isAllocatedToNewFeebtnEnabled = true;
     }
 
   }
