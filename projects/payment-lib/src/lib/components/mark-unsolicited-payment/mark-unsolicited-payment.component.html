@@ -1,6 +1,6 @@
 <div class="mkpay-unidentified">
   <div *ngIf="viewStatus === 'mainForm'">
-  <h1 class="heading-large">Mark payment as unsolicited</h1>
+  <h1 class="heading-large">Mark payment as transferred</h1>
   <div class="govuk-grid-column-full govuk-!-padding-bottom-3">
     <hr class="govuk-section-break govuk-section-break--visible">
     <table class="govuk-table">
@@ -28,7 +28,7 @@
   <form [formGroup]="markPaymentUnsolicitedForm" novalidate>
     <div class="govuk-form-group">
       <label class="govuk-label govuk-label--s" for="reason">
-        Reason for payment being marked as unsolicited.     
+        Reason for payment being marked as transferred.     
       </label>
       <input class="govuk-input govuk-input--width-20 govuk-!-margin-right-1" [ngClass]="{'inline-error-class': reasonHasError}" id="reason" name="reason" type="text" formControlName="reason">
       <p [ngClass]="{'inline-error-message': reasonHasError}" *ngIf="reasonHasError">Enter a reason for marking this payment as unsolicited</p>
@@ -73,8 +73,31 @@
         <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
         <strong class="govuk-warning-text__text">
         <span class="govuk-warning-text__assistive">Warning</span>
-          Are you sure you want to mark this payment as unsolicited?
+          Are you sure you want to mark this payment as transferred?
         </strong>
+
+        <div class="govuk-grid-column-full govuk-!-padding-bottom-3">
+          <hr class="govuk-section-break govuk-section-break--visible">
+          <table class="govuk-table">
+            <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <td class="govuk-table__header" scope="col">Reason</td>
+              <td class="govuk-table__header" scope="col">Receiving Site ID</td>
+              <td class="govuk-table__header" scope="col">Sending e-mail Address</td>
+              <td class="govuk-table__header" scope="col"> Receiving e-mail Address</td>
+           </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+                <td class="govuk-table__cell">{{reason}}</td>
+            <td class="govuk-table__cell">{{responsibleOffice}}</td>
+            <td class="govuk-table__cell">{{responsiblePerson}}</td>
+            <td class="govuk-table__cell">{{emailId}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
       </div>
       <div class="govuk-button--group">
         <button type="submit" class="button" (click)="confirmPayments()">
