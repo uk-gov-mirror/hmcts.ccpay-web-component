@@ -2,7 +2,7 @@
   <div *ngIf="viewStatus==='mainForm'">
   <div class="govuk-heading-section">
      <h1 class="govuk-heading-xl">Allocate payment to fee group</h1>
-        <h2 class="govuk-heading-m"> Amount to be allocated : {{amountForAllocation | currency:'GBP':'symbol-narrow':'1.2-2'}}</h2>
+     <h2 class="govuk-heading-m">Amount left to be allocated: {{ unAllocatedPayment.amount | currency:'GBP':'symbol-narrow':'1.2-2' }}</h2>
         
   </div>
 <div class="payment-group-section" *ngFor="let paymentGroup of paymentGroups">
@@ -58,7 +58,9 @@
 </div>
 <ng-container *ngIf="viewStatus === 'allocatePaymentConfirmation'">
 <h1 class="govuk-heading-xl">Confirm association</h1>
-<h2 class="govuk-heading-m">Amount left to be allocated: {{ remainingAmount | currency:'GBP':'symbol-narrow':'1.2-2' }}</h2>
+<h2 class="govuk-heading-m">
+    Amount to be allocated: {{amountForAllocation | currency:'GBP':'symbol-narrow':'1.2-2'}}
+    </h2>
 <div class="payment-group-section" >
     <h3 class="govuk-heading-s">Group reference: {{selectedPayment.payment_group_reference}}</h3>
     <table class="govuk-table">
@@ -102,7 +104,7 @@
   </ul>
 </div>
   <label class="govuk-label govuk-label--m" for="amount">
-      Amount left to be allocated: {{ unAllocatedPayment.amount | currency:'GBP':'symbol-narrow':'1.2-2' }}
+      Amount left to be allocated: {{ remainingAmount | currency:'GBP':'symbol-narrow':'1.2-2' }}
   </label>
       <div class="govuk-button--group">
         <button type="submit" class="button" (click)="confirmAllocatePayement()">
