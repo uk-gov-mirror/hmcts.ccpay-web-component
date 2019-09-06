@@ -33,8 +33,8 @@
             <td class="govuk-table__cell"> {{unassignedRecord.payer_name}} </td>
           </tr>
       </tbody>
-      <tbody class="govuk-table__body" *ngIf="isRecordExist">
-        <td class="govuk-table__cell" colspan="6">No payments recorded</td>
+      <tbody class="govuk-table__body" *ngIf="upPaymentErrorMessage !== null">
+        <td class="govuk-table__cell" colspan="6">No Unprocessed payments record</td>
       </tbody>
     </table>
 

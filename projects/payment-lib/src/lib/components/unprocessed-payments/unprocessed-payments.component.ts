@@ -15,7 +15,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
   @Output() selectedUnprocessedFeeEvent: EventEmitter<string> = new EventEmitter();
   viewStatus = 'main';
   unassignedRecordList: IBSPayments;
-  errorMessage: string;
+  upPaymentErrorMessage: string = null;
   ccdCaseNumber: string;
   recordId: string = null;
   isRecordExist: boolean = false;
@@ -49,7 +49,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
         }
         this.isRecordExist =  this.unassignedRecordList.length === 0;
         },
-        (error: any) => this.errorMessage = error
+        (error: any) => this.upPaymentErrorMessage = error
       );
     } else {
         this.bulkScaningPaymentService.getBSPaymentsByCCD(this.ccdCaseNumber).subscribe(
@@ -60,7 +60,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
         }
         this.isRecordExist =  this.unassignedRecordList.length === 0;
         },
-        (error: any) => this.errorMessage = error
+        (error: any) => this.upPaymentErrorMessage = error
       );
     }
 

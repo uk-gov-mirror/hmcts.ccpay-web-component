@@ -7,6 +7,9 @@ export interface IPayment {
   reference: string;
   currency: string;
   date_created: string;
+  banked_date: string;
+  document_control_number: string;
+  payer_name: string;
   date_updated: string;
   ccd_case_number: string;
   case_reference: string;

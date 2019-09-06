@@ -18,7 +18,9 @@ export class AllocatePaymentsComponent implements OnInit {
   viewStatus: string;
   ccdCaseNumber: string;
   bspaymentdcn: string;
-  unAllocatedPayment: IBSPayments = null;
+  unAllocatedPayment: IBSPayments = {
+    amount: 0
+  };
   errorMessage: string;
   paymentGroups: IPayment[] = [];
   selectedPayment: IPaymentGroup;
