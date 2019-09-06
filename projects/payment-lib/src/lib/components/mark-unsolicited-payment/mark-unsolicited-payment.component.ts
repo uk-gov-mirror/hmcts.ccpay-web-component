@@ -66,15 +66,22 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
     const requestBody = new AllocatePaymentRequest
     (this.ccdCaseNumber, this.unassignedRecord);
     this.paymentViewService.postBSPayments(requestBody).subscribe(
-      response => {
+      res1 => {
         const reqBody = new UnsolicitedPaymentsRequest
-        (response['data'].payment_group_reference, response['data'].reference, controls.reason.value, controls.responsibleOffice.value, controls.responsiblePerson.value, controls.emailId.value);
+        (res1['data'].payment_group_reference, res1['data'].reference, controls.reason.value, controls.responsibleOffice.value, controls.responsiblePerson.value, controls.emailId.value);
 
         this.paymentViewService.postBSUnsolicitedPayments(reqBody).subscribe(
-          res => {
-            if (res.success) {
-              this.paymentLibComponent.viewName = 'case-transactions';
-              this.paymentLibComponent.TAKEPAYMENT = true;
+          res2 => {
+             if (res2.success) {
+              this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'PROCESS').subscribe(
+                res3 => {
+                  if (res3.success) {
+                    this.paymentLibComponent.viewName = 'case-transactions';
+                    this.paymentLibComponent.TAKEPAYMENT = true;
+                  }
+                },
+                (error: any) => this.errorMessage = error
+              );
             }
           },
           (error: any) => this.errorMessage = error

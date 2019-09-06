@@ -26,6 +26,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
   isMarkAsUnidentifiedbtnEnabled: boolean = false;
   isAllocatedToNewFeebtnEnabled: boolean = false;
   isExceptionCase: boolean = false;
+  serviceId: string = null;
 
   constructor(private router: Router,
     private bulkScaningPaymentService: BulkScaningPaymentService,
@@ -44,6 +45,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
         this.bulkScaningPaymentService.getBSPaymentsByDCN(this.dcnNumber).subscribe(
         unassignedPayments => {
         this.unassignedRecordList = unassignedPayments['data'].payments;
+        this.serviceId = unassignedPayments['data'].responsible_service_id;
         if (unassignedPayments['data']['ccd_reference'] === undefined) {
           this.isExceptionCase = true;
         }
@@ -83,6 +85,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
   }
   goToAllocatePage() {
     this.paymentLibComponent.bspaymentdcn = this.recordId;
+    this.paymentLibComponent.unProcessedPaymentServiceId = this.serviceId
     this.paymentLibComponent.viewName = 'allocate-payments';
   }
 

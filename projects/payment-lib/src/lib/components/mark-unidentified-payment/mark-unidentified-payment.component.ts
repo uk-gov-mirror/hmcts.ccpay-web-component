@@ -77,14 +77,21 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
     (this.ccdCaseNumber, this.unassignedRecord),
     reason = this.markPaymentUnidentifiedForm.get('investicationDetail').value;
     this.paymentViewService.postBSPayments(requestBody).subscribe(
-      response => {
+      res1 => {
         const reqBody = new UnidentifiedPaymentsRequest
-        (response['data'].payment_group_reference, response['data'].reference, reason);
+        (res1['data'].payment_group_reference, res1['data'].reference, reason);
         this.paymentViewService.postBSUnidentifiedPayments(reqBody).subscribe(
-          res => {
-            if (res.success) {
-              this.paymentLibComponent.viewName = 'case-transactions';
-              this.paymentLibComponent.TAKEPAYMENT = true;
+          res2 => {
+            if (res2.success) {
+              this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'PROCESS').subscribe(
+                res3 => {
+                  if (res3.success) {
+                    this.paymentLibComponent.viewName = 'case-transactions';
+                    this.paymentLibComponent.TAKEPAYMENT = true;
+                  }
+                },
+                (error: any) => this.errorMessage = error
+              );
             }
           },
           (error: any) => this.errorMessage = error

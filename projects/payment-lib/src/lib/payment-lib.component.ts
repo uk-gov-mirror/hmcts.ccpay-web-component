@@ -29,6 +29,7 @@ export class PaymentLibComponent implements OnInit {
   @Input('SELECTED_OPTION') SELECTED_OPTION: string;
   paymentMethod: string;
   bspaymentdcn: string;
+  unProcessedPaymentServiceId: string = null;
   paymentGroupReference: string;
   paymentReference: string;
   viewName: string;
