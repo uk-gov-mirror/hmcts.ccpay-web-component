@@ -23,6 +23,10 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
   ccdCaseNumber: string;
   bspaymentdcn: string;
   unassignedRecord: IBSPayments;
+  reason: string;
+  responsiblePerson: string;
+  responsibleOffice: string;
+  emailId: string;
 
   constructor(private formBuilder: FormBuilder,
   private paymentViewService: PaymentViewService,
@@ -82,6 +86,11 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
  saveAndContinue() {
     this.resetForm();
     if (this.markPaymentUnsolicitedForm.dirty && this.markPaymentUnsolicitedForm.valid) {
+      const controls = this.markPaymentUnsolicitedForm.controls;
+      this.emailId = controls.emailId.value;
+      this.responsibleOffice = controls.responsibleOffice.value;
+      this.responsiblePerson = controls.responsiblePerson.value;
+      this.reason = controls.reason.value;
       this.viewStatus = 'unsolicitedContinueConfirm';
     }else {
       if(this.markPaymentUnsolicitedForm.controls.reason.invalid ) {
@@ -136,7 +145,7 @@ cancelMarkUnsolicitedPayments(type?:string){
    getUnassignedPayment() {
     this.bulkScaningPaymentService.getBSPaymentsByDCN(this.bspaymentdcn).subscribe(
       unassignedPayments => {
-        debugger
+        
        this.unassignedRecord = unassignedPayments['data'].payments[0];
       },
       (error: any) => this.errorMessage = error

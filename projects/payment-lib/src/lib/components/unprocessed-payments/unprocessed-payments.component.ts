@@ -99,7 +99,10 @@ export class UnprocessedPaymentsComponent implements OnInit {
     event.preventDefault();
     this.recordId = null;
     this.isUnprocessedRecordSelected = false;
-    this.validateButtons();
+    this.isAllocateToExistingFeebtnEnabled = false;
+    this.isAllocatedToNewFeebtnEnabled = false;
+    this.isMarkAsUnidentifiedbtnEnabled = false;
+    //this.validateButtons();
     this.selectedUnprocessedFeeEvent.emit('');
   }
 
