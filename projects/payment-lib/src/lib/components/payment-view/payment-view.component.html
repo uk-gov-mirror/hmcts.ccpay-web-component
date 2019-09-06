@@ -3,7 +3,7 @@
   <div class="govuk-breadcrumbs">
     <ol class="govuk-breadcrumbs__list">
       <li class="govuk-breadcrumbs__list-item">
-        <a [href]="'/payment-history/' + ccdCaseNumber + '?view=case-transactions&takePayment=true'" class="govuk-back-link">Back</a>
+        <a [href]="'/payment-history/' + ccdCaseNumber + '?selectedOption='+selectedOption+'&dcn='+dcnNumber+'&view=case-transactions&takePayment=true'" class="govuk-back-link">Back</a>
       </li>
     </ol>
   </div>
@@ -54,7 +54,7 @@
         </tr>
         <tr class="section" *ngIf="paymentGroup.payments[0] && paymentGroup.payments[0].document_control_number">
           <td class="bold" width="330px">Banked Date</td>
-          <td>£{{ paymentGroup.payments[0].banked_date | date:'dd MMM yyyy' }}</td>
+          <td>{{ paymentGroup.payments[0].banked_date | date:'dd MMM yyyy' }}</td>
         </tr>
         </tbody>
       </table>

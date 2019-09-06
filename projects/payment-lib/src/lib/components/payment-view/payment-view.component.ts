@@ -13,6 +13,8 @@ export class PaymentViewComponent implements OnInit {
   paymentGroup: IPaymentGroup;
   errorMessage: string;
   ccdCaseNumber: string;
+  selectedOption: string;
+  dcnNumber: string;
 
   constructor(private paymentViewService: PaymentViewService,
               private paymentLibComponent: PaymentLibComponent) {
@@ -20,6 +22,10 @@ export class PaymentViewComponent implements OnInit {
 
   ngOnInit() {
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
+    this.selectedOption = this.paymentLibComponent.SELECTED_OPTION;
+    this.dcnNumber = this.paymentLibComponent.DCN_NUMBER;
+
+
     this.paymentViewService.getPaymentGroupDetails(this.paymentLibComponent.paymentGroupReference,
       this.paymentLibComponent.paymentMethod).subscribe(
       paymentGroup => this.paymentGroup = paymentGroup,
