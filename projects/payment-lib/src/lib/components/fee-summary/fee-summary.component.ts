@@ -8,6 +8,7 @@ import { IFee } from '../../interfaces/IFee';
 import { PaymentToPayhubRequest } from '../../interfaces/PaymentToPayhubRequest';
 import { SafeHtml } from '@angular/platform-browser';
 import {Router} from '@angular/router';
+import {Location} from '@angular/common';
 import { debugOutputAstAsTypeScript } from '@angular/compiler';
 
 @Component({
@@ -30,11 +31,13 @@ export class FeeSummaryComponent implements OnInit {
   service: string = null;
   upPaymentErrorMessage: string;
   selectedOption:string;
-  
+  isBackButtonEnable: boolean = true;
+
 
   constructor(
     private router: Router,
     private bulkScaningPaymentService: BulkScaningPaymentService,
+    private location: Location,
     private paymentViewService: PaymentViewService,
     private paymentLibComponent: PaymentLibComponent
   ) {}
@@ -116,7 +119,7 @@ export class FeeSummaryComponent implements OnInit {
           this.getPaymentGroup();
           this.viewStatus = 'main';
           return;
-          } 
+          }
           this.loadCaseTransactionPage();
       },
       (error: any) => {
@@ -146,12 +149,15 @@ export class FeeSummaryComponent implements OnInit {
     this.router.navigateByUrl(url);
   }
   takePayment() {
+
     const seriveName = this.service ==='AA07' ? 'DIVORCE': this.service ==='AA08' ? 'PROBATE' : '';
     const requestBody = new PaymentToPayhubRequest(this.ccdCaseNumber, this.totalFee, this.service, seriveName);
     this.paymentViewService.postPaymentToPayHub(requestBody, this.paymentGroupRef).subscribe(
       response => {
+        this.location.go(`payment-history?view=fee-summary`);
         this.payhubHtml = response;
         this.viewStatus = 'payhub_view';
+        this.isBackButtonEnable=false;
       },
       (error: any) => {
         this.errorMessage = error;
