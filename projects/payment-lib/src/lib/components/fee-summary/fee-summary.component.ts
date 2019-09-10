@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { IPaymentGroup } from '../../interfaces/IPaymentGroup';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
+import { BulkScaningPaymentService } from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
 import { PaymentLibComponent } from '../../payment-lib.component';
 import { IRemission } from '../../interfaces/IRemission';
 import { IFee } from '../../interfaces/IFee';
@@ -27,22 +28,46 @@ export class FeeSummaryComponent implements OnInit {
   totalFee: number;
   payhubHtml: SafeHtml;
   service: string = null;
+  upPaymentErrorMessage: string;
+  selectedOption:string;
+  
 
   constructor(
     private router: Router,
+    private bulkScaningPaymentService: BulkScaningPaymentService,
     private paymentViewService: PaymentViewService,
     private paymentLibComponent: PaymentLibComponent
   ) {}
 
   ngOnInit() {
     this.viewStatus = 'main';
-    debugger
     this.bsPaymentDcnNumber = this.paymentLibComponent.bspaymentdcn;
+    this.selectedOption = this.paymentLibComponent.SELECTED_OPTION.toLocaleLowerCase();
     //this.paymentGroupRef = '2018-15310089885';
     //this.paymentGroupRef = '2019-15496299273';
+    if (this.bsPaymentDcnNumber) {
+      this.getUnassignedPaymentlist();
+    }
     this.getPaymentGroup();
+  }
 
-  
+    getUnassignedPaymentlist() {
+     if (this.selectedOption === 'dcn') {
+        this.bulkScaningPaymentService.getBSPaymentsByDCN(this.paymentLibComponent.DCN_NUMBER).subscribe(
+        unassignedPayments => {
+        this.service = unassignedPayments['data'].responsible_service_id;
+        },
+        (error: any) => this.upPaymentErrorMessage = error
+      );
+    } else {
+        this.bulkScaningPaymentService.getBSPaymentsByCCD(this.ccdCaseNumber).subscribe(
+        unassignedPayments => {
+        this.service = unassignedPayments['data'].responsible_service_id;
+        },
+        (error: any) => this.upPaymentErrorMessage = error
+      );
+    }
+
   }
 
   getRemissionByFeeCode(feeCode: string): IRemission {
