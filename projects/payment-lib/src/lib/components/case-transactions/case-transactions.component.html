@@ -45,7 +45,7 @@
     <div *ngIf="paymentGroups?.length === 0">
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-          <span class="heading-small">Exisiting Fees</span>
+          <span class="heading-small">Exisiting fees</span>
         </div>
 
         <div class="govuk-grid-column-two-thirds" align="left">
@@ -95,7 +95,7 @@
     </div>
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-          <span class="heading-small">Exisiting Fees</span>
+          <span class="heading-small">Exisiting fees</span>
         </div>
 
         <div class="govuk-grid-column-two-thirds" align="left">
@@ -199,7 +199,7 @@
             <button type="submit" (click)="loadFeeSummaryPage(paymentGroup)"
                                   [disabled]="(getGroupOutstandingAmount(paymentGroup) === 0 || isUnprocessedRecordSelected)"
                                   [ngClass]='(getGroupOutstandingAmount(paymentGroup) === 0 || isUnprocessedRecordSelected) ? "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"'>
-                                  Add Telephone Payment
+                                  Add telephone payment
             </button>
 
             <button type="submit" disabled="disabled" aria-disabled="true" class="button button--disabled">
