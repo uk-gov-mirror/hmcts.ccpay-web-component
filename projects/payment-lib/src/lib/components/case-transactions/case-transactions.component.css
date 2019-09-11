@@ -2,3 +2,23 @@
     position: relative;
     margin-bottom: 10px;
 }
+.govuk-heading-xl{
+    font-size: 48px;
+    margin-bottom:1px;
+}
+.govuk-section-break--visible{
+ border-bottom: 2px solid black;
+ }
+.totalpayments.govuk-table__row{
+ border-bottom: 2px solid black !important;
+}
+.govuk-inset-text{
+margin-left :1em;
+}
+.govuk-button {
+  font-size: 19px;
+}
+
+. govuk-table__cell--col6,.groupamount.govuk-table__header{
+text-align:right;
+}
