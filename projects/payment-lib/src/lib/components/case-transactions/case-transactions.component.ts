@@ -20,6 +20,7 @@ export class CaseTransactionsComponent implements OnInit {
   payments: IPayment[] = [];
   remissions: IRemission[] = [];
   fees: IFee[] = [];
+  totalRefundAmount: number = 0;
   errorMessage: string;
   totalFees: number;
   totalPayments: number;
@@ -105,10 +106,11 @@ export class CaseTransactionsComponent implements OnInit {
 
   }
 
-  getGroupOutstandingAmount(paymentGroup: IPaymentGroup): number {
-    let feesTotal = 0.00;
-    let paymentsTotal = 0.00;
-    let remissionsTotal = 0.00;
+  getGroupOutstandingAmount(paymentGroup: IPaymentGroup, status?:string): number {
+    let feesTotal = 0.00,
+     paymentsTotal = 0.00,
+     remissionsTotal = 0.00,
+     grpOutstandingAmount = 0.00;
 
     if (paymentGroup.fees) {
       paymentGroup.fees.forEach(fee => {
@@ -129,8 +131,15 @@ export class CaseTransactionsComponent implements OnInit {
         remissionsTotal = remissionsTotal + remission.hwf_amount;
       });
     }
-
-    return (feesTotal - remissionsTotal) - paymentsTotal;
+      grpOutstandingAmount = (feesTotal - remissionsTotal) - paymentsTotal;
+      if (grpOutstandingAmount < 0 && status === 'outstanding') {
+        if(this.totalRefundAmount === 0) {
+          this.totalRefundAmount = grpOutstandingAmount;
+        } else {
+          this.totalRefundAmount = (this.totalRefundAmount + grpOutstandingAmount);
+        }
+      }
+    return grpOutstandingAmount;
   }
 
   redirectToFeeSearchPage(event: any) {

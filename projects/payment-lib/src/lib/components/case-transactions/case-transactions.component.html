@@ -131,13 +131,12 @@
           </thead>
           <tbody class="govuk-table__body">
           <tr class="govuk-table__row">
-            <td class="govuk-table__cell">{{ getGroupOutstandingAmount(paymentGroup) | currency :'GBP':'symbol':'1.2-2'  }}</td>
+            <td class="govuk-table__cell">{{ getGroupOutstandingAmount(paymentGroup, 'outstanding') | currency :'GBP':'symbol':'1.2-2'  }}</td>
           </tr>
           </tbody>
         </table>
         </div>
       </div>
-
       <div class="govuk-inset-text" *ngIf="paymentGroup.payments || paymentGroup.remissions">
         <!-- payments -->
         <table class="govuk-table">
@@ -210,6 +209,14 @@
 
     </div>
     <ccpay-app-unprocessed-payments [PAYMENT_RECORDS_EXISTS]="isPaymentRecordsExist" (selectedUnprocessedFeeEvent) = "selectedUnprocessedFeeEvent($event)" ></ccpay-app-unprocessed-payments>
+    <div class="govuk-grid-row govuk-grid__surplus-payments">
+    <div class="govuk-grid-column-full govuk-grid__surplus-payments-col1">
+      <span class="heading-small">Surplus payments</span>
+    </div>
+    <div class="govuk-grid-column-full">
+       Total surplus payments received: {{(totalRefundAmount*-1) | currency :'GBP':'symbol':'1.2-2'}}
+    </div>
+    </div>
   </main>
 
 
