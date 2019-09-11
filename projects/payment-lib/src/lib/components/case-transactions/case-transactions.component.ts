@@ -20,7 +20,6 @@ export class CaseTransactionsComponent implements OnInit {
   payments: IPayment[] = [];
   remissions: IRemission[] = [];
   fees: IFee[] = [];
-  totalRefundAmount: number = 0;
   errorMessage: string;
   totalFees: number;
   totalPayments: number;
@@ -44,6 +43,7 @@ export class CaseTransactionsComponent implements OnInit {
         this.paymentGroups = paymentGroups['payment_groups'];
       //  this.isPaymentRecordsExist =  this.paymentGroups.length === 0;
         this.calculateAmounts();
+        this.calculateRefundAmount();
       },
       (error: any) => {
         this.errorMessage = <any>error;
@@ -64,6 +64,9 @@ export class CaseTransactionsComponent implements OnInit {
     this.dcnNumber = this.paymentLibComponent.DCN_NUMBER;
     this.selectedOption = this.paymentLibComponent.SELECTED_OPTION.toLocaleLowerCase();
   }
+  ngAfterViewInit() {
+    this.calculateRefundAmount();
+  }
 
   setDefaults(): void {
     this.totalPayments = 0.00;
@@ -72,9 +75,9 @@ export class CaseTransactionsComponent implements OnInit {
 }
 
   calculateAmounts(): void {
-    let feesTotal = 0.00;
-    let paymentsTotal = 0.00;
-    let remissionsTotal = 0.00;
+    let feesTotal = 0.00,
+     paymentsTotal = 0.00,
+     remissionsTotal = 0.00;
 
     this.paymentGroups.forEach(paymentGroup => {
       if (paymentGroup.fees) {
@@ -105,12 +108,47 @@ export class CaseTransactionsComponent implements OnInit {
     });
 
   }
+  calculateRefundAmount() {
+    let totalRefundAmount = 0;
+    this.paymentGroups.forEach(function (paymentGroup) {
+      let grpOutstandingAmount = 0.00,
+        feesTotal = 0.00,
+        paymentsTotal = 0.00,
+        remissionsTotal = 0.00;
+      if (paymentGroup.fees) {
+        paymentGroup.fees.forEach(fee => {
+          feesTotal = feesTotal + fee.calculated_amount;
+        });
+      }
 
-  getGroupOutstandingAmount(paymentGroup: IPaymentGroup, status?:string): number {
+      if (paymentGroup.payments) {
+        paymentGroup.payments.forEach(payment => {
+          if (payment.status.toUpperCase() === 'SUCCESS') {
+            paymentsTotal = paymentsTotal + payment.amount;
+          }
+        });
+      }
+
+      if (paymentGroup.remissions) {
+        paymentGroup.remissions.forEach(remission => {
+          remissionsTotal = remissionsTotal + remission.hwf_amount;
+        });
+      }  
+        grpOutstandingAmount = (feesTotal - remissionsTotal) - paymentsTotal;
+        if (grpOutstandingAmount < 0) {
+          if(totalRefundAmount === 0) {
+            totalRefundAmount = grpOutstandingAmount;
+          } else {
+            totalRefundAmount = (totalRefundAmount + grpOutstandingAmount);
+          }
+        }
+    });
+    return totalRefundAmount * -1;
+  }
+  getGroupOutstandingAmount(paymentGroup: IPaymentGroup): number {
     let feesTotal = 0.00,
      paymentsTotal = 0.00,
-     remissionsTotal = 0.00,
-     grpOutstandingAmount = 0.00;
+     remissionsTotal = 0.00;
 
     if (paymentGroup.fees) {
       paymentGroup.fees.forEach(fee => {
@@ -130,16 +168,8 @@ export class CaseTransactionsComponent implements OnInit {
       paymentGroup.remissions.forEach(remission => {
         remissionsTotal = remissionsTotal + remission.hwf_amount;
       });
-    }
-      grpOutstandingAmount = (feesTotal - remissionsTotal) - paymentsTotal;
-      if (grpOutstandingAmount < 0 && status === 'outstanding') {
-        if(this.totalRefundAmount === 0) {
-          this.totalRefundAmount = grpOutstandingAmount;
-        } else {
-          this.totalRefundAmount = (this.totalRefundAmount + grpOutstandingAmount);
-        }
-      }
-    return grpOutstandingAmount;
+    }   
+    return (feesTotal - remissionsTotal) - paymentsTotal;
   }
 
   redirectToFeeSearchPage(event: any) {
