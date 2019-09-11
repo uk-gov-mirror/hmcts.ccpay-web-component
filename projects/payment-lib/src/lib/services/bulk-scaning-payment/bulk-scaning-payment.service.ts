@@ -42,7 +42,7 @@ export class BulkScaningPaymentService {
     );
   }
   patchBSChangeStatus(dcnNumber: string, status: string): Observable<any> {
-    return this.http.patch(`${this.paymentLibService.API_ROOT}/bulk-scan-payments/${dcnNumber}/${status}`, status).pipe(
+    return this.http.patch(`${this.paymentLibService.API_ROOT}/bulk-scan-payments/${dcnNumber}/status/${status}`, status).pipe(
       catchError(this.errorHandlerService.handleError)
     );
   }

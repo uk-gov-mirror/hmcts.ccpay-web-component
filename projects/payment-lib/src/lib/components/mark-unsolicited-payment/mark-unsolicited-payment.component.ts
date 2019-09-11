@@ -23,6 +23,7 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
   ccdCaseNumber: string;
   bspaymentdcn: string;
   unassignedRecord: IBSPayments;
+  siteID: string = null;
   reason: string;
   responsiblePerson: string;
   responsibleOffice: string;
@@ -64,7 +65,7 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
   confirmPayments() {
     const controls = this.markPaymentUnsolicitedForm.controls;
     const requestBody = new AllocatePaymentRequest
-    (this.ccdCaseNumber, this.unassignedRecord);
+    (this.ccdCaseNumber, this.unassignedRecord, this.siteID);
     this.paymentViewService.postBSPayments(requestBody).subscribe(
       res1 => {
         const reqBody = new UnsolicitedPaymentsRequest
@@ -73,7 +74,7 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
         this.paymentViewService.postBSUnsolicitedPayments(reqBody).subscribe(
           res2 => {
              if (res2.success) {
-              this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'PROCESS').subscribe(
+              this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'PROCESSED').subscribe(
                 res3 => {
                   if (res3.success) {
                     this.paymentLibComponent.viewName = 'case-transactions';
@@ -154,6 +155,7 @@ cancelMarkUnsolicitedPayments(type?:string){
       unassignedPayments => {
         
        this.unassignedRecord = unassignedPayments['data'].payments[0];
+       this.siteID = unassignedPayments['data'].responsible_service_id;
       },
       (error: any) => this.errorMessage = error
     );

@@ -21,6 +21,7 @@ export class AllocatePaymentsComponent implements OnInit {
   unAllocatedPayment: IBSPayments = {
     amount: 0
   };
+  siteID: string = null;
   errorMessage: string;
   paymentGroups: IPayment[] = [];
   selectedPayment: IPaymentGroup;
@@ -28,6 +29,7 @@ export class AllocatePaymentsComponent implements OnInit {
   isRemainingAmountGtZero: boolean;
   afterFeeAllocateOutstanding: number;
   amountForAllocation: number;
+  isConfirmButtondisabled: boolean = false;
 
   constructor(
   private caseTransactionsService: CaseTransactionsService,
@@ -90,8 +92,9 @@ export class AllocatePaymentsComponent implements OnInit {
     this.viewStatus = 'mainForm';
   }
   confirmAllocatePayement(){
+this.isConfirmButtondisabled = true;
    const requestBody = new AllocatePaymentRequest
-    (this.ccdCaseNumber, this.unAllocatedPayment);
+    (this.ccdCaseNumber, this.unAllocatedPayment, this.siteID);
     this.bulkScaningPaymentService.postBSAllocatePayment(requestBody, this.selectedPayment.payment_group_reference)
     .subscribe(
       response => {
@@ -100,21 +103,30 @@ export class AllocatePaymentsComponent implements OnInit {
         this.paymentViewService.postBSAllocationPayments(reqBody).subscribe(
           res => {
             if (res.success) {
-              this.bulkScaningPaymentService.patchBSChangeStatus(this.unAllocatedPayment.dcn_reference, 'PROCESS').subscribe(
+              this.bulkScaningPaymentService.patchBSChangeStatus(this.unAllocatedPayment.dcn_reference, 'PROCESSED').subscribe(
                 res => {
                   if (res.success) {
                     this.paymentLibComponent.viewName = 'case-transactions';
                     this.paymentLibComponent.TAKEPAYMENT = true;
                   }
                 },
-                (error: any) => this.errorMessage = error
+                (error: any) => {
+                  this.errorMessage = error;
+                  this.isConfirmButtondisabled = false;
+                }
               );
             }
           },
-          (error: any) => this.errorMessage = error
+          (error: any) => {
+            this.errorMessage = error;
+            this.isConfirmButtondisabled = false;
+          }
         );
       },
-      (error: any) => this.errorMessage = error
+      (error: any) => {
+        this.errorMessage = error;
+        this.isConfirmButtondisabled = false;
+      }
     );
   }
   saveAndContinue(){
@@ -133,6 +145,7 @@ export class AllocatePaymentsComponent implements OnInit {
     this.bulkScaningPaymentService.getBSPaymentsByDCN(this.bspaymentdcn).subscribe(
       unassignedPayments => {
         this.unAllocatedPayment = unassignedPayments['data'].payments[0];
+        this.siteID = unassignedPayments['data'].responsible_service_id;
       },
       (error: any) => this.errorMessage = error
     );

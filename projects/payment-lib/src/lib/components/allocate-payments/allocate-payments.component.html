@@ -107,7 +107,7 @@
       Amount left to be allocated: {{ remainingAmount | currency:'GBP':'symbol-narrow':'1.2-2' }}
   </label>
       <div class="govuk-button--group">
-        <button type="submit" class="button" (click)="confirmAllocatePayement()">
+        <button type="submit" [disabled]="isConfirmButtondisabled" [ngClass]="isConfirmButtondisabled ? 'button button--disabled' : 'button'" (click)="confirmAllocatePayement()">
           Confirm
         </button>
         <button type="button" class="button govuk-button--secondary" (click)="cancelAllocatePayment()">

@@ -22,6 +22,7 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
   investicationDetailMaxHasError: boolean = false;
   errorMessage: string;
   unassignedRecord:IBSPayments;
+  siteID: string = null;
 
   constructor(private formBuilder: FormBuilder,
   private paymentViewService: PaymentViewService,
@@ -47,6 +48,7 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
     this.bulkScaningPaymentService.getBSPaymentsByDCN(this.bspaymentdcn).subscribe(
       unassignedPayments => {
         this.unassignedRecord = unassignedPayments['data'].payments[0];
+        this.siteID = unassignedPayments['data'].responsible_service_id;
       },
       (error: any) => this.errorMessage = error
     );
@@ -74,7 +76,7 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
   }
   confirmPayments() {
     const requestBody = new AllocatePaymentRequest
-    (this.ccdCaseNumber, this.unassignedRecord),
+    (this.ccdCaseNumber, this.unassignedRecord, this.siteID),
     reason = this.markPaymentUnidentifiedForm.get('investicationDetail').value;
     this.paymentViewService.postBSPayments(requestBody).subscribe(
       res1 => {
@@ -83,7 +85,7 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
         this.paymentViewService.postBSUnidentifiedPayments(reqBody).subscribe(
           res2 => {
             if (res2.success) {
-              this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'PROCESS').subscribe(
+              this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'PROCESSED').subscribe(
                 res3 => {
                   if (res3.success) {
                     this.paymentLibComponent.viewName = 'case-transactions';

@@ -15,7 +15,7 @@ export class AllocatePaymentRequest {
   requestor: String;
   site_id: String;
 
-  constructor(ccd_case_number : string, unAllocatedPayment: IBSPayments) {
+  constructor(ccd_case_number : string, unAllocatedPayment: IBSPayments, siteID: string) {
     this.amount = unAllocatedPayment.amount;
     this.banked_date = unAllocatedPayment.date_banked;
     this.ccd_case_number = ccd_case_number;
@@ -33,7 +33,7 @@ export class AllocatePaymentRequest {
       name: 'success'
     }
     this.payment_method = unAllocatedPayment.payment_method;
-    this.requestor= 'DIVORCE';
-    this.site_id= 'AA07';
+    this.requestor= siteID==='AA07' ? 'DIVORCE' : 'PROBATE';
+    this.site_id= siteID;
   }
 }
