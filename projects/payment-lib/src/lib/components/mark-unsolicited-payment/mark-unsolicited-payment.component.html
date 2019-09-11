@@ -7,10 +7,10 @@
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
             <td class="govuk-table__header" scope="col">Reference (DCN)</td>
-            <td class="govuk-table__header" scope="col">Banked Date</td>
+            <td class="govuk-table__header" scope="col">Banked date</td>
             <td class="govuk-table__header" scope="col">Amount</td>
             <td class="govuk-table__header" scope="col">Method</td>
-            <td class="govuk-table__header" scope="col">Payer Name</td>
+            <td class="govuk-table__header" scope="col">Payer name</td>
 
         </tr>
       </thead>
@@ -36,7 +36,7 @@
     </div>
     <div class="govuk-form-group">
       <label class="govuk-label govuk-label--s" for="responsibleOffice">
-        Receiving Site ID (Receiving Court/Bulk Centre Site ID)    
+        Receiving Site ID (Receiving court/Bulk centre site ID)    
       </label>
       <input class="govuk-input govuk-input--width-20 govuk-!-margin-right-1" [ngClass]="{'inline-error-class': responsibleOfficeHasError}" id="responsibleOffice" name="responsibleOffice" type="text" formControlName="responsibleOffice">
       <p [ngClass]="{'inline-error-message': responsibleOfficeHasError}" *ngIf="responsibleOfficeHasError">Enter receiving site ID</p>
@@ -44,18 +44,18 @@
     </div>
     <div class="govuk-form-group">
       <label class="govuk-label govuk-label--s" for="responsiblePerson">
-        Sending e-mail Address (Team/Person responsible at receiving Court/Bulk Centre)      
+        Sending e-mail Address (Team/Person responsible at receiving court/Bulk centre)      
       </label>
       <input class="govuk-input govuk-input--width-20 govuk-!-margin-right-1" [ngClass]="{'inline-error-class': responsiblePersonHasError}" id="responsiblePerson" name="responsiblePerson" type="text" formControlName="responsiblePerson">
-      <p [ngClass]="{'inline-error-message': responsiblePersonHasError}" *ngIf="responsiblePersonHasError">Enter sending e-mail Address</p>
+      <p [ngClass]="{'inline-error-message': responsiblePersonHasError}" *ngIf="responsiblePersonHasError">Enter sending e-mail address</p>
 
     </div>
     <div class="govuk-form-group">
       <label class="govuk-label govuk-label--s" for="emailId">
-        Receiving e-mail Address (Receiving email address – assuming shared mailbox)
+        Receiving e-mail address (Receiving email address – assuming shared mailbox)
       </label>
       <input class="govuk-input govuk-input--width-20 govuk-!-margin-right-1" [ngClass]="{'inline-error-class': emailIdHasError}" id="emailId" name="emailId" type="text" formControlName="emailId">
-      <p [ngClass]="{'inline-error-message': emailIdHasError}" *ngIf="emailIdHasError">Enter receiving e-mail Address</p>
+      <p [ngClass]="{'inline-error-message': emailIdHasError}" *ngIf="emailIdHasError">Enter receiving e-mail address</p>
 
     </div>
     <div class="govuk-button--group">
@@ -73,7 +73,7 @@
         <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
         <strong class="govuk-warning-text__text">
         <span class="govuk-warning-text__assistive">Warning</span>
-          Are you sure you want to mark this payment as transferred?
+        <h1 class="heading-small"> Are you sure you want to mark this payment as transferred? </h1>
         </strong>
 
         <div class="govuk-grid-column-full govuk-!-padding-bottom-3">
@@ -82,9 +82,9 @@
             <thead class="govuk-table__head">
             <tr class="govuk-table__row">
               <td class="govuk-table__header" scope="col">Reason</td>
-              <td class="govuk-table__header" scope="col">Receiving Site ID</td>
-              <td class="govuk-table__header" scope="col">Sending e-mail Address</td>
-              <td class="govuk-table__header" scope="col"> Receiving e-mail Address</td>
+              <td class="govuk-table__header" scope="col">Receiving site Id</td>
+              <td class="govuk-table__header" scope="col">Sending e-mail address</td>
+              <td class="govuk-table__header" scope="col"> Receiving e-mail address</td>
            </tr>
             </thead>
             <tbody class="govuk-table__body">

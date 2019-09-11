@@ -49,11 +49,11 @@
           <td>{{ paymentGroup.payments[0].document_control_number }}</td>
         </tr>
         <tr class="section" *ngIf="paymentGroup.payments[0] && paymentGroup.payments[0].document_control_number">
-          <td class="bold" width="330px">Payer Name</td>
+          <td class="bold" width="330px">Payer name</td>
           <td>{{ paymentGroup.payments[0].payer_name }}</td>
         </tr>
         <tr class="section" *ngIf="paymentGroup.payments[0] && paymentGroup.payments[0].document_control_number">
-          <td class="bold" width="330px">Banked Date</td>
+          <td class="bold" width="330px">Banked date</td>
           <td>{{ paymentGroup.payments[0].banked_date | date:'dd MMM yyyy' }}</td>
         </tr>
         </tbody>
