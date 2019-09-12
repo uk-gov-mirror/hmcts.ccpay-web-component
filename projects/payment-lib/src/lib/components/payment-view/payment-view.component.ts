@@ -19,10 +19,13 @@ export class PaymentViewComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
     this.paymentViewService.getPaymentGroupDetails(this.paymentLibComponent.paymentGroupReference,
       this.paymentLibComponent.paymentMethod).subscribe(
-      paymentGroup => this.paymentGroup = paymentGroup,
+      paymentGroup => {
+        this.paymentGroup = paymentGroup;
+        this.paymentGroup.payments = this.paymentGroup.payments.filter
+        (paymentGroupObj => paymentGroupObj['reference'].includes(this.paymentLibComponent.paymentReference));
+      },  
       (error: any) => this.errorMessage = error
     );
   }
