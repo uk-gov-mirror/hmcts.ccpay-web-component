@@ -34,22 +34,9 @@
           </tr>
       </tbody>
       <tbody class="govuk-table__body" *ngIf="upPaymentErrorMessage !== null">
-        <td class="govuk-table__cell" colspan="6">No Unprocessed payments record</td>
+        <td class="govuk-table__cell" colspan="6">No unallocated payments record available</td>
       </tbody>
     </table>
-
-
-
-
-
-
-
-
-
-
-
-
-
     <button type="button"
     [disabled]="!isAllocatedToNewFeebtnEnabled"
      [ngClass]="!isAllocatedToNewFeebtnEnabled ? 'button button--disabled govuk-!-margin-right-1' : 'button govuk-!-margin-right-1'" (click)="redirectToFeeSearchPage($event)">
@@ -70,6 +57,5 @@
     [ngClass]='!isUnprocessedRecordSelected ?  "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"' (click)="loadUnsolicitedPage('unsolicitedPage')">
       Mark as transferred
     </button>  
-    
 </div>
 

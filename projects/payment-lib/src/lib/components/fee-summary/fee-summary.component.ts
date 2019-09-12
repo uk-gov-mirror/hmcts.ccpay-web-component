@@ -138,15 +138,12 @@ export class FeeSummaryComponent implements OnInit {
   }
   redirectToFeeSearchPage(event: any, page?: string) {
     event.preventDefault();
-    let url = `/fee-search?ccdCaseNumber=${this.ccdCaseNumber}`;
+    let dcn = this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
     if(this.viewStatus === 'feeRemovalConfirmation' || this.viewStatus === 'add_remission') {
       this.viewStatus = 'main';
       return;
     }
-    if(page === 'summary') {
-      let dcn = this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
-      url = `/fee-search?ccdCaseNumber=selectedOption=${this.paymentLibComponent.SELECTED_OPTION}&${this.ccdCaseNumber}&paymentGroupRef=${this.paymentGroupRef}${dcn}`;
-    }
+    let url = `/fee-search?ccdCaseNumber=${this.ccdCaseNumber}&selectedOption=${this.paymentLibComponent.SELECTED_OPTION}&paymentGroupRef=${this.paymentGroupRef}${dcn}`;
     this.router.navigateByUrl(url);
   }
   takePayment() {

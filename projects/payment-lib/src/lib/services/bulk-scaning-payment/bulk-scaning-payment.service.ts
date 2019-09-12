@@ -5,8 +5,6 @@ import {PaymentLibService} from '../../payment-lib.service';
 import {Observable} from 'rxjs/Observable';
 import {catchError} from 'rxjs/operators';
 import { IBSPayments } from '../../interfaces/IBSPayments';
-import { UnidentifiedPaymentsRequest } from '../../interfaces/UnidentifiedPaymentsRequest';
-import { UnsolicitedPaymentsRequest } from '../../interfaces/UnsolicitedPaymentsRequest';
 import { AllocatePaymentRequest } from '../../interfaces/AllocatePaymentRequest';
 import { IPaymentGroup } from '../../interfaces/IPaymentGroup';
 
