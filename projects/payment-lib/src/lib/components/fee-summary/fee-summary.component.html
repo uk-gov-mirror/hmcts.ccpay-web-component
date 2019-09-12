@@ -79,8 +79,13 @@
         <td class="no-border">
           <table class="govuk-table">
             <tr class="govuk-table__row">
-              <td class="no-border govuk-!-font-weight-bold subcolumn-1">Total to be paid</td>
-              <td class="no-border subcolumn-2">{{ totalFee | currency:'GBP':'symbol-narrow':'1.2-2'}}</td>
+              <td class="no-border govuk-!-font-weight-bold subcolumn-1">Total payment</td>
+              <td class="no-border subcolumn-2">{{ totalAfterRemission - outStandingAmount | currency:'GBP':'symbol-narrow':'1.2-2'}}</td>
+              <td class="no-border subcolumn-3"></td>
+            </tr>
+            <tr class="govuk-table__row">
+              <td class="no-border govuk-!-font-weight-bold subcolumn-1">Total outstanding amount</td>
+              <td class="no-border subcolumn-2">{{ outStandingAmount | currency:'GBP':'symbol-narrow':'1.2-2'}}</td>
               <td class="no-border subcolumn-3"></td>
             </tr>
           </table>

@@ -47,38 +47,14 @@ export class AllocatePaymentsComponent implements OnInit {
     this.caseTransactionsService.getPaymentGroups(this.ccdCaseNumber).subscribe(
       paymentGroups => {
       this.paymentGroups = paymentGroups['payment_groups'].filter(paymentGroup => {
-          return this.getGroupOutstandingAmount(<any>paymentGroup) > 0;
+          return this.getGroupOutstandingAmount(<IPaymentGroup>paymentGroup) > 0;
       });
       },
       (error: any) => this.errorMessage = error
     );
   }
   getGroupOutstandingAmount(paymentGroup: IPaymentGroup): number {
-    let feesTotal = 0.00,
-      paymentsTotal = 0.00,
-      remissionsTotal = 0.00;
-
-    if (paymentGroup.fees) {
-      paymentGroup.fees.forEach(fee => {
-        feesTotal = feesTotal + fee.calculated_amount;
-      });
-    }
-
-    if (paymentGroup.payments) {
-      paymentGroup.payments.forEach(payment => {
-        if (payment.status.toUpperCase() === 'SUCCESS') {
-          paymentsTotal = paymentsTotal + payment.amount;
-        }
-      });
-    }
-
-    if (paymentGroup.remissions) {
-      paymentGroup.remissions.forEach(remission => {
-        remissionsTotal = remissionsTotal + remission.hwf_amount;
-      });
-    }
-
-    return (feesTotal - remissionsTotal) - paymentsTotal;
+    return this.bulkScaningPaymentService.calculateOutStandingAmount(paymentGroup);
   }
 
   gotoCasetransationPage() {

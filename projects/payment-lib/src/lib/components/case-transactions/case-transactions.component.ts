@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {PaymentLibComponent} from '../../payment-lib.component';
 import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
 import {CaseTransactionsService} from '../../services/case-transactions/case-transactions.service';
+import { BulkScaningPaymentService } from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
 import {IFee} from '../../interfaces/IFee';
 import {IPayment} from '../../interfaces/IPayment';
 import {IRemission} from '../../interfaces/IRemission';
@@ -32,6 +33,7 @@ export class CaseTransactionsComponent implements OnInit {
   isPaymentRecordsExist: boolean = false;
 
     constructor(private router: Router,
+    private bulkScaningPaymentService: BulkScaningPaymentService,
     private caseTransactionsService: CaseTransactionsService,
     private paymentLibComponent: PaymentLibComponent) { }
 
@@ -146,30 +148,7 @@ export class CaseTransactionsComponent implements OnInit {
     return totalRefundAmount * -1;
   }
   getGroupOutstandingAmount(paymentGroup: IPaymentGroup): number {
-    let feesTotal = 0.00,
-     paymentsTotal = 0.00,
-     remissionsTotal = 0.00;
-
-    if (paymentGroup.fees) {
-      paymentGroup.fees.forEach(fee => {
-        feesTotal = feesTotal + fee.calculated_amount;
-      });
-    }
-
-    if (paymentGroup.payments) {
-      paymentGroup.payments.forEach(payment => {
-        if (payment.status.toUpperCase() === 'SUCCESS') {
-          paymentsTotal = paymentsTotal + payment.amount;
-        }
-      });
-    }
-
-    if (paymentGroup.remissions) {
-      paymentGroup.remissions.forEach(remission => {
-        remissionsTotal = remissionsTotal + remission.hwf_amount;
-      });
-    }   
-    return (feesTotal - remissionsTotal) - paymentsTotal;
+    return this.bulkScaningPaymentService.calculateOutStandingAmount(paymentGroup);;
   }
 
   redirectToFeeSearchPage(event: any) {
@@ -178,6 +157,7 @@ export class CaseTransactionsComponent implements OnInit {
   }
 
   loadFeeSummaryPage(paymentGroup: IPaymentGroup) {
+    this.paymentLibComponent.bspaymentdcn = null;
     this.paymentLibComponent.paymentGroupReference = paymentGroup.payment_group_reference;
     this.paymentLibComponent.viewName = 'fee-summary';
   }

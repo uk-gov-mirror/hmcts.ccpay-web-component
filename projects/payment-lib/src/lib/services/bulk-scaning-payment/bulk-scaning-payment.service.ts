@@ -8,6 +8,7 @@ import { IBSPayments } from '../../interfaces/IBSPayments';
 import { UnidentifiedPaymentsRequest } from '../../interfaces/UnidentifiedPaymentsRequest';
 import { UnsolicitedPaymentsRequest } from '../../interfaces/UnsolicitedPaymentsRequest';
 import { AllocatePaymentRequest } from '../../interfaces/AllocatePaymentRequest';
+import { IPaymentGroup } from '../../interfaces/IPaymentGroup';
 
 
 @Injectable({
@@ -45,5 +46,31 @@ export class BulkScaningPaymentService {
     return this.http.patch(`${this.paymentLibService.API_ROOT}/bulk-scan-payments/${dcnNumber}/status/${status}`, status).pipe(
       catchError(this.errorHandlerService.handleError)
     );
+  }
+  calculateOutStandingAmount(paymentGroup: IPaymentGroup): number {
+    let feesTotal = 0.00,
+     paymentsTotal = 0.00,
+     remissionsTotal = 0.00;
+
+    if (paymentGroup.fees) {
+      paymentGroup.fees.forEach(fee => {
+        feesTotal = feesTotal + fee.calculated_amount;
+      });
+    }
+
+    if (paymentGroup.payments) {
+      paymentGroup.payments.forEach(payment => {
+        if (payment.status.toUpperCase() === 'SUCCESS') {
+          paymentsTotal = paymentsTotal + payment.amount;
+        }
+      });
+    }
+
+    if (paymentGroup.remissions) {
+      paymentGroup.remissions.forEach(remission => {
+        remissionsTotal = remissionsTotal + remission.hwf_amount;
+      });
+    }   
+    return (feesTotal - remissionsTotal) - paymentsTotal;
   }
 }

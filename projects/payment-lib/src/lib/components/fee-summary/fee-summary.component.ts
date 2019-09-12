@@ -32,7 +32,8 @@ export class FeeSummaryComponent implements OnInit {
   upPaymentErrorMessage: string;
   selectedOption:string;
   isBackButtonEnable: boolean = true;
-
+  outStandingAmount: number;
+  totalAfterRemission: number = 0;
 
   constructor(
     private router: Router,
@@ -96,12 +97,12 @@ export class FeeSummaryComponent implements OnInit {
       this.paymentLibComponent.paymentMethod).subscribe(
       paymentGroup => {
         this.paymentGroup = paymentGroup;
-        this.totalFee = 0;
-        if (this.paymentGroup.fees) {
-          for (const fee of this.paymentGroup.fees) {
-            this.totalFee = this.totalFee + fee.net_amount;
-          }
+        if (paymentGroup.fees) {
+          paymentGroup.fees.forEach(fee => {
+              this.totalAfterRemission  = this.totalAfterRemission  + fee.net_amount;
+          });
         }
+        this.outStandingAmount = this.bulkScaningPaymentService.calculateOutStandingAmount(paymentGroup);
       },
       (error: any) => this.errorMessage = error
     );
@@ -151,7 +152,7 @@ export class FeeSummaryComponent implements OnInit {
   takePayment() {
 
     const seriveName = this.service ==='AA07' ? 'DIVORCE': this.service ==='AA08' ? 'PROBATE' : '';
-    const requestBody = new PaymentToPayhubRequest(this.ccdCaseNumber, this.totalFee, this.service, seriveName);
+    const requestBody = new PaymentToPayhubRequest(this.ccdCaseNumber, this.outStandingAmount, this.service, seriveName);
     this.paymentViewService.postPaymentToPayHub(requestBody, this.paymentGroupRef).subscribe(
       response => {
         this.location.go(`payment-history?view=fee-summary`);
