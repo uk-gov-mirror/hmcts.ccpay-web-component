@@ -45,12 +45,8 @@
         </tr>
 
         <tr class="section" *ngIf="paymentGroup.payments[0] && paymentGroup.payments[0].document_control_number">
-          <td class="bold" width="330px">Reference (DCN)</td>
+          <td class="bold" width="330px">Payment asset number(DCN)</td>
           <td>{{ paymentGroup.payments[0].document_control_number }}</td>
-        </tr>
-        <tr class="section" *ngIf="paymentGroup.payments[0] && paymentGroup.payments[0].document_control_number">
-          <td class="bold" width="330px">Payer name</td>
-          <td>{{ paymentGroup.payments[0].payer_name }}</td>
         </tr>
         <tr class="section" *ngIf="paymentGroup.payments[0] && paymentGroup.payments[0].document_control_number">
           <td class="bold" width="330px">Banked date</td>

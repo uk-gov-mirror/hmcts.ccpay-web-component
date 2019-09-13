@@ -4,12 +4,11 @@
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
             <td class="govuk-table__header" scope="col"><a href="#" (click)="unprocessedPaymentUnSelectEvent($event)">Unselect</a></td>
-            <td class="govuk-table__header" scope="col">Reference (DCN)</td>
+            <td class="govuk-table__header" scope="col">Payment asset number(DCN)</td>
             <td class="govuk-table__header" scope="col">Banked date</td>
             <td class="govuk-table__header" scope="col">Amount</td>
             <td class="govuk-table__header" scope="col">Method</td>
-            <td class="govuk-table__header" scope="col">Payer name</td>
-          </tr>
+           </tr>
       </thead>
       <tbody class="govuk-table__body" >
         <tr class="govuk-table__row" *ngFor="let unassignedRecord of unassignedRecordList; let i of index;">
@@ -30,7 +29,6 @@
             <td class="govuk-table__cell"> {{unassignedRecord.date_banked | date:'dd MMM yyyy'}}</td>
             <td class="govuk-table__cell"> {{unassignedRecord.amount | currency :'GBP':'symbol':'1.2-2'}}</td>
             <td class="govuk-table__cell"> {{unassignedRecord.payment_method}}  </td>
-            <td class="govuk-table__cell"> {{unassignedRecord.payer_name}} </td>
           </tr>
       </tbody>
       <tbody class="govuk-table__body" *ngIf="upPaymentErrorMessage !== null">

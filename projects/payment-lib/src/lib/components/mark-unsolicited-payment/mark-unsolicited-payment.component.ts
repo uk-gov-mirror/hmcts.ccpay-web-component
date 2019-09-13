@@ -6,6 +6,7 @@ import { IBSPayments } from '../../interfaces/IBSPayments';
 import { UnsolicitedPaymentsRequest } from '../../interfaces/UnsolicitedPaymentsRequest';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import { AllocatePaymentRequest } from '../../interfaces/AllocatePaymentRequest';
+import { stringLiteral } from 'babel-types';
 
 @Component({
   selector: 'app-mark-unsolicited-payment',
@@ -51,14 +52,8 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
         Validators.required,
         Validators.pattern('^([a-zA-Z0-9\\s\\n,\\.-:]*)$')
       ])),
-      responsiblePerson: new FormControl('', Validators.compose([
-        Validators.required,
-        Validators.pattern(emailPattern)
-      ])),
-      emailId: new FormControl('', Validators.compose([
-        Validators.required,
-        Validators.pattern(emailPattern)
-      ]))
+      responsiblePerson: new FormControl(''),
+      emailId: new FormControl('')
     });
   }
   confirmPayments() {
