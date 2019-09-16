@@ -19,6 +19,7 @@ export class PaymentViewComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
     this.paymentViewService.getPaymentGroupDetails(this.paymentLibComponent.paymentGroupReference,
       this.paymentLibComponent.paymentMethod).subscribe(
       paymentGroup => {
