@@ -24,11 +24,12 @@
     <div *ngIf="!errorMessage && paymentGroup">
 
       <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-          <h2 class="govuk-heading-m">Payment details</h2>
+        <div class="column">
+          <h1 class="heading-medium">Payment details</h1>
         </div>
       </div>
 
+      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible"> 
       <table>
         <tbody>
         <tr class="section">
@@ -47,7 +48,7 @@
       </table>
 
       <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
+        <div class="column">
           <h2 class="heading-medium">Fee and remission details</h2>
         </div>
       </div>
@@ -81,6 +82,8 @@
           </tr>
           </tbody>
         </table>
+
+        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible"> 
       </div>
 
       <!-- card details -->

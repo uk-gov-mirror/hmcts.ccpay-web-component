@@ -19,6 +19,10 @@ margin-left :1em;
   font-size: 19px;
 }
 
-. govuk-table__cell--col6,.groupamount.govuk-table__header{
+.groupamount.govuk-table__header,.govuk-table__cell.govuk-table__cell--col6.govuk-table__custom--col6{
 text-align:right;
+}
+
+.feeclass{
+  padding-left:0.7em;
 }
