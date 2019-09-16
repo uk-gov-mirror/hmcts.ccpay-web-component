@@ -24,8 +24,8 @@
     <div *ngIf="!errorMessage && paymentGroup">
 
       <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-          <h2 class="govuk-heading-m">Payment details</h2>
+        <div class="column">
+          <h2 class="heading-medium">Payment details</h2>
         </div>
       </div>
 
@@ -45,12 +45,8 @@
         </tr>
 
         <tr class="section" *ngIf="paymentGroup.payments[0] && paymentGroup.payments[0].document_control_number">
-          <td class="bold" width="330px">Reference (DCN)</td>
+          <td class="bold" width="330px">Payment asset number(DCN)</td>
           <td>{{ paymentGroup.payments[0].document_control_number }}</td>
-        </tr>
-        <tr class="section" *ngIf="paymentGroup.payments[0] && paymentGroup.payments[0].document_control_number">
-          <td class="bold" width="330px">Payer name</td>
-          <td>{{ paymentGroup.payments[0].payer_name }}</td>
         </tr>
         <tr class="section" *ngIf="paymentGroup.payments[0] && paymentGroup.payments[0].document_control_number">
           <td class="bold" width="330px">Banked date</td>
@@ -60,7 +56,7 @@
       </table>
 
       <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
+        <div class="column">
           <h2 class="heading-medium">Fee and remission details</h2>
         </div>
       </div>
