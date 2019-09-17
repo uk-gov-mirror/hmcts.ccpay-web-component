@@ -25,18 +25,22 @@
   
   <form [formGroup]="markPaymentUnsolicitedForm" novalidate>
     <div class="govuk-form-group">
-      <label class="govuk-label govuk-label--s" for="reason">
+      <label class="govuk-label custom-govuk-label custom-govuk-label" for="reason">
         Reason for payment being marked as transferred.     
       </label>
-      <input class="govuk-input govuk-input--width-20 govuk-!-margin-right-1" [ngClass]="{'inline-error-class': reasonHasError}" id="reason" name="reason" type="text" formControlName="reason">
-      <p [ngClass]="{'inline-error-message': reasonHasError}" *ngIf="reasonHasError">Enter a reason for marking this payment as transferred</p>
-
+        <textarea class="form-control form-control-3-4" [ngClass]="{'inline-error-class': reasonHasError || reasonMinHasError || reasonMaxHasError}" name="reason" id="reason" rows="5" formControlName="reason">
+        </textarea>
+        <p class="inline-error-message" *ngIf="reasonHasError || reasonMinHasError || reasonMaxHasError">
+          <span *ngIf="reasonHasError">Enter a reason for marking this payment as transferred.</span>
+          <span *ngIf="reasonMinHasError">Reason should be at least 3 characters.</span>
+          <span *ngIf="reasonMaxHasError">Reason should be 255 characters or under.</span>
+        </p>
     </div>
     <div class="govuk-form-group">
-      <label class="govuk-label govuk-label--s" for="responsibleOffice">
+      <label class="govuk-label custom-govuk-label" for="responsibleOffice">
         Receiving Site ID (Receiving court/Bulk centre site ID)    
       </label>
-      <input class="govuk-input govuk-input--width-20 govuk-!-margin-right-1" [ngClass]="{'inline-error-class': responsibleOfficeHasError}" id="responsibleOffice" name="responsibleOffice" type="text" formControlName="responsibleOffice">
+      <input class="govuk-input govuk-input--width-30 govuk-!-margin-right-1" [ngClass]="{'inline-error-class': responsibleOfficeHasError}" id="responsibleOffice" name="responsibleOffice" type="text" formControlName="responsibleOffice">
       <p [ngClass]="{'inline-error-message': responsibleOfficeHasError}" *ngIf="responsibleOfficeHasError">Enter receiving site ID</p>
 
     </div>

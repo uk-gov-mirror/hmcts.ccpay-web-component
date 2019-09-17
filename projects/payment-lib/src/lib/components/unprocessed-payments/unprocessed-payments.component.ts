@@ -85,6 +85,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
   }
   goToAllocatePage() {
     this.paymentLibComponent.bspaymentdcn = this.recordId;
+    this.paymentLibComponent.paymentGroupReference = null;
     this.paymentLibComponent.unProcessedPaymentServiceId = this.serviceId
     this.paymentLibComponent.viewName = 'allocate-payments';
   }

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { IFee } from '../../interfaces/IFee';
+import {Router} from '@angular/router';
 import { AddRemissionRequest } from '../../interfaces/AddRemissionRequest';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import { PaymentLibComponent } from '../../payment-lib.component';
@@ -21,15 +22,18 @@ export class AddRemissionComponent implements OnInit {
   hasErrors = false;
   viewStatus = 'main';
   errorMessage = null;
+  option: string = null;
 
   remissionCodeHasError = false;
   amountHasError = false;
 
   constructor(private formBuilder: FormBuilder,
+    private router: Router,
     private paymentViewService: PaymentViewService,
     private paymentLibComponent: PaymentLibComponent) { }
 
   ngOnInit() {
+    this.option = this.paymentLibComponent.SELECTED_OPTION;
     this.remissionForm = this.formBuilder.group({
       remissionCode: new FormControl('', Validators.compose([
         Validators.required,
@@ -70,8 +74,15 @@ export class AddRemissionComponent implements OnInit {
     this.paymentViewService.postPaymentGroupWithRemissions(this.paymentGroupRef, this.fee.id, requestBody).subscribe(
       response => {
         if (response.success) {
-          this.paymentLibComponent.viewName = 'case-transactions';
-          this.paymentLibComponent.TAKEPAYMENT = true;
+          if (this.paymentLibComponent.bspaymentdcn) {
+            this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+            this.router.onSameUrlNavigation = 'reload';
+            this.router.navigateByUrl(`/payment-history/${this.ccdCaseNumber}?view=fee-summary&selectedOption=${this.option}&paymentGroupRef=${this.paymentGroupRef}&dcn=${this.paymentLibComponent.bspaymentdcn}`);
+          }else {
+            this.paymentLibComponent.viewName = 'case-transactions';
+            this.paymentLibComponent.TAKEPAYMENT = true;
+          }
+
         }
       },
       (error: any) => {

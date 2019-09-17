@@ -17,6 +17,8 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
   markPaymentUnsolicitedForm: FormGroup;
   viewStatus: string;
   reasonHasError: boolean = false;
+  reasonMinHasError: boolean = false;
+  reasonMaxHasError: boolean = false;
   responsibleOfficeHasError: boolean = false;
   responsiblePersonHasError: boolean = false;
   errorMessage: string;
@@ -47,7 +49,9 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
     this.markPaymentUnsolicitedForm = this.formBuilder.group({
       reason: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('^([a-zA-Z0-9\\s]*)$')
+        Validators.minLength(3),
+        Validators.maxLength(255),
+        Validators.pattern('^([a-zA-Z0-9\\s,\\.]*)$')
       ])),
       responsibleOffice: new FormControl('', Validators.compose([
         Validators.required,
@@ -88,6 +92,7 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
   }
  saveAndContinue() {
     this.resetForm();
+        const formerror = this.markPaymentUnsolicitedForm.controls.reason.errors;
     if (this.markPaymentUnsolicitedForm.dirty && this.markPaymentUnsolicitedForm.valid) {
       const controls = this.markPaymentUnsolicitedForm.controls;
       this.emailId = controls.emailId.value;
@@ -98,6 +103,16 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
     }else {
       if(this.markPaymentUnsolicitedForm.controls.reason.invalid ) {
         this.reasonHasError = true;
+        this.reasonMinHasError = false;
+        this.reasonMaxHasError = false;
+      }
+      if(formerror.minlength && formerror.minlength.actualLength < 3 ) {
+        this.reasonHasError = false;
+        this.reasonMinHasError = true;
+      }
+      if(formerror.maxlength && formerror.maxlength.actualLength > 255 ) {
+        this.reasonHasError = false;
+        this.reasonMaxHasError = true;
       }
       if(this.markPaymentUnsolicitedForm.controls.responsibleOffice.invalid) {
         this.responsibleOfficeHasError = true;
@@ -111,8 +126,9 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
     }
   }
   resetForm() {
-
     this.reasonHasError = false;
+    this.reasonMinHasError = false;
+    this.reasonMaxHasError = false;
     this.responsibleOfficeHasError = false;
     this.responsiblePersonHasError = false;
     this.emailIdHasError = false;
