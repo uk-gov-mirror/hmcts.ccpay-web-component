@@ -21,6 +21,7 @@ import { AddRemissionComponent } from './components/add-remission/add-remission.
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CcdHyphensPipe } from './pipes/ccd-hyphens.pipe';
 import { SanitizeHtmlPipe } from './pipes/sanitize-html.pipe';
+import { ReportsComponent } from './components/reports/reports.component';
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import { SanitizeHtmlPipe } from './pipes/sanitize-html.pipe';
     FeeSummaryComponent,
     AddRemissionComponent,
     CcdHyphensPipe,
-    SanitizeHtmlPipe
+    SanitizeHtmlPipe,
+    ReportsComponent
   ],
   exports: [ PaymentLibComponent ],
   providers: [ { provide: LoggerService, useClass: ConsoleLoggerService }]

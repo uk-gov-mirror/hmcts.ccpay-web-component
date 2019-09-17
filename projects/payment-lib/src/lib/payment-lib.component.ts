@@ -14,7 +14,8 @@ import { IBSPayments } from './interfaces/IBSPayments';
     <app-allocate-payments *ngIf="viewName === 'allocate-payments'"></app-allocate-payments>
     <ccpay-fee-summary *ngIf="viewName === 'fee-summary'"
                        [ccdCaseNumber]="CCD_CASE_NUMBER" [paymentGroupRef]="paymentGroupReference"></ccpay-fee-summary>
-  `
+    <ccpay-reports *ngIf="viewName === 'reports'"></ccpay-reports>
+    `
 })
 
 export class PaymentLibComponent implements OnInit {
@@ -39,6 +40,7 @@ export class PaymentLibComponent implements OnInit {
               private paymentLibService: PaymentLibService) { }
 
   ngOnInit() {
+    debugger;
     this.paymentLibService.setApiRootUrl(this.API_ROOT);
     this.paymentLibService.setBulkScanApiRootUrl(this.BULKSCAN_API_ROOT);
     if (this.PAYMENT_GROUP_REF) {
@@ -50,8 +52,10 @@ export class PaymentLibComponent implements OnInit {
 
     if (this.VIEW === 'fee-summary') {
       this.viewName = 'fee-summary';
-    } else {
+    } else  if (this.VIEW !== 'reports') {
       this.viewName = 'case-transactions';
+    } else {
+      this.viewName = this.VIEW;
     }
   }
 }
