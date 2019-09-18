@@ -12,6 +12,7 @@ import {Router} from '@angular/router';
 export class UnprocessedPaymentsComponent implements OnInit {
 
   @Input('PAYMENT_RECORDS_EXISTS') PAYMENT_RECORDS_EXISTS: boolean;
+  @Input('IS_BUTTON_ENABLE') IS_BUTTON_ENABLE: boolean;
   @Output() selectedUnprocessedFeeEvent: EventEmitter<string> = new EventEmitter();
   viewStatus = 'main';
   unassignedRecordList: IBSPayments;
