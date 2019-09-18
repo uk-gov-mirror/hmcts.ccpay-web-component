@@ -10,15 +10,20 @@ export class ReportsComponent implements OnInit {
   reportsForm: FormGroup;
   startDate: string;
   endDate: string;
+  maxDate: Date;
   constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.fromValidation();
+    this.maxDate = new Date();   
   }
 
   fromValidation() {
     this.reportsForm = this.formBuilder.group({
-      selectedreport: new FormControl('',) });
+      selectedreport: new FormControl('') ,
+      startDate: new FormControl(''),
+      endDate: new FormControl('') });
+      
 }
 
 onSelectionChange(value: string) {
@@ -26,7 +31,7 @@ onSelectionChange(value: string) {
 }
 
 
-  DownloadReport(){
+  downloadReport(){
     alert('Ready for Download!!');
   }
 }
