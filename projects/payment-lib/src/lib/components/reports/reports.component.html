@@ -68,6 +68,16 @@
               <span class="form-hint">Requests where balances are marked as shortfall/surplus further case management.
                   E.g: Refund approval, Customer contact</span>
            </div>
+
+           <div class="datefrom">
+            <label class="govuk-label govuk-radios__label govuk-label--m" for="date-from">Date from</label>
+            <input class="form-control" id="date-from" name="date-from" type="date" [(ngModel)]="startDate" />
+          </div>
+    
+          <div class="dateto">
+            <label class="govuk-label govuk-radios__label govuk-label--m" for="date-to">Date to</label>
+            <input class="form-control" id="date-to" name="search" type="date" [(ngModel)]="endDate" min="reportsForm.value.startDate"/>
+           </div>
           </div>
       </fieldset>
       <button class="button" type="submit" (click)="DownloadReport()">Download report</button>

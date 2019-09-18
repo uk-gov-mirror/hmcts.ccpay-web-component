@@ -8,6 +8,8 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 })
 export class ReportsComponent implements OnInit {
   reportsForm: FormGroup;
+  startDate: string;
+  endDate: string;
   constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit() {
