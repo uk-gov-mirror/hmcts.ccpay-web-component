@@ -1,5 +1,5 @@
-<form >
-     <div  [formGroup]="reportsForm" class="govuk-form-group">
+<form [formGroup]="reportsForm">
+     <div  class="govuk-form-group">
         <legend class='govuk-fieldset__legend--xl'>
             <h1 class="govuk-fieldset__heading">
               Choose the report type and date range
@@ -7,7 +7,7 @@
           </legend>
       <fieldset class="govuk-fieldset">
         <div class="govuk-radios govuk-radios--conditional" data-module="govuk-radios">
-          <div class="govuk-radios__item">
+          <div  class="govuk-radios__item">
               <input 
               id="DataLoss"
               class="govuk-radios__input"
@@ -68,8 +68,9 @@
               <span class="form-hint">Requests where balances are marked as shortfall/surplus further case management.
                   E.g: Refund approval, Customer contact</span>
            </div>
-
-           <div class="datefrom">
+       
+          </div>
+          <div class="datefrom">
             <label class="govuk-label govuk-radios__label govuk-label--m" for="date-from">Date from</label>
             <input class="form-control" id="date-from" name="date-from" type="date" [(ngModel)]="startDate" />
           </div>
@@ -78,7 +79,6 @@
             <label class="govuk-label govuk-radios__label govuk-label--m" for="date-to">Date to</label>
             <input class="form-control" id="date-to" name="search" type="date" [(ngModel)]="endDate" min="reportsForm.value.startDate"/>
            </div>
-          </div>
       </fieldset>
       <button class="button" type="submit" (click)="DownloadReport()">Download report</button>
     </div>

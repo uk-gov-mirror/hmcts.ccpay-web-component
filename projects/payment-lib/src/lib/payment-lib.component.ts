@@ -40,7 +40,6 @@ export class PaymentLibComponent implements OnInit {
               private paymentLibService: PaymentLibService) { }
 
   ngOnInit() {
-    debugger;
     this.paymentLibService.setApiRootUrl(this.API_ROOT);
     this.paymentLibService.setBulkScanApiRootUrl(this.BULKSCAN_API_ROOT);
     if (this.PAYMENT_GROUP_REF) {
