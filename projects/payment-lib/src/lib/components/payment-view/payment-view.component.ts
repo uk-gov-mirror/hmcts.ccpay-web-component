@@ -33,9 +33,8 @@ export class PaymentViewComponent implements OnInit {
         this.paymentGroup = paymentGroup;
         this.paymentGroup.payments = this.paymentGroup.payments.filter
         (paymentGroupObj => paymentGroupObj['reference'].includes(this.paymentLibComponent.paymentReference));
-        const paymentAllocation = this.paymentGroup.payments[0].payment_allocation,
-        paymentAllocationStatus = paymentAllocation.length > 0 ? paymentAllocation[0].payment_allocation_status : null;
-        this.isStatusAllocated = paymentAllocationStatus && paymentAllocationStatus.name === 'Allocated' || paymentAllocationStatus;
+        const paymentAllocation = this.paymentGroup.payments[0].payment_allocation;
+        this.isStatusAllocated = paymentAllocation.length > 0 && paymentAllocation[0].payment_allocation_status.name === 'Allocated' || paymentAllocation.length === 0;
       },  
       (error: any) => this.errorMessage = error
     );
