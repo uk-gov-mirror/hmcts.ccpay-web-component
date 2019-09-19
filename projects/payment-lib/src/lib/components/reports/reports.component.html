@@ -9,6 +9,7 @@
         <div class="govuk-radios govuk-radios--conditional" data-module="govuk-radios">
           <div  class="govuk-radios__item">
               <input 
+              required
               id="DataLoss"
               class="govuk-radios__input"
               formControlName="selectedreport"
@@ -70,7 +71,7 @@
      <div  class="govuk-form-group">
       <div class="datefrom">
       <label class="govuk-label govuk-radios__label govuk-label--m" for="date-from">Date from</label>
-      <input class="form-control" id="date-from" name="date-from" type="date"  formControlName="startDate" required/>
+      <input [max]="getToday()" class="form-control" id="date-from" name="date-from" type="date"  formControlName="startDate" required/>
       </div>
 
       <div class="dateto">
