@@ -10,13 +10,17 @@ export class ReportsComponent implements OnInit {
   reportsForm: FormGroup;
   startDate: string;
   endDate: string;
-  maxDate: Date;
+ // maxDate: string;
   constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.fromValidation();
-    this.maxDate = new Date();   
+    //this.maxDate = new Date().getTime();   
   }
+
+  getToday(): string {
+    return new Date().toISOString().split('T')[0];
+ }
 
   fromValidation() {
     this.reportsForm = this.formBuilder.group({

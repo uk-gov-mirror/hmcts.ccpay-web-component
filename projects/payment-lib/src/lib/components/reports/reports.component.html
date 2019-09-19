@@ -75,7 +75,7 @@
 
       <div class="dateto">
       <label class="govuk-label govuk-radios__label govuk-label--m" for="date-to">Date to</label>
-      <input  [max]="maxDate" class="form-control" id="date-to" name="search" type="date" formControlName="endDate" required/>
+      <input  [max]="getToday()" class="form-control" id="date-to" name="search" type="date" formControlName="endDate" required/>
       </div>
      </div>
     <div class="btnsubmit">
