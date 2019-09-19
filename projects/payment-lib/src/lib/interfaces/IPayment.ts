@@ -1,5 +1,6 @@
 import {IFee} from './IFee';
 import {IStatusHistory} from './IStatusHistory';
+import {IPaymentStatus} from './IPaymentStatus';
 
 export interface IPayment {
   amount: number;
@@ -17,6 +18,7 @@ export interface IPayment {
   method: string;
   external_provider: string;
   status: string;
+  payment_allocation: IPaymentStatus[];
   external_reference: string;
   site_id: string;
   service_name: string;

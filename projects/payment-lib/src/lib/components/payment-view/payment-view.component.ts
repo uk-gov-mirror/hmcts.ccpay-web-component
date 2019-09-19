@@ -15,6 +15,7 @@ export class PaymentViewComponent implements OnInit {
   ccdCaseNumber: string;
   selectedOption: string;
   dcnNumber: string;
+  isStatusAllocated: boolean;
 
   constructor(private paymentViewService: PaymentViewService,
               private paymentLibComponent: PaymentLibComponent) {
@@ -32,6 +33,9 @@ export class PaymentViewComponent implements OnInit {
         this.paymentGroup = paymentGroup;
         this.paymentGroup.payments = this.paymentGroup.payments.filter
         (paymentGroupObj => paymentGroupObj['reference'].includes(this.paymentLibComponent.paymentReference));
+        const paymentAllocation = this.paymentGroup.payments[0].payment_allocation,
+        paymentAllocationStatus = paymentAllocation.length > 0 ? paymentAllocation[0].payment_allocation_status : null;
+        this.isStatusAllocated = paymentAllocationStatus && paymentAllocationStatus.name === 'Allocated' || paymentAllocationStatus;
       },  
       (error: any) => this.errorMessage = error
     );
