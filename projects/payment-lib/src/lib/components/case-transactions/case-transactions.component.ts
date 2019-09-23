@@ -31,9 +31,7 @@ export class CaseTransactionsComponent implements OnInit {
   isUnprocessedRecordSelected: boolean = false;
   exceptionRecordReference: string;
   isFeeRecordsExist: boolean = false;
-  isGrpOutstandingAmtPositive: boolean = false;
-
-
+  isGrpOutstandingAmtPositive: boolean;
 
     constructor(private router: Router,
     private bulkScaningPaymentService: BulkScaningPaymentService,
@@ -41,6 +39,7 @@ export class CaseTransactionsComponent implements OnInit {
     private paymentLibComponent: PaymentLibComponent) { }
 
   ngOnInit() {
+    this.isGrpOutstandingAmtPositive = false;
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
     this.takePayment = this.paymentLibComponent.TAKEPAYMENT;
     this.caseTransactionsService.getPaymentGroups(this.ccdCaseNumber).subscribe(
@@ -136,7 +135,7 @@ export class CaseTransactionsComponent implements OnInit {
           } else {
             totalRefundAmount = (totalRefundAmount + grpOutstandingAmount);
           }
-        }else {
+        } else {
           this.isGrpOutstandingAmtPositive = true;
         }
     });
