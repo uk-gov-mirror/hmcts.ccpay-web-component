@@ -39,14 +39,12 @@ export class CaseTransactionsComponent implements OnInit {
     private paymentLibComponent: PaymentLibComponent) { }
 
   ngOnInit() {
-    this.isGrpOutstandingAmtPositive = false;
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
     this.takePayment = this.paymentLibComponent.TAKEPAYMENT;
     this.caseTransactionsService.getPaymentGroups(this.ccdCaseNumber).subscribe(
       paymentGroups => {
         this.paymentGroups = paymentGroups['payment_groups'];
         this.calculateAmounts();
-        this.calculateRefundAmount();
       },
       (error: any) => {
         this.errorMessage = <any>error;
@@ -56,9 +54,6 @@ export class CaseTransactionsComponent implements OnInit {
 
     this.dcnNumber = this.paymentLibComponent.DCN_NUMBER;
     this.selectedOption = this.paymentLibComponent.SELECTED_OPTION.toLocaleLowerCase();
-  }
-  ngAfterViewInit() {
-    this.calculateRefundAmount();
   }
 
   setDefaults(): void {
