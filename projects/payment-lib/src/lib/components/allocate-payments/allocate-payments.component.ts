@@ -3,11 +3,10 @@ import { PaymentLibComponent } from '../../payment-lib.component';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import {BulkScaningPaymentService} from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
 import {CaseTransactionsService} from '../../services/case-transactions/case-transactions.service';
-import {IPayment} from '../../interfaces/IPayment';
 import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
-import { IBSPayments } from '../../interfaces/IBSPayments';
-import { AllocatePaymentRequest } from '../../interfaces/AllocatePaymentRequest';
-import { IAllocationPaymentsRequest } from '../../interfaces/IAllocationPaymentsRequest';
+import {IBSPayments} from '../../interfaces/IBSPayments';
+import {AllocatePaymentRequest} from '../../interfaces/AllocatePaymentRequest';
+import {IAllocationPaymentsRequest} from '../../interfaces/IAllocationPaymentsRequest';
 
 @Component({
   selector: 'app-allocate-payments',

@@ -6,7 +6,7 @@
     <table class="govuk-table">
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
-            <td class="govuk-table__header" scope="col">Payment asset number(DCN)</td>
+            <td class="govuk-table__header" scope="col">Payment asset number (DCN)</td>
             <td class="govuk-table__header" scope="col">Banked date</td>
             <td class="govuk-table__header" scope="col">Amount</td>
             <td class="govuk-table__header" scope="col">Method</td>
@@ -26,7 +26,7 @@
   <form [formGroup]="markPaymentUnsolicitedForm" novalidate>
     <div class="govuk-form-group">
       <label class="govuk-label custom-govuk-label custom-govuk-label" for="reason">
-        Reason for payment being marked as transferred.     
+        Reason for payment being marked as transferred   
       </label>
         <textarea class="form-control form-control-3-4" [ngClass]="{'inline-error-class': reasonHasError || reasonMinHasError || reasonMaxHasError}" name="reason" id="reason" rows="5" formControlName="reason">
         </textarea>
@@ -68,7 +68,7 @@
             <thead class="govuk-table__head">
             <tr class="govuk-table__row">
               <td class="govuk-table__header" scope="col">Reason</td>
-              <td class="govuk-table__header" scope="col">Receiving site Id</td>
+              <td class="govuk-table__header" scope="col">Receiving site ID</td>
             </tr>
             </thead>
             <tbody class="govuk-table__body">
