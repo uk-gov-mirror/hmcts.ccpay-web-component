@@ -26,3 +26,9 @@
  font-size: 22px;
  padding-bottom: 10px;
 }
+.lowercase { text-transform: lowercase; }
+.capitalize { text-transform: capitalize; }
+
+.channel::first-letter {
+    text-transform: uppercase;
+  }

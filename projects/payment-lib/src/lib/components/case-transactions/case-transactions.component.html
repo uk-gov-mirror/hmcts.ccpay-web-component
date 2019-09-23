@@ -163,8 +163,8 @@
                           <a href="javascript:void(0)" (click)="goToPaymentViewComponent(paymentGroup.payment_group_reference, payment.reference, payment.method)">{{ payment.reference }}</a>
                         </td>
                         <td class="govuk-table__cell">{{ payment.date_created | date:'dd MMM yyyy HH:mm:ss' }}</td>
-                        <td class="govuk-table__cell">{{ payment.channel }}</td>
-                        <td class="govuk-table__cell">{{ payment.method }}</td>
+                        <td class="channel govuk-table__cell">{{ payment.channel | lowercase }}</td>
+                        <td class="capitalize govuk-table__cell">{{ payment.method | lowercase }}</td>
                         <td class="govuk-table__cell">{{ payment.amount }}</td>
                         <td class="govuk-table__cell"> - </td>
                         <!-- <td class="govuk-table__cell">{{ payment.payment_allocation?.length > 0 ? payment.payment_allocation[0].payment_allocation_status.name : '-' }}</td> -->
