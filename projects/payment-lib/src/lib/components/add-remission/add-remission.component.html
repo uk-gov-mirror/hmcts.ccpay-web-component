@@ -25,16 +25,16 @@
               <label class="govuk-label govuk-label--s" [ngClass]="{'inline-error-message': amountHasError}" for="amount">
                 How much does the applicant need to pay?
               </label>
-              
+
               <div id="amount-currency" class="govuk-visually-hidden">in pounds</div>
                 <div class="hmcts-currency-input">
                 <div class="hmcts-currency-input__symbol" aria-hidden="true">£</div>
                 <input class="govuk-input govuk-input--width-10" id="amount" aria-label="amount"  name="amount" type="text" aria-describedby="amount-currency" formControlName="amount">
               </div>
-            </div> 
+            </div>
           </form>
           <button class="button" type="submit" (click)="addRemission()">
-              Add remission
+              Submit
             </button>
         </div>
       </form>
@@ -72,8 +72,8 @@
       <button type="submit" class="button" (click)="confirmRemission()">
         Confirm
       </button>
-      
+
     </ng-container>
-  
+
 </div>
 

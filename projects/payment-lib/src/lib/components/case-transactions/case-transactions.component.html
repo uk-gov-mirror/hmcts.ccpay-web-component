@@ -14,8 +14,7 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds govuk-!-padding-bottom-6">
         <h3 class="heading-medium">CCD reference:</h3>
-        <span *ngIf="selectedOption !== 'dcn'"> {{ ccdCaseNumber | ccdHyphens }}</span>
-        <span *ngIf="selectedOption === 'dcn'"> {{ dcnNumber }}</span>
+        <span> {{ ccdCaseNumber | ccdHyphens }}</span>
       </div>
 
       <div class="govuk-grid-column-full govuk-!-padding-bottom-3">
@@ -29,7 +28,7 @@
             </tr>
           </thead>
           <tbody class="govuk-table__body">
-            <tr class="govuk-table__row">
+            <tr class="totalpayments govuk-table__row">
               <td class="govuk-table__cell">{{ totalPayments | currency :'GBP':'symbol':'1.2-2' }}</td>
               <td class="govuk-table__cell">{{ totalRemissions | currency :'GBP':'symbol':'1.2-2' }}</td>
               <td class="govuk-table__cell">{{ (totalFees - totalRemissions) - totalPayments | currency :'GBP':'symbol':'1.2-2'}}</td>
@@ -38,7 +37,7 @@
         </table>
       </div>
     </div>
-    
+
 
     <!-- No fees start -->
     <div *ngIf="paymentGroups?.length === 0">
@@ -93,11 +92,13 @@
       </div>
     </div>
       <div class="govuk-grid-row">
+
+        <!--New Code start-->
+
         <div class="govuk-grid-column-full">
           <span class="heading-small">Exisiting fees</span>
         </div>
-
-        <div class="govuk-grid-column-two-thirds" align="left">
+        <div class=feeclass>
         <table class="govuk-table">
           <thead class="govuk-table__head">
           <tr class="govuk-table__row">
@@ -106,40 +107,30 @@
             <td class="govuk-table__header" scope="col">Volume</td>
             <td class="govuk-table__header" scope="col">Fee amount</td>
             <td class="govuk-table__header" scope="col">Calculated amount</td>
+            <td class="groupamount govuk-table__header" scope="col">Group amount outstanding</td>
           </tr>
           </thead>
-          <tbody class="govuk-table__body">
-          <tr class="govuk-table__row" *ngFor="let fee of paymentGroup.fees">
-            <td class="govuk-table__cell">{{ fee.code }}</td>
-            <td class="govuk-table__cell">{{ fee.description }}</td>
-            <td class="govuk-table__cell">{{ fee.volume }}</td>
-            <td class="govuk-table__cell">{{ fee.calculated_amount/fee.volume }}</td>
-            <td class="govuk-table__cell">{{ fee.calculated_amount }}</td>
-
+          <tbody class="govuk-table__body" >
+          <tr class="govuk-table__row"  *ngFor="let fee of paymentGroup.fees;  let i = index;">
+            <td class="govuk-table__cell govuk-table__cell--col1">{{fee.code}}</td>
+            <td class="govuk-table__cell govuk-table__cell--col2"> {{fee.description}} </td>
+            <td class="govuk-table__cell govuk-table__cell--col3"> {{fee.volume}} </td>
+            <td class="govuk-table__cell govuk-table__cell--col4"> {{ fee.calculated_amount/fee.volume | currency:'GBP':'symbol-narrow':'1.2-2' }} </td>
+            <td class="govuk-table__cell govuk-table__cell--col5"> {{fee.calculated_amount | currency:'GBP':'symbol-narrow':'1.2-2' }} </td>
+            <td class="govuk-table__cell govuk-table__cell--col6 govuk-table__custom--col6" [attr.rowspan]="paymentGroup.fees.length" *ngIf="i==0">
+              {{getGroupOutstandingAmount(paymentGroup) | currency:'GBP':'symbol-narrow':'1.2-2' }} </td>
           </tr>
+          </tbody>
+          <tbody class="govuk-table__body" *ngIf="paymentGroup.fees.length==0">
+          <td class="govuk-table__cell" colspan="6">No payments recorded</td>
           </tbody>
         </table>
       </div>
-
-        <div class="govuk-grid-column-one-third" align="right">
-          <table class="govuk-table">
-          <thead class="govuk-table__head">
-          <tr class="govuk-table__row">
-            <td class="govuk-table__header" scope="col">Group amount outstanding</td>
-          </tr>
-          </thead>
-          <tbody class="govuk-table__body">
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell">{{ getGroupOutstandingAmount(paymentGroup) | currency :'GBP':'symbol':'1.2-2'  }}</td>
-          </tr>
-          </tbody>
-        </table>
-        </div>
       </div>
-      <div class="govuk-inset-text govuk-inset-text__no-border" *ngIf="paymentGroup.payments || paymentGroup.remissions">
+    <div class="govuk-inset-text govuk-inset-text__no-border" *ngIf="paymentGroup.payments || paymentGroup.remissions">
       <details>
         <summary class="govuk-hidetext">
-        <span class="summary">Allocated paymnents and remissions</span>
+        <span class="summary">Allocated payments and remissions</span>
         </summary>
 
           <div class="panel panel-border-narrow">
@@ -167,7 +158,6 @@
                         <td class="capitalize govuk-table__cell">{{ payment.method | lowercase }}</td>
                         <td class="govuk-table__cell">{{ payment.amount }}</td>
                         <td class="govuk-table__cell"> - </td>
-                        <!-- <td class="govuk-table__cell">{{ payment.payment_allocation?.length > 0 ? payment.payment_allocation[0].payment_allocation_status.name : '-' }}</td> -->
                         <td class="govuk-table__cell">{{ payment.status }}</td>
                       </tr>
                   </tbody>
@@ -207,8 +197,8 @@
 
         <div *ngIf="takePayment">
             <button type="submit" (click)="loadFeeSummaryPage(paymentGroup)"
-                                  [disabled]="(getGroupOutstandingAmount(paymentGroup) === 0 || isUnprocessedRecordSelected)"
-                                  [ngClass]='(getGroupOutstandingAmount(paymentGroup) === 0 || isUnprocessedRecordSelected) ? "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"'>
+                                  [disabled]="(getGroupOutstandingAmount(paymentGroup) < 0 || isUnprocessedRecordSelected)"
+                                  [ngClass]='(getGroupOutstandingAmount(paymentGroup) < 0 || isUnprocessedRecordSelected) ? "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"'>
                                   Add telephone payment
             </button>
 
@@ -217,9 +207,8 @@
             </button>
         </div>
       </div>
-
     </div>
-    <ccpay-app-unprocessed-payments [PAYMENT_RECORDS_EXISTS]="isPaymentRecordsExist" (selectedUnprocessedFeeEvent) = "selectedUnprocessedFeeEvent($event)" ></ccpay-app-unprocessed-payments>
+    <ccpay-app-unprocessed-payments [IS_BUTTON_ENABLE]="takePayment" [PAYMENT_RECORDS_EXISTS]="isPaymentRecordsExist" (selectedUnprocessedFeeEvent) = "selectedUnprocessedFeeEvent($event)" ></ccpay-app-unprocessed-payments>
     <div class="govuk-grid-row govuk-grid__surplus-payments">
     <div class="govuk-grid-column-full govuk-grid__surplus-payments-col1">
       <span class="heading-small">Surplus payments</span>

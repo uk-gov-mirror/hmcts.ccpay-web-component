@@ -50,4 +50,9 @@ export class PaymentViewComponent implements OnInit {
     this.paymentLibComponent.viewName = 'payment-list';
   }
 
+  goToCaseTransationPage(event: any) {
+    event.preventDefault()
+    this.paymentLibComponent.viewName = 'case-transactions';
+  }
+
 }

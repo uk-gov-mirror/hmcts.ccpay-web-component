@@ -23,7 +23,7 @@ export class AllocatePaymentsComponent implements OnInit {
   };
   siteID: string = null;
   errorMessage: string;
-  paymentGroups: IPayment[] = [];
+  paymentGroups: IPaymentGroup[] = [];
   selectedPayment: IPaymentGroup;
   remainingAmount: number;
   isRemainingAmountGtZero: boolean;
@@ -43,18 +43,23 @@ export class AllocatePaymentsComponent implements OnInit {
     this.bspaymentdcn = this.paymentLibComponent.bspaymentdcn;
 
     this.getUnassignedPayment();
+    this.getPaymentGroupDetails(this.paymentLibComponent.paymentGroupReference)
+  }
+  getGroupOutstandingAmount(paymentGroup: IPaymentGroup): number {
+    return this.bulkScaningPaymentService.calculateOutStandingAmount(paymentGroup);
+  }
+
+  getPaymentGroupDetails(paymentGroupRef: string){
 
     this.caseTransactionsService.getPaymentGroups(this.ccdCaseNumber).subscribe(
       paymentGroups => {
       this.paymentGroups = paymentGroups['payment_groups'].filter(paymentGroup => {
-          return this.getGroupOutstandingAmount(<IPaymentGroup>paymentGroup) > 0;
+        
+          return paymentGroupRef ? this.getGroupOutstandingAmount(<IPaymentGroup>paymentGroup) > 0 && paymentGroup.payment_group_reference === paymentGroupRef : this.getGroupOutstandingAmount(<IPaymentGroup>paymentGroup) > 0;
       });
       },
       (error: any) => this.errorMessage = error
     );
-  }
-  getGroupOutstandingAmount(paymentGroup: IPaymentGroup): number {
-    return this.bulkScaningPaymentService.calculateOutStandingAmount(paymentGroup);
   }
 
   gotoCasetransationPage() {

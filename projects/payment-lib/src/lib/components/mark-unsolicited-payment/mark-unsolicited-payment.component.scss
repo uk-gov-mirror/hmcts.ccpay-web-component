@@ -18,13 +18,11 @@
 .heading-small{
   margin-bottom: 0px;
 }
-// .govuk-warning-text__icon{
-//   top:0.8em;
-// }
 
 .lowercase { text-transform: lowercase; }
 .capitalize { text-transform: capitalize; }
 
+.custom-govuk-label,
 .govuk-warning-text__text {
-  padding-bottom:20px;
+  font-size: 19px;
 }

@@ -117,6 +117,7 @@ export class FeeSummaryComponent implements OnInit {
     this.paymentViewService.deleteFeeFromPaymentGroup(fee).subscribe(
       (success: any) => {
           if (this.paymentGroup.fees && this.paymentGroup.fees.length > 1){
+          this.totalAfterRemission = 0;
           this.getPaymentGroup();
           this.viewStatus = 'main';
           return;
@@ -163,6 +164,7 @@ export class FeeSummaryComponent implements OnInit {
     );
   }
   goToAllocatePage() {
+    this.paymentLibComponent.paymentGroupReference = this.paymentGroupRef;
     this.paymentLibComponent.viewName = 'allocate-payments';
   }
 }
