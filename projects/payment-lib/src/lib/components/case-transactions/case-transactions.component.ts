@@ -131,14 +131,16 @@ export class CaseTransactionsComponent implements OnInit {
           } else {
             totalRefundAmount = (totalRefundAmount + grpOutstandingAmount);
           }
-        } else {
-          this.isGrpOutstandingAmtPositive = true;
         }
     });
     return totalRefundAmount * -1;
   }
   getGroupOutstandingAmount(paymentGroup: IPaymentGroup): number {
-    return this.bulkScaningPaymentService.calculateOutStandingAmount(paymentGroup);;
+    const amount = this.bulkScaningPaymentService.calculateOutStandingAmount(paymentGroup);
+    if(amount > 0){
+      this.isGrpOutstandingAmtPositive = true;
+    }
+    return amount;
   }
 
   redirectToFeeSearchPage(event: any) {
