@@ -39,6 +39,7 @@ export class CaseTransactionsComponent implements OnInit {
     private paymentLibComponent: PaymentLibComponent) { }
 
   ngOnInit() {
+    this.isGrpOutstandingAmtPositive = false;
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
     this.takePayment = this.paymentLibComponent.TAKEPAYMENT;
     this.caseTransactionsService.getPaymentGroups(this.ccdCaseNumber).subscribe(
