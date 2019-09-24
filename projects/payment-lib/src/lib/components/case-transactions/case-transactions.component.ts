@@ -7,7 +7,6 @@ import {IFee} from '../../interfaces/IFee';
 import {IPayment} from '../../interfaces/IPayment';
 import {IRemission} from '../../interfaces/IRemission';
 import {Router} from '@angular/router';
-import {PaymentListComponent} from '../payment-list/payment-list.component';
 
 @Component({
   selector: 'ccpay-case-transactions',
@@ -31,7 +30,8 @@ export class CaseTransactionsComponent implements OnInit {
   isUnprocessedRecordSelected: boolean = false;
   exceptionRecordReference: string;
   isFeeRecordsExist: boolean = false;
-  isGrpOutstandingAmtPositive: boolean;
+  isGrpOutstandingAmtPositive: boolean = false;
+  totalRefundAmount:Number;
 
     constructor(private router: Router,
     private bulkScaningPaymentService: BulkScaningPaymentService,
@@ -46,6 +46,7 @@ export class CaseTransactionsComponent implements OnInit {
       paymentGroups => {
         this.paymentGroups = paymentGroups['payment_groups'];
         this.calculateAmounts();
+        this.totalRefundAmount = this.calculateRefundAmount();
       },
       (error: any) => {
         this.errorMessage = <any>error;
@@ -70,7 +71,6 @@ export class CaseTransactionsComponent implements OnInit {
 
     this.paymentGroups.forEach(paymentGroup => {
       if (paymentGroup.fees) {
-        this.isFeeRecordsExist = true;
         paymentGroup.fees.forEach(fee => {
           feesTotal = feesTotal + fee.calculated_amount;
           this.fees.push(fee);
@@ -100,12 +100,13 @@ export class CaseTransactionsComponent implements OnInit {
   }
   calculateRefundAmount() {
     let totalRefundAmount = 0;
-    this.paymentGroups.forEach(function (paymentGroup) {
+    this.paymentGroups.forEach(paymentGroup => {
       let grpOutstandingAmount = 0.00,
         feesTotal = 0.00,
         paymentsTotal = 0.00,
         remissionsTotal = 0.00;
       if (paymentGroup.fees) {
+        this.isFeeRecordsExist = true;
         paymentGroup.fees.forEach(fee => {
           feesTotal = feesTotal + fee.calculated_amount;
         });
@@ -131,16 +132,14 @@ export class CaseTransactionsComponent implements OnInit {
           } else {
             totalRefundAmount = (totalRefundAmount + grpOutstandingAmount);
           }
+        } else {
+          this.isGrpOutstandingAmtPositive = true;
         }
     });
     return totalRefundAmount * -1;
   }
   getGroupOutstandingAmount(paymentGroup: IPaymentGroup): number {
-    const amount = this.bulkScaningPaymentService.calculateOutStandingAmount(paymentGroup);
-    if(amount > 0){
-      this.isGrpOutstandingAmtPositive = true;
-    }
-    return amount;
+    return this.bulkScaningPaymentService.calculateOutStandingAmount(paymentGroup);;
   }
 
   redirectToFeeSearchPage(event: any) {
