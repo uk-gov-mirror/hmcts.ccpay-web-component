@@ -15,11 +15,11 @@
               formControlName="selectedreport"
               name="selectedreport"
               type="radio"
-              value="DataLoss" 
+              value="DATA_LOSS" 
               (change)= "onSelectionChange('DataLoss')"
                data-aria-controls="DataLoss"/>
-              <label class="govuk-label govuk-radios__label govuk-label--m" for="DataLoss">Data Loss</label>
-              <span class="form-hint">Missing Transactions where data has been received from only either of Exela or Bulk scan</span>
+              <label class="govuk-label govuk-radios__label govuk-label--m" for="DataLoss">Data loss</label>
+              <span class="form-hint">Missing transactions where data has been received from only either of Exela or Bulk scan</span>
           </div>
 
          <div class="govuk-radios__item">
@@ -29,10 +29,10 @@
               formControlName="selectedreport"
               name="selectedreport"
               type="radio"
-              value="UnprocessedTransactions" 
+              value="UNPROCESSED" 
               (change)= "onSelectionChange('UnprocessedTransactions')"
               data-aria-controls="UnprocessedTransactions"/>
-              <label class="govuk-label govuk-radios__label govuk-label--m" for="UnprocessedTransactions">Unprocessed Transactions</label>
+              <label class="govuk-label govuk-radios__label govuk-label--m" for="UnprocessedTransactions">Unprocessed transactions</label>
               <span class="form-hint">Transaction records that are still unprocessed by staff.</span>
          </div>
 
@@ -46,7 +46,7 @@
             value="ProcessedUnallocated" 
             (change)= "onSelectionChange('ProcessedUnallocated')"
             data-aria-controls="ProcessedUnallocated"/>
-            <label class="govuk-label govuk-radios__label govuk-label--m" for="ProcessedUnallocated">Processed Unallocated</label>
+            <label class="govuk-label govuk-radios__label govuk-label--m" for="ProcessedUnallocated">Processed unallocated</label>
             <span class="form-hint">Payments that are marked as ‘Unidentified’ or ‘Transferred’ (Unsolicited requests)</span>
          </div>
 
@@ -60,7 +60,7 @@
             value="ShortfallsandSurplus" 
             (change)= "onSelectionChange('ShortfallsandSurplus')"
             data-aria-controls="ShortfallsandSurplus"/>
-            <label class="govuk-label govuk-radios__label govuk-label--m" for="ShortfallsandSurplus">Short falls and Surplus</label>
+            <label class="govuk-label govuk-radios__label govuk-label--m" for="ShortfallsandSurplus">Short falls and surplus</label>
             <span class="form-hint">Requests where balances are marked as shortfall/surplus further case management.
                E.g: Refund approval, Customer contact</span>
          </div>
@@ -71,12 +71,12 @@
      <div  class="govuk-form-group">
       <div class="datefrom">
       <label class="govuk-label govuk-radios__label govuk-label--m" for="date-from">Date from</label>
-      <input [max]="getToday()" class="form-control" id="date-from" name="date-from" type="date"  formControlName="startDate" required/>
+      <input [max]="getToday()"  class="form-control" id="date-from" name="date-from" type="date"  formControlName="startDate" required/>
       </div>
 
       <div class="dateto">
       <label class="govuk-label govuk-radios__label govuk-label--m" for="date-to">Date to</label>
-      <input  [max]="getToday()" class="form-control" id="date-to" name="search" type="date" formControlName="endDate" required/>
+      <input [min]="getSelectedFromDate()" [max]="getToday()" class="form-control" id="date-to" name="search" type="date" formControlName="endDate" required/>
       </div>
      </div>
     <div class="btnsubmit">
