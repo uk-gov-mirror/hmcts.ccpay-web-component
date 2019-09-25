@@ -197,27 +197,26 @@
 
         <div *ngIf="takePayment">
             <button type="submit" (click)="loadFeeSummaryPage(paymentGroup)"
-                                  [disabled]="(getGroupOutstandingAmount(paymentGroup) < 0 || isUnprocessedRecordSelected)"
-                                  [ngClass]='(getGroupOutstandingAmount(paymentGroup) < 0 || isUnprocessedRecordSelected) ? "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"'>
+                                  [disabled]="(getGroupOutstandingAmount(paymentGroup) <= 0 || isUnprocessedRecordSelected)"
+                                  [ngClass]='(getGroupOutstandingAmount(paymentGroup) <= 0 || isUnprocessedRecordSelected) ? "govuk-button govuk-button--secondary govuk-button--disabled govuk-!-margin-right-1" : "govuk-button govuk-button--secondary govuk-!-margin-right-1"'>
                                   Add telephone payment
-            </button>
-
-            <button type="submit" disabled="disabled" aria-disabled="true" class="button button--disabled">
-                Deduct Remission
             </button>
         </div>
       </div>
     </div>
-    <ccpay-app-unprocessed-payments [IS_BUTTON_ENABLE]="takePayment" [PAYMENT_RECORDS_EXISTS]="isPaymentRecordsExist" (selectedUnprocessedFeeEvent) = "selectedUnprocessedFeeEvent($event)" ></ccpay-app-unprocessed-payments>
+    <ccpay-app-unprocessed-payments 
+    [IS_BUTTON_ENABLE]="takePayment"
+    [FEE_RECORDS_EXISTS]="isFeeRecordsExist" 
+    [IS_OS_AMT_AVAILABLE]="isGrpOutstandingAmtPositive" 
+    (selectedUnprocessedFeeEvent) = "selectedUnprocessedFeeEvent($event)">
+    </ccpay-app-unprocessed-payments>
     <div class="govuk-grid-row govuk-grid__surplus-payments">
-    <div class="govuk-grid-column-full govuk-grid__surplus-payments-col1">
-      <span class="heading-small">Surplus payments</span>
-    </div>
-    <div class="govuk-grid-column-full">
-       Total surplus payments received: {{calculateRefundAmount() | currency :'GBP':'symbol':'1.2-2'}}
-    </div>
+      <div class="govuk-grid-column-full govuk-grid__surplus-payments-col1">
+        <span class="heading-small">Surplus payments</span>
+      </div>
+      <div class="govuk-grid-column-full">
+        Total surplus payments received: {{totalRefundAmount | currency :'GBP':'symbol':'1.2-2'}}
+      </div>
     </div>
   </main>
 
-
-</div>

@@ -31,6 +31,7 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
   responsiblePerson: string;
   responsibleOffice: string;
   emailId: string;
+  isConfirmButtondisabled:Boolean = false;
 
   constructor(private formBuilder: FormBuilder,
   private paymentViewService: PaymentViewService,
@@ -62,6 +63,7 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
     });
   }
   confirmPayments() {
+    this.isConfirmButtondisabled = true;
     const controls = this.markPaymentUnsolicitedForm.controls;
     const requestBody = new AllocatePaymentRequest
     (this.ccdCaseNumber, this.unassignedRecord, this.siteID);
@@ -80,14 +82,23 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
                     this.paymentLibComponent.TAKEPAYMENT = true;
                   }
                 },
-                (error: any) => this.errorMessage = error
+                (error: any) => {
+                  this.errorMessage = error;
+                  this.isConfirmButtondisabled = false;
+                }
               );
             }
           },
-          (error: any) => this.errorMessage = error
+          (error: any) => {
+            this.errorMessage = error;
+            this.isConfirmButtondisabled = false;
+          }
         );
       },
-      (error: any) => this.errorMessage = error
+      (error: any) => {
+        this.errorMessage = error;
+        this.isConfirmButtondisabled = false;
+      }
     );
   }
  saveAndContinue() {

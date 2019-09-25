@@ -7,7 +7,6 @@ import {IFee} from '../../interfaces/IFee';
 import {IPayment} from '../../interfaces/IPayment';
 import {IRemission} from '../../interfaces/IRemission';
 import {Router} from '@angular/router';
-import {PaymentListComponent} from '../payment-list/payment-list.component';
 
 @Component({
   selector: 'ccpay-case-transactions',
@@ -30,7 +29,9 @@ export class CaseTransactionsComponent implements OnInit {
   isAddFeeBtnEnabled: boolean = true;
   isUnprocessedRecordSelected: boolean = false;
   exceptionRecordReference: string;
-  isPaymentRecordsExist: boolean = false;
+  isFeeRecordsExist: boolean = false;
+  isGrpOutstandingAmtPositive: boolean = false;
+  totalRefundAmount:Number;
 
     constructor(private router: Router,
     private bulkScaningPaymentService: BulkScaningPaymentService,
@@ -38,14 +39,14 @@ export class CaseTransactionsComponent implements OnInit {
     private paymentLibComponent: PaymentLibComponent) { }
 
   ngOnInit() {
+    this.isGrpOutstandingAmtPositive = false;
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
     this.takePayment = this.paymentLibComponent.TAKEPAYMENT;
     this.caseTransactionsService.getPaymentGroups(this.ccdCaseNumber).subscribe(
       paymentGroups => {
         this.paymentGroups = paymentGroups['payment_groups'];
-        this.isPaymentRecordsExist =  this.paymentGroups.length === 0;
         this.calculateAmounts();
-        this.calculateRefundAmount();
+        this.totalRefundAmount = this.calculateRefundAmount();
       },
       (error: any) => {
         this.errorMessage = <any>error;
@@ -53,21 +54,8 @@ export class CaseTransactionsComponent implements OnInit {
       }
     );
 
-    this.paymentGroups.forEach(paymentGroup => {
-      if (paymentGroup.fees) {
-        paymentGroup.fees.forEach( fees => {
-          if (fees['code'].length > 0) {
-            this.isPaymentRecordsExist = true;
-          }
-        });
-      }
-    });
-
     this.dcnNumber = this.paymentLibComponent.DCN_NUMBER;
     this.selectedOption = this.paymentLibComponent.SELECTED_OPTION.toLocaleLowerCase();
-  }
-  ngAfterViewInit() {
-    this.calculateRefundAmount();
   }
 
   setDefaults(): void {
@@ -112,12 +100,13 @@ export class CaseTransactionsComponent implements OnInit {
   }
   calculateRefundAmount() {
     let totalRefundAmount = 0;
-    this.paymentGroups.forEach(function (paymentGroup) {
+    this.paymentGroups.forEach(paymentGroup => {
       let grpOutstandingAmount = 0.00,
         feesTotal = 0.00,
         paymentsTotal = 0.00,
         remissionsTotal = 0.00;
       if (paymentGroup.fees) {
+        this.isFeeRecordsExist = true;
         paymentGroup.fees.forEach(fee => {
           feesTotal = feesTotal + fee.calculated_amount;
         });
@@ -143,6 +132,8 @@ export class CaseTransactionsComponent implements OnInit {
           } else {
             totalRefundAmount = (totalRefundAmount + grpOutstandingAmount);
           }
+        } else {
+          this.isGrpOutstandingAmtPositive = true;
         }
     });
     return totalRefundAmount * -1;

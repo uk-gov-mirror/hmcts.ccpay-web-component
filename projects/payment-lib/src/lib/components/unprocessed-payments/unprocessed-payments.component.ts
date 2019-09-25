@@ -11,8 +11,9 @@ import {Router} from '@angular/router';
 })
 export class UnprocessedPaymentsComponent implements OnInit {
 
-  @Input('PAYMENT_RECORDS_EXISTS') PAYMENT_RECORDS_EXISTS: boolean;
+  @Input('FEE_RECORDS_EXISTS') FEE_RECORDS_EXISTS: boolean;
   @Input('IS_BUTTON_ENABLE') IS_BUTTON_ENABLE: boolean;
+  @Input('IS_OS_AMT_AVAILABLE') IS_OS_AMT_AVAILABLE: boolean;
   @Output() selectedUnprocessedFeeEvent: EventEmitter<string> = new EventEmitter();
   viewStatus = 'main';
   unassignedRecordList: IBSPayments;
@@ -92,13 +93,13 @@ export class UnprocessedPaymentsComponent implements OnInit {
   }
 
   validateButtons() {
-  if ( this.isUnprocessedRecordSelected  && this.isExceptionCase && !this.PAYMENT_RECORDS_EXISTS) {
+  if ( this.isUnprocessedRecordSelected  && this.isExceptionCase) {
         this.isMarkAsUnidentifiedbtnEnabled = true;
-    } else if ( this.isUnprocessedRecordSelected  && !this.PAYMENT_RECORDS_EXISTS ) {
-      this.isAllocateToExistingFeebtnEnabled = true;
-      this.isAllocatedToNewFeebtnEnabled = true;
-    } else if( this.isUnprocessedRecordSelected  && this.PAYMENT_RECORDS_EXISTS ) {
+    } else if ( this.isUnprocessedRecordSelected  && !this.FEE_RECORDS_EXISTS ) {
       this.isAllocateToExistingFeebtnEnabled = false;
+      this.isAllocatedToNewFeebtnEnabled = true;
+    } else if( this.isUnprocessedRecordSelected  && this.FEE_RECORDS_EXISTS ) {
+      this.isAllocateToExistingFeebtnEnabled = this.IS_OS_AMT_AVAILABLE;
       this.isAllocatedToNewFeebtnEnabled = true;
     }
 
