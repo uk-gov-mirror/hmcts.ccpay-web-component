@@ -23,6 +23,7 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
   errorMessage: string;
   unassignedRecord:IBSPayments;
   siteID: string = null;
+  isConfirmButtondisabled: boolean = false;
 
   constructor(private formBuilder: FormBuilder,
   private paymentViewService: PaymentViewService,
@@ -75,6 +76,7 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
     }
   }
   confirmPayments() {
+    this.isConfirmButtondisabled = true;
     const requestBody = new AllocatePaymentRequest
     (this.ccdCaseNumber, this.unassignedRecord, this.siteID),
     reason = this.markPaymentUnidentifiedForm.get('investicationDetail').value;
@@ -92,14 +94,23 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
                     this.paymentLibComponent.TAKEPAYMENT = true;
                   }
                 },
-                (error: any) => this.errorMessage = error
+                (error: any) => {
+                  this.errorMessage = error;
+                  this.isConfirmButtondisabled = false;
+                }
               );
             }
           },
-          (error: any) => this.errorMessage = error
+          (error: any) => {
+            this.errorMessage = error;
+            this.isConfirmButtondisabled = false;
+          }
         );
       },
-      (error: any) => this.errorMessage = error
+      (error: any) => {
+        this.errorMessage = error;
+        this.isConfirmButtondisabled = false;
+      }
     );
   }
   cancelMarkUnidentifiedPayments(type?:string){

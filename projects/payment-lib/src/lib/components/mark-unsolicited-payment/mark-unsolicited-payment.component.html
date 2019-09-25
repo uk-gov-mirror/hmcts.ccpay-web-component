@@ -82,7 +82,7 @@
 
       </div>
       <div class="govuk-button--group">
-        <button type="submit" class="button" (click)="confirmPayments()">
+        <button type="submit" class="button" [disabled]="isConfirmButtondisabled" (click)="confirmPayments()">
           Confirm
         </button>
         <button type="button" class="button govuk-button--secondary" (click)="cancelMarkUnsolicitedPayments()">
