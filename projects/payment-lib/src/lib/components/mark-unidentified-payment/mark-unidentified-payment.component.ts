@@ -23,7 +23,7 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
   errorMessage: string;
   unassignedRecord:IBSPayments;
   siteID: string = null;
-  isConfirmButtondisabled: boolean = false;
+  investigationComment: string;
 
   constructor(private formBuilder: FormBuilder,
   private paymentViewService: PaymentViewService,
@@ -58,6 +58,7 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
     this.investicationDetailHasError = false;
     const formerror = this.markPaymentUnidentifiedForm.controls.investicationDetail.errors;
     if (this.markPaymentUnidentifiedForm.dirty && this.markPaymentUnidentifiedForm.valid) {
+      this.investigationComment = this.markPaymentUnidentifiedForm.controls.investicationDetail.value;
       this.viewStatus = 'unidentifiedContinueConfirm';
     }else {
       if(this.markPaymentUnidentifiedForm.controls.investicationDetail.invalid ) {
@@ -76,7 +77,6 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
     }
   }
   confirmPayments() {
-    this.isConfirmButtondisabled = true;
     const requestBody = new AllocatePaymentRequest
     (this.ccdCaseNumber, this.unassignedRecord, this.siteID),
     reason = this.markPaymentUnidentifiedForm.get('investicationDetail').value;
@@ -94,23 +94,14 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
                     this.paymentLibComponent.TAKEPAYMENT = true;
                   }
                 },
-                (error: any) => {
-                  this.errorMessage = error;
-                  this.isConfirmButtondisabled = false;
-                }
+                (error: any) => this.errorMessage = error
               );
             }
           },
-          (error: any) => {
-            this.errorMessage = error;
-            this.isConfirmButtondisabled = false;
-          }
+          (error: any) => this.errorMessage = error
         );
       },
-      (error: any) => {
-        this.errorMessage = error;
-        this.isConfirmButtondisabled = false;
-      }
+      (error: any) => this.errorMessage = error
     );
   }
   cancelMarkUnidentifiedPayments(type?:string){
