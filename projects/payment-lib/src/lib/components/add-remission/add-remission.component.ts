@@ -21,9 +21,9 @@ export class AddRemissionComponent implements OnInit {
   hasErrors = false;
   viewStatus = 'main';
   errorMessage = null;
-
   remissionCodeHasError = false;
   amountHasError = false;
+  isConfirmationBtnDisabled: boolean = false;
 
   constructor(private formBuilder: FormBuilder,
     private paymentViewService: PaymentViewService,
@@ -63,9 +63,10 @@ export class AddRemissionComponent implements OnInit {
   }
 
   confirmRemission() {
-    const newNetAmount = this.remissionForm.controls.amount.value;
-    const remissionAmount = this.fee.net_amount - newNetAmount;
-    const requestBody = new AddRemissionRequest
+    this.isConfirmationBtnDisabled = true;
+    const newNetAmount = this.remissionForm.controls.amount.value,
+     remissionAmount = this.fee.net_amount - newNetAmount,
+     requestBody = new AddRemissionRequest
     (this.ccdCaseNumber, this.fee, remissionAmount, this.remissionForm.controls.remissionCode.value, this.service);
     this.paymentViewService.postPaymentGroupWithRemissions(this.paymentGroupRef, this.fee.id, requestBody).subscribe(
       response => {
@@ -76,6 +77,7 @@ export class AddRemissionComponent implements OnInit {
       },
       (error: any) => {
         this.errorMessage = error;
+        this.isConfirmationBtnDisabled = false;
       }
     );
   }
