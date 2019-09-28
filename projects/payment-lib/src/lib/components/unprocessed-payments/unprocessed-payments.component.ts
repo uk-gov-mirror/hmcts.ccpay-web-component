@@ -95,7 +95,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
   validateButtons() {
   if ( this.isUnprocessedRecordSelected  && this.isExceptionCase) {
         this.isMarkAsUnidentifiedbtnEnabled = true;
-    } else if ( this.isUnprocessedRecordSelected  && !this.FEE_RECORDS_EXISTS ) {
+    } else if ( this.isUnprocessedRecordSelected  && !this.isExceptionCase) {
       this.isAllocateToExistingFeebtnEnabled = false;
       this.isAllocatedToNewFeebtnEnabled = true;
     } else if( this.isUnprocessedRecordSelected  && this.FEE_RECORDS_EXISTS ) {

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { BulkScaningPaymentService } from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
+import { PaymentViewService } from '../../services/payment-view/payment-view.service';
+import { ResponseContentType } from '@angular/http';
 
 @Component({
   selector: 'ccpay-reports',
@@ -11,7 +13,8 @@ export class ReportsComponent implements OnInit {
   reportsForm: FormGroup;
   startDate: string;
   endDate: string;
-  constructor(private formBuilder: FormBuilder,private bulkScaningPaymentService: BulkScaningPaymentService,) { }
+  constructor(private formBuilder: FormBuilder,private bulkScaningPaymentService: BulkScaningPaymentService,
+    private paymentViewService: PaymentViewService) { }
 
   ngOnInit() {
     this.fromValidation();
@@ -41,17 +44,33 @@ downloadReport(){
   const selectedReportName = this.reportsForm.get('selectedreport').value;
   const selectedStartDate = this.tranformDate(this.reportsForm.get('startDate').value);
   const selectedEndDate = this.tranformDate(this.reportsForm.get('endDate').value);
+
+  if(selectedReportName === 'PROCESSED_UNALLOCATED'){
+    this.paymentViewService.downloadSelectedReport(selectedReportName,selectedStartDate,selectedEndDate).subscribe((response) => {
+      let myBlob = new Blob([response.data], {type: 'application/vnd.ms-excel'});
+      let downloadUrl = URL.createObjectURL(myBlob);
+      let a = document.createElement('a');
+      a.href = downloadUrl;
+      a.download = this.reportsForm.get('selectedreport').value+'.xls';
+      a.click();
+      setTimeout( ()=> {
+            URL.revokeObjectURL(downloadUrl);
+        }, 100);
+    }); 
+  } else {
     this.bulkScaningPaymentService.downloadSelectedReport(selectedReportName,selectedStartDate,selectedEndDate).subscribe((response) => {
-    let myBlob = new Blob([response._body], {type: 'application/vnd.ms-excel'});
-    let downloadUrl = URL.createObjectURL(myBlob);
-    let a = document.createElement('a');
-    a.href = downloadUrl;
-    a.download = this.reportsForm.get('selectedreport').value+'.xlsx';// you can take a custom name as well as provide by server
-    a.click();
-    setTimeout( ()=> {
-          URL.revokeObjectURL(downloadUrl);
-      }, 100);
-  }); 
+      let myBlob = new Blob([response.data]);
+      let downloadUrl = URL.createObjectURL(myBlob);
+      let a = document.createElement('a');
+      a.href = downloadUrl;
+      a.download = this.reportsForm.get('selectedreport').value+'.xls';
+      a.click();
+      setTimeout( ()=> {
+            URL.revokeObjectURL(downloadUrl);
+        }, 100);
+    }); 
+  }
+   
   }
 
    tranformDate(strDate: string) {
