@@ -125,8 +125,11 @@ export class FeeSummaryComponent implements OnInit {
         this.isBackButtonEnable=false;
       },
       (error: any) => {
-        this.errorMessage = error;
-      }
+        this.errorMessage = error;        
+      }        
     );
+    if (this.errorMessage !== null){
+      this.router.navigateByUrl('/pci-pal-failure');
+    }
   }
 }
