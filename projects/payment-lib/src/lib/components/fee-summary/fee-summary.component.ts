@@ -80,6 +80,7 @@ export class FeeSummaryComponent implements OnInit {
   }
 
   confirmRemoveFee(fee: IFee){
+    this.isRemoveBtnDisabled = false;
     this.currentFee = fee;
     this.viewStatus = 'feeRemovalConfirmation';
   }
