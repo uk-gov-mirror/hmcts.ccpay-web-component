@@ -56,43 +56,35 @@ downloadReport(){
   const selectedEndDate = this.tranformDate(this.reportsForm.get('endDate').value);
 
   if(selectedReportName === 'PROCESSED_UNALLOCATED'){
-    // this.paymentViewService.downloadSelectedReport(selectedReportName,selectedStartDate,selectedEndDate).subscribe((response) => {
-    //   let myBlob = new Blob([response.data], {type: 'application/vnd.ms-excel'});
-    //   let downloadUrl = URL.createObjectURL(myBlob);
-    //   let a = document.createElement('a');
-    //   a.href = downloadUrl;
-    //   a.download = this.reportsForm.get('selectedreport').value+'.xls';
-    //   a.click();
-    //   setTimeout( ()=> {
-    //         URL.revokeObjectURL(downloadUrl);
-    //     }, 100);
-    // }); 
+    // this.bulkScaningPaymentService.downloadSelectedReport(selectedReportName,selectedStartDate,selectedEndDate).subscribe(
+    //   response =>  {
+    //     this.xlFileService.exportAsExcelFile(response, this.reportsForm.get('selectedreport').value+'_'+selectedStartDate+'_'+selectedEndDate);
+    //   },
+    //   (error: any) => {
+    //     this.errorMessage = <any>error;
+    //   })
   } else {
-    this.bulkScaningPaymentService.downloadSelectedReport(selectedReportName,selectedStartDate,selectedEndDate).subscribe((response) => {
-      let myBlob = new Blob([response.data]);
-      let downloadUrl = URL.createObjectURL(myBlob);
-      let a = document.createElement('a');
-      a.href = downloadUrl;
-      a.download = this.reportsForm.get('selectedreport').value+'.xls';
-      a.click();
-      setTimeout( ()=> {
-            URL.revokeObjectURL(downloadUrl);
-        }, 100);
-    }); 
-  }
-   
-  }
-  downloadXL(){
-    
-    this.caseTransactionsService.getPaymentGroups('2222333344445555').subscribe(
-      paymentGroups => {
-        this.xlFileService.exportAsExcelFile(paymentGroups['payment_groups'][0]['payments'],'report');
+    this.bulkScaningPaymentService.downloadSelectedReport(selectedReportName,selectedStartDate,selectedEndDate).subscribe(
+      response =>  {
+        this.xlFileService.exportAsExcelFile(response['data'], this.reportsForm.get('selectedreport').value+'_'+selectedStartDate+'_'+selectedEndDate);
       },
       (error: any) => {
         this.errorMessage = <any>error;
-      }
-    );
+      })
   }
+   
+  }
+  // downloadXL(){
+    
+  //   this.caseTransactionsService.getPaymentGroups('2222333344445555').subscribe(
+  //     paymentGroups => {
+  //       this.xlFileService.exportAsExcelFile(paymentGroups['payment_groups'][0]['payments'],'report');
+  //     },
+  //     (error: any) => {
+  //       this.errorMessage = <any>error;
+  //     }
+  //   );
+  // }
 
    tranformDate(strDate: string) {
     let result = '';
