@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import {PaymentLibComponent} from '../../payment-lib.component';
+import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
+import {CaseTransactionsService} from '../../services/case-transactions/case-transactions.service';
 import { BulkScaningPaymentService } from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
+import {XlFileService} from '../../services/xl-file/xl-file.service';
+
 
 @Component({
   selector: 'ccpay-reports',
@@ -11,7 +16,15 @@ export class ReportsComponent implements OnInit {
   reportsForm: FormGroup;
   startDate: string;
   endDate: string;
-  constructor(private formBuilder: FormBuilder,private bulkScaningPaymentService: BulkScaningPaymentService,) { }
+  ccdCaseNumber: string;
+  errorMessage: string;
+  paymentGroups: IPaymentGroup[] = [];
+  constructor(
+    private caseTransactionsService: CaseTransactionsService,
+    private xlFileService: XlFileService,
+    private paymentLibComponent: PaymentLibComponent,
+    private formBuilder: FormBuilder,
+    private bulkScaningPaymentService: BulkScaningPaymentService,) { }
 
   ngOnInit() {
     this.fromValidation();
@@ -52,6 +65,17 @@ downloadReport(){
           URL.revokeObjectURL(downloadUrl);
       }, 100);
   }); 
+  }
+  downloadXL(){
+    
+    this.caseTransactionsService.getPaymentGroups('1111222233334444').subscribe(
+      paymentGroups => {
+        this.xlFileService.exportAsExcelFile(paymentGroups['payment_groups'],'report');
+      },
+      (error: any) => {
+        this.errorMessage = <any>error;
+      }
+    );
   }
 
    tranformDate(strDate: string) {
