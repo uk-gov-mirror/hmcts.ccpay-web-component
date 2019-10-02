@@ -22,6 +22,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CcdHyphensPipe } from './pipes/ccd-hyphens.pipe';
 import { SanitizeHtmlPipe } from './pipes/sanitize-html.pipe';
 import { ReportsComponent } from './components/reports/reports.component';
+import { XlFileService } from './services/xl-file/xl-file.service';
 
 
 @NgModule({
@@ -51,7 +52,10 @@ import { ReportsComponent } from './components/reports/reports.component';
     ReportsComponent
   ],
   exports: [ PaymentLibComponent ],
-  providers: [ { provide: LoggerService, useClass: ConsoleLoggerService }]
+  providers: [ 
+    { provide: LoggerService, useClass: ConsoleLoggerService },
+    XlFileService
+  ]
 })
 
 export class PaymentLibModule { }

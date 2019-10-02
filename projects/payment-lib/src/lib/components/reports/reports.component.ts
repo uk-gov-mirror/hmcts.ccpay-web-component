@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import {PaymentLibComponent} from '../../payment-lib.component';
+import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
+import {CaseTransactionsService} from '../../services/case-transactions/case-transactions.service';
 import { BulkScaningPaymentService } from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
-import { PaymentViewService } from '../../services/payment-view/payment-view.service';
-import { ResponseContentType } from '@angular/http';
+import {XlFileService} from '../../services/xl-file/xl-file.service';
+
 
 @Component({
   selector: 'ccpay-reports',
@@ -13,8 +16,15 @@ export class ReportsComponent implements OnInit {
   reportsForm: FormGroup;
   startDate: string;
   endDate: string;
-  constructor(private formBuilder: FormBuilder,private bulkScaningPaymentService: BulkScaningPaymentService,
-    private paymentViewService: PaymentViewService) { }
+  ccdCaseNumber: string;
+  errorMessage: string;
+  paymentGroups: IPaymentGroup[] = [];
+  constructor(
+    private caseTransactionsService: CaseTransactionsService,
+    private xlFileService: XlFileService,
+    private paymentLibComponent: PaymentLibComponent,
+    private formBuilder: FormBuilder,
+    private bulkScaningPaymentService: BulkScaningPaymentService,) { }
 
   ngOnInit() {
     this.fromValidation();
@@ -46,17 +56,17 @@ downloadReport(){
   const selectedEndDate = this.tranformDate(this.reportsForm.get('endDate').value);
 
   if(selectedReportName === 'PROCESSED_UNALLOCATED'){
-    this.paymentViewService.downloadSelectedReport(selectedReportName,selectedStartDate,selectedEndDate).subscribe((response) => {
-      let myBlob = new Blob([response.data], {type: 'application/vnd.ms-excel'});
-      let downloadUrl = URL.createObjectURL(myBlob);
-      let a = document.createElement('a');
-      a.href = downloadUrl;
-      a.download = this.reportsForm.get('selectedreport').value+'.xls';
-      a.click();
-      setTimeout( ()=> {
-            URL.revokeObjectURL(downloadUrl);
-        }, 100);
-    }); 
+    // this.paymentViewService.downloadSelectedReport(selectedReportName,selectedStartDate,selectedEndDate).subscribe((response) => {
+    //   let myBlob = new Blob([response.data], {type: 'application/vnd.ms-excel'});
+    //   let downloadUrl = URL.createObjectURL(myBlob);
+    //   let a = document.createElement('a');
+    //   a.href = downloadUrl;
+    //   a.download = this.reportsForm.get('selectedreport').value+'.xls';
+    //   a.click();
+    //   setTimeout( ()=> {
+    //         URL.revokeObjectURL(downloadUrl);
+    //     }, 100);
+    // }); 
   } else {
     this.bulkScaningPaymentService.downloadSelectedReport(selectedReportName,selectedStartDate,selectedEndDate).subscribe((response) => {
       let myBlob = new Blob([response.data]);
@@ -71,6 +81,17 @@ downloadReport(){
     }); 
   }
    
+  }
+  downloadXL(){
+    
+    this.caseTransactionsService.getPaymentGroups('2222333344445555').subscribe(
+      paymentGroups => {
+        this.xlFileService.exportAsExcelFile(paymentGroups['payment_groups'][0]['payments'],'report');
+      },
+      (error: any) => {
+        this.errorMessage = <any>error;
+      }
+    );
   }
 
    tranformDate(strDate: string) {
