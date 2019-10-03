@@ -4,8 +4,9 @@ import {PaymentLibComponent} from '../../payment-lib.component';
 import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
 import {CaseTransactionsService} from '../../services/case-transactions/case-transactions.service';
 import { BulkScaningPaymentService } from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
+import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import {XlFileService} from '../../services/xl-file/xl-file.service';
-
+import {DataLossReport} from '../../interfaces/DataLossReport';
 
 @Component({
   selector: 'ccpay-reports',
@@ -19,12 +20,15 @@ export class ReportsComponent implements OnInit {
   ccdCaseNumber: string;
   errorMessage: string;
   paymentGroups: IPaymentGroup[] = [];
+  dataLossList: DataLossReport = new DataLossReport();
+
   constructor(
     private caseTransactionsService: CaseTransactionsService,
     private xlFileService: XlFileService,
     private paymentLibComponent: PaymentLibComponent,
     private formBuilder: FormBuilder,
-    private bulkScaningPaymentService: BulkScaningPaymentService,) { }
+    private bulkScaningPaymentService: BulkScaningPaymentService,
+    private paymentViewService: PaymentViewService) { }
 
   ngOnInit() {
     this.fromValidation();
@@ -56,16 +60,20 @@ downloadReport(){
   const selectedEndDate = this.tranformDate(this.reportsForm.get('endDate').value);
 
   if(selectedReportName === 'PROCESSED_UNALLOCATED'){
-    // this.bulkScaningPaymentService.downloadSelectedReport(selectedReportName,selectedStartDate,selectedEndDate).subscribe(
-    //   response =>  {
-    //     this.xlFileService.exportAsExcelFile(response, this.reportsForm.get('selectedreport').value+'_'+selectedStartDate+'_'+selectedEndDate);
-    //   },
-    //   (error: any) => {
-    //     this.errorMessage = <any>error;
-    //   })
+    this.paymentViewService.downloadSelectedReport(selectedReportName,selectedStartDate,selectedEndDate).subscribe(
+      response =>  {
+        this.xlFileService.exportAsExcelFile(response['data'], this.reportsForm.get('selectedreport').value+'_'+selectedStartDate+'_'+selectedEndDate);
+      },
+      (error: any) => {
+        this.errorMessage = <any>error;
+      })
   } else {
     this.bulkScaningPaymentService.downloadSelectedReport(selectedReportName,selectedStartDate,selectedEndDate).subscribe(
       response =>  {
+        if(response['data'].length === 0){
+            let data = JSON.stringify(this.dataLossList);
+            response.data= JSON.parse(data);
+        }
         this.xlFileService.exportAsExcelFile(response['data'], this.reportsForm.get('selectedreport').value+'_'+selectedStartDate+'_'+selectedEndDate);
       },
       (error: any) => {

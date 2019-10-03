@@ -110,11 +110,7 @@ export class PaymentViewService {
     );
   }
 downloadSelectedReport(reportName: string, startDate: string, endDate:string): Observable<any> {
-  return this.http.get(`${this.paymentLibService.API_ROOT}/payment/bulkscan-report-download?date_from=${startDate}&date_to=${endDate}&report_type=${reportName}`, {
-    withCredentials: true
-  })
-    .pipe(
-      catchError(this.errorHandlerService.handleError)
-    );
+  const url = `${this.paymentLibService.API_ROOT}/report/data?date_from=${startDate}&date_to=${endDate}&report_type=${reportName}`;
+  return this.http.get(url, { withCredentials: true }).pipe( catchError(this.errorHandlerService.handleError));
 }
 }
