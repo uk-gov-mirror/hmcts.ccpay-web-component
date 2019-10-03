@@ -157,7 +157,7 @@
                         <td class="govuk-table__cell">{{ payment.channel }}</td>
                         <td class="govuk-table__cell">{{ payment.method }}</td>
                         <td class="govuk-table__cell">{{ payment.amount }}</td>
-                        <td class="govuk-table__cell"> - </td>
+                        <td class="govuk-table__cell"> {{getAllocationStatus(payment)}}</td>
                         <td class="govuk-table__cell">{{ payment.status }}</td>
                       </tr>
                   </tbody>
@@ -197,9 +197,9 @@
 
         <div *ngIf="takePayment">
             <button type="submit" (click)="loadFeeSummaryPage(paymentGroup)"
-                                  [disabled]="(getGroupOutstandingAmount(paymentGroup) <= 0 || isUnprocessedRecordSelected)"
-                                  [ngClass]='(getGroupOutstandingAmount(paymentGroup) <= 0 || isUnprocessedRecordSelected) ? "govuk-button govuk-button--secondary govuk-button--disabled govuk-!-margin-right-1" : "govuk-button govuk-button--secondary govuk-!-margin-right-1"'>
-                                  Add telephone payment
+              [disabled]="(getGroupOutstandingAmount(paymentGroup) <= 0 || isUnprocessedRecordSelected)"
+              [ngClass]='(getGroupOutstandingAmount(paymentGroup) <= 0 || isUnprocessedRecordSelected) ? "govuk-button govuk-button--secondary govuk-button--disabled govuk-!-margin-right-1" : "govuk-button govuk-button--secondary govuk-!-margin-right-1"'>
+                Add telephone payment
             </button>
         </div>
       </div>

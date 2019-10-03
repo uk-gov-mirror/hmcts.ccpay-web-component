@@ -102,7 +102,7 @@
       <ccpay-pba-details *ngIf="!isCardPayment" [payment]="paymentGroup.payments[0]"></ccpay-pba-details>
 
       <!-- Status histories -->
-      <ccpay-payment-statuses></ccpay-payment-statuses>
+      <ccpay-payment-statuses *ngIf="isStatusAllocated"></ccpay-payment-statuses>
 
     </div>
 

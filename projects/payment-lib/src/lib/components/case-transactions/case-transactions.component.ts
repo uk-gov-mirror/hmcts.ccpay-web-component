@@ -63,6 +63,13 @@ export class CaseTransactionsComponent implements OnInit {
     this.totalRemissions = 0.00;
     this.totalFees = 0.00;
 }
+getAllocationStatus(payments: any){
+
+  let paymentAllocation = payments.payment_allocation,
+      isAllocationStatusExist = paymentAllocation.length >0;
+  return isAllocationStatusExist ? paymentAllocation[0].payment_allocation_status.name : '-';
+
+}
 
   calculateAmounts(): void {
     let feesTotal = 0.00,

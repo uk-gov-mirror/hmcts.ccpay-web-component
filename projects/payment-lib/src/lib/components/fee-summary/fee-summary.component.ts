@@ -9,7 +9,6 @@ import { PaymentToPayhubRequest } from '../../interfaces/PaymentToPayhubRequest'
 import { SafeHtml } from '@angular/platform-browser';
 import {Router} from '@angular/router';
 import {Location} from '@angular/common';
-import { debugOutputAstAsTypeScript } from '@angular/compiler';
 
 @Component({
   selector: 'ccpay-fee-summary',
