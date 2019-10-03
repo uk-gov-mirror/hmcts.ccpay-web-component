@@ -28,6 +28,8 @@ export class FeeSummaryComponent implements OnInit {
   payhubHtml: SafeHtml;
   service: string = null;
   isBackButtonEnable: boolean = true;
+  isConfirmationBtnDisabled: boolean = false;
+  isRemoveBtnDisabled: boolean = false;
 
   constructor(
     private router: Router,
@@ -78,11 +80,13 @@ export class FeeSummaryComponent implements OnInit {
   }
 
   confirmRemoveFee(fee: IFee){
+    this.isRemoveBtnDisabled = false;
     this.currentFee = fee;
     this.viewStatus = 'feeRemovalConfirmation';
   }
 
   removeFee(fee: any){
+    this.isRemoveBtnDisabled = true;
     this.paymentViewService.deleteFeeFromPaymentGroup(fee).subscribe(
       (success: any) => {
           if (this.paymentGroup.fees && this.paymentGroup.fees.length > 1){
@@ -94,6 +98,7 @@ export class FeeSummaryComponent implements OnInit {
       },
       (error: any) => {
           this.errorMessage = error;
+          this.isRemoveBtnDisabled = false;
       }
     );
   }
@@ -114,9 +119,9 @@ export class FeeSummaryComponent implements OnInit {
     this.router.navigateByUrl(`/fee-search?ccdCaseNumber=${this.ccdCaseNumber}`);
   }
   takePayment() {
-
-    const seriveName = this.service ==='AA07' ? 'DIVORCE': this.service ==='AA08' ? 'PROBATE' : '';
-    const requestBody = new PaymentToPayhubRequest(this.ccdCaseNumber, this.totalFee, this.service, seriveName);
+    this.isConfirmationBtnDisabled = true;
+    const seriveName = this.service ==='AA07' ? 'DIVORCE': this.service ==='AA08' ? 'PROBATE' : '',
+     requestBody = new PaymentToPayhubRequest(this.ccdCaseNumber, this.totalFee, this.service, seriveName);
     this.paymentViewService.postPaymentToPayHub(requestBody, this.paymentGroupRef).subscribe(
       response => {
         this.location.go(`payment-history?view=fee-summary`);
@@ -126,6 +131,7 @@ export class FeeSummaryComponent implements OnInit {
       },
       (error: any) => {
         this.errorMessage = error;
+        this.isConfirmationBtnDisabled = false;
       }
     );
   }
