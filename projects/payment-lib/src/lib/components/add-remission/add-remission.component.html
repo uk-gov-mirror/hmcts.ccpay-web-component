@@ -69,7 +69,10 @@
       <button type="submit" class="button govuk-button--secondary" (click)="cancelRemission.emit()">
         Cancel
       </button>
-      <button type="submit" class="button" (click)="confirmRemission()">
+      <button type="submit"
+      [disabled]="isConfirmationBtnDisabled"
+      [ngClass]='isConfirmationBtnDisabled ? "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"'
+      (click)="confirmRemission()">
         Confirm
       </button>
 
