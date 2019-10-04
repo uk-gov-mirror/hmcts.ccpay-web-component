@@ -39,7 +39,6 @@ export class ReportsComponent implements OnInit {
 
  getSelectedFromDate(): void {
  this.validateDates();
-  //this.reportsForm.get('startDate').setValue('');
  }
 
  validateDates(){
