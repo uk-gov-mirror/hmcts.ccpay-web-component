@@ -31,6 +31,7 @@
     "govuk_template_jinja": "^0.24.0",
     "rxjs": "^6.0.0",
     "rxjs-compat": "^6.5.3",
+    "xlsx-style": "^0.8.13",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {

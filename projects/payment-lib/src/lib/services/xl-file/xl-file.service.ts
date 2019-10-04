@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
+import * as XLSXStyle from 'xlsx-style';
+
 
 const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
 const EXCEL_EXTENSION = '.xlsx';
@@ -31,7 +33,6 @@ export class XlFileService {
       worksheet =  this.setShortFallReportHeaders(worksheet);
       worksheet = this.autoFitColumns(worksheet,json);
     }
-    
     workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
     const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
     this.saveAsExcelFile(excelBuffer, excelFileName);
@@ -60,6 +61,7 @@ private autoFitColumns (worksheet: XLSX.WorkSheet,json:any) : XLSX.WorkSheet {
     worksheet['!cols'] = ColWidth;
     return worksheet;
 }
+
 
 private setDataLossReportHeaders (worksheet: XLSX.WorkSheet): XLSX.WorkSheet {
   worksheet.A1.v = "Loss_Resp";

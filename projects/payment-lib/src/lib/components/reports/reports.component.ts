@@ -6,7 +6,6 @@ import {CaseTransactionsService} from '../../services/case-transactions/case-tra
 import { BulkScaningPaymentService } from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import {XlFileService} from '../../services/xl-file/xl-file.service';
-import {DataLossReport} from '../../interfaces/DataLossReport';
 
 @Component({
   selector: 'ccpay-reports',
@@ -20,7 +19,6 @@ export class ReportsComponent implements OnInit {
   ccdCaseNumber: string;
   errorMessage: string;
   paymentGroups: IPaymentGroup[] = [];
-  dataLossList: DataLossReport = new DataLossReport();
 
   constructor(
     private caseTransactionsService: CaseTransactionsService,
@@ -29,6 +27,7 @@ export class ReportsComponent implements OnInit {
     private formBuilder: FormBuilder,
     private bulkScaningPaymentService: BulkScaningPaymentService,
     private paymentViewService: PaymentViewService) { }
+   
 
   ngOnInit() {
     this.fromValidation();
@@ -55,6 +54,11 @@ onSelectionChange(value: string) {
 }
 
 downloadReport(){
+  const dataLossRptDefault = [{loss_resp:'',payment_asset_dcn:'',resp_service_id:'',resp_service_name:'',date_banked:'',bgc_batch:'',payment_method:'',amount:''}];
+  const unProcessedRptDefault = [{resp_service_id:'',resp_service_name:'',exception_ref:'',ccd_ref:'',date_banked:'',bgc_batch:'',payment_asset_dcn:'',payment_method:'',amount:''}];
+  const processedUnallocated =[{loss_resp:'',payment_asset_dcn:'',resp_service_id:'',resp_service_name:'',date_banked:'',bgc_batch:'',amount:''}];
+  const shortFallsRptDefault = [{loss_resp:'',payment_asset_dcn:'',resp_service_id:'',resp_service_name:'',date_banked:'',bgc_batch:'',amount:''}];
+
   const selectedReportName = this.reportsForm.get('selectedreport').value;
   const selectedStartDate = this.tranformDate(this.reportsForm.get('startDate').value);
   const selectedEndDate = this.tranformDate(this.reportsForm.get('endDate').value);
@@ -62,6 +66,11 @@ downloadReport(){
   if(selectedReportName === 'PROCESSED_UNALLOCATED'){
     this.paymentViewService.downloadSelectedReport(selectedReportName,selectedStartDate,selectedEndDate).subscribe(
       response =>  {
+        if(response['data'].length === 0 && selectedReportName === 'PROCESSED_UNALLOCATED' ){
+          response.data= processedUnallocated;
+        } else {
+          response.data= shortFallsRptDefault;
+        }  
         this.xlFileService.exportAsExcelFile(response['data'], this.reportsForm.get('selectedreport').value+'_'+selectedStartDate+'_'+selectedEndDate);
       },
       (error: any) => {
@@ -70,9 +79,10 @@ downloadReport(){
   } else {
     this.bulkScaningPaymentService.downloadSelectedReport(selectedReportName,selectedStartDate,selectedEndDate).subscribe(
       response =>  {
-        if(response['data'].length === 0){
-            let data = JSON.stringify(this.dataLossList);
-            response.data= JSON.parse(data);
+        if(response['data'].length === 0 && selectedReportName === 'DATA_LOSS' ){
+           response.data= dataLossRptDefault;
+        } else{
+          response.data = unProcessedRptDefault;
         }
         this.xlFileService.exportAsExcelFile(response['data'], this.reportsForm.get('selectedreport').value+'_'+selectedStartDate+'_'+selectedEndDate);
       },
@@ -82,18 +92,7 @@ downloadReport(){
   }
    
   }
-  // downloadXL(){
-    
-  //   this.caseTransactionsService.getPaymentGroups('2222333344445555').subscribe(
-  //     paymentGroups => {
-  //       this.xlFileService.exportAsExcelFile(paymentGroups['payment_groups'][0]['payments'],'report');
-  //     },
-  //     (error: any) => {
-  //       this.errorMessage = <any>error;
-  //     }
-  //   );
-  // }
-
+ 
    tranformDate(strDate: string) {
     let result = '';
     if (strDate) {
