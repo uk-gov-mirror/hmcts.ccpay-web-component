@@ -29,7 +29,7 @@ export class XlFileService {
       worksheet =  this.setProcessedUnallocatedReportHeaders(worksheet);
       worksheet = this.autoFitColumns(worksheet,json);
     } else {
-      worksheet =  XLSX.utils.json_to_sheet(json,{header:['loss_resp','payment_asset_dcn','resp_service_id','resp_service_name','date_banked','bgc_batch','amount']});
+      worksheet =  XLSX.utils.json_to_sheet(json,{header:['resp_service_id','resp_service_name','surplus_shortfall','balance','payment_amount','ccd_case_reference','processed_date']});
       worksheet =  this.setShortFallReportHeaders(worksheet);
       worksheet = this.autoFitColumns(worksheet,json);
     }

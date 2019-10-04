@@ -66,18 +66,18 @@ downloadReport(){
   const dataLossRptDefault = [{loss_resp:'',payment_asset_dcn:'',resp_service_id:'',resp_service_name:'',date_banked:'',bgc_batch:'',payment_method:'',amount:''}];
   const unProcessedRptDefault = [{resp_service_id:'',resp_service_name:'',exception_ref:'',ccd_ref:'',date_banked:'',bgc_batch:'',payment_asset_dcn:'',payment_method:'',amount:''}];
   const processedUnallocated =[{loss_resp:'',payment_asset_dcn:'',resp_service_id:'',resp_service_name:'',date_banked:'',bgc_batch:'',amount:''}];
-  const shortFallsRptDefault = [{loss_resp:'',payment_asset_dcn:'',resp_service_id:'',resp_service_name:'',date_banked:'',bgc_batch:'',amount:''}];
+  const shortFallsRptDefault = [{resp_service_id:'',resp_service_name:'',surplus_shortfall:'',balance:'',payment_amount:'',ccd_case_reference:'',processed_date:''}];
 
   const selectedReportName = this.reportsForm.get('selectedreport').value;
   const selectedStartDate = this.tranformDate(this.reportsForm.get('startDate').value);
   const selectedEndDate = this.tranformDate(this.reportsForm.get('endDate').value);
 
-  if(selectedReportName === 'PROCESSED_UNALLOCATED'){
+  if(selectedReportName === 'PROCESSED_UNALLOCATED' || selectedReportName === 'SURPLUS_AND_SHORTFALL' ){
     this.paymentViewService.downloadSelectedReport(selectedReportName,selectedStartDate,selectedEndDate).subscribe(
       response =>  {
         if(response['data'].length === 0 && selectedReportName === 'PROCESSED_UNALLOCATED' ){
           response.data= processedUnallocated;
-        } else {
+        } else if(response['data'].length === 0 && selectedReportName === 'SURPLUS_AND_SHORTFALL' ) {
           response.data= shortFallsRptDefault;
         }  
         this.xlFileService.exportAsExcelFile(response['data'], this.reportsForm.get('selectedreport').value+'_'+selectedStartDate+'_'+selectedEndDate);
@@ -90,7 +90,7 @@ downloadReport(){
       response =>  {
         if(response['data'].length === 0 && selectedReportName === 'DATA_LOSS' ){
            response.data= dataLossRptDefault;
-        } else{
+        } else if(response['data'].length === 0 && selectedReportName === 'UNPROCESSED'){
           response.data = unProcessedRptDefault;
         }
         this.xlFileService.exportAsExcelFile(response['data'], this.reportsForm.get('selectedreport').value+'_'+selectedStartDate+'_'+selectedEndDate);
