@@ -1,5 +1,5 @@
 export class IPaymentStatus {
-  payment_allocation_status: any;
+  allocation_status: any;
   date_created: string;
   payment_group_reference: string;
   payment_reference: string;

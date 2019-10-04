@@ -67,7 +67,7 @@ getAllocationStatus(payments: any){
 
   let paymentAllocation = payments.payment_allocation,
       isAllocationStatusExist = paymentAllocation.length >0;
-  return isAllocationStatusExist ? paymentAllocation[0].payment_allocation_status.name : '-';
+  return isAllocationStatusExist ? paymentAllocation[0].allocation_status : '-';
 
 }
 
