@@ -111,11 +111,8 @@ private setShortFallReportHeaders (worksheet: XLSX.WorkSheet): XLSX.WorkSheet {
   worksheet.C1.v = "Surplus_Shortfall";
   worksheet.D1.v = "Balance";
   worksheet.E1.v = "Payment_Amount";
-  worksheet.F1.v = "Reason";
-  worksheet.G1.v = "Request_ID";
-  worksheet.H1.v = "CCD_Exception_Ref";
-  worksheet.I1.v = "CCD_Case_Ref";
-  worksheet.J1.v = "Date_Banked";
+  worksheet.F1.v = "CCD_Case_Ref";
+  worksheet.G1.v = "Processed_Date";
   return worksheet;
 }
 
