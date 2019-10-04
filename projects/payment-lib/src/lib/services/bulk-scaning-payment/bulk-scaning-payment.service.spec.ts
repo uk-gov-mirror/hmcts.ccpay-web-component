@@ -1,15 +1,15 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { CaseTransactionsService } from './bulk-scaning-payment.service';
+import { BulkScaningPaymentService } from './bulk-scaning-payment.service';
 
-describe('CaseTransactionsService', () => {
+describe('BulkScaningPaymentService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [CaseTransactionsService]
+      providers: [BulkScaningPaymentService]
     });
   });
 
-  it('should be created', inject([CaseTransactionsService], (service: CaseTransactionsService) => {
+  it('should be created', inject([BulkScaningPaymentService], (service: BulkScaningPaymentService) => {
     expect(service).toBeTruthy();
   }));
 });

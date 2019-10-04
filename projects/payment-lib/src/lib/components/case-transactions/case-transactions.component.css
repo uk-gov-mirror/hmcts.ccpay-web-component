@@ -25,6 +25,12 @@
     font-size: 22px;
     padding-bottom: 10px;
 }
+.lowercase { text-transform: lowercase; }
+.capitalize { text-transform: capitalize; }
+
+.channel::first-letter {
+    text-transform: uppercase;
+  }
 .govuk-heading-xl {
     font-size: 48px;
     margin-bottom: 1px;

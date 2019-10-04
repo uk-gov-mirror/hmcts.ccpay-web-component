@@ -19,6 +19,9 @@
   margin-bottom: 0px;
 }
 
+.lowercase { text-transform: lowercase; }
+.capitalize { text-transform: capitalize; }
+
 .custom-govuk-label,
 .govuk-warning-text__text {
   font-size: 19px;

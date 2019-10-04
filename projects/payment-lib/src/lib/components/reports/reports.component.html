@@ -1,0 +1,86 @@
+<div class="header">
+      <legend class="govuk-fieldset__legend--xl">
+         <h1 class="govuk-fieldset__heading"> Choose the report type and date range</h1>
+      </legend>
+</div>
+<form [formGroup]="reportsForm">
+     <div  class="govuk-form-group">
+       
+        <div class="govuk-radios govuk-radios--conditional" data-module="govuk-radios">
+          <div  class="govuk-radios__item">
+              <input 
+              required
+              id="DataLoss"
+              class="govuk-radios__input"
+              formControlName="selectedreport"
+              name="selectedreport"
+              type="radio"
+              value="DATA_LOSS" 
+              (change)= "onSelectionChange('DataLoss')"
+               data-aria-controls="DataLoss"/>
+              <label class="govuk-label govuk-radios__label govuk-label--m" for="DataLoss">Data loss</label>
+              <span class="form-hint">Missing transactions where data has been received from only either of Exela or Bulk scan</span>
+          </div>
+
+         <div class="govuk-radios__item">
+              <input 
+              id="UnprocessedTransactions"
+              class="govuk-radios__input"
+              formControlName="selectedreport"
+              name="selectedreport"
+              type="radio"
+              value="UNPROCESSED" 
+              (change)= "onSelectionChange('UnprocessedTransactions')"
+              data-aria-controls="UnprocessedTransactions"/>
+              <label class="govuk-label govuk-radios__label govuk-label--m" for="UnprocessedTransactions">Unprocessed transactions</label>
+              <span class="form-hint">Transaction records that are still unprocessed by staff.</span>
+         </div>
+
+         <div class="govuk-radios__item">
+            <input 
+            id="ProcessedUnallocated"
+            class="govuk-radios__input"
+            formControlName="selectedreport"
+            name="selectedreport"
+            type="radio"
+            value="PROCESSED_UNALLOCATED" 
+            (change)= "onSelectionChange('ProcessedUnallocated')"
+            data-aria-controls="ProcessedUnallocated"/>
+            <label class="govuk-label govuk-radios__label govuk-label--m" for="ProcessedUnallocated">Processed unallocated</label>
+            <span class="form-hint">Payments that are marked as ‘Unidentified’ or ‘Transferred’ (Unsolicited requests)</span>
+         </div>
+
+         <div class="govuk-radios__item">
+            <input 
+            id="ShortfallsandSurplus"
+            class="govuk-radios__input"
+            formControlName="selectedreport"
+            name="selectedreport"
+            type="radio"
+            value="SURPLUS_AND_SHORTFALL" 
+            (change)= "onSelectionChange('ShortfallsandSurplus')"
+            data-aria-controls="ShortfallsandSurplus"/>
+            <label class="govuk-label govuk-radios__label govuk-label--m" for="ShortfallsandSurplus">Short falls and surplus</label>
+            <span class="form-hint">Requests where balances are marked as shortfall/surplus further case management.
+               E.g: Refund approval, Customer contact</span>
+         </div>
+       
+       </div>
+     </div>
+
+     <div  class="govuk-form-group">
+      <div class="datefrom">
+      <label class="govuk-label govuk-radios__label govuk-label--m" for="date-from">Date from</label>
+      <input (change)="getSelectedFromDate()"  class="form-control" id="date-from" name="date-from" type="date"  formControlName="startDate" required/>
+      </div>
+
+      <div class="dateto">
+      <label class="govuk-label govuk-radios__label govuk-label--m" for="date-to">Date to</label>
+      <input (change)="getSelectedFromDate()" [max]="getToday()" class="form-control" id="date-to" name="search" type="date" formControlName="endDate" required/>
+      </div>
+     </div>
+    <div class="btnsubmit">
+     <button type="submit" (click)="downloadReport()" class="button" [disabled]="!reportsForm.valid">Download report</button>
+   </div>
+ </form>
+    

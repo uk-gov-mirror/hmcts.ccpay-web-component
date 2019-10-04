@@ -64,7 +64,7 @@
             <tr class="govuk-table__row">
               <td class="no-border grey-text subcolumn-1">Remission amount:</td>
               <td class="no-border subcolumn-2">{{ getRemissionByFeeCode(fee.code)?.hwf_amount? ( getRemissionByFeeCode(fee.code)?.hwf_amount  | currency:'GBP':'symbol-narrow':'1.2-2') : '-' }}</td>
-              <td class="no-border subcolumn-3"> <a (click)="addRemission(fee)" [ngClass]="{'remissionDisable': service==null}" *ngIf="getRemissionByFeeCode(fee.code)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code)?.hwf_amount">add remission</a></td>
+              <td class="no-border subcolumn-3"> <a (click)="addRemission(fee)" [ngClass]="{'remissionDisable': service==null}" *ngIf="getRemissionByFeeCode(fee.code)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code)?.hwf_amount">Deduct remission</a></td>
             </tr>
             <tr class="govuk-table__row">
               <td class="no-border grey-text subcolumn-1">Total after remission:</td>
@@ -110,13 +110,13 @@
               </legend>
               <div class="govuk-radios govuk-radios--small">
                 <div class="govuk-radios__item">
-                  <input class="govuk-radios__input" [(ngModel)]="service" type="radio" value="AA07">
+                  <input id="changed-name" class="govuk-radios__input" [(ngModel)]="service" type="radio" aria-label="AA07" value="AA07">
                   <label class="govuk-label govuk-radios__label" for="changed-name">
                     Divorce
                   </label>
                 </div>
                 <div class="govuk-radios__item">
-                  <input class="govuk-radios__input" [(ngModel)]="service" type="radio" value="AA08">
+                  <input id="changed-name-2" class="govuk-radios__input" [(ngModel)]="service" type="radio" aria-label="AA08" value="AA08">
                   <label class="govuk-label govuk-radios__label" for="changed-name-2">
                     Probate
                   </label>

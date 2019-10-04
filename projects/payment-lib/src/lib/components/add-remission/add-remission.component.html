@@ -19,7 +19,7 @@
                   Add remission to {{ fee.code }}:{{ fee.description }}
                 <span class="form-hint" [ngClass]="{'inline-error-message': remissionCodeHasError}">Enter remission for reference. For example: HWF-A1B-23C</span>
               </label>
-              <input class="govuk-input govuk-input--width-20 govuk-!-margin-right-1" id="remissionCode" name="remissionCode" type="text" formControlName="remissionCode">
+              <input class="govuk-input govuk-input--width-20 govuk-!-margin-right-1" id="remissionCode" aria-label="remissionCode"  name="remissionCode" type="text" formControlName="remissionCode">
             </div>
             <div class="govuk-form-group" [ngClass]="{'form-group-error': amountHasError}">
               <label class="govuk-label govuk-label--s" [ngClass]="{'inline-error-message': amountHasError}" for="amount">
@@ -29,7 +29,7 @@
               <div id="amount-currency" class="govuk-visually-hidden">in pounds</div>
                 <div class="hmcts-currency-input">
                 <div class="hmcts-currency-input__symbol" aria-hidden="true">£</div>
-                <input class="govuk-input govuk-input--width-10" id="amount" name="amount" type="text" aria-describedby="amount-currency" formControlName="amount">
+                <input class="govuk-input govuk-input--width-10" id="amount" aria-label="amount"  name="amount" type="text" aria-describedby="amount-currency" formControlName="amount">
               </div>
             </div>
           </form>
