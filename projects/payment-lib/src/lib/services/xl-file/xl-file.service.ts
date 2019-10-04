@@ -16,15 +16,15 @@ export class XlFileService {
     let worksheet: XLSX.WorkSheet; 
     let workbook: XLSX.WorkBook; 
 
-    if(excelFileName.match('DATA_LOSS')!== undefined){
+    if(excelFileName.match('DATA_LOSS')!== null){
      worksheet =  XLSX.utils.json_to_sheet(json,{header:['loss_resp','payment_asset_dcn','resp_service_id','resp_service_name','date_banked','bgc_batch','payment_method','amount']});
      worksheet =  this.setDataLossReportHeaders(worksheet);
      worksheet = this.autoFitColumns(worksheet,json);
-     } else if(excelFileName.match('UNPROCESSED')!== undefined){
+     } else if(excelFileName.match('UNPROCESSED')!== null){
      worksheet =  XLSX.utils.json_to_sheet(json,{header:['resp_service_id','resp_service_name','exception_ref','ccd_ref','date_banked','bgc_batch','payment_asset_dcn','payment_method','amount']});
      worksheet =  this.setUnprocessedReportHeaders(worksheet);
      worksheet = this.autoFitColumns(worksheet,json);
-    } else if(excelFileName.match('PROCESSED_UNALLOCATED')!== undefined){
+    } else if(excelFileName.match('PROCESSED_UNALLOCATED')!== null){
       worksheet =  XLSX.utils.json_to_sheet(json,{header:['loss_resp','payment_asset_dcn','resp_service_id','resp_service_name','date_banked','bgc_batch','amount']});
       worksheet =  this.setProcessedUnallocatedReportHeaders(worksheet);
       worksheet = this.autoFitColumns(worksheet,json);
