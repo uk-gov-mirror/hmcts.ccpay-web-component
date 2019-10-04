@@ -38,7 +38,17 @@ export class ReportsComponent implements OnInit {
  }
 
  getSelectedFromDate(): void {
+ this.validateDates();
   //this.reportsForm.get('startDate').setValue('');
+ }
+
+ validateDates(){
+  const selectedStartDate = this.tranformDate(this.reportsForm.get('startDate').value);
+  const selectedEndDate = this.tranformDate(this.reportsForm.get('endDate').value);
+  if(selectedStartDate > selectedEndDate && selectedEndDate !== ''){
+    this.reportsForm.get('startDate').setValue('');
+  }
+
  }
 
   fromValidation() {
