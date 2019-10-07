@@ -209,13 +209,13 @@
       </div>
     </div>
     <ccpay-app-unprocessed-payments [IS_BUTTON_ENABLE]="takePayment" [PAYMENT_RECORDS_EXISTS]="isPaymentRecordsExist" (selectedUnprocessedFeeEvent) = "selectedUnprocessedFeeEvent($event)" ></ccpay-app-unprocessed-payments>
-    <div class="govuk-grid-row govuk-grid__surplus-payments">
-    <div class="govuk-grid-column-full govuk-grid__surplus-payments-col1">
-      <span class="heading-small">Surplus payments</span>
-    </div>
-    <div class="govuk-grid-column-full">
-       Total surplus payments received: {{calculateRefundAmount() | currency :'GBP':'symbol':'1.2-2'}}
-    </div>
+    <div class="govuk-grid-row govuk-grid__surplus-payments"  *ngIf="calculateRefundAmount() > 0">
+      <div class="govuk-grid-column-full govuk-grid__surplus-payments-col1">
+        <span class="heading-small">Surplus payments</span>
+      </div>
+      <div class="govuk-grid-column-full">
+        Total surplus payments received: {{calculateRefundAmount() | currency :'GBP':'symbol':'1.2-2'}}
+      </div>
     </div>
   </main>
 
