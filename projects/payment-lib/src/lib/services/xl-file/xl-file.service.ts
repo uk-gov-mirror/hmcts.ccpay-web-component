@@ -47,14 +47,13 @@ private autoFitColumns (worksheet: XLSX.WorkSheet,json:any) : XLSX.WorkSheet {
       let value = obj.values(json[i]);
       let key = obj.keys(json[i]);
       for (let j = 0; j < value.length; j++) {
-        if (typeof value[j] == "number") {
-          objectMaxLength[j] = 10;
-        } else {
-          objectMaxLength[j] =
-            key[j].length >= value[j].length
-              ? key[j].length+2
-              : value[j].length+1;
+        if(value[j] === null){
+          value[j] = '';
         }
+        objectMaxLength[j] =
+          key[j].length >= value[j].length
+            ? key[j].length+2
+            : value[j].length+1;
       ColWidth.push({'width': +objectMaxLength[j]});
       }
     }
@@ -120,6 +119,6 @@ private saveAsExcelFile(buffer: any, fileName: string): void {
     const data: Blob = new Blob([buffer], {
       type: EXCEL_TYPE
     });
-    FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
+    FileSaver.saveAs(data, fileName +'_RUN_'+ new Date().getTime() + EXCEL_EXTENSION);
   }
 }

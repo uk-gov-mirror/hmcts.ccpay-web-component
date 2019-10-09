@@ -80,7 +80,7 @@ downloadReport(){
         } else if(response['data'].length === 0 && selectedReportName === 'SURPLUS_AND_SHORTFALL' ) {
           response.data= shortFallsRptDefault;
         }  
-        this.xlFileService.exportAsExcelFile(response['data'], this.reportsForm.get('selectedreport').value+'_'+selectedStartDate+'_'+selectedEndDate);
+        this.xlFileService.exportAsExcelFile(response['data'], this.reportsForm.get('selectedreport').value+'_'+selectedStartDate+'_To_'+selectedEndDate);
       },
       (error: any) => {
         this.errorMessage = <any>error;
@@ -93,7 +93,7 @@ downloadReport(){
         } else if(response['data'].length === 0 && selectedReportName === 'UNPROCESSED'){
           response.data = unProcessedRptDefault;
         }
-        this.xlFileService.exportAsExcelFile(response['data'], this.reportsForm.get('selectedreport').value+'_'+selectedStartDate+'_'+selectedEndDate);
+        this.xlFileService.exportAsExcelFile(response['data'], this.reportsForm.get('selectedreport').value+'_'+selectedStartDate+'_To_'+selectedEndDate);
       },
       (error: any) => {
         this.errorMessage = <any>error;
