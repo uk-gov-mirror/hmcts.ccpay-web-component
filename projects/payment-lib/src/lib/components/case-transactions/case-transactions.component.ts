@@ -139,8 +139,8 @@ getAllocationStatus(payments: any){
           } else {
             totalRefundAmount = (totalRefundAmount + grpOutstandingAmount);
           }
-        } else {
-          this.isGrpOutstandingAmtPositive = grpOutstandingAmount === 0;
+        } else if(grpOutstandingAmount > 0) {
+          this.isGrpOutstandingAmtPositive = true;
         }
     });
     return totalRefundAmount * -1;
