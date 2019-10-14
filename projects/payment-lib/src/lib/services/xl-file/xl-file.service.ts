@@ -25,7 +25,7 @@ export class XlFileService {
      worksheet =  this.setUnprocessedReportHeaders(worksheet);
      worksheet = this.autoFitColumns(worksheet,json);
     } else if(excelFileName.match('PROCESSED_UNALLOCATED')!== null){
-      worksheet =  XLSX.utils.json_to_sheet(json,{header:['loss_resp','payment_asset_dcn','resp_service_id','resp_service_name','date_banked','bgc_batch','amount']});
+      worksheet =  XLSX.utils.json_to_sheet(json,{header:['resp_service_id','resp_service_name','allocation_status','receiving_office','allocation_reason','ccd_exception_ref','ccd_case_ref','payment_asset_dcn','date_banked','bgc_batch','payment_method','amount','updated_by']});
       worksheet =  this.setProcessedUnallocatedReportHeaders(worksheet);
       worksheet = this.autoFitColumns(worksheet,json);
     } else {
