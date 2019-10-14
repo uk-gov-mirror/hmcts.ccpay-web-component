@@ -11,6 +11,7 @@ import { StatusHistoryComponent } from './components/status-history/status-histo
 import { PbaDetailsComponent } from './components/pba-details/pba-details.component';
 import { LoggerService } from './services/shared/logger/logger.service';
 import { ConsoleLoggerService } from './services/shared/logger/console-logger.service';
+import { WebComponentHttpClient } from './services/shared/httpclient/webcomponent.http.client';
 import { CaseTransactionsComponent } from './components/case-transactions/case-transactions.component';
 import { FeeSummaryComponent } from './components/fee-summary/fee-summary.component';
 import { MarkUnidentifiedPaymentComponent } from './components/mark-unidentified-payment/mark-unidentified-payment.component';
@@ -54,7 +55,8 @@ import { XlFileService } from './services/xl-file/xl-file.service';
   exports: [ PaymentLibComponent ],
   providers: [ 
     { provide: LoggerService, useClass: ConsoleLoggerService },
-    XlFileService
+    XlFileService,
+    WebComponentHttpClient
   ]
 })
 

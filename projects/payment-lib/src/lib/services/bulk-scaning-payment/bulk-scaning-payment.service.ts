@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {ErrorHandlerService} from '../shared/error-handler.service';
+import { WebComponentHttpClient } from '../shared/httpclient/webcomponent.http.client';
 import {PaymentLibService} from '../../payment-lib.service';
 import {Observable} from 'rxjs/Observable';
 import {catchError} from 'rxjs/operators';
@@ -15,6 +16,7 @@ import { IPaymentGroup } from '../../interfaces/IPaymentGroup';
 export class BulkScaningPaymentService {
 
   constructor(private http: HttpClient,
+    private https: WebComponentHttpClient,
               private errorHandlerService: ErrorHandlerService,
               private paymentLibService: PaymentLibService
               ) { }
@@ -36,7 +38,7 @@ export class BulkScaningPaymentService {
       );
   }
   postBSAllocatePayment(body: AllocatePaymentRequest, paymentRef: string): Observable<any> {
-    return this.http.post(`${this.paymentLibService.API_ROOT}/payment-groups/${paymentRef}/bulk-scan-payments`, body).pipe(
+    return this.https.post(`${this.paymentLibService.API_ROOT}/payment-groups/${paymentRef}/bulk-scan-payments`, body).pipe(
       catchError(this.errorHandlerService.handleError)
     );
   }
@@ -73,7 +75,7 @@ export class BulkScaningPaymentService {
   }
 
   downloadSelectedReport(reportName: string, startDate: string, endDate:string): Observable<any> {
-    return this.http.get(`${this.paymentLibService.BULKSCAN_API_ROOT}/report/data?date_from=${startDate}&date_to=${endDate}&report_type=${reportName}`, {
+    return this.https.get(`${this.paymentLibService.BULKSCAN_API_ROOT}/report/data?date_from=${startDate}&date_to=${endDate}&report_type=${reportName}`, {
       withCredentials: true
     })
       .pipe(
