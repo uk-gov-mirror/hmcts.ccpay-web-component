@@ -25,7 +25,7 @@ export class XlFileService {
      worksheet =  this.setUnprocessedReportHeaders(worksheet);
      worksheet = this.autoFitColumns(worksheet,json);
     } else if(excelFileName.match('PROCESSED_UNALLOCATED')!== null){
-      worksheet =  XLSX.utils.json_to_sheet(json,{header:['loss_resp','payment_asset_dcn','resp_service_id','resp_service_name','date_banked','bgc_batch','amount']});
+      worksheet =  XLSX.utils.json_to_sheet(json,{header:['resp_service_id','resp_service_name','allocation_status','receiving_office','allocation_reason','ccd_exception_reference','ccd_case_reference','payment_asset_dcn','date_banked','bgc_batch','payment_method','amount']});
       worksheet =  this.setProcessedUnallocatedReportHeaders(worksheet);
       worksheet = this.autoFitColumns(worksheet,json);
     } else {
@@ -54,6 +54,9 @@ private autoFitColumns (worksheet: XLSX.WorkSheet,json:any) : XLSX.WorkSheet {
           key[j].length >= value[j].length
             ? key[j].length+2
             : value[j].length+1;
+            if( value[j].length === undefined){
+              objectMaxLength[j] =  key[j].length+2;
+            }
       ColWidth.push({'width': +objectMaxLength[j]});
       }
     }
@@ -95,12 +98,11 @@ private setProcessedUnallocatedReportHeaders (worksheet: XLSX.WorkSheet): XLSX.W
   worksheet.E1.v = "Allocation_Reason";
   worksheet.F1.v = "CCD_Exception_Ref";
   worksheet.G1.v = "CCD_Case_Ref";
-  worksheet.H1.v = "Date_Banked";
-  worksheet.I1.v = "BGC_Batch";
-  worksheet.J1.v = "Payment_Asset_DCN";
+  worksheet.H1.v = "Payment_Asset_DCN";
+  worksheet.I1.v = "Date_Banked";
+  worksheet.J1.v = "BGC_Batch";
   worksheet.K1.v = "Payment_Method";
   worksheet.L1.v = "Amount";
-  worksheet.M1.v = "Updated_by";
   return worksheet;
 }
 
