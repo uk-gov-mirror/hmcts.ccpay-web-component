@@ -75,12 +75,13 @@ downloadReport(){
   if(selectedReportName === 'PROCESSED_UNALLOCATED' || selectedReportName === 'SURPLUS_AND_SHORTFALL' ){
     this.paymentViewService.downloadSelectedReport(selectedReportName,selectedStartDate,selectedEndDate).subscribe(
       response =>  {
-        if(response['data'].length === 0 && selectedReportName === 'PROCESSED_UNALLOCATED' ){
-          response.data= processedUnallocated;
-        } else if(response['data'].length === 0 && selectedReportName === 'SURPLUS_AND_SHORTFALL' ) {
-          response.data= shortFallsRptDefault;
+        let res = JSON.parse(response);
+        if(res['data'].length === 0 && selectedReportName === 'PROCESSED_UNALLOCATED' ){
+          res.data= processedUnallocated;
+        } else if(res['data'].length === 0 && selectedReportName === 'SURPLUS_AND_SHORTFALL' ) {
+          res.data= shortFallsRptDefault;
         }  
-        this.xlFileService.exportAsExcelFile(response['data'], this.reportsForm.get('selectedreport').value+'_'+selectedStartDate+'_To_'+selectedEndDate);
+        this.xlFileService.exportAsExcelFile(res['data'], this.reportsForm.get('selectedreport').value+'_'+selectedStartDate+'_To_'+selectedEndDate);
       },
       (error: any) => {
         this.errorMessage = <any>error;
@@ -88,12 +89,13 @@ downloadReport(){
   } else {
     this.bulkScaningPaymentService.downloadSelectedReport(selectedReportName,selectedStartDate,selectedEndDate).subscribe(
       response =>  {
-        if(response['data'].length === 0 && selectedReportName === 'DATA_LOSS' ){
-           response.data= dataLossRptDefault;
-        } else if(response['data'].length === 0 && selectedReportName === 'UNPROCESSED'){
-          response.data = unProcessedRptDefault;
+        let res = JSON.parse(response);
+        if(res['data'].length === 0 && selectedReportName === 'DATA_LOSS' ){
+          res.data= dataLossRptDefault;
+        } else if(res['data'].length === 0 && selectedReportName === 'UNPROCESSED'){
+          res.data = unProcessedRptDefault;
         }
-        this.xlFileService.exportAsExcelFile(response['data'], this.reportsForm.get('selectedreport').value+'_'+selectedStartDate+'_To_'+selectedEndDate);
+        this.xlFileService.exportAsExcelFile(res['data'], this.reportsForm.get('selectedreport').value+'_'+selectedStartDate+'_To_'+selectedEndDate);
       },
       (error: any) => {
         this.errorMessage = <any>error;

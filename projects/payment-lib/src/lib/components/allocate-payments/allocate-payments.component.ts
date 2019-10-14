@@ -77,15 +77,18 @@ this.isConfirmButtondisabled = true;
     (this.ccdCaseNumber, this.unAllocatedPayment, this.siteID);
     this.bulkScaningPaymentService.postBSAllocatePayment(requestBody, this.selectedPayment.payment_group_reference)
     .subscribe(
-      response => {
+      res1 => {
+        let response1 = JSON.parse(res1);
         const reqBody = new IAllocationPaymentsRequest
-        (response['data'].payment_group_reference, response['data'].reference);
+        (response1['data'].payment_group_reference, response1['data'].reference);
         this.paymentViewService.postBSAllocationPayments(reqBody).subscribe(
-          res => {
-            if (res.success) {
+          res2 => {
+            let response2 = JSON.parse(res2);
+            if (response2.success) {
               this.bulkScaningPaymentService.patchBSChangeStatus(this.unAllocatedPayment.dcn_reference, 'PROCESSED').subscribe(
-                res => {
-                  if (res.success) {
+                res3 => {
+                  let response3 = JSON.parse(res3);
+                  if (response3.success) {
                     this.paymentLibComponent.viewName = 'case-transactions';
                     this.paymentLibComponent.TAKEPAYMENT = true;
                   }

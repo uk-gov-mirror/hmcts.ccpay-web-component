@@ -74,7 +74,7 @@ export class AddRemissionComponent implements OnInit {
     (this.ccdCaseNumber, this.fee, remissionAmount, this.remissionForm.controls.remissionCode.value, this.service);
     this.paymentViewService.postPaymentGroupWithRemissions(this.paymentGroupRef, this.fee.id, requestBody).subscribe(
       response => {
-        if (response.success) {
+        if (JSON.parse(response).success) {
           if (this.paymentLibComponent.bspaymentdcn) {
             this.router.routeReuseStrategy.shouldReuseRoute = () => false;
             this.router.onSameUrlNavigation = 'reload';
