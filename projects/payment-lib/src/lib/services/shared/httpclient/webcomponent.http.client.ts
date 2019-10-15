@@ -24,6 +24,10 @@ export class WebComponentHttpClient {
     const opts = this.addHeaders(options || {});
     return this.http.get(url, opts);
   }
+  patch(url: string, body: any | null, options?: any): Observable<any> {
+    const opts = this.addHeaders(options || {});
+    return this.http.patch(url, body, opts);
+  }
 
   addHeaders(options: any): any {
     const csrfToken = this.meta.getTag('name=csrf-token');

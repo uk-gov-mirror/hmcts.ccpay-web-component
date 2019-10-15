@@ -158,7 +158,7 @@ export class FeeSummaryComponent implements OnInit {
     this.paymentViewService.postPaymentToPayHub(requestBody, this.paymentGroupRef).subscribe(
       response => {
         this.location.go(`payment-history?view=fee-summary`);
-        this.payhubHtml = JSON.parse(response);
+        this.payhubHtml = response;
         this.viewStatus = 'payhub_view';
         this.isBackButtonEnable=false;
       },
