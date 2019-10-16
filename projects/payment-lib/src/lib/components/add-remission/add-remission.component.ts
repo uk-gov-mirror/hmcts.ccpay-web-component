@@ -22,6 +22,8 @@ export class AddRemissionComponent implements OnInit {
   viewStatus = 'main';
   errorMessage = null;
   remissionCodeHasError = false;
+  remissionErrorMsg = 'Enter remission for reference. For example: HWF-A1B-23C';
+
   amountHasError = false;
   isConfirmationBtnDisabled: boolean = false;
 
@@ -50,6 +52,8 @@ export class AddRemissionComponent implements OnInit {
     }else {
       if(this.remissionForm.controls.remissionCode.invalid ) {
         this.remissionCodeHasError = true;
+        this.remissionErrorMsg = 'Enter remission for reference.';
+
       }
       if(this.remissionForm.controls.amount.invalid){
         this.amountHasError = true;

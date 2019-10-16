@@ -17,7 +17,7 @@
             <div class="govuk-form-group" [ngClass]="{'form-group-error': remissionCodeHasError}">
               <label class="govuk-label govuk-label--s" for="remission-code">
                   Add remission to {{ fee.code }}:{{ fee.description }}
-                <span class="form-hint" [ngClass]="{'inline-error-message': remissionCodeHasError}">Enter remission for reference. For example: HWF-A1B-23C</span>
+                <span class="form-hint" [ngClass]="{'inline-error-message': remissionCodeHasError}">{{remissionErrorMsg}}</span>
               </label>
               <input class="govuk-input govuk-input--width-20 govuk-!-margin-right-1" id="remissionCode" name="remissionCode" type="text" formControlName="remissionCode">
             </div>
