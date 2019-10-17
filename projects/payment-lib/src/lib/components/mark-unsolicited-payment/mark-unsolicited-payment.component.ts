@@ -65,19 +65,18 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
   confirmPayments() {
     this.isConfirmButtondisabled = true;
     const controls = this.markPaymentUnsolicitedForm.controls;
-    const requestBody = new AllocatePaymentRequest
-    (this.ccdCaseNumber, this.unassignedRecord, this.siteID);
-    this.paymentViewService.postBSPayments(requestBody).subscribe(
+    this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'PROCESSED').subscribe(
       res1 => {
         const response1 = JSON.parse(res1),
-            reqBody = new UnsolicitedPaymentsRequest
-        (response1['data'].payment_group_reference, response1['data'].reference, controls.reason.value, controls.responsibleOffice.value, controls.responsiblePerson.value, controls.emailId.value);
-
-        this.paymentViewService.postBSUnsolicitedPayments(reqBody).subscribe(
+         requestBody = new AllocatePaymentRequest
+        (this.ccdCaseNumber, this.unassignedRecord, this.siteID);
+        this.paymentViewService.postBSPayments(requestBody).subscribe(
           res2 => {
-            const response2 = JSON.parse(res2);
+            const response2 = JSON.parse(res2),
+            reqBody = new UnsolicitedPaymentsRequest
+            (response2['data'].payment_group_reference, response2['data'].reference, controls.reason.value, controls.responsibleOffice.value, controls.responsiblePerson.value, controls.emailId.value);
              if (response2.success) {
-              this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'PROCESSED').subscribe(
+              this.paymentViewService.postBSUnsolicitedPayments(reqBody).subscribe(
                 res3 => {
                   const response3 = JSON.parse(res3);
                   if (response3.success) {
@@ -86,6 +85,7 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
                   }
                 },
                 (error: any) => {
+                  this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'COMPLETE').subscribe();
                   this.errorMessage = error;
                   this.isConfirmButtondisabled = false;
                 }
@@ -93,6 +93,7 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
             }
           },
           (error: any) => {
+            this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'COMPLETE').subscribe();
             this.errorMessage = error;
             this.isConfirmButtondisabled = false;
           }

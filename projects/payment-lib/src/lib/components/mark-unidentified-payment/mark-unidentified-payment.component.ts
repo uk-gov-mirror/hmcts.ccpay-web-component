@@ -24,6 +24,7 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
   unassignedRecord:IBSPayments;
   siteID: string = null;
   investigationComment: string;
+  isConfirmButtondisabled:Boolean = false;
 
   constructor(private formBuilder: FormBuilder,
   private paymentViewService: PaymentViewService,
@@ -79,19 +80,20 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
     }
   }
   confirmPayments() {
-    const requestBody = new AllocatePaymentRequest
-    (this.ccdCaseNumber, this.unassignedRecord, this.siteID),
-    reason = this.markPaymentUnidentifiedForm.get('investicationDetail').value;
-    this.paymentViewService.postBSPayments(requestBody).subscribe(
+    this.isConfirmButtondisabled = true;
+
+    const reason = this.markPaymentUnidentifiedForm.get('investicationDetail').value;
+      this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'PROCESSED').subscribe(
       res1 => {
-        const response1 = JSON.parse(res1),
-           reqBody = new UnidentifiedPaymentsRequest
-        (response1['data'].payment_group_reference, response1['data'].reference, reason);
-        this.paymentViewService.postBSUnidentifiedPayments(reqBody).subscribe(
+        const requestBody = new AllocatePaymentRequest
+        (this.ccdCaseNumber, this.unassignedRecord, this.siteID)
+        this.paymentViewService.postBSPayments(requestBody).subscribe(
           res2 => {
-            const response2 = JSON.parse(res2);
+            const response2 = JSON.parse(res2),
+              reqBody = new UnidentifiedPaymentsRequest
+              (response2['data'].payment_group_reference, response2['data'].reference, reason);
             if (response2.success) {
-              this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'PROCESSED').subscribe(
+              this.paymentViewService.postBSUnidentifiedPayments(reqBody).subscribe(
                 res3 => {
                   const response3 = JSON.parse(res3);
                   if (response3.success) {
@@ -99,14 +101,25 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
                     this.paymentLibComponent.TAKEPAYMENT = true;
                   }
                 },
-                (error: any) => this.errorMessage = error
+                (error: any) => {
+                  this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'COMPLETE').subscribe();
+                  this.errorMessage = error;
+                  this.isConfirmButtondisabled = false;
+                }
               );
             }
           },
-          (error: any) => this.errorMessage = error
+          (error: any) => {
+            this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'COMPLETE').subscribe();
+            this.errorMessage = error;
+            this.isConfirmButtondisabled = false;
+          }
         );
       },
-      (error: any) => this.errorMessage = error
+      (error: any) => {
+        this.errorMessage = error
+        this.isConfirmButtondisabled = false;
+      }
     );
   }
   cancelMarkUnidentifiedPayments(type?:string){
@@ -120,6 +133,7 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
       this.viewStatus = 'mainForm';
     }
   }
+
   gotoCasetransationPage() {
     this.paymentLibComponent.viewName = 'case-transactions';
     this.paymentLibComponent.TAKEPAYMENT = true;

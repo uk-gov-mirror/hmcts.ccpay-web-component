@@ -72,20 +72,21 @@ export class AllocatePaymentsComponent implements OnInit {
     this.viewStatus = 'mainForm';
   }
   confirmAllocatePayement(){
-this.isConfirmButtondisabled = true;
-   const requestBody = new AllocatePaymentRequest
-    (this.ccdCaseNumber, this.unAllocatedPayment, this.siteID);
-    this.bulkScaningPaymentService.postBSAllocatePayment(requestBody, this.selectedPayment.payment_group_reference)
-    .subscribe(
+    this.isConfirmButtondisabled = true;
+    this.bulkScaningPaymentService.patchBSChangeStatus(this.unAllocatedPayment.dcn_reference, 'PROCESSED').subscribe(
       res1 => {
-        let response1 = JSON.parse(res1);
-        const reqBody = new IAllocationPaymentsRequest
-        (response1['data'].payment_group_reference, response1['data'].reference);
-        this.paymentViewService.postBSAllocationPayments(reqBody).subscribe(
-          res2 => {
-            let response2 = JSON.parse(res2);
-            if (response2.success) {
-              this.bulkScaningPaymentService.patchBSChangeStatus(this.unAllocatedPayment.dcn_reference, 'PROCESSED').subscribe(
+        let response3 = JSON.parse(res1);
+        if (response3.success) {
+          const requestBody = new AllocatePaymentRequest
+          (this.ccdCaseNumber, this.unAllocatedPayment, this.siteID);
+          this.bulkScaningPaymentService.postBSAllocatePayment(requestBody, this.selectedPayment.payment_group_reference).subscribe(
+            res2 => {
+              let response2 = JSON.parse(res2);
+              const reqBody = new IAllocationPaymentsRequest
+              (response2['data'].payment_group_reference, response2['data'].reference);
+              if (response2.success) {
+                this.paymentViewService.postBSAllocationPayments(reqBody).subscribe(
+
                 res3 => {
                   let response3 = JSON.parse(res3);
                   if (response3.success) {
@@ -97,14 +98,15 @@ this.isConfirmButtondisabled = true;
                   this.errorMessage = error;
                   this.isConfirmButtondisabled = false;
                 }
-              );
+                );
+              }
+            },
+            (error: any) => {
+              this.errorMessage = error;
+              this.isConfirmButtondisabled = false;
             }
-          },
-          (error: any) => {
-            this.errorMessage = error;
-            this.isConfirmButtondisabled = false;
-          }
-        );
+          );
+      }
       },
       (error: any) => {
         this.errorMessage = error;

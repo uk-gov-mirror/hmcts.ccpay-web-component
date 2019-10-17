@@ -31,28 +31,10 @@ export class PaymentViewService {
               private errorHandlerService: ErrorHandlerService,
               private paymentLibService: PaymentLibService) { }
 
-  addHeaders(options: any): any {
-    const headers = {};
-    if (options.headers) {
-      options.headers.forEach(element => {
-        headers[element] = options.headers.get(element);
-      });
-    }
-    headers['X-Requested-With'] = 'XMLHttpRequest';
-
-    if (this.meta && this.meta.getTag('name=csrf-token')) {
-      const csrfToken = this.meta.getTag('name=csrf-token');
-      headers['CSRF-Token'] = csrfToken.content;
-    }
-    options.headers = new HttpHeaders(headers);
-    options.responseType = 'text';
-    return options;
-  }
-
   getPaymentDetails(paymentReference: string, paymentMethod: string): Observable<IPayment> {
     this.logger.info('Payment-view-service getPaymentDetails for: ', paymentReference);
 
-    return this.http.get<IPayment>(paymentMethod === 'card' ?
+    return this.http.get<IPayment>(paymentMethod === 'card' || paymentMethod === 'cash' || paymentMethod === 'cheque' || paymentMethod === 'postal order' ?
           `${this.paymentLibService.API_ROOT}/card-payments/${paymentReference}` :
           `${this.paymentLibService.API_ROOT}/credit-account-payments/${paymentReference}`, {
         withCredentials: true
@@ -100,7 +82,7 @@ export class PaymentViewService {
   }
   deleteFeeFromPaymentGroup(feeId: number): Observable<any> {
         this.logger.info('Payment-view-service deleteFeeFromPaymentGroup for: ', feeId);
-    return this.http.delete(`${this.paymentLibService.API_ROOT}/fees/${feeId}`).pipe(
+    return this.https.delete(`${this.paymentLibService.API_ROOT}/fees/${feeId}`).pipe(
       catchError(this.errorHandlerService.handleError)
     );
   }
