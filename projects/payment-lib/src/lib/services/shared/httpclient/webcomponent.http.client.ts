@@ -27,7 +27,7 @@ export class WebComponentHttpClient {
 
   delete(url: string, options?: any): Observable<any> {
     const opts = this.addHeaders(options || {});
-    return this.http.get(url, opts);
+    return this.http.delete(url, opts);
   }
   
   patch(url: string, body: any | null, options?: any): Observable<any> {
