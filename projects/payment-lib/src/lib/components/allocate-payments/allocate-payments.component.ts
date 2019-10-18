@@ -75,8 +75,8 @@ export class AllocatePaymentsComponent implements OnInit {
     this.isConfirmButtondisabled = true;
     this.bulkScaningPaymentService.patchBSChangeStatus(this.unAllocatedPayment.dcn_reference, 'PROCESSED').subscribe(
       res1 => {
-        let response3 = JSON.parse(res1);
-        if (response3.success) {
+        let response1 = JSON.parse(res1);
+        if (response1.success) {
           const requestBody = new AllocatePaymentRequest
           (this.ccdCaseNumber, this.unAllocatedPayment, this.siteID);
           this.bulkScaningPaymentService.postBSAllocatePayment(requestBody, this.selectedPayment.payment_group_reference).subscribe(
@@ -95,6 +95,14 @@ export class AllocatePaymentsComponent implements OnInit {
                   }
                 },
                 (error: any) => {
+                  this.bulkScaningPaymentService.patchBSChangeStatus(this.unAllocatedPayment.dcn_reference, 'COMPLETE').subscribe(
+                    success => {
+                      if (JSON.parse(success).success) {
+                        this.paymentLibComponent.viewName = 'case-transactions';
+                        this.paymentLibComponent.TAKEPAYMENT = true;
+                      }
+                    }
+                  );
                   this.errorMessage = error;
                   this.isConfirmButtondisabled = false;
                 }
@@ -102,6 +110,14 @@ export class AllocatePaymentsComponent implements OnInit {
               }
             },
             (error: any) => {
+              this.bulkScaningPaymentService.patchBSChangeStatus(this.unAllocatedPayment.dcn_reference, 'COMPLETE').subscribe(
+                success => {
+                  if (JSON.parse(success).success) {
+                    this.paymentLibComponent.viewName = 'case-transactions';
+                    this.paymentLibComponent.TAKEPAYMENT = true;
+                  }
+                }
+              );
               this.errorMessage = error;
               this.isConfirmButtondisabled = false;
             }

@@ -46,23 +46,30 @@ export class UnprocessedPaymentsComponent implements OnInit {
      if (this.selectedOption === 'dcn') {
         this.bulkScaningPaymentService.getBSPaymentsByDCN(this.dcnNumber).subscribe(
         unassignedPayments => {
-        this.unassignedRecordList = unassignedPayments['data'].payments;
-        this.serviceId = unassignedPayments['data'].responsible_service_id;
-        if (unassignedPayments['data']['ccd_reference'] === undefined) {
-          this.isExceptionCase = true;
-        }
-        this.isRecordExist =  this.unassignedRecordList.length === 0;
+          if(unassignedPayments['data'].payments) {
+            this.unassignedRecordList = unassignedPayments['data'].payments;
+            this.serviceId = unassignedPayments['data'].responsible_service_id;
+            if (unassignedPayments['data']['ccd_reference'] === undefined) {
+            this.isExceptionCase = true;
+            }
+            this.isRecordExist =  this.unassignedRecordList.length === 0;
+          }
+          this.upPaymentErrorMessage = 'error';
         },
         (error: any) => this.upPaymentErrorMessage = error
       );
     } else {
         this.bulkScaningPaymentService.getBSPaymentsByCCD(this.ccdCaseNumber).subscribe(
         unassignedPayments => {
-        this.unassignedRecordList = unassignedPayments['data'].payments;
-        if (unassignedPayments['data']['ccd_reference'] === undefined) {
-          this.isExceptionCase = true;
-        }
-        this.isRecordExist =  this.unassignedRecordList.length === 0;
+          if(unassignedPayments['data'].payments) {
+            this.unassignedRecordList = unassignedPayments['data'].payments;
+            this.serviceId = unassignedPayments['data'].responsible_service_id;
+            if (unassignedPayments['data']['ccd_reference'] === undefined) {
+            this.isExceptionCase = true;
+            }
+            this.isRecordExist =  this.unassignedRecordList.length === 0;
+          }
+          this.upPaymentErrorMessage = 'error';
         },
         (error: any) => this.upPaymentErrorMessage = error
       );

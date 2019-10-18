@@ -60,15 +60,20 @@ export class FeeSummaryComponent implements OnInit {
      if (this.selectedOption === 'dcn') {
         this.bulkScaningPaymentService.getBSPaymentsByDCN(this.paymentLibComponent.DCN_NUMBER).subscribe(
         unassignedPayments => {
-        this.service = unassignedPayments['data'].responsible_service_id;
+          if(unassignedPayments['data'].payments) {
+            this.service = unassignedPayments['data'].responsible_service_id;
+          }
+          this.upPaymentErrorMessage = 'error';
         },
         (error: any) => this.upPaymentErrorMessage = error
       );
     } else {
         this.bulkScaningPaymentService.getBSPaymentsByCCD(this.ccdCaseNumber).subscribe(
         unassignedPayments => {
-        this.service = unassignedPayments['data'].responsible_service_id;
-        },
+          if(unassignedPayments['data'].payments) {
+            this.service = unassignedPayments['data'].responsible_service_id;
+          }
+          this.upPaymentErrorMessage = 'error';        },
         (error: any) => this.upPaymentErrorMessage = error
       );
     }
