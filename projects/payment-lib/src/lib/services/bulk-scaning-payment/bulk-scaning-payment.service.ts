@@ -74,6 +74,11 @@ export class BulkScaningPaymentService {
     return (feesTotal - remissionsTotal) - paymentsTotal;
   }
 
+  removeUnwantedString(input: string) {
+    const pattern = /[\_]/gi;
+    return input.replace(pattern, '');
+  }
+
   downloadSelectedReport(reportName: string, startDate: string, endDate:string): Observable<any> {
     return this.https.get(`${this.paymentLibService.BULKSCAN_API_ROOT}/report/data?date_from=${startDate}&date_to=${endDate}&report_type=${reportName}`, {
       withCredentials: true

@@ -62,8 +62,9 @@ export class FeeSummaryComponent implements OnInit {
         unassignedPayments => {
           if(unassignedPayments['data'].payments) {
             this.service = unassignedPayments['data'].responsible_service_id;
+          } else {
+            this.upPaymentErrorMessage = 'error';
           }
-          this.upPaymentErrorMessage = 'error';
         },
         (error: any) => this.upPaymentErrorMessage = error
       );
@@ -72,8 +73,10 @@ export class FeeSummaryComponent implements OnInit {
         unassignedPayments => {
           if(unassignedPayments['data'].payments) {
             this.service = unassignedPayments['data'].responsible_service_id;
-          }
-          this.upPaymentErrorMessage = 'error';        },
+          } else {
+            this.upPaymentErrorMessage = 'error';  
+          }      
+        },
         (error: any) => this.upPaymentErrorMessage = error
       );
     }

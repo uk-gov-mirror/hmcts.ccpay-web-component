@@ -53,8 +53,9 @@ export class UnprocessedPaymentsComponent implements OnInit {
             this.isExceptionCase = true;
             }
             this.isRecordExist =  this.unassignedRecordList.length === 0;
+          } else {
+            this.upPaymentErrorMessage = 'error';
           }
-          this.upPaymentErrorMessage = 'error';
         },
         (error: any) => this.upPaymentErrorMessage = error
       );
@@ -68,8 +69,9 @@ export class UnprocessedPaymentsComponent implements OnInit {
             this.isExceptionCase = true;
             }
             this.isRecordExist =  this.unassignedRecordList.length === 0;
+          } else {
+            this.upPaymentErrorMessage = 'error';
           }
-          this.upPaymentErrorMessage = 'error';
         },
         (error: any) => this.upPaymentErrorMessage = error
       );
@@ -78,6 +80,9 @@ export class UnprocessedPaymentsComponent implements OnInit {
   }
   formatUnassignedRecordId(ID: Number) {
     return `unassignrecord-${ID}`;
+  }
+  trimUnderscore(method: string){
+    return this.bulkScaningPaymentService.removeUnwantedString(method);
   }
   redirectToFeeSearchPage(event: any) {
     event.preventDefault();

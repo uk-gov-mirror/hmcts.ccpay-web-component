@@ -57,6 +57,9 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
       (error: any) => this.errorMessage = error
     );
   }
+  trimUnderscore(method: string){
+    return this.bulkScaningPaymentService.removeUnwantedString(method);
+  }
  saveAndContinue() {
     this.investicationDetailHasError = false;
     const formerror = this.markPaymentUnidentifiedForm.controls.investicationDetail.errors;

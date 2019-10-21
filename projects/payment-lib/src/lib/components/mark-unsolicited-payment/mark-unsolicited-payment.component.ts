@@ -62,6 +62,9 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
       emailId: new FormControl('')
     });
   }
+  trimUnderscore(method: string){
+    return this.bulkScaningPaymentService.removeUnwantedString(method);
+  }
   confirmPayments() {
     this.isConfirmButtondisabled = true;
     const controls = this.markPaymentUnsolicitedForm.controls;
