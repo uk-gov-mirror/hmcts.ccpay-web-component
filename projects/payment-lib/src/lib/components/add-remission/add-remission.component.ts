@@ -70,7 +70,7 @@ export class AddRemissionComponent implements OnInit {
     (this.ccdCaseNumber, this.fee, remissionAmount, this.remissionForm.controls.remissionCode.value, this.service);
     this.paymentViewService.postPaymentGroupWithRemissions(this.paymentGroupRef, this.fee.id, requestBody).subscribe(
       response => {
-        if (response.success) {
+        if (JSON.parse(response).success) {
           this.paymentLibComponent.viewName = 'case-transactions';
           this.paymentLibComponent.TAKEPAYMENT = true;
         }
