@@ -11,6 +11,7 @@ import { StatusHistoryComponent } from './components/status-history/status-histo
 import { PbaDetailsComponent } from './components/pba-details/pba-details.component';
 import { LoggerService } from './services/shared/logger/logger.service';
 import { ConsoleLoggerService } from './services/shared/logger/console-logger.service';
+import { WebComponentHttpClient } from './services/shared/httpclient/webcomponent.http.client';
 import { CaseTransactionsComponent } from './components/case-transactions/case-transactions.component';
 import { FeeSummaryComponent } from './components/fee-summary/fee-summary.component';
 import { AddRemissionComponent } from './components/add-remission/add-remission.component';
@@ -41,7 +42,10 @@ import { SanitizeHtmlPipe } from './pipes/sanitize-html.pipe';
     SanitizeHtmlPipe
   ],
   exports: [ PaymentLibComponent ],
-  providers: [ { provide: LoggerService, useClass: ConsoleLoggerService }]
+  providers: [ { 
+    provide: LoggerService, useClass: ConsoleLoggerService },
+    WebComponentHttpClient
+  ]
 })
 
 export class PaymentLibModule { }
