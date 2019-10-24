@@ -155,7 +155,7 @@
                         </td>
                         <td class="govuk-table__cell">{{ payment.date_created | date:'dd MMM yyyy HH:mm:ss' }}</td>
                         <td class="channel govuk-table__cell">{{ payment.channel | lowercase }}</td>
-                        <td class="capitalize govuk-table__cell">{{ payment.method | lowercase }}</td>
+                        <td class="govuk-table__cell capitalize">{{ payment.method | lowercase}}</td>
                         <td class="govuk-table__cell">{{ payment.amount }}</td>
                         <td class="govuk-table__cell"> {{getAllocationStatus(payment)}}</td>
                         <td class="govuk-table__cell">{{ payment.status }}</td>

@@ -38,4 +38,6 @@
 
 
 .lowercase { text-transform: lowercase; }
-.capitalize { text-transform: capitalize; }
+.capitalize::first-letter {
+  text-transform: uppercase;
+}

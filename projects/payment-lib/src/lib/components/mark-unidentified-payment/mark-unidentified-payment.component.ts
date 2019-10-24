@@ -58,7 +58,7 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
     );
   }
   trimUnderscore(method: string){
-    return this.bulkScaningPaymentService.removeUnwantedString(method);
+    return this.bulkScaningPaymentService.removeUnwantedString(method,' ');
   }
  saveAndContinue() {
     this.investicationDetailHasError = false;

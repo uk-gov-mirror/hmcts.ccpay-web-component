@@ -74,9 +74,9 @@ export class BulkScaningPaymentService {
     return (feesTotal - remissionsTotal) - paymentsTotal;
   }
 
-  removeUnwantedString(input: string) {
+  removeUnwantedString(input: string, replaceText: string) {
     const pattern = /[\_]/gi;
-    return input.replace(pattern, '');
+    return input.replace(pattern, replaceText);
   }
 
   downloadSelectedReport(reportName: string, startDate: string, endDate:string): Observable<any> {

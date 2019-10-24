@@ -26,7 +26,6 @@
     padding-bottom: 10px;
 }
 .lowercase { text-transform: lowercase; }
-.capitalize { text-transform: capitalize; }
 
 .channel::first-letter {
     text-transform: uppercase;
@@ -59,4 +58,8 @@
 
 details summary {
     display: list-item;
+}
+
+.capitalize::first-letter {
+    text-transform: uppercase;
 }

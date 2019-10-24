@@ -82,7 +82,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
     return `unassignrecord-${ID}`;
   }
   trimUnderscore(method: string){
-    return this.bulkScaningPaymentService.removeUnwantedString(method);
+    return this.bulkScaningPaymentService.removeUnwantedString(method,' ');
   }
   redirectToFeeSearchPage(event: any) {
     event.preventDefault();

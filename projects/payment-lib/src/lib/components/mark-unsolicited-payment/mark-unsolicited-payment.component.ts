@@ -63,7 +63,7 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
     });
   }
   trimUnderscore(method: string){
-    return this.bulkScaningPaymentService.removeUnwantedString(method);
+    return this.bulkScaningPaymentService.removeUnwantedString(method,' ');
   }
   confirmPayments() {
     this.isConfirmButtondisabled = true;
