@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { formatDate } from "@angular/common";
 import {PaymentLibComponent} from '../../payment-lib.component';
 import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
 import {CaseTransactionsService} from '../../services/case-transactions/case-transactions.service';
@@ -31,6 +32,7 @@ export class ReportsComponent implements OnInit {
 
   ngOnInit() {
     this.fromValidation();
+
    }
 
   getToday(): string {
@@ -72,45 +74,52 @@ downloadReport(){
   const selectedStartDate = this.tranformDate(this.reportsForm.get('startDate').value);
   const selectedEndDate = this.tranformDate(this.reportsForm.get('endDate').value);
 
-  if(selectedReportName === 'PROCESSED_UNALLOCATED' || selectedReportName === 'SURPLUS_AND_SHORTFALL' ){
-    this.paymentViewService.downloadSelectedReport(selectedReportName,selectedStartDate,selectedEndDate).subscribe(
-      response =>  {
-        let res = JSON.parse(response);
-        if(res['data'].length === 0 && selectedReportName === 'PROCESSED_UNALLOCATED' ){
-          res.data= processedUnallocated;
-        } else if(res['data'].length === 0 && selectedReportName === 'SURPLUS_AND_SHORTFALL' ) {
-          res.data= shortFallsRptDefault;
-        }  
-        this.xlFileService.exportAsExcelFile(res['data'], this.reportsForm.get('selectedreport').value+'_'+selectedStartDate+'_To_'+selectedEndDate);
-      },
-      (error: any) => {
-        this.errorMessage = <any>error;
-      })
-  } else {
-    this.bulkScaningPaymentService.downloadSelectedReport(selectedReportName,selectedStartDate,selectedEndDate).subscribe(
-      response =>  {
-        let res = JSON.parse(response);
-        if(res['data'].length === 0 && selectedReportName === 'DATA_LOSS' ){
-          res.data= dataLossRptDefault;
-        } else if(res['data'].length === 0 && selectedReportName === 'UNPROCESSED'){
-          res.data = unProcessedRptDefault;
-        }
-        this.xlFileService.exportAsExcelFile(res['data'], this.reportsForm.get('selectedreport').value+'_'+selectedStartDate+'_To_'+selectedEndDate);
-      },
-      (error: any) => {
-        this.errorMessage = <any>error;
-      })
-  }
-   
+    if(selectedReportName === 'PROCESSED_UNALLOCATED' || selectedReportName === 'SURPLUS_AND_SHORTFALL' ){
+      this.paymentViewService.downloadSelectedReport(selectedReportName,selectedStartDate,selectedEndDate).subscribe(
+        response =>  {
+          let res= {data: this.applyDateFormat(JSON.parse(response))};
+          if(res['data'].length === 0 && selectedReportName === 'PROCESSED_UNALLOCATED' ){
+            res.data= processedUnallocated;
+          } else if(res['data'].length === 0 && selectedReportName === 'SURPLUS_AND_SHORTFALL' ) {
+            res.data= shortFallsRptDefault;
+          }  
+          this.xlFileService.exportAsExcelFile(res['data'], this.reportsForm.get('selectedreport').value+'_'+selectedStartDate+'_To_'+selectedEndDate);
+        },
+        (error: any) => {
+          this.errorMessage = <any>error;
+        })
+    } else {
+      this.bulkScaningPaymentService.downloadSelectedReport(selectedReportName,selectedStartDate,selectedEndDate).subscribe(
+        response =>  {
+          let res = {data: this.applyDateFormat(JSON.parse(response))};
+          if(res['data'].length === 0 && selectedReportName === 'DATA_LOSS' ){
+            res.data= dataLossRptDefault;
+          } else if(res['data'].length === 0 && selectedReportName === 'UNPROCESSED'){
+            res.data = unProcessedRptDefault;
+          }
+          this.xlFileService.exportAsExcelFile(res['data'], this.reportsForm.get('selectedreport').value+'_'+selectedStartDate+'_To_'+selectedEndDate);
+        },
+        (error: any) => {
+          this.errorMessage = <any>error;
+        })
+    }
   }
  
    tranformDate(strDate: string) {
-    let result = '';
-    if (strDate) {
-      let parts = strDate.split('-');
-      result = `${parts[1]}/${parts[2]}/${parts[0]}`;
-    }
-    return result;
-}
-  
+      let result = '';
+      if (strDate) {
+        let parts = strDate.split('-');
+        result = `${parts[1]}/${parts[2]}/${parts[0]}`;
+      }
+      return result;
+   }
+  applyDateFormat(res) {
+    const fmt = 'dd/MM/yyyy',
+    loc = 'en-US';
+    return res['data'].map(value => {
+      value['date_banked'] = value['date_banked'] ? formatDate(value['date_banked'], fmt, loc): null;
+      value['processed_date'] = value['processed_date'] ? formatDate(value['processed_date'], fmt, loc): null;
+      return value;
+    });
+  }
 }
