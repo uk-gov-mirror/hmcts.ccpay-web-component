@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/internal/Observable';
 
 import {IPayment} from '../../interfaces/IPayment';
 import {PaymentLibService} from '../../payment-lib.service';
+import { WebComponentHttpClient } from '../shared/httpclient/webcomponent.http.client';
 import { ErrorHandlerService } from '../shared/error-handler.service';
 import { catchError } from 'rxjs/operators';
 import { LoggerService } from '../shared/logger/logger.service';
@@ -21,27 +22,10 @@ export class PaymentViewService {
   private meta: Meta;
 
   constructor(private http: HttpClient,
+              private https: WebComponentHttpClient,
               private logger: LoggerService,
               private errorHandlerService: ErrorHandlerService,
               private paymentLibService: PaymentLibService) { }
-
-  addHeaders(options: any): any {
-    const headers = {};
-    if (options.headers) {
-      options.headers.forEach(element => {
-        headers[element] = options.headers.get(element);
-      });
-    }
-    headers['X-Requested-With'] = 'XMLHttpRequest';
-
-    if (this.meta && this.meta.getTag('name=csrf-token')) {
-      const csrfToken = this.meta.getTag('name=csrf-token');
-      headers['CSRF-Token'] = csrfToken.content;
-    }
-    options.headers = new HttpHeaders(headers);
-    options.responseType = 'text';
-    return options;
-  }
 
   getPaymentDetails(paymentReference: string, paymentMethod: string): Observable<IPayment> {
     this.logger.info('Payment-view-service getPaymentDetails for: ', paymentReference);
@@ -68,20 +52,18 @@ export class PaymentViewService {
   }
 
   postPaymentGroupWithRemissions(paymentGroupReference: string, feeId: number, body: AddRemissionRequest): Observable<any> {
-    return this.http.post(`${this.paymentLibService.API_ROOT}/payment-groups/${paymentGroupReference}/fees/${feeId}/remissions`, body).pipe(
+    return this.https.post(`${this.paymentLibService.API_ROOT}/payment-groups/${paymentGroupReference}/fees/${feeId}/remissions`, body).pipe(
       catchError(this.errorHandlerService.handleError)
     );
   }
   deleteFeeFromPaymentGroup(feeId: number): Observable<any> {
         this.logger.info('Payment-view-service deleteFeeFromPaymentGroup for: ', feeId);
-    return this.http.delete(`${this.paymentLibService.API_ROOT}/fees/${feeId}`).pipe(
+    return this.https.delete(`${this.paymentLibService.API_ROOT}/fees/${feeId}`).pipe(
       catchError(this.errorHandlerService.handleError)
     );
   }
   postPaymentToPayHub(body: PaymentToPayhubRequest, paymentGroupRef: string): Observable<any> {
-    const opts = {};
-    this.addHeaders(opts);
-    return this.http.post(`${this.paymentLibService.API_ROOT}/payment-groups/${paymentGroupRef}/card-payments`, body, opts).pipe(
+    return this.https.post(`${this.paymentLibService.API_ROOT}/payment-groups/${paymentGroupRef}/card-payments`, body).pipe(
       catchError(this.errorHandlerService.handleError)
     );
   }
