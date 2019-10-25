@@ -177,8 +177,12 @@ export class FeeSummaryComponent implements OnInit {
       }
     );
   }
-  goToAllocatePage() {
-    this.paymentLibComponent.paymentGroupReference = this.paymentGroupRef;
-    this.paymentLibComponent.viewName = 'allocate-payments';
+  goToAllocatePage(outStandingAmount: number) {
+    if (outStandingAmount > 0) {
+      this.paymentLibComponent.paymentGroupReference = this.paymentGroupRef;
+      this.paymentLibComponent.viewName = 'allocate-payments';
+    } else {
+      this.loadCaseTransactionPage();
+    }
   }
 }
