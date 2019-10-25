@@ -4,10 +4,10 @@ import { Observable } from 'rxjs/internal/Observable';
 
 import {IPayment} from '../../interfaces/IPayment';
 import {PaymentLibService} from '../../payment-lib.service';
+import { WebComponentHttpClient } from '../shared/httpclient/webcomponent.http.client';
 import { ErrorHandlerService } from '../shared/error-handler.service';
 import { catchError } from 'rxjs/operators';
 import { LoggerService } from '../shared/logger/logger.service';
-import { WebComponentHttpClient } from '../shared/httpclient/webcomponent.http.client';
 import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
 import { AddRemissionRequest } from '../../interfaces/AddRemissionRequest';
 import { PaymentToPayhubRequest } from '../../interfaces/PaymentToPayhubRequest';
