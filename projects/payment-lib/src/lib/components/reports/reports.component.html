@@ -16,7 +16,6 @@
               name="selectedreport"
               type="radio"
               value="DATA_LOSS" 
-              (change)= "onSelectionChange('DataLoss')"
                data-aria-controls="DataLoss"/>
               <label class="govuk-label govuk-radios__label govuk-label--m" for="DataLoss">Data loss</label>
               <span class="form-hint">Missing transactions where data has been received from only either of Exela or Bulk scan</span>
@@ -30,7 +29,6 @@
               name="selectedreport"
               type="radio"
               value="UNPROCESSED" 
-              (change)= "onSelectionChange('UnprocessedTransactions')"
               data-aria-controls="UnprocessedTransactions"/>
               <label class="govuk-label govuk-radios__label govuk-label--m" for="UnprocessedTransactions">Unprocessed transactions</label>
               <span class="form-hint">Transaction records that are still unprocessed by staff.</span>
@@ -44,7 +42,6 @@
             name="selectedreport"
             type="radio"
             value="PROCESSED_UNALLOCATED" 
-            (change)= "onSelectionChange('ProcessedUnallocated')"
             data-aria-controls="ProcessedUnallocated"/>
             <label class="govuk-label govuk-radios__label govuk-label--m" for="ProcessedUnallocated">Processed unallocated</label>
             <span class="form-hint">Payments that are marked as ‘Unidentified’ or ‘Transferred’ (Unsolicited requests)</span>
@@ -58,7 +55,6 @@
             name="selectedreport"
             type="radio"
             value="SURPLUS_AND_SHORTFALL" 
-            (change)= "onSelectionChange('ShortfallsandSurplus')"
             data-aria-controls="ShortfallsandSurplus"/>
             <label class="govuk-label govuk-radios__label govuk-label--m" for="ShortfallsandSurplus">Short falls and surplus</label>
             <span class="form-hint">Requests where balances are marked as shortfall/surplus further case management.

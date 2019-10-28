@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { formatDate } from "@angular/common";
-import {PaymentLibComponent} from '../../payment-lib.component';
 import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
-import {CaseTransactionsService} from '../../services/case-transactions/case-transactions.service';
 import { BulkScaningPaymentService } from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import {XlFileService} from '../../services/xl-file/xl-file.service';
+import { timestamp } from 'rxjs/operators';
 
 @Component({
   selector: 'ccpay-reports',
@@ -22,9 +21,7 @@ export class ReportsComponent implements OnInit {
   paymentGroups: IPaymentGroup[] = [];
 
   constructor(
-    private caseTransactionsService: CaseTransactionsService,
     private xlFileService: XlFileService,
-    private paymentLibComponent: PaymentLibComponent,
     private formBuilder: FormBuilder,
     private bulkScaningPaymentService: BulkScaningPaymentService,
     private paymentViewService: PaymentViewService) { }
@@ -44,8 +41,8 @@ export class ReportsComponent implements OnInit {
  }
 
  validateDates(){
-  const selectedStartDate = this.tranformDate(this.reportsForm.get('startDate').value);
-  const selectedEndDate = this.tranformDate(this.reportsForm.get('endDate').value);
+  const selectedStartDate = this.tranformDate(this.reportsForm.get('startDate').value),
+    selectedEndDate = this.tranformDate(this.reportsForm.get('endDate').value);
   if(selectedStartDate > selectedEndDate && selectedEndDate !== ''){
     this.reportsForm.get('startDate').setValue('');
   }
@@ -56,23 +53,18 @@ export class ReportsComponent implements OnInit {
     this.reportsForm = this.formBuilder.group({
       selectedreport: new FormControl('') ,
       startDate: new FormControl(''),
-      endDate: new FormControl('') });
-      
-}
-
-onSelectionChange(value: string) {
-  
+      endDate: new FormControl('') 
+    });
 }
 
 downloadReport(){
-  const dataLossRptDefault = [{loss_resp:'',payment_asset_dcn:'',resp_service_id:'',resp_service_name:'',date_banked:'',bgc_batch:'',payment_method:'',amount:''}];
-  const unProcessedRptDefault = [{resp_service_id:'',resp_service_name:'',exception_ref:'',ccd_ref:'',date_banked:'',bgc_batch:'',payment_asset_dcn:'',payment_method:'',amount:''}];
-  const processedUnallocated =[{resp_service_id:'',resp_service_name:'',allocation_status:'',receiving_office:'',allocation_reason:'',ccd_exception_ref:'',ccd_case_ref:'',payment_asset_dcn:'',date_banked:'',bgc_batch:'',payment_method:'',amount:'',updated_by:''}];
-  const shortFallsRptDefault = [{resp_service_id:'',resp_service_name:'',surplus_shortfall:'',balance:'',payment_amount:'',ccd_case_reference:'',processed_date:''}];
-
-  const selectedReportName = this.reportsForm.get('selectedreport').value;
-  const selectedStartDate = this.tranformDate(this.reportsForm.get('startDate').value);
-  const selectedEndDate = this.tranformDate(this.reportsForm.get('endDate').value);
+  const dataLossRptDefault = [{loss_resp:'',payment_asset_dcn:'',resp_service_id:'',resp_service_name:'',date_banked:'',bgc_batch:'',payment_method:'',amount:''}],
+    unProcessedRptDefault = [{resp_service_id:'',resp_service_name:'',exception_ref:'',ccd_ref:'',date_banked:'',bgc_batch:'',payment_asset_dcn:'',payment_method:'',amount:''}],
+    processedUnallocated =[{resp_service_id:'',resp_service_name:'',allocation_status:'',receiving_office:'',allocation_reason:'',ccd_exception_ref:'',ccd_case_ref:'',payment_asset_dcn:'',date_banked:'',bgc_batch:'',payment_method:'',amount:'',updated_by:''}],
+    shortFallsRptDefault = [{resp_service_id:'',resp_service_name:'',surplus_shortfall:'',balance:'',payment_amount:'',ccd_case_reference:'',processed_date:''}],
+    selectedReportName = this.reportsForm.get('selectedreport').value,
+    selectedStartDate = this.tranformDate(this.reportsForm.get('startDate').value),
+    selectedEndDate = this.tranformDate(this.reportsForm.get('endDate').value);
 
     if(selectedReportName === 'PROCESSED_UNALLOCATED' || selectedReportName === 'SURPLUS_AND_SHORTFALL' ){
       this.paymentViewService.downloadSelectedReport(selectedReportName,selectedStartDate,selectedEndDate).subscribe(
@@ -83,7 +75,7 @@ downloadReport(){
           } else if(res['data'].length === 0 && selectedReportName === 'SURPLUS_AND_SHORTFALL' ) {
             res.data= shortFallsRptDefault;
           }  
-          this.xlFileService.exportAsExcelFile(res['data'], this.reportsForm.get('selectedreport').value+'_'+selectedStartDate+'_To_'+selectedEndDate);
+          this.xlFileService.exportAsExcelFile(res['data'], this.getFileName(this.reportsForm.get('selectedreport').value, selectedStartDate, selectedEndDate));
         },
         (error: any) => {
           this.errorMessage = <any>error;
@@ -97,22 +89,56 @@ downloadReport(){
           } else if(res['data'].length === 0 && selectedReportName === 'UNPROCESSED'){
             res.data = unProcessedRptDefault;
           }
-          this.xlFileService.exportAsExcelFile(res['data'], this.reportsForm.get('selectedreport').value+'_'+selectedStartDate+'_To_'+selectedEndDate);
+          this.xlFileService.exportAsExcelFile(res['data'], this.getFileName(this.reportsForm.get('selectedreport').value, selectedStartDate, selectedEndDate ));
         },
         (error: any) => {
           this.errorMessage = <any>error;
         })
     }
   }
- 
-   tranformDate(strDate: string) {
-      let result = '';
-      if (strDate) {
-        let parts = strDate.split('-');
-        result = `${parts[1]}/${parts[2]}/${parts[0]}`;
-      }
-      return result;
-   }
+  getFileName(selectedOption: string, startDate: string, endDate: string ) {
+    const loc = 'en-US',
+      stDt = formatDate(startDate, 'ddMMyy', loc),
+      enDt = formatDate(endDate, 'ddMMyy', loc),
+      timestamp = formatDate(new Date(), 'ddMMyy_HHMMSS', loc),
+      selectedOptionTxt = this.getCamelCaseString(selectedOption);
+      
+      return selectedOptionTxt+'_'+stDt+'_To_'+enDt+'_Run_'+ timestamp;
+  } 
+  tranformDate(strDate: string) {
+    let result = '';
+    if (strDate) {
+      let parts = strDate.split('-');
+      result = `${parts[1]}/${parts[2]}/${parts[0]}`;
+    }
+    return result;
+  }
+  getCamelCaseString(selectedOption) {
+    let result;
+    switch(selectedOption) { 
+      case 'UNPROCESSED': { 
+        result = 'Unprocessed';
+        break; 
+      } 
+      case 'DATA_LOSS': { 
+        result = 'Data_Loss';
+        break; 
+      } 
+      case 'PROCESSED_UNALLOCATED': { 
+        result = 'Processed_Unallocated';
+        break; 
+      } 
+      case 'SURPLUS_AND_SHORTFALL': { 
+        result = 'Surplus_Shortfall';
+        break; 
+      } 
+      default: { 
+        result = selectedOption;
+        break; 
+      } 
+   } 
+   return result;
+  }
   applyDateFormat(res) {
     const fmt = 'dd/MM/yyyy',
     loc = 'en-US';
