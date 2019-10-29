@@ -48,7 +48,7 @@
     </table>
 </div>
 <div class="govuk-button-group-allocate">
-    <button type="button" class="button govuk-!-margin-right-1" (click)="saveAndContinue()">
+    <button type="button" class="button govuk-!-margin-right-1" [disabled]="isContinueButtondisabled" (click)="saveAndContinue()">
       Continue
     </button>
     <button type="button" class="button govuk-button--secondary" (click)="gotoCasetransationPage()">

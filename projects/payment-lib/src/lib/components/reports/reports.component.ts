@@ -100,7 +100,9 @@ downloadReport(){
     const loc = 'en-US',
       stDt = formatDate(startDate, 'ddMMyy', loc),
       enDt = formatDate(endDate, 'ddMMyy', loc),
-      timestamp = formatDate(new Date(), 'ddMMyy_HHMMSS', loc),
+      now = new Date(),
+      currentDate = formatDate(now, 'ddMMyy', loc),
+      timestamp = `${currentDate}_${this.getTwodigit(now.getHours())}${this.getTwodigit(now.getMinutes())}${this.getTwodigit(now.getSeconds())}`,
       selectedOptionTxt = this.getCamelCaseString(selectedOption);
       
       return selectedOptionTxt+'_'+stDt+'_To_'+enDt+'_Run_'+ timestamp;
@@ -112,6 +114,9 @@ downloadReport(){
       result = `${parts[1]}/${parts[2]}/${parts[0]}`;
     }
     return result;
+  }
+  getTwodigit(input: number){
+    return ("0" + input).slice(-2);
   }
   getCamelCaseString(selectedOption) {
     let result;

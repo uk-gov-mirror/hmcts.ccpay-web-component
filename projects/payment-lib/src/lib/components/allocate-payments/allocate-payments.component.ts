@@ -29,6 +29,7 @@ export class AllocatePaymentsComponent implements OnInit {
   afterFeeAllocateOutstanding: number;
   amountForAllocation: number;
   isConfirmButtondisabled: boolean = false;
+  isContinueButtondisabled: boolean = true;
 
   constructor(
   private caseTransactionsService: CaseTransactionsService,
@@ -66,6 +67,7 @@ export class AllocatePaymentsComponent implements OnInit {
     this.paymentLibComponent.TAKEPAYMENT = true;
   }
   selectedPaymentGroup(paymentGroup: IPaymentGroup) {
+    this.isContinueButtondisabled = false;
     this.selectedPayment = paymentGroup;
   }
   cancelAllocatePayment(){
@@ -153,6 +155,4 @@ export class AllocatePaymentsComponent implements OnInit {
       (error: any) => this.errorMessage = error
     );
   }
-
-
 }
