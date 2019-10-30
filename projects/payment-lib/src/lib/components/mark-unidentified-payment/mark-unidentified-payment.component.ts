@@ -17,6 +17,7 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
   viewStatus: string;
   ccdCaseNumber: string;
   bspaymentdcn: string;
+  isInvesticationDetailEmpty: boolean = false;
   investicationDetailHasError: boolean = false;
   investicationDetailMinHasError: boolean = false;
   investicationDetailMaxHasError: boolean = false;
@@ -61,26 +62,32 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
     return this.bulkScaningPaymentService.removeUnwantedString(method,' ');
   }
  saveAndContinue() {
-    this.investicationDetailHasError = false;
-    const formerror = this.markPaymentUnidentifiedForm.controls.investicationDetail.errors;
+  this.resetForm([false, false, false, false]);
+  const investicationField = this.markPaymentUnidentifiedForm.controls.investicationDetail;
+  const formerror = investicationField.errors;
     if (this.markPaymentUnidentifiedForm.dirty && this.markPaymentUnidentifiedForm.valid) {
       this.investigationComment = this.markPaymentUnidentifiedForm.controls.investicationDetail.value;
       this.viewStatus = 'unidentifiedContinueConfirm';
     }else {
-      if(this.markPaymentUnidentifiedForm.controls.investicationDetail.invalid ) {
-        this.investicationDetailHasError = true;
-        this.investicationDetailMinHasError = false;
-        this.investicationDetailMaxHasError = false;
+      if(investicationField.value == '' ) {
+        this.resetForm([true, false, false, false]);
       }
-      if(formerror.minlength && formerror.minlength.actualLength < 3 ) {
-        this.investicationDetailHasError = false;
-        this.investicationDetailMinHasError = true;
+      if(investicationField.value != '' && investicationField.invalid ) {
+        this.resetForm([false, true, false, false]);
       }
-      if(formerror.maxlength && formerror.maxlength.actualLength > 255 ) {
-        this.investicationDetailHasError = false;
-        this.investicationDetailMaxHasError = true;
+      if(formerror && formerror.minlength && formerror.minlength.actualLength < 3 ) {
+        this.resetForm([false, false, true, false]);
+      }
+      if(formerror && formerror.maxlength && formerror.maxlength.actualLength > 255 ) {
+        this.resetForm([false, false, false, true]);
       }
     }
+  }
+  resetForm(val) {
+      this.isInvesticationDetailEmpty = val[0];
+      this.investicationDetailHasError = val[1];
+      this.investicationDetailMinHasError = val[2];
+      this.investicationDetailMaxHasError = val[3];
   }
   confirmPayments() {
     this.isConfirmButtondisabled = true;

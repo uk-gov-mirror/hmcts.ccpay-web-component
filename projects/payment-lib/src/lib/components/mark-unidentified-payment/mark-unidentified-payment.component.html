@@ -37,7 +37,8 @@
         <textarea class="form-control form-control-3-4" [ngClass]="{'inline-error-class': investicationDetailHasError || investicationDetailMinHasError || investicationDetailMaxHasError}" name="investicationDetail" id="investicationDetail" rows="5" formControlName="investicationDetail">
         </textarea>
         <p class="inline-error-message" *ngIf="investicationDetailHasError || investicationDetailMinHasError || investicationDetailMaxHasError">
-          <span *ngIf="investicationDetailHasError">Enter a reason for marking this payment as unidentified.</span>
+          <span *ngIf="isInvesticationDetailEmpty">Enter a reason for marking this payment as unidentified.</span>
+          <span *ngIf="investicationDetailHasError">Enter a vaild reason</span>
           <span *ngIf="investicationDetailMinHasError">Reason should be at least 3 characters.</span>
           <span *ngIf="investicationDetailMaxHasError">Reason should be 255 characters or under.</span>
         </p>

@@ -17,12 +17,12 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
   markPaymentUnsolicitedForm: FormGroup;
   viewStatus: string;
   reasonHasError: boolean = false;
+  isReasonEmpty: boolean = false;
   reasonMinHasError: boolean = false;
   reasonMaxHasError: boolean = false;
   responsibleOfficeHasError: boolean = false;
-  responsiblePersonHasError: boolean = false;
+  isResponsibleOfficeEmpty: boolean = false;
   errorMessage: string;
-  emailIdHasError: boolean = false;
   ccdCaseNumber: string;
   bspaymentdcn: string;
   unassignedRecord: IBSPayments;
@@ -39,7 +39,7 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
   private bulkScaningPaymentService: BulkScaningPaymentService) { }
 
   ngOnInit() {
-    this.resetForm();
+    this.resetForm([false,false,false,false,false,false], 'all');
     this.viewStatus = 'mainForm';
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
     this.bspaymentdcn = this.paymentLibComponent.bspaymentdcn;
@@ -123,8 +123,10 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
     );
   }
  saveAndContinue() {
-    this.resetForm();
+    this.resetForm([false,false,false,false,false,false], 'all');
         const formerror = this.markPaymentUnsolicitedForm.controls.reason.errors;
+        const reasonField = this.markPaymentUnsolicitedForm.controls.reason;
+        const officeIdField = this.markPaymentUnsolicitedForm.controls.responsibleOffice;
     if (this.markPaymentUnsolicitedForm.dirty && this.markPaymentUnsolicitedForm.valid) {
       const controls = this.markPaymentUnsolicitedForm.controls;
       this.emailId = controls.emailId.value;
@@ -133,37 +135,37 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
       this.reason = controls.reason.value;
       this.viewStatus = 'unsolicitedContinueConfirm';
     }else {
-      if(this.markPaymentUnsolicitedForm.controls.reason.invalid ) {
-        this.reasonHasError = true;
-        this.reasonMinHasError = false;
-        this.reasonMaxHasError = false;
+      if( reasonField.value == '' ) {
+        this.resetForm([true,false,false,false,false,false], 'reason');
       }
-      if(formerror.minlength && formerror.minlength.actualLength < 3 ) {
-        this.reasonHasError = false;
-        this.reasonMinHasError = true;
+      if(reasonField.value != '' && this.markPaymentUnsolicitedForm.controls.reason.invalid ) {
+        this.resetForm([false,true,false,false,false,false], 'reason');
       }
-      if(formerror.maxlength && formerror.maxlength.actualLength > 255 ) {
-        this.reasonHasError = false;
-        this.reasonMaxHasError = true;
+      if(formerror && formerror.minlength && formerror.minlength.actualLength < 3 ) {
+        this.resetForm([false,false,true,false,false,false], 'reason');
       }
-      if(this.markPaymentUnsolicitedForm.controls.responsibleOffice.invalid) {
-        this.responsibleOfficeHasError = true;
+      if(formerror && formerror.maxlength && formerror.maxlength.actualLength > 255 ) {
+        this.resetForm([false,false,false,true,false,false], 'reason');
       }
-      if(this.markPaymentUnsolicitedForm.controls.responsiblePerson.invalid) {
-        this.responsiblePersonHasError = true;
+      if(officeIdField.value == '') {
+        this.resetForm([false,false,false,false,true,false], 'responsibleOffice');
       }
-      if(this.markPaymentUnsolicitedForm.controls.emailId.invalid) {
-        this.emailIdHasError = true;
+      if(officeIdField.value != '' && officeIdField.invalid) {
+        this.resetForm([false,false,false,false,false,true],'responsibleOffice');
       }
     }
   }
-  resetForm() {
-    this.reasonHasError = false;
-    this.reasonMinHasError = false;
-    this.reasonMaxHasError = false;
-    this.responsibleOfficeHasError = false;
-    this.responsiblePersonHasError = false;
-    this.emailIdHasError = false;
+  resetForm(val, field) {
+    if(field==='reason' || field==='all') {
+      this.isReasonEmpty = val[0];
+      this.reasonHasError = val[1];
+      this.reasonMinHasError = val[2];
+      this.reasonMaxHasError = val[3];
+    }
+    if(field==='responsibleOffice' || field==='all') {
+      this.isResponsibleOfficeEmpty = val[4];
+      this.responsibleOfficeHasError = val[5];
+    }
   }
 
 cancelMarkUnsolicitedPayments(type?:string){
