@@ -23,9 +23,13 @@ export class AddRemissionComponent implements OnInit {
   viewStatus = 'main';
   errorMessage = null;
   option: string = null;
-  remissionCodeHasError = false;
-  amountHasError = false;
   isConfirmationBtnDisabled: boolean = false;
+
+  isRemissionCodeEmpty: boolean = false;
+  remissionCodeHasError: boolean = false;
+  isAmountEmpty: boolean = false;
+  amountHasError: boolean = false;
+  isRemissionLessThanFeeError: boolean = false;
 
   constructor(private formBuilder: FormBuilder,
     private router: Router,
@@ -48,24 +52,40 @@ export class AddRemissionComponent implements OnInit {
   }
 
   addRemission() {
-    this.resetRemissionForm();
+    this.resetRemissionForm([false, false, false, false, false], 'All');
     const remissionctrls=this.remissionForm.controls,
       isRemissionLessThanFee = this.fee.calculated_amount > remissionctrls.amount.value; 
     if (this.remissionForm.dirty && this.remissionForm.valid && isRemissionLessThanFee) {
       this.viewStatus = 'confirmation';
     }else {
-      if(remissionctrls.remissionCode.invalid ) {
-        this.remissionCodeHasError = true;
+
+      if(remissionctrls['remissionCode'].value == '' ) {
+        this.resetRemissionForm([true, false, false, false, false], 'remissionCode');
       }
-      if(remissionctrls.amount.invalid || !isRemissionLessThanFee){
-        this.amountHasError = true;
+      if(remissionctrls['remissionCode'].value != '' && remissionctrls['remissionCode'].invalid ) {
+        this.resetRemissionForm([false, true, false, false, false], 'remissionCode');
+      }
+      if(remissionctrls['amount'].value == '' ) {
+        this.resetRemissionForm([false, false, true, false, false], 'amount');
+      }
+      if(remissionctrls['amount'].value != '' && remissionctrls['amount'].invalid ) {
+        this.resetRemissionForm([false, true, false, true, false], 'amount');
+      }
+      if(remissionctrls.amount.valid && !isRemissionLessThanFee){
+        this.resetRemissionForm([false, false, false, false, true], 'amount');
       }
     }
   }
 
-  resetRemissionForm(){
-    this.remissionCodeHasError = false;
-    this.amountHasError = false;
+  resetRemissionForm(val, field){
+    if(field==='remissionCode' || field==='All') {
+      this.isRemissionCodeEmpty = val[0];
+      this.remissionCodeHasError = val[1];
+    } else if (field==='amount' || field==='All'){
+      this.isAmountEmpty = val[2];
+      this.amountHasError = val[3];
+      this.isRemissionLessThanFeeError = val[4];
+    }
   }
 
   confirmRemission() {

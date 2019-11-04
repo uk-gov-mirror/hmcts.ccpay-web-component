@@ -14,22 +14,31 @@
       <form novalidate>
         <div class="govuk-form-group">
           <form [formGroup]="remissionForm" novalidate>
-            <div class="govuk-form-group" [ngClass]="{'form-group-error': remissionCodeHasError}">
+            <div class="govuk-form-group">
               <label class="govuk-label govuk-label--s" for="remission-code">
                   Add remission to {{ fee.code }}:{{ fee.description }}
-                <span class="form-hint" [ngClass]="{'inline-error-message': remissionCodeHasError}">Enter remission for reference. For example: HWF-A1B-23C</span>
+                <span class="form-hint">Enter remission for reference. For example: HWF-A1B-23C</span>
               </label>
-              <input class="govuk-input govuk-input--width-20 govuk-!-margin-right-1" id="remissionCode" aria-label="remissionCode"  name="remissionCode" type="text" formControlName="remissionCode">
+              <input [ngClass]="{'inline-error-class': isRemissionCodeEmpty || remissionCodeHasError}" class="govuk-input govuk-input--width-20 govuk-!-margin-right-1" id="remissionCode" aria-label="remissionCode"  name="remissionCode" type="text" formControlName="remissionCode">
+              <p class="inline-error-message" *ngIf="isRemissionCodeEmpty || remissionCodeHasError">
+                <span *ngIf="isRemissionCodeEmpty">Enter a remission code</span>
+                <span *ngIf="remissionCodeHasError">Enter a vaild remission code</span>
+              </p>
             </div>
-            <div class="govuk-form-group" [ngClass]="{'form-group-error': amountHasError}">
-              <label class="govuk-label govuk-label--s" [ngClass]="{'inline-error-message': amountHasError}" for="amount">
+            <div class="govuk-form-group">
+              <label class="govuk-label govuk-label--s" for="amount">
                 How much does the applicant need to pay?
               </label>
 
               <div id="amount-currency" class="govuk-visually-hidden">in pounds</div>
                 <div class="hmcts-currency-input">
                 <div class="hmcts-currency-input__symbol" aria-hidden="true">£</div>
-                <input class="govuk-input govuk-input--width-10" id="amount" aria-label="amount"  name="amount" type="text" aria-describedby="amount-currency" formControlName="amount">
+                <input class="govuk-input govuk-input--width-10" [ngClass]="{'inline-error-class': isAmountEmpty || amountHasError || isRemissionLessThanFeeError}" id="amount" aria-label="amount"  name="amount" type="text" aria-describedby="amount-currency" formControlName="amount">
+                <p class="inline-error-message" *ngIf="isAmountEmpty || amountHasError || isRemissionLessThanFeeError">
+                  <span *ngIf="isAmountEmpty">Enter a amount</span>
+                  <span *ngIf="amountHasError">Enter a vaild amount</span>
+                  <span *ngIf="isRemissionLessThanFeeError">Remission amount should be less than fee</span>
+                </p>
               </div>
             </div>
           </form>
