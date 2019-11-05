@@ -37,7 +37,7 @@
                 <p class="inline-error-message" *ngIf="isAmountEmpty || amountHasError || isRemissionLessThanFeeError">
                   <span *ngIf="isAmountEmpty">Enter a amount</span>
                   <span *ngIf="amountHasError">Enter a vaild amount</span>
-                  <span *ngIf="isRemissionLessThanFeeError">Remission amount should be less than fee</span>
+                  <span *ngIf="isRemissionLessThanFeeError">The remission amount must be less than the total fee</span>
                 </p>
               </div>
             </div>
