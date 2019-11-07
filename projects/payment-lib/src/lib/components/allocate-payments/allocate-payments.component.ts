@@ -80,7 +80,7 @@ export class AllocatePaymentsComponent implements OnInit {
         let response1 = JSON.parse(res1);
         if (response1.success) {
           const requestBody = new AllocatePaymentRequest
-          (this.ccdCaseNumber, this.unAllocatedPayment, this.siteID);
+          (this.ccdCaseNumber, this.unAllocatedPayment, this.siteID, '');
           this.bulkScaningPaymentService.postBSAllocatePayment(requestBody, this.selectedPayment.payment_group_reference).subscribe(
             res2 => {
               let response2 = JSON.parse(res2);

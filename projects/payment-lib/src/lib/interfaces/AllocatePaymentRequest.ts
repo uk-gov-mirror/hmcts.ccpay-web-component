@@ -4,6 +4,7 @@ export class AllocatePaymentRequest {
   amount: Number;
   banked_date: String;
   ccd_case_number: String;
+  exception_record: String;
   currency: String;
   document_control_number: String;
   external_provider: String;
@@ -15,10 +16,11 @@ export class AllocatePaymentRequest {
   requestor: String;
   site_id: String;
 
-  constructor(ccd_case_number : string, unAllocatedPayment: IBSPayments, siteID: string) {
+  constructor(ccd_case_number : string, unAllocatedPayment: IBSPayments, siteID: string, exceptionRecord: string) {
     this.amount = unAllocatedPayment.amount;
     this.banked_date = unAllocatedPayment.date_banked;
     this.ccd_case_number = ccd_case_number;
+    this.exception_record = exceptionRecord;
     this.currency= unAllocatedPayment.currency;
     this.document_control_number = unAllocatedPayment.dcn_reference;
     this.external_provider = 'exela';

@@ -26,6 +26,8 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
   siteID: string = null;
   investigationComment: string;
   isConfirmButtondisabled:Boolean = false;
+  ccdReference: string = null;
+  exceptionReference: string = null;
 
   constructor(private formBuilder: FormBuilder,
   private paymentViewService: PaymentViewService,
@@ -54,6 +56,12 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
           return payment && payment.dcn_reference == this.bspaymentdcn;
         })[0];
         this.siteID = unassignedPayments['data'].responsible_service_id;
+        if(unassignedPayments['data'].ccd_reference) {
+          this.ccdReference = unassignedPayments['data'].ccd_reference;
+          this.exceptionReference = unassignedPayments['data'].ccd_reference === this.ccdCaseNumber ? null : this.ccdCaseNumber;
+        }else {
+          this.exceptionReference = this.ccdCaseNumber;
+        }
       },
       (error: any) => this.errorMessage = error
     );
@@ -96,7 +104,7 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
       this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'PROCESSED').subscribe(
       res1 => {
         const requestBody = new AllocatePaymentRequest
-        (this.ccdCaseNumber, this.unassignedRecord, this.siteID)
+        (this.ccdReference, this.unassignedRecord, this.siteID, this.exceptionReference)
         this.paymentViewService.postBSPayments(requestBody).subscribe(
           res2 => {
             const response2 = JSON.parse(res2),

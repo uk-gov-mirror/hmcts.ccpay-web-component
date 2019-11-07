@@ -32,6 +32,8 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
   responsibleOffice: string;
   emailId: string;
   isConfirmButtondisabled:Boolean = false;
+  ccdReference: string = null;
+  exceptionReference: string = null;
 
   constructor(private formBuilder: FormBuilder,
   private paymentViewService: PaymentViewService,
@@ -72,8 +74,8 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
       res1 => {
         const response1 = JSON.parse(res1),
          requestBody = new AllocatePaymentRequest
-        (this.ccdCaseNumber, this.unassignedRecord, this.siteID);
-        this.paymentViewService.postBSPayments(requestBody).subscribe(
+         (this.ccdReference, this.unassignedRecord, this.siteID, this.exceptionReference)
+         this.paymentViewService.postBSPayments(requestBody).subscribe(
           res2 => {
             const response2 = JSON.parse(res2),
             reqBody = new UnsolicitedPaymentsRequest
@@ -203,6 +205,12 @@ cancelMarkUnsolicitedPayments(type?:string){
         return payment && payment.dcn_reference == this.bspaymentdcn;
       })[0];
        this.siteID = unassignedPayments['data'].responsible_service_id;
+       if(unassignedPayments['data'].ccd_reference) {
+        this.ccdReference = unassignedPayments['data'].ccd_reference;
+        this.exceptionReference = unassignedPayments['data'].ccd_reference === this.ccdCaseNumber ? null : this.ccdCaseNumber;
+      }else {
+        this.exceptionReference = this.ccdCaseNumber;
+      }
       },
       (error: any) => this.errorMessage = error
     );
