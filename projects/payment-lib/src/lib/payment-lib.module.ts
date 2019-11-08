@@ -21,6 +21,7 @@ import { AllocatePaymentsComponent } from './components/allocate-payments/alloca
 import { AddRemissionComponent } from './components/add-remission/add-remission.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CcdHyphensPipe } from './pipes/ccd-hyphens.pipe';
+import { keyValuePipe } from './pipes/key-value.pipe';
 import { SanitizeHtmlPipe } from './pipes/sanitize-html.pipe';
 import { ReportsComponent } from './components/reports/reports.component';
 import { XlFileService } from './services/xl-file/xl-file.service';
@@ -49,6 +50,7 @@ import { XlFileService } from './services/xl-file/xl-file.service';
     FeeSummaryComponent,
     AddRemissionComponent,
     CcdHyphensPipe,
+    keyValuePipe,
     SanitizeHtmlPipe,
     ReportsComponent
   ],

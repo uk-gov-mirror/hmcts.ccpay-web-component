@@ -75,7 +75,7 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
         const response1 = JSON.parse(res1),
          requestBody = new AllocatePaymentRequest
          (this.ccdReference, this.unassignedRecord, this.siteID, this.exceptionReference)
-         this.paymentViewService.postBSPayments(requestBody).subscribe(
+        this.paymentViewService.postBSPayments(requestBody).subscribe(
           res2 => {
             const response2 = JSON.parse(res2),
             reqBody = new UnsolicitedPaymentsRequest

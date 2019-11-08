@@ -44,7 +44,24 @@
     .govuk-warning-text__custom,
     .govuk-list__custom,
     .govuk-heading-m--custom,
-    .govuk-label--m {
+    .govuk-label--m,
+    .govuk-form-group {
         font-size: 19px;
+    }
+    .govuk-radios__conditional--hidden {
+        display: none;
+    }
+    .form-group-error {
+        border-left: 5px solid #b10e1e;
+        padding-left: 15px;
+    }
+    .inline-error-class {
+        outline: 3px solid #a71414;
+        outline-offset: 0;
+    }
+      .inline-error-message {
+      color: #a71414;
+      font-weight: bold;
+      margin-top: 10px;
     }
 }

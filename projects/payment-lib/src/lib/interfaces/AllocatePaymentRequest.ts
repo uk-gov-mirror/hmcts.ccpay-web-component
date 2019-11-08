@@ -4,7 +4,7 @@ export class AllocatePaymentRequest {
   amount: Number;
   banked_date: String;
   ccd_case_number: String;
-  exception_record: String;
+  exception_record: string;
   currency: String;
   document_control_number: String;
   external_provider: String;

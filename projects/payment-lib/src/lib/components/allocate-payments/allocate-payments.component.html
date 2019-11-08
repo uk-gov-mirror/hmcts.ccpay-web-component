@@ -62,7 +62,7 @@
     Amount to be allocated: {{amountForAllocation | currency:'GBP':'symbol-narrow':'1.2-2'}}
     </h2>
 <div class="payment-group-section" >
-    <h3 class="govuk-heading-m govuk-heading-m--custom">Group reference: {{selectedPayment.payment_group_reference}}</h3>
+    <h3 class="govuk-heading-m--custom">Group reference: {{selectedPayment.payment_group_reference}}</h3>
     <table class="govuk-table">
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
@@ -90,21 +90,105 @@
       </tbody>
     </table>
 </div>
-<div class="govuk-form-group govuk-form-group--error" *ngIf="isRemainingAmountGtZero">
-    <div class="govuk-warning-text">
-      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-      <strong class="govuk-warning-text__text govuk-warning-text__custom">
-        <span class="govuk-warning-text__assistive">Warning</span>
-        You have money left over
-      </strong>
-    </div>
-  <ul class="govuk-list govuk-list__custom">
-      <li>This money cannot be used again after this point. It will be marked as a surplus payment.</li>
-  </ul>
-</div>
-  <label class="govuk-label govuk-label--m" for="amount">
-      Amount left to be allocated: {{ remainingAmount | currency:'GBP':'symbol-narrow':'1.2-2' }}
-  </label>
+  <div class="govuk-form-group" *ngIf="isRemainingAmountGtZero || isRemainingAmountLtZero">
+      <div class="govuk-warning-text">
+          <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+          <strong class="govuk-warning-text__text govuk-warning-text__custom">
+            <span class="govuk-warning-text__assistive">Warning</span>
+                {{paymentSectionLabel.title}} {{ remainingAmount | currency:'GBP':'symbol-narrow':'1.2-2' }}
+         
+          </strong>
+      </div>
+
+      <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset" aria-describedby="how-contacted-conditional-hint">
+          <span id="how-contacted-conditional-hint" class="govuk-hint" [ngClass]="{'inline-error-message': paymentReasonHasError}">
+            {{paymentSectionLabel.reason}}
+          </span>
+          <div [ngClass]="paymentReasonHasError ? 'govuk-radios govuk-radios--conditional form-group-error' : 'govuk-radios govuk-radios--conditional'" data-module="govuk-radios" *ngIf="isRemainingAmountGtZero">
+            <div class="govuk-radios__item" *ngFor="let reason of reasonList.overPayment | keyValue" >
+              <input class="govuk-radios__input" id="{{reason.key}}" name="paymentReason" type="radio" [(ngModel)]="paymentReason" value={{reason.value}} (click)="selectRadioButton(reason.key, 'reason')">
+              <label class="govuk-label govuk-radios__label" for="how-contacted-conditional">
+                {{reason.value}}
+              </label>
+            </div>
+          </div>
+          <div class="govuk-radios govuk-radios--conditional" data-module="govuk-radios" *ngIf="isRemainingAmountLtZero">
+
+          <div class="govuk-radios__item" *ngFor="let reason of reasonList.shortFall | keyValue">
+            <input class="govuk-radios__input" id="{{reason.key}}" name="paymentReason" type="radio" [(ngModel)]="paymentReason" value={{reason.value}} (click)="selectRadioButton(reason.key, 'reason')">
+            <label class="govuk-label govuk-radios__label" for="how-contacted-conditional">
+              {{reason.value}}
+            </label>
+          </div>
+        </div>
+        </fieldset>
+      </div>
+      <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset" aria-describedby="how-contacted-conditional-hint">
+          <span id="how-contacted-conditional-hint" class="govuk-hint" [ngClass]="{'inline-error-message': paymentExplanationHasError}">
+            Provide an explanatory note
+          </span>
+          <div [ngClass]="paymentExplanationHasError ? 'govuk-radios govuk-radios--conditional form-group-error' : 'govuk-radios govuk-radios--conditional'" data-module="govuk-radios" *ngIf="isRemainingAmountGtZero">
+            <div class="govuk-radios__item" *ngFor="let explanation of explanationList.overPayment | keyValue">
+              <input class="govuk-radios__input" id="{{explanation.key}}" name="paymentExplanation" type="radio" [(ngModel)]="paymentExplanation" value={{explanation.value}} (click)="selectRadioButton(explanation.key, 'explanation')">
+              <label class="govuk-label govuk-radios__label" for="how-contacted-conditional">
+                {{explanation.value}}
+              </label>
+            </div>
+          </div>
+
+            <div class="govuk-radios govuk-radios--conditional" data-module="govuk-radios"  *ngIf="isRemainingAmountLtZero">
+
+            <div class="govuk-radios__item" *ngFor="let explanation of explanationList.shortFall | keyValue" >
+              <input class="govuk-radios__input" id="{{explanation.key}}" name="paymentExplanation" type="radio" [(ngModel)]="paymentExplanation" value={{explanation.value}} (click)="selectRadioButton(explanation.key, 'explanation')">
+              <label class="govuk-label govuk-radios__label" for="how-contacted-conditional">
+                {{explanation.value}}
+              </label>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+  </div>
+
+  <form [formGroup]="overUnderPaymentForm" novalidate>
+      <div [ngClass]="isMoreDetailsBoxHide ? 'govuk-radios__conditional govuk-radios__conditional--hidden' : 'govuk-radios__conditional'" class="" id="conditional-how-contacted-conditional-3">
+        <div class="govuk-form-group">
+          <span id="more-detail-hint" class="govuk-hint">
+            Please enter details
+          </span>
+          <textarea 
+            class="govuk-textarea" 
+            [ngClass]="{'inline-error-class': isPaymentDetailsEmpty || isPaymentDetailsInvalid || paymentDetailsMinHasError || paymentDetailsMaxHasError}" 
+            id="moreDetails" 
+            name="moreDetails" 
+            rows="5" 
+            formControlName="moreDetails" >
+        </textarea>
+          <p class="inline-error-message" *ngIf="isPaymentDetailsEmpty || isPaymentDetailsInvalid || paymentDetailsMinHasError || paymentDetailsMaxHasError">
+            <span *ngIf="isPaymentDetailsEmpty">Enter a explanation</span>
+            <span *ngIf="isPaymentDetailsInvalid">Enter a valid explanation</span>
+            <span *ngIf="paymentDetailsMinHasError">Explanation should be at least 3 characters.</span>
+            <span *ngIf="paymentDetailsMaxHasError">Explanation should be 255 characters or under.</span>
+          </p>
+        </div>
+      </div>
+      <div class="govuk-form-group">
+        <label class="govuk-label" for="userName">
+          Enter your name
+        </label>
+        <input 
+          class="govuk-input" 
+          id="userName" 
+          name="userName" 
+          type="text"
+          [ngClass]="{'inline-error-class': isUserNameEmpty || isUserNameInvalid}" 
+          formControlName="userName">
+        <p class="inline-error-message" *ngIf="isUserNameEmpty || isUserNameInvalid">
+          <span *ngIf="isUserNameEmpty">Enter your name.</span>
+          <span *ngIf="isUserNameInvalid">Enter a valid name</span>
+        </p>
+      </div>
       <div class="govuk-button--group">
         <button type="submit" [disabled]="isConfirmButtondisabled" [ngClass]="isConfirmButtondisabled ? 'button button--disabled' : 'button'" (click)="confirmAllocatePayement()">
           Confirm
@@ -113,6 +197,7 @@
           Cancel
         </button>
       </div>
+    </form>
     </ng-container>
 
 </div>
