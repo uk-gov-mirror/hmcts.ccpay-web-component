@@ -45,7 +45,10 @@
     .govuk-list__custom,
     .govuk-heading-m--custom,
     .govuk-label--m,
-    .govuk-form-group {
+    .govuk-radios__item,
+    .govuk-hint,
+    .govuk-font__custom
+     {
         font-size: 19px;
     }
     .govuk-radios__conditional--hidden {
@@ -59,9 +62,12 @@
         outline: 3px solid #a71414;
         outline-offset: 0;
     }
-      .inline-error-message {
+    .inline-error-message {
       color: #a71414;
       font-weight: bold;
       margin-top: 10px;
+    }
+    .inline-error-border {
+        border-color: #a71414;
     }
 }

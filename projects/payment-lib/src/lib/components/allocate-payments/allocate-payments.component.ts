@@ -254,6 +254,13 @@ export class AllocatePaymentsComponent implements OnInit {
 
   saveAndContinue(){
     if(this.selectedPayment) {
+      this.isMoreDetailsBoxHide = true;
+      this.overUnderPaymentForm.get('moreDetails').reset();
+      this.overUnderPaymentForm.get('moreDetails').setValue('');
+      this.overUnderPaymentForm.get('userName').reset();
+      this.overUnderPaymentForm.get('userName').setValue('');
+      this.paymentReason = '';
+      this.paymentExplanation = '';
       let GroupOutstandingAmount = this.getGroupOutstandingAmount(this.selectedPayment);
       const remainingToBeAssigned = this.unAllocatedPayment.amount - GroupOutstandingAmount;
       this.isRemainingAmountGtZero = remainingToBeAssigned > 0;
@@ -268,7 +275,7 @@ export class AllocatePaymentsComponent implements OnInit {
           title:'',
           reason:'',
         };
-      this.remainingAmount =  this.isRemainingAmountGtZero ? remainingToBeAssigned : 0;
+      this.remainingAmount =  this.isRemainingAmountGtZero ? remainingToBeAssigned : this.isRemainingAmountLtZero ? remainingToBeAssigned * -1 : 0;
       this.afterFeeAllocateOutstanding = remainingToBeAssigned >= 0 ? 0 : (remainingToBeAssigned * -1);
       this.amountForAllocation = GroupOutstandingAmount >= this.unAllocatedPayment.amount ? this.unAllocatedPayment.amount : GroupOutstandingAmount;
 
@@ -289,6 +296,10 @@ export class AllocatePaymentsComponent implements OnInit {
   selectRadioButton(key, type) {
     this.isMoreDetailsBoxHide = true;
     if( type === 'explanation' && key === 'other' ){
+      this.isPaymentDetailsEmpty = false;
+      this.isPaymentDetailsInvalid = false;
+      this.paymentDetailsMinHasError = false;
+      this.paymentDetailsMaxHasError = false;
       this.isMoreDetailsBoxHide = false;
     }
   }
