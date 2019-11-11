@@ -32,16 +32,18 @@ export class CaseTransactionsComponent implements OnInit {
   isFeeRecordsExist: boolean = false;
   isGrpOutstandingAmtPositive: boolean = false;
   totalRefundAmount:Number;
-
-    constructor(private router: Router,
-    private bulkScaningPaymentService: BulkScaningPaymentService,
-    private caseTransactionsService: CaseTransactionsService,
-    private paymentLibComponent: PaymentLibComponent) { }
+  isBulkScanEnable;
+  constructor(private router: Router,
+  private bulkScaningPaymentService: BulkScaningPaymentService,
+  private caseTransactionsService: CaseTransactionsService,
+  private paymentLibComponent: PaymentLibComponent) { }
 
   ngOnInit() {
     this.isGrpOutstandingAmtPositive = false;
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
     this.takePayment = this.paymentLibComponent.TAKEPAYMENT;
+    this.isBulkScanEnable = this.paymentLibComponent.ISBSENABLE;
+
     this.caseTransactionsService.getPaymentGroups(this.ccdCaseNumber).subscribe(
       paymentGroups => {
         this.paymentGroups = paymentGroups['payment_groups'];
