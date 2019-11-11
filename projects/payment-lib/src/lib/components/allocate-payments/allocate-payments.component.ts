@@ -141,7 +141,7 @@ export class AllocatePaymentsComponent implements OnInit {
       isOtherOptionSelected = this.paymentExplanation === 'Other';
 
     this.resetForm([false, false, false, false, false, false, false, false], 'all');
-    if ( isEmptyCondtion && (!isOtherOptionSelected && userNameField.valid || isOtherOptionSelected && userNameField.valid && paymentDetailsField.valid)) {
+    if ( (!this.isRemainingAmountGtZero && !this.isRemainingAmountLtZero) || isEmptyCondtion && (!isOtherOptionSelected && userNameField.valid || isOtherOptionSelected && userNameField.valid && paymentDetailsField.valid)) {
       this.isConfirmButtondisabled = true;
       this.otherPaymentExplanation = this.paymentExplanation === 'Other' ? paymentDetailsField.value : this.paymentExplanation;
       this.userName = userNameField.value;
