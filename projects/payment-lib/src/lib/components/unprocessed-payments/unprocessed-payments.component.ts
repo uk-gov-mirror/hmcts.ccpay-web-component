@@ -24,9 +24,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
   dcnNumber: string = null;
   selectedOption: string;
   isUnprocessedRecordSelected: boolean = false;
-  isAllocateToExistingFeebtnEnabled: boolean = false;
   isMarkAsUnidentifiedbtnEnabled: boolean = false;
-  isAllocatedToNewFeebtnEnabled: boolean = false;
   isExceptionCase: boolean = false;
   serviceId: string = null;
 
@@ -107,23 +105,13 @@ export class UnprocessedPaymentsComponent implements OnInit {
   validateButtons() {
   if ( this.isUnprocessedRecordSelected  && this.isExceptionCase) {
         this.isMarkAsUnidentifiedbtnEnabled = true;
-    } else if ( this.isUnprocessedRecordSelected  && !this.isExceptionCase && !this.FEE_RECORDS_EXISTS) {
-      this.isAllocateToExistingFeebtnEnabled = false;
-      this.isAllocatedToNewFeebtnEnabled = true;
-    } else if( this.isUnprocessedRecordSelected && !this.isExceptionCase && this.FEE_RECORDS_EXISTS ) {
-      this.isAllocateToExistingFeebtnEnabled = this.IS_OS_AMT_AVAILABLE;
-      this.isAllocatedToNewFeebtnEnabled = true;
     }
-
   }
   unprocessedPaymentUnSelectEvent(event: any) {
     event.preventDefault();
     this.recordId = null;
     this.isUnprocessedRecordSelected = false;
-    this.isAllocateToExistingFeebtnEnabled = false;
-    this.isAllocatedToNewFeebtnEnabled = false;
     this.isMarkAsUnidentifiedbtnEnabled = false;
-    //this.validateButtons();
     this.selectedUnprocessedFeeEvent.emit('');
   }
 

@@ -37,16 +37,6 @@
       </tbody>
     </table>
    <div class="button-grb" *ngIf="IS_BUTTON_ENABLE">
-      <button type="button"
-      [disabled]="!isAllocatedToNewFeebtnEnabled"
-      [ngClass]="!isAllocatedToNewFeebtnEnabled ? 'button button--disabled govuk-!-margin-right-1' : 'button govuk-!-margin-right-1'" (click)="redirectToFeeSearchPage($event)">
-        Allocate to a new fee
-      </button>
-      <button type="button" 
-      [disabled]="!isAllocateToExistingFeebtnEnabled"
-      [ngClass]='!isAllocateToExistingFeebtnEnabled ?  "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"' (click)="goToAllocatePage()">
-        Allocate to an existing fee
-      </button>
       <button type="button" 
       [disabled]="!isMarkAsUnidentifiedbtnEnabled"
       [ngClass]='!isMarkAsUnidentifiedbtnEnabled ?  "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"' (click)="loadUnsolicitedPage('unidentifiedPage')">

@@ -213,6 +213,8 @@ export class AllocatePaymentsComponent implements OnInit {
                   if (response3.success) {
                     this.paymentLibComponent.viewName = 'case-transactions';
                     this.paymentLibComponent.TAKEPAYMENT = true;
+                    this.paymentLibComponent.ISBSENABLE = true;
+
                   }
                 },
                 (error: any) => {
@@ -221,6 +223,7 @@ export class AllocatePaymentsComponent implements OnInit {
                       if (JSON.parse(success).success) {
                         this.paymentLibComponent.viewName = 'case-transactions';
                         this.paymentLibComponent.TAKEPAYMENT = true;
+                        this.paymentLibComponent.ISBSENABLE = true;
                       }
                     }
                   );
@@ -236,6 +239,8 @@ export class AllocatePaymentsComponent implements OnInit {
                   if (JSON.parse(success).success) {
                     this.paymentLibComponent.viewName = 'case-transactions';
                     this.paymentLibComponent.TAKEPAYMENT = true;
+                    this.paymentLibComponent.ISBSENABLE = true;
+
                   }
                 }
               );

@@ -115,16 +115,14 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
                 res3 => {
                   const response3 = JSON.parse(res3);
                   if (response3.success) {
-                    this.paymentLibComponent.viewName = 'case-transactions';
-                    this.paymentLibComponent.TAKEPAYMENT = true;
+                    this.gotoCasetransationPage();
                   }
                 },
                 (error: any) => {
                   this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'COMPLETE').subscribe(
                     success => {
                       if (JSON.parse(success).success) {
-                        this.paymentLibComponent.viewName = 'case-transactions';
-                        this.paymentLibComponent.TAKEPAYMENT = true;
+                        this.gotoCasetransationPage();
                       }
                     }
                   );
@@ -138,8 +136,7 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
             this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'COMPLETE').subscribe(
               success => {
                 if (JSON.parse(success).success) {
-                  this.paymentLibComponent.viewName = 'case-transactions';
-                  this.paymentLibComponent.TAKEPAYMENT = true;
+                  this.gotoCasetransationPage();
                 }
               }
             );
@@ -169,5 +166,7 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
   gotoCasetransationPage() {
     this.paymentLibComponent.viewName = 'case-transactions';
     this.paymentLibComponent.TAKEPAYMENT = true;
+    this.paymentLibComponent.ISBSENABLE = true;
+
   }
 }

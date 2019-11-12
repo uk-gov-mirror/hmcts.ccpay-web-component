@@ -5,10 +5,6 @@
       <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-xl">Case transactions</h1>
       </div>
-
-      <div  class="govuk-grid-column-one-third" align="right" *ngIf="takePayment">
-        <a [ngClass]="{ 'disable': !isAddFeeBtnEnabled} " (click)="redirectToFeeSearchPage($event)" class="button">Add a new fee</a>
-       </div>
     </div> 
 
     <div class="govuk-grid-row">
@@ -36,6 +32,10 @@
           </tbody>
         </table>
       </div>
+
+      <div  class="govuk-grid-column-two-thirds govuk-!-padding-bottom-6" *ngIf="takePayment">
+        <a [ngClass]="{ 'disable': !isAddFeeBtnEnabled} " (click)="redirectToFeeSearchPage($event)" class="govuk-button govuk-button--secondary">Add a new fee</a>
+       </div>
     </div>
 
 

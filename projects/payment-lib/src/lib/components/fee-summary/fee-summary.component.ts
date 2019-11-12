@@ -144,6 +144,7 @@ export class FeeSummaryComponent implements OnInit {
 
  loadCaseTransactionPage() {
     this.paymentLibComponent.TAKEPAYMENT = true;
+    this.paymentLibComponent.ISBSENABLE = true;
     this.paymentLibComponent.viewName = 'case-transactions';
   }
   cancelRemission() {
