@@ -61,7 +61,7 @@ downloadReport(){
   const dataLossRptDefault = [{loss_resp:'',payment_asset_dcn:'',resp_service_id:'',resp_service_name:'',date_banked:'',bgc_batch:'',payment_method:'',amount:''}],
     unProcessedRptDefault = [{resp_service_id:'',resp_service_name:'',exception_ref:'',ccd_ref:'',date_banked:'',bgc_batch:'',payment_asset_dcn:'',payment_method:'',amount:''}],
     processedUnallocated =[{resp_service_id:'',resp_service_name:'',allocation_status:'',receiving_office:'',allocation_reason:'',ccd_exception_ref:'',ccd_case_ref:'',payment_asset_dcn:'',date_banked:'',bgc_batch:'',payment_method:'',amount:'',updated_by:''}],
-    shortFallsRptDefault = [{resp_service_id:'',resp_service_name:'',surplus_shortfall:'',balance:'',payment_amount:'',ccd_case_reference:'',processed_date:''}],
+    shortFallsRptDefault = [{resp_service_id:'',resp_service_name:'',surplus_shortfall:'',balance:'',payment_amount:'',ccd_case_reference:'',ccd_exception_reference:'',processed_date:'', reason:'', explanation:'', user_name:''}],
     selectedReportName = this.reportsForm.get('selectedreport').value,
     selectedStartDate = this.tranformDate(this.reportsForm.get('startDate').value),
     selectedEndDate = this.tranformDate(this.reportsForm.get('endDate').value);

@@ -236,6 +236,8 @@ export class AllocatePaymentsComponent implements OnInit {
                   if (JSON.parse(success).success) {
                     this.paymentLibComponent.viewName = 'case-transactions';
                     this.paymentLibComponent.TAKEPAYMENT = true;
+                    this.paymentLibComponent.ISBSENABLE = true;
+
                   }
                 }
               );
