@@ -10,6 +10,8 @@ import { SafeHtml } from '@angular/platform-browser';
 import {Router} from '@angular/router';
 import {Location} from '@angular/common';
 
+const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
+
 @Component({
   selector: 'ccpay-fee-summary',
   templateUrl: './fee-summary.component.html',
@@ -146,6 +148,15 @@ export class FeeSummaryComponent implements OnInit {
     this.paymentLibComponent.TAKEPAYMENT = true;
     this.paymentLibComponent.ISBSENABLE = true;
     this.paymentLibComponent.viewName = 'case-transactions';
+    this.paymentViewService.getBSfeature().subscribe(
+      features => {
+        let result = JSON.parse(features).filter(feature => feature.uid === BS_ENABLE_FLAG);
+        this.paymentLibComponent.ISBSENABLE = result[0] ? result[0].enable : false;
+      },
+      err => {
+        this.paymentLibComponent.ISBSENABLE = false;
+      }
+    );
   }
   cancelRemission() {
     this.viewStatus = 'main';

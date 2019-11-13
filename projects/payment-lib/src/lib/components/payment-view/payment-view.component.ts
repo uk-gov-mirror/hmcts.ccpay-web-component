@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-
 import {PaymentViewService} from '../../services/payment-view/payment-view.service';
 import {PaymentLibComponent} from '../../payment-lib.component';
 import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
+
+const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 
 @Component({
   selector: 'ccpay-payment-view',
@@ -56,6 +57,15 @@ export class PaymentViewComponent implements OnInit {
   goToCaseTransationPage(event: any) {
     event.preventDefault()
     this.paymentLibComponent.viewName = 'case-transactions';
+    this.paymentViewService.getBSfeature().subscribe(
+      features => {
+        let result = JSON.parse(features).filter(feature => feature.uid === BS_ENABLE_FLAG);
+        this.paymentLibComponent.ISBSENABLE = result[0] ? result[0].enable : false;
+      },
+      err => {
+        this.paymentLibComponent.ISBSENABLE = false;
+      }
+    );
   }
 
 }

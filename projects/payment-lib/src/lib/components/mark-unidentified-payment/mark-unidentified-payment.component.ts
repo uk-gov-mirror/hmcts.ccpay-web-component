@@ -167,6 +167,5 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
     this.paymentLibComponent.viewName = 'case-transactions';
     this.paymentLibComponent.TAKEPAYMENT = true;
     this.paymentLibComponent.ISBSENABLE = true;
-
   }
 }
