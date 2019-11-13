@@ -120,8 +120,8 @@ export class AddRemissionComponent implements OnInit {
     this.paymentLibComponent.TAKEPAYMENT = true;
     this.paymentViewService.getBSfeature().subscribe(
       features => {
-        let result = features.filter(feature => feature.uid === BS_ENABLE_FLAG);
-        this.paymentLibComponent.ISBSENABLE = result ? result.enable : false;
+        let result = JSON.parse(features).filter(feature => feature.uid === BS_ENABLE_FLAG);
+        this.paymentLibComponent.ISBSENABLE = result[0] ? result[0].enable : false;
       },
       err => {
         this.paymentLibComponent.ISBSENABLE = false;
