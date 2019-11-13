@@ -5,7 +5,6 @@ import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
 import { BulkScaningPaymentService } from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import {XlFileService} from '../../services/xl-file/xl-file.service';
-import { timestamp } from 'rxjs/operators';
 
 @Component({
   selector: 'ccpay-reports',
