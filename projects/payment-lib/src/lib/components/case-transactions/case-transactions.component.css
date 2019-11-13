@@ -59,6 +59,11 @@
 details summary {
     display: list-item;
 }
+.case-transaction__color {
+    color:  #a71414;
+    font-weight: bold;
+    text-align: center;
+}
 
 .capitalize::first-letter {
     text-transform: uppercase;

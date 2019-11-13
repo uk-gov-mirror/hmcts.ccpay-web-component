@@ -33,6 +33,7 @@ export class CaseTransactionsComponent implements OnInit {
   isGrpOutstandingAmtPositive: boolean = false;
   totalRefundAmount:Number;
   isBulkScanEnable;
+  unprocessedRecordCount: number;
   constructor(private router: Router,
   private bulkScaningPaymentService: BulkScaningPaymentService,
   private caseTransactionsService: CaseTransactionsService,
@@ -182,5 +183,8 @@ getAllocationStatus(payments: any){
       this.isAddFeeBtnEnabled = true;
       this.isUnprocessedRecordSelected = false;
     }
+  }
+  getUnprocessedFeeCount(unProcessedRecordCount: number) {
+     this.unprocessedRecordCount = unProcessedRecordCount;
   }
 }

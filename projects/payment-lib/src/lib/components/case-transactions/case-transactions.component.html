@@ -21,6 +21,8 @@
               <td class="govuk-table__header" scope="col">Total payments</td>
               <td class="govuk-table__header" scope="col">Total remissions</td>
               <td class="govuk-table__header" scope="col">Amount due</td>
+              <td class="govuk-table__header" scope="col" *ngIf="totalRefundAmount > 0">Total Surplus</td>
+              <td class="govuk-table__header" scope="col" *ngIf="isBulkScanEnable">Unallocated payments</td>
             </tr>
           </thead>
           <tbody class="govuk-table__body">
@@ -28,14 +30,20 @@
               <td class="govuk-table__cell">{{ totalPayments | currency :'GBP':'symbol':'1.2-2' }}</td>
               <td class="govuk-table__cell">{{ totalRemissions | currency :'GBP':'symbol':'1.2-2' }}</td>
               <td class="govuk-table__cell">{{ (totalFees - totalRemissions) - totalPayments | currency :'GBP':'symbol':'1.2-2'}}</td>
+              <td class="govuk-table__cell" *ngIf="totalRefundAmount > 0">{{totalRefundAmount | currency :'GBP':'symbol':'1.2-2'}}</td>
+              <td class="govuk-table__cell case-transaction__color" *ngIf="isBulkScanEnable">{{unprocessedRecordCount}}</td>
             </tr>
           </tbody>
         </table>
       </div>
 
-      <div  class="govuk-grid-column-two-thirds govuk-!-padding-bottom-6" *ngIf="takePayment">
-        <a [ngClass]="{ 'disable': !isAddFeeBtnEnabled} " (click)="redirectToFeeSearchPage($event)" class="govuk-button govuk-button--secondary">Add a new fee</a>
-       </div>
+       <div class="govuk-grid-column-two-thirds govuk-!-padding-bottom-6" *ngIf="takePayment">
+        <button type="submit" (click)="redirectToFeeSearchPage($event)"
+          [disabled]="!isAddFeeBtnEnabled"
+          [ngClass]='!isAddFeeBtnEnabled ? "govuk-button govuk-button--secondary govuk-button--disabled govuk-!-margin-right-1" : "govuk-button govuk-button--secondary govuk-!-margin-right-1"'>
+          Add a new fee
+        </button>
+    </div>
     </div>
 
 
@@ -209,6 +217,7 @@
       [IS_BUTTON_ENABLE]="takePayment"
       [FEE_RECORDS_EXISTS]="isFeeRecordsExist" 
       [IS_OS_AMT_AVAILABLE]="isGrpOutstandingAmtPositive" 
+      (getUnprocessedFeeCount) = "getUnprocessedFeeCount($event)"
       (selectedUnprocessedFeeEvent) = "selectedUnprocessedFeeEvent($event)">
     </ccpay-app-unprocessed-payments>
     <div class="govuk-grid-row govuk-grid__surplus-payments"  *ngIf="totalRefundAmount > 0">
