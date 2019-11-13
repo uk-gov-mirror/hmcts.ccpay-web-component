@@ -6,6 +6,8 @@ import { AddRemissionRequest } from '../../interfaces/AddRemissionRequest';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import { PaymentLibComponent } from '../../payment-lib.component';
 
+const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
+
 @Component({
   selector: 'ccpay-add-remission',
   templateUrl: './add-remission.component.html',
@@ -102,8 +104,7 @@ export class AddRemissionComponent implements OnInit {
             this.router.onSameUrlNavigation = 'reload';
             this.router.navigateByUrl(`/payment-history/${this.ccdCaseNumber}?view=fee-summary&selectedOption=${this.option}&paymentGroupRef=${this.paymentGroupRef}&dcn=${this.paymentLibComponent.bspaymentdcn}`);
           }else {
-            this.paymentLibComponent.viewName = 'case-transactions';
-            this.paymentLibComponent.TAKEPAYMENT = true;
+            this.gotoCasetransationPage();
           }
 
         }
@@ -111,6 +112,19 @@ export class AddRemissionComponent implements OnInit {
       (error: any) => {
         this.errorMessage = error;
         this.isConfirmationBtnDisabled = false;
+      }
+    );
+  }
+  gotoCasetransationPage() {
+    this.paymentLibComponent.viewName = 'case-transactions';
+    this.paymentLibComponent.TAKEPAYMENT = true;
+    this.paymentViewService.getBSfeature().subscribe(
+      features => {
+        let result = features.filter(feature => feature.uid === BS_ENABLE_FLAG);
+        this.paymentLibComponent.ISBSENABLE = result ? result.enable : false;
+      },
+      err => {
+        this.paymentLibComponent.ISBSENABLE = false;
       }
     );
   }

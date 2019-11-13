@@ -124,6 +124,7 @@ export class AllocatePaymentsComponent implements OnInit {
   gotoCasetransationPage() {
     this.paymentLibComponent.viewName = 'case-transactions';
     this.paymentLibComponent.TAKEPAYMENT = true;
+    this.paymentLibComponent.ISBSENABLE = true;
   }
   selectedPaymentGroup(paymentGroup: IPaymentGroup) {
     this.isContinueButtondisabled = false;
@@ -211,16 +212,14 @@ export class AllocatePaymentsComponent implements OnInit {
                 res3 => {
                   let response3 = JSON.parse(res3);
                   if (response3.success) {
-                    this.paymentLibComponent.viewName = 'case-transactions';
-                    this.paymentLibComponent.TAKEPAYMENT = true;
+                   this.gotoCasetransationPage();
                   }
                 },
                 (error: any) => {
                   this.bulkScaningPaymentService.patchBSChangeStatus(this.unAllocatedPayment.dcn_reference, 'COMPLETE').subscribe(
                     success => {
                       if (JSON.parse(success).success) {
-                        this.paymentLibComponent.viewName = 'case-transactions';
-                        this.paymentLibComponent.TAKEPAYMENT = true;
+                        this.gotoCasetransationPage();
                       }
                     }
                   );
@@ -234,10 +233,7 @@ export class AllocatePaymentsComponent implements OnInit {
               this.bulkScaningPaymentService.patchBSChangeStatus(this.unAllocatedPayment.dcn_reference, 'COMPLETE').subscribe(
                 success => {
                   if (JSON.parse(success).success) {
-                    this.paymentLibComponent.viewName = 'case-transactions';
-                    this.paymentLibComponent.TAKEPAYMENT = true;
-                    this.paymentLibComponent.ISBSENABLE = true;
-
+                    this.gotoCasetransationPage();
                   }
                 }
               );
