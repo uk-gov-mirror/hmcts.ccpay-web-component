@@ -44,7 +44,8 @@ export class AllocatePaymentsComponent implements OnInit {
   paymentDetailsMaxHasError: boolean = false;
   isUserNameEmpty: boolean = false;
   isUserNameInvalid: boolean = false;
-
+  ccdReference: string = null;
+  exceptionReference: string = null;
   paymentReason: string = null;
   paymentExplanation: string = null;
   userName: string = null;
@@ -200,7 +201,7 @@ export class AllocatePaymentsComponent implements OnInit {
         let response1 = JSON.parse(res1);
         if (response1.success) {
           const requestBody = new AllocatePaymentRequest
-          (this.ccdCaseNumber, this.unAllocatedPayment, this.siteID, '');
+          (this.ccdReference, this.unAllocatedPayment, this.siteID, this.exceptionReference);
           this.bulkScaningPaymentService.postBSAllocatePayment(requestBody, this.selectedPayment.payment_group_reference).subscribe(
             res2 => {
               let response2 = JSON.parse(res2);
@@ -287,6 +288,11 @@ export class AllocatePaymentsComponent implements OnInit {
           return payment && payment.dcn_reference == this.bspaymentdcn;
         })[0];
         this.siteID = unassignedPayments['data'].responsible_service_id;
+        const beCcdNumber = unassignedPayments['data'].ccd_reference,
+        beExceptionNumber = unassignedPayments['data'].exception_record_reference,
+        exceptionReference = beCcdNumber ? beCcdNumber === this.ccdCaseNumber ? null : this.ccdCaseNumber : this.ccdCaseNumber;
+       this.ccdReference = beCcdNumber ? beCcdNumber : null;
+       this.exceptionReference = beExceptionNumber ? beExceptionNumber : exceptionReference;
       },
       (error: any) => this.errorMessage = error
     );

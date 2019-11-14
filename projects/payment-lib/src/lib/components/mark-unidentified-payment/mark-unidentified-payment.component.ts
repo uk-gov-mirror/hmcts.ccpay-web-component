@@ -56,12 +56,11 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
           return payment && payment.dcn_reference == this.bspaymentdcn;
         })[0];
         this.siteID = unassignedPayments['data'].responsible_service_id;
-        if(unassignedPayments['data'].ccd_reference) {
-          this.ccdReference = unassignedPayments['data'].ccd_reference;
-          this.exceptionReference = unassignedPayments['data'].ccd_reference === this.ccdCaseNumber ? null : this.ccdCaseNumber;
-        }else {
-          this.exceptionReference = this.ccdCaseNumber;
-        }
+        const beCcdNumber = unassignedPayments['data'].ccd_reference,
+          beExceptionNumber = unassignedPayments['data'].exception_record_reference,
+          exceptionReference = beCcdNumber ? beCcdNumber === this.ccdCaseNumber ? null : this.ccdCaseNumber : this.ccdCaseNumber;
+        this.ccdReference = beCcdNumber ? beCcdNumber : null;
+        this.exceptionReference = beExceptionNumber ? beExceptionNumber : exceptionReference;
       },
       (error: any) => this.errorMessage = error
     );
