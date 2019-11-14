@@ -22,7 +22,7 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
   reasonMaxHasError: boolean = false;
   responsibleOfficeHasError: boolean = false;
   isResponsibleOfficeEmpty: boolean = false;
-  errorMessage: string;
+  errorMessage = this.getErrorMessage(false);
   ccdCaseNumber: string;
   bspaymentdcn: string;
   unassignedRecord: IBSPayments;
@@ -72,17 +72,20 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
     const controls = this.markPaymentUnsolicitedForm.controls;
     this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'PROCESSED').subscribe(
       res1 => {
+        this.errorMessage = this.getErrorMessage(false);
         const response1 = JSON.parse(res1),
          requestBody = new AllocatePaymentRequest
          (this.ccdReference, this.unassignedRecord, this.siteID, this.exceptionReference)
         this.paymentViewService.postBSPayments(requestBody).subscribe(
           res2 => {
+            this.errorMessage = this.getErrorMessage(false);
             const response2 = JSON.parse(res2),
             reqBody = new UnsolicitedPaymentsRequest
             (response2['data'].payment_group_reference, response2['data'].reference, controls.reason.value, controls.responsibleOffice.value, controls.responsiblePerson.value, controls.emailId.value);
              if (response2.success) {
               this.paymentViewService.postBSUnsolicitedPayments(reqBody).subscribe(
                 res3 => {
+                  this.errorMessage = this.getErrorMessage(false);
                   const response3 = JSON.parse(res3);
                   if (response3.success) {
                     this.gotoCasetransationPage();
@@ -92,11 +95,12 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
                   this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'COMPLETE').subscribe(
                     success => {
                       if (JSON.parse(success).success) {
+                        this.errorMessage = this.getErrorMessage(false);
                         this.gotoCasetransationPage();
                       }
                     }
                   );
-                  this.errorMessage = error;
+                  this.errorMessage = this.getErrorMessage(true);
                   this.isConfirmButtondisabled = false;
                 }
               );
@@ -106,17 +110,19 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
             this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'COMPLETE').subscribe(
               success => {
                 if (JSON.parse(success).success) {
+                  this.errorMessage = this.getErrorMessage(false);
                   this.gotoCasetransationPage();
                 }
               }
             );
-            this.errorMessage = error;
+
+            this.errorMessage = this.getErrorMessage(true);
             this.isConfirmButtondisabled = false;
           }
         );
       },
       (error: any) => {
-        this.errorMessage = error;
+        this.errorMessage = this.getErrorMessage(true);
         this.isConfirmButtondisabled = false;
       }
     );
@@ -209,8 +215,18 @@ cancelMarkUnsolicitedPayments(type?:string){
         this.ccdReference = beCcdNumber ? beCcdNumber : null;
         this.exceptionReference = beExceptionNumber ? beExceptionNumber : exceptionReference;
     },
-      (error: any) => this.errorMessage = error
+      (error: any) => {
+        this.errorMessage = this.getErrorMessage(true);
+      }
     );
+  }
+
+  getErrorMessage(isErrorExist) {
+    return {
+      title: "There is a problem with the service",
+      body: "Try again later",
+      showError: isErrorExist
+    };
   }
 
 }

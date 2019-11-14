@@ -23,7 +23,7 @@ export class AllocatePaymentsComponent implements OnInit {
     amount: 0
   };
   siteID: string = null;
-  errorMessage: string;
+  errorMessage = this.getErrorMessage(false);
   paymentGroups: IPaymentGroup[] = [];
   selectedPayment: IPaymentGroup;
   remainingAmount: number;
@@ -113,12 +113,14 @@ export class AllocatePaymentsComponent implements OnInit {
 
     this.caseTransactionsService.getPaymentGroups(this.ccdCaseNumber).subscribe(
       paymentGroups => {
+        this.errorMessage = this.getErrorMessage(false);
       this.paymentGroups = paymentGroups['payment_groups'].filter(paymentGroup => {
-        
           return paymentGroupRef ? this.getGroupOutstandingAmount(<IPaymentGroup>paymentGroup) > 0 && paymentGroup.payment_group_reference === paymentGroupRef : this.getGroupOutstandingAmount(<IPaymentGroup>paymentGroup) > 0;
       });
       },
-      (error: any) => this.errorMessage = error
+      (error: any) => {
+        this.errorMessage = this.getErrorMessage(true);
+      }
     );
   }
 
@@ -198,12 +200,14 @@ export class AllocatePaymentsComponent implements OnInit {
   finalServiceCall() {
     this.bulkScaningPaymentService.patchBSChangeStatus(this.unAllocatedPayment.dcn_reference, 'PROCESSED').subscribe(
       res1 => {
+        this.errorMessage = this.getErrorMessage(false);
         let response1 = JSON.parse(res1);
         if (response1.success) {
           const requestBody = new AllocatePaymentRequest
           (this.ccdReference, this.unAllocatedPayment, this.siteID, this.exceptionReference);
           this.bulkScaningPaymentService.postBSAllocatePayment(requestBody, this.selectedPayment.payment_group_reference).subscribe(
             res2 => {
+              this.errorMessage = this.getErrorMessage(false);
               let response2 = JSON.parse(res2);
               const reqBody = new IAllocationPaymentsRequest
               (response2['data'].payment_group_reference, response2['data'].reference, this.paymentReason, this.otherPaymentExplanation, this.userName);
@@ -211,6 +215,7 @@ export class AllocatePaymentsComponent implements OnInit {
                 this.paymentViewService.postBSAllocationPayments(reqBody).subscribe(
   
                 res3 => {
+                  this.errorMessage = this.getErrorMessage(false);
                   let response3 = JSON.parse(res3);
                   if (response3.success) {
                    this.gotoCasetransationPage();
@@ -219,12 +224,13 @@ export class AllocatePaymentsComponent implements OnInit {
                 (error: any) => {
                   this.bulkScaningPaymentService.patchBSChangeStatus(this.unAllocatedPayment.dcn_reference, 'COMPLETE').subscribe(
                     success => {
+                      this.errorMessage = this.getErrorMessage(false);
                       if (JSON.parse(success).success) {
                         this.gotoCasetransationPage();
                       }
                     }
                   );
-                  this.errorMessage = error;
+                  this.errorMessage = this.getErrorMessage(true);
                   this.isConfirmButtondisabled = false;
                 }
                 );
@@ -233,19 +239,20 @@ export class AllocatePaymentsComponent implements OnInit {
             (error: any) => {
               this.bulkScaningPaymentService.patchBSChangeStatus(this.unAllocatedPayment.dcn_reference, 'COMPLETE').subscribe(
                 success => {
+                  this.errorMessage = this.getErrorMessage(false);
                   if (JSON.parse(success).success) {
                     this.gotoCasetransationPage();
                   }
                 }
               );
-              this.errorMessage = error;
+              this.errorMessage = this.getErrorMessage(true);
               this.isConfirmButtondisabled = false;
             }
           );
       }
       },
       (error: any) => {
-        this.errorMessage = error;
+        this.errorMessage = this.getErrorMessage(true);
         this.isConfirmButtondisabled = false;
       }
     );  
@@ -284,6 +291,7 @@ export class AllocatePaymentsComponent implements OnInit {
    getUnassignedPayment() {
     this.bulkScaningPaymentService.getBSPaymentsByDCN(this.bspaymentdcn).subscribe(
       unassignedPayments => {
+        this.errorMessage = this.getErrorMessage(false);
         this.unAllocatedPayment = unassignedPayments['data'].payments.filter(payment => {
           return payment && payment.dcn_reference == this.bspaymentdcn;
         })[0];
@@ -294,7 +302,9 @@ export class AllocatePaymentsComponent implements OnInit {
        this.ccdReference = beCcdNumber ? beCcdNumber : null;
        this.exceptionReference = beExceptionNumber ? beExceptionNumber : exceptionReference;
       },
-      (error: any) => this.errorMessage = error
+      (error: any) => {
+        this.errorMessage = this.getErrorMessage(true);
+      }
     );
   }
   selectRadioButton(key, type) {
@@ -306,5 +316,12 @@ export class AllocatePaymentsComponent implements OnInit {
       this.paymentDetailsMaxHasError = false;
       this.isMoreDetailsBoxHide = false;
     }
+  }
+  getErrorMessage(isErrorExist) {
+    return {
+      title: "There is a problem with the service",
+      body: "Try again later",
+      showError: isErrorExist
+    };
   }
 }
