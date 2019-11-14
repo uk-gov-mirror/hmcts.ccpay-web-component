@@ -67,7 +67,7 @@ export class AllocatePaymentsComponent implements OnInit {
     overPayment: {
       referRefund: 'I have noted on case and refer for refund',
       noRefund: 'I have noted on case, refund not due',
-      noCase: 'here is no case, refer for refund',
+      noCase: 'There is no case, refer for refund',
       other: 'Other'
     },
     shortFall: {
