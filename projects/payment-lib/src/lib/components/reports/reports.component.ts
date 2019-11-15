@@ -151,9 +151,6 @@ downloadReport(){
       if (value['date_banked']) {
         value['date_banked'] = formatDate(value['date_banked'], fmt, loc);
       }
-      if (value['processed_date']) {
-        value['processed_date'] = formatDate(value['processed_date'], fmt, loc);
-      }
       return value;
     });
   }
