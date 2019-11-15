@@ -29,6 +29,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
   isAllocatedToNewFeebtnEnabled: boolean = false;
   isExceptionCase: boolean = false;
   serviceId: string = null;
+  isBulkScanEnable;
 
   constructor(private router: Router,
     private bulkScaningPaymentService: BulkScaningPaymentService,
@@ -39,6 +40,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
     this.selectedOption = this.paymentLibComponent.SELECTED_OPTION.toLocaleLowerCase();
     this.dcnNumber = this.paymentLibComponent.DCN_NUMBER;
+    this.isBulkScanEnable = this.paymentLibComponent.ISBSENABLE;
     this.getUnassignedPaymentlist();
      }
 
@@ -86,7 +88,8 @@ export class UnprocessedPaymentsComponent implements OnInit {
   }
   redirectToFeeSearchPage(event: any) {
     event.preventDefault();
-    this.router.navigateByUrl(`/fee-search?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}&dcn=${this.recordId}`);
+    const url = this.isBulkScanEnable ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
+    this.router.navigateByUrl(`/fee-search?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}&dcn=${this.recordId}${url}`);
   }
   loadUnsolicitedPage(viewName: string) {
     this.paymentLibComponent.bspaymentdcn = this.recordId;
