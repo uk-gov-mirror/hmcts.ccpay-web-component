@@ -222,14 +222,7 @@ export class AllocatePaymentsComponent implements OnInit {
                   }
                 },
                 (error: any) => {
-                  this.bulkScaningPaymentService.patchBSChangeStatus(this.unAllocatedPayment.dcn_reference, 'COMPLETE').subscribe(
-                    success => {
-                      this.errorMessage = this.getErrorMessage(false);
-                      if (JSON.parse(success).success) {
-                        this.gotoCasetransationPage();
-                      }
-                    }
-                  );
+                  this.bulkScaningPaymentService.patchBSChangeStatus(this.unAllocatedPayment.dcn_reference, 'COMPLETE').subscribe();
                   this.errorMessage = this.getErrorMessage(true);
                   this.isConfirmButtondisabled = false;
                 }
@@ -237,14 +230,7 @@ export class AllocatePaymentsComponent implements OnInit {
               }
             },
             (error: any) => {
-              this.bulkScaningPaymentService.patchBSChangeStatus(this.unAllocatedPayment.dcn_reference, 'COMPLETE').subscribe(
-                success => {
-                  this.errorMessage = this.getErrorMessage(false);
-                  if (JSON.parse(success).success) {
-                    this.gotoCasetransationPage();
-                  }
-                }
-              );
+              this.bulkScaningPaymentService.patchBSChangeStatus(this.unAllocatedPayment.dcn_reference, 'COMPLETE').subscribe();
               this.errorMessage = this.getErrorMessage(true);
               this.isConfirmButtondisabled = false;
             }

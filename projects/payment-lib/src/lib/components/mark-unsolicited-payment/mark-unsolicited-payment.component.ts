@@ -92,14 +92,7 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
                   }
                 },
                 (error: any) => {
-                  this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'COMPLETE').subscribe(
-                    success => {
-                      if (JSON.parse(success).success) {
-                        this.errorMessage = this.getErrorMessage(false);
-                        this.gotoCasetransationPage();
-                      }
-                    }
-                  );
+                  this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'COMPLETE').subscribe();
                   this.errorMessage = this.getErrorMessage(true);
                   this.isConfirmButtondisabled = false;
                 }
@@ -107,15 +100,7 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
             }
           },
           (error: any) => {
-            this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'COMPLETE').subscribe(
-              success => {
-                if (JSON.parse(success).success) {
-                  this.errorMessage = this.getErrorMessage(false);
-                  this.gotoCasetransationPage();
-                }
-              }
-            );
-
+            this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'COMPLETE').subscribe();
             this.errorMessage = this.getErrorMessage(true);
             this.isConfirmButtondisabled = false;
           }
