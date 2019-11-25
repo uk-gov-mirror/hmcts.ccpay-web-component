@@ -52,6 +52,15 @@ export class FeeSummaryComponent implements OnInit {
     this.selectedOption = this.paymentLibComponent.SELECTED_OPTION.toLocaleLowerCase();
     //this.paymentGroupRef = '2018-15310089885';
     //this.paymentGroupRef = '2019-15496299273';
+    this.paymentViewService.getBSfeature().subscribe(
+      features => {
+        let result = JSON.parse(features).filter(feature => feature.uid === BS_ENABLE_FLAG);
+        this.paymentLibComponent.ISBSENABLE = result[0] ? result[0].enable : false;
+      },
+      err => {
+        this.paymentLibComponent.ISBSENABLE = false;
+      }
+    );
     if (this.bsPaymentDcnNumber) {
       this.getUnassignedPaymentlist();
     }
