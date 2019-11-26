@@ -53,27 +53,27 @@ export class AllocatePaymentsComponent implements OnInit {
 
   reasonList: { [key: string]: { [key: string]: string } }= {
     overPayment: {
-      hwfReward: 'HWF awarded. If this is selected, pull through and display HWF Ref number',
-      wrongFee: 'Wrong fee received',
-      notIssueCase: 'Cannot issue case',
-      otherDeduction: 'Other deduction'
+      hwfReward: 'Help with Fees (HWF) awarded.  Please include the HWF reference number in the explanatory note',
+      wrongFee: 'Incorrect payment received',
+      notIssueCase: 'Unable to issue case',
+      otherDeduction: 'Other'
     },
     shortFall: {
-      helpWithFee: 'Help with Fees (HwF) declined',
-      wrongFee: 'Wrong fee received',
+      helpWithFee: 'Help with Fees (HWF) application declined',
+      wrongFee: 'Incorrect payment received',
       other: 'Other'
     }
   }
   explanationList = {
     overPayment: {
-      referRefund: 'I have noted on case and refer for refund',
-      noRefund: 'I have noted on case, refund not due',
-      noCase: 'There is no case, refer for refund',
+      referRefund: 'Details in case notes.  Refund due',
+      noRefund: 'Details in case notes. No refund due',
+      noCase: 'No case created.  Refund due',
       other: 'Other'
     },
     shortFall: {
-      holdCase: 'I have put hold on case and written to user requesting the shortfall',
-      heldCase: 'I have held case, user needs to be contacted to request shortfall',
+      holdCase: 'I have put a stop on the case and contacted the applicant requesting the balance of payment',
+      heldCase: 'I have put a stop on the case.  The applicant needs to be contacted to request the balance of payment',
       other: 'Other'
     }
   }
