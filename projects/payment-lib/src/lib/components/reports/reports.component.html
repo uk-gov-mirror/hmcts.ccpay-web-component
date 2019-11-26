@@ -1,11 +1,11 @@
 <div class="header">
+      <ccpay-error-banner *ngIf="errorMessage.showError" [errorMessage]="errorMessage"></ccpay-error-banner>
       <legend class="govuk-fieldset__legend--xl">
          <h1 class="govuk-fieldset__heading"> Choose the report type and date range</h1>
       </legend>
 </div>
 <form [formGroup]="reportsForm">
      <div  class="govuk-form-group">
-       
         <div class="govuk-radios govuk-radios--conditional" data-module="govuk-radios">
           <div  class="govuk-radios__item">
               <input 

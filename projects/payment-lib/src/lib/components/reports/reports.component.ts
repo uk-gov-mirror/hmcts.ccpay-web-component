@@ -3,9 +3,9 @@ import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { formatDate } from "@angular/common";
 import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
 import { BulkScaningPaymentService } from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
+import { ErrorHandlerService } from '../../services/shared/error-handler.service';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import {XlFileService} from '../../services/xl-file/xl-file.service';
-import { timestamp } from 'rxjs/operators';
 
 @Component({
   selector: 'ccpay-reports',
@@ -17,11 +17,12 @@ export class ReportsComponent implements OnInit {
   startDate: string;
   endDate: string;
   ccdCaseNumber: string;
-  errorMessage: string;
+  errorMessage = this.errorHandlerService.getServerErrorMessage(false);
   paymentGroups: IPaymentGroup[] = [];
 
   constructor(
     private xlFileService: XlFileService,
+    private errorHandlerService: ErrorHandlerService,
     private formBuilder: FormBuilder,
     private bulkScaningPaymentService: BulkScaningPaymentService,
     private paymentViewService: PaymentViewService) { }
@@ -69,6 +70,7 @@ downloadReport(){
     if(selectedReportName === 'PROCESSED_UNALLOCATED' || selectedReportName === 'SURPLUS_AND_SHORTFALL' ){
       this.paymentViewService.downloadSelectedReport(selectedReportName,selectedStartDate,selectedEndDate).subscribe(
         response =>  {
+          this.errorMessage = this.errorHandlerService.getServerErrorMessage(false);
           let res= {data: this.applyDateFormat(JSON.parse(response))};
           if(res['data'].length === 0 && selectedReportName === 'PROCESSED_UNALLOCATED' ){
             res.data= processedUnallocated;
@@ -78,11 +80,12 @@ downloadReport(){
           this.xlFileService.exportAsExcelFile(res['data'], this.getFileName(this.reportsForm.get('selectedreport').value, selectedStartDate, selectedEndDate));
         },
         (error: any) => {
-          this.errorMessage = <any>error;
+          this.errorMessage = this.errorHandlerService.getServerErrorMessage(true);
         })
     } else {
       this.bulkScaningPaymentService.downloadSelectedReport(selectedReportName,selectedStartDate,selectedEndDate).subscribe(
         response =>  {
+          this.errorMessage = this.errorHandlerService.getServerErrorMessage(false);
           let res = {data: this.applyDateFormat(JSON.parse(response))};
           if(res['data'].length === 0 && selectedReportName === 'DATA_LOSS' ){
             res.data= dataLossRptDefault;
@@ -92,7 +95,7 @@ downloadReport(){
           this.xlFileService.exportAsExcelFile(res['data'], this.getFileName(this.reportsForm.get('selectedreport').value, selectedStartDate, selectedEndDate ));
         },
         (error: any) => {
-          this.errorMessage = <any>error;
+          this.errorMessage = this.errorHandlerService.getServerErrorMessage(true);
         })
     }
   }

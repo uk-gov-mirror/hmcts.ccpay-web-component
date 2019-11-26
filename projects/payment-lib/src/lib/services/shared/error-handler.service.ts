@@ -34,4 +34,12 @@ export class ErrorHandlerService {
     }
     return _throw(errorMessage);
   }
+
+  getServerErrorMessage(isErrorExist) {
+    return {
+      title: "There is a problem with the service",
+      body: "Try again later",
+      showError: isErrorExist
+    };
+  }
 }

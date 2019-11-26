@@ -4,6 +4,7 @@ import { PaymentLibComponent } from '../../payment-lib.component';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import {BulkScaningPaymentService} from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
 import {CaseTransactionsService} from '../../services/case-transactions/case-transactions.service';
+import { ErrorHandlerService } from '../../services/shared/error-handler.service';
 import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
 import {IBSPayments} from '../../interfaces/IBSPayments';
 import {AllocatePaymentRequest} from '../../interfaces/AllocatePaymentRequest';
@@ -23,7 +24,7 @@ export class AllocatePaymentsComponent implements OnInit {
     amount: 0
   };
   siteID: string = null;
-  errorMessage = this.getErrorMessage(false);
+  errorMessage = this.errorHandlerService.getServerErrorMessage(false);
   paymentGroups: IPaymentGroup[] = [];
   selectedPayment: IPaymentGroup;
   remainingAmount: number;
@@ -80,6 +81,7 @@ export class AllocatePaymentsComponent implements OnInit {
 
 
   constructor(
+  private errorHandlerService: ErrorHandlerService,
   private formBuilder: FormBuilder,
   private caseTransactionsService: CaseTransactionsService,
   private paymentViewService: PaymentViewService,
@@ -113,13 +115,13 @@ export class AllocatePaymentsComponent implements OnInit {
 
     this.caseTransactionsService.getPaymentGroups(this.ccdCaseNumber).subscribe(
       paymentGroups => {
-        this.errorMessage = this.getErrorMessage(false);
+        this.errorMessage = this.errorHandlerService.getServerErrorMessage(false);
       this.paymentGroups = paymentGroups['payment_groups'].filter(paymentGroup => {
           return paymentGroupRef ? this.getGroupOutstandingAmount(<IPaymentGroup>paymentGroup) > 0 && paymentGroup.payment_group_reference === paymentGroupRef : this.getGroupOutstandingAmount(<IPaymentGroup>paymentGroup) > 0;
       });
       },
       (error: any) => {
-        this.errorMessage = this.getErrorMessage(true);
+        this.errorMessage = this.errorHandlerService.getServerErrorMessage(true);
       }
     );
   }
@@ -200,14 +202,14 @@ export class AllocatePaymentsComponent implements OnInit {
   finalServiceCall() {
     this.bulkScaningPaymentService.patchBSChangeStatus(this.unAllocatedPayment.dcn_reference, 'PROCESSED').subscribe(
       res1 => {
-        this.errorMessage = this.getErrorMessage(false);
+        this.errorMessage = this.errorHandlerService.getServerErrorMessage(false);
         let response1 = JSON.parse(res1);
         if (response1.success) {
           const requestBody = new AllocatePaymentRequest
           (this.ccdReference, this.unAllocatedPayment, this.siteID, this.exceptionReference);
           this.bulkScaningPaymentService.postBSAllocatePayment(requestBody, this.selectedPayment.payment_group_reference).subscribe(
             res2 => {
-              this.errorMessage = this.getErrorMessage(false);
+              this.errorMessage = this.errorHandlerService.getServerErrorMessage(false);
               let response2 = JSON.parse(res2);
               const reqBody = new IAllocationPaymentsRequest
               (response2['data'].payment_group_reference, response2['data'].reference, this.paymentReason, this.otherPaymentExplanation, this.userName);
@@ -215,7 +217,7 @@ export class AllocatePaymentsComponent implements OnInit {
                 this.paymentViewService.postBSAllocationPayments(reqBody).subscribe(
   
                 res3 => {
-                  this.errorMessage = this.getErrorMessage(false);
+                  this.errorMessage = this.errorHandlerService.getServerErrorMessage(false);
                   let response3 = JSON.parse(res3);
                   if (response3.success) {
                    this.gotoCasetransationPage();
@@ -223,7 +225,7 @@ export class AllocatePaymentsComponent implements OnInit {
                 },
                 (error: any) => {
                   this.bulkScaningPaymentService.patchBSChangeStatus(this.unAllocatedPayment.dcn_reference, 'COMPLETE').subscribe();
-                  this.errorMessage = this.getErrorMessage(true);
+                  this.errorMessage = this.errorHandlerService.getServerErrorMessage(true);
                   this.isConfirmButtondisabled = false;
                 }
                 );
@@ -231,14 +233,14 @@ export class AllocatePaymentsComponent implements OnInit {
             },
             (error: any) => {
               this.bulkScaningPaymentService.patchBSChangeStatus(this.unAllocatedPayment.dcn_reference, 'COMPLETE').subscribe();
-              this.errorMessage = this.getErrorMessage(true);
+              this.errorMessage = this.errorHandlerService.getServerErrorMessage(true);
               this.isConfirmButtondisabled = false;
             }
           );
       }
       },
       (error: any) => {
-        this.errorMessage = this.getErrorMessage(true);
+        this.errorMessage = this.errorHandlerService.getServerErrorMessage(true);
         this.isConfirmButtondisabled = false;
       }
     );  
@@ -264,7 +266,7 @@ export class AllocatePaymentsComponent implements OnInit {
           title: 'There is a shortfall of',
           reason: 'Provide a reason',
         }: { 
-          title:'',
+          title:'Amount left to be allocated',
           reason:'',
         };
       this.remainingAmount =  this.isRemainingAmountGtZero ? remainingToBeAssigned : this.isRemainingAmountLtZero ? remainingToBeAssigned * -1 : 0;
@@ -277,7 +279,7 @@ export class AllocatePaymentsComponent implements OnInit {
    getUnassignedPayment() {
     this.bulkScaningPaymentService.getBSPaymentsByDCN(this.bspaymentdcn).subscribe(
       unassignedPayments => {
-        this.errorMessage = this.getErrorMessage(false);
+        this.errorMessage = this.errorHandlerService.getServerErrorMessage(false);
         this.unAllocatedPayment = unassignedPayments['data'].payments.filter(payment => {
           return payment && payment.dcn_reference == this.bspaymentdcn;
         })[0];
@@ -289,7 +291,7 @@ export class AllocatePaymentsComponent implements OnInit {
        this.exceptionReference = beExceptionNumber ? beExceptionNumber : exceptionReference;
       },
       (error: any) => {
-        this.errorMessage = this.getErrorMessage(true);
+        this.errorMessage = this.errorHandlerService.getServerErrorMessage(true);
       }
     );
   }
@@ -302,12 +304,5 @@ export class AllocatePaymentsComponent implements OnInit {
       this.paymentDetailsMaxHasError = false;
       this.isMoreDetailsBoxHide = false;
     }
-  }
-  getErrorMessage(isErrorExist) {
-    return {
-      title: "There is a problem with the service",
-      body: "Try again later",
-      showError: isErrorExist
-    };
   }
 }
