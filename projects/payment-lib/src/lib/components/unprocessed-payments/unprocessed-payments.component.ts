@@ -48,7 +48,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
      if (this.selectedOption === 'dcn') {
         this.bulkScaningPaymentService.getBSPaymentsByDCN(this.dcnNumber).subscribe(
         unassignedPayments => {
-          if(unassignedPayments['data']) {
+          if(unassignedPayments['data'] && unassignedPayments['data'].payments) {
             this.setValuesForUnassignedRecord(unassignedPayments['data']);
           } else if(unassignedPayments['payments']) {
             this.setValuesForUnassignedRecord(unassignedPayments);
@@ -61,7 +61,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
     } else {
         this.bulkScaningPaymentService.getBSPaymentsByCCD(this.ccdCaseNumber).subscribe(
         unassignedPayments => {
-          if(unassignedPayments['data']) {
+          if(unassignedPayments['data'] && unassignedPayments['data'].payments) {
             this.setValuesForUnassignedRecord(unassignedPayments['data']);
           } else if(unassignedPayments['payments']) {
             this.setValuesForUnassignedRecord(unassignedPayments);
