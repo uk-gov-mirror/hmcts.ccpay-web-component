@@ -153,12 +153,12 @@
                         <td class="govuk-table__cell">
                           <a href="javascript:void(0)" (click)="goToPaymentViewComponent(paymentGroup.payment_group_reference, payment.reference, payment.method)">{{ payment.reference }}</a>
                         </td>
-                        <td class="govuk-table__cell">{{ payment.date_created | date:'dd MMM yyyy HH:mm:ss' }}</td>
-                        <td class="channel govuk-table__cell">{{ payment.channel | lowercase }}</td>
-                        <td class="govuk-table__cell capitalize">{{ payment.method | lowercase}}</td>
-                        <td class="govuk-table__cell">{{ payment.amount }}</td>
-                        <td class="govuk-table__cell"> {{getAllocationStatus(payment)}}</td>
-                        <td class="govuk-table__cell">{{ payment.status }}</td>
+                        <td class="govuk-table__cell whitespace-inherit">{{ payment.date_created | date:'dd MMM yyyy HH:mm:ss' }}</td>
+                        <td class="channel govuk-table__cell whitespace-inherit">{{ payment.channel | lowercase }}</td>
+                        <td class="govuk-table__cell capitalize whitespace-inherit">{{ payment.method | lowercase}}</td>
+                        <td class="govuk-table__cell whitespace-inherit">{{ payment.amount }}</td>
+                        <td class="govuk-table__cell whitespace-inherit"> {{getAllocationStatus(payment)}}</td>
+                        <td class="govuk-table__cell whitespace-inherit">{{ payment.status }}</td>
                       </tr>
                   </tbody>
                   <tbody class="govuk-table__body" *ngIf="paymentGroup.payments?.length === 0">
@@ -180,11 +180,11 @@
                   </thead>
                   <tbody class="govuk-table__body" *ngIf="paymentGroup.remissions?.length > 0">
                     <tr class="govuk-table__row" *ngFor="let remission of paymentGroup.remissions">
-                        <td class="govuk-table__cell">{{ remission.remission_reference }}</td>
-                        <td class="govuk-table__cell">{{ remission.date_created | date:'dd MMM yyyy HH:mm:ss' }}</td>
-                        <td class="govuk-table__cell">{{ remission.hwf_reference }}</td>
-                        <td class="govuk-table__cell">{{ remission.fee_code }}</td>
-                        <td class="govuk-table__cell">{{ remission.hwf_amount }}</td>
+                        <td class="govuk-table__cell whitespace-inherit">{{ remission.remission_reference }}</td>
+                        <td class="govuk-table__cell whitespace-inherit">{{ remission.date_created | date:'dd MMM yyyy HH:mm:ss' }}</td>
+                        <td class="govuk-table__cell whitespace-inherit">{{ remission.hwf_reference }}</td>
+                        <td class="govuk-table__cell whitespace-inherit">{{ remission.fee_code }}</td>
+                        <td class="govuk-table__cell whitespace-inherit">{{ remission.hwf_amount }}</td>
                       </tr>
                   </tbody>
                   <tbody class="govuk-table__body" *ngIf="paymentGroup.remissions?.length === 0">
