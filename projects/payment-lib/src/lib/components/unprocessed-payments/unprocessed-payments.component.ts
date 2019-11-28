@@ -48,13 +48,10 @@ export class UnprocessedPaymentsComponent implements OnInit {
      if (this.selectedOption === 'dcn') {
         this.bulkScaningPaymentService.getBSPaymentsByDCN(this.dcnNumber).subscribe(
         unassignedPayments => {
-          if(unassignedPayments['data'].payments) {
-            this.unassignedRecordList = unassignedPayments['data'].payments;
-            this.serviceId = unassignedPayments['data'].responsible_service_id;
-            if (unassignedPayments['data']['ccd_reference'] === undefined) {
-            this.isExceptionCase = true;
-            }
-            this.isRecordExist =  this.unassignedRecordList.length === 0;
+          if(unassignedPayments['data']) {
+            this.setValuesForUnassignedRecord(unassignedPayments['data']);
+          } else if(unassignedPayments['payments']) {
+            this.setValuesForUnassignedRecord(unassignedPayments);
           } else {
             this.upPaymentErrorMessage = 'error';
           }
@@ -64,13 +61,10 @@ export class UnprocessedPaymentsComponent implements OnInit {
     } else {
         this.bulkScaningPaymentService.getBSPaymentsByCCD(this.ccdCaseNumber).subscribe(
         unassignedPayments => {
-          if(unassignedPayments['data'].payments) {
-            this.unassignedRecordList = unassignedPayments['data'].payments;
-            this.serviceId = unassignedPayments['data'].responsible_service_id;
-            if (unassignedPayments['data']['ccd_reference'] === undefined) {
-            this.isExceptionCase = true;
-            }
-            this.isRecordExist =  this.unassignedRecordList.length === 0;
+          if(unassignedPayments['data']) {
+            this.setValuesForUnassignedRecord(unassignedPayments['data']);
+          } else if(unassignedPayments['payments']) {
+            this.setValuesForUnassignedRecord(unassignedPayments);
           } else {
             this.upPaymentErrorMessage = 'error';
           }
@@ -79,6 +73,14 @@ export class UnprocessedPaymentsComponent implements OnInit {
       );
     }
 
+  }
+  setValuesForUnassignedRecord(unassignedPayments) {
+    this.unassignedRecordList = unassignedPayments.payments;
+    this.serviceId = unassignedPayments.responsible_service_id;
+    if (unassignedPayments['ccd_reference'] === undefined) {
+      this.isExceptionCase = true;
+    }
+    this.isRecordExist =  this.unassignedRecordList.length === 0;
   }
   formatUnassignedRecordId(ID: Number) {
     return `unassignrecord-${ID}`;
