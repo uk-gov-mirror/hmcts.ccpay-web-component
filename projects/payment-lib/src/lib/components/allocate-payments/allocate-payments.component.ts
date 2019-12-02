@@ -9,6 +9,7 @@ import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
 import {IBSPayments} from '../../interfaces/IBSPayments';
 import {AllocatePaymentRequest} from '../../interfaces/AllocatePaymentRequest';
 import {IAllocationPaymentsRequest} from '../../interfaces/IAllocationPaymentsRequest';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-allocate-payments',
@@ -36,6 +37,7 @@ export class AllocatePaymentsComponent implements OnInit {
   isConfirmButtondisabled: boolean = false;
   isContinueButtondisabled: boolean = true;
   otherPaymentExplanation: string = null;
+  selectedOption: string = null;
 
   paymentReasonHasError: boolean = false;
   paymentExplanationHasError: boolean = false;
@@ -51,6 +53,7 @@ export class AllocatePaymentsComponent implements OnInit {
   paymentExplanation: string = null;
   userName: string = null;
   paymentSectionLabel: any;
+  paymentRef: string = null;
 
   reasonList: { [key: string]: { [key: string]: string } }= {
     overPayment: {
@@ -81,6 +84,7 @@ export class AllocatePaymentsComponent implements OnInit {
 
 
   constructor(
+  private router: Router,
   private errorHandlerService: ErrorHandlerService,
   private formBuilder: FormBuilder,
   private caseTransactionsService: CaseTransactionsService,
@@ -92,6 +96,8 @@ export class AllocatePaymentsComponent implements OnInit {
     this.viewStatus = 'mainForm';
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
     this.bspaymentdcn = this.paymentLibComponent.bspaymentdcn;
+    this.paymentRef = this.paymentLibComponent.paymentGroupReference;
+    this.selectedOption = this.paymentLibComponent.SELECTED_OPTION;
     this.overUnderPaymentForm = this.formBuilder.group({
       moreDetails: new FormControl('', Validators.compose([
         Validators.required,
@@ -105,7 +111,7 @@ export class AllocatePaymentsComponent implements OnInit {
       ])),
     });
     this.getUnassignedPayment();
-    this.getPaymentGroupDetails(this.paymentLibComponent.paymentGroupReference)
+    this.getPaymentGroupDetails(this.paymentRef)
   }
   getGroupOutstandingAmount(paymentGroup: IPaymentGroup): number {
     return this.bulkScaningPaymentService.calculateOutStandingAmount(paymentGroup);
@@ -128,6 +134,12 @@ export class AllocatePaymentsComponent implements OnInit {
 
   gotoCasetransationPage() {
     this.paymentLibComponent.viewName = 'case-transactions';
+    this.paymentLibComponent.TAKEPAYMENT = true;
+    this.paymentLibComponent.ISBSENABLE = true;
+  }
+  gotoSummaryPage(event: any) {
+    event.preventDefault();
+    this.paymentLibComponent.viewName = 'fee-summary';
     this.paymentLibComponent.TAKEPAYMENT = true;
     this.paymentLibComponent.ISBSENABLE = true;
   }
