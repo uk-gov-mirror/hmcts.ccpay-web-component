@@ -115,7 +115,7 @@
             <td class="govuk-table__cell govuk-table__cell--col1">{{fee.code}}</td>
             <td class="govuk-table__cell govuk-table__cell--col2"> {{fee.description}} </td>
             <td class="govuk-table__cell govuk-table__cell--col3"> {{fee.volume}} </td>
-            <td class="govuk-table__cell govuk-table__cell--col4"> {{ fee.calculated_amount/fee.volume | currency:'GBP':'symbol-narrow':'1.2-2' }} </td>
+            <td class="govuk-table__cell govuk-table__cell--col4"> {{ fee.fee_amount | currency:'GBP':'symbol-narrow':'1.2-2' }} </td>
             <td class="govuk-table__cell govuk-table__cell--col5"> {{fee.calculated_amount | currency:'GBP':'symbol-narrow':'1.2-2' }} </td>
             <td class="govuk-table__cell govuk-table__cell--col6 govuk-table__custom--col6" [attr.rowspan]="paymentGroup.fees.length" *ngIf="i==0">
               {{getGroupOutstandingAmount(paymentGroup) | currency:'GBP':'symbol-narrow':'1.2-2' }} </td>
