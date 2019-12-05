@@ -68,3 +68,8 @@ details summary {
 .capitalize::first-letter {
     text-transform: uppercase;
 }
+
+.govuk-inset-text__no-left-margin {
+    margin-left: 0;
+    padding-left: 0;
+}

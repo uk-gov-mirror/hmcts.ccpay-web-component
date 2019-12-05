@@ -163,9 +163,14 @@ getAllocationStatus(payments: any){
     this.router.navigateByUrl(`/reports?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}`);
   }
 
-  loadFeeSummaryPage(paymentGroup: IPaymentGroup) {
+  redirectToFeesummaryPage(paymentRef: string) {
+    this.loadFeeSummaryPage(paymentRef);
+    this.router.navigateByUrl(`/payment-history/${this.ccdCaseNumber}?view=fee-summary&selectedOption=${this.selectedOption}&paymentGroupRef=${paymentRef}`);
+  }
+
+  loadFeeSummaryPage(paymentRef: string) {
     this.paymentLibComponent.bspaymentdcn = null;
-    this.paymentLibComponent.paymentGroupReference = paymentGroup.payment_group_reference;
+    this.paymentLibComponent.paymentGroupReference = paymentRef;
     this.paymentLibComponent.viewName = 'fee-summary';
   }
 
@@ -187,5 +192,10 @@ getAllocationStatus(payments: any){
   }
   getUnprocessedFeeCount(unProcessedRecordCount: number) {
      this.unprocessedRecordCount = unProcessedRecordCount;
+  }
+  getRemissionDetails(remissions: any, feeCode: string) {
+    return remissions.filter((remission)=>{
+      return remission.fee_code === feeCode;
+    });
   }
 }
