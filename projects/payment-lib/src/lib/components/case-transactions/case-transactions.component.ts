@@ -16,8 +16,9 @@ import {Router} from '@angular/router';
 export class CaseTransactionsComponent implements OnInit {
   takePayment: boolean;
   ccdCaseNumber: string;
-  paymentGroups: IPaymentGroup[] = [];
+  paymentGroups: any[] = [];
   payments: IPayment[] = [];
+  nonPayments: IPayment[] = [];
   remissions: IRemission[] = [];
   fees: IFee[] = [];
   errorMessage: string;
@@ -49,6 +50,7 @@ export class CaseTransactionsComponent implements OnInit {
       paymentGroups => {
         this.paymentGroups = paymentGroups['payment_groups'];
         this.calculateAmounts();
+        console.log(this.nonPayments);
         this.totalRefundAmount = this.calculateRefundAmount();
       },
       (error: any) => {
@@ -78,7 +80,9 @@ getAllocationStatus(payments: any){
   calculateAmounts(): void {
     let feesTotal = 0.00,
      paymentsTotal = 0.00,
-     remissionsTotal = 0.00;
+     remissionsTotal = 0.00,
+     allocationStatus = null,
+     isPaymentSuccess = false;
 
     this.paymentGroups.forEach(paymentGroup => {
       if (paymentGroup.fees) {
@@ -90,10 +94,16 @@ getAllocationStatus(payments: any){
       this.totalFees = feesTotal;
 
       if (paymentGroup.payments) {
+        
         paymentGroup.payments.forEach(payment => {
-          if (payment.status.toUpperCase() === 'SUCCESS') {
+          allocationStatus = payment.payment_allocation;
+          isPaymentSuccess = payment.status.toUpperCase() === 'SUCCESS';
+          if (isPaymentSuccess && (allocationStatus[0].allocation_status === 'Allocated' || allocationStatus.length === 0)) {
             paymentsTotal = paymentsTotal + payment.amount;
             this.payments.push(payment);
+          } else if(allocationStatus.length > 0 && allocationStatus[0].allocation_status !== 'Allocated') {
+            payment.paymentGroupReference = paymentGroup.payment_group_reference
+            this.nonPayments.push(payment);
           }
         });
       }
@@ -174,10 +184,10 @@ getAllocationStatus(payments: any){
     this.paymentLibComponent.viewName = 'fee-summary';
   }
 
-  goToPaymentViewComponent(paymentGroupReference: string, paymentReference: string, paymentMethod: string) {
-    this.paymentLibComponent.paymentMethod = paymentMethod;
-    this.paymentLibComponent.paymentGroupReference = paymentGroupReference;
-    this.paymentLibComponent.paymentReference = paymentReference;
+  goToPaymentViewComponent(paymentGroup: any) {
+    this.paymentLibComponent.paymentMethod = paymentGroup.paymentMethod;
+    this.paymentLibComponent.paymentGroupReference = paymentGroup.paymentGroupReference;
+    this.paymentLibComponent.paymentReference = paymentGroup.paymentReference;
     this.paymentLibComponent.viewName = 'payment-view';
   }
 
