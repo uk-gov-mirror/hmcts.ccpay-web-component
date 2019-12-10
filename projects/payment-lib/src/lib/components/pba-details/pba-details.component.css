@@ -1,0 +1,4 @@
+
+.capitalize::first-letter {
+    text-transform: uppercase;
+}

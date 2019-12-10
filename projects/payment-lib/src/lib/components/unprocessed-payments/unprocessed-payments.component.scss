@@ -1,0 +1,46 @@
+.unprocessed-payments {
+  //todo ...
+  .unprocessed-payments--radio-button {
+    bottom: 10px;
+  }
+}
+
+.disable{
+  text-decoration:none;
+  padding: .526315em .789473em .263157em;
+  cursor:default;
+  color:white;
+  background-color: #00823b;
+  pointer-events:none;
+  font-size: 1em;
+  line-height: 1.25;
+  outline: 1px solid transparent;
+  outline-offset: -1px;
+  -webkit-appearance: none;
+  box-shadow: 0 2px 0 #003618;
+}
+
+.button.disabled,.button[disabled="disabled"],.button[disabled] {
+  zoom:1;filter: alpha(opacity=50);
+  opacity: .5
+}
+
+.button.disabled:active,.button[disabled="disabled"]:active,.button[disabled]:active {
+  top: 0;
+  -webkit-box-shadow: 0 2px 0 #003618;
+  -moz-box-shadow: 0 2px 0 #003618;
+  box-shadow: 0 2px 0 #003618
+}
+
+.button[disabled="disabled"] {
+  background: #00823b;
+}
+
+
+.lowercase { text-transform: lowercase; }
+.capitalize::first-letter {
+  text-transform: uppercase;
+}
+.whitespace-inherit {
+  white-space: inherit !important;
+}

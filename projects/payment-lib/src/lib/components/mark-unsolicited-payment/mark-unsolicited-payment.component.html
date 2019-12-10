@@ -1,0 +1,115 @@
+<div class="mkpay-unidentified">
+  <div *ngIf="viewStatus === 'mainForm'">
+  <h1 class="heading-large">Mark payment as transferred</h1>
+  <div class="govuk-grid-column-full govuk-!-padding-bottom-3">
+    <hr class="govuk-section-break govuk-section-break--visible">
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+            <td class="govuk-table__header" scope="col">Payment asset number (DCN)</td>
+            <td class="govuk-table__header" scope="col">Banked date</td>
+            <td class="govuk-table__header" scope="col">Amount</td>
+            <td class="govuk-table__header" scope="col">Method</td>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+            <td class="govuk-table__cell">{{unassignedRecord.dcn_reference}}</td>
+            <td class="govuk-table__cell"> {{unassignedRecord.date_banked | date:'dd MMM yyyy'}}</td>
+            <td class="govuk-table__cell"> {{unassignedRecord.amount | currency :'GBP':'symbol':'1.2-2'}}</td>
+            <td class="capitalize govuk-table__cell"> {{trimUnderscore(unassignedRecord.payment_method) | lowercase}}  </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <form [formGroup]="markPaymentUnsolicitedForm" novalidate>
+    <div class="govuk-form-group">
+      <label class="govuk-label custom-govuk-label custom-govuk-label" for="reason">
+        Reason for payment being marked as transferred   
+      </label>
+        <textarea class="form-control form-control-3-4" [ngClass]="{'inline-error-class': reasonHasError || reasonMinHasError || reasonMaxHasError}" name="reason" id="reason" rows="5" formControlName="reason">
+        </textarea>
+        <p class="inline-error-message" *ngIf="isReasonEmpty || reasonHasError || reasonMinHasError || reasonMaxHasError">
+          <span *ngIf="isReasonEmpty">Enter a reason for marking this payment as transferred.</span>
+          <span *ngIf="reasonHasError">Enter a valid reason</span>
+          <span *ngIf="reasonMinHasError">Reason should be at least 3 characters.</span>
+          <span *ngIf="reasonMaxHasError">Reason should be 255 characters or under.</span>
+        </p>
+    </div>
+    <div class="govuk-form-group">
+      <label class="govuk-label custom-govuk-label" for="responsibleOffice">
+        Receiving Site ID (Receiving court/Bulk centre site ID)    
+      </label>
+      <input class="govuk-input govuk-input--width-30 govuk-!-margin-right-1" [ngClass]="{'inline-error-class': responsibleOfficeHasError}" id="responsibleOffice" name="responsibleOffice" type="text" formControlName="responsibleOffice">
+      <p class="inline-error-message" *ngIf="responsibleOfficeHasError || isResponsibleOfficeEmpty ">
+        <span *ngIf="isResponsibleOfficeEmpty">Enter receiving site ID</span>
+        <span *ngIf="responsibleOfficeHasError">Enter vaild receiving site ID</span>
+      </p>
+
+    </div>
+   <div class="govuk-button--group">
+      <button type="submit" class="button" (click)="saveAndContinue()">
+        Confirm
+      </button>
+      <button type="button" class="button govuk-button--secondary" (click)="cancelMarkUnsolicitedPayments('cancel')">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>
+       <ng-container *ngIf="viewStatus === 'unsolicitedContinueConfirm'">
+          <ccpay-error-banner *ngIf="errorMessage.showError" [errorMessage]="errorMessage"></ccpay-error-banner>
+      <div class="govuk-warning-text">
+        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+        <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Warning</span>
+        <h1 class="heading-small"> Are you sure you want to mark this payment as transferred? </h1>
+        </strong>
+
+        <div class="govuk-grid-column-full govuk-!-padding-bottom-3">
+          <hr class="govuk-section-break govuk-section-break--visible">
+          <table class="govuk-table">
+            <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <td class="govuk-table__header" scope="col">Reason</td>
+              <td class="govuk-table__header" scope="col">Receiving site ID</td>
+            </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+            <td class="govuk-table__cell">{{reason}}</td>
+            <td class="govuk-table__cell">{{responsibleOffice}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+      <div class="govuk-button--group">
+        <button type="submit" class="button" [disabled]="isConfirmButtondisabled" (click)="confirmPayments()">
+          Confirm
+        </button>
+        <button type="button" class="button govuk-button--secondary" (click)="cancelMarkUnsolicitedPayments()">
+          Cancel
+        </button>
+      </div>
+    </ng-container>
+      <ng-container *ngIf="viewStatus === 'unsolicitedCancelConfirm'">
+      <div class="govuk-warning-text">
+        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+        <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Warning</span>
+          Are you sure you want to cancel?
+        </strong>
+      </div>
+      <div class="govuk-button--group">
+        <button type="submit" class="button" (click)="gotoCasetransationPage()">
+          Yes
+        </button>
+        <button type="button" class="button govuk-button--secondary" (click)="cancelMarkUnsolicitedPayments()">
+          No
+        </button>
+      </div>
+    </ng-container>
+</div>

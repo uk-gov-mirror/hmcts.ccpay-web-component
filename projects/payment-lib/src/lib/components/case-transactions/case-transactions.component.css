@@ -1,28 +1,68 @@
-.govuk-grid-column-full--gr{
+.govuk-grid-column-full--gr {
     position: relative;
     margin-bottom: 10px;
 }
-.govuk-heading-xl{
+.disable {
+    text-decoration: none;
+    cursor: default;
+    color:white;
+    background-color: grey;
+    pointer-events: none;
+}
+.govuk-grid__surplus-payments {
+    margin: 20px 0;
+}
+.govuk-grid__surplus-payments > .govuk-grid-column-full {
+    padding: 0;
+}
+.govuk-grid__surplus-payments-col1 {
+    margin-bottom: 10px;
+}
+.govuk-inset-text__no-border {
+    border-left: 0px;
+}
+.govuk-hidetext {
+    font-size: 22px;
+    padding-bottom: 10px;
+}
+.lowercase { text-transform: lowercase; }
+
+.channel::first-letter {
+    text-transform: uppercase;
+  }
+.govuk-heading-xl {
     font-size: 48px;
-    margin-bottom:1px;
+    margin-bottom: 1px;
 }
-.govuk-section-break--visible{
- border-bottom: 2px solid black;
+.govuk-section-break--visible {
+    border-bottom: 2px solid black;
  }
-.totalpayments.govuk-table__row{
- border-bottom: 2px solid black !important;
+.totalpayments.govuk-table__row {
+    border-bottom: 2px solid black !important;
 }
-.govuk-inset-text{
-margin-left :1em;
+.govuk-inset-text {
+    margin-left: 1em;
 }
 .govuk-button {
   font-size: 19px;
 }
 
-.groupamount.govuk-table__header,.govuk-table__cell.govuk-table__cell--col6.govuk-table__custom--col6{
-text-align:right;
+.groupamount.govuk-table__header,
+.govuk-table__cell.govuk-table__cell--col6.govuk-table__custom--col6 {
+    text-align: right;
 }
 
-.feeclass{
-  padding-left:0.7em;
+.feeclass {
+  padding-left: 0.7em;
+}
+
+details summary {
+    display: list-item;
+}
+
+.capitalize::first-letter {
+    text-transform: uppercase;
+}
+.whitespace-inherit {
+    white-space: inherit !important;
 }

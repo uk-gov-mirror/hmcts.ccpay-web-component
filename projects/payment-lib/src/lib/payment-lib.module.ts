@@ -14,10 +14,18 @@ import { ConsoleLoggerService } from './services/shared/logger/console-logger.se
 import { WebComponentHttpClient } from './services/shared/httpclient/webcomponent.http.client';
 import { CaseTransactionsComponent } from './components/case-transactions/case-transactions.component';
 import { FeeSummaryComponent } from './components/fee-summary/fee-summary.component';
+import { ErrorBannerComponent } from './components/error-banner/error-banner.component';
+import { MarkUnidentifiedPaymentComponent } from './components/mark-unidentified-payment/mark-unidentified-payment.component';
+import { MarkUnsolicitedPaymentComponent } from './components/mark-unsolicited-payment/mark-unsolicited-payment.component';
+import { UnprocessedPaymentsComponent } from './components/unprocessed-payments/unprocessed-payments.component';
+import { AllocatePaymentsComponent } from './components/allocate-payments/allocate-payments.component';
 import { AddRemissionComponent } from './components/add-remission/add-remission.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CcdHyphensPipe } from './pipes/ccd-hyphens.pipe';
+import { keyValuePipe } from './pipes/key-value.pipe';
 import { SanitizeHtmlPipe } from './pipes/sanitize-html.pipe';
+import { ReportsComponent } from './components/reports/reports.component';
+import { XlFileService } from './services/xl-file/xl-file.service';
 
 
 @NgModule({
@@ -34,16 +42,24 @@ import { SanitizeHtmlPipe } from './pipes/sanitize-html.pipe';
     CardDetailsComponent,
     PageNotFoundComponent,
     StatusHistoryComponent,
+    MarkUnidentifiedPaymentComponent,
+    MarkUnsolicitedPaymentComponent,
+    UnprocessedPaymentsComponent,
+    AllocatePaymentsComponent,
     PbaDetailsComponent,
     CaseTransactionsComponent,
     FeeSummaryComponent,
     AddRemissionComponent,
     CcdHyphensPipe,
-    SanitizeHtmlPipe
+    keyValuePipe,
+    SanitizeHtmlPipe,
+    ReportsComponent,
+    ErrorBannerComponent
   ],
   exports: [ PaymentLibComponent ],
-  providers: [ { 
-    provide: LoggerService, useClass: ConsoleLoggerService },
+  providers: [ 
+    { provide: LoggerService, useClass: ConsoleLoggerService },
+    XlFileService,
     WebComponentHttpClient
   ]
 })
