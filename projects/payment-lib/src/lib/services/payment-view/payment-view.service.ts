@@ -11,7 +11,11 @@ import { LoggerService } from '../shared/logger/logger.service';
 import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
 import { AddRemissionRequest } from '../../interfaces/AddRemissionRequest';
 import { PaymentToPayhubRequest } from '../../interfaces/PaymentToPayhubRequest';
+import { UnidentifiedPaymentsRequest } from '../../interfaces/UnidentifiedPaymentsRequest';
+import { UnsolicitedPaymentsRequest } from '../../interfaces/UnsolicitedPaymentsRequest';
 import { Meta } from '@angular/platform-browser';
+import { AllocatePaymentRequest } from '../../interfaces/AllocatePaymentRequest';
+import { IAllocationPaymentsRequest } from '../../interfaces/IAllocationPaymentsRequest';
 
 
 @Injectable({
@@ -30,7 +34,7 @@ export class PaymentViewService {
   getPaymentDetails(paymentReference: string, paymentMethod: string): Observable<IPayment> {
     this.logger.info('Payment-view-service getPaymentDetails for: ', paymentReference);
 
-    return this.http.get<IPayment>(paymentMethod === 'card' ?
+    return this.http.get<IPayment>(paymentMethod === 'card' || paymentMethod === 'cash' || paymentMethod === 'cheque' || paymentMethod === 'postal order' ?
           `${this.paymentLibService.API_ROOT}/card-payments/${paymentReference}` :
           `${this.paymentLibService.API_ROOT}/credit-account-payments/${paymentReference}`, {
         withCredentials: true
@@ -50,6 +54,26 @@ export class PaymentViewService {
         catchError(this.errorHandlerService.handleError)
       );
   }
+  postBSPayments(body: AllocatePaymentRequest): Observable<any> {
+    return this.https.post(`${this.paymentLibService.API_ROOT}/payment-groups/bulk-scan-payments`, body).pipe(
+      catchError(this.errorHandlerService.handleError)
+    );
+  }
+  postBSUnidentifiedPayments(body: UnidentifiedPaymentsRequest): Observable<any> {
+    return this.https.post(`${this.paymentLibService.API_ROOT}/payment-allocations`, body).pipe(
+      catchError(this.errorHandlerService.handleError)
+    );
+  }
+  postBSUnsolicitedPayments(body: UnsolicitedPaymentsRequest): Observable<any> {
+    return this.https.post(`${this.paymentLibService.API_ROOT}/payment-allocations`, body).pipe(
+      catchError(this.errorHandlerService.handleError)
+    );
+  }
+  postBSAllocationPayments(body: IAllocationPaymentsRequest): Observable<any> {
+    return this.https.post(`${this.paymentLibService.API_ROOT}/payment-allocations`, body).pipe(
+      catchError(this.errorHandlerService.handleError)
+    );
+  }
 
   postPaymentGroupWithRemissions(paymentGroupReference: string, feeId: number, body: AddRemissionRequest): Observable<any> {
     return this.https.post(`${this.paymentLibService.API_ROOT}/payment-groups/${paymentGroupReference}/fees/${feeId}/remissions`, body).pipe(
@@ -66,5 +90,12 @@ export class PaymentViewService {
     return this.https.post(`${this.paymentLibService.API_ROOT}/payment-groups/${paymentGroupRef}/card-payments`, body).pipe(
       catchError(this.errorHandlerService.handleError)
     );
+  }
+  downloadSelectedReport(reportName: string, startDate: string, endDate:string): Observable<any> {
+    const url = `${this.paymentLibService.API_ROOT}/report/data?date_from=${startDate}&date_to=${endDate}&report_type=${reportName}`;
+    return this.https.get(url, { withCredentials: true }).pipe( catchError(this.errorHandlerService.handleError));
+  }
+  getBSfeature(): Observable<any> {
+    return this.https.get('api/payment-history/bulk-scan-feature', { withCredentials: true }).pipe( catchError(this.errorHandlerService.handleError));
   }
 }

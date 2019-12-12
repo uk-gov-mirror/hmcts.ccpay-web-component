@@ -1,5 +1,6 @@
 import {IFee} from './IFee';
 import {IStatusHistory} from './IStatusHistory';
+import {IPaymentStatus} from './IPaymentStatus';
 
 export interface IPayment {
   amount: number;
@@ -7,6 +8,9 @@ export interface IPayment {
   reference: string;
   currency: string;
   date_created: string;
+  banked_date: string;
+  document_control_number: string;
+  payer_name: string;
   date_updated: string;
   ccd_case_number: string;
   case_reference: string;
@@ -14,6 +18,7 @@ export interface IPayment {
   method: string;
   external_provider: string;
   status: string;
+  payment_allocation: IPaymentStatus[];
   external_reference: string;
   site_id: string;
   service_name: string;

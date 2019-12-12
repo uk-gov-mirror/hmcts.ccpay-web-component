@@ -1,0 +1,31 @@
+.govuk-radios__input:focus+.govuk-radios__label::before {
+    border-width: 4px;
+    -webkit-box-shadow: 0 0 0 4px rgb(255, 175, 0);
+    box-shadow: 0 0 0 4px rgb(255, 175, 0)
+  }
+ 
+.datefrom{
+width:50%;
+float:left;
+}
+
+.dateto{
+  width:50%;
+  float: right;
+}
+.govuk-label--m{
+    font-size: large;
+  }
+
+.form-hint{
+  padding-left: 0.7em;
+}
+.header{
+  margin-top:10px;
+  margin-bottom: 15px;
+}
+
+.btnsubmit{
+  margin-bottom:30px;
+}
+  

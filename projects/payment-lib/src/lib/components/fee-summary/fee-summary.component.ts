@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { IPaymentGroup } from '../../interfaces/IPaymentGroup';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
+import { BulkScaningPaymentService } from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
 import { PaymentLibComponent } from '../../payment-lib.component';
 import { IRemission } from '../../interfaces/IRemission';
 import { IFee } from '../../interfaces/IFee';
@@ -8,7 +9,8 @@ import { PaymentToPayhubRequest } from '../../interfaces/PaymentToPayhubRequest'
 import { SafeHtml } from '@angular/platform-browser';
 import {Router} from '@angular/router';
 import {Location} from '@angular/common';
-import { debugOutputAstAsTypeScript } from '@angular/compiler';
+
+const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 
 @Component({
   selector: 'ccpay-fee-summary',
@@ -20,6 +22,7 @@ export class FeeSummaryComponent implements OnInit {
   @Input() paymentGroupRef: string;
   @Input() ccdCaseNumber: string;
 
+  bsPaymentDcnNumber: string;
   paymentGroup: IPaymentGroup;
   errorMessage: string;
   viewStatus = 'main';
@@ -27,12 +30,17 @@ export class FeeSummaryComponent implements OnInit {
   totalFee: number;
   payhubHtml: SafeHtml;
   service: string = null;
+  upPaymentErrorMessage: string;
+  selectedOption:string;
   isBackButtonEnable: boolean = true;
+  outStandingAmount: number;
+  totalAfterRemission: number = 0;
   isConfirmationBtnDisabled: boolean = false;
   isRemoveBtnDisabled: boolean = false;
 
   constructor(
     private router: Router,
+    private bulkScaningPaymentService: BulkScaningPaymentService,
     private location: Location,
     private paymentViewService: PaymentViewService,
     private paymentLibComponent: PaymentLibComponent
@@ -40,9 +48,49 @@ export class FeeSummaryComponent implements OnInit {
 
   ngOnInit() {
     this.viewStatus = 'main';
-    // this.paymentGroupRef = '2018-15310089885';
-    //this.paymentGroupRef = '2019-15496299273';
+    this.bsPaymentDcnNumber = this.paymentLibComponent.bspaymentdcn;
+    this.selectedOption = this.paymentLibComponent.SELECTED_OPTION.toLocaleLowerCase();
+
+    this.paymentViewService.getBSfeature().subscribe(
+      features => {
+        let result = JSON.parse(features).filter(feature => feature.uid === BS_ENABLE_FLAG);
+        this.paymentLibComponent.ISBSENABLE = result[0] ? result[0].enable : false;
+      },
+      err => {
+        this.paymentLibComponent.ISBSENABLE = false;
+      }
+    );
+    if (this.bsPaymentDcnNumber) {
+      this.getUnassignedPaymentlist();
+    }
     this.getPaymentGroup();
+  }
+
+    getUnassignedPaymentlist() {
+     if (this.selectedOption === 'dcn') {
+        this.bulkScaningPaymentService.getBSPaymentsByDCN(this.paymentLibComponent.DCN_NUMBER).subscribe(
+        unassignedPayments => {
+          if(unassignedPayments['data'].payments) {
+            this.service = unassignedPayments['data'].responsible_service_id;
+          } else {
+            this.upPaymentErrorMessage = 'error';
+          }
+        },
+        (error: any) => this.upPaymentErrorMessage = error
+      );
+    } else {
+        this.bulkScaningPaymentService.getBSPaymentsByCCD(this.ccdCaseNumber).subscribe(
+        unassignedPayments => {
+          if(unassignedPayments['data'].payments) {
+            this.service = unassignedPayments['data'].responsible_service_id;
+          } else {
+            this.upPaymentErrorMessage = 'error';  
+          }      
+        },
+        (error: any) => this.upPaymentErrorMessage = error
+      );
+    }
+
   }
 
   getRemissionByFeeCode(feeCode: string): IRemission {
@@ -68,12 +116,12 @@ export class FeeSummaryComponent implements OnInit {
       this.paymentLibComponent.paymentMethod).subscribe(
       paymentGroup => {
         this.paymentGroup = paymentGroup;
-        this.totalFee = 0;
-        if (this.paymentGroup.fees) {
-          for (const fee of this.paymentGroup.fees) {
-            this.totalFee = this.totalFee + fee.net_amount;
-          }
+        if (paymentGroup.fees) {
+          paymentGroup.fees.forEach(fee => {
+              this.totalAfterRemission  = this.totalAfterRemission  + fee.net_amount;
+          });
         }
+        this.outStandingAmount = this.bulkScaningPaymentService.calculateOutStandingAmount(paymentGroup);
       },
       (error: any) => this.errorMessage = error
     );
@@ -90,6 +138,7 @@ export class FeeSummaryComponent implements OnInit {
     this.paymentViewService.deleteFeeFromPaymentGroup(fee).subscribe(
       (success: any) => {
           if (this.paymentGroup.fees && this.paymentGroup.fees.length > 1){
+          this.totalAfterRemission = 0;
           this.getPaymentGroup();
           this.viewStatus = 'main';
           return;
@@ -106,22 +155,34 @@ export class FeeSummaryComponent implements OnInit {
  loadCaseTransactionPage() {
     this.paymentLibComponent.TAKEPAYMENT = true;
     this.paymentLibComponent.viewName = 'case-transactions';
+    this.paymentViewService.getBSfeature().subscribe(
+      features => {
+        let result = JSON.parse(features).filter(feature => feature.uid === BS_ENABLE_FLAG);
+        this.paymentLibComponent.ISBSENABLE = result[0] ? result[0].enable : false;
+      },
+      err => {
+        this.paymentLibComponent.ISBSENABLE = false;
+      }
+    );
   }
   cancelRemission() {
     this.viewStatus = 'main';
   }
-  redirectToFeeSearchPage(event: any) {
+  redirectToFeeSearchPage(event: any, page?: string) {
     event.preventDefault();
+    let dcn = this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
+    const ISBSenable = this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
     if(this.viewStatus === 'feeRemovalConfirmation' || this.viewStatus === 'add_remission') {
       this.viewStatus = 'main';
       return;
     }
-    this.router.navigateByUrl(`/fee-search?ccdCaseNumber=${this.ccdCaseNumber}`);
+    let url = `/fee-search?ccdCaseNumber=${this.ccdCaseNumber}&selectedOption=${this.paymentLibComponent.SELECTED_OPTION}&paymentGroupRef=${this.paymentGroupRef}${dcn}${ISBSenable}`;
+    this.router.navigateByUrl(url);
   }
   takePayment() {
     this.isConfirmationBtnDisabled = true;
     const seriveName = this.service ==='AA07' ? 'DIVORCE': this.service ==='AA08' ? 'PROBATE' : '',
-     requestBody = new PaymentToPayhubRequest(this.ccdCaseNumber, this.totalFee, this.service, seriveName);
+      requestBody = new PaymentToPayhubRequest(this.ccdCaseNumber, this.outStandingAmount, this.service, seriveName);
     this.paymentViewService.postPaymentToPayHub(requestBody, this.paymentGroupRef).subscribe(
       response => {
         this.location.go(`payment-history?view=fee-summary`);
@@ -132,7 +193,16 @@ export class FeeSummaryComponent implements OnInit {
       (error: any) => {
         this.errorMessage = error;
         this.isConfirmationBtnDisabled = false;
+        this.router.navigateByUrl('/pci-pal-failure');
       }
     );
+  }
+  goToAllocatePage(outStandingAmount: number) {
+    if (outStandingAmount > 0) {
+      this.paymentLibComponent.paymentGroupReference = this.paymentGroupRef;
+      this.paymentLibComponent.viewName = 'allocate-payments';
+    } else {
+      this.loadCaseTransactionPage();
+    }
   }
 }

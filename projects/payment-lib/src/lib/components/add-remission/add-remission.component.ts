@@ -1,9 +1,12 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { IFee } from '../../interfaces/IFee';
+import {Router} from '@angular/router';
 import { AddRemissionRequest } from '../../interfaces/AddRemissionRequest';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import { PaymentLibComponent } from '../../payment-lib.component';
+
+const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 
 @Component({
   selector: 'ccpay-add-remission',
@@ -21,15 +24,22 @@ export class AddRemissionComponent implements OnInit {
   hasErrors = false;
   viewStatus = 'main';
   errorMessage = null;
-  remissionCodeHasError = false;
-  amountHasError = false;
+  option: string = null;
   isConfirmationBtnDisabled: boolean = false;
 
+  isRemissionCodeEmpty: boolean = false;
+  remissionCodeHasError: boolean = false;
+  isAmountEmpty: boolean = false;
+  amountHasError: boolean = false;
+  isRemissionLessThanFeeError: boolean = false;
+
   constructor(private formBuilder: FormBuilder,
+    private router: Router,
     private paymentViewService: PaymentViewService,
     private paymentLibComponent: PaymentLibComponent) { }
 
   ngOnInit() {
+    this.option = this.paymentLibComponent.SELECTED_OPTION;
     this.remissionForm = this.formBuilder.group({
       remissionCode: new FormControl('', Validators.compose([
         Validators.required,
@@ -44,22 +54,40 @@ export class AddRemissionComponent implements OnInit {
   }
 
   addRemission() {
-    this.resetRemissionForm();
-    if (this.remissionForm.dirty && this.remissionForm.valid) {
+    this.resetRemissionForm([false, false, false, false, false], 'All');
+    const remissionctrls=this.remissionForm.controls,
+      isRemissionLessThanFee = this.fee.calculated_amount > remissionctrls.amount.value; 
+    if (this.remissionForm.dirty && this.remissionForm.valid && isRemissionLessThanFee) {
       this.viewStatus = 'confirmation';
     }else {
-      if(this.remissionForm.controls.remissionCode.invalid ) {
-        this.remissionCodeHasError = true;
+
+      if(remissionctrls['remissionCode'].value == '' ) {
+        this.resetRemissionForm([true, false, false, false, false], 'remissionCode');
       }
-      if(this.remissionForm.controls.amount.invalid){
-        this.amountHasError = true;
+      if(remissionctrls['remissionCode'].value != '' && remissionctrls['remissionCode'].invalid ) {
+        this.resetRemissionForm([false, true, false, false, false], 'remissionCode');
+      }
+      if(remissionctrls['amount'].value == '' ) {
+        this.resetRemissionForm([false, false, true, false, false], 'amount');
+      }
+      if(remissionctrls['amount'].value != '' && remissionctrls['amount'].invalid ) {
+        this.resetRemissionForm([false, true, false, true, false], 'amount');
+      }
+      if(remissionctrls.amount.valid && !isRemissionLessThanFee){
+        this.resetRemissionForm([false, false, false, false, true], 'amount');
       }
     }
   }
 
-  resetRemissionForm(){
-    this.remissionCodeHasError = false;
-    this.amountHasError = false;
+  resetRemissionForm(val, field){
+    if(field==='remissionCode' || field==='All') {
+      this.isRemissionCodeEmpty = val[0];
+      this.remissionCodeHasError = val[1];
+    } else if (field==='amount' || field==='All'){
+      this.isAmountEmpty = val[2];
+      this.amountHasError = val[3];
+      this.isRemissionLessThanFeeError = val[4];
+    }
   }
 
   confirmRemission() {
@@ -71,13 +99,32 @@ export class AddRemissionComponent implements OnInit {
     this.paymentViewService.postPaymentGroupWithRemissions(this.paymentGroupRef, this.fee.id, requestBody).subscribe(
       response => {
         if (JSON.parse(response).success) {
-          this.paymentLibComponent.viewName = 'case-transactions';
-          this.paymentLibComponent.TAKEPAYMENT = true;
+          if (this.paymentLibComponent.bspaymentdcn) {
+            this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+            this.router.onSameUrlNavigation = 'reload';
+            this.router.navigateByUrl(`/payment-history/${this.ccdCaseNumber}?view=fee-summary&selectedOption=${this.option}&paymentGroupRef=${this.paymentGroupRef}&dcn=${this.paymentLibComponent.bspaymentdcn}`);
+          }else {
+            this.gotoCasetransationPage();
+          }
+
         }
       },
       (error: any) => {
         this.errorMessage = error;
         this.isConfirmationBtnDisabled = false;
+      }
+    );
+  }
+  gotoCasetransationPage() {
+    this.paymentLibComponent.viewName = 'case-transactions';
+    this.paymentLibComponent.TAKEPAYMENT = true;
+    this.paymentViewService.getBSfeature().subscribe(
+      features => {
+        let result = JSON.parse(features).filter(feature => feature.uid === BS_ENABLE_FLAG);
+        this.paymentLibComponent.ISBSENABLE = result[0] ? result[0].enable : false;
+      },
+      err => {
+        this.paymentLibComponent.ISBSENABLE = false;
       }
     );
   }

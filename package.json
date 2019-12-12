@@ -1,6 +1,6 @@
 {
   "name": "ccpay-web-component",
-  "version": "2.0.53",
+  "version": "3.0.1",
   "scripts": {
     "ng": "ng",
     "build:library": "ng build payment-lib",
@@ -30,7 +30,8 @@
     "govuk_frontend_toolkit": "^7.1.0",
     "govuk_template_jinja": "^0.24.0",
     "rxjs": "^6.0.0",
-    "rxjs-compat": "^6.1.0",
+    "rxjs-compat": "^6.5.3",
+    "xlsx-style": "^0.8.13",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
@@ -39,10 +40,12 @@
     "@angular/cli": "~6.0.8",
     "@angular/compiler-cli": "^6.0.3",
     "@angular/language-service": "^6.0.3",
+    "@types/file-saver": "^2.0.1",
     "@types/jasmine": "~2.8.6",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~8.9.4",
     "codelyzer": "~4.2.1",
+    "file-saver": "^2.0.2",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~1.7.1",
@@ -57,7 +60,8 @@
     "tsickle": ">=0.25.5",
     "tslib": "^1.7.1",
     "tslint": "~5.9.1",
-    "typescript": "~2.7.2"
+    "typescript": "~2.7.2",
+    "xlsx": "^0.15.1"
   },
   "license": "MIT"
 }

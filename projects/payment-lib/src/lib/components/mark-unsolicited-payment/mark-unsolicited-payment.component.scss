@@ -1,0 +1,24 @@
+.mkpay-unidentified {
+  margin: 10px 0 20px 0;
+  .govuk-button--secondary {
+    margin-left: 10px;
+    background-color: #b3b8bdf2;
+  }
+  .inline-error-class {
+    outline: 3px solid #a71414;
+    outline-offset: 0;
+  }
+  .inline-error-message {
+    color: #a71414;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+}
+
+.lowercase { text-transform: lowercase; }
+.capitalize { text-transform: capitalize; }
+
+.custom-govuk-label,
+.govuk-warning-text__text {
+  font-size: 19px;
+}
