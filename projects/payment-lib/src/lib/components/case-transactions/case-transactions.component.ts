@@ -50,7 +50,6 @@ export class CaseTransactionsComponent implements OnInit {
       paymentGroups => {
         this.paymentGroups = paymentGroups['payment_groups'];
         this.calculateAmounts();
-        console.log(this.nonPayments);
         this.totalRefundAmount = this.calculateRefundAmount();
       },
       (error: any) => {
@@ -98,13 +97,17 @@ getAllocationStatus(payments: any){
         paymentGroup.payments.forEach(payment => {
           allocationStatus = payment.payment_allocation;
           isPaymentSuccess = payment.status.toUpperCase() === 'SUCCESS';
-          if (isPaymentSuccess && (allocationStatus[0].allocation_status === 'Allocated' || allocationStatus.length === 0)) {
+          if (isPaymentSuccess) {
             paymentsTotal = paymentsTotal + payment.amount;
             this.payments.push(payment);
-          } else if(allocationStatus.length > 0 && allocationStatus[0].allocation_status !== 'Allocated') {
-            payment.paymentGroupReference = paymentGroup.payment_group_reference
-            this.nonPayments.push(payment);
           }
+          // if (isPaymentSuccess && (allocationStatus[0].allocation_status === 'Allocated' || allocationStatus.length === 0)) {
+          //   paymentsTotal = paymentsTotal + payment.amount;
+          //   this.payments.push(payment);
+          // } else if(allocationStatus.length > 0 && allocationStatus[0].allocation_status !== 'Allocated') {
+          //   payment.paymentGroupReference = paymentGroup.payment_group_reference
+          //   this.nonPayments.push(payment);
+          // }
         });
       }
       this.totalPayments = paymentsTotal;
