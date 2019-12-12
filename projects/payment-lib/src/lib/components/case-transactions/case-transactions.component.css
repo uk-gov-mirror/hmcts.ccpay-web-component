@@ -55,7 +55,9 @@
 .feeclass {
   padding-left: 0.7em;
 }
-
+.align-center {
+    text-align: center;
+}
 details summary {
     display: list-item;
 }
