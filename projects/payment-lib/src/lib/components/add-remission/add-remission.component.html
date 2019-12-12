@@ -41,7 +41,7 @@
                 </p>
               </div>
             </div>
-            <div class="govuk-form-group">
+            <!-- <div class="govuk-form-group">
               <label class="govuk-label custom-govuk-label govuk-label--s" for="remission-reason">
                 Reason  
               </label>
@@ -53,7 +53,7 @@
                 <span *ngIf="remissionReasonMinHasError">Reason should be at least 3 characters.</span>
                 <span *ngIf="remissionReasonMaxHasError">Reason should be 255 characters or under.</span>
               </p>
-            </div>
+            </div> -->
           </form>
           <button class="button" type="submit" (click)="addRemission()">
               Submit
@@ -82,10 +82,10 @@
             <td class="govuk-table__cell govuk-!-font-weight-bold">Fee description:</td>
             <td class="govuk-table__cell">{{ fee.description }}</td>
         </tr>
-        <tr class="govuk-table__row">
+        <!-- <tr class="govuk-table__row">
             <td class="govuk-table__cell govuk-!-font-weight-bold">Reason:</td>
             <td class="govuk-table__cell">{{ remissionForm.controls.remissonReason.value  }}</td>
-        </tr>
+        </tr> -->
         <tr class="govuk-table__row">
             <td class="govuk-table__cell govuk-!-font-weight-bold">Amount the applicant must pay:</td>
             <td class="govuk-table__cell">{{  remissionForm.controls.amount.value  | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
