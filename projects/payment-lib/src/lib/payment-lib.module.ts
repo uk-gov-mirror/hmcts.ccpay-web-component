@@ -14,6 +14,7 @@ import { ConsoleLoggerService } from './services/shared/logger/console-logger.se
 import { WebComponentHttpClient } from './services/shared/httpclient/webcomponent.http.client';
 import { CaseTransactionsComponent } from './components/case-transactions/case-transactions.component';
 import { FeeSummaryComponent } from './components/fee-summary/fee-summary.component';
+import { ErrorBannerComponent } from './components/error-banner/error-banner.component';
 import { MarkUnidentifiedPaymentComponent } from './components/mark-unidentified-payment/mark-unidentified-payment.component';
 import { MarkUnsolicitedPaymentComponent } from './components/mark-unsolicited-payment/mark-unsolicited-payment.component';
 import { UnprocessedPaymentsComponent } from './components/unprocessed-payments/unprocessed-payments.component';
@@ -54,7 +55,8 @@ import { XlFileService } from './services/xl-file/xl-file.service';
     CcdHyphensPipe,
     keyValuePipe,
     SanitizeHtmlPipe,
-    ReportsComponent
+    ReportsComponent,
+    ErrorBannerComponent
   ],
   exports: [ PaymentLibComponent ],
   providers: [ 

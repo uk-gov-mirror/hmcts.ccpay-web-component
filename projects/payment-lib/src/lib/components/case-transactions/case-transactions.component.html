@@ -50,7 +50,11 @@
     <span class="heading-small">Exisiting fees</span>
     <div *ngIf="paymentGroups?.length === 0">
       <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds" align="left">
+        <div class="govuk-grid-column-full">
+          <span class="heading-small">Existing fees</span>
+        </div>
+
+        <div class="govuk-grid-column-full">
           <table class="govuk-table">
             <thead class="govuk-table__head">
             <tr class="govuk-table__row">
@@ -93,8 +97,8 @@
           <tr class="govuk-table__row">
             <td class="govuk-table__cell govuk-table__cell--col1">{{fee.code}}</td>
             <td class="govuk-table__cell govuk-table__cell--col2"> {{fee.description}} </td>
-            <td class="govuk-table__cell govuk-table__cell--col3"> {{fee.volume}} </td>
-            <td class="govuk-table__cell govuk-table__cell--col4"> {{ fee.calculated_amount/fee.volume | currency:'GBP':'symbol-narrow':'1.2-2' }} </td>
+            <td class="govuk-table__cell govuk-table__cell--col3 align-center"> {{fee.volume? fee.volume : '-'}} </td>
+            <td class="govuk-table__cell govuk-table__cell--col4"> {{ fee.fee_amount | currency:'GBP':'symbol-narrow':'1.2-2' }} </td>
             <td class="govuk-table__cell govuk-table__cell--col5"> {{fee.calculated_amount | currency:'GBP':'symbol-narrow':'1.2-2' }} </td>
             <td class="govuk-table__cell govuk-table__cell--col6 govuk-table__custom--col6" [attr.rowspan]="paymentGroup.fees.length">
               {{getGroupOutstandingAmount(paymentGroup) | currency:'GBP':'symbol-narrow':'1.2-2' }} </td>

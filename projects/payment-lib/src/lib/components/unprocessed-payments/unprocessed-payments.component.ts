@@ -30,6 +30,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
   isMarkAsUnidentifiedbtnEnabled: boolean = false;
   isExceptionCase: boolean = false;
   serviceId: string = null;
+  isBulkScanEnable;
 
   constructor(private router: Router,
     private bulkScaningPaymentService: BulkScaningPaymentService,
@@ -40,6 +41,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
     this.selectedOption = this.paymentLibComponent.SELECTED_OPTION.toLocaleLowerCase();
     this.dcnNumber = this.paymentLibComponent.DCN_NUMBER;
+    this.isBulkScanEnable = this.paymentLibComponent.ISBSENABLE;
     this.getUnassignedPaymentlist();
      }
 
@@ -47,14 +49,10 @@ export class UnprocessedPaymentsComponent implements OnInit {
      if (this.selectedOption === 'dcn') {
         this.bulkScaningPaymentService.getBSPaymentsByDCN(this.dcnNumber).subscribe(
         unassignedPayments => {
-          if(unassignedPayments['data'].payments) {
-            this.unassignedRecordList = unassignedPayments['data'].payments;
-            this.serviceId = unassignedPayments['data'].responsible_service_id;
-            if (unassignedPayments['data']['ccd_reference'] === undefined) {
-            this.isExceptionCase = true;
-            }
-            this.isRecordExist =  this.unassignedRecordList.length === 0;
-            this.getUnprocessedFeeCount.emit(<any>this.unassignedRecordList.length)
+          if(unassignedPayments['data'] && unassignedPayments['data'].payments) {
+            this.setValuesForUnassignedRecord(unassignedPayments['data']);
+          } else if(unassignedPayments['payments']) {
+            this.setValuesForUnassignedRecord(unassignedPayments);
           } else {
             this.upPaymentErrorMessage = 'error';
             this.getUnprocessedFeeCount.emit('0');
@@ -68,14 +66,10 @@ export class UnprocessedPaymentsComponent implements OnInit {
     } else {
         this.bulkScaningPaymentService.getBSPaymentsByCCD(this.ccdCaseNumber).subscribe(
         unassignedPayments => {
-          if(unassignedPayments['data'].payments) {
-            this.unassignedRecordList = unassignedPayments['data'].payments;
-            this.serviceId = unassignedPayments['data'].responsible_service_id;
-            if (unassignedPayments['data']['ccd_reference'] === undefined) {
-            this.isExceptionCase = true;
-            }
-            this.isRecordExist =  this.unassignedRecordList.length === 0;
-            this.getUnprocessedFeeCount.emit(<any>this.unassignedRecordList.length)
+          if(unassignedPayments['data'] && unassignedPayments['data'].payments) {
+            this.setValuesForUnassignedRecord(unassignedPayments['data']);
+          } else if(unassignedPayments['payments']) {
+            this.setValuesForUnassignedRecord(unassignedPayments);
           } else {
             this.upPaymentErrorMessage = 'error';
             this.getUnprocessedFeeCount.emit('0');
@@ -89,6 +83,14 @@ export class UnprocessedPaymentsComponent implements OnInit {
     }
 
   }
+  setValuesForUnassignedRecord(unassignedPayments) {
+    this.unassignedRecordList = unassignedPayments.payments;
+    this.serviceId = unassignedPayments.responsible_service_id;
+    if (unassignedPayments['ccd_reference'] === undefined) {
+      this.isExceptionCase = true;
+    }
+    this.isRecordExist =  this.unassignedRecordList.length === 0;
+  }
   formatUnassignedRecordId(ID: Number) {
     return `unassignrecord-${ID}`;
   }
@@ -97,7 +99,8 @@ export class UnprocessedPaymentsComponent implements OnInit {
   }
   redirectToFeeSearchPage(event: any) {
     event.preventDefault();
-    this.router.navigateByUrl(`/fee-search?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}&dcn=${this.recordId}`);
+    const url = this.isBulkScanEnable ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
+    this.router.navigateByUrl(`/fee-search?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}&dcn=${this.recordId}${url}`);
   }
   loadUnsolicitedPage(viewName: string) {
     this.paymentLibComponent.bspaymentdcn = this.recordId;

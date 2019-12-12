@@ -21,7 +21,7 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
   investicationDetailHasError: boolean = false;
   investicationDetailMinHasError: boolean = false;
   investicationDetailMaxHasError: boolean = false;
-  errorMessage: string;
+  errorMessage = this.getErrorMessage(false);
   unassignedRecord:IBSPayments;
   siteID: string = null;
   investigationComment: string;
@@ -52,18 +52,20 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
  getUnassignedPayment() {
     this.bulkScaningPaymentService.getBSPaymentsByDCN(this.bspaymentdcn).subscribe(
       unassignedPayments => {
+        this.errorMessage = this.getErrorMessage(false);
         this.unassignedRecord = unassignedPayments['data'].payments.filter(payment => {
           return payment && payment.dcn_reference == this.bspaymentdcn;
         })[0];
         this.siteID = unassignedPayments['data'].responsible_service_id;
-        if(unassignedPayments['data'].ccd_reference) {
-          this.ccdReference = unassignedPayments['data'].ccd_reference;
-          this.exceptionReference = unassignedPayments['data'].ccd_reference === this.ccdCaseNumber ? null : this.ccdCaseNumber;
-        }else {
-          this.exceptionReference = this.ccdCaseNumber;
-        }
+        const beCcdNumber = unassignedPayments['data'].ccd_reference,
+          beExceptionNumber = unassignedPayments['data'].exception_record_reference,
+          exceptionReference = beCcdNumber ? beCcdNumber === this.ccdCaseNumber ? null : this.ccdCaseNumber : this.ccdCaseNumber;
+        this.ccdReference = beCcdNumber ? beCcdNumber : null;
+        this.exceptionReference = beExceptionNumber ? beExceptionNumber : exceptionReference;
       },
-      (error: any) => this.errorMessage = error
+      (error: any) => {
+        this.errorMessage = this.getErrorMessage(true);
+      }
     );
   }
   trimUnderscore(method: string){
@@ -103,50 +105,41 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
     const reason = this.markPaymentUnidentifiedForm.get('investicationDetail').value;
       this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'PROCESSED').subscribe(
       res1 => {
+        this.errorMessage = this.getErrorMessage(false);
         const requestBody = new AllocatePaymentRequest
         (this.ccdReference, this.unassignedRecord, this.siteID, this.exceptionReference)
         this.paymentViewService.postBSPayments(requestBody).subscribe(
           res2 => {
+            this.errorMessage = this.getErrorMessage(false);
             const response2 = JSON.parse(res2),
               reqBody = new UnidentifiedPaymentsRequest
               (response2['data'].payment_group_reference, response2['data'].reference, reason);
             if (response2.success) {
               this.paymentViewService.postBSUnidentifiedPayments(reqBody).subscribe(
                 res3 => {
+                  this.errorMessage = this.getErrorMessage(false);
                   const response3 = JSON.parse(res3);
                   if (response3.success) {
                     this.gotoCasetransationPage();
                   }
                 },
                 (error: any) => {
-                  this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'COMPLETE').subscribe(
-                    success => {
-                      if (JSON.parse(success).success) {
-                        this.gotoCasetransationPage();
-                      }
-                    }
-                  );
-                  this.errorMessage = error;
+                  this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'COMPLETE').subscribe();
+                  this.errorMessage = this.getErrorMessage(true);
                   this.isConfirmButtondisabled = false;
                 }
               );
             }
           },
           (error: any) => {
-            this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'COMPLETE').subscribe(
-              success => {
-                if (JSON.parse(success).success) {
-                  this.gotoCasetransationPage();
-                }
-              }
-            );
-            this.errorMessage = error;
+            this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'COMPLETE').subscribe();
+            this.errorMessage = this.getErrorMessage(true);
             this.isConfirmButtondisabled = false;
           }
         );
       },
       (error: any) => {
-        this.errorMessage = error
+        this.errorMessage = this.getErrorMessage(true);
         this.isConfirmButtondisabled = false;
       }
     );
@@ -167,5 +160,12 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
     this.paymentLibComponent.viewName = 'case-transactions';
     this.paymentLibComponent.TAKEPAYMENT = true;
     this.paymentLibComponent.ISBSENABLE = true;
+  }
+  getErrorMessage(isErrorExist) {
+    return {
+      title: "There is a problem with the service",
+      body: "Try again later",
+      showError: isErrorExist
+    };
   }
 }

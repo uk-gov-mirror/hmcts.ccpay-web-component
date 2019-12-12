@@ -168,7 +168,8 @@ getAllocationStatus(payments: any){
 
   redirectToFeeSearchPage(event: any) {
     event.preventDefault();
-    this.router.navigateByUrl(`/fee-search?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}`);
+    const url = this.isBulkScanEnable ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
+    this.router.navigateByUrl(`/fee-search?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}${url}`);
   }
 
   redirectToReportsPage(event: any) {

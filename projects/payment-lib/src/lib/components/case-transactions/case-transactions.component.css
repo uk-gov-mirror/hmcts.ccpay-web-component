@@ -55,7 +55,9 @@
 .feeclass {
   padding-left: 0.7em;
 }
-
+.align-center {
+    text-align: center;
+}
 details summary {
     display: list-item;
 }
@@ -72,4 +74,7 @@ details summary {
 .govuk-inset-text__no-left-margin {
     margin-left: 0;
     padding-left: 0;
+}
+.whitespace-inherit {
+    white-space: inherit !important;
 }

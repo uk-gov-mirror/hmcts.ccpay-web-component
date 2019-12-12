@@ -4,10 +4,12 @@ import { PaymentLibComponent } from '../../payment-lib.component';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import {BulkScaningPaymentService} from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
 import {CaseTransactionsService} from '../../services/case-transactions/case-transactions.service';
+import { ErrorHandlerService } from '../../services/shared/error-handler.service';
 import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
 import {IBSPayments} from '../../interfaces/IBSPayments';
 import {AllocatePaymentRequest} from '../../interfaces/AllocatePaymentRequest';
 import {IAllocationPaymentsRequest} from '../../interfaces/IAllocationPaymentsRequest';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-allocate-payments',
@@ -23,7 +25,7 @@ export class AllocatePaymentsComponent implements OnInit {
     amount: 0
   };
   siteID: string = null;
-  errorMessage: string;
+  errorMessage = this.errorHandlerService.getServerErrorMessage(false);
   paymentGroups: IPaymentGroup[] = [];
   selectedPayment: IPaymentGroup;
   remainingAmount: number;
@@ -35,6 +37,7 @@ export class AllocatePaymentsComponent implements OnInit {
   isConfirmButtondisabled: boolean = false;
   isContinueButtondisabled: boolean = true;
   otherPaymentExplanation: string = null;
+  selectedOption: string = null;
 
   paymentReasonHasError: boolean = false;
   paymentExplanationHasError: boolean = false;
@@ -44,41 +47,45 @@ export class AllocatePaymentsComponent implements OnInit {
   paymentDetailsMaxHasError: boolean = false;
   isUserNameEmpty: boolean = false;
   isUserNameInvalid: boolean = false;
-
+  ccdReference: string = null;
+  exceptionReference: string = null;
   paymentReason: string = null;
   paymentExplanation: string = null;
   userName: string = null;
   paymentSectionLabel: any;
+  paymentRef: string = null;
 
   reasonList: { [key: string]: { [key: string]: string } }= {
     overPayment: {
-      hwfReward: 'HWF awarded. If this is selected, pull through and display HWF Ref number',
-      wrongFee: 'Wrong fee received',
-      notIssueCase: 'Cannot issue case',
-      otherDeduction: 'Other deduction'
+      hwfReward: 'Help with Fees (HWF) awarded.  Please include the HWF reference number in the explanatory note',
+      wrongFee: 'Incorrect payment received',
+      notIssueCase: 'Unable to issue case',
+      otherDeduction: 'Other'
     },
     shortFall: {
-      helpWithFee: 'Help with Fees (HwF) declined',
-      wrongFee: 'Wrong fee received',
+      helpWithFee: 'Help with Fees (HWF) application declined',
+      wrongFee: 'Incorrect payment received',
       other: 'Other'
     }
   }
   explanationList = {
     overPayment: {
-      referRefund: 'I have noted on case and refer for refund',
-      noRefund: 'I have noted on case, refund not due',
-      noCase: 'here is no case, refer for refund',
+      referRefund: 'Details in case notes.  Refund due',
+      noRefund: 'Details in case notes. No refund due',
+      noCase: 'No case created.  Refund due',
       other: 'Other'
     },
     shortFall: {
-      holdCase: 'I have put hold on case and written to user requesting the shortfall',
-      heldCase: 'I have held case, user needs to be contacted to request shortfall',
+      holdCase: 'I have put a stop on the case and contacted the applicant requesting the balance of payment',
+      heldCase: 'I have put a stop on the case.  The applicant needs to be contacted to request the balance of payment',
       other: 'Other'
     }
   }
 
 
   constructor(
+  private router: Router,
+  private errorHandlerService: ErrorHandlerService,
   private formBuilder: FormBuilder,
   private caseTransactionsService: CaseTransactionsService,
   private paymentViewService: PaymentViewService,
@@ -89,6 +96,8 @@ export class AllocatePaymentsComponent implements OnInit {
     this.viewStatus = 'mainForm';
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
     this.bspaymentdcn = this.paymentLibComponent.bspaymentdcn;
+    this.paymentRef = this.paymentLibComponent.paymentGroupReference;
+    this.selectedOption = this.paymentLibComponent.SELECTED_OPTION;
     this.overUnderPaymentForm = this.formBuilder.group({
       moreDetails: new FormControl('', Validators.compose([
         Validators.required,
@@ -102,7 +111,7 @@ export class AllocatePaymentsComponent implements OnInit {
       ])),
     });
     this.getUnassignedPayment();
-    this.getPaymentGroupDetails(this.paymentLibComponent.paymentGroupReference)
+    this.getPaymentGroupDetails(this.paymentRef)
   }
   getGroupOutstandingAmount(paymentGroup: IPaymentGroup): number {
     return this.bulkScaningPaymentService.calculateOutStandingAmount(paymentGroup);
@@ -112,17 +121,25 @@ export class AllocatePaymentsComponent implements OnInit {
 
     this.caseTransactionsService.getPaymentGroups(this.ccdCaseNumber).subscribe(
       paymentGroups => {
+        this.errorMessage = this.errorHandlerService.getServerErrorMessage(false);
       this.paymentGroups = paymentGroups['payment_groups'].filter(paymentGroup => {
-        
           return paymentGroupRef ? this.getGroupOutstandingAmount(<IPaymentGroup>paymentGroup) > 0 && paymentGroup.payment_group_reference === paymentGroupRef : this.getGroupOutstandingAmount(<IPaymentGroup>paymentGroup) > 0;
       });
       },
-      (error: any) => this.errorMessage = error
+      (error: any) => {
+        this.errorMessage = this.errorHandlerService.getServerErrorMessage(true);
+      }
     );
   }
 
   gotoCasetransationPage() {
     this.paymentLibComponent.viewName = 'case-transactions';
+    this.paymentLibComponent.TAKEPAYMENT = true;
+    this.paymentLibComponent.ISBSENABLE = true;
+  }
+  gotoSummaryPage(event: any) {
+    event.preventDefault();
+    this.paymentLibComponent.viewName = 'fee-summary';
     this.paymentLibComponent.TAKEPAYMENT = true;
     this.paymentLibComponent.ISBSENABLE = true;
   }
@@ -197,12 +214,14 @@ export class AllocatePaymentsComponent implements OnInit {
   finalServiceCall() {
     this.bulkScaningPaymentService.patchBSChangeStatus(this.unAllocatedPayment.dcn_reference, 'PROCESSED').subscribe(
       res1 => {
+        this.errorMessage = this.errorHandlerService.getServerErrorMessage(false);
         let response1 = JSON.parse(res1);
         if (response1.success) {
           const requestBody = new AllocatePaymentRequest
-          (this.ccdCaseNumber, this.unAllocatedPayment, this.siteID, '');
+          (this.ccdReference, this.unAllocatedPayment, this.siteID, this.exceptionReference);
           this.bulkScaningPaymentService.postBSAllocatePayment(requestBody, this.selectedPayment.payment_group_reference).subscribe(
             res2 => {
+              this.errorMessage = this.errorHandlerService.getServerErrorMessage(false);
               let response2 = JSON.parse(res2);
               const reqBody = new IAllocationPaymentsRequest
               (response2['data'].payment_group_reference, response2['data'].reference, this.paymentReason, this.otherPaymentExplanation, this.userName);
@@ -210,41 +229,30 @@ export class AllocatePaymentsComponent implements OnInit {
                 this.paymentViewService.postBSAllocationPayments(reqBody).subscribe(
   
                 res3 => {
+                  this.errorMessage = this.errorHandlerService.getServerErrorMessage(false);
                   let response3 = JSON.parse(res3);
                   if (response3.success) {
                    this.gotoCasetransationPage();
                   }
                 },
                 (error: any) => {
-                  this.bulkScaningPaymentService.patchBSChangeStatus(this.unAllocatedPayment.dcn_reference, 'COMPLETE').subscribe(
-                    success => {
-                      if (JSON.parse(success).success) {
-                        this.gotoCasetransationPage();
-                      }
-                    }
-                  );
-                  this.errorMessage = error;
+                  this.bulkScaningPaymentService.patchBSChangeStatus(this.unAllocatedPayment.dcn_reference, 'COMPLETE').subscribe();
+                  this.errorMessage = this.errorHandlerService.getServerErrorMessage(true);
                   this.isConfirmButtondisabled = false;
                 }
                 );
               }
             },
             (error: any) => {
-              this.bulkScaningPaymentService.patchBSChangeStatus(this.unAllocatedPayment.dcn_reference, 'COMPLETE').subscribe(
-                success => {
-                  if (JSON.parse(success).success) {
-                    this.gotoCasetransationPage();
-                  }
-                }
-              );
-              this.errorMessage = error;
+              this.bulkScaningPaymentService.patchBSChangeStatus(this.unAllocatedPayment.dcn_reference, 'COMPLETE').subscribe();
+              this.errorMessage = this.errorHandlerService.getServerErrorMessage(true);
               this.isConfirmButtondisabled = false;
             }
           );
       }
       },
       (error: any) => {
-        this.errorMessage = error;
+        this.errorMessage = this.errorHandlerService.getServerErrorMessage(true);
         this.isConfirmButtondisabled = false;
       }
     );  
@@ -270,7 +278,7 @@ export class AllocatePaymentsComponent implements OnInit {
           title: 'There is a shortfall of',
           reason: 'Provide a reason',
         }: { 
-          title:'',
+          title:'Amount left to be allocated',
           reason:'',
         };
       this.remainingAmount =  this.isRemainingAmountGtZero ? remainingToBeAssigned : this.isRemainingAmountLtZero ? remainingToBeAssigned * -1 : 0;
@@ -283,12 +291,20 @@ export class AllocatePaymentsComponent implements OnInit {
    getUnassignedPayment() {
     this.bulkScaningPaymentService.getBSPaymentsByDCN(this.bspaymentdcn).subscribe(
       unassignedPayments => {
+        this.errorMessage = this.errorHandlerService.getServerErrorMessage(false);
         this.unAllocatedPayment = unassignedPayments['data'].payments.filter(payment => {
           return payment && payment.dcn_reference == this.bspaymentdcn;
         })[0];
         this.siteID = unassignedPayments['data'].responsible_service_id;
+        const beCcdNumber = unassignedPayments['data'].ccd_reference,
+        beExceptionNumber = unassignedPayments['data'].exception_record_reference,
+        exceptionReference = beCcdNumber ? beCcdNumber === this.ccdCaseNumber ? null : this.ccdCaseNumber : this.ccdCaseNumber;
+       this.ccdReference = beCcdNumber ? beCcdNumber : null;
+       this.exceptionReference = beExceptionNumber ? beExceptionNumber : exceptionReference;
       },
-      (error: any) => this.errorMessage = error
+      (error: any) => {
+        this.errorMessage = this.errorHandlerService.getServerErrorMessage(true);
+      }
     );
   }
   selectRadioButton(key, type) {

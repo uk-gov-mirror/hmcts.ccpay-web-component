@@ -50,8 +50,16 @@ export class FeeSummaryComponent implements OnInit {
     this.viewStatus = 'main';
     this.bsPaymentDcnNumber = this.paymentLibComponent.bspaymentdcn;
     this.selectedOption = this.paymentLibComponent.SELECTED_OPTION.toLocaleLowerCase();
-    //this.paymentGroupRef = '2018-15310089885';
-    //this.paymentGroupRef = '2019-15496299273';
+
+    this.paymentViewService.getBSfeature().subscribe(
+      features => {
+        let result = JSON.parse(features).filter(feature => feature.uid === BS_ENABLE_FLAG);
+        this.paymentLibComponent.ISBSENABLE = result[0] ? result[0].enable : false;
+      },
+      err => {
+        this.paymentLibComponent.ISBSENABLE = false;
+      }
+    );
     if (this.bsPaymentDcnNumber) {
       this.getUnassignedPaymentlist();
     }
@@ -163,11 +171,12 @@ export class FeeSummaryComponent implements OnInit {
   redirectToFeeSearchPage(event: any, page?: string) {
     event.preventDefault();
     let dcn = this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
+    const ISBSenable = this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
     if(this.viewStatus === 'feeRemovalConfirmation' || this.viewStatus === 'add_remission') {
       this.viewStatus = 'main';
       return;
     }
-    let url = `/fee-search?ccdCaseNumber=${this.ccdCaseNumber}&selectedOption=${this.paymentLibComponent.SELECTED_OPTION}&paymentGroupRef=${this.paymentGroupRef}${dcn}`;
+    let url = `/fee-search?ccdCaseNumber=${this.ccdCaseNumber}&selectedOption=${this.paymentLibComponent.SELECTED_OPTION}&paymentGroupRef=${this.paymentGroupRef}${dcn}${ISBSenable}`;
     this.router.navigateByUrl(url);
   }
   takePayment() {
