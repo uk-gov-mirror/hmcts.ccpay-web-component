@@ -1,5 +1,6 @@
 <div class="unprocessed-payments">
-  <h3 class="heading-medium">Unallocated payments</h3>
+  <h3 class="heading-medium" *ngIf="!IS_BUTTON_ENABLE">Unprocessed payments</h3>
+  <h3 class="heading-medium" *ngIf="IS_BUTTON_ENABLE">Unallocated payments</h3>
     <table class="govuk-table">
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
