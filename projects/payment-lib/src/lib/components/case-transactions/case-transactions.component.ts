@@ -18,6 +18,7 @@ export class CaseTransactionsComponent implements OnInit {
   ccdCaseNumber: string;
   paymentGroups: IPaymentGroup[] = [];
   payments: IPayment[] = [];
+  allPayments: IPayment[] = [];
   remissions: IRemission[] = [];
   fees: IFee[] = [];
   errorMessage: string;
@@ -94,6 +95,8 @@ getAllocationStatus(payments: any){
             paymentsTotal = paymentsTotal + payment.amount;
             this.payments.push(payment);
           }
+          payment.paymentGroupReference = paymentGroup.payment_group_reference
+          this.allPayments.push(payment);
         });
       }
       this.totalPayments = paymentsTotal;
