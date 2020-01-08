@@ -44,7 +44,7 @@ export class ReportsComponent implements OnInit {
  validateDates(){
   const selectedStartDate = this.tranformDate(this.reportsForm.get('startDate').value),
     selectedEndDate = this.tranformDate(this.reportsForm.get('endDate').value);
-  if(selectedStartDate > selectedEndDate && selectedEndDate !== ''){
+  if(new Date(selectedStartDate) > new Date(selectedEndDate) && selectedEndDate !== ''){
     this.reportsForm.get('startDate').setValue('');
   }
 
