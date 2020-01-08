@@ -169,6 +169,7 @@ cancelMarkUnsolicitedPayments(type?:string){
         this.gotoCasetransationPage();
       }
     } else {
+      this.markPaymentUnsolicitedForm.controls.responsibleOffice.setValue('');
       this.viewStatus = 'mainForm';
     }
   }
