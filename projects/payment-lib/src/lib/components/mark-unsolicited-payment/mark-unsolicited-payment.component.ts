@@ -7,6 +7,7 @@ import { UnsolicitedPaymentsRequest } from '../../interfaces/UnsolicitedPayments
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import { AllocatePaymentRequest } from '../../interfaces/AllocatePaymentRequest';
 import { stringLiteral } from 'babel-types';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-mark-unsolicited-payment',
@@ -70,6 +71,7 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
   confirmPayments() {
     this.isConfirmButtondisabled = true;
     const controls = this.markPaymentUnsolicitedForm.controls;
+    // controls.responsibleOffice.setValue('P219');
     this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'PROCESSED').subscribe(
       res1 => {
         this.errorMessage = this.getErrorMessage(false);
@@ -116,6 +118,7 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
     this.resetForm([false,false,false,false,false,false], 'all');
         const formerror = this.markPaymentUnsolicitedForm.controls.reason.errors;
         const reasonField = this.markPaymentUnsolicitedForm.controls.reason;
+        this.markPaymentUnsolicitedForm.controls.responsibleOffice.setValue('P219');
         const officeIdField = this.markPaymentUnsolicitedForm.controls.responsibleOffice;
     if (this.markPaymentUnsolicitedForm.dirty && this.markPaymentUnsolicitedForm.valid) {
       const controls = this.markPaymentUnsolicitedForm.controls;
