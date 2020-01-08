@@ -112,7 +112,8 @@ getAllocationStatus(payments: any){
 
   }
   calculateRefundAmount() {
-    let totalRefundAmount = 0;
+    let totalRefundAmount = 0,
+    isFeeAmountZero = false;
     this.paymentGroups.forEach(paymentGroup => {
       let grpOutstandingAmount = 0.00,
         feesTotal = 0.00,
@@ -122,7 +123,11 @@ getAllocationStatus(payments: any){
         this.isFeeRecordsExist = true;
         paymentGroup.fees.forEach(fee => {
           feesTotal = feesTotal + fee.calculated_amount;
+          if(fee.calculated_amount === 0) {
+            isFeeAmountZero = true
+          }
         });
+
       }
 
       if (paymentGroup.payments) {
@@ -145,7 +150,8 @@ getAllocationStatus(payments: any){
           } else {
             totalRefundAmount = (totalRefundAmount + grpOutstandingAmount);
           }
-        } else if(grpOutstandingAmount > 0) {
+        }
+        else if(grpOutstandingAmount > 0 || (grpOutstandingAmount === 0 && isFeeAmountZero)) {
           this.isGrpOutstandingAmtPositive = true;
         }
     });

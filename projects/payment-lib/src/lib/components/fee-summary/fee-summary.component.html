@@ -141,11 +141,11 @@
                 [ngClass]='totalFee <= 0 || !service || isConfirmationBtnDisabled? "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"'>
                   Take payment
               </button>
-              <button *ngIf="bsPaymentDcnNumber" type="button" (click)="goToAllocatePage(outStandingAmount)" class="button govuk-!-margin-right-1">
-                <span *ngIf="outStandingAmount > 0">
+              <button *ngIf="bsPaymentDcnNumber" type="button" (click)="goToAllocatePage(outStandingAmount, isFeeAmountZero)" class="button govuk-!-margin-right-1">
+                <span *ngIf="outStandingAmount > 0 || (isFeeAmountZero && outStandingAmount === 0)">
                   Allocate payment
                 </span>
-                <span *ngIf="outStandingAmount <= 0">
+                <span *ngIf="outStandingAmount < 0 || (!isFeeAmountZero && outStandingAmount === 0)">
                   Continue
                 </span>
               </button>

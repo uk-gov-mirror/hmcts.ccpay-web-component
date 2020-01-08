@@ -38,6 +38,7 @@ export class AllocatePaymentsComponent implements OnInit {
   isContinueButtondisabled: boolean = true;
   otherPaymentExplanation: string = null;
   selectedOption: string = null;
+  isFeeAmountZero: boolean = false;
 
   paymentReasonHasError: boolean = false;
   paymentExplanationHasError: boolean = false;
@@ -123,7 +124,14 @@ export class AllocatePaymentsComponent implements OnInit {
       paymentGroups => {
         this.errorMessage = this.errorHandlerService.getServerErrorMessage(false);
       this.paymentGroups = paymentGroups['payment_groups'].filter(paymentGroup => {
-          return paymentGroupRef ? this.getGroupOutstandingAmount(<IPaymentGroup>paymentGroup) > 0 && paymentGroup.payment_group_reference === paymentGroupRef : this.getGroupOutstandingAmount(<IPaymentGroup>paymentGroup) > 0;
+          paymentGroup.fees.forEach(fee => {
+            if(fee.calculated_amount === 0) {
+              this.isFeeAmountZero = true
+            }
+          });
+          let fstCon = this.getGroupOutstandingAmount(<IPaymentGroup>paymentGroup),
+          scndCn = fstCon > 0 || (fstCon == 0 && this.isFeeAmountZero) && paymentGroup.payment_group_reference === paymentGroupRef;
+          return paymentGroupRef ?  scndCn : fstCon > 0 || (fstCon == 0 && this.isFeeAmountZero);
       });
       },
       (error: any) => {
