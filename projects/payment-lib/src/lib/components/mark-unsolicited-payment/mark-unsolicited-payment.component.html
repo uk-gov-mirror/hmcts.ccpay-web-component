@@ -41,12 +41,7 @@
       <label class="govuk-label custom-govuk-label" for="responsibleOffice">
         Receiving Site ID (Receiving court/Bulk centre site ID)    
       </label>
-      <input class="govuk-input govuk-input--width-30 govuk-!-margin-right-1" [ngClass]="{'inline-error-class': responsibleOfficeHasError}" id="responsibleOffice" name="responsibleOffice" type="text" formControlName="responsibleOffice">
-      <p class="inline-error-message" *ngIf="responsibleOfficeHasError || isResponsibleOfficeEmpty ">
-        <span *ngIf="isResponsibleOfficeEmpty">Enter receiving site ID</span>
-        <span *ngIf="responsibleOfficeHasError">Enter vaild receiving site ID</span>
-      </p>
-
+      <input class="govuk-input govuk-input--width-30 govuk-!-margin-right-1" placeholder='Manchester District Probate Registry (P219)'  id="responsibleOffice" name="responsibleOffice" type="text" formControlName="responsibleOffice" disabled>
     </div>
    <div class="govuk-button--group">
       <button type="submit" class="button" (click)="saveAndContinue()">
@@ -79,7 +74,7 @@
             <tbody class="govuk-table__body">
             <tr class="govuk-table__row">
             <td class="govuk-table__cell">{{reason}}</td>
-            <td class="govuk-table__cell">{{responsibleOffice}}</td>
+            <td class="govuk-table__cell">Manchester District Probate Registry (P219)</td>
             </tr>
             </tbody>
           </table>
