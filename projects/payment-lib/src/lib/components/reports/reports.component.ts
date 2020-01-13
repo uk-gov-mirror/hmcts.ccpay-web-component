@@ -92,10 +92,14 @@ downloadReport(){
           } else if(res['data'].length === 0 && selectedReportName === 'UNPROCESSED'){
             res.data = unProcessedRptDefault;
           }
+          if(res['data'].length > 0) {
           for( var i=0; i< res['data'].length; i++) {
+            if(res['data'][i]["exception_ref"] !== undefined) {
             res['data'][i]['env_ref'] = res['data'][i]["exception_ref"].substr(0,13);
             res['data'][i]['env_item'] = res['data'][i]["exception_ref"].substr(13,21);
           }
+        }
+        }
          
           this.xlFileService.exportAsExcelFile(res['data'], this.getFileName(this.reportsForm.get('selectedreport').value, selectedStartDate, selectedEndDate ));
         },
