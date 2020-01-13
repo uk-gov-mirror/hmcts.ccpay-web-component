@@ -17,11 +17,11 @@ export class XlFileService {
     let workbook: XLSX.WorkBook; 
 
     if(excelFileName.match('Data_Loss')!== null){
-     worksheet =  XLSX.utils.json_to_sheet(json,{header:['loss_resp','payment_asset_dcn','resp_service_id','resp_service_name','date_banked','bgc_batch','payment_method','amount']});
+     worksheet =  XLSX.utils.json_to_sheet(json,{header:['loss_resp','payment_asset_dcn','env_ref','env_item','resp_service_id','resp_service_name','date_banked','bgc_batch','payment_method','amount']});
      worksheet =  this.setDataLossReportHeaders(worksheet);
      worksheet = this.autoFitColumns(worksheet,json);
      } else if(excelFileName.match('Unprocessed')!== null){
-     worksheet =  XLSX.utils.json_to_sheet(json,{header:['resp_service_id','resp_service_name','exception_ref','ccd_ref','date_banked','bgc_batch','payment_asset_dcn','payment_method','amount']});
+     worksheet =  XLSX.utils.json_to_sheet(json,{header:['resp_service_id','resp_service_name','exception_ref','env_ref','env_item','ccd_ref','date_banked','bgc_batch','payment_asset_dcn','payment_method','amount']});
      worksheet =  this.setUnprocessedReportHeaders(worksheet);
      worksheet = this.autoFitColumns(worksheet,json);
     } else if(excelFileName.match('Processed_Unallocated')!== null){
@@ -68,12 +68,14 @@ private autoFitColumns (worksheet: XLSX.WorkSheet,json:any) : XLSX.WorkSheet {
 private setDataLossReportHeaders (worksheet: XLSX.WorkSheet): XLSX.WorkSheet {
   worksheet.A1.v = "Loss_Resp";
   worksheet.B1.v = "Payment_Asset_DCN";
-  worksheet.C1.v = "Resp_Service ID";
-  worksheet.D1.v = "Resp_Service Name";
-  worksheet.E1.v = "Date_Banked";
-  worksheet.F1.v = "BGC_Batch";
-  worksheet.G1.v = "Payment_Method";
-  worksheet.H1.v = "Amount";
+  worksheet.C1.v = "Envelope_Ref";
+  worksheet.D1.v = "Envelope_Item";
+  worksheet.E1.v = "Resp_Service ID";
+  worksheet.F1.v = "Resp_Service Name";
+  worksheet.G1.v = "Date_Banked";
+  worksheet.H1.v = "BGC_Batch";
+  worksheet.I1.v = "Payment_Method";
+  worksheet.J1.v = "Amount";
   return worksheet;
 }
 
@@ -81,12 +83,14 @@ private setUnprocessedReportHeaders (worksheet: XLSX.WorkSheet): XLSX.WorkSheet 
   worksheet.A1.v = "Resp_Service ID";
   worksheet.B1.v = "Resp_Service Name";
   worksheet.C1.v = "Exception_Ref";
-  worksheet.D1.v = "CCD_Ref";
-  worksheet.E1.v = "Date_Banked";
-  worksheet.F1.v = "BGC_Batch";
-  worksheet.G1.v = "Payment_Asset_DCN";
-  worksheet.H1.v = "Payment_Method";
-  worksheet.I1.v = "Amount";
+  worksheet.D1.v = "Envelope_Ref";
+  worksheet.E1.v = "Envelope_Item";
+  worksheet.F1.v = "CCD_Ref";
+  worksheet.G1.v = "Date_Banked";
+  worksheet.H1.v = "BGC_Batch";
+  worksheet.I1.v = "Payment_Asset_DCN";
+  worksheet.J1.v = "Payment_Method";
+  worksheet.K1.v = "Amount";
   return worksheet;
 }
 
