@@ -201,12 +201,12 @@ export class FeeSummaryComponent implements OnInit {
       }
     );
   }
-  goToAllocatePage(outStandingAmount: number, isFeeAmountZero: Boolean) {
-    if (outStandingAmount > 0 || (outStandingAmount === 0 && isFeeAmountZero)) {
-      this.paymentLibComponent.paymentGroupReference = this.paymentGroupRef;
-      this.paymentLibComponent.viewName = 'allocate-payments';
-    } else {
+  goToAllocatePage(/*outStandingAmount: number, isFeeAmountZero: Boolean*/) {
+    // if (outStandingAmount > 0 || (outStandingAmount === 0 && isFeeAmountZero)) {
+    //   this.paymentLibComponent.paymentGroupReference = this.paymentGroupRef;
+    //   this.paymentLibComponent.viewName = 'allocate-payments';
+    // } else {
       this.loadCaseTransactionPage();
-    }
+    //}
   }
 }
