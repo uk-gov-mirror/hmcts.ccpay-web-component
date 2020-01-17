@@ -51,8 +51,8 @@ export class BulkScaningPaymentService {
     let feesTotal = 0.00,
      paymentsTotal = 0.00,
      remissionsTotal = 0.00;
-debugger
-    if (paymentGroup.fees) {
+
+     if (paymentGroup.fees) {
       paymentGroup.fees.forEach(fee => {
         feesTotal = feesTotal + fee.calculated_amount;
       });
