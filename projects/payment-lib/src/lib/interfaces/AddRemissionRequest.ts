@@ -8,14 +8,14 @@ export class AddRemissionRequest {
   hwf_reference: string;
   payment_group_reference: string;
   site_id: string;
-  //retrospective_reason: string;
+  retrospective_reason: string;
 
-  constructor(ccd_case_number: string, fee: IFee, hwf_amount: number, hwf_reference: string,service: string) {
+  constructor(ccd_case_number: string, fee: IFee, hwf_amount: number, hwf_reference: string, reason: string, service: string) {
     this.ccd_case_number = ccd_case_number;
     this.fee = fee;
     this.hwf_amount = hwf_amount;
     this.hwf_reference = hwf_reference;
-    //this.retrospective_reason = reason;
+    this.retrospective_reason = reason;
     this.site_id = service;
   }
 }

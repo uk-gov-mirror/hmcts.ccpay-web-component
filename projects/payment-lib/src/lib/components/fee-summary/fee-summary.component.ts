@@ -34,6 +34,7 @@ export class FeeSummaryComponent implements OnInit {
   selectedOption:string;
   isBackButtonEnable: boolean = true;
   outStandingAmount: number;
+  isFeeAmountZero: boolean = false;;
   totalAfterRemission: number = 0;
   isConfirmationBtnDisabled: boolean = false;
   isRemoveBtnDisabled: boolean = false;
@@ -119,6 +120,9 @@ export class FeeSummaryComponent implements OnInit {
         if (paymentGroup.fees) {
           paymentGroup.fees.forEach(fee => {
               this.totalAfterRemission  = this.totalAfterRemission  + fee.net_amount;
+              if(fee.calculated_amount === 0) {
+                this.isFeeAmountZero = true;
+              }
           });
         }
         this.outStandingAmount = this.bulkScaningPaymentService.calculateOutStandingAmount(paymentGroup);
@@ -197,8 +201,8 @@ export class FeeSummaryComponent implements OnInit {
       }
     );
   }
-  goToAllocatePage(outStandingAmount: number) {
-    if (outStandingAmount > 0) {
+  goToAllocatePage(outStandingAmount: number, isFeeAmountZero: Boolean) {
+    if (outStandingAmount > 0 || (outStandingAmount === 0 && isFeeAmountZero)) {
       this.paymentLibComponent.paymentGroupReference = this.paymentGroupRef;
       this.paymentLibComponent.viewName = 'allocate-payments';
     } else {

@@ -19,6 +19,7 @@ export class CaseTransactionsComponent implements OnInit {
   paymentGroups: any[] = [];
   payments: IPayment[] = [];
   nonPayments: IPayment[] = [];
+  allPayments: IPayment[] = [];
   remissions: IRemission[] = [];
   fees: IFee[] = [];
   errorMessage: string;
@@ -101,13 +102,13 @@ getAllocationStatus(payments: any){
             paymentsTotal = paymentsTotal + payment.amount;
             this.payments.push(payment);
           }
-          // if (isPaymentSuccess && (allocationStatus[0].allocation_status === 'Allocated' || allocationStatus.length === 0)) {
-          //   paymentsTotal = paymentsTotal + payment.amount;
-          //   this.payments.push(payment);
-          // } else if(allocationStatus.length > 0 && allocationStatus[0].allocation_status !== 'Allocated') {
-          //   payment.paymentGroupReference = paymentGroup.payment_group_reference
-          //   this.nonPayments.push(payment);
-          // }
+          if (isPaymentSuccess && (allocationStatus[0].allocation_status === 'Allocated' || allocationStatus.length === 0)) {
+            paymentsTotal = paymentsTotal + payment.amount;
+            this.payments.push(payment);
+          } else if(allocationStatus.length > 0 && allocationStatus[0].allocation_status !== 'Allocated') {
+            payment.paymentGroupReference = paymentGroup.payment_group_reference
+            this.nonPayments.push(payment);
+          }
         });
       }
       this.totalPayments = paymentsTotal;
@@ -123,7 +124,8 @@ getAllocationStatus(payments: any){
 
   }
   calculateRefundAmount() {
-    let totalRefundAmount = 0;
+    let totalRefundAmount = 0,
+    isFeeAmountZero = false;
     this.paymentGroups.forEach(paymentGroup => {
       let grpOutstandingAmount = 0.00,
         feesTotal = 0.00,
@@ -133,7 +135,11 @@ getAllocationStatus(payments: any){
         this.isFeeRecordsExist = true;
         paymentGroup.fees.forEach(fee => {
           feesTotal = feesTotal + fee.calculated_amount;
+          if(fee.calculated_amount === 0) {
+            isFeeAmountZero = true
+          }
         });
+
       }
 
       if (paymentGroup.payments) {
@@ -156,7 +162,8 @@ getAllocationStatus(payments: any){
           } else {
             totalRefundAmount = (totalRefundAmount + grpOutstandingAmount);
           }
-        } else if(grpOutstandingAmount > 0) {
+        }
+        else if(grpOutstandingAmount > 0 || (grpOutstandingAmount === 0 && isFeeAmountZero)) {
           this.isGrpOutstandingAmtPositive = true;
         }
     });
