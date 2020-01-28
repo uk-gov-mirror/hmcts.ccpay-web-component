@@ -21,6 +21,13 @@
             <td class="capitalize govuk-table__cell"> {{ processedRecord.payment_allocation[0].allocation_status }}  </td>
 
           </tr>
+          <tr class="govuk-table__row" *ngIf="NONPAYMENTS.length === 0">
+            <td class="govuk-table__cell" colspan="5">
+              No processed payments
+             </td>
+
+          </tr>
+
       </tbody>
     </table>
 </div>
