@@ -11,6 +11,7 @@ before_deploy:
 - cd dist/payment-lib
 deploy:
   skip_cleanup: true
+  edge: true
   provider: npm
   email: jenkins-reform@HMCTS.NET
   api_key:
