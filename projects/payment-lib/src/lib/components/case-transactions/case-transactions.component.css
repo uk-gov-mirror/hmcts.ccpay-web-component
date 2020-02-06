@@ -78,3 +78,8 @@ details summary {
 .whitespace-inherit {
     white-space: inherit !important;
 }
+
+.govuk-section-records-break {
+    margin: 10px;
+    border-bottom: 2px solid black !important;
+}
