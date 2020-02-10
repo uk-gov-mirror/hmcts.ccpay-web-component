@@ -202,6 +202,13 @@ getAllocationStatus(payments: any){
     this.paymentLibComponent.viewName = 'payment-view';
   }
 
+  goToPaymentViewComponent1(paymentMethod: any, paymentGroupReference: any, paymentReference: any) {
+    this.paymentLibComponent.paymentMethod = paymentMethod;
+    this.paymentLibComponent.paymentGroupReference = paymentGroupReference;
+    this.paymentLibComponent.paymentReference = paymentReference;
+    this.paymentLibComponent.viewName = 'payment-view';
+  }
+
   selectedUnprocessedFeeEvent(unprocessedRecordId: string) {
     if ( unprocessedRecordId ) {
       this.isAddFeeBtnEnabled = false

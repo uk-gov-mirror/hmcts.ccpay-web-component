@@ -121,8 +121,8 @@
           <td class="govuk-table__cell" colspan="6">No payments recorded</td>
           </tbody>
         </table>
-        <div class="govuk-inset-text govuk-inset-text__no-border govuk-inset-text__no-left-margin" *ngIf="paymentGroup.payments || paymentGroup.remissions">
-          <details *ngIf="paymentGroup.payments?.length > 0 || paymentGroup.remissions?.length > 0">
+        <div class="govuk-inset-text govuk-inset-text__no-border govuk-inset-text__no-left-margin" *ngIf="paymentGroup.payments?.length > 0 || paymentGroup.remissions?.length > 0">
+          <details>
             <summary class="govuk-hidetext">
             <span class="summary">Allocated payments and remissions</span>
             </summary>
@@ -141,10 +141,10 @@
                             <td class="govuk-table__header" scope="col">Status</td>
                           </tr>
                       </thead>
-                      <!-- <tbody class="govuk-table__body" *ngIf="paymentGroup.payments?.length > 0">
+                      <tbody class="govuk-table__body" *ngIf="paymentGroup.payments?.length > 0">
                         <tr class="govuk-table__row"  *ngFor="let payment of paymentGroup.payments">
                             <td class="govuk-table__cell">
-                              <a href="javascript:void(0)" (click)="goToPaymentViewComponent({paymentGroup.payment_group_reference, payment.reference, payment.method})">{{ payment.reference }}</a>
+                                <a href="javascript:void(0)" (click)="goToPaymentViewComponent1(paymentGroup.payment_group_reference, payment.reference, payment.method)">{{ payment.reference }}</a>
                             </td>
                             <td class="govuk-table__cell">{{ payment.date_created | date:'dd MMM yyyy HH:mm:ss' }}</td>
                             <td class="channel govuk-table__cell">{{ payment.channel | lowercase }}</td>
@@ -153,8 +153,8 @@
                             <td class="govuk-table__cell"> {{getAllocationStatus(payment)}}</td>
                             <td class="govuk-table__cell">{{ payment.status }}</td>
                           </tr>
-                      </tbody> -->
-                      <tbody class="govuk-table__body">
+                      </tbody>
+                      <tbody class="govuk-table__body" *ngIf="paymentGroup.payments?.length === 0">
                         <td class="govuk-table__cell" colspan="7">No payments recorded</td>
                       </tbody>
                     </table>
