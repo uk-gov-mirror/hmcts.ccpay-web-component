@@ -172,9 +172,9 @@ getAllocationStatus(payments: any){
     this.router.navigateByUrl(`/reports?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}`);
   }
 
-  loadFeeSummaryPage(paymentRef: string) {
+  loadFeeSummaryPage(paymentGroup: IPaymentGroup) {
     this.paymentLibComponent.bspaymentdcn = null;
-    this.paymentLibComponent.paymentGroupReference = paymentRef;
+    this.paymentLibComponent.paymentGroupReference = paymentGroup.payment_group_reference;
     this.paymentLibComponent.viewName = 'fee-summary';
   }
 
@@ -183,10 +183,6 @@ getAllocationStatus(payments: any){
     this.paymentLibComponent.paymentGroupReference = paymentGroupReference;
     this.paymentLibComponent.paymentReference = paymentReference;
     this.paymentLibComponent.viewName = 'payment-view';
-  }
-  redirectToFeesummaryPage(paymentRef: string) {
-    this.loadFeeSummaryPage(paymentRef);
-    this.router.navigateByUrl(`/payment-history/${this.ccdCaseNumber}?view=fee-summary&selectedOption=${this.selectedOption}&paymentGroupRef=${paymentRef}`);
   }
 
   selectedUnprocessedFeeEvent(unprocessedRecordId: string) {
