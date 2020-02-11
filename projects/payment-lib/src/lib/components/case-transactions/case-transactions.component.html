@@ -22,7 +22,7 @@
               <td class="govuk-table__header" scope="col">Total remissions</td>
               <td class="govuk-table__header" scope="col">Amount due</td>
               <td class="govuk-table__header" scope="col" *ngIf="totalRefundAmount > 0">Total Surplus</td>
-              <td class="govuk-table__header" scope="col" *ngIf="isBulkScanEnable">Unallocated payments</td>
+              <!-- <td class="govuk-table__header" scope="col" *ngIf="isBulkScanEnable">Unallocated payments</td> -->
             </tr>
           </thead>
           <tbody class="govuk-table__body">
@@ -31,13 +31,13 @@
               <td class="govuk-table__cell">{{ totalRemissions | currency :'GBP':'symbol':'1.2-2' }}</td>
               <td class="govuk-table__cell">{{ (totalFees - totalRemissions) - totalPayments | currency :'GBP':'symbol':'1.2-2'}}</td>
               <td class="govuk-table__cell" *ngIf="totalRefundAmount > 0">{{totalRefundAmount | currency :'GBP':'symbol':'1.2-2'}}</td>
-              <td class="govuk-table__cell case-transaction__color" *ngIf="isBulkScanEnable">{{unprocessedRecordCount}}</td>
+              <!-- <td class="govuk-table__cell case-transaction__color" *ngIf="isBulkScanEnable">{{unprocessedRecordCount}}</td> -->
             </tr>
           </tbody>
         </table>
       </div>
 
-       <div class="govuk-grid-column-two-thirds govuk-!-padding-bottom-6" *ngIf="takePayment">
+       <div class="govuk-grid-column-two-thirds" *ngIf="takePayment">
         <button type="submit" (click)="redirectToFeeSearchPage($event)"
           [disabled]="!isAddFeeBtnEnabled"
           [ngClass]='!isAddFeeBtnEnabled ? "govuk-button govuk-button--secondary govuk-button--disabled govuk-!-margin-right-1" : "govuk-button govuk-button--secondary govuk-!-margin-right-1"'>
@@ -46,9 +46,27 @@
     </div>
     </div>
 
-
+    <div class="govuk-grid-row">
+        <hr class="govuk-section-records-break">
+        <ccpay-app-unprocessed-payments
+        *ngIf="isBulkScanEnable"
+        [IS_BUTTON_ENABLE]="takePayment"
+        [FEE_RECORDS_EXISTS]="isFeeRecordsExist" 
+        [IS_OS_AMT_AVAILABLE]="isGrpOutstandingAmtPositive" 
+        (getUnprocessedFeeCount) = "getUnprocessedFeeCount($event)"
+        (selectedUnprocessedFeeEvent) = "selectedUnprocessedFeeEvent($event)">
+      </ccpay-app-unprocessed-payments>
+      <hr class="govuk-section-records-break">
+    
+    
+      <ccpay-app-processed-payments
+      [NONPAYMENTS]="nonPayments"
+      (goToPaymentViewComponent) = "goToPaymentViewComponent($event)"
+      ></ccpay-app-processed-payments>
+      <hr class="govuk-section-records-break">
+    </div>
     <!-- No fees start -->
-    <span class="heading-small">Exisiting fees</span>
+    <span class="heading-medium exisitng-fees">Exisiting fees</span>
     <div *ngIf="paymentGroups?.length === 0">
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
@@ -105,8 +123,8 @@
           <td class="govuk-table__cell" colspan="6">No payments recorded</td>
           </tbody>
         </table>
-        <div class="govuk-inset-text govuk-inset-text__no-border govuk-inset-text__no-left-margin" *ngIf="paymentGroup.payments || paymentGroup.remissions">
-          <details>
+        <div class="govuk-inset-text govuk-inset-text__no-border govuk-inset-text__no-left-margin"  *ngIf="paymentGroup.payments || paymentGroup.remissions">
+          <details  *ngIf="paymentGroup.payments?.length > 0 || paymentGroup.remissions?.length > 0">
             <summary class="govuk-hidetext">
             <span class="summary">Allocated payments and remissions</span>
             </summary>
@@ -125,10 +143,10 @@
                             <td class="govuk-table__header" scope="col">Status</td>
                           </tr>
                       </thead>
-                      <!-- <tbody class="govuk-table__body" *ngIf="paymentGroup.payments?.length > 0">
+                      <tbody class="govuk-table__body" *ngIf="paymentGroup.payments?.length > 0">
                         <tr class="govuk-table__row"  *ngFor="let payment of paymentGroup.payments">
                             <td class="govuk-table__cell">
-                              <a href="javascript:void(0)" (click)="goToPaymentViewComponent({paymentGroup.payment_group_reference, payment.reference, payment.method})">{{ payment.reference }}</a>
+                              <a href="javascript:void(0)" (click)="goToPaymentViewComponent1(paymentGroup.payment_group_reference, payment.reference, payment.method)">{{ payment.reference }}</a>
                             </td>
                             <td class="govuk-table__cell">{{ payment.date_created | date:'dd MMM yyyy HH:mm:ss' }}</td>
                             <td class="channel govuk-table__cell">{{ payment.channel | lowercase }}</td>
@@ -137,7 +155,7 @@
                             <td class="govuk-table__cell"> {{getAllocationStatus(payment)}}</td>
                             <td class="govuk-table__cell">{{ payment.status }}</td>
                           </tr>
-                      </tbody> -->
+                      </tbody>
                       <tbody class="govuk-table__body">
                         <td class="govuk-table__cell" colspan="7">No payments recorded</td>
                       </tbody>
@@ -168,24 +186,26 @@
                     </table>
               </div>
           </details>
+          <div *ngIf="takePayment">
+              <button type="submit" (click)="loadFeeSummaryPage(paymentGroup.payment_group_reference)"
+                [disabled]="(getGroupOutstandingAmount(paymentGroup) <= 0 || isUnprocessedRecordSelected)"
+                [ngClass]='(getGroupOutstandingAmount(paymentGroup) <= 0 || isUnprocessedRecordSelected) ? "govuk-button govuk-button--secondary govuk-button--disabled govuk-!-margin-right-1" : "govuk-button govuk-button--secondary govuk-!-margin-right-1"'>
+                  Add telephone payment
+              </button>
           </div>
+        </div>
+        
+        <!-- <div class="add-telephony-payment" *ngIf="takePayment">
+              <button type="submit" (click)="loadFeeSummaryPage(paymentGroup.payment_group_reference)"
+                [disabled]="(getGroupOutstandingAmount(paymentGroup) <= 0 || isUnprocessedRecordSelected)"
+                [ngClass]='(getGroupOutstandingAmount(paymentGroup) <= 0 || isUnprocessedRecordSelected) ? "govuk-button govuk-button--secondary govuk-button--disabled govuk-!-margin-right-1" : "govuk-button govuk-button--secondary govuk-!-margin-right-1"'>
+                  Add telephone payment
+              </button>
+        </div> -->
       </div>
       </div>
     </div>
   </div>
-    <ccpay-app-unprocessed-payments
-      *ngIf="isBulkScanEnable"
-      [IS_BUTTON_ENABLE]="takePayment"
-      [FEE_RECORDS_EXISTS]="isFeeRecordsExist" 
-      [IS_OS_AMT_AVAILABLE]="isGrpOutstandingAmtPositive" 
-      (getUnprocessedFeeCount) = "getUnprocessedFeeCount($event)"
-      (selectedUnprocessedFeeEvent) = "selectedUnprocessedFeeEvent($event)">
-    </ccpay-app-unprocessed-payments>
-
-    <ccpay-app-processed-payments
-    [NONPAYMENTS]="nonPayments"
-    (goToPaymentViewComponent) = "goToPaymentViewComponent($event)"
-    ></ccpay-app-processed-payments>
     <div class="govuk-grid-row govuk-grid__surplus-payments"  *ngIf="totalRefundAmount > 0">
       <div class="govuk-grid-column-full govuk-grid__surplus-payments-col1">
         <h3 class="heading-medium">Surplus payments</h3>

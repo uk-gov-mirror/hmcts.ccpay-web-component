@@ -37,17 +37,27 @@
         <td class="govuk-table__cell" colspan="6">No unallocated payments record available</td>
       </tbody>
     </table>
-   <div class="button-grb" *ngIf="IS_BUTTON_ENABLE">
-      <button type="button" 
-      [disabled]="!isMarkAsUnidentifiedbtnEnabled"
-      [ngClass]='!isMarkAsUnidentifiedbtnEnabled ?  "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"' (click)="loadUnsolicitedPage('unidentifiedPage')">
-        Mark as unidentified
-      </button>
-      <button type="button" 
-      [disabled]="!isUnprocessedRecordSelected"
-      [ngClass]='!isUnprocessedRecordSelected ?  "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"' (click)="loadUnsolicitedPage('unsolicitedPage')">
-        Mark as transferred
-      </button>  
-    </div>
+    <div class="button-grb" *ngIf="IS_BUTTON_ENABLE">
+        <button type="button"
+        [disabled]="!isAllocatedToNewFeebtnEnabled"
+        [ngClass]="!isAllocatedToNewFeebtnEnabled ? 'button button--disabled govuk-!-margin-right-1' : 'button govuk-!-margin-right-1'" (click)="redirectToFeeSearchPage($event)">
+          Allocate to a new fee
+        </button>
+        <button type="button" 
+        [disabled]="!isAllocateToExistingFeebtnEnabled"
+        [ngClass]='!isAllocateToExistingFeebtnEnabled ?  "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"' (click)="goToAllocatePage()">
+          Allocate to an existing fee
+        </button>
+        <button type="button" 
+        [disabled]="!isMarkAsUnidentifiedbtnEnabled"
+        [ngClass]='!isMarkAsUnidentifiedbtnEnabled ?  "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"' (click)="loadUnsolicitedPage('unidentifiedPage')">
+          Mark as unidentified
+        </button>
+        <button type="button" 
+        [disabled]="!isUnprocessedRecordSelected"
+        [ngClass]='!isUnprocessedRecordSelected ?  "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"' (click)="loadUnsolicitedPage('unsolicitedPage')">
+          Mark as transferred
+        </button>  
+      </div>
 </div>
 

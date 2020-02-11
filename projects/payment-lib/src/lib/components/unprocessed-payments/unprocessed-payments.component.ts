@@ -15,9 +15,6 @@ export class UnprocessedPaymentsComponent implements OnInit {
   @Input('IS_BUTTON_ENABLE') IS_BUTTON_ENABLE: boolean;
   @Input('IS_OS_AMT_AVAILABLE') IS_OS_AMT_AVAILABLE: boolean;
   @Output() selectedUnprocessedFeeEvent: EventEmitter<string> = new EventEmitter();
-  @Output() getUnprocessedFeeCount: EventEmitter<string> = new EventEmitter();
-
-
   viewStatus = 'main';
   unassignedRecordList: IBSPayments;
   upPaymentErrorMessage: string = null;
@@ -27,7 +24,9 @@ export class UnprocessedPaymentsComponent implements OnInit {
   dcnNumber: string = null;
   selectedOption: string;
   isUnprocessedRecordSelected: boolean = false;
+  isAllocateToExistingFeebtnEnabled: boolean = false;
   isMarkAsUnidentifiedbtnEnabled: boolean = false;
+  isAllocatedToNewFeebtnEnabled: boolean = false;
   isExceptionCase: boolean = false;
   serviceId: string = null;
   isBulkScanEnable;
@@ -55,13 +54,9 @@ export class UnprocessedPaymentsComponent implements OnInit {
             this.setValuesForUnassignedRecord(unassignedPayments);
           } else {
             this.upPaymentErrorMessage = 'error';
-            this.getUnprocessedFeeCount.emit('0');
           }
         },
-        (error: any) => {
-          this.upPaymentErrorMessage = error
-          this.getUnprocessedFeeCount.emit('0');
-        }
+        (error: any) => this.upPaymentErrorMessage = error
       );
     } else {
         this.bulkScaningPaymentService.getBSPaymentsByCCD(this.ccdCaseNumber).subscribe(
@@ -72,13 +67,9 @@ export class UnprocessedPaymentsComponent implements OnInit {
             this.setValuesForUnassignedRecord(unassignedPayments);
           } else {
             this.upPaymentErrorMessage = 'error';
-            this.getUnprocessedFeeCount.emit('0');
           }
         },
-        (error: any) => {
-          this.upPaymentErrorMessage = error;
-          this.getUnprocessedFeeCount.emit('0');
-        }
+        (error: any) => this.upPaymentErrorMessage = error
       );
     }
 
@@ -121,13 +112,23 @@ export class UnprocessedPaymentsComponent implements OnInit {
   validateButtons() {
   if ( this.isUnprocessedRecordSelected  && this.isExceptionCase) {
         this.isMarkAsUnidentifiedbtnEnabled = true;
+    } else if ( this.isUnprocessedRecordSelected  && !this.isExceptionCase && !this.FEE_RECORDS_EXISTS) {
+      this.isAllocateToExistingFeebtnEnabled = false;
+      this.isAllocatedToNewFeebtnEnabled = true;
+    } else if( this.isUnprocessedRecordSelected && !this.isExceptionCase && this.FEE_RECORDS_EXISTS ) {
+      this.isAllocateToExistingFeebtnEnabled = this.IS_OS_AMT_AVAILABLE;
+      this.isAllocatedToNewFeebtnEnabled = true;
     }
+
   }
   unprocessedPaymentUnSelectEvent(event: any) {
     event.preventDefault();
     this.recordId = null;
     this.isUnprocessedRecordSelected = false;
+    this.isAllocateToExistingFeebtnEnabled = false;
+    this.isAllocatedToNewFeebtnEnabled = false;
     this.isMarkAsUnidentifiedbtnEnabled = false;
+    //this.validateButtons();
     this.selectedUnprocessedFeeEvent.emit('');
   }
 

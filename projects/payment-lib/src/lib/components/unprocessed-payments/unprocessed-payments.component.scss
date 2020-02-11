@@ -1,5 +1,6 @@
 .unprocessed-payments {
   //todo ...
+  margin: 17px;
   .unprocessed-payments--radio-button {
     bottom: 10px;
   }
@@ -43,4 +44,10 @@
 }
 .whitespace-inherit {
   white-space: inherit !important;
+}
+.button-grb {
+  padding-bottom: 8px;
+}
+.heading-medium {
+  margin-top: 0.875em;
 }
