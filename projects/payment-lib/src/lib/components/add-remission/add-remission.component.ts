@@ -37,6 +37,8 @@ export class AddRemissionComponent implements OnInit {
   remissionReasonMaxHasError: boolean = false;
   isRemissionLessThanFeeError: boolean = false;
 
+  remissionReason: string = null;
+
   constructor(private formBuilder: FormBuilder,
     private router: Router,
     private paymentViewService: PaymentViewService,
@@ -70,6 +72,7 @@ export class AddRemissionComponent implements OnInit {
       reasonField = this.remissionForm.controls.remissionReason,
       isRemissionLessThanFee = this.fee.calculated_amount > remissionctrls.amount.value; 
     if (this.remissionForm.dirty && this.remissionForm.valid && isRemissionLessThanFee) {
+      this.remissionReason = this.remissionForm.value.remissionReason;
       this.viewStatus = 'confirmation';
     }else {
 
