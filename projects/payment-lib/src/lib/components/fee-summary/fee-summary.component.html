@@ -40,7 +40,7 @@
       </tr>
     </thead>
     <tbody class="govuk-table__body" *ngIf="paymentGroup.fees">
-      <tr class="govuk-table__row" *ngFor="let fee of paymentGroup.fees">
+      <tr class="govuk-table__row" *ngFor="let fee of paymentGroup.fees; let i = index;">
         <td class="govuk-table__cell">{{ fee.code }}</td>
         <td class="govuk-table__cell">{{ fee.description }}</td>
         <td class="govuk-table__cell">{{ getRemissionByFeeCode(fee.code)?.hwf_reference }}</td>
@@ -49,7 +49,7 @@
             <tr class="govuk-table__row">
               <td class="no-border grey-text subcolumn-1">Fee amount:</td>
               <td class="no-border subcolumn-2">{{ fee.fee_amount | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
-              <td class="no-border subcolumn-3"><a (click)="confirmRemoveFee(fee.id)">remove fee</a></td>
+              <td class="no-border subcolumn-3"><a *ngIf="!(isPaymentExist && i === 0) " (click)="confirmRemoveFee(fee.id)">remove fee</a></td>
             </tr>
             <tr class="govuk-table__row" *ngIf="fee.volume && fee.volume > 0">
               <td class="no-border grey-text subcolumn-1">Volume:</td>
