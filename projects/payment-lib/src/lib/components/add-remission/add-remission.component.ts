@@ -18,7 +18,6 @@ export class AddRemissionComponent implements OnInit {
   @Input() ccdCaseNumber: string;
   @Input() service: string;
   @Input() paymentGroupRef: string;
-  @Output() cancelRemission: EventEmitter<void> = new EventEmitter();
 
   remissionForm: FormGroup;
   hasErrors = false;
@@ -62,6 +61,9 @@ export class AddRemissionComponent implements OnInit {
         Validators.pattern('^([a-zA-Z0-9\\s,\\.]*)$')
       ]))
     });
+    this.viewStatus = 'main';
+  }
+  cancelRemission() {
     this.viewStatus = 'main';
   }
 
