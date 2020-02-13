@@ -38,13 +38,22 @@
         </table>
       </div>
     </div>
-
-
+    <div class="govuk-grid-row">
+        <hr class="govuk-section-records-break">
+    <ccpay-app-unprocessed-payments
+      *ngIf="isBulkScanEnable"
+      [IS_BUTTON_ENABLE]="takePayment"
+      [FEE_RECORDS_EXISTS]="isFeeRecordsExist" 
+      [IS_OS_AMT_AVAILABLE]="isGrpOutstandingAmtPositive" 
+      (selectedUnprocessedFeeEvent) = "selectedUnprocessedFeeEvent($event)">
+    </ccpay-app-unprocessed-payments>
+    <hr class="govuk-section-records-break">
+  </div>
     <!-- No fees start -->
     <div *ngIf="paymentGroups?.length === 0">
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-          <span class="heading-small">Existing fees</span>
+            <span class="heading-medium exisitng-fees">Exisiting fees</span>
         </div>
 
         <div class="govuk-grid-column-full">
@@ -115,7 +124,7 @@
       </div>
       </div>
     <div class="govuk-inset-text govuk-inset-text__no-border" *ngIf="paymentGroup.payments || paymentGroup.remissions">
-      <details>
+      <details *ngIf="paymentGroup.payments?.length > 0 || paymentGroup.remissions?.length > 0">
         <summary class="govuk-hidetext">
         <span class="summary">Allocated payments and remissions</span>
         </summary>
@@ -192,13 +201,7 @@
       </div>
     </div>
   </div>
-    <ccpay-app-unprocessed-payments
-      *ngIf="isBulkScanEnable"
-      [IS_BUTTON_ENABLE]="takePayment"
-      [FEE_RECORDS_EXISTS]="isFeeRecordsExist" 
-      [IS_OS_AMT_AVAILABLE]="isGrpOutstandingAmtPositive" 
-      (selectedUnprocessedFeeEvent) = "selectedUnprocessedFeeEvent($event)">
-    </ccpay-app-unprocessed-payments>
+
     <div class="govuk-grid-row govuk-grid__surplus-payments" *ngIf="!takePayment">
       <div class="govuk-grid-column-full">
       <span class="heading-medium">Processed payments</span>
