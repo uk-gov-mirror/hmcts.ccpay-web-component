@@ -16,6 +16,7 @@ import {Router} from '@angular/router';
 export class CaseTransactionsComponent implements OnInit {
   takePayment: boolean;
   ccdCaseNumber: string;
+  excReference: string;
   paymentGroups: IPaymentGroup[] = [];
   payments: IPayment[] = [];
   allPayments: IPayment[] = [];
@@ -28,6 +29,7 @@ export class CaseTransactionsComponent implements OnInit {
   selectedOption: string;
   dcnNumber: string;
   isAddFeeBtnEnabled: boolean = true;
+  isExceptionRecord: boolean = false;
   isUnprocessedRecordSelected: boolean = false;
   exceptionRecordReference: string;
   isFeeRecordsExist: boolean = false;
@@ -42,6 +44,10 @@ export class CaseTransactionsComponent implements OnInit {
   ngOnInit() {
     this.isGrpOutstandingAmtPositive = false;
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
+    if(this.paymentLibComponent.CCD_CASE_NUMBER === '') {
+      this.ccdCaseNumber = this.paymentLibComponent.EXC_REFERENCE;
+    }
+    this.excReference = this.paymentLibComponent.EXC_REFERENCE;
     this.takePayment = this.paymentLibComponent.TAKEPAYMENT;
     this.isBulkScanEnable = this.paymentLibComponent.ISBSENABLE;
 
@@ -56,9 +62,9 @@ export class CaseTransactionsComponent implements OnInit {
         this.setDefaults();
       }
     );
-
     this.dcnNumber = this.paymentLibComponent.DCN_NUMBER;
     this.selectedOption = this.paymentLibComponent.SELECTED_OPTION.toLocaleLowerCase();
+    this.checkForExceptionRecord();
   }
 
   setDefaults(): void {
@@ -73,6 +79,48 @@ getAllocationStatus(payments: any){
   return isAllocationStatusExist ? paymentAllocation[0].allocation_status : '-';
   //return "-";
 
+}
+
+checkForExceptionRecord(): void {
+  if(this.paymentGroups.length === 0 && this.selectedOption.toLocaleLowerCase() === 'ccdorexception') {
+    this.bulkScaningPaymentService.getBSPaymentsByCCD(this.ccdCaseNumber).subscribe(
+      recordData => {
+        if(recordData['data'] && recordData['data'].exception_record_reference.length > 0 && recordData['data'].ccd_reference >0) {
+          this.isExceptionRecord = false;
+        }
+
+        if(recordData['data'] && recordData['data'].exception_record_reference.length > 0 && recordData['data'].ccd_reference === undefined) {
+          this.isExceptionRecord = true;
+        }
+
+        if(recordData['data'] && recordData['data'].exception_record_reference.length === undefined && recordData['data'].ccd_reference >0) {
+          this.isExceptionRecord = false;
+        }
+      });
+  }
+
+  if (this.paymentGroups.length === 0 && this.selectedOption.toLocaleLowerCase() === 'dcn') {
+    if (this.paymentLibComponent.CCD_CASE_NUMBER.length > 0 && this.paymentLibComponent.EXC_REFERENCE.length > 0) {
+      this.isExceptionRecord = false;
+    } else if(this.paymentLibComponent.CCD_CASE_NUMBER.length === 0 && this.paymentLibComponent.EXC_REFERENCE.length > 0) {
+      this.isExceptionRecord = true;
+    } else {
+      this.isExceptionRecord = false;
+    }
+  }
+  if (this.paymentGroups.length > 0)
+  this.paymentGroups.forEach(paymentGroup => {
+    if (paymentGroup.payments) {
+      paymentGroup.payments.forEach(payment => {
+        if (payment.case_reference !== undefined && payment.case_reference.length > 0) {
+          this.isExceptionRecord = true;
+        } else {
+          this.isExceptionRecord = false;
+        }
+       
+      });
+    }
+  });
 }
 
   calculateAmounts(): void {
