@@ -38,6 +38,7 @@ export class FeeSummaryComponent implements OnInit {
   totalAfterRemission: number = 0;
   isConfirmationBtnDisabled: boolean = false;
   isRemoveBtnDisabled: boolean = false;
+  isPaymentExist: boolean = false;
 
   constructor(
     private router: Router,
@@ -117,6 +118,8 @@ export class FeeSummaryComponent implements OnInit {
       this.paymentLibComponent.paymentMethod).subscribe(
       paymentGroup => {
         this.paymentGroup = paymentGroup;
+        this.isPaymentExist = paymentGroup.payments ? paymentGroup.payments.length > 0 : false;
+
         if (paymentGroup.fees) {
           paymentGroup.fees.forEach(fee => {
               this.totalAfterRemission  = this.totalAfterRemission  + fee.net_amount;

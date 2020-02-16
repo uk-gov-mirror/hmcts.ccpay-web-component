@@ -17,8 +17,9 @@ export class CaseTransactionsComponent implements OnInit {
   takePayment: boolean;
   ccdCaseNumber: string;
   excReference: string;
-  paymentGroups: IPaymentGroup[] = [];
+  paymentGroups: any[] = [];
   payments: IPayment[] = [];
+  nonPayments: IPayment[] = [];
   allPayments: IPayment[] = [];
   remissions: IRemission[] = [];
   fees: IFee[] = [];
@@ -36,6 +37,7 @@ export class CaseTransactionsComponent implements OnInit {
   isGrpOutstandingAmtPositive: boolean = false;
   totalRefundAmount:Number;
   isBulkScanEnable;
+  unprocessedRecordCount: number;
   constructor(private router: Router,
   private bulkScaningPaymentService: BulkScaningPaymentService,
   private caseTransactionsService: CaseTransactionsService,
@@ -77,7 +79,6 @@ getAllocationStatus(payments: any){
   let paymentAllocation = payments.payment_allocation,
       isAllocationStatusExist = paymentAllocation.length >0;
   return isAllocationStatusExist ? paymentAllocation[0].allocation_status : '-';
-  //return "-";
 
 }
 
@@ -126,7 +127,9 @@ checkForExceptionRecord(): void {
   calculateAmounts(): void {
     let feesTotal = 0.00,
      paymentsTotal = 0.00,
-     remissionsTotal = 0.00;
+     remissionsTotal = 0.00,
+     allocationStatus = null,
+     isPaymentSuccess = false;
 
     this.paymentGroups.forEach(paymentGroup => {
       if (paymentGroup.fees) {
@@ -139,12 +142,19 @@ checkForExceptionRecord(): void {
 
       if (paymentGroup.payments) {
         paymentGroup.payments.forEach(payment => {
-          if (payment.status.toUpperCase() === 'SUCCESS') {
+          allocationStatus = payment.payment_allocation;
+          isPaymentSuccess = payment.status.toUpperCase() === 'SUCCESS';
+          if (isPaymentSuccess) {
             paymentsTotal = paymentsTotal + payment.amount;
             this.payments.push(payment);
           }
-          payment.paymentGroupReference = paymentGroup.payment_group_reference
-          this.allPayments.push(payment);
+          if (isPaymentSuccess && (allocationStatus[0].allocation_status === 'Allocated' || allocationStatus.length === 0)) {
+            paymentsTotal = paymentsTotal + payment.amount;
+            this.payments.push(payment);
+          } else if(allocationStatus.length > 0 && allocationStatus[0].allocation_status !== 'Allocated') {
+            payment.paymentGroupReference = paymentGroup.payment_group_reference
+            this.nonPayments.push(payment);
+          }
         });
       }
       this.totalPayments = paymentsTotal;
@@ -214,7 +224,6 @@ checkForExceptionRecord(): void {
     const url = this.isBulkScanEnable ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
     this.router.navigateByUrl(`/fee-search?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}${url}`);
   }
-
   redirectToReportsPage(event: any) {
     event.preventDefault();
     this.router.navigateByUrl(`/reports?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}`);
@@ -226,10 +235,10 @@ checkForExceptionRecord(): void {
     this.paymentLibComponent.viewName = 'fee-summary';
   }
 
-  goToPaymentViewComponent(paymentGroupReference: string, paymentReference: string, paymentMethod: string) {
-    this.paymentLibComponent.paymentMethod = paymentMethod;
-    this.paymentLibComponent.paymentGroupReference = paymentGroupReference;
-    this.paymentLibComponent.paymentReference = paymentReference;
+  goToPaymentViewComponent(paymentGroup: any) {
+    this.paymentLibComponent.paymentMethod = paymentGroup.paymentMethod;
+    this.paymentLibComponent.paymentGroupReference = paymentGroup.paymentGroupReference;
+    this.paymentLibComponent.paymentReference = paymentGroup.paymentReference;
     this.paymentLibComponent.viewName = 'payment-view';
   }
 
@@ -241,5 +250,8 @@ checkForExceptionRecord(): void {
       this.isAddFeeBtnEnabled = true;
       this.isUnprocessedRecordSelected = false;
     }
+  }
+  getUnprocessedFeeCount(unProcessedRecordCount: number) {
+    this.unprocessedRecordCount = unProcessedRecordCount;
   }
 }
