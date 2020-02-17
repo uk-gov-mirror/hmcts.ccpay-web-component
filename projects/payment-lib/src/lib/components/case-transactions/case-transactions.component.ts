@@ -242,6 +242,10 @@ checkForExceptionRecord(): void {
     this.paymentLibComponent.viewName = 'payment-view';
   }
 
+  goToPayementView(paymentGroupReference: string, paymentReference: string, paymentMethod: string) {
+    this.goToPaymentViewComponent({paymentGroupReference, paymentReference, paymentMethod});
+  }
+
   selectedUnprocessedFeeEvent(unprocessedRecordId: string) {
     if ( unprocessedRecordId ) {
       this.isAddFeeBtnEnabled = false

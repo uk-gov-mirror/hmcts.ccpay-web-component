@@ -85,3 +85,6 @@ details summary {
 .exisitng-fees {
     margin-left: 12px;
 }
+.govuk-table__header--custom {
+    text-align: center;
+}

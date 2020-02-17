@@ -28,7 +28,7 @@
               <td class="govuk-table__header" scope="col">Total remissions</td>
               <td class="govuk-table__header" scope="col">Amount due</td>
               <td class="govuk-table__header" scope="col" *ngIf="totalRefundAmount > 0">Total Surplus</td>
-              <td class="govuk-table__header" scope="col" *ngIf="isBulkScanEnable">Unallocated payments</td>
+              <td class="govuk-table__header govuk-table__header--custom" scope="col" *ngIf="isBulkScanEnable">Unallocated payments</td>
             </tr>
           </thead>
           <tbody class="govuk-table__body">
@@ -64,10 +64,13 @@
       [NONPAYMENTS]="nonPayments"
       (goToPaymentViewComponent) = "goToPaymentViewComponent($event)">
     </ccpay-app-processed-payments>
-    <hr class="govuk-section-records-break">
   </div>
+  <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full govuk-!-padding-bottom-3">
+        <span class="heading-small">Exisiting fees</span>
+      </div>
+    </div>
     <!-- No fees start -->
-    <span class="heading-small">Exisiting fees</span>
     <div *ngIf="paymentGroups?.length === 0">
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
@@ -93,9 +96,7 @@
     </div>
 
     <!-- No fees end -->
-
     <div *ngFor="let paymentGroup of paymentGroups">
-
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-full govuk-grid-column-full--gr">
         <span class="heading-medium">Group reference: {{paymentGroup.payment_group_reference}}</span>
@@ -104,7 +105,7 @@
       <div class="govuk-grid-row">
 
         <!--New Code start-->
-        <div class=feeclass>
+        <div class="feeclass govuk-grid-column-full govuk-!-padding-bottom-3">
         <table class="govuk-table">
           <thead class="govuk-table__head">
           <tr class="govuk-table__row">
@@ -157,7 +158,7 @@
                   <tbody class="govuk-table__body" *ngIf="paymentGroup.payments?.length > 0">
                     <tr class="govuk-table__row"  *ngFor="let payment of paymentGroup.payments">
                         <td class="govuk-table__cell whitespace-inherit">
-                          <a href="javascript:void(0)" (click)="goToPaymentViewComponent(paymentGroup)">{{ payment.reference }}</a>
+                          <a href="javascript:void(0)" (click)="goToPayementView(paymentGroup.payment_group_reference, payment.reference, payment.method)">{{ payment.reference }}</a>
                         </td>
                         <td class="govuk-table__cell whitespace-inherit">{{ payment.date_created | date:'dd MMM yyyy HH:mm:ss' }}</td>
                         <td class="channel govuk-table__cell whitespace-inherit">{{ payment.channel | lowercase }}</td>
@@ -231,7 +232,7 @@
         <tbody class="govuk-table__body" *ngIf="allPayments?.length > 0">
           <tr class="govuk-table__row"  *ngFor="let payment of allPayments">
               <td class="govuk-table__cell whitespace-inherit">
-                <a href="javascript:void(0)" (click)="goToPaymentViewComponent(payment)">{{ payment.reference }}</a>
+                <a href="javascript:void(0)" (click)="goToPayementView(payment.paymentGroupReference, payment.reference, payment.method)">{{ payment.reference }}</a>
               </td>
               <td class="govuk-table__cell whitespace-inherit">{{ payment.date_created | date:'dd MMM yyyy HH:mm:ss' }}</td>
               <td class="govuk-table__cell whitespace-inherit">{{ payment.date_updated | date:'dd MMM yyyy HH:mm:ss' }}</td>
@@ -248,13 +249,15 @@
       </table>
   </div>
 </div>
-    <div class="govuk-grid-row govuk-grid__surplus-payments"  *ngIf="totalRefundAmount > 0">
+    <div class="govuk-grid-row govuk-grid__surplus-payments" *ngIf="totalRefundAmount > 0">
+        <div class="govuk-grid-column-full govuk-!-padding-bottom-3">
       <div class="govuk-grid-column-full govuk-grid__surplus-payments-col1">
         <h3 class="heading-medium">Surplus payments</h3>
       </div>
-      <div class="govuk-grid-column-full">
+      <div class="govuk-grid-column-full govuk-!-padding-bottom-3">
         Total surplus payments received: {{totalRefundAmount | currency :'GBP':'symbol':'1.2-2'}}
       </div>
+    </div>
     </div>
   </main>
 
