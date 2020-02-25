@@ -31,6 +31,7 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
   reason: string;
   responsiblePerson: string;
   responsibleOffice: string;
+  responsibleSiteId: string;
   emailId: string;
   isConfirmButtondisabled:Boolean = false;
   ccdReference: string = null;
@@ -59,7 +60,7 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
       ])),
       responsibleOffice: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('^([a-zA-Z0-9\\s\\n,\\.-:]*)$')
+        Validators.pattern('^([a-zA-Z0-9]*)$')
       ])),
       responsiblePerson: new FormControl(''),
       emailId: new FormControl('')
@@ -71,7 +72,6 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
   confirmPayments() {
     this.isConfirmButtondisabled = true;
     const controls = this.markPaymentUnsolicitedForm.controls;
-    // controls.responsibleOffice.setValue('P219');
     this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'PROCESSED').subscribe(
       res1 => {
         this.errorMessage = this.getErrorMessage(false);
@@ -118,7 +118,6 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
     this.resetForm([false,false,false,false,false,false], 'all');
         const formerror = this.markPaymentUnsolicitedForm.controls.reason.errors;
         const reasonField = this.markPaymentUnsolicitedForm.controls.reason;
-        this.markPaymentUnsolicitedForm.controls.responsibleOffice.setValue('P219');
         const officeIdField = this.markPaymentUnsolicitedForm.controls.responsibleOffice;
     if (this.markPaymentUnsolicitedForm.dirty && this.markPaymentUnsolicitedForm.valid) {
       const controls = this.markPaymentUnsolicitedForm.controls;
@@ -126,6 +125,8 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
       this.responsibleOffice = controls.responsibleOffice.value;
       this.responsiblePerson = controls.responsiblePerson.value;
       this.reason = controls.reason.value;
+      this.responsibleSiteId = this.responsibleOffice === 'AA07' ? 'Divorce' : this.responsibleOffice === 'AA08' ? 'Probate' : 'Family Public Law';
+
       this.viewStatus = 'unsolicitedContinueConfirm';
     }else {
       if( reasonField.value == '' ) {
