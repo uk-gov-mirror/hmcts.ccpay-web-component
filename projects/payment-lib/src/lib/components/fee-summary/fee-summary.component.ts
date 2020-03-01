@@ -29,7 +29,7 @@ export class FeeSummaryComponent implements OnInit {
   currentFee: IFee;
   totalFee: number;
   payhubHtml: SafeHtml;
-  service: string = null;
+  service: string = "";
   upPaymentErrorMessage: string;
   selectedOption:string;
   isBackButtonEnable: boolean = true;
