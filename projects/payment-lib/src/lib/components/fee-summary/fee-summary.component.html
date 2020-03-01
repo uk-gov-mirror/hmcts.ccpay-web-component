@@ -64,7 +64,7 @@
             <tr class="govuk-table__row">
               <td class="no-border grey-text subcolumn-1">Remission amount:</td>
               <td class="no-border subcolumn-2">{{ getRemissionByFeeCode(fee.code)?.hwf_amount? ( getRemissionByFeeCode(fee.code)?.hwf_amount  | currency:'GBP':'symbol-narrow':'1.2-2') : '-' }}</td>
-              <td class="no-border subcolumn-3"> <a (click)="addRemission(fee)" [ngClass]="{'remissionDisable': service==null}" *ngIf="getRemissionByFeeCode(fee.code)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code)?.hwf_amount">Deduct remission</a></td>
+              <td class="no-border subcolumn-3"> <a (click)="addRemission(fee)" [ngClass]="{'remissionDisable': !service}" *ngIf="getRemissionByFeeCode(fee.code)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code)?.hwf_amount">Deduct remission</a></td>
             </tr>
             <tr class="govuk-table__row">
               <td class="no-border grey-text subcolumn-1">Total after remission:</td>
@@ -99,31 +99,16 @@
         <td class="no-border"></td>
         <td class="no-border"></td>
         <td class="no-border">
-
           <div class="govuk-form-group govuk-form-group--mg">
-
-            <fieldset class="govuk-fieldset">
-              <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                <span class="govuk-fieldset__heading govuk-fieldset__heading--fz">
-                  What service is this fee for?
-                </span>
-              </legend>
-              <div class="govuk-radios govuk-radios--small">
-                <div class="govuk-radios__item">
-                  <input id="changed-name" class="govuk-radios__input" [(ngModel)]="service" type="radio" aria-label="AA07" value="AA07">
-                  <label class="govuk-label govuk-radios__label" for="changed-name">
-                    Divorce
-                  </label>
-                </div>
-                <div class="govuk-radios__item">
-                  <input id="changed-name-2" class="govuk-radios__input" [(ngModel)]="service" type="radio" aria-label="AA08" value="AA08">
-                  <label class="govuk-label govuk-radios__label" for="changed-name-2">
-                    Probate
-                  </label>
-                </div>
-              </div>
-            </fieldset>
-
+            <label class="govuk-label custom-govuk-label govuk-fieldset__heading--fz" for="responsibleOffice">
+              <strong>What service is this fee for?</strong>
+            </label>
+            <select class="govuk-select govuk-select--custom" id="responsibleOffice" [(ngModel)]="service" name="responsibleOffice">
+              <option value="" selected='selected'>Please select</option>
+              <option value="AA07">Divorce</option>
+              <option value="ABA3">Family Public Law</option>
+              <option value="AA08">Probate</option>
+            </select>
           </div>
         </td>
       </tr>
