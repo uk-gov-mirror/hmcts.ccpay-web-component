@@ -88,14 +88,17 @@ checkForExceptionRecord(): void {
       recordData => {
         if(recordData['data'] && recordData['data'].exception_record_reference.length > 0 && recordData['data'].ccd_reference >0) {
           this.isExceptionRecord = false;
+          this.isAddFeeBtnEnabled = true;
         }
 
         if(recordData['data'] && recordData['data'].exception_record_reference.length > 0 && recordData['data'].ccd_reference === undefined) {
           this.isExceptionRecord = true;
+          this.isAddFeeBtnEnabled = false;
         }
 
         if(recordData['data'] && recordData['data'].exception_record_reference.length === undefined && recordData['data'].ccd_reference >0) {
           this.isExceptionRecord = false;
+          this.isAddFeeBtnEnabled = true;
         }
       });
   }
@@ -103,10 +106,13 @@ checkForExceptionRecord(): void {
   if (this.paymentGroups.length === 0 && this.selectedOption.toLocaleLowerCase() === 'dcn') {
     if (this.paymentLibComponent.CCD_CASE_NUMBER.length > 0 && this.paymentLibComponent.EXC_REFERENCE.length > 0) {
       this.isExceptionRecord = false;
+      this.isAddFeeBtnEnabled = true;
     } else if(this.paymentLibComponent.CCD_CASE_NUMBER.length === 0 && this.paymentLibComponent.EXC_REFERENCE.length > 0) {
       this.isExceptionRecord = true;
+      this.isAddFeeBtnEnabled = false;
     } else {
       this.isExceptionRecord = false;
+      this.isAddFeeBtnEnabled = true;
     }
   }
   if (this.paymentGroups.length > 0)
@@ -115,8 +121,10 @@ checkForExceptionRecord(): void {
       paymentGroup.payments.forEach(payment => {
         if (payment.case_reference !== undefined && payment.case_reference.length > 0) {
           this.isExceptionRecord = true;
+          this.isAddFeeBtnEnabled = false;
         } else {
           this.isExceptionRecord = false;
+          this.isAddFeeBtnEnabled = true;
         }
        
       });
