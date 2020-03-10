@@ -259,7 +259,7 @@ checkForExceptionRecord(): void {
       this.isAddFeeBtnEnabled = false
       this.isUnprocessedRecordSelected = true;
     } else {
-      this.isAddFeeBtnEnabled = true;
+      this.isAddFeeBtnEnabled = !this.isExceptionRecord;
       this.isUnprocessedRecordSelected = false;
     }
   }
