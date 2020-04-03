@@ -6,7 +6,7 @@ import {IPayment} from '../../interfaces/IPayment';
 import {PaymentLibService} from '../../payment-lib.service';
 import { WebComponentHttpClient } from '../shared/httpclient/webcomponent.http.client';
 import { ErrorHandlerService } from '../shared/error-handler.service';
-import { catchError } from 'rxjs/operators';
+import { timeoutWith, catchError } from 'rxjs/operators';
 import { LoggerService } from '../shared/logger/logger.service';
 import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
 import { AddRemissionRequest } from '../../interfaces/AddRemissionRequest';
@@ -16,7 +16,7 @@ import { UnsolicitedPaymentsRequest } from '../../interfaces/UnsolicitedPayments
 import { Meta } from '@angular/platform-browser';
 import { AllocatePaymentRequest } from '../../interfaces/AllocatePaymentRequest';
 import { IAllocationPaymentsRequest } from '../../interfaces/IAllocationPaymentsRequest';
-
+import { interval } from 'rxjs/internal/observable/interval';
 
 @Injectable({
   providedIn: 'root'
@@ -93,9 +93,12 @@ export class PaymentViewService {
   }
   downloadSelectedReport(reportName: string, startDate: string, endDate:string): Observable<any> {
     const url = `${this.paymentLibService.API_ROOT}/report/data?date_from=${startDate}&date_to=${endDate}&report_type=${reportName}`;
-    return this.https.get(url, { withCredentials: true, headers: new HttpHeaders({ timeout: `${240000}`})})
+    const minutes = interval(60 * 1000);
+    return this.https.get(url, { withCredentials: true })
     .pipe(
-      catchError(this.errorHandlerService.handleError));
+      timeoutWith(240000, minutes),
+      catchError(this.errorHandlerService.handleError)
+      );
   }
   getBSfeature(): Observable<any> {
     return this.https.get('api/payment-history/bulk-scan-feature', { withCredentials: true }).pipe( catchError(this.errorHandlerService.handleError));
