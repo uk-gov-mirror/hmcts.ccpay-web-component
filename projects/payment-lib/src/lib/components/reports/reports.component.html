@@ -63,7 +63,6 @@
        
        </div>
      </div>
-
      <div  class="govuk-form-group">
       <div class="datefrom">
       <label class="govuk-label govuk-radios__label govuk-label--m" for="date-from">Date from</label>
@@ -76,7 +75,7 @@
       </div>
      </div>
     <div class="btnsubmit">
-     <button type="submit" (click)="downloadReport()" class="button" [disabled]="!reportsForm.valid">Download report</button>
+     <button type="submit" (click)="downloadReport()" class="button" [disabled]="!reportsForm.valid || isDownLoadButtondisabled">Download report</button>
    </div>
  </form>
     
