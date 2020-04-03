@@ -93,7 +93,9 @@ export class PaymentViewService {
   }
   downloadSelectedReport(reportName: string, startDate: string, endDate:string): Observable<any> {
     const url = `${this.paymentLibService.API_ROOT}/report/data?date_from=${startDate}&date_to=${endDate}&report_type=${reportName}`;
-    return this.https.get(url, { withCredentials: true }).pipe( catchError(this.errorHandlerService.handleError));
+    return this.https.get(url, { withCredentials: true, headers: new HttpHeaders({ timeout: `${240000}`})})
+    .pipe(
+      catchError(this.errorHandlerService.handleError));
   }
   getBSfeature(): Observable<any> {
     return this.https.get('api/payment-history/bulk-scan-feature', { withCredentials: true }).pipe( catchError(this.errorHandlerService.handleError));
