@@ -18,6 +18,8 @@ export class ReportsComponent implements OnInit {
   endDate: string;
   ccdCaseNumber: string;
   isDownLoadButtondisabled:Boolean = false;
+  isStartDateLesthanEndDate: Boolean = false;
+  isDateRangeBetnWeek: Boolean = false;
   errorMessage = this.errorHandlerService.getServerErrorMessage(false);
   paymentGroups: IPaymentGroup[] = [];
 
@@ -39,14 +41,23 @@ export class ReportsComponent implements OnInit {
  }
 
  getSelectedFromDate(): void {
- this.validateDates();
+ this.validateDates(this.reportsForm.get('selectedreport').value);
  }
 
- validateDates(){
+ validateDates(reportName){
   const selectedStartDate = this.tranformDate(this.reportsForm.get('startDate').value),
     selectedEndDate = this.tranformDate(this.reportsForm.get('endDate').value);
+  const isDateRangeMoreThanWeek = (<any>new Date(selectedStartDate) - <any>new Date(selectedEndDate))/(1000 * 3600 * -24) > 7;
   if(new Date(selectedStartDate) > new Date(selectedEndDate) && selectedEndDate !== ''){
     this.reportsForm.get('startDate').setValue('');
+    this.isDateRangeBetnWeek = false;
+    this.isStartDateLesthanEndDate = true;
+  } else if(reportName && reportName ==='SURPLUS_AND_SHORTFALL' && isDateRangeMoreThanWeek ) {
+    this.isDateRangeBetnWeek = true;
+    this.isStartDateLesthanEndDate = false;
+  } else {
+    this.isDateRangeBetnWeek = false;
+    this.isStartDateLesthanEndDate = false;
   }
 
  }
