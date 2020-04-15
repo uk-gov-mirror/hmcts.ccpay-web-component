@@ -68,3 +68,23 @@ details summary {
 .whitespace-inherit {
     white-space: inherit !important;
 }
+
+.govuk-section-records-break {
+    margin: 10px;
+    border-bottom: 2px solid black !important;
+}
+.case-transaction__color {
+    color:  #a71414;
+    font-weight: bold;
+    text-align: center;
+}
+.govuk-inset-text__no-left-margin {
+    margin-left: 0;
+    padding-left: 0;
+}
+.exisitng-fees {
+    margin-left: 12px;
+}
+.govuk-table__header--custom {
+    text-align: center;
+}

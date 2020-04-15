@@ -29,7 +29,7 @@ export class FeeSummaryComponent implements OnInit {
   currentFee: IFee;
   totalFee: number;
   payhubHtml: SafeHtml;
-  service: string = null;
+  service: string = "";
   upPaymentErrorMessage: string;
   selectedOption:string;
   isBackButtonEnable: boolean = true;
@@ -38,6 +38,7 @@ export class FeeSummaryComponent implements OnInit {
   totalAfterRemission: number = 0;
   isConfirmationBtnDisabled: boolean = false;
   isRemoveBtnDisabled: boolean = false;
+  isPaymentExist: boolean = false;
 
   constructor(
     private router: Router,
@@ -117,6 +118,8 @@ export class FeeSummaryComponent implements OnInit {
       this.paymentLibComponent.paymentMethod).subscribe(
       paymentGroup => {
         this.paymentGroup = paymentGroup;
+        this.isPaymentExist = paymentGroup.payments ? paymentGroup.payments.length > 0 : false;
+
         if (paymentGroup.fees) {
           paymentGroup.fees.forEach(fee => {
               this.totalAfterRemission  = this.totalAfterRemission  + fee.net_amount;
@@ -185,7 +188,8 @@ export class FeeSummaryComponent implements OnInit {
   }
   takePayment() {
     this.isConfirmationBtnDisabled = true;
-    const seriveName = this.service ==='AA07' ? 'DIVORCE': this.service ==='AA08' ? 'PROBATE' : '',
+    const seriveName = this.service ==='AA07' ? 'DIVORCE': this.service ==='AA08' ? 'PROBATE' : 'FPL',
+
       requestBody = new PaymentToPayhubRequest(this.ccdCaseNumber, this.outStandingAmount, this.service, seriveName);
     this.paymentViewService.postPaymentToPayHub(requestBody, this.paymentGroupRef).subscribe(
       response => {
