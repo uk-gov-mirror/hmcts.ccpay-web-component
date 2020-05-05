@@ -244,6 +244,7 @@ export class AllocatePaymentsComponent implements OnInit {
                   }
                 },
                 (error: any) => {
+                  this.paymentViewService.revertPaymentsAllocation(response2['data'].reference, 'Failed').subscribe();
                   this.bulkScaningPaymentService.patchBSChangeStatus(this.unAllocatedPayment.dcn_reference, 'COMPLETE').subscribe();
                   this.errorMessage = this.errorHandlerService.getServerErrorMessage(true);
                   this.isConfirmButtondisabled = false;
