@@ -94,7 +94,7 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
                   }
                 },
                 (error: any) => {
-                  this.paymentViewService.revertPaymentsAllocation(response2['data'].reference, 'Failed').subscribe();
+                  this.paymentViewService.revertPaymentsAllocation(response2['data'].reference, 'failed').subscribe();
                   this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'COMPLETE').subscribe();
                   this.errorMessage = this.getErrorMessage(true);
                   this.isConfirmButtondisabled = false;
