@@ -219,8 +219,9 @@ cancelMarkUnsolicitedPayments(type?:string){
       showError: isErrorExist
     };
   }
+  
   selectchange(args){ 
     this.selectedSiteId = args.target.value; 
-    this.countryName = args.target.options[args.target.selectedIndex].text; 
+    this.selectedSiteName = args.target.options[args.target.selectedIndex].text; 
   } 
 }
