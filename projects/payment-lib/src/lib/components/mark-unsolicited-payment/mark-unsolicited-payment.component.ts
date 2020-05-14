@@ -35,6 +35,7 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
   isConfirmButtondisabled:Boolean = false;
   ccdReference: string = null;
   exceptionReference: string = null;
+  selectedSiteId: string;
 
   constructor(private formBuilder: FormBuilder,
   private paymentViewService: PaymentViewService,
@@ -119,11 +120,11 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
         const formerror = this.markPaymentUnsolicitedForm.controls.reason.errors;
         const reasonField = this.markPaymentUnsolicitedForm.controls.reason;
         // this.markPaymentUnsolicitedForm.controls.responsibleOffice.setValue('P219');
-        const officeIdField = this.markPaymentUnsolicitedForm.controls.responsibleOffice;
+        const officeIdField = this.selectedSiteId;
     if (this.markPaymentUnsolicitedForm.dirty && this.markPaymentUnsolicitedForm.valid) {
       const controls = this.markPaymentUnsolicitedForm.controls;
       this.emailId = controls.emailId.value;
-      this.responsibleOffice = controls.responsibleOffice.value;
+      this.responsibleOffice = this.markPaymentUnsolicitedForm.get('responsibleOffice').value;
       this.responsiblePerson = controls.responsiblePerson.value;
       this.reason = controls.reason.value;
       this.viewStatus = 'unsolicitedContinueConfirm';
