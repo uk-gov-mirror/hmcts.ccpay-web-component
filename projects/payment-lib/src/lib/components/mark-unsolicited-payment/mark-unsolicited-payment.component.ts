@@ -36,6 +36,7 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
   ccdReference: string = null;
   exceptionReference: string = null;
   selectedSiteId: string;
+  selectedSiteName: string;
 
   constructor(private formBuilder: FormBuilder,
   private paymentViewService: PaymentViewService,
@@ -218,5 +219,8 @@ cancelMarkUnsolicitedPayments(type?:string){
       showError: isErrorExist
     };
   }
-
+  selectchange(args){ 
+    this.selectedSiteId = args.target.value; 
+    this.countryName = args.target.options[args.target.selectedIndex].text; 
+  } 
 }
