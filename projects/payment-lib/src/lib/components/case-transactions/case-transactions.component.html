@@ -1,14 +1,14 @@
 <div class="govuk-width-container">
 
   <main class="govuk-main-wrapper">
-    <div  *ngIf="takePayment">
-    <div class="govuk-grid-row">
+    <div>
+    <div  *ngIf="takePayment" class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-xl">Case transactions</h1>
       </div>
     </div> 
 
-    <div class="govuk-grid-row">
+    <div  *ngIf="takePayment" class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds govuk-!-padding-bottom-6 govuk-!-padding-top-6">
         <span> {{ ccdCaseNumber | ccdHyphens }}</span>
       </div>
@@ -66,6 +66,7 @@
       <hr class="govuk-section-records-break">
     </div>
     <!-- No fees start -->
+    <div *ngIf="takePayment">
     <span class="heading-medium exisitng-fees">Exisiting fees</span>
     <div *ngIf="paymentGroups?.length === 0">
       <div class="govuk-grid-row">
@@ -91,7 +92,8 @@
         </div>
       </div>
     </div>
-
+  </div>
+    <div *ngIf="takePayment">
     <!-- No fees end -->
     <div *ngFor="let paymentGroup of paymentGroups">
       <div class="govuk-grid-row">
@@ -206,6 +208,9 @@
       </div>
     </div>
   </div>
+  </div>
+
+
     <div class="govuk-grid-row govuk-grid__surplus-payments"  *ngIf="totalRefundAmount > 0">
       <div class="govuk-grid-column-full govuk-grid__surplus-payments-col1">
         <h3 class="heading-medium">Surplus payments</h3>
