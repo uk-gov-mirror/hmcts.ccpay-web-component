@@ -1,6 +1,6 @@
 {
   "name": "ccpay-web-component",
-  "version": "3.0.0-beta56",
+  "version": "v3.0.0-beta90",
   "scripts": {
     "ng": "ng",
     "build:library": "ng build payment-lib",
@@ -54,6 +54,7 @@
     "karma-jasmine": "~1.1.1",
     "karma-jasmine-html-reporter": "^0.2.2",
     "ng-packagr": "^3.0.3",
+    "node-sass": "^4.14.1",
     "protractor": "~5.3.0",
     "server": "^1.0.18",
     "ts-node": "~5.0.1",
