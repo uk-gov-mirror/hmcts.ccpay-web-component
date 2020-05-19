@@ -120,6 +120,7 @@ checkForExceptionRecord(): void {
   if (this.paymentGroups.length > 0)
   this.paymentGroups.forEach(paymentGroup => {
     if (paymentGroup.payments) {
+      this.nonPayments = paymentGroup.payments;
       paymentGroup.payments.forEach(payment => {
         if (payment.case_reference !== undefined && payment.case_reference.length > 0) {
           this.isExceptionRecord = true;
