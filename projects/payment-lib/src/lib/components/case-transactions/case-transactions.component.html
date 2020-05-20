@@ -65,14 +65,12 @@
       (getUnprocessedFeeCount) = "getUnprocessedFeeCount($event)"	
       (selectedUnprocessedFeeEvent) = "selectedUnprocessedFeeEvent($event)">	
       </ccpay-app-unprocessed-payments>	
-      <div  *ngIf="takePayment">
       <hr class="govuk-section-records-break">	
       <ccpay-app-processed-payments	
-      [NONPAYMENTS]="nonPayments"	
+      *ngIf="takePayment" [NONPAYMENTS]="nonPayments"	
       (goToPaymentViewComponent) = "goToPaymentViewComponent($event)"	>
       </ccpay-app-processed-payments>	
       <hr class="govuk-section-records-break">
-    </div>	
     </div>
     <div  *ngIf="takePayment">
       <!-- No fees start -->
@@ -228,7 +226,7 @@
       </div>
     </div>
 </div>
-<div *ngIf="!takePayment" class="govuk-grid-row govuk-grid__surplus-payments" *ngIf="!takePayment">	
+<div *ngIf="!takePayment" class="govuk-grid-row govuk-grid__surplus-payments">	
     <div class="govuk-grid-column-full">	
     <span class="heading-medium">Processed payments</span>	
     <table class="govuk-table">	
