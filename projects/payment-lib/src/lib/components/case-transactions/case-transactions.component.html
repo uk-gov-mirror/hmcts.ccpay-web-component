@@ -56,7 +56,9 @@
     </div>
 
     <div class="govuk-grid-row">	
-      <hr class="govuk-section-records-break">	
+      <div *ngIf="takePayment">
+          <hr class="govuk-section-records-break">
+      </div>	
       <ccpay-app-unprocessed-payments	
       *ngIf="isBulkScanEnable"	
       [IS_BUTTON_ENABLE]="takePayment"	
