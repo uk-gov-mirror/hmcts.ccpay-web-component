@@ -88,8 +88,7 @@ checkForExceptionRecord(): void {
   if(this.paymentGroups.length === 0 && this.selectedOption.toLocaleLowerCase() === 'ccdorexception') {
     this.bulkScaningPaymentService.getBSPaymentsByCCD(this.ccdCaseNumber).subscribe(
       recordData => {
-        this.nonPayments = recordData['data']['payments'];
-        if(recordData['data'] && recordData['data'].exception_record_reference.length > 0 && recordData['data'].ccd_reference >0) {
+       if(recordData['data'] && recordData['data'].exception_record_reference.length > 0 && recordData['data'].ccd_reference >0) {
           this.isExceptionRecord = false;
           this.isAddFeeBtnEnabled = true;
         }
@@ -107,10 +106,6 @@ checkForExceptionRecord(): void {
   }
 
   if (this.paymentGroups.length === 0 && this.selectedOption.toLocaleLowerCase() === 'dcn') {
-    this.bulkScaningPaymentService.getBSPaymentsByDCN(this.dcnNumber).subscribe(
-      unassignedPayments => {
-        this.nonPayments = unassignedPayments['data']['payments'];
-      });
     if (this.paymentLibComponent.CCD_CASE_NUMBER.length > 0 && this.paymentLibComponent.EXC_REFERENCE.length > 0) {
       this.isExceptionRecord = false;
       this.isAddFeeBtnEnabled = true;
