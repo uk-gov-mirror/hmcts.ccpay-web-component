@@ -138,14 +138,13 @@ checkForExceptionRecord(): void {
   calculateAmounts(): void {
     let feesTotal = 0.00,
      paymentsTotal = 0.00,
-     remissionsTotal = 0.00,
-     allocationStatus = null,
-     isPaymentSuccess = false;
+     remissionsTotal = 0.00;
 
     this.paymentGroups.forEach(paymentGroup => {
       if (paymentGroup.fees) {
         paymentGroup.fees.forEach(fee => {
           feesTotal = feesTotal + fee.calculated_amount;
+          fee['payment_group_reference'] = paymentGroup['payment_group_reference'];
           this.fees.push(fee);
         });
       }
