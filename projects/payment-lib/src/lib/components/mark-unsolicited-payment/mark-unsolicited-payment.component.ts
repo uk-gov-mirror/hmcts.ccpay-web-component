@@ -6,8 +6,6 @@ import { IBSPayments } from '../../interfaces/IBSPayments';
 import { UnsolicitedPaymentsRequest } from '../../interfaces/UnsolicitedPaymentsRequest';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import { AllocatePaymentRequest } from '../../interfaces/AllocatePaymentRequest';
-import { stringLiteral } from 'babel-types';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-mark-unsolicited-payment',
@@ -48,7 +46,6 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
     this.bspaymentdcn = this.paymentLibComponent.bspaymentdcn;
     this.getUnassignedPayment();
 
-    const emailPattern = '^[a-z0-9](\\.?[a-z0-9_-]){0,}@[a-z0-9-]+\\.([a-z]{1,6}\\.)?[a-z]{2,6}$';
     
     this.markPaymentUnsolicitedForm = this.formBuilder.group({
       reason: new FormControl('', Validators.compose([
@@ -75,8 +72,7 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
     this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'PROCESSED').subscribe(
       res1 => {
         this.errorMessage = this.getErrorMessage(false);
-        const response1 = JSON.parse(res1),
-         requestBody = new AllocatePaymentRequest
+        const requestBody = new AllocatePaymentRequest
          (this.ccdReference, this.unassignedRecord, this.siteID, this.exceptionReference)
         this.paymentViewService.postBSPayments(requestBody).subscribe(
           res2 => {
@@ -93,7 +89,7 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
                     this.gotoCasetransationPage();
                   }
                 },
-                (error: any) => {
+                () => {
                   this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'COMPLETE').subscribe();
                   this.errorMessage = this.getErrorMessage(true);
                   this.isConfirmButtondisabled = false;
@@ -101,14 +97,14 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
               );
             }
           },
-          (error: any) => {
+          () => {
             this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'COMPLETE').subscribe();
             this.errorMessage = this.getErrorMessage(true);
             this.isConfirmButtondisabled = false;
           }
         );
       },
-      (error: any) => {
+      () => {
         this.errorMessage = this.getErrorMessage(true);
         this.isConfirmButtondisabled = false;
       }
@@ -204,7 +200,7 @@ cancelMarkUnsolicitedPayments(type?:string){
         this.ccdReference = beCcdNumber ? beCcdNumber : null;
         this.exceptionReference = beExceptionNumber ? beExceptionNumber : exceptionReference;
     },
-      (error: any) => {
+      () => {
         this.errorMessage = this.getErrorMessage(true);
       }
     );
