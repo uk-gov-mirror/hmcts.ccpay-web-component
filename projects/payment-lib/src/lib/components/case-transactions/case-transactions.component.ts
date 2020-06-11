@@ -3,6 +3,7 @@ import {PaymentLibComponent} from '../../payment-lib.component';
 import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
 import {CaseTransactionsService} from '../../services/case-transactions/case-transactions.service';
 import { BulkScaningPaymentService } from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
+import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import {IFee} from '../../interfaces/IFee';
 import {IPayment} from '../../interfaces/IPayment';
 import {IRemission} from '../../interfaces/IRemission';
@@ -37,8 +38,12 @@ export class CaseTransactionsComponent implements OnInit {
   isGrpOutstandingAmtPositive: boolean = false;
   totalRefundAmount:Number;
   isBulkScanEnable;
+  viewStatus = 'main';
+  isRemoveBtnDisabled: boolean = false;
+  feeId:IFee;
   unprocessedRecordCount: number;
   constructor(private router: Router,
+  private paymentViewService: PaymentViewService,
   private bulkScaningPaymentService: BulkScaningPaymentService,
   private caseTransactionsService: CaseTransactionsService,
   private paymentLibComponent: PaymentLibComponent) { }
@@ -232,7 +237,6 @@ checkForExceptionRecord(): void {
     event.preventDefault();
     this.router.navigateByUrl(`/reports?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}`);
   }
-
   loadFeeSummaryPage(paymentGroup: IPaymentGroup) {
     this.paymentLibComponent.bspaymentdcn = null;
     this.paymentLibComponent.paymentGroupReference = paymentGroup.payment_group_reference;
@@ -261,5 +265,25 @@ checkForExceptionRecord(): void {
   }
   getUnprocessedFeeCount(unProcessedRecordCount: number) {
     this.unprocessedRecordCount = unProcessedRecordCount;
+  }
+  confirmRemoveFee(fee: IFee){
+    this.isRemoveBtnDisabled = false;
+    this.feeId = fee;
+    this.viewStatus = 'feeRemovalConfirmation';
+  }
+  cancelRemoval() {
+    this.viewStatus = 'main';
+  }
+  removeFee(fee: any){
+    this.isRemoveBtnDisabled = true;
+    this.paymentViewService.deleteFeeFromPaymentGroup(fee).subscribe(
+      (success: any) => {
+        window.location.reload();
+      },
+      (error: any) => {
+          this.errorMessage = error;
+          this.isRemoveBtnDisabled = false;
+      }
+    );
   }
 }
