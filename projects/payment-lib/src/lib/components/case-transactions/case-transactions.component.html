@@ -37,7 +37,7 @@
             <tr class="totalpayments govuk-table__row">
               <td class="govuk-table__cell">{{ totalPayments | currency :'GBP':'symbol':'1.2-2' }}</td>
               <td class="govuk-table__cell">{{ totalRemissions | currency :'GBP':'symbol':'1.2-2' }}</td>
-              <td class="govuk-table__cell">{{ (totalFees - totalRemissions) - totalPayments | currency :'GBP':'symbol':'1.2-2'}}</td>
+              <td class="govuk-table__cell">{{ (totalFees - totalRemissions) - nonOffLinePayment | currency :'GBP':'symbol':'1.2-2'}}</td>
               <td class="govuk-table__cell" *ngIf="totalRefundAmount > 0">{{totalRefundAmount | currency :'GBP':'symbol':'1.2-2'}}</td>
               <td class="govuk-table__cell case-transaction__color" *ngIf="isBulkScanEnable">{{unprocessedRecordCount}}</td>
             </tr>

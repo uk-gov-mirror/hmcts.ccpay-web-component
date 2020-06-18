@@ -143,7 +143,8 @@ checkForExceptionRecord(): void {
   calculateAmounts(): void {
     let feesTotal = 0.00,
      paymentsTotal = 0.00,
-     remissionsTotal = 0.00;
+     remissionsTotal = 0.00,
+     nonOffLinePayment = 0.00;
 
     this.paymentGroups.forEach(paymentGroup => {
       if (paymentGroup.fees) {
@@ -159,6 +160,10 @@ checkForExceptionRecord(): void {
         paymentGroup.payments.forEach(payment => {
           if (payment.status.toUpperCase() === 'SUCCESS') {
             paymentsTotal = paymentsTotal + payment.amount;
+            let allocationLen = payment.payment_allocation;
+            if(allocationLen.length === 0 || allocationLen.length > 0 && allocationLen[0].allocation_status ==='Allocated') {
+              nonOffLinePayment = nonOffLinePayment + payment.amount;
+            }
             this.payments.push(payment);
           }
           payment.paymentGroupReference = paymentGroup.payment_group_reference
