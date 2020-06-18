@@ -8,6 +8,7 @@ import {IFee} from '../../interfaces/IFee';
 import {IPayment} from '../../interfaces/IPayment';
 import {IRemission} from '../../interfaces/IRemission';
 import {Router} from '@angular/router';
+import { thisTypeAnnotation } from 'babel-types';
 
 @Component({
   selector: 'ccpay-case-transactions',
@@ -27,6 +28,7 @@ export class CaseTransactionsComponent implements OnInit {
   errorMessage: string;
   totalFees: number;
   totalPayments: number;
+  totalNonOffPayments: number;
   totalRemissions: number;
   selectedOption: string;
   dcnNumber: string;
@@ -79,6 +81,7 @@ export class CaseTransactionsComponent implements OnInit {
     this.totalPayments = 0.00;
     this.totalRemissions = 0.00;
     this.totalFees = 0.00;
+    this.totalNonOffPayments = 0.00;
 }
 getAllocationStatus(payments: any){
 
@@ -171,6 +174,7 @@ checkForExceptionRecord(): void {
         });
       }
       this.totalPayments = paymentsTotal;
+      this.totalNonOffPayments = nonOffLinePayment;
 
       if (paymentGroup.remissions) {
         paymentGroup.remissions.forEach(remisison => {
