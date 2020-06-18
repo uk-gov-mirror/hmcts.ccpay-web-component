@@ -10,6 +10,7 @@
       </div>
     </div>
   <ng-container *ngIf="viewStatus === 'main'">
+      <input #myInput type='hidden' id='iFrameDrivenImageValue' value='ADDREMISSION'>
       <h1 class="heading-large">Add remission</h1>
       <form novalidate>
         <div class="govuk-form-group">
@@ -49,6 +50,7 @@
       </form>
   </ng-container>
   <ng-container *ngIf="viewStatus === 'confirmation'">
+      <input #myInput type='hidden' id='iFrameDrivenImageValue' value='ADDREMISSIONCONFIRMATION'>
       <div class="govuk-warning-text">
         <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
         <strong class="govuk-warning-text__text">

@@ -9,6 +9,7 @@
 
 <div class="fee-summary" *ngIf="viewStatus === 'main'">
     <main class="govuk-main-wrapper">
+        <input #myInput type='hidden' id='iFrameDrivenImageValue' value='FEESUMMARY'>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <h1 class="heading-xlarge">Fee Summary</h1>
@@ -160,6 +161,7 @@
 </div>
 
   <ng-container *ngIf="viewStatus === 'feeRemovalConfirmation'">
+      <input #myInput type='hidden' id='iFrameDrivenImageValue' value='FEEREMOVAL'>
       <div class="govuk-warning-text">
         <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
         <strong class="govuk-warning-text__text">
