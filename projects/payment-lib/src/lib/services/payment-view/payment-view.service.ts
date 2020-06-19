@@ -75,12 +75,6 @@ export class PaymentViewService {
     );
   }
 
-  revertPaymentsAllocation(reference: string, status: string): Observable<any> {
-    return this.https.patch(`${this.paymentLibService.API_ROOT}/payments/${reference}/status/${status}`, status).pipe(
-      catchError(this.errorHandlerService.handleError)
-    );
-  }
-
   postPaymentGroupWithRemissions(paymentGroupReference: string, feeId: number, body: AddRemissionRequest): Observable<any> {
     return this.https.post(`${this.paymentLibService.API_ROOT}/payment-groups/${paymentGroupReference}/fees/${feeId}/remissions`, body).pipe(
       catchError(this.errorHandlerService.handleError)
