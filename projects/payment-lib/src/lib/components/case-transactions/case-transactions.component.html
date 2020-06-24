@@ -46,10 +46,8 @@
       </div>
 
       <div class="govuk-grid-column-two-thirds govuk-!-padding-bottom-6" *ngIf="takePayment">
-        <button type="submit" (click)="redirectToFeeSearchPage($event)"
-          [disabled]="!isAddFeeBtnEnabled"
-          [ngClass]='!isAddFeeBtnEnabled ? "govuk-button govuk-button--secondary govuk-button--disabled govuk-!-margin-right-1" : "govuk-button govuk-button--secondary govuk-!-margin-right-1"'>
-          Add a new fee
+        <button type="submit" (click)="loadFeeSummaryPage()" class="govuk-button govuk-button--secondary govuk-!-margin-right-1">
+          Take telephony payment
         </button>
      </div>
 

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { IPaymentGroup } from '../../interfaces/IPaymentGroup';
+import { IPaymentList } from '../../interfaces/IPaymentList';
+import {CaseTransactionsService} from '../../services/case-transactions/case-transactions.service';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import { BulkScaningPaymentService } from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
 import { PaymentLibComponent } from '../../payment-lib.component';
@@ -23,7 +24,7 @@ export class FeeSummaryComponent implements OnInit {
   @Input() ccdCaseNumber: string;
 
   bsPaymentDcnNumber: string;
-  paymentGroup: IPaymentGroup;
+  paymentGroup: any;
   errorMessage: string;
   viewStatus = 'main';
   currentFee: IFee;
@@ -45,6 +46,7 @@ export class FeeSummaryComponent implements OnInit {
     private bulkScaningPaymentService: BulkScaningPaymentService,
     private location: Location,
     private paymentViewService: PaymentViewService,
+    private caseTransactionsService: CaseTransactionsService,
     private paymentLibComponent: PaymentLibComponent
   ) {}
 
@@ -114,22 +116,30 @@ export class FeeSummaryComponent implements OnInit {
   }
 
   getPaymentGroup() {
-    this.paymentViewService.getPaymentGroupDetails(this.paymentGroupRef,
-      this.paymentLibComponent.paymentMethod).subscribe(
-      paymentGroup => {
-        this.paymentGroup = paymentGroup;
-        this.isPaymentExist = paymentGroup.payments ? paymentGroup.payments.length > 0 : false;
+    this.caseTransactionsService.getPaymentGroups(this.ccdCaseNumber).subscribe(
+      paymentGroups => {
+        console.log(paymentGroups['payment_groups'])
+        if(paymentGroups['payment_groups'] && paymentGroups['payment_groups'].length > 0) {
+          paymentGroups.forEach(paymentGroup => {
+            if (paymentGroup.fees) {
+              paymentGroup.fees.forEach(fee => {
+                this.totalAfterRemission  = this.totalAfterRemission  + fee.net_amount;
+                if(fee.calculated_amount === 0) {
+                  this.isFeeAmountZero = true;
+                }
+              });
+            }
+            this.outStandingAmount = this.bulkScaningPaymentService.calculateOutStandingAmount(paymentGroup);
+            paymentGroup.fees['outStandingAmount'] = this.outStandingAmount;
+            paymentGroup.fees['isFeeAmountZero'] = this.isFeeAmountZero;
+            paymentGroup.fees['totalAfterRemission'] = this.totalAfterRemission;
+             paymentGroup.fees['isPaymentExist'] = paymentGroup.payments ? paymentGroup.payments.length > 0 : false;
+            this.paymentGroup.push(paymentGroup.fees);
 
-        if (paymentGroup.fees) {
-          paymentGroup.fees.forEach(fee => {
-              this.totalAfterRemission  = this.totalAfterRemission  + fee.net_amount;
-              if(fee.calculated_amount === 0) {
-                this.isFeeAmountZero = true;
-              }
           });
         }
-        this.outStandingAmount = this.bulkScaningPaymentService.calculateOutStandingAmount(paymentGroup);
-      },
+        console.log(this.paymentGroup)
+    },
       (error: any) => this.errorMessage = error
     );
   }
@@ -190,7 +200,8 @@ export class FeeSummaryComponent implements OnInit {
     this.isConfirmationBtnDisabled = true;
     const seriveName = this.service ==='AA07' ? 'DIVORCE': this.service ==='AA08' ? 'PROBATE' : 'FPL',
 
-      requestBody = new PaymentToPayhubRequest(this.ccdCaseNumber, this.outStandingAmount, this.service, seriveName);
+      requestBody = new PaymentToPayhubRequest(this.ccdCaseNumber, this.outStandingAmount, this.service, seriveName),
+      res = new IPaymentList([]);
     this.paymentViewService.postPaymentToPayHub(requestBody, this.paymentGroupRef).subscribe(
       response => {
         this.location.go(`payment-history?view=fee-summary`);

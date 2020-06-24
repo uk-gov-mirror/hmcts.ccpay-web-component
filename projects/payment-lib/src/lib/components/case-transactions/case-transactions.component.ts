@@ -8,7 +8,6 @@ import {IFee} from '../../interfaces/IFee';
 import {IPayment} from '../../interfaces/IPayment';
 import {IRemission} from '../../interfaces/IRemission';
 import {Router} from '@angular/router';
-import { thisTypeAnnotation } from 'babel-types';
 
 @Component({
   selector: 'ccpay-case-transactions',
@@ -246,9 +245,9 @@ checkForExceptionRecord(): void {
     event.preventDefault();
     this.router.navigateByUrl(`/reports?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}`);
   }
-  loadFeeSummaryPage(paymentGroup: IPaymentGroup) {
+  loadFeeSummaryPage() {
     this.paymentLibComponent.bspaymentdcn = null;
-    this.paymentLibComponent.paymentGroupReference = paymentGroup.payment_group_reference;
+    this.paymentLibComponent.paymentGroupReference = '';
     this.paymentLibComponent.viewName = 'fee-summary';
   }
 
