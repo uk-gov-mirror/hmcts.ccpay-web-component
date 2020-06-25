@@ -198,8 +198,8 @@ export class FeeSummaryComponent implements OnInit {
     const seriveName = this.service ==='AA07' ? 'DIVORCE': this.service ==='AA08' ? 'PROBATE' : 'FPL',
 
       requestBody = new PaymentToPayhubRequest(this.ccdCaseNumber, this.outStandingAmount, this.service, seriveName),
-      res = new IPaymentList([]);
-    this.paymentViewService.postPaymentToPayHub(requestBody, this.paymentGroupRef).subscribe(
+      res = new IPaymentList([this.outStandingAmount, this.ccdCaseNumber, this.ccdCaseNumber, this.paymentGroup, this.service, seriveName]);
+    this.paymentViewService.postPaymentListToPayHub(res).subscribe(
       response => {
         this.location.go(`payment-history?view=fee-summary`);
         this.payhubHtml = response;
@@ -212,6 +212,20 @@ export class FeeSummaryComponent implements OnInit {
         this.router.navigateByUrl('/pci-pal-failure');
       }
     );
+
+    //     this.paymentViewService.postPaymentToPayHub(requestBody, this.paymentGroupRef).subscribe(
+    //   response => {
+    //     this.location.go(`payment-history?view=fee-summary`);
+    //     this.payhubHtml = response;
+    //     this.viewStatus = 'payhub_view';
+    //     this.isBackButtonEnable=false;
+    //   },
+    //   (error: any) => {
+    //     this.errorMessage = error;
+    //     this.isConfirmationBtnDisabled = false;
+    //     this.router.navigateByUrl('/pci-pal-failure');
+    //   }
+    // );
   }
   goToAllocatePage(outStandingAmount: number, isFeeAmountZero: Boolean) {
     if (outStandingAmount > 0 || (outStandingAmount === 0 && isFeeAmountZero)) {
