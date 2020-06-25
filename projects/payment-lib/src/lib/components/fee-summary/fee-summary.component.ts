@@ -114,11 +114,12 @@ export class FeeSummaryComponent implements OnInit {
               paymentGroup.fees.forEach(fee => {
                 if(fee.date_created) {
                   this.totalAfterRemission  = this.totalAfterRemission  + fee.net_amount;
+                  let allocated_amount = fee.allocated_amount? fee.allocated_amount : 0.00;
+                  this.outStandingAmount  = this.outStandingAmount  + (fee.net_amount - allocated_amount);
                   if(fee.calculated_amount === 0) {
                     this.isFeeAmountZero = true;
                   }
                   fee.isFeeAmountZero = this.isFeeAmountZero;
-                // fee.totalAfterRemission = this.totalAfterRemission;
                   fee.isPaymentExist = paymentGroup.payments ? paymentGroup.payments.length > 0 : false;
                   if (paymentGroup.remissions) {
                     paymentGroup.remissions.forEach(remission => {
