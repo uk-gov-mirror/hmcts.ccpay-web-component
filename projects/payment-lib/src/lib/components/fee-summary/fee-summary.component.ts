@@ -120,7 +120,7 @@ export class FeeSummaryComponent implements OnInit {
       paymentGroups => {
         console.log(paymentGroups['payment_groups'])
         if(paymentGroups['payment_groups'] && paymentGroups['payment_groups'].length > 0) {
-          paymentGroups.forEach(paymentGroup => {
+          paymentGroups['payment_groups'].forEach(paymentGroup => {
             if (paymentGroup.fees) {
               paymentGroup.fees.forEach(fee => {
                 this.totalAfterRemission  = this.totalAfterRemission  + fee.net_amount;
