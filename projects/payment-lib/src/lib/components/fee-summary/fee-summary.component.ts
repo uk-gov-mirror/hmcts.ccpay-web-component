@@ -24,7 +24,7 @@ export class FeeSummaryComponent implements OnInit {
   @Input() ccdCaseNumber: string;
 
   bsPaymentDcnNumber: string;
-  paymentGroup: any;
+  paymentGroup: any = [];
   errorMessage: string;
   viewStatus = 'main';
   currentFee: IFee;
@@ -134,6 +134,7 @@ export class FeeSummaryComponent implements OnInit {
             paymentGroup.fees['isFeeAmountZero'] = this.isFeeAmountZero;
             paymentGroup.fees['totalAfterRemission'] = this.totalAfterRemission;
              paymentGroup.fees['isPaymentExist'] = paymentGroup.payments ? paymentGroup.payments.length > 0 : false;
+             console.log(paymentGroup.fees)
             this.paymentGroup.push(paymentGroup.fees);
 
           });
