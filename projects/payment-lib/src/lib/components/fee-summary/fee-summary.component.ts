@@ -97,17 +97,6 @@ export class FeeSummaryComponent implements OnInit {
 
   }
 
-  getRemissionByFeeCode(feeCode: string): IRemission {
-    if (this.paymentGroup && this.paymentGroup.remissions && this.paymentGroup.remissions.length > 0) {
-      for (const remission of this.paymentGroup.remissions) {
-        if (remission.fee_code === feeCode) {
-          return remission;
-        }
-      }
-    }
-    return null;
-  }
-
   addRemission(fee: IFee) {
     if (this.service) {
       this.currentFee = fee;
@@ -123,24 +112,29 @@ export class FeeSummaryComponent implements OnInit {
           paymentGroups['payment_groups'].forEach(paymentGroup => {
             if (paymentGroup.fees) {
               paymentGroup.fees.forEach(fee => {
-                this.totalAfterRemission  = this.totalAfterRemission  + fee.net_amount;
-                if(fee.calculated_amount === 0) {
-                  this.isFeeAmountZero = true;
-                }
-                fee.isFeeAmountZero = this.isFeeAmountZero;
-                fee.totalAfterRemission = this.totalAfterRemission;
-                fee.isPaymentExist = paymentGroup.payments ? paymentGroup.payments.length > 0 : false;
-                this.paymentGroup.push(fee);
+                if(fee.date_created) {
+                  this.totalAfterRemission  = this.totalAfterRemission  + fee.net_amount;
+                  if(fee.calculated_amount === 0) {
+                    this.isFeeAmountZero = true;
+                  }
+                  fee.isFeeAmountZero = this.isFeeAmountZero;
+                // fee.totalAfterRemission = this.totalAfterRemission;
+                  fee.isPaymentExist = paymentGroup.payments ? paymentGroup.payments.length > 0 : false;
+                  if (paymentGroup.remissions) {
+                    paymentGroup.remissions.forEach(remission => {
+                      if (remission.fee_code === fee.fee.code) {
+                          fee.remission = remission;
+                      }
+                    });
+                  }
+                  this.paymentGroup.push(fee);
+              }
               });
             }
-            
-            //this.outStandingAmount = this.bulkScaningPaymentService.calculateOutStandingAmount(paymentGroup);
-            //paymentGroup.fees['outStandingAmount'] = this.outStandingAmount;
-
 
           });
         }
-        console.log(this.paymentGroup)
+        console.log(this.paymentGroup, this.totalAfterRemission)
     },
       (error: any) => this.errorMessage = error
     );
