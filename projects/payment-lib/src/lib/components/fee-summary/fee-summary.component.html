@@ -40,7 +40,7 @@
       </tr>
     </thead>
     <tbody class="govuk-table__body" *ngIf="paymentGroup.fees">
-      <tr class="govuk-table__row" *ngFor="let fee of paymentGroup.fees; let i = index;">
+      <tr class="govuk-table__row" *ngFor="let fee of paymentGroup; let i = index;">
         <td class="govuk-table__cell">{{ fee.code }}</td>
         <td class="govuk-table__cell">{{ fee.description }}</td>
         <td class="govuk-table__cell">{{ getRemissionByFeeCode(fee.code)?.hwf_reference }}</td>

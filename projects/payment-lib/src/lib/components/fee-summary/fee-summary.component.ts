@@ -127,15 +127,16 @@ export class FeeSummaryComponent implements OnInit {
                 if(fee.calculated_amount === 0) {
                   this.isFeeAmountZero = true;
                 }
+                fee.isFeeAmountZero = this.isFeeAmountZero;
+                fee.totalAfterRemission = this.totalAfterRemission;
+                fee.isPaymentExist = paymentGroup.payments ? paymentGroup.payments.length > 0 : false;
+                this.paymentGroup.push(fee);
               });
             }
-            this.outStandingAmount = this.bulkScaningPaymentService.calculateOutStandingAmount(paymentGroup);
-            paymentGroup.fees['outStandingAmount'] = this.outStandingAmount;
-            paymentGroup.fees['isFeeAmountZero'] = this.isFeeAmountZero;
-            paymentGroup.fees['totalAfterRemission'] = this.totalAfterRemission;
-             paymentGroup.fees['isPaymentExist'] = paymentGroup.payments ? paymentGroup.payments.length > 0 : false;
-             console.log(paymentGroup.fees)
-            this.paymentGroup.push(paymentGroup.fees);
+            
+            //this.outStandingAmount = this.bulkScaningPaymentService.calculateOutStandingAmount(paymentGroup);
+            //paymentGroup.fees['outStandingAmount'] = this.outStandingAmount;
+
 
           });
         }
