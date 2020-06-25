@@ -39,7 +39,7 @@
         <th class="govuk-table__header govuk-!-font-weight-bold" scope="col"></th>
       </tr>
     </thead>
-    <tbody class="govuk-table__body" *ngIf="paymentGroup.fees">
+    <tbody class="govuk-table__body" *ngIf="paymentGroup.length > 0">
       <tr class="govuk-table__row" *ngFor="let fee of paymentGroup; let i = index;">
         <td class="govuk-table__cell">{{ fee.code }}</td>
         <td class="govuk-table__cell">{{ fee.description }}</td>
