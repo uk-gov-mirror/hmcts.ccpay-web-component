@@ -34,9 +34,9 @@ export class FeeSummaryComponent implements OnInit {
   upPaymentErrorMessage: string;
   selectedOption:string;
   isBackButtonEnable: boolean = true;
-  outStandingAmount: number;
+  outStandingAmount: number = 0.00;
   isFeeAmountZero: boolean = false;;
-  totalAfterRemission: number = 0;
+  totalAfterRemission: number = 0.00;
   isConfirmationBtnDisabled: boolean = false;
   isRemoveBtnDisabled: boolean = false;
   isPaymentExist: boolean = false;
@@ -135,7 +135,7 @@ export class FeeSummaryComponent implements OnInit {
 
           });
         }
-        console.log(this.paymentGroup, this.totalAfterRemission)
+        console.log(this.paymentGroup, this.totalAfterRemission,this.outStandingAmount)
     },
       (error: any) => this.errorMessage = error
     );
