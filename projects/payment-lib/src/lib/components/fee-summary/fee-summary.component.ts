@@ -198,7 +198,7 @@ export class FeeSummaryComponent implements OnInit {
     const seriveName = this.service ==='AA07' ? 'DIVORCE': this.service ==='AA08' ? 'PROBATE' : 'FPL',
 
       requestBody = new PaymentToPayhubRequest(this.ccdCaseNumber, this.outStandingAmount, this.service, seriveName),
-      res = new IPaymentList([this.outStandingAmount, this.ccdCaseNumber, this.ccdCaseNumber, this.paymentGroup, this.service, seriveName]);
+      res = new IPaymentList([this.outStandingAmount, this.ccdCaseNumber, this.ccdCaseNumber, this.paymentGroup, seriveName, this.service]);
     this.paymentViewService.postPaymentListToPayHub(res).subscribe(
       response => {
         this.location.go(`payment-history?view=fee-summary`);
