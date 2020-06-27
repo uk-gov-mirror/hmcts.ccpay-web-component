@@ -3,6 +3,7 @@ import {PaymentLibComponent} from '../../payment-lib.component';
 import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
 import {CaseTransactionsService} from '../../services/case-transactions/case-transactions.service';
 import { BulkScaningPaymentService } from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
+import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import {IFee} from '../../interfaces/IFee';
 import {IPayment} from '../../interfaces/IPayment';
 import {IRemission} from '../../interfaces/IRemission';
@@ -26,6 +27,7 @@ export class CaseTransactionsComponent implements OnInit {
   errorMessage: string;
   totalFees: number;
   totalPayments: number;
+  totalNonOffPayments: number;
   totalRemissions: number;
   selectedOption: string;
   dcnNumber: string;
@@ -37,8 +39,12 @@ export class CaseTransactionsComponent implements OnInit {
   isGrpOutstandingAmtPositive: boolean = false;
   totalRefundAmount:Number;
   isBulkScanEnable;
+  viewStatus = 'main';
+  isRemoveBtnDisabled: boolean = false;
+  feeId:IFee;
   unprocessedRecordCount: number;
   constructor(private router: Router,
+  private paymentViewService: PaymentViewService,
   private bulkScaningPaymentService: BulkScaningPaymentService,
   private caseTransactionsService: CaseTransactionsService,
   private paymentLibComponent: PaymentLibComponent) { }
@@ -74,6 +80,7 @@ export class CaseTransactionsComponent implements OnInit {
     this.totalPayments = 0.00;
     this.totalRemissions = 0.00;
     this.totalFees = 0.00;
+    this.totalNonOffPayments = 0.00;
 }
 getAllocationStatus(payments: any){
 
@@ -139,13 +146,13 @@ checkForExceptionRecord(): void {
     let feesTotal = 0.00,
      paymentsTotal = 0.00,
      remissionsTotal = 0.00,
-     allocationStatus = null,
-     isPaymentSuccess = false;
+     nonOffLinePayment = 0.00;
 
     this.paymentGroups.forEach(paymentGroup => {
       if (paymentGroup.fees) {
         paymentGroup.fees.forEach(fee => {
           feesTotal = feesTotal + fee.calculated_amount;
+          fee['payment_group_reference'] = paymentGroup['payment_group_reference'];
           this.fees.push(fee);
         });
       }
@@ -155,6 +162,10 @@ checkForExceptionRecord(): void {
         paymentGroup.payments.forEach(payment => {
           if (payment.status.toUpperCase() === 'SUCCESS') {
             paymentsTotal = paymentsTotal + payment.amount;
+            let allocationLen = payment.payment_allocation;
+            if(allocationLen.length === 0 || allocationLen.length > 0 && allocationLen[0].allocation_status ==='Allocated') {
+              nonOffLinePayment = nonOffLinePayment + payment.amount;
+            }
             this.payments.push(payment);
           }
           payment.paymentGroupReference = paymentGroup.payment_group_reference
@@ -162,6 +173,7 @@ checkForExceptionRecord(): void {
         });
       }
       this.totalPayments = paymentsTotal;
+      this.totalNonOffPayments = nonOffLinePayment;
 
       if (paymentGroup.remissions) {
         paymentGroup.remissions.forEach(remisison => {
@@ -204,7 +216,7 @@ checkForExceptionRecord(): void {
         paymentGroup.remissions.forEach(remission => {
           remissionsTotal = remissionsTotal + remission.hwf_amount;
         });
-      }  
+      }
         grpOutstandingAmount = (feesTotal - remissionsTotal) - paymentsTotal;
         if (grpOutstandingAmount < 0) {
           if(totalRefundAmount === 0) {
@@ -233,7 +245,6 @@ checkForExceptionRecord(): void {
     event.preventDefault();
     this.router.navigateByUrl(`/reports?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}`);
   }
-
   loadFeeSummaryPage(paymentGroup: IPaymentGroup) {
     this.paymentLibComponent.bspaymentdcn = null;
     this.paymentLibComponent.paymentGroupReference = paymentGroup.payment_group_reference;
@@ -262,5 +273,25 @@ checkForExceptionRecord(): void {
   }
   getUnprocessedFeeCount(unProcessedRecordCount: number) {
     this.unprocessedRecordCount = unProcessedRecordCount;
+  }
+  confirmRemoveFee(fee: IFee){
+    this.isRemoveBtnDisabled = false;
+    this.feeId = fee;
+    this.viewStatus = 'feeRemovalConfirmation';
+  }
+  cancelRemoval() {
+    this.viewStatus = 'main';
+  }
+  removeFee(fee: any){
+    this.isRemoveBtnDisabled = true;
+    this.paymentViewService.deleteFeeFromPaymentGroup(fee).subscribe(
+      (success: any) => {
+        window.location.reload();
+      },
+      (error: any) => {
+          this.errorMessage = error;
+          this.isRemoveBtnDisabled = false;
+      }
+    );
   }
 }
