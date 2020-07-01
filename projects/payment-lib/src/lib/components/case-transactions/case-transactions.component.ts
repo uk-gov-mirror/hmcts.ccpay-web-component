@@ -31,6 +31,7 @@ export class CaseTransactionsComponent implements OnInit {
   totalRemissions: number;
   selectedOption: string;
   dcnNumber: string;
+  paymentRef: string;
   isAddFeeBtnEnabled: boolean = true;
   isExceptionRecord: boolean = false;
   isUnprocessedRecordSelected: boolean = false;
@@ -38,6 +39,7 @@ export class CaseTransactionsComponent implements OnInit {
   isFeeRecordsExist: boolean = false;
   isGrpOutstandingAmtPositive: boolean = false;
   totalRefundAmount:Number;
+  isAnyFeeGroupAvilable: boolean = true;
   isBulkScanEnable;
   viewStatus = 'main';
   isRemoveBtnDisabled: boolean = false;
@@ -67,6 +69,7 @@ export class CaseTransactionsComponent implements OnInit {
       },
       (error: any) => {
         this.errorMessage = <any>error;
+        this.isAnyFeeGroupAvilable = false;
         this.setDefaults();
       }
     );
@@ -187,7 +190,10 @@ checkForExceptionRecord(): void {
   }
   calculateRefundAmount() {
     let totalRefundAmount = 0,
-    isFeeAmountZero = false;
+    isFeeAmountZero = false,
+    isNewPaymentGroup = false,
+    isOldPaymentGroup = false;
+
     this.paymentGroups.forEach(paymentGroup => {
       let grpOutstandingAmount = 0.00,
         feesTotal = 0.00,
@@ -199,6 +205,11 @@ checkForExceptionRecord(): void {
           feesTotal = feesTotal + fee.calculated_amount;
           if(fee.calculated_amount === 0) {
             isFeeAmountZero = true
+          }
+          if(fee.date_created) {
+            isNewPaymentGroup = true;
+          }else {
+            isOldPaymentGroup = true;
           }
         });
 
@@ -218,6 +229,13 @@ checkForExceptionRecord(): void {
         });
       }
         grpOutstandingAmount = (feesTotal - remissionsTotal) - paymentsTotal;
+        if(grpOutstandingAmount > 0 && isNewPaymentGroup) {
+          this.isAnyFeeGroupAvilable = true;
+          this.paymentRef = paymentGroup.payment_group_reference;
+        }
+        if(grpOutstandingAmount <= 0 && isNewPaymentGroup) {
+          this.isAnyFeeGroupAvilable = false;
+        }
         if (grpOutstandingAmount < 0) {
           if(totalRefundAmount === 0) {
             totalRefundAmount = grpOutstandingAmount;
@@ -229,6 +247,9 @@ checkForExceptionRecord(): void {
           this.isGrpOutstandingAmtPositive = true;
         }
     });
+    if((!isNewPaymentGroup && isOldPaymentGroup) || (!isNewPaymentGroup && !isOldPaymentGroup)) {
+      this.isAnyFeeGroupAvilable = false;
+    }
     return totalRefundAmount * -1;
   }
   getGroupOutstandingAmount(paymentGroup: IPaymentGroup): number {
@@ -237,8 +258,14 @@ checkForExceptionRecord(): void {
 
   redirectToFeeSearchPage(event: any) {
     event.preventDefault();
+    if(!this.isAnyFeeGroupAvilable) {
     const url = this.isBulkScanEnable ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
     this.router.navigateByUrl(`/fee-search?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}${url}`);
+    } else {
+      this.paymentLibComponent.bspaymentdcn = null;
+      this.paymentLibComponent.paymentGroupReference = this.paymentRef;
+      this.paymentLibComponent.viewName = 'fee-summary';
+    }
   }
 
   redirectToReportsPage(event: any) {
