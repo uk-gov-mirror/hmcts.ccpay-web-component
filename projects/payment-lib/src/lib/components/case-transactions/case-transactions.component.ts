@@ -36,14 +36,12 @@ export class CaseTransactionsComponent implements OnInit {
   isExceptionRecord: boolean = false;
   isUnprocessedRecordSelected: boolean = false;
   exceptionRecordReference: string;
-  isFeeRecordsExist: boolean = false;
-  isGrpOutstandingAmtPositive: boolean = false;
-  totalRefundAmount:Number;
   isAnyFeeGroupAvilable: boolean = true;
   isBulkScanEnable;
   viewStatus = 'main';
   isRemoveBtnDisabled: boolean = false;
   feeId:IFee;
+  clAmountDue: number = 0;
   unprocessedRecordCount: number;
   constructor(private router: Router,
   private paymentViewService: PaymentViewService,
@@ -52,7 +50,6 @@ export class CaseTransactionsComponent implements OnInit {
   private paymentLibComponent: PaymentLibComponent) { }
 
   ngOnInit() {
-    this.isGrpOutstandingAmtPositive = false;
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
     if(this.paymentLibComponent.CCD_CASE_NUMBER === '') {
       this.ccdCaseNumber = this.paymentLibComponent.EXC_REFERENCE;
@@ -65,7 +62,7 @@ export class CaseTransactionsComponent implements OnInit {
       paymentGroups => {
         this.paymentGroups = paymentGroups['payment_groups'];
         this.calculateAmounts();
-        this.totalRefundAmount = this.calculateRefundAmount();
+        this.calculateRefundAmount();
       },
       (error: any) => {
         this.errorMessage = <any>error;
@@ -82,7 +79,6 @@ export class CaseTransactionsComponent implements OnInit {
   setDefaults(): void {
     this.totalPayments = 0.00;
     this.totalRemissions = 0.00;
-    this.totalFees = 0.00;
     this.totalNonOffPayments = 0.00;
 }
 getAllocationStatus(payments: any){
@@ -98,17 +94,17 @@ checkForExceptionRecord(): void {
   if(this.paymentGroups.length === 0 && this.selectedOption.toLocaleLowerCase() === 'ccdorexception') {
     this.bulkScaningPaymentService.getBSPaymentsByCCD(this.ccdCaseNumber).subscribe(
       recordData => {
-       if(recordData['data'] && recordData['data'].exception_record_reference.length > 0 && recordData['data'].ccd_reference >0) {
+       if(recordData['data'] && recordData['data'].exception_record_reference && recordData['data'].exception_record_reference.length > 0 && recordData['data'].ccd_reference >0) {
           this.isExceptionRecord = false;
           this.isAddFeeBtnEnabled = true;
         }
 
-        if(recordData['data'] && recordData['data'].exception_record_reference.length > 0 && recordData['data'].ccd_reference === undefined) {
+        if(recordData['data'] && recordData['data'].exception_record_reference && recordData['data'].exception_record_reference.length > 0 && recordData['data'].ccd_reference === undefined) {
           this.isExceptionRecord = true;
           this.isAddFeeBtnEnabled = false;
         }
 
-        if(recordData['data'] && recordData['data'].exception_record_reference.length === undefined && recordData['data'].ccd_reference >0) {
+        if(recordData['data'] && recordData['data'].exception_record_reference && recordData['data'].exception_record_reference.length === undefined && recordData['data'].ccd_reference >0) {
           this.isExceptionRecord = false;
           this.isAddFeeBtnEnabled = true;
         }
@@ -146,20 +142,22 @@ checkForExceptionRecord(): void {
 }
 
   calculateAmounts(): void {
-    let feesTotal = 0.00,
-     paymentsTotal = 0.00,
+    let paymentsTotal = 0.00,
      remissionsTotal = 0.00,
      nonOffLinePayment = 0.00;
 
     this.paymentGroups.forEach(paymentGroup => {
       if (paymentGroup.fees) {
         paymentGroup.fees.forEach(fee => {
-          feesTotal = feesTotal + fee.calculated_amount;
+          if(fee.date_created) {
+            let a = fee.amount_due === undefined;
+            let b = fee.amount_due < 0;
+            this.clAmountDue = a ? this.clAmountDue + fee.net_amount : b ? this.clAmountDue + 0 : this.clAmountDue + fee.amount_due;
+          }
           fee['payment_group_reference'] = paymentGroup['payment_group_reference'];
           this.fees.push(fee);
         });
       }
-      this.totalFees = feesTotal;
 
       if (paymentGroup.payments) {
         paymentGroup.payments.forEach(payment => {
@@ -189,10 +187,8 @@ checkForExceptionRecord(): void {
 
   }
   calculateRefundAmount() {
-    let totalRefundAmount = 0,
-    isFeeAmountZero = false,
-    isNewPaymentGroup = false,
-    isOldPaymentGroup = false;
+    let isNewPaymentGroup = false,
+       isOldPaymentGroup = false;
 
     this.paymentGroups.forEach(paymentGroup => {
       let grpOutstandingAmount = 0.00,
@@ -200,21 +196,15 @@ checkForExceptionRecord(): void {
         paymentsTotal = 0.00,
         remissionsTotal = 0.00;
       if (paymentGroup.fees) {
-        this.isFeeRecordsExist = true;
         paymentGroup.fees.forEach(fee => {
           feesTotal = feesTotal + fee.calculated_amount;
-          if(fee.calculated_amount === 0) {
-            isFeeAmountZero = true
-          }
           if(fee.date_created) {
             isNewPaymentGroup = true;
           }else {
             isOldPaymentGroup = true;
           }
         });
-
       }
-
       if (paymentGroup.payments) {
         paymentGroup.payments.forEach(payment => {
           if (payment.status.toUpperCase() === 'SUCCESS') {
@@ -236,21 +226,10 @@ checkForExceptionRecord(): void {
         if(grpOutstandingAmount <= 0 && isNewPaymentGroup) {
           this.isAnyFeeGroupAvilable = false;
         }
-        if (grpOutstandingAmount < 0) {
-          if(totalRefundAmount === 0) {
-            totalRefundAmount = grpOutstandingAmount;
-          } else {
-            totalRefundAmount = (totalRefundAmount + grpOutstandingAmount);
-          }
-        }
-        else if(grpOutstandingAmount > 0 || (grpOutstandingAmount === 0 && isFeeAmountZero)) {
-          this.isGrpOutstandingAmtPositive = true;
-        }
     });
     if((!isNewPaymentGroup && isOldPaymentGroup) || (!isNewPaymentGroup && !isOldPaymentGroup)) {
       this.isAnyFeeGroupAvilable = false;
     }
-    return totalRefundAmount * -1;
   }
   getGroupOutstandingAmount(paymentGroup: IPaymentGroup): number {
     return this.bulkScaningPaymentService.calculateOutStandingAmount(paymentGroup);;
@@ -291,16 +270,24 @@ checkForExceptionRecord(): void {
 
   selectedUnprocessedFeeEvent(unprocessedRecordId: string) {
     if ( unprocessedRecordId ) {
-      this.isAddFeeBtnEnabled = false
       this.isUnprocessedRecordSelected = true;
     } else {
-      this.isAddFeeBtnEnabled = !this.isExceptionRecord;;
       this.isUnprocessedRecordSelected = false;
     }
   }
   getUnprocessedFeeCount(unProcessedRecordCount: number) {
     this.unprocessedRecordCount = unProcessedRecordCount;
   }
+
+  calculateAmountDue(fee: IFee) {
+
+    if(fee.date_created) {
+      return fee.amount_due ? fee.amount_due : fee.net_amount;
+    } else {
+      return "0.00";
+    }
+  }
+
   confirmRemoveFee(fee: IFee){
     this.isRemoveBtnDisabled = false;
     this.feeId = fee;
@@ -320,5 +307,9 @@ checkForExceptionRecord(): void {
           this.isRemoveBtnDisabled = false;
       }
     );
+  }
+
+  isCheckAmountdueExist(amountDue: any) {
+    return typeof amountDue === 'undefined';
   }
 }

@@ -12,8 +12,9 @@ import {Router} from '@angular/router';
 export class UnprocessedPaymentsComponent implements OnInit {
 
   @Input('FEE_RECORDS_EXISTS') FEE_RECORDS_EXISTS: boolean;
+  @Input('PAYMENTREF') PAYMENTREF: string;
   @Input('IS_BUTTON_ENABLE') IS_BUTTON_ENABLE: boolean;
-  @Input('IS_OS_AMT_AVAILABLE') IS_OS_AMT_AVAILABLE: boolean;
+
   @Output() selectedUnprocessedFeeEvent: EventEmitter<string> = new EventEmitter();
   @Output() getUnprocessedFeeCount: EventEmitter<string> = new EventEmitter();
 
@@ -115,9 +116,9 @@ export class UnprocessedPaymentsComponent implements OnInit {
   }
   goToAllocatePage() {
     this.paymentLibComponent.bspaymentdcn = this.recordId;
-    this.paymentLibComponent.paymentGroupReference = null;
+    this.paymentLibComponent.paymentGroupReference = this.PAYMENTREF;
     this.paymentLibComponent.unProcessedPaymentServiceId = this.serviceId
-    this.paymentLibComponent.viewName = 'allocate-payments';
+    this.paymentLibComponent.viewName = 'fee-summary';
   }
 
   validateButtons() {
@@ -127,8 +128,8 @@ export class UnprocessedPaymentsComponent implements OnInit {
       this.isAllocateToExistingFeebtnEnabled = false;
       this.isAllocatedToNewFeebtnEnabled = true;
     } else if( this.isUnprocessedRecordSelected && !this.isExceptionCase && this.FEE_RECORDS_EXISTS ) {
-      this.isAllocateToExistingFeebtnEnabled = this.IS_OS_AMT_AVAILABLE;
-      this.isAllocatedToNewFeebtnEnabled = true;
+      this.isAllocateToExistingFeebtnEnabled = true;
+      this.isAllocatedToNewFeebtnEnabled = false;
     }
 
   }

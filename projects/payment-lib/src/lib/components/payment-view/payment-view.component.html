@@ -33,15 +33,11 @@
       <table>
         <tbody>
         <tr class="section">
-          <td class="bold" width="330px">Payment group reference</td>
-          <td>{{ paymentGroup.payment_group_reference }}</td>
-        </tr>
-        <tr class="section">
           <td class="bold" width="330px">Payment reference</td>
           <td>{{ paymentGroup.payments[0].reference }}</td>
         </tr>
         <tr class="section">
-          <td class="bold" width="330px">Total payment amount</td>
+          <td class="bold" width="330px">Payment amount</td>
           <td>£{{ paymentGroup.payments[0].amount | number:'.2' }}</td>
         </tr>
 
@@ -78,16 +74,18 @@
             <td>£{{ fee.calculated_amount | number:'.2' }}</td>
           </tr>
           <tr *ngIf="fee.net_amount">
-            <td class="bold" width="330px">Net amount</td>
-            <td>£{{ fee.net_amount | number:'.2' }}</td>
+            <td class="bold" width="330px">Allocated amount</td>
+            <td>£{{ fee.apportion_amount | number:'.2' }}</td>
           </tr>
-          <tr *ngIf="paymentGroup.remissions?.length > 0">
+        </tbody>
+      <tbody *ngFor="let remission of paymentGroup.remissions">
+          <tr *ngIf="remission.fee_code === fee.code">
             <td class="bold" width="330px">Remission code</td>
-            <td>{{paymentGroup.remissions[0].hwf_reference}}</td>
+            <td>{{remission.hwf_reference}}</td>
           </tr>
           <tr *ngIf="paymentGroup.remissions?.length > 0">
             <td class="bold" width="330px">Remission amount</td>
-            <td>£{{ paymentGroup.remissions[0].hwf_amount | number:'.2'}}</td>
+            <td>£{{ remission.hwf_amount | number:'.2'}}</td>
           </tr>
           </tbody>
         </table>

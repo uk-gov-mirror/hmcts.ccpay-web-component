@@ -13,8 +13,14 @@
     <div class="govuk-grid-column-two-thirds">
       <h1 class="heading-xlarge">Fee Summary</h1>
     </div>
-    <div class="govuk-grid-column-one-third" align="right">
-      <a (click)="redirectToFeeSearchPage($event,'summary')" class="button">Add a new fee</a>
+
+
+     <div class="govuk-grid-column-one-third" align="right">
+            <button (click)="redirectToFeeSearchPage($event,'summary')"
+            [disabled]="isPaymentExist || isRemissionsExist"
+            [ngClass]='isPaymentExist || isRemissionsExist ? "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"'>
+              Add a new fee
+            </button>
     </div>
   </div>
 
@@ -49,7 +55,9 @@
             <tr class="govuk-table__row">
               <td class="no-border grey-text subcolumn-1">Fee amount:</td>
               <td class="no-border subcolumn-2">{{ fee.fee_amount | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
-              <td class="no-border subcolumn-3"><a *ngIf="!(isPaymentExist && i === 0)" (click)="confirmRemoveFee(fee.id)">remove fee</a></td>
+              <td class="no-border subcolumn-3">
+                <a (click)="confirmRemoveFee(fee.id)" [ngClass]='!isCheckAmountdueExist(fee.amount_due) ? "disable-link" : ""'>remove fee</a>
+              </td>
             </tr>
             <tr class="govuk-table__row" *ngIf="fee.volume && fee.volume > 0">
               <td class="no-border grey-text subcolumn-1">Volume:</td>

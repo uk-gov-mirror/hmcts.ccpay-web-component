@@ -39,6 +39,7 @@ export class FeeSummaryComponent implements OnInit {
   isConfirmationBtnDisabled: boolean = false;
   isRemoveBtnDisabled: boolean = false;
   isPaymentExist: boolean = false;
+  isRemissionsExist: Boolean = false;
 
   constructor(
     private router: Router,
@@ -114,11 +115,11 @@ export class FeeSummaryComponent implements OnInit {
   }
 
   getPaymentGroup() {
-    this.paymentViewService.getPaymentGroupDetails(this.paymentGroupRef,
-      this.paymentLibComponent.paymentMethod).subscribe(
+    this.paymentViewService.getPaymentGroupDetails(this.paymentGroupRef).subscribe(
       paymentGroup => {
         this.paymentGroup = paymentGroup;
         this.isPaymentExist = paymentGroup.payments ? paymentGroup.payments.length > 0 : false;
+        this.isRemissionsExist = paymentGroup.remissions ? paymentGroup.remissions.length > 0 : false;
 
         if (paymentGroup.fees) {
           paymentGroup.fees.forEach(fee => {
@@ -212,5 +213,8 @@ export class FeeSummaryComponent implements OnInit {
     } else {
       this.loadCaseTransactionPage();
     }
+  }
+  isCheckAmountdueExist(amountDue: any) {
+    return typeof amountDue === 'undefined';
   }
 }

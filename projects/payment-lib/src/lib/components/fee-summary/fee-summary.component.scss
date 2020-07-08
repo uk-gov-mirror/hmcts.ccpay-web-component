@@ -66,3 +66,9 @@
 .govuk-select--custom {
   width: 50%;
 }
+
+.disable-link {
+  cursor: default;
+  pointer-events: none;
+  color: #8e8c8c;
+}

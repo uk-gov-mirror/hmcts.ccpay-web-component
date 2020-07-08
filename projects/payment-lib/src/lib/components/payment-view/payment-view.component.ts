@@ -28,8 +28,7 @@ export class PaymentViewComponent implements OnInit {
     this.dcnNumber = this.paymentLibComponent.DCN_NUMBER;
 
 
-    this.paymentViewService.getPaymentGroupDetails(this.paymentLibComponent.paymentGroupReference,
-      this.paymentLibComponent.paymentMethod).subscribe(
+    this.paymentViewService.getApportionPaymentDetails(this.paymentLibComponent.paymentReference).subscribe(
       paymentGroup => {
         this.paymentGroup = paymentGroup;
         this.paymentGroup.payments = this.paymentGroup.payments.filter

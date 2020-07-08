@@ -95,3 +95,8 @@ details summary {
 .govuk-table__header--custom {
     text-align: center;
 }
+.disable-link {
+    cursor: default;
+    pointer-events: none;
+    color: #8e8c8c;
+}
