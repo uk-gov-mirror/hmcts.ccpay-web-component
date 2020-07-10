@@ -151,7 +151,7 @@ checkForExceptionRecord(): void {
         paymentGroup.fees.forEach(fee => {
           if(fee.date_created) {
             let a = fee.amount_due === undefined;
-            let b = fee.amount_due < 0;
+            let b = fee.amount_due <= 0;
             this.clAmountDue = a ? this.clAmountDue + fee.net_amount : b ? this.clAmountDue + 0 : this.clAmountDue + fee.amount_due;
           }
           fee['payment_group_reference'] = paymentGroup['payment_group_reference'];
@@ -223,7 +223,7 @@ checkForExceptionRecord(): void {
           this.isAnyFeeGroupAvilable = true;
           this.paymentRef = paymentGroup.payment_group_reference;
         }
-        if(grpOutstandingAmount <= 0 && isNewPaymentGroup) {
+        if(paymentGroup.fees && paymentGroup.fees.length > 0 && grpOutstandingAmount <= 0 && isNewPaymentGroup) {
           this.isAnyFeeGroupAvilable = false;
         }
     });
@@ -282,7 +282,7 @@ checkForExceptionRecord(): void {
   calculateAmountDue(fee: IFee) {
 
     if(fee.date_created) {
-      return fee.amount_due ? fee.amount_due : fee.net_amount;
+      return fee.amount_due !== undefined? fee.amount_due : fee.net_amount;
     } else {
       return "0.00";
     }
