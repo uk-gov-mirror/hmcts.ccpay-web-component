@@ -100,3 +100,17 @@ details summary {
     pointer-events: none;
     color: #8e8c8c;
 }
+
+.panel-no--style {
+    border-left-style: none;
+}
+
+.col-28 {
+    width: 28%;
+}
+
+.col-15 {
+    width: 15%;
+}
+
+ 
