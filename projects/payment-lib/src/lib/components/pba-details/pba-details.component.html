@@ -1,33 +1,26 @@
-<div class="grid-row">
-  <div class="column">
-    <h2 class="heading-medium">Payment method</h2>
-  </div>
-</div>
 
-
-<div>
+  <h2 class="heading-large">Payment method</h2>
   <table>
     <tbody>
     <tr>
-      <td class="bold" width="330px">Method</td>
+      <td class="bold tb-col-w">Method</td>
       <td class="capitalize">{{ payment.method | lowercase}}</td>
     </tr>
     <tr>
-      <td class="bold" width="330px">Type</td>
+      <td class="bold tb-col-w">Type</td>
       <td>Credit</td>
     </tr>
     <tr *ngIf="payment.organisation_name">
-      <td class="bold" width="330px">PBA account name</td>
+      <td class="bold tb-col-w">PBA account name</td>
       <td>{{ payment.organisation_name }}</td>
     </tr>
     <tr *ngIf="payment.account_number">
-      <td class="bold" width="330px">PBA number</td>
+      <td class="bold tb-col-w">PBA number</td>
       <td>{{ payment.account_number }}</td>
     </tr>
     <tr *ngIf="payment.customer_reference">
-      <td class="bold" width="330px">Customer internal reference</td>
+      <td class="bold tb-col-w">Customer internal reference</td>
       <td>{{ payment.customer_reference }}</td>
     </tr>
     </tbody>
   </table>
-</div>

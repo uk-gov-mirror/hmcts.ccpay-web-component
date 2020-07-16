@@ -17,6 +17,7 @@ export class PaymentViewComponent implements OnInit {
   selectedOption: string;
   dcnNumber: string;
   isStatusAllocated: boolean;
+  isRemissionsMatch: boolean;
 
   constructor(private paymentViewService: PaymentViewService,
               private paymentLibComponent: PaymentLibComponent) {
@@ -30,7 +31,23 @@ export class PaymentViewComponent implements OnInit {
 
     this.paymentViewService.getApportionPaymentDetails(this.paymentLibComponent.paymentReference).subscribe(
       paymentGroup => {
+        let fees = [];
+        paymentGroup.fees.forEach(fee => {
+          this.isRemissionsMatch = false;
+          paymentGroup.remissions.forEach(rem => {
+            if(rem.fee_code === fee.code) {
+              this.isRemissionsMatch = true;
+              fee['remissions'] = rem;
+              fees.push(fee);
+            }
+          });
+          if(!this.isRemissionsMatch) {
+            fees.push(fee);
+          }
+        });
+        paymentGroup.fees = fees
         this.paymentGroup = paymentGroup;
+
         this.paymentGroup.payments = this.paymentGroup.payments.filter
         (paymentGroupObj => paymentGroupObj['reference'].includes(this.paymentLibComponent.paymentReference));
         const paymentAllocation = this.paymentGroup.payments[0].payment_allocation;

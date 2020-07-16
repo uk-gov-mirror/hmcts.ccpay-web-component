@@ -14,12 +14,19 @@
 
 <div *ngIf="!errorMessage && statuses">
   <table>
-    <tbody>
-      <tr *ngFor="let status of statuses.status_histories">
-        <td class="bold">Payment {{ status.status }}</td>
-        <td>£{{ statuses.amount | number:'.2' }}</td>
-        <td>{{ status.date_created | date:'dd MMM yyyy hh:mm:ss'}}</td>
-      </tr>
+      <thead>
+        <tr>
+          <th>Status</th>
+          <th>Amount</th>
+          <th>Date</th>
+        </tr>
+      </thead> 
+      <tbody>
+        <tr *ngFor="let status of statuses.status_histories">
+          <td>{{ status.status }}</td>
+          <td>£{{ statuses.amount | number:'.2' }}</td>
+          <td>{{ status.date_created | date:'dd MMM yyyy hh:mm:ss'}}</td>
+        </tr>
     </tbody>
   </table>
 </div>
