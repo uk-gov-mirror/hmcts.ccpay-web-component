@@ -57,12 +57,15 @@ export class CaseTransactionsComponent implements OnInit {
     this.excReference = this.paymentLibComponent.EXC_REFERENCE;
     this.takePayment = this.paymentLibComponent.TAKEPAYMENT;
     this.isBulkScanEnable = this.paymentLibComponent.ISBSENABLE;
+    this.dcnNumber = this.paymentLibComponent.DCN_NUMBER;
+    this.selectedOption = this.paymentLibComponent.SELECTED_OPTION.toLocaleLowerCase();
 
     this.caseTransactionsService.getPaymentGroups(this.ccdCaseNumber).subscribe(
       paymentGroups => {
         this.paymentGroups = paymentGroups['payment_groups'];
         this.calculateAmounts();
         this.calculateRefundAmount();
+        this.checkForExceptionRecord();
       },
       (error: any) => {
         this.errorMessage = <any>error;
@@ -71,9 +74,8 @@ export class CaseTransactionsComponent implements OnInit {
       }
     );
 
-    this.dcnNumber = this.paymentLibComponent.DCN_NUMBER;
-    this.selectedOption = this.paymentLibComponent.SELECTED_OPTION.toLocaleLowerCase();
-    this.checkForExceptionRecord();
+
+  
   }
 
   setDefaults(): void {
@@ -161,12 +163,15 @@ checkForExceptionRecord(): void {
 
       if (paymentGroup.payments) {
         paymentGroup.payments.forEach(payment => {
+          let allocationLen = payment.payment_allocation;
+
           if (payment.status.toUpperCase() === 'SUCCESS') {
             paymentsTotal = paymentsTotal + payment.amount;
-            let allocationLen = payment.payment_allocation;
             if(allocationLen.length === 0 || allocationLen.length > 0 && allocationLen[0].allocation_status ==='Allocated') {
               nonOffLinePayment = nonOffLinePayment + payment.amount;
             }
+          }
+          if(allocationLen.length === 0 || allocationLen.length > 0 && allocationLen[0].allocation_status ==='Allocated') {
             this.payments.push(payment);
           }
           payment.paymentGroupReference = paymentGroup.payment_group_reference

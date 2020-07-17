@@ -51,7 +51,7 @@
         </tbody>
       </table>
 
-      <div class="govuk-grid-row">
+      <div class="govuk-grid-row" *ngIf="paymentGroup.fees.length > 0">
         <div class="column">
           <h2 class="heading-large">Fee and remission details</h2>
         </div>

@@ -57,7 +57,7 @@ export class PaymentViewService {
   getApportionPaymentDetails(paymentReference: string): Observable<IPaymentGroup> {
     this.logger.info('Payment-view-service getPaymentGroupDetails for: ', paymentReference);
 
-    return this.http.get<IPayment>(`${this.paymentLibService.API_ROOT}/fee-pay-apportion/${paymentReference}`, {
+    return this.http.get<IPayment>(`${this.paymentLibService.API_ROOT}/payment-groups/fee-pay-apportion/${paymentReference}`, {
       withCredentials: true
     })
       .pipe(
