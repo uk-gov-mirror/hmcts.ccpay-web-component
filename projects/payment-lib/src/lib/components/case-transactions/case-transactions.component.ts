@@ -171,7 +171,7 @@ checkForExceptionRecord(): void {
               nonOffLinePayment = nonOffLinePayment + payment.amount;
             }
           }
-          if(allocationLen.length === 0 || allocationLen.length > 0 && allocationLen[0].allocation_status ==='Allocated') {
+          if(allocationLen.length === 0 || allocationLen.length > 0 && allocationLen[0].allocation_status && allocationLen[0].allocation_status ==='Allocated') {
             this.payments.push(payment);
           }
           payment.paymentGroupReference = paymentGroup.payment_group_reference
