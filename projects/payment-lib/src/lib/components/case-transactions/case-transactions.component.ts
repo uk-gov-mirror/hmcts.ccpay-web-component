@@ -128,7 +128,6 @@ checkForExceptionRecord(): void {
   if (this.paymentGroups.length > 0)
   this.paymentGroups.forEach(paymentGroup => {
     if (paymentGroup.payments) {
-      this.nonPayments = paymentGroup.payments;
       paymentGroup.payments.forEach(payment => {
         if (payment.case_reference !== undefined && payment.case_reference.length > 0) {
           this.isExceptionRecord = true;
@@ -169,9 +168,13 @@ checkForExceptionRecord(): void {
             paymentsTotal = paymentsTotal + payment.amount;
             if(allocationLen.length === 0 || allocationLen.length > 0 && allocationLen[0].allocation_status ==='Allocated') {
               nonOffLinePayment = nonOffLinePayment + payment.amount;
+              this.payments.push(payment);
+            }
+            if(allocationLen.length > 0 && allocationLen[0].allocation_status !=='Allocated') {
+              this.nonPayments.push(payment);
             }
           }
-          if(allocationLen.length === 0 || allocationLen.length > 0 && allocationLen[0].allocation_status && allocationLen[0].allocation_status ==='Allocated') {
+          if(allocationLen.length === 0) {
             this.payments.push(payment);
           }
           payment.paymentGroupReference = paymentGroup.payment_group_reference
