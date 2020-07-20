@@ -168,9 +168,8 @@ checkForExceptionRecord(): void {
             paymentsTotal = paymentsTotal + payment.amount;
             if(allocationLen.length === 0 || allocationLen.length > 0 && allocationLen[0].allocation_status ==='Allocated') {
               nonOffLinePayment = nonOffLinePayment + payment.amount;
-              this.payments.push(payment);
             }
-            if(allocationLen.length > 0 && allocationLen[0].allocation_status !=='Allocated') {
+            if( allocationLen.length > 0 ) {
               this.nonPayments.push(payment);
             }
           }
