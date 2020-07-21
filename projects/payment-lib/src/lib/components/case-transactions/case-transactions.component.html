@@ -99,7 +99,7 @@
                 <td class="govuk-table__cell">{{fee.calculated_amount | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
                 <td class="govuk-table__cell"> {{calculateAmountDue(fee) | currency:'GBP':'symbol-narrow':'1.2-2'}} </td>
                 <td class="govuk-table__cell">
-                   <a (click)="confirmRemoveFee(fee.id)" [ngClass]='!isCheckAmountdueExist(fee.amount_due) ? "disable-link" : ""'>Remove</a>
+                   <a (click)="confirmRemoveFee(fee.id)" [ngClass]='!isCheckAmountdueExist(fee.amount_due) || fee.remissions ? "disable-link" : ""'>Remove</a>
                 </td>
               </tr>
             </tbody>
@@ -140,7 +140,7 @@
                   </tr>
               </tbody>
               <tbody class="govuk-table__body" *ngIf="payments?.length === 0">
-                <td class="govuk-table__cell" colspan="6">No payments recorded</td>
+                <td class="govuk-table__cell" colspan="7">No payments recorded</td>
               </tbody>
             </table>
 

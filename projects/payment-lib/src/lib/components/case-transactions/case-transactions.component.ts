@@ -32,12 +32,14 @@ export class CaseTransactionsComponent implements OnInit {
   selectedOption: string;
   dcnNumber: string;
   paymentRef: string;
+  isTurnOff: Boolean = true;
   isAddFeeBtnEnabled: boolean = true;
   isExceptionRecord: boolean = false;
   isUnprocessedRecordSelected: boolean = false;
   exceptionRecordReference: string;
   isAnyFeeGroupAvilable: boolean = true;
   isBulkScanEnable;
+  isRemissionsMatch: boolean;
   viewStatus = 'main';
   isRemoveBtnDisabled: boolean = false;
   feeId:IFee;
@@ -60,6 +62,7 @@ export class CaseTransactionsComponent implements OnInit {
     this.dcnNumber = this.paymentLibComponent.DCN_NUMBER;
     this.selectedOption = this.paymentLibComponent.SELECTED_OPTION.toLocaleLowerCase();
 
+    this.isTurnOff = this.paymentLibComponent.ISTURNOFF;
     this.caseTransactionsService.getPaymentGroups(this.ccdCaseNumber).subscribe(
       paymentGroups => {
         this.paymentGroups = paymentGroups['payment_groups'];
@@ -195,22 +198,40 @@ checkForExceptionRecord(): void {
   }
   calculateRefundAmount() {
     let isNewPaymentGroup = false,
-       isOldPaymentGroup = false;
+       isOldPaymentGroup = false,
+       fees = [];
 
-    this.paymentGroups.forEach(paymentGroup => {
+
+    this.paymentGroups.forEach((paymentGroup, index) => {
       let grpOutstandingAmount = 0.00,
         feesTotal = 0.00,
         paymentsTotal = 0.00,
         remissionsTotal = 0.00;
+
       if (paymentGroup.fees) {
         paymentGroup.fees.forEach(fee => {
           feesTotal = feesTotal + fee.calculated_amount;
+
+          this.isRemissionsMatch = false;
+          paymentGroup.remissions.forEach(rem => {
+            if(rem.fee_code === fee.code) {
+              this.isRemissionsMatch = true;
+              fee['remissions'] = rem;
+              fees.push(fee);
+            }
+          });
+
+          if(!this.isRemissionsMatch) {
+            fees.push(fee);
+          }
+
           if(fee.date_created) {
             isNewPaymentGroup = true;
           }else {
             isOldPaymentGroup = true;
           }
         });
+        this.paymentGroups[index].fees = fees;
       }
       if (paymentGroup.payments) {
         paymentGroup.payments.forEach(payment => {

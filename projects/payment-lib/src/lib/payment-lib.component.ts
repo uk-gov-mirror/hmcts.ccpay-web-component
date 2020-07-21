@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
 import {PaymentLibService} from './payment-lib.service';
 import { IBSPayments } from './interfaces/IBSPayments';
 
@@ -30,6 +29,8 @@ export class PaymentLibComponent implements OnInit {
   @Input('DCN_NUMBER') DCN_NUMBER: string;
   @Input('SELECTED_OPTION') SELECTED_OPTION: string;
   @Input('ISBSENABLE') ISBSENABLE: Boolean;
+  @Input('ISTURNOFF') ISTURNOFF: Boolean;
+
   paymentMethod: string;
   bspaymentdcn: string;
   unProcessedPaymentServiceId: string = null;
@@ -38,8 +39,7 @@ export class PaymentLibComponent implements OnInit {
   viewName: string;
   unProcessedPayment: IBSPayments = null;
 
-  constructor(private router: Router,
-              private paymentLibService: PaymentLibService) { }
+  constructor(private paymentLibService: PaymentLibService) { }
 
   ngOnInit() {
     this.paymentLibService.setApiRootUrl(this.API_ROOT);
