@@ -132,7 +132,7 @@ checkForExceptionRecord(): void {
   this.paymentGroups.forEach(paymentGroup => {
     if (paymentGroup.payments) {
       paymentGroup.payments.forEach(payment => {
-        if (payment.case_reference !== undefined && payment.case_reference.length > 0) {
+        if (payment.case_reference !== undefined && payment.ccd_case_number === undefined) {
           this.isExceptionRecord = true;
           this.isAddFeeBtnEnabled = false;
         } else {
