@@ -111,7 +111,7 @@
           </table>
         </div>
       </div>
-      <div class="panel panel-no--style" *ngIf="payments?.length > 0 || remissions?.length > 0">
+      <div class="panel panel-no--style" *ngIf="allPayments?.length > 0 || remissions?.length > 0">
           <!-- payments -->
           <h3 class="heading-medium">Payments</h3>
             <table class="govuk-table">
@@ -126,7 +126,7 @@
                     <td class="govuk-table__header" scope="col">Payment status</td>
                   </tr>
               </thead>
-              <tbody class="govuk-table__body" *ngIf="payments?.length > 0">
+              <tbody class="govuk-table__body" *ngIf="allPayments?.length > 0">
                 <tr class="govuk-table__row"  *ngFor="let payment of allPayments">
                     <td class="govuk-table__cell whitespace-inherit">
                       <a href="javascript:void(0)" (click)="goToPayementView(payment.paymentGroupReference, payment.reference, payment.method)">{{ payment.reference }}</a>
