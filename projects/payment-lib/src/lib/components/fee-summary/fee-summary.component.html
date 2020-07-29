@@ -2,7 +2,7 @@
 <div class="govuk-breadcrumbs" *ngIf="isBackButtonEnable">
   <ol class="govuk-breadcrumbs__list">
     <li class="govuk-breadcrumbs__list-item">
-      <a (click)="redirectToFeeSearchPage($event)" class="govuk-back-link govuk-label">Back</a>
+      <a (click)="loadCaseTransactionPage()" class="govuk-back-link govuk-label">Back</a>
     </li>
   </ol>
 </div>
@@ -56,7 +56,7 @@
               <td class="no-border grey-text subcolumn-1">Fee amount:</td>
               <td class="no-border subcolumn-2">{{ fee.fee_amount | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
               <td class="no-border subcolumn-3">
-                <a (click)="confirmRemoveFee(fee.id)" [ngClass]='isPaymentExist || isRemissionsExist  ? "disable-link" : ""'>remove fee</a>
+                <a (click)="confirmRemoveFee(fee.id)" [ngClass]='isPaymentExist || fee.remissions ? "disable-link" : ""'>remove fee</a>
               </td>
             </tr>
             <tr class="govuk-table__row" *ngIf="fee.volume && fee.volume > 0">

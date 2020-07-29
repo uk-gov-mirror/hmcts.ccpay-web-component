@@ -40,6 +40,8 @@ export class FeeSummaryComponent implements OnInit {
   isRemoveBtnDisabled: boolean = false;
   isPaymentExist: boolean = false;
   isRemissionsExist: Boolean = false;
+  isRemissionsMatch = false;
+
 
   constructor(
     private router: Router,
@@ -115,6 +117,7 @@ export class FeeSummaryComponent implements OnInit {
   }
 
   getPaymentGroup() {
+    let fees = [];
     this.paymentViewService.getPaymentGroupDetails(this.paymentGroupRef).subscribe(
       paymentGroup => {
         this.paymentGroup = paymentGroup;
@@ -127,8 +130,22 @@ export class FeeSummaryComponent implements OnInit {
               if(fee.calculated_amount === 0) {
                 this.isFeeAmountZero = true;
               }
+              this.isRemissionsMatch = false;
+              paymentGroup.remissions.forEach(rem => {
+                if(rem.fee_code === fee.code) {
+                  this.isRemissionsMatch = true;
+                  fee['remissions'] = rem;
+                  fees.push(fee);
+                }
+              });
+    
+              if(!this.isRemissionsMatch) {
+                fees.push(fee);
+              }
           });
+          paymentGroup.fees = fees;
         }
+
         this.outStandingAmount = this.bulkScaningPaymentService.calculateOutStandingAmount(paymentGroup);
       },
       (error: any) => this.errorMessage = error
