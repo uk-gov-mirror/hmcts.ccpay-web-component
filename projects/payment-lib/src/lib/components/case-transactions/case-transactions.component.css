@@ -112,5 +112,8 @@ details summary {
 .col-15 {
     width: 15%;
 }
-
+.hmcts-banner > .hmcts-banner__message {
+    font-size:19px;
+    line-height: 1.25;
+}
  

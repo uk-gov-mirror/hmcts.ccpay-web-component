@@ -75,7 +75,6 @@
         <div class="govuk-grid-column-full">
           <span class="heading-small">Fees</span>
         </div>
-
         <div class="govuk-grid-column-full">
           <table class="govuk-table">
             <thead class="govuk-table__head">
@@ -90,14 +89,15 @@
 
             </tr>
             </thead>
-            <tbody class="govuk-table__body" *ngIf="paymentGroups?.length > 0">
-              <tr class="govuk-table__row" *ngFor="let fee of fees;">
+            <tbody class="govuk-table__body" *ngFor="let paymentGroup of paymentGroups;">
+              <tr class="govuk-table__row" *ngFor="let fee of paymentGroup.fees; let i = index;">
                 <td class="govuk-table__cell">	{{fee.code}} </td>
                 <td class="govuk-table__cell">{{fee.description}}</td>
                 <td class="govuk-table__cell">{{fee.volume? fee.volume : '-'}}</td>
                 <td class="govuk-table__cell">{{ fee.fee_amount | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
                 <td class="govuk-table__cell">{{fee.calculated_amount | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
-                <td class="govuk-table__cell"> {{calculateAmountDue(fee) | currency:'GBP':'symbol-narrow':'1.2-2'}} </td>
+                <td class="govuk-table__cell govuk-!-font-weight-bold"  [attr.rowspan]="paymentGroup.fees.length" *ngIf="paymentGroup.old && i==0"> {{getGroupOutstandingAmount(paymentGroup)| currency:'GBP':'symbol-narrow':'1.2-2'}}* </td>
+                <td class="govuk-table__cell" *ngIf="!paymentGroup.old"> {{calculateAmountDue(fee) | currency:'GBP':'symbol-narrow':'1.2-2'}} </td>
                 <td class="govuk-table__cell">
                    <a (click)="confirmRemoveFee(fee.id)" [ngClass]='!isCheckAmountdueExist(fee.amount_due) || fee.remissions ? "disable-link" : ""'>Remove</a>
                 </td>
@@ -109,6 +109,16 @@
               </tr>
             </tbody>
           </table>
+        </div>
+      </div>
+      <div class="hmcts-banner" *ngIf="isHistoricGroupAvailable">
+        <svg class="hmcts-banner__icon" fill="currentColor" role="presentation" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" height="25" width="25">
+            <path d="M13.7,18.5h-2.4v-2.4h2.4V18.5z M12.5,13.7c-0.7,0-1.2-0.5-1.2-1.2V7.7c0-0.7,0.5-1.2,1.2-1.2s1.2,0.5,1.2,1.2v4.8
+          C13.7,13.2,13.2,13.7,12.5,13.7z M12.5,0.5c-6.6,0-12,5.4-12,12s5.4,12,12,12s12-5.4,12-12S19.1,0.5,12.5,0.5z"></path>
+        </svg>
+        <div class="hmcts-banner__message">
+          <span class="hmcts-banner__assistive">information</span>
+          * These fees have already been processed offline. Check the notes in CCD for more information.
         </div>
       </div>
       <div class="panel panel-no--style" *ngIf="allPayments?.length > 0 || remissions?.length > 0">

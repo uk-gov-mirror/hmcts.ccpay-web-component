@@ -38,6 +38,7 @@ export class CaseTransactionsComponent implements OnInit {
   isUnprocessedRecordSelected: boolean = false;
   exceptionRecordReference: string;
   isAnyFeeGroupAvilable: boolean = true;
+  isHistoricGroupAvailable: boolean = false;
   isBulkScanEnable;
   isRemissionsMatch: boolean;
   viewStatus = 'main';
@@ -197,16 +198,14 @@ checkForExceptionRecord(): void {
 
   }
   calculateRefundAmount() {
-    let isNewPaymentGroup = false,
-       isOldPaymentGroup = false,
-       fees = [];
-
+    let isNewPaymentGroup = false;
 
     this.paymentGroups.forEach((paymentGroup, index) => {
       let grpOutstandingAmount = 0.00,
         feesTotal = 0.00,
         paymentsTotal = 0.00,
-        remissionsTotal = 0.00;
+        remissionsTotal = 0.00,
+        fees = [];
 
       if (paymentGroup.fees) {
         paymentGroup.fees.forEach(fee => {
@@ -228,7 +227,8 @@ checkForExceptionRecord(): void {
           if(fee.date_created) {
             isNewPaymentGroup = true;
           }else {
-            isOldPaymentGroup = true;
+            this.isHistoricGroupAvailable = true;
+            this.paymentGroups[index]['old'] = true;
           }
         });
         this.paymentGroups[index].fees = fees;
@@ -255,7 +255,7 @@ checkForExceptionRecord(): void {
           this.isAnyFeeGroupAvilable = false;
         }
     });
-    if((!isNewPaymentGroup && isOldPaymentGroup) || (!isNewPaymentGroup && !isOldPaymentGroup)) {
+    if((!isNewPaymentGroup && this.isHistoricGroupAvailable) || (!isNewPaymentGroup && !this.isHistoricGroupAvailable)) {
       this.isAnyFeeGroupAvilable = false;
     }
   }
