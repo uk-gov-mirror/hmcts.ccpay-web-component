@@ -13,7 +13,9 @@ export class UnprocessedPaymentsComponent implements OnInit {
 
   @Input('FEE_RECORDS_EXISTS') FEE_RECORDS_EXISTS: boolean;
   @Input('PAYMENTREF') PAYMENTREF: string;
+  @Input('ISTURNOFF') ISTURNOFF: boolean;
   @Input('IS_BUTTON_ENABLE') IS_BUTTON_ENABLE: boolean;
+  @Input('IS_OS_AMT_AVAILABLE') IS_OS_AMT_AVAILABLE: boolean;
 
   @Output() selectedUnprocessedFeeEvent: EventEmitter<string> = new EventEmitter();
   @Output() getUnprocessedFeeCount: EventEmitter<string> = new EventEmitter();
@@ -116,9 +118,17 @@ export class UnprocessedPaymentsComponent implements OnInit {
   }
   goToAllocatePage() {
     this.paymentLibComponent.bspaymentdcn = this.recordId;
-    this.paymentLibComponent.paymentGroupReference = this.PAYMENTREF;
     this.paymentLibComponent.unProcessedPaymentServiceId = this.serviceId
-    this.paymentLibComponent.viewName = 'fee-summary';
+    this.paymentLibComponent.isTurnOff = this.ISTURNOFF;
+
+    if(!this.ISTURNOFF) {
+      this.paymentLibComponent.paymentGroupReference = this.PAYMENTREF;
+      this.paymentLibComponent.viewName = 'fee-summary';
+    }else {
+      this.paymentLibComponent.paymentGroupReference = null;
+      this.paymentLibComponent.viewName = 'allocate-payments';
+    }
+
   }
 
   validateButtons() {
@@ -128,10 +138,14 @@ export class UnprocessedPaymentsComponent implements OnInit {
       this.isAllocateToExistingFeebtnEnabled = false;
       this.isAllocatedToNewFeebtnEnabled = true;
     } else if( this.isUnprocessedRecordSelected && !this.isExceptionCase && this.FEE_RECORDS_EXISTS ) {
-      this.isAllocateToExistingFeebtnEnabled = true;
-      this.isAllocatedToNewFeebtnEnabled = false;
+      if(!this.ISTURNOFF) {
+        this.isAllocateToExistingFeebtnEnabled = true;
+        this.isAllocatedToNewFeebtnEnabled = false;
+      } else {
+        this.isAllocateToExistingFeebtnEnabled = this.IS_OS_AMT_AVAILABLE;
+        this.isAllocatedToNewFeebtnEnabled = true;
+      }
     }
-
   }
   unprocessedPaymentUnSelectEvent(event: any) {
     event.preventDefault();

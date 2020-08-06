@@ -1,12 +1,14 @@
 
 <div class="govuk-breadcrumbs" *ngIf="isBackButtonEnable">
   <ol class="govuk-breadcrumbs__list">
-    <li class="govuk-breadcrumbs__list-item">
+    <li class="govuk-breadcrumbs__list-item" *ngIf="!isTurnOff">
       <a (click)="loadCaseTransactionPage()" class="govuk-back-link govuk-label">Back</a>
     </li>
+    <li class="govuk-breadcrumbs__list-item" *ngIf="isTurnOff">
+        <a (click)="redirectToFeeSearchPage($event,'summary')" class="govuk-back-link govuk-label">Back</a>
+      </li>
   </ol>
 </div>
-
 <div class="fee-summary" *ngIf="viewStatus === 'main'">
     <main class="govuk-main-wrapper">
   <div class="govuk-grid-row">
@@ -16,11 +18,13 @@
 
 
      <div class="govuk-grid-column-one-third" align="right">
-            <button (click)="redirectToFeeSearchPage($event,'summary')"
+            <button  *ngIf="!isTurnOff" (click)="redirectToFeeSearchPage($event,'summary')"
             [disabled]="isPaymentExist"
             [ngClass]='isPaymentExist ? "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"'>
               Add a new fee
             </button>
+
+            <a *ngIf="isTurnOff" (click)="redirectToFeeSearchPage($event,'summary')" class="button">Add a new fee</a>	
     </div>
   </div>
 
@@ -55,8 +59,11 @@
             <tr class="govuk-table__row">
               <td class="no-border grey-text subcolumn-1">Fee amount:</td>
               <td class="no-border subcolumn-2">{{ fee.fee_amount | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
-              <td class="no-border subcolumn-3">
+              <td class="no-border subcolumn-3" *ngIf="!isTurnOff">
                 <a (click)="confirmRemoveFee(fee.id)" [ngClass]='isPaymentExist || fee.remissions ? "disable-link" : ""'>remove fee</a>
+              </td>
+              <td class="no-border subcolumn-3" *ngIf="isTurnOff">
+                <a (click)="confirmRemoveFee(fee.id)">remove fee</a>
               </td>
             </tr>
             <tr class="govuk-table__row" *ngIf="fee.volume && fee.volume > 0">
@@ -72,7 +79,16 @@
             <tr class="govuk-table__row">
               <td class="no-border grey-text subcolumn-1">Remission amount:</td>
               <td class="no-border subcolumn-2">{{ getRemissionByFeeCode(fee.code)?.hwf_amount? ( getRemissionByFeeCode(fee.code)?.hwf_amount  | currency:'GBP':'symbol-narrow':'1.2-2') : '-' }}</td>
-              <td class="no-border subcolumn-3"> <a (click)="addRemission(fee)" [ngClass]="{'remissionDisable': !service}" *ngIf="(getRemissionByFeeCode(fee.code)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code)?.hwf_amount) && !isPaymentExist">Deduct remission</a></td>
+              <td class="no-border subcolumn-3" *ngIf="!isTurnOff"> 
+                <a (click)="addRemission(fee)" [ngClass]="{'remissionDisable': !service}" *ngIf="(getRemissionByFeeCode(fee.code)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code)?.hwf_amount) && !isPaymentExist">
+                  Deduct remission
+                </a>
+              </td>
+              <td class="no-border subcolumn-3" *ngIf="isTurnOff"> 
+                <a (click)="addRemission(fee)" [ngClass]="{'remissionDisable': !service}" *ngIf="getRemissionByFeeCode(fee.code)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code)?.hwf_amount">
+                Deduct remission
+              </a>
+              </td>
                         </tr>
             <tr class="govuk-table__row">
               <td class="no-border grey-text subcolumn-1">Total after remission:</td>

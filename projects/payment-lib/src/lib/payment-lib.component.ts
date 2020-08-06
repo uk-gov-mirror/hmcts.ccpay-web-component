@@ -10,9 +10,11 @@ import { IBSPayments } from './interfaces/IBSPayments';
     <ccpay-case-transactions  *ngIf="viewName === 'case-transactions'"></ccpay-case-transactions>
     <app-mark-unidentified-payment *ngIf="viewName === 'unidentifiedPage'"></app-mark-unidentified-payment>
     <app-mark-unsolicited-payment *ngIf="viewName === 'unsolicitedPage'"></app-mark-unsolicited-payment>
-    <app-allocate-payments *ngIf="viewName === 'allocate-payments'"></app-allocate-payments>
+    <app-allocate-payments *ngIf="viewName === 'allocate-payments'"
+    [isTurnOff]="ISTURNOFF"></app-allocate-payments>
     <ccpay-fee-summary *ngIf="viewName === 'fee-summary'"
-                       [ccdCaseNumber]="CCD_CASE_NUMBER" [paymentGroupRef]="paymentGroupReference"></ccpay-fee-summary>
+      [ccdCaseNumber]="CCD_CASE_NUMBER" [paymentGroupRef]="paymentGroupReference"
+      [isTurnOff]="ISTURNOFF"></ccpay-fee-summary>
     <ccpay-reports *ngIf="viewName === 'reports'"></ccpay-reports>
     `
 })
@@ -29,7 +31,7 @@ export class PaymentLibComponent implements OnInit {
   @Input('DCN_NUMBER') DCN_NUMBER: string;
   @Input('SELECTED_OPTION') SELECTED_OPTION: string;
   @Input('ISBSENABLE') ISBSENABLE: Boolean;
-  @Input('ISTURNOFF') ISTURNOFF: Boolean;
+  @Input('ISTURNOFF') ISTURNOFF: boolean;
 
   paymentMethod: string;
   bspaymentdcn: string;
@@ -37,6 +39,7 @@ export class PaymentLibComponent implements OnInit {
   paymentGroupReference: string;
   paymentReference: string;
   viewName: string;
+  isTurnOff: boolean;
   unProcessedPayment: IBSPayments = null;
 
   constructor(private paymentLibService: PaymentLibService) { }
