@@ -34,10 +34,10 @@
           </thead>
           <tbody class="govuk-table__body">
             <tr class="totalpayments govuk-table__row">
-              <td class="govuk-table__cell">{{ totalPayments | currency :'GBP':'symbol':'1.2-2' }}</td>
-              <td class="govuk-table__cell">{{ totalRemissions | currency :'GBP':'symbol':'1.2-2' }}</td>
-              <td class="govuk-table__cell">{{ clAmountDue | currency :'GBP':'symbol':'1.2-2'}}</td>
-              <td class="govuk-table__cell case-transaction__color" *ngIf="isBulkScanEnable">{{unprocessedRecordCount}}</td>
+              <td class="govuk-table__cell summary-table-font">{{ totalPayments | currency :'GBP':'symbol':'1.2-2' }}</td>
+              <td class="govuk-table__cell summary-table-font">{{ totalRemissions | currency :'GBP':'symbol':'1.2-2' }}</td>
+              <td class="govuk-table__cell summary-table-font">{{ clAmountDue | currency :'GBP':'symbol':'1.2-2'}}</td>
+              <td class="govuk-table__cell case-transaction__color summary-table-font" *ngIf="isBulkScanEnable">{{unprocessedRecordCount}}</td>
             </tr>
           </tbody>
         </table>
@@ -74,7 +74,7 @@
 
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-          <span class="heading-small">Fees</span>
+            <h3 class="heading-medium">Fees</h3>
         </div>
         <div class="govuk-grid-column-full">
           <table class="govuk-table">
@@ -212,9 +212,9 @@
           </thead>
           <tbody class="govuk-table__body">
             <tr class="totalpayments govuk-table__row">
-              <td class="govuk-table__cell">{{ totalPayments | currency :'GBP':'symbol':'1.2-2' }}</td>
-              <td class="govuk-table__cell">{{ totalRemissions | currency :'GBP':'symbol':'1.2-2' }}</td>
-              <td class="govuk-table__cell">{{ (totalFees - totalRemissions) - totalPayments | currency :'GBP':'symbol':'1.2-2'}}</td>
+              <td class="govuk-table__cell summary-table-font">{{ totalPayments | currency :'GBP':'symbol':'1.2-2' }}</td>
+              <td class="govuk-table__cell summary-table-font">{{ totalRemissions | currency :'GBP':'symbol':'1.2-2' }}</td>
+              <td class="govuk-table__cell summary-table-font">{{ (totalFees - totalRemissions) - totalPayments | currency :'GBP':'symbol':'1.2-2'}}</td>
             </tr>
           </tbody>
         </table>
