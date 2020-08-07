@@ -72,7 +72,7 @@
             <td class="bold tb-col-w">Fee amount</td>
             <td>£{{ fee.calculated_amount | number:'.2' }}</td>
           </tr>
-          <tr *ngIf="fee.allocated_amount">
+          <tr *ngIf="fee.apportion_amount">
             <td class="bold tb-col-w tr-border" [ngClass]="{'tr-border': !fee.remissions}">Allocated amount</td>
             <td [ngClass]="{'tr-border': !fee.remissions}">£{{ fee.apportion_amount | number:'.2' }}</td>
           </tr>
