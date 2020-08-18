@@ -105,7 +105,9 @@ export class UnprocessedPaymentsComponent implements OnInit {
   redirectToFeeSearchPage(event: any) {
     event.preventDefault();
     const url = this.isBulkScanEnable ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
-    this.router.navigateByUrl(`/fee-search?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}&dcn=${this.recordId}${url}`);
+    const isTurnOff = this.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
+
+    this.router.navigateByUrl(`/fee-search?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}&dcn=${this.recordId}${url}${isTurnOff}`);
   }
   loadUnsolicitedPage(viewName: string) {
     this.paymentLibComponent.bspaymentdcn = this.recordId;
