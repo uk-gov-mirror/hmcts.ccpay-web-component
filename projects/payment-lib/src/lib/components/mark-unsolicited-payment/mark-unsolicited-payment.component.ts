@@ -219,7 +219,6 @@ cancelMarkUnsolicitedPayments(type?:string){
       showError: isErrorExist
     };
   }
-  
   selectchange(args){ 
     this.selectedSiteId = args.target.value; 
     this.selectedSiteName = args.target.options[args.target.selectedIndex].text; 
