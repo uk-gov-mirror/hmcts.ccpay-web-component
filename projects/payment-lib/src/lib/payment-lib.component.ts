@@ -6,7 +6,8 @@ import { IBSPayments } from './interfaces/IBSPayments';
   selector: 'ccpay-payment-lib',
   template: `
     <ccpay-payment-list *ngIf="viewName === 'payment-list'"></ccpay-payment-list>
-    <ccpay-payment-view *ngIf="viewName === 'payment-view'"></ccpay-payment-view>
+    <ccpay-payment-view *ngIf="viewName === 'payment-view'"
+    [isTurnOff]="ISTURNOFF"></ccpay-payment-view>
     <ccpay-case-transactions  *ngIf="viewName === 'case-transactions'"></ccpay-case-transactions>
     <app-mark-unidentified-payment *ngIf="viewName === 'unidentifiedPage'"></app-mark-unidentified-payment>
     <app-mark-unsolicited-payment *ngIf="viewName === 'unsolicitedPage'"></app-mark-unsolicited-payment>

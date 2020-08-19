@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
 import {PaymentViewService} from '../../services/payment-view/payment-view.service';
 import {PaymentLibComponent} from '../../payment-lib.component';
 import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
@@ -11,6 +11,7 @@ const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
   styleUrls: ['./payment-view.component.css']
 })
 export class PaymentViewComponent implements OnInit {
+  @Input() isTurnOff: boolean;
   paymentGroup: IPaymentGroup;
   errorMessage: string;
   ccdCaseNumber: string;
@@ -27,13 +28,14 @@ export class PaymentViewComponent implements OnInit {
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
     this.selectedOption = this.paymentLibComponent.SELECTED_OPTION;
     this.dcnNumber = this.paymentLibComponent.DCN_NUMBER;
-
+    this.isTurnOff = this.paymentLibComponent.ISTURNOFF;
 
     this.paymentViewService.getApportionPaymentDetails(this.paymentLibComponent.paymentReference).subscribe(
       paymentGroup => {
         let fees = [];
         paymentGroup.fees.forEach(fee => {
           this.isRemissionsMatch = false;
+
           paymentGroup.remissions.forEach(rem => {
             if(rem.fee_code === fee.code) {
               this.isRemissionsMatch = true;

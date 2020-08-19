@@ -28,9 +28,12 @@
           <h1 class="heading-large govuk-!-margin-top-0">Payment details</h1>
         </div>
       </div>
-
       <table>
         <tbody>
+      <tr class="section" *ngIf="isTurnOff">
+          <td class="bold tb-col-w">Payment group reference</td>
+          <td>{{ paymentGroup.payment_group_reference }}</td>
+        </tr>
         <tr class="section">
           <td class="bold tb-col-w">Payment reference</td>
           <td>{{ paymentGroup.payments[0].reference }}</td>
