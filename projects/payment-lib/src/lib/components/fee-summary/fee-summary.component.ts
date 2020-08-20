@@ -190,6 +190,14 @@ export class FeeSummaryComponent implements OnInit {
         this.paymentLibComponent.ISBSENABLE = false;
       }
     );
+
+    const dcn = this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
+    const ISBSenable = this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
+    const isTurnOff = this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
+    const partUrl = `selectedOption=${this.paymentLibComponent.SELECTED_OPTION}${dcn}${ISBSenable}${isTurnOff}`;
+
+    let url = `/payment-history/${this.ccdCaseNumber}?view=case-transactions&takePayment=true&${partUrl}`;
+    this.router.navigateByUrl(url);
   }
   cancelRemission() {
     this.viewStatus = 'main';
