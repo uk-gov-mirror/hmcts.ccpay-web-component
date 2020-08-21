@@ -27,6 +27,7 @@ export class AddRemissionComponent implements OnInit {
   errorMessage = null;
   option: string = null;
   isConfirmationBtnDisabled: boolean = false;
+  bsPaymentDcnNumber: string;
 
   isRemissionCodeEmpty: boolean = false;
   remissionCodeHasError: boolean = false;
@@ -41,6 +42,7 @@ export class AddRemissionComponent implements OnInit {
 
   ngOnInit() {
     this.option = this.paymentLibComponent.SELECTED_OPTION;
+    this.bsPaymentDcnNumber = this.paymentLibComponent.bspaymentdcn;
     this.remissionForm = this.formBuilder.group({
       remissionCode: new FormControl('', Validators.compose([
         Validators.required,
@@ -130,5 +132,13 @@ export class AddRemissionComponent implements OnInit {
         this.paymentLibComponent.ISBSENABLE = false;
       }
     );
+
+    const dcn = this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
+    const ISBSenable = this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
+    const isTurnOff = this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
+    const partUrl = `selectedOption=${this.option}${dcn}${ISBSenable}${isTurnOff}`;
+
+    let url = `/payment-history/${this.ccdCaseNumber}?view=case-transactions&takePayment=true&${partUrl}`;
+    this.router.navigateByUrl(url);
   }
 }
