@@ -55,7 +55,7 @@ export class AllocatePaymentsComponent implements OnInit {
   userName: string = null;
   paymentSectionLabel: any;
   paymentRef: string = null;
-  istest = true;
+  isStrategicFixEnable: boolean = true;
 
   reasonList: { [key: string]: { [key: string]: string } }= {
     overPayment: {
@@ -221,7 +221,7 @@ export class AllocatePaymentsComponent implements OnInit {
     }
   }
   finalServiceCall() {
-    if(this.istest) {
+    if(this.isStrategicFixEnable) {
       let allocatedRequest = {
         allocation_reason: this.paymentReason,
         allocation_status:'Allocated',

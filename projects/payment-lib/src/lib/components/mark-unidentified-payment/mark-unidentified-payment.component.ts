@@ -28,6 +28,7 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
   isConfirmButtondisabled:Boolean = false;
   ccdReference: string = null;
   exceptionReference: string = null;
+  isStrategicFixEnable: boolean = true;
 
   constructor(private formBuilder: FormBuilder,
   private paymentViewService: PaymentViewService,
@@ -101,48 +102,81 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
   }
   confirmPayments() {
     this.isConfirmButtondisabled = true;
-
     const reason = this.markPaymentUnidentifiedForm.get('investicationDetail').value;
-      this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'PROCESSED').subscribe(
-      res1 => {
-        this.errorMessage = this.getErrorMessage(false);
-        const requestBody = new AllocatePaymentRequest
-        (this.ccdReference, this.unassignedRecord, this.siteID, this.exceptionReference)
-        this.paymentViewService.postBSPayments(requestBody).subscribe(
-          res2 => {
+
+    if(this.isStrategicFixEnable) {
+      let allocatedRequest = {
+        allocation_reason: '',
+        allocation_status:'Unidentified',
+        explanation: '',
+        payment_allocation_status: {
+          description: '',
+          name: 'Unidentified'
+        },
+        payment_group_reference: '',
+        payment_reference: '',
+        reason: '',
+        receiving_office: '',
+        unidentified_reason: reason,
+        user_id: this.siteID,
+        user_name: ''
+      }
+      const postStrategicBody = new AllocatePaymentRequest
+      (this.ccdReference, this.unassignedRecord, this.siteID, this.exceptionReference, allocatedRequest);
+      this.bulkScaningPaymentService.postBSWoPGStrategic(postStrategicBody).subscribe(
+        res => {
+          this.errorMessage = this.getErrorMessage(false);
+          let response = JSON.parse(res);
+          if (response.success) {
+          this.gotoCasetransationPage();
+          }
+        },
+        (error: any) => {
+          this.errorMessage = this.getErrorMessage(true);
+          this.isConfirmButtondisabled = false;
+        });
+    } else {
+          this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'PROCESSED').subscribe(
+          res1 => {
             this.errorMessage = this.getErrorMessage(false);
-            const response2 = JSON.parse(res2),
-              reqBody = new UnidentifiedPaymentsRequest
-              (response2['data'].payment_group_reference, response2['data'].reference, reason);
-            if (response2.success) {
-              this.paymentViewService.postBSUnidentifiedPayments(reqBody).subscribe(
-                res3 => {
-                  this.errorMessage = this.getErrorMessage(false);
-                  const response3 = JSON.parse(res3);
-                  if (response3.success) {
-                    this.gotoCasetransationPage();
-                  }
-                },
-                (error: any) => {
-                  this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'COMPLETE').subscribe();
-                  this.errorMessage = this.getErrorMessage(true);
-                  this.isConfirmButtondisabled = false;
+            const requestBody = new AllocatePaymentRequest
+            (this.ccdReference, this.unassignedRecord, this.siteID, this.exceptionReference)
+            this.paymentViewService.postBSPayments(requestBody).subscribe(
+              res2 => {
+                this.errorMessage = this.getErrorMessage(false);
+                const response2 = JSON.parse(res2),
+                  reqBody = new UnidentifiedPaymentsRequest
+                  (response2['data'].payment_group_reference, response2['data'].reference, reason);
+                if (response2.success) {
+                  this.paymentViewService.postBSUnidentifiedPayments(reqBody).subscribe(
+                    res3 => {
+                      this.errorMessage = this.getErrorMessage(false);
+                      const response3 = JSON.parse(res3);
+                      if (response3.success) {
+                        this.gotoCasetransationPage();
+                      }
+                    },
+                    (error: any) => {
+                      this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'COMPLETE').subscribe();
+                      this.errorMessage = this.getErrorMessage(true);
+                      this.isConfirmButtondisabled = false;
+                    }
+                  );
                 }
-              );
-            }
+              },
+              (error: any) => {
+                this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'COMPLETE').subscribe();
+                this.errorMessage = this.getErrorMessage(true);
+                this.isConfirmButtondisabled = false;
+              }
+            );
           },
           (error: any) => {
-            this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'COMPLETE').subscribe();
             this.errorMessage = this.getErrorMessage(true);
             this.isConfirmButtondisabled = false;
           }
         );
-      },
-      (error: any) => {
-        this.errorMessage = this.getErrorMessage(true);
-        this.isConfirmButtondisabled = false;
       }
-    );
   }
   cancelMarkUnidentifiedPayments(type?:string){
     if(type && type === 'cancel') {
