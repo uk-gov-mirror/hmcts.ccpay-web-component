@@ -49,6 +49,7 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
     this.viewStatus = 'mainForm';
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
     this.bspaymentdcn = this.paymentLibComponent.bspaymentdcn;
+    this.isStrategicFixEnable = this.paymentLibComponent.ISSFENABLE;
     this.getUnassignedPayment();
 
     const emailPattern = '^[a-z0-9](\\.?[a-z0-9_-]){0,}@[a-z0-9-]+\\.([a-z]{1,6}\\.)?[a-z]{2,6}$';
@@ -74,7 +75,7 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
   confirmPayments() {
     this.isConfirmButtondisabled = true;
     const controls = this.markPaymentUnsolicitedForm.controls;
-    if(this.isStrategicFixEnable) {
+    if(!this.isStrategicFixEnable) {
       let allocatedRequest = {
         allocation_reason: '',
         allocation_status:'Transferred',

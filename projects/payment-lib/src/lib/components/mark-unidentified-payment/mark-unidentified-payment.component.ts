@@ -39,6 +39,7 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
     this.viewStatus = 'mainForm';
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
     this.bspaymentdcn = this.paymentLibComponent.bspaymentdcn;
+    this.isStrategicFixEnable = this.paymentLibComponent.ISSFENABLE;
     this.getUnassignedPayment();
 
     this.markPaymentUnidentifiedForm = this.formBuilder.group({
@@ -104,7 +105,7 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
     this.isConfirmButtondisabled = true;
     const reason = this.markPaymentUnidentifiedForm.get('investicationDetail').value;
 
-    if(this.isStrategicFixEnable) {
+    if(!this.isStrategicFixEnable) {
       let allocatedRequest = {
         allocation_reason: '',
         allocation_status:'Unidentified',

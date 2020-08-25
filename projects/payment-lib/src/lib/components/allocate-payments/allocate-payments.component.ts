@@ -10,6 +10,7 @@ import {IBSPayments} from '../../interfaces/IBSPayments';
 import {AllocatePaymentRequest} from '../../interfaces/AllocatePaymentRequest';
 import {IAllocationPaymentsRequest} from '../../interfaces/IAllocationPaymentsRequest';
 import {Router} from '@angular/router';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-allocate-payments',
@@ -100,6 +101,7 @@ export class AllocatePaymentsComponent implements OnInit {
     this.bspaymentdcn = this.paymentLibComponent.bspaymentdcn;
     this.paymentRef = this.paymentLibComponent.paymentGroupReference;
     this.selectedOption = this.paymentLibComponent.SELECTED_OPTION;
+    this.isStrategicFixEnable = this.paymentLibComponent.ISSFENABLE;
     this.overUnderPaymentForm = this.formBuilder.group({
       moreDetails: new FormControl('', Validators.compose([
         Validators.required,
@@ -221,7 +223,7 @@ export class AllocatePaymentsComponent implements OnInit {
     }
   }
   finalServiceCall() {
-    if(this.isStrategicFixEnable) {
+    if(!this.isStrategicFixEnable) {
       let allocatedRequest = {
         allocation_reason: this.paymentReason,
         allocation_status:'Allocated',
