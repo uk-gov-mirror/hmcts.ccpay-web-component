@@ -35,7 +35,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
   isExceptionCase: boolean = false;
   serviceId: string = null;
   isBulkScanEnable;
-
+  isTurnOff: boolean = true;
   constructor(private router: Router,
     private bulkScaningPaymentService: BulkScaningPaymentService,
     private paymentLibComponent: PaymentLibComponent) { }
@@ -46,6 +46,9 @@ export class UnprocessedPaymentsComponent implements OnInit {
     this.selectedOption = this.paymentLibComponent.SELECTED_OPTION.toLocaleLowerCase();
     this.dcnNumber = this.paymentLibComponent.DCN_NUMBER;
     this.isBulkScanEnable = this.paymentLibComponent.ISBSENABLE;
+    this.isTurnOff = this.paymentLibComponent.ISTURNOFF;
+
+
     this.getUnassignedPaymentlist();
      }
 
