@@ -8,7 +8,7 @@
     </ol>
   </div>
 
-  <main class="govuk-main-wrapper " id="main-content" role="main">
+  <main class="govuk-main-wrapper govuk-!-padding-top-0" id="main-content" role="main">
 
     <div *ngIf="errorMessage">
       <div class="error-summary" role="group" aria-labelledby="failure-error-summary-heading" tabindex="-1">
@@ -25,40 +25,38 @@
 
       <div class="govuk-grid-row">
         <div class="column">
-          <h1 class="heading-medium">Payment details</h1>
+          <h1 class="heading-large govuk-!-margin-top-0">Payment details</h1>
         </div>
       </div>
-
-      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible"> 
       <table>
         <tbody>
-        <tr class="section">
-          <td class="bold" width="330px">Payment group reference</td>
+      <tr class="section" *ngIf="isTurnOff">
+          <td class="bold tb-col-w">Payment group reference</td>
           <td>{{ paymentGroup.payment_group_reference }}</td>
         </tr>
         <tr class="section">
-          <td class="bold" width="330px">Payment reference</td>
+          <td class="bold tb-col-w">Payment reference</td>
           <td>{{ paymentGroup.payments[0].reference }}</td>
         </tr>
         <tr class="section">
-          <td class="bold" width="330px">Total payment amount</td>
+          <td class="bold tb-col-w">Payment amount</td>
           <td>£{{ paymentGroup.payments[0].amount | number:'.2' }}</td>
         </tr>
 
         <tr class="section" *ngIf="paymentGroup.payments[0] && paymentGroup.payments[0].document_control_number">
-          <td class="bold" width="330px">Payment asset number(DCN)</td>
+          <td class="bold tb-col-w">Payment asset number(DCN)</td>
           <td>{{ paymentGroup.payments[0].document_control_number }}</td>
         </tr>
         <tr class="section" *ngIf="paymentGroup.payments[0] && paymentGroup.payments[0].document_control_number">
-          <td class="bold" width="330px">Banked date</td>
+          <td class="bold tb-col-w">Banked date</td>
           <td>{{ paymentGroup.payments[0].banked_date | date:'dd MMM yyyy' }}</td>
         </tr>
         </tbody>
       </table>
 
-      <div class="govuk-grid-row">
+      <div class="govuk-grid-row" *ngIf="paymentGroup.fees.length > 0">
         <div class="column">
-          <h2 class="heading-medium">Fee and remission details</h2>
+          <h2 class="heading-large">Fee and remission details</h2>
         </div>
       </div>
 
@@ -66,33 +64,37 @@
         <table class="table">
           <tbody>
           <tr class="section">
-            <td class="bold" width="330px">Description</td>
+            <td class="bold tb-col-w">Description</td>
             <td>Application for {{ fee.description }}</td>
           </tr>
           <tr class="section">
-            <td class="bold" width="330px">Fee code</td>
+            <td class="bold tb-col-w">Fee code</td>
             <td>{{ fee.code }}</td>
           </tr>
           <tr class="section">
-            <td class="bold" width="330px">Fee amount</td>
-            <td>£{{ fee.calculated_amount | number:'.2' }}</td>
+            <td class="bold tb-col-w" [ngClass]="{'tr-border': !fee.apportion_amount && !fee.remissions && !isTurnOff }">Fee amount</td>
+            <td [ngClass]="{'tr-border': !fee.apportion_amount && !fee.remissions && !isTurnOff }">£{{ fee.calculated_amount | number:'.2' }}</td>
           </tr>
-          <tr *ngIf="fee.net_amount">
-            <td class="bold" width="330px">Net amount</td>
-            <td>£{{ fee.net_amount | number:'.2' }}</td>
+          <tr *ngIf="fee.net_amount && isTurnOff">
+            <td class="bold tb-col-w" [ngClass]="{'tr-border': !fee.apportion_amount && !fee.remissions}" >Net amount</td>
+            <td [ngClass]="{'tr-border': !fee.apportion_amount && !fee.remissions}">£{{ fee.net_amount | number:'.2' }}</td>
           </tr>
-          <tr *ngIf="paymentGroup.remissions?.length > 0">
-            <td class="bold" width="330px">Remission code</td>
-            <td>{{paymentGroup.remissions[0].hwf_reference}}</td>
+          <tr *ngIf="fee.apportion_amount">
+            <td class="bold tb-col-w tr-border" [ngClass]="{'tr-border': !fee.remissions}">Allocated amount</td>
+            <td [ngClass]="{'tr-border': !fee.remissions}">£{{ fee.apportion_amount | number:'.2' }}</td>
           </tr>
-          <tr *ngIf="paymentGroup.remissions?.length > 0">
-            <td class="bold" width="330px">Remission amount</td>
-            <td>£{{ paymentGroup.remissions[0].hwf_amount | number:'.2'}}</td>
+
+          <tr *ngIf="fee.remissions">
+            <td class="bold tb-col-w">Remission code</td>
+            <td>{{fee.remissions.hwf_reference}}</td>
+          </tr>
+          <tr *ngIf="fee.remissions">
+            <td class="bold tb-col-w tr-border">Remission amount</td>
+            <td class="tr-border">£{{ fee.remissions.hwf_amount | number:'.2'}}</td>
           </tr>
           </tbody>
         </table>
 
-        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible"> 
       </div>
 
       <!-- card details -->
