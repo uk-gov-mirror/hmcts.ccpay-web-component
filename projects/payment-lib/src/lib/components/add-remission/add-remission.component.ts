@@ -18,6 +18,7 @@ export class AddRemissionComponent implements OnInit {
   @Input() ccdCaseNumber: string;
   @Input() service: string;
   @Input() paymentGroupRef: string;
+  @Input() isTurnOff: boolean;
   @Output() cancelRemission: EventEmitter<void> = new EventEmitter();
 
   remissionForm: FormGroup;
@@ -26,6 +27,7 @@ export class AddRemissionComponent implements OnInit {
   errorMessage = null;
   option: string = null;
   isConfirmationBtnDisabled: boolean = false;
+  bsPaymentDcnNumber: string;
 
   isRemissionCodeEmpty: boolean = false;
   remissionCodeHasError: boolean = false;
@@ -40,6 +42,7 @@ export class AddRemissionComponent implements OnInit {
 
   ngOnInit() {
     this.option = this.paymentLibComponent.SELECTED_OPTION;
+    this.bsPaymentDcnNumber = this.paymentLibComponent.bspaymentdcn;
     this.remissionForm = this.formBuilder.group({
       remissionCode: new FormControl('', Validators.compose([
         Validators.required,
@@ -96,13 +99,14 @@ export class AddRemissionComponent implements OnInit {
      remissionAmount = this.fee.net_amount - newNetAmount,
      requestBody = new AddRemissionRequest
     (this.ccdCaseNumber, this.fee, remissionAmount, this.remissionForm.controls.remissionCode.value, this.service);
-    this.paymentViewService.postPaymentGroupWithRemissions(this.paymentGroupRef, this.fee.id, requestBody).subscribe(
+    this.paymentViewService.postPaymentGroupWithRemissions(decodeURIComponent(this.paymentGroupRef).trim(), this.fee.id, requestBody).subscribe(
       response => {
         if (JSON.parse(response).success) {
+          const LDUrl = this.isTurnOff ? '&isTurnOff=Enable' : '&isTurnOff=Disable'
           if (this.paymentLibComponent.bspaymentdcn) {
             this.router.routeReuseStrategy.shouldReuseRoute = () => false;
             this.router.onSameUrlNavigation = 'reload';
-            this.router.navigateByUrl(`/payment-history/${this.ccdCaseNumber}?view=fee-summary&selectedOption=${this.option}&paymentGroupRef=${this.paymentGroupRef}&dcn=${this.paymentLibComponent.bspaymentdcn}`);
+            this.router.navigateByUrl(`/payment-history/${this.ccdCaseNumber}?view=fee-summary&selectedOption=${this.option}&paymentGroupRef=${this.paymentGroupRef}&dcn=${this.paymentLibComponent.bspaymentdcn}${LDUrl}`);
           }else {
             this.gotoCasetransationPage();
           }
@@ -118,6 +122,7 @@ export class AddRemissionComponent implements OnInit {
   gotoCasetransationPage() {
     this.paymentLibComponent.viewName = 'case-transactions';
     this.paymentLibComponent.TAKEPAYMENT = true;
+    this.paymentLibComponent.ISTURNOFF = this.isTurnOff;
     this.paymentViewService.getBSfeature().subscribe(
       features => {
         let result = JSON.parse(features).filter(feature => feature.uid === BS_ENABLE_FLAG);
@@ -127,5 +132,13 @@ export class AddRemissionComponent implements OnInit {
         this.paymentLibComponent.ISBSENABLE = false;
       }
     );
+
+    const dcn = this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
+    const ISBSenable = this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
+    const isTurnOff = this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
+    const partUrl = `selectedOption=${this.option}${dcn}${ISBSenable}${isTurnOff}`;
+
+    let url = `/payment-history/${this.ccdCaseNumber}?view=case-transactions&takePayment=true&${partUrl}`;
+    this.router.navigateByUrl(url);
   }
 }

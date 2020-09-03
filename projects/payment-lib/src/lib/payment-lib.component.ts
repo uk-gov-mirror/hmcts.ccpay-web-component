@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
 import {PaymentLibService} from './payment-lib.service';
 import { IBSPayments } from './interfaces/IBSPayments';
 
@@ -7,13 +6,16 @@ import { IBSPayments } from './interfaces/IBSPayments';
   selector: 'ccpay-payment-lib',
   template: `
     <ccpay-payment-list *ngIf="viewName === 'payment-list'"></ccpay-payment-list>
-    <ccpay-payment-view *ngIf="viewName === 'payment-view'"></ccpay-payment-view>
+    <ccpay-payment-view *ngIf="viewName === 'payment-view'"
+    [isTurnOff]="ISTURNOFF"></ccpay-payment-view>
     <ccpay-case-transactions  *ngIf="viewName === 'case-transactions'"></ccpay-case-transactions>
     <app-mark-unidentified-payment *ngIf="viewName === 'unidentifiedPage'"></app-mark-unidentified-payment>
     <app-mark-unsolicited-payment *ngIf="viewName === 'unsolicitedPage'"></app-mark-unsolicited-payment>
-    <app-allocate-payments *ngIf="viewName === 'allocate-payments'"></app-allocate-payments>
+    <app-allocate-payments *ngIf="viewName === 'allocate-payments'"
+    [isTurnOff]="ISTURNOFF"></app-allocate-payments>
     <ccpay-fee-summary *ngIf="viewName === 'fee-summary'"
-                       [ccdCaseNumber]="CCD_CASE_NUMBER" [paymentGroupRef]="paymentGroupReference"></ccpay-fee-summary>
+      [ccdCaseNumber]="CCD_CASE_NUMBER" [paymentGroupRef]="paymentGroupReference"
+      [isTurnOff]="ISTURNOFF"></ccpay-fee-summary>
     <ccpay-reports *ngIf="viewName === 'reports'"></ccpay-reports>
     `
 })
@@ -22,6 +24,7 @@ export class PaymentLibComponent implements OnInit {
   @Input('API_ROOT') API_ROOT: string;
   @Input('BULKSCAN_API_ROOT') BULKSCAN_API_ROOT: string;
   @Input('CCD_CASE_NUMBER') CCD_CASE_NUMBER: string;
+  @Input('EXC_REFERENCE') EXC_REFERENCE: string;
   @Input('PAYMENT_METHOD') PAYMENT_METHOD: string;
   @Input('VIEW') VIEW: string;
   @Input('PAYMENT_GROUP_REF') PAYMENT_GROUP_REF?: string;
@@ -30,6 +33,7 @@ export class PaymentLibComponent implements OnInit {
   @Input('SELECTED_OPTION') SELECTED_OPTION: string;
   @Input('ISBSENABLE') ISBSENABLE: Boolean;
   @Input('ISSFENABLE') ISSFENABLE: boolean;
+  @Input('ISTURNOFF') ISTURNOFF: boolean;
 
   paymentMethod: string;
   bspaymentdcn: string;
@@ -37,10 +41,10 @@ export class PaymentLibComponent implements OnInit {
   paymentGroupReference: string;
   paymentReference: string;
   viewName: string;
+  isTurnOff: boolean;
   unProcessedPayment: IBSPayments = null;
 
-  constructor(private router: Router,
-              private paymentLibService: PaymentLibService) { }
+  constructor(private paymentLibService: PaymentLibService) { }
 
   ngOnInit() {
     this.paymentLibService.setApiRootUrl(this.API_ROOT);
