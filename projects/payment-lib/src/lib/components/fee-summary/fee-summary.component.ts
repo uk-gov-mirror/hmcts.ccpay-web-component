@@ -189,9 +189,11 @@ export class FeeSummaryComponent implements OnInit {
       requestBody = new PaymentToPayhubRequest(this.ccdCaseNumber, this.outStandingAmount, this.service, seriveName);
     this.paymentViewService.postPaymentAntennaToPayHub(requestBody, this.paymentGroupRef).subscribe(
       response => {
-        this.location.go(`payment-history?view=fee-summary`);
-        this.payhubHtml = response;
-        this.viewStatus = 'payhub_view';
+        // this.location.go(`payment-history?view=fee-summary`);
+        // this.payhubHtml = response;
+        // this.viewStatus = 'payhub_view';
+
+        this.pcipalFormFinalSubmit(response);
         this.isBackButtonEnable=false;
       },
       (error: any) => {
@@ -201,6 +203,28 @@ export class FeeSummaryComponent implements OnInit {
       }
     );
   }
+
+  pcipalFormFinalSubmit(response){
+      let form = document.createElement('form');
+      form.setAttribute('action', response._links.next_url.href);
+      form.setAttribute('enctype', 'application/x-www-form-urlencoded; charset=utf-8');
+      form.setAttribute('method', 'post');
+      form.setAttribute('target', '_self');
+      let xBearerToken = document.createElement('input');
+      xBearerToken.setAttribute('type', 'hidden');
+      xBearerToken.setAttribute('name', 'X-BEARER-TOKEN');
+      xBearerToken.setAttribute('value', response.access_token);
+      let xRefreshToken = document.createElement('input');
+      xRefreshToken.setAttribute('type', 'hidden');
+      xRefreshToken.setAttribute('name', 'X-REFRESH-TOKEN');
+      xRefreshToken.setAttribute('value', response.refresh_token);
+      form.appendChild(xBearerToken);
+      form.appendChild(xRefreshToken);
+      document.body.appendChild(form);
+      form.submit();
+   }
+
+
   goToAllocatePage(outStandingAmount: number, isFeeAmountZero: Boolean) {
     if (outStandingAmount > 0 || (outStandingAmount === 0 && isFeeAmountZero)) {
       this.paymentLibComponent.paymentGroupReference = this.paymentGroupRef;
