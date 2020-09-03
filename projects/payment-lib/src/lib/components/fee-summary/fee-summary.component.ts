@@ -193,7 +193,7 @@ export class FeeSummaryComponent implements OnInit {
         // this.payhubHtml = response;
         // this.viewStatus = 'payhub_view';
 
-        this.pcipalFormFinalSubmit(response);
+        this.pcipalFormFinalSubmit(JSON.parse(response));
         this.isBackButtonEnable=false;
       },
       (error: any) => {
