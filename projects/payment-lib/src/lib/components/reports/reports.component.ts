@@ -89,7 +89,7 @@ downloadReport(){
             res.data= processedUnallocated;
           } else if(res['data'].length === 0 && selectedReportName === 'SURPLUS_AND_SHORTFALL' ) {
             res.data= shortFallsRptDefault;
-          } 
+          }  
           if(res['data'].length > 0) {
             for( var i=0; i< res['data'].length; i++) {
               if(res['data'][i]["payment_asset_dcn"] !== undefined) {
