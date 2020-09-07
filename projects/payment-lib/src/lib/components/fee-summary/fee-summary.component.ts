@@ -9,7 +9,7 @@ import { PaymentToPayhubRequest } from '../../interfaces/PaymentToPayhubRequest'
 import { SafeHtml } from '@angular/platform-browser';
 import {Router} from '@angular/router';
 import {Location} from '@angular/common';
-
+import request from 'request-promise-native';
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 
 @Component({
@@ -205,23 +205,41 @@ export class FeeSummaryComponent implements OnInit {
   }
 
   pcipalFormFinalSubmit(response){
-      let form = document.createElement('form');
-      form.setAttribute('action', response._links.next_url.href);
-      form.setAttribute('enctype', 'application/x-www-form-urlencoded; charset=utf-8');
-      form.setAttribute('method', 'post');
-      form.setAttribute('target', '_self');
-      let xBearerToken = document.createElement('input');
-      xBearerToken.setAttribute('type', 'hidden');
-      xBearerToken.setAttribute('name', 'X-BEARER-TOKEN');
-      xBearerToken.setAttribute('value', response.access_token);
-      let xRefreshToken = document.createElement('input');
-      xRefreshToken.setAttribute('type', 'hidden');
-      xRefreshToken.setAttribute('name', 'X-REFRESH-TOKEN');
-      xRefreshToken.setAttribute('value', response.refresh_token);
-      form.appendChild(xBearerToken);
-      form.appendChild(xRefreshToken);
-      document.body.appendChild(form);
-      form.submit();
+    var options = {
+      method: 'POST',
+      uri: response._links.next_url.href,
+      form: {
+          // Like <input type="text" name="name">
+          'X-BEARER-TOKEN': response.access_token,
+          'X-REFRESH-TOKEN': response.refresh_token
+
+      },
+      headers: {
+          'content-type': 'application/x-www-form-urlencoded'
+      }
+  };
+    request(options).then((body)=>{
+      let s = body;
+    }).catch((error)=>{
+      let e = error;
+    });
+      // let form = document.createElement('form');
+      // form.setAttribute('action', response._links.next_url.href);
+      // form.setAttribute('enctype', 'application/x-www-form-urlencoded; charset=utf-8');
+      // form.setAttribute('method', 'post');
+      // form.setAttribute('target', '_self');
+      // let xBearerToken = document.createElement('input');
+      // xBearerToken.setAttribute('type', 'hidden');
+      // xBearerToken.setAttribute('name', 'X-BEARER-TOKEN');
+      // xBearerToken.setAttribute('value', response.access_token);
+      // let xRefreshToken = document.createElement('input');
+      // xRefreshToken.setAttribute('type', 'hidden');
+      // xRefreshToken.setAttribute('name', 'X-REFRESH-TOKEN');
+      // xRefreshToken.setAttribute('value', response.refresh_token);
+      // form.appendChild(xBearerToken);
+      // form.appendChild(xRefreshToken);
+      // document.body.appendChild(form);
+      // form.submit();
    }
 
 
