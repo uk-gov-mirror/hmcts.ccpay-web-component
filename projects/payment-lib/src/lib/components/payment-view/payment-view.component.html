@@ -72,8 +72,12 @@
             <td>{{ fee.code }}</td>
           </tr>
           <tr class="section">
-            <td class="bold tb-col-w" [ngClass]="{'tr-border': !fee.apportion_amount && !fee.remissions }">Fee amount</td>
-            <td [ngClass]="{'tr-border': !fee.apportion_amount && !fee.remissions}">£{{ fee.calculated_amount | number:'.2' }}</td>
+            <td class="bold tb-col-w" [ngClass]="{'tr-border': !fee.apportion_amount && !fee.remissions && !isTurnOff }">Fee amount</td>
+            <td [ngClass]="{'tr-border': !fee.apportion_amount && !fee.remissions && !isTurnOff }">£{{ fee.calculated_amount | number:'.2' }}</td>
+          </tr>
+          <tr *ngIf="fee.net_amount && isTurnOff">
+            <td class="bold tb-col-w" [ngClass]="{'tr-border': !fee.apportion_amount && !fee.remissions}" >Net amount</td>
+            <td [ngClass]="{'tr-border': !fee.apportion_amount && !fee.remissions}">£{{ fee.net_amount | number:'.2' }}</td>
           </tr>
           <tr *ngIf="fee.apportion_amount">
             <td class="bold tb-col-w tr-border" [ngClass]="{'tr-border': !fee.remissions}">Allocated amount</td>
