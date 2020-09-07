@@ -7,6 +7,7 @@
     "package": "cat dist/ccpay-web-component/{runtime,polyfills,scripts,main}.js | gzip > elements.js.gz",
     "start": "ng serve -o",
     "start:no-open": "ng serve",
+    "audit": "yarn audit --groups dependencies",
     "build": "ng build --prod payment-lib",
     "test": "ng test",
     "lint": "ng lint",

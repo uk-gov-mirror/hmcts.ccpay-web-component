@@ -2,3 +2,7 @@
 .capitalize::first-letter {
     text-transform: uppercase;
 }
+
+.tb-col-w {
+    width: 330px;
+}

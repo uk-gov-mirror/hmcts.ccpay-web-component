@@ -61,10 +61,62 @@
 details summary {
     display: list-item;
 }
+.case-transaction__color {
+    color:  #a71414;
+    font-weight: bold;
+    text-align: center;
+}
 
 .capitalize::first-letter {
     text-transform: uppercase;
 }
+
+.govuk-inset-text__no-left-margin {
+    margin-left: 0;
+    padding-left: 0;
+}
 .whitespace-inherit {
     white-space: inherit !important;
+}
+
+.govuk-section-records-break {
+    margin: 10px;
+    border-bottom: 2px solid black !important;
+}
+
+.exisitng-fees {
+    margin-left: 12px;
+}
+
+.add-telephony-payment {
+    margin-top: -2em;
+    margin-left: -2em;
+}
+.govuk-table__header--custom {
+    text-align: center;
+}
+.disable-link {
+    cursor: default;
+    pointer-events: none;
+    color: #8e8c8c;
+}
+
+.panel-no--style {
+    border-left-style: none;
+}
+
+.col-28 {
+    width: 28%;
+}
+
+.col-15 {
+    width: 15%;
+}
+.hmcts-banner > .hmcts-banner__message {
+    font-size:19px;
+    line-height: 1.25;
+}
+
+.summary-table-font {
+  font-size: 36px;
 }
