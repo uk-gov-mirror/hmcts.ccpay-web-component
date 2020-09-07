@@ -1,12 +1,14 @@
 
 <div class="govuk-breadcrumbs" *ngIf="isBackButtonEnable">
   <ol class="govuk-breadcrumbs__list">
-    <li class="govuk-breadcrumbs__list-item">
-      <a (click)="redirectToFeeSearchPage($event)" class="govuk-back-link govuk-label">Back</a>
+    <li class="govuk-breadcrumbs__list-item" *ngIf="!isTurnOff">
+      <a (click)="loadCaseTransactionPage()" class="govuk-back-link govuk-label">Back</a>
     </li>
+    <li class="govuk-breadcrumbs__list-item" *ngIf="isTurnOff">
+        <a (click)="redirectToFeeSearchPage($event,'summary')" class="govuk-back-link govuk-label">Back</a>
+      </li>
   </ol>
 </div>
-
 <div class="fee-summary" *ngIf="viewStatus === 'main'">
     <main class="govuk-main-wrapper">
         <input #myInput type='hidden' id='iFrameDrivenImageValue' value='FEESUMMARY'>
@@ -14,8 +16,16 @@
     <div class="govuk-grid-column-two-thirds">
       <h1 class="heading-xlarge">Fee Summary</h1>
     </div>
-    <div class="govuk-grid-column-one-third" align="right">
-      <a (click)="redirectToFeeSearchPage($event,'summary')" class="button">Add a new fee</a>
+
+
+     <div class="govuk-grid-column-one-third" align="right">
+            <button  *ngIf="!isTurnOff" (click)="redirectToFeeSearchPage($event,'summary')"
+            [disabled]="isPaymentExist"
+            [ngClass]='isPaymentExist ? "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"'>
+              Add a new fee
+            </button>
+
+            <a *ngIf="isTurnOff" (click)="redirectToFeeSearchPage($event,'summary')" class="button">Add a new fee</a>	
     </div>
   </div>
 
@@ -41,7 +51,7 @@
       </tr>
     </thead>
     <tbody class="govuk-table__body" *ngIf="paymentGroup.fees">
-      <tr class="govuk-table__row" *ngFor="let fee of paymentGroup.fees">
+      <tr class="govuk-table__row" *ngFor="let fee of paymentGroup.fees; let i = index;">
         <td class="govuk-table__cell">{{ fee.code }}</td>
         <td class="govuk-table__cell">{{ fee.description }}</td>
         <td class="govuk-table__cell">{{ getRemissionByFeeCode(fee.code)?.hwf_reference }}</td>
@@ -50,7 +60,12 @@
             <tr class="govuk-table__row">
               <td class="no-border grey-text subcolumn-1">Fee amount:</td>
               <td class="no-border subcolumn-2">{{ fee.fee_amount | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
-              <td class="no-border subcolumn-3"><a (click)="confirmRemoveFee(fee.id)">remove fee</a></td>
+              <td class="no-border subcolumn-3" *ngIf="!isTurnOff">
+                <a (click)="confirmRemoveFee(fee.id)" [ngClass]='isPaymentExist || fee.remissions ? "disable-link" : ""'>remove fee</a>
+              </td>
+              <td class="no-border subcolumn-3" *ngIf="isTurnOff">
+                <a (click)="confirmRemoveFee(fee.id)">remove fee</a>
+              </td>
             </tr>
             <tr class="govuk-table__row" *ngIf="fee.volume && fee.volume > 0">
               <td class="no-border grey-text subcolumn-1">Volume:</td>
@@ -65,8 +80,17 @@
             <tr class="govuk-table__row">
               <td class="no-border grey-text subcolumn-1">Remission amount:</td>
               <td class="no-border subcolumn-2">{{ getRemissionByFeeCode(fee.code)?.hwf_amount? ( getRemissionByFeeCode(fee.code)?.hwf_amount  | currency:'GBP':'symbol-narrow':'1.2-2') : '-' }}</td>
-              <td class="no-border subcolumn-3"> <a (click)="addRemission(fee)" [ngClass]="{'remissionDisable': service==null}" *ngIf="getRemissionByFeeCode(fee.code)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code)?.hwf_amount">Deduct remission</a></td>
-            </tr>
+              <td class="no-border subcolumn-3" *ngIf="!isTurnOff"> 
+                <a (click)="addRemission(fee)" [ngClass]="{'remissionDisable': !service}" *ngIf="(getRemissionByFeeCode(fee.code)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code)?.hwf_amount) && !isPaymentExist">
+                  Deduct remission
+                </a>
+              </td>
+              <td class="no-border subcolumn-3" *ngIf="isTurnOff"> 
+                <a (click)="addRemission(fee)" [ngClass]="{'remissionDisable': !service}" *ngIf="getRemissionByFeeCode(fee.code)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code)?.hwf_amount">
+                Deduct remission
+              </a>
+              </td>
+                        </tr>
             <tr class="govuk-table__row">
               <td class="no-border grey-text subcolumn-1">Total after remission:</td>
               <td class="no-border subcolumn-2">{{ fee.net_amount  | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
@@ -100,31 +124,16 @@
         <td class="no-border"></td>
         <td class="no-border"></td>
         <td class="no-border">
-
           <div class="govuk-form-group govuk-form-group--mg">
-
-            <fieldset class="govuk-fieldset">
-              <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                <span class="govuk-fieldset__heading govuk-fieldset__heading--fz">
-                  What service is this fee for?
-                </span>
-              </legend>
-              <div class="govuk-radios govuk-radios--small">
-                <div class="govuk-radios__item">
-                  <input id="changed-name" class="govuk-radios__input" [(ngModel)]="service" type="radio" aria-label="AA07" value="AA07">
-                  <label class="govuk-label govuk-radios__label" for="changed-name">
-                    Divorce
-                  </label>
-                </div>
-                <div class="govuk-radios__item">
-                  <input id="changed-name-2" class="govuk-radios__input" [(ngModel)]="service" type="radio" aria-label="AA08" value="AA08">
-                  <label class="govuk-label govuk-radios__label" for="changed-name-2">
-                    Probate
-                  </label>
-                </div>
-              </div>
-            </fieldset>
-
+            <label class="govuk-label custom-govuk-label govuk-fieldset__heading--fz" for="responsibleOffice">
+              <strong>What service is this fee for?</strong>
+            </label>
+            <select class="govuk-select govuk-select--custom" id="responsibleOffice" [(ngModel)]="service" name="responsibleOffice">
+              <option value="" selected='selected'>Please select</option>
+              <option value="AA07">Divorce</option>
+              <!-- <option value="ABA3">Family Public Law</option> -->
+              <option value="AA08">Probate</option>
+            </select>
           </div>
         </td>
       </tr>
@@ -184,5 +193,5 @@
       </div>
     </ng-container>
 
-<ccpay-add-remission *ngIf="viewStatus === 'add_remission' && currentFee" [fee]="currentFee" [service]="service" [ccdCaseNumber]="ccdCaseNumber" [paymentGroupRef]="paymentGroupRef" (cancelRemission)="cancelRemission()"></ccpay-add-remission>
+<ccpay-add-remission *ngIf="viewStatus === 'add_remission' && currentFee" [isTurnOff]="isTurnOff" [fee]="currentFee" [service]="service" [ccdCaseNumber]="ccdCaseNumber" [paymentGroupRef]="paymentGroupRef" (cancelRemission)="cancelRemission()"></ccpay-add-remission>
 <div *ngIf="viewStatus === 'payhub_view' && payhubHtml" [innerHTML]="payhubHtml | sanitizeHtml" id="payhub-html-id"></div>

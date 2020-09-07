@@ -1,6 +1,6 @@
 <div class="allocate-payments">
-  <div *ngIf="viewStatus==='mainForm'">
-      <input #myInput type='hidden' id='iFrameDrivenImageValue' value='ALLOCATEPAYMENTS'>
+  <div *ngIf="viewStatus==='mainForm' && isTurnOff">
+    <input #myInput type='hidden' id='iFrameDrivenImageValue' value='ALLOCATEPAYMENTS'>
     <div class="govuk-breadcrumbs" *ngIf="paymentRef" >
         <ol class="govuk-breadcrumbs__list">
           <li class="govuk-breadcrumbs__list-item">
@@ -62,15 +62,17 @@
       </button>
   </div>
 </div>
-  <ng-container *ngIf="viewStatus === 'allocatePaymentConfirmation'">
+       
+
+  <ng-container *ngIf="(viewStatus === 'mainForm' && !isTurnOff) || viewStatus === 'allocatePaymentConfirmation'">
     <ccpay-error-banner *ngIf="errorMessage.showError" [errorMessage]="errorMessage"></ccpay-error-banner>
     <input #myInput type='hidden' id='iFrameDrivenImageValue' value='CONFIRMATIONPAGEALLOCATEPAYMENTS'>
     <h1 class="govuk-heading-xl">Confirm association</h1>
     <h2 class="govuk-heading-l govuk-heading-l--custom">
       Amount to be allocated: {{amountForAllocation | currency:'GBP':'symbol-narrow':'1.2-2'}}
     </h2>
-    <div class="payment-group-section" >
-      <h3 class="govuk-heading-m--custom">Group reference: {{selectedPayment.payment_group_reference}}</h3>
+    <div class="payment-group-section" *ngIf="paymentGroup">
+        <h3 class="govuk-heading-m--custom" *ngIf="isTurnOff">Group reference: {{paymentGroup.payment_group_reference}}</h3>
       <table class="govuk-table">
         <thead class="govuk-table__head">
           <tr class="govuk-table__row">
@@ -79,20 +81,20 @@
             <td class="govuk-table__header" scope="col">Volume</td>
             <td class="govuk-table__header" scope="col">Fee amount</td>
             <td class="govuk-table__header" scope="col">Calculated amount</td>
-            <td class="govuk-table__header" scope="col">Group amount outstanding</td>
+            <td class="govuk-table__header" scope="col">Amount Due</td>
           </tr>
         </thead>
         <tbody class="govuk-table__body" >
-          <tr class="govuk-table__row" *ngFor="let fee of selectedPayment.fees; let i = index;">
+          <tr class="govuk-table__row" *ngFor="let fee of paymentGroup.fees; let i = index;">
             <td class="govuk-table__cell govuk-table__cell--col1">{{fee.code}}</td>
             <td class="govuk-table__cell govuk-table__cell--col2"> {{fee.description}} </td>
             <td class="govuk-table__cell govuk-table__cell--col3"> {{fee.volume? fee.volume : '-'}} </td>
             <td class="govuk-table__cell govuk-table__cell--col4"> {{ fee.fee_amount | currency:'GBP':'symbol-narrow':'1.2-2' }} </td>
             <td class="govuk-table__cell govuk-table__cell--col5"> {{fee.calculated_amount | currency:'GBP':'symbol-narrow':'1.2-2'}} </td>
-            <td class="govuk-table__cell govuk-table__cell--col6" [attr.rowspan]="selectedPayment.fees.length" *ngIf="i==0"> {{afterFeeAllocateOutstanding | currency:'GBP':'symbol-narrow':'1.2-2'}} </td>
+            <td class="govuk-table__cell govuk-table__cell--col6" [attr.rowspan]="paymentGroup.fees.length" *ngIf="i==0"> {{afterFeeAllocateOutstanding | currency:'GBP':'symbol-narrow':'1.2-2'}} </td>
           </tr>
         </tbody>
-        <tbody class="govuk-table__body" *ngIf="selectedPayment.fees.length == 0">
+        <tbody class="govuk-table__body" *ngIf="paymentGroup.fees.length == 0">
           <td class="govuk-table__cell" colspan="6">No payments recorded</td>
         </tbody>
       </table>
@@ -198,7 +200,7 @@
         <button type="submit" [disabled]="isConfirmButtondisabled" [ngClass]="isConfirmButtondisabled ? 'button button--disabled' : 'button'" (click)="confirmAllocatePayement()">
           Confirm
         </button>
-        <button type="button" class="button govuk-button--secondary" (click)="cancelAllocatePayment()">
+        <button type="button" class="button govuk-button--secondary" (click)="cancelAllocatePayment($event)">
           Cancel
         </button>
       </div>

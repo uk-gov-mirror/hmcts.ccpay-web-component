@@ -44,10 +44,20 @@ export class PaymentViewService {
       );
   }
 
-  getPaymentGroupDetails(paymentGroupReference: string, paymentMethod: string): Observable<IPaymentGroup> {
+  getPaymentGroupDetails(paymentGroupReference: string): Observable<IPaymentGroup> {
     this.logger.info('Payment-view-service getPaymentGroupDetails for: ', paymentGroupReference);
 
     return this.http.get<IPayment>(`${this.paymentLibService.API_ROOT}/payment-groups/${paymentGroupReference}`, {
+      withCredentials: true
+    })
+      .pipe(
+        catchError(this.errorHandlerService.handleError)
+      );
+  }
+  getApportionPaymentDetails(paymentReference: string): Observable<IPaymentGroup> {
+    this.logger.info('Payment-view-service getPaymentGroupDetails for: ', paymentReference);
+
+    return this.http.get<IPayment>(`${this.paymentLibService.API_ROOT}/payment-groups/fee-pay-apportion/${paymentReference}`, {
       withCredentials: true
     })
       .pipe(
