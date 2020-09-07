@@ -32,6 +32,7 @@ export class PaymentLibComponent implements OnInit {
   @Input('DCN_NUMBER') DCN_NUMBER: string;
   @Input('SELECTED_OPTION') SELECTED_OPTION: string;
   @Input('ISBSENABLE') ISBSENABLE: Boolean;
+  @Input('ISSFENABLE') ISSFENABLE: boolean;
   @Input('ISTURNOFF') ISTURNOFF: boolean;
 
   paymentMethod: string;

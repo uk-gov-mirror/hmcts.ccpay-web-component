@@ -55,6 +55,7 @@ export class AllocatePaymentsComponent implements OnInit {
   userName: string = null;
   paymentSectionLabel: any;
   paymentRef: string = null;
+  isStrategicFixEnable: boolean = true;
 
   reasonList: { [key: string]: { [key: string]: string } }= {
     overPayment: {
@@ -98,6 +99,7 @@ export class AllocatePaymentsComponent implements OnInit {
     this.bspaymentdcn = this.paymentLibComponent.bspaymentdcn;
     this.paymentRef = this.paymentLibComponent.paymentGroupReference;
     this.selectedOption = this.paymentLibComponent.SELECTED_OPTION;
+    this.isStrategicFixEnable = this.paymentLibComponent.ISSFENABLE;
     this.isTurnOff = this.paymentLibComponent.isTurnOff;
     this.overUnderPaymentForm = this.formBuilder.group({
       moreDetails: new FormControl('', Validators.compose([
@@ -246,6 +248,39 @@ export class AllocatePaymentsComponent implements OnInit {
     }
   }
   finalServiceCall() {
+    if(!this.isStrategicFixEnable) {
+      let allocatedRequest = {
+        allocation_reason: this.paymentReason,
+        allocation_status:'Allocated',
+        explanation: this.otherPaymentExplanation,
+        payment_allocation_status: {
+          description: '',
+          name: 'Allocated'
+        },
+        payment_group_reference: this.paymentGroup.payment_group_reference,
+        payment_reference: '',
+        reason: '',
+        receiving_office: '',
+        unidentified_reason:'',
+        user_id: this.siteID,
+        user_name: this.userName
+      }
+      const postStrategicBody = new AllocatePaymentRequest
+      (this.ccdReference, this.unAllocatedPayment, this.siteID, this.exceptionReference, allocatedRequest);
+      this.bulkScaningPaymentService.postBSPaymentStrategic(postStrategicBody , this.paymentGroup.payment_group_reference).subscribe(
+        res => {
+          this.errorMessage = this.errorHandlerService.getServerErrorMessage(false);
+          let response = JSON.parse(res);
+          if (response.success) {
+           this.gotoCasetransationPage();
+          }
+        },
+        (error: any) => {
+          this.errorMessage = this.errorHandlerService.getServerErrorMessage(true);
+          this.isConfirmButtondisabled = false;
+        });
+
+    } else {
     this.bulkScaningPaymentService.patchBSChangeStatus(this.unAllocatedPayment.dcn_reference, 'PROCESSED').subscribe(
       res1 => {
         this.errorMessage = this.errorHandlerService.getServerErrorMessage(false);
@@ -290,6 +325,7 @@ export class AllocatePaymentsComponent implements OnInit {
         this.isConfirmButtondisabled = false;
       }
     );  
+  }
   }
 
   saveAndContinue(){
