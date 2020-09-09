@@ -189,11 +189,7 @@ export class FeeSummaryComponent implements OnInit {
       requestBody = new PaymentToPayhubRequest(this.ccdCaseNumber, this.outStandingAmount, this.service, seriveName);
     this.paymentViewService.postPaymentAntennaToPayHub(requestBody, this.paymentGroupRef).subscribe(
       response => {
-        // this.location.go(`payment-history?view=fee-summary`);
-        // this.payhubHtml = response;
-        // this.viewStatus = 'payhub_view';
-
-        this.pcipalFormFinalSubmit(JSON.parse(response));
+        this.pcipalFormFinalSubmit();
         this.isBackButtonEnable=false;
       },
       (error: any) => {
@@ -204,44 +200,23 @@ export class FeeSummaryComponent implements OnInit {
     );
   }
 
-  pcipalFormFinalSubmit(response){
-  //   var options = {
-  //     method: 'POST',
-  //     uri: response._links.next_url.href,
-  //     form: {
-  //         // Like <input type="text" name="name">
-  //         'X-BEARER-TOKEN': response.access_token,
-  //         'X-REFRESH-TOKEN': response.refresh_token
-
-  //     },
-  //     headers: {
-  //         'content-type': 'application/x-www-form-urlencoded'
-  //     }
-  // };
-  //   request(options).then((body)=>{
-  //     let s = body;
-  //   }).catch((error)=>{
-  //     let e = error;
-  //   });
+  pcipalFormFinalSubmit(){
       let form = document.createElement('form');
-      form.setAttribute('action', response._links.next_url.href);
+      form.setAttribute('action', '/pcipalTest');
       form.setAttribute('enctype', 'application/x-www-form-urlencoded; charset=utf-8');
       form.setAttribute('method', 'post');
       form.setAttribute('target', '_self');
       let xBearerToken = document.createElement('input');
       xBearerToken.setAttribute('type', 'hidden');
       xBearerToken.setAttribute('name', 'X-BEARER-TOKEN');
-      xBearerToken.setAttribute('value', response.access_token);
       let xRefreshToken = document.createElement('input');
       xRefreshToken.setAttribute('type', 'hidden');
       xRefreshToken.setAttribute('name', 'X-REFRESH-TOKEN');
-      xRefreshToken.setAttribute('value', response.refresh_token);
       form.appendChild(xBearerToken);
       form.appendChild(xRefreshToken);
       document.body.appendChild(form);
       form.submit();
    }
-
 
   goToAllocatePage(outStandingAmount: number, isFeeAmountZero: Boolean) {
     if (outStandingAmount > 0 || (outStandingAmount === 0 && isFeeAmountZero)) {
