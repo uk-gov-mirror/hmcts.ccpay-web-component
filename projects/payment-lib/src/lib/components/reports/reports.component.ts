@@ -92,6 +92,10 @@ downloadReport(){
           }  
           if(res['data'].length > 0) {
             for( var i=0; i< res['data'].length; i++) {
+              if(res['data'][i]["payment_asset_dcn"] !== undefined) {
+                res['data'][i]['env_ref'] = res['data'][i]["payment_asset_dcn"].substr(0,13);
+                res['data'][i]['env_item'] = res['data'][i]["payment_asset_dcn"].substr(13,21);
+              }
               if(res['data'][i]["amount"] !== undefined) {
                 res['data'][i]['amount'] = this.convertToFloatValue(res['data'][i]['amount']);
               }
@@ -122,6 +126,10 @@ downloadReport(){
           }
           if(res['data'].length > 0) {
             for( var i=0; i< res['data'].length; i++) {
+              if(res['data'][i]["payment_asset_dcn"] !== undefined) {
+                res['data'][i]['env_ref'] = res['data'][i]["payment_asset_dcn"].substr(0,13);
+                res['data'][i]['env_item'] = res['data'][i]["payment_asset_dcn"].substr(13,21);
+              }
               if(res['data'][i]["amount"] !== undefined) {
                 res['data'][i]['amount'] = this.convertToFloatValue(res['data'][i]['amount']);
               }
