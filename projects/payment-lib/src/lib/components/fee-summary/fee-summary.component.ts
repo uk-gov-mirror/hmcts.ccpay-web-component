@@ -189,7 +189,7 @@ export class FeeSummaryComponent implements OnInit {
       requestBody = new PaymentToPayhubRequest(this.ccdCaseNumber, this.outStandingAmount, this.service, seriveName);
     this.paymentViewService.postPaymentAntennaToPayHub(requestBody, this.paymentGroupRef).subscribe(
       response => {
-        this.pcipalFormFinalSubmit();
+        this.pcipalFormFinalSubmit(response);
         this.isBackButtonEnable=false;
       },
       (error: any) => {
@@ -200,7 +200,7 @@ export class FeeSummaryComponent implements OnInit {
     );
   }
 
-  pcipalFormFinalSubmit(){
+  pcipalFormFinalSubmit(response){
       let form = document.createElement('form');
       form.setAttribute('action', '/pcipalTest');
       form.setAttribute('enctype', 'application/x-www-form-urlencoded; charset=utf-8');
@@ -216,6 +216,24 @@ export class FeeSummaryComponent implements OnInit {
       form.appendChild(xRefreshToken);
       document.body.appendChild(form);
       form.submit();
+      // const result = JSON.parse(response);
+      // let form = document.createElement('form');
+      // form.setAttribute('action', result._links.next_url.href);
+      // form.setAttribute('enctype', 'application/x-www-form-urlencoded; charset=utf-8');
+      // form.setAttribute('method', 'post');
+      // form.setAttribute('target', '_self');
+      // let xBearerToken = document.createElement('input');
+      // xBearerToken.setAttribute('type', 'hidden');
+      // xBearerToken.setAttribute('name', 'X-BEARER-TOKEN');
+      // xBearerToken.setAttribute('value', result._links.next_url.accessToken);
+      // let xRefreshToken = document.createElement('input');
+      // xRefreshToken.setAttribute('type', 'hidden');
+      // xRefreshToken.setAttribute('name', 'X-REFRESH-TOKEN');
+      // xRefreshToken.setAttribute('value', result._links.next_url.refreshToken);
+      // form.appendChild(xBearerToken);
+      // form.appendChild(xRefreshToken);
+      // document.body.appendChild(form);
+      // form.submit();
    }
 
   goToAllocatePage(outStandingAmount: number, isFeeAmountZero: Boolean) {
