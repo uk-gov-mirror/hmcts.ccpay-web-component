@@ -42,6 +42,7 @@
         Receiving Site ID (Receiving court/Bulk centre site ID)    
       </label>
       <select class="form-control short-input" id="responsibleOffice" formControlName="responsibleOffice" (change)="selectchange($event)">
+        <option value="" selected='selected'>Please select</option>
         <option value="P219">Manchester District Probate Registry (P219)</option>
         <option value="Y694">South West Regional Divorce Centre (Y694)</option>
       </select>

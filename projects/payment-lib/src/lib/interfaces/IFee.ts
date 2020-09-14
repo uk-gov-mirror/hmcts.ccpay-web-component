@@ -12,4 +12,11 @@ export interface IFee {
   reference: string;
   memo_line: string;
   fee_amount?: number;
+  apportion_amount?: number;
+  allocated_amount?: number;
+  is_fully_apportioned?: string;
+  date_apportioned?: string;
+  date_created?: string;
+  date_updated?: string;
+  amount_due?: number;
 }

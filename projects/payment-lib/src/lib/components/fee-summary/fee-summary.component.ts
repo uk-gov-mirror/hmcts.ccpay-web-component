@@ -21,6 +21,7 @@ const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 export class FeeSummaryComponent implements OnInit {
   @Input() paymentGroupRef: string;
   @Input() ccdCaseNumber: string;
+  @Input() isTurnOff: string;
 
   bsPaymentDcnNumber: string;
   paymentGroup: IPaymentGroup;
@@ -29,7 +30,7 @@ export class FeeSummaryComponent implements OnInit {
   currentFee: IFee;
   totalFee: number;
   payhubHtml: SafeHtml;
-  service: string = null;
+  service: string = "";
   upPaymentErrorMessage: string;
   selectedOption:string;
   isBackButtonEnable: boolean = true;
@@ -38,6 +39,10 @@ export class FeeSummaryComponent implements OnInit {
   totalAfterRemission: number = 0;
   isConfirmationBtnDisabled: boolean = false;
   isRemoveBtnDisabled: boolean = false;
+  isPaymentExist: boolean = false;
+  isRemissionsExist: Boolean = false;
+  isRemissionsMatch = false;
+
 
   constructor(
     private router: Router,
@@ -113,18 +118,35 @@ export class FeeSummaryComponent implements OnInit {
   }
 
   getPaymentGroup() {
-    this.paymentViewService.getPaymentGroupDetails(this.paymentGroupRef,
-      this.paymentLibComponent.paymentMethod).subscribe(
+    let fees = [];
+    this.paymentViewService.getPaymentGroupDetails(this.paymentGroupRef).subscribe(
       paymentGroup => {
         this.paymentGroup = paymentGroup;
+        this.isPaymentExist = paymentGroup.payments ? paymentGroup.payments.length > 0 : false;
+        this.isRemissionsExist = paymentGroup.remissions ? paymentGroup.remissions.length > 0 : false;
+
         if (paymentGroup.fees) {
           paymentGroup.fees.forEach(fee => {
               this.totalAfterRemission  = this.totalAfterRemission  + fee.net_amount;
               if(fee.calculated_amount === 0) {
                 this.isFeeAmountZero = true;
               }
+              this.isRemissionsMatch = false;
+              paymentGroup.remissions.forEach(rem => {
+                if(rem.fee_code === fee.code) {
+                  this.isRemissionsMatch = true;
+                  fee['remissions'] = rem;
+                  fees.push(fee);
+                }
+              });
+    
+              if(!this.isRemissionsMatch) {
+                fees.push(fee);
+              }
           });
+          paymentGroup.fees = fees;
         }
+
         this.outStandingAmount = this.bulkScaningPaymentService.calculateOutStandingAmount(paymentGroup);
       },
       (error: any) => this.errorMessage = error
@@ -168,6 +190,14 @@ export class FeeSummaryComponent implements OnInit {
         this.paymentLibComponent.ISBSENABLE = false;
       }
     );
+
+    const dcn = this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
+    const ISBSenable = this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
+    const isTurnOff = this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
+    const partUrl = `selectedOption=${this.paymentLibComponent.SELECTED_OPTION}${dcn}${ISBSenable}${isTurnOff}`;
+
+    let url = `/payment-history/${this.ccdCaseNumber}?view=case-transactions&takePayment=true&${partUrl}`;
+    this.router.navigateByUrl(url);
   }
   cancelRemission() {
     this.viewStatus = 'main';
@@ -176,16 +206,19 @@ export class FeeSummaryComponent implements OnInit {
     event.preventDefault();
     let dcn = this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
     const ISBSenable = this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
+    const isTurnOff = this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
+
     if(this.viewStatus === 'feeRemovalConfirmation' || this.viewStatus === 'add_remission') {
       this.viewStatus = 'main';
       return;
     }
-    let url = `/fee-search?ccdCaseNumber=${this.ccdCaseNumber}&selectedOption=${this.paymentLibComponent.SELECTED_OPTION}&paymentGroupRef=${this.paymentGroupRef}${dcn}${ISBSenable}`;
+    let url = `/fee-search?ccdCaseNumber=${this.ccdCaseNumber}&selectedOption=${this.paymentLibComponent.SELECTED_OPTION}&paymentGroupRef=${this.paymentGroupRef}${dcn}${ISBSenable}${isTurnOff}`;
     this.router.navigateByUrl(url);
   }
   takePayment() {
     this.isConfirmationBtnDisabled = true;
-    const seriveName = this.service ==='AA07' ? 'DIVORCE': this.service ==='AA08' ? 'PROBATE' : '',
+    const seriveName = this.service ==='AA07' ? 'DIVORCE': this.service ==='AA08' ? 'PROBATE' : 'FPL',
+
       requestBody = new PaymentToPayhubRequest(this.ccdCaseNumber, this.outStandingAmount, this.service, seriveName);
     this.paymentViewService.postPaymentAntennaToPayHub(requestBody, this.paymentGroupRef).subscribe(
       response => {
@@ -243,5 +276,8 @@ export class FeeSummaryComponent implements OnInit {
     } else {
       this.loadCaseTransactionPage();
     }
+  }
+  isCheckAmountdueExist(amountDue: any) {
+    return typeof amountDue === 'undefined';
   }
 }
