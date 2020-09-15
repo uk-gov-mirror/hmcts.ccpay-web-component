@@ -101,6 +101,12 @@ export class PaymentViewService {
       catchError(this.errorHandlerService.handleError)
     );
   }
+
+  postPaymentAntennaToPayHub(body: PaymentToPayhubRequest, paymentGroupRef: string): Observable<any> {
+    return this.https.post(`${this.paymentLibService.API_ROOT}/payment-groups/${paymentGroupRef}/card-payments-antenna`, body).pipe(
+      catchError(this.errorHandlerService.handleError)
+    );
+  }
   downloadSelectedReport(reportName: string, startDate: string, endDate:string): Observable<any> {
     const url = `${this.paymentLibService.API_ROOT}/report/data?date_from=${startDate}&date_to=${endDate}&report_type=${reportName}`;
     return this.https.get(url, { withCredentials: true }).pipe( catchError(this.errorHandlerService.handleError));

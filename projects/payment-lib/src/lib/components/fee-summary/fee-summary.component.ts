@@ -22,6 +22,9 @@ export class FeeSummaryComponent implements OnInit {
   @Input() paymentGroupRef: string;
   @Input() ccdCaseNumber: string;
   @Input() isTurnOff: string;
+  @Input() isOldPcipalOff: string;
+  @Input() isNewPcipalOff: string;
+
 
   bsPaymentDcnNumber: string;
   paymentGroup: IPaymentGroup;
@@ -31,6 +34,7 @@ export class FeeSummaryComponent implements OnInit {
   totalFee: number;
   payhubHtml: SafeHtml;
   service: string = "";
+  platForm: string = "";
   upPaymentErrorMessage: string;
   selectedOption:string;
   isBackButtonEnable: boolean = true;
@@ -42,7 +46,6 @@ export class FeeSummaryComponent implements OnInit {
   isPaymentExist: boolean = false;
   isRemissionsExist: Boolean = false;
   isRemissionsMatch = false;
-
 
   constructor(
     private router: Router,
@@ -56,6 +59,12 @@ export class FeeSummaryComponent implements OnInit {
     this.viewStatus = 'main';
     this.bsPaymentDcnNumber = this.paymentLibComponent.bspaymentdcn;
     this.selectedOption = this.paymentLibComponent.SELECTED_OPTION.toLocaleLowerCase();
+
+    if ((!this.isOldPcipalOff && this.isNewPcipalOff)) {
+      this.platForm = '8x8';
+    }else if ((this.isOldPcipalOff && !this.isNewPcipalOff)) {
+      this.platForm = 'Antenna';
+    }
 
     this.paymentViewService.getBSfeature().subscribe(
       features => {
@@ -220,20 +229,38 @@ export class FeeSummaryComponent implements OnInit {
     const seriveName = this.service ==='AA07' ? 'DIVORCE': this.service ==='AA08' ? 'PROBATE' : 'FINREM',
 
       requestBody = new PaymentToPayhubRequest(this.ccdCaseNumber, this.outStandingAmount, this.service, seriveName);
-    this.paymentViewService.postPaymentToPayHub(requestBody, this.paymentGroupRef).subscribe(
-      response => {
-        this.location.go(`payment-history?view=fee-summary`);
-        this.payhubHtml = response;
-        this.viewStatus = 'payhub_view';
-        this.isBackButtonEnable=false;
-      },
-      (error: any) => {
-        this.errorMessage = error;
-        this.isConfirmationBtnDisabled = false;
-        this.router.navigateByUrl('/pci-pal-failure');
-      }
-    );
+
+    if(this.platForm === '8x8') {
+      this.paymentViewService.postPaymentToPayHub(requestBody, this.paymentGroupRef).subscribe(
+        response => {
+          this.location.go(`payment-history?view=fee-summary`);
+          this.payhubHtml = response;
+          this.viewStatus = 'payhub_view';
+          this.isBackButtonEnable=false;
+        },
+        (error: any) => {
+          this.errorMessage = error;
+          this.isConfirmationBtnDisabled = false;
+          this.router.navigateByUrl('/pci-pal-failure');
+        }
+      );
+    } else if(this.platForm === 'Antenna') {
+
+      this.paymentViewService.postPaymentAntennaToPayHub(requestBody, this.paymentGroupRef).subscribe(
+        response => {
+          this.isBackButtonEnable=false;
+          window.location.href = '/pcipalThirdCall';
+        },
+        (error: any) => {
+          this.errorMessage = error;
+          this.isConfirmationBtnDisabled = false;
+          this.router.navigateByUrl('/pci-pal-failure');
+        }
+      );
+    }
+
   }
+
   goToAllocatePage(outStandingAmount: number, isFeeAmountZero: Boolean) {
     if (outStandingAmount > 0 || (outStandingAmount === 0 && isFeeAmountZero)) {
       this.paymentLibComponent.paymentGroupReference = this.paymentGroupRef;
