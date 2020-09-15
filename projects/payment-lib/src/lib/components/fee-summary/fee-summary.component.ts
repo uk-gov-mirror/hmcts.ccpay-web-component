@@ -255,7 +255,7 @@ export class FeeSummaryComponent implements OnInit {
         (error: any) => {
           this.errorMessage = error;
           this.isConfirmationBtnDisabled = false;
-          this.router.navigateByUrl('/pci-pal-third-call');
+          this.router.navigateByUrl('/pci-pal-failure');
         }
       );
     }
