@@ -246,10 +246,11 @@ export class FeeSummaryComponent implements OnInit {
         }
       );
     } else if(this.platForm === 'Antenna') {
+
       this.paymentViewService.postPaymentAntennaToPayHub(requestBody, this.paymentGroupRef).subscribe(
         response => {
           this.isBackButtonEnable=false;
-          this.router.navigateByUrl('/pci-pal-third-call');
+          window.location.href = '/pcipalThirdCall';
         },
         (error: any) => {
           this.errorMessage = error;
