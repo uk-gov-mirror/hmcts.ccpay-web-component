@@ -33,6 +33,9 @@ export class CaseTransactionsComponent implements OnInit {
   dcnNumber: string;
   paymentRef: string;
   isTurnOff: boolean;
+  isNewPcipalOff: boolean;
+  isOldPcipalOff: boolean;
+
   isAddFeeBtnEnabled: boolean = true;
   isExceptionRecord: boolean = false;
   isUnprocessedRecordSelected: boolean = false;
@@ -69,6 +72,8 @@ export class CaseTransactionsComponent implements OnInit {
     this.selectedOption = this.paymentLibComponent.SELECTED_OPTION.toLocaleLowerCase();
 
     this.isTurnOff = this.paymentLibComponent.ISTURNOFF;
+    this.isNewPcipalOff = this.paymentLibComponent.ISNEWPCIPALOFF;
+    this.isOldPcipalOff = this.paymentLibComponent.ISOLDPCIPALOFF;
     if(!this.isTurnOff) {
       this.caseTransactionsService.getPaymentGroups(this.ccdCaseNumber).subscribe(
         paymentGroups => {
@@ -356,9 +361,12 @@ checkForExceptionRecord(): void {
   redirectToFeeSearchPage(event: any) {
     event.preventDefault();
     if(!this.isAnyFeeGroupAvilable || this.isTurnOff) {
-    const turnOffUrl = this.isTurnOff ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
-    const url = this.isBulkScanEnable ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
-    this.router.navigateByUrl(`/fee-search?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}${url}${turnOffUrl}`);
+    let url = this.isBulkScanEnable ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
+      url += this.isTurnOff ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
+      url += this.isNewPcipalOff ? '&isNewPcipalOff=Enable' : '&isNewPcipalOff=Disable';
+      url += this.isOldPcipalOff ? '&isOldPcipalOff=Enable' : '&isOldPcipalOff=Disable';
+
+    this.router.navigateByUrl(`/fee-search?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}${url}`);
     } else {
       this.paymentLibComponent.bspaymentdcn = null;
       this.paymentLibComponent.paymentGroupReference = this.paymentRef;
