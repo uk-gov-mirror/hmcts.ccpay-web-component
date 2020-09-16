@@ -63,8 +63,10 @@ export class FeeSummaryComponent implements OnInit {
 
     if ((!this.isOldPcipalOff && this.isNewPcipalOff)) {
       this.platForm = '8x8';
-    }else if ((this.isOldPcipalOff && !this.isNewPcipalOff)) {
+    } else if ((this.isOldPcipalOff && !this.isNewPcipalOff)) {
       this.platForm = 'Antenna';
+    } else if ((this.isOldPcipalOff && this.isNewPcipalOff)){
+      this.platForm = '8x8';
     }
 
     this.paymentViewService.getBSfeature().subscribe(
@@ -201,10 +203,12 @@ export class FeeSummaryComponent implements OnInit {
       }
     );
 
-    const dcn = this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
-    const ISBSenable = this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
-    const isTurnOff = this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
-    const partUrl = `selectedOption=${this.paymentLibComponent.SELECTED_OPTION}${dcn}${ISBSenable}${isTurnOff}`;
+    let partUrl = `selectedOption=${this.paymentLibComponent.SELECTED_OPTION}`;
+      partUrl +=this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
+      partUrl +=this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
+      partUrl +=this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
+      partUrl +=this.isNewPcipalOff ? '&isNewPcipalOff=Enable' : '&isNewPcipalOff=Disable';
+      partUrl +=this.isOldPcipalOff ? '&isOldPcipalOff=Enable' : '&isOldPcipalOff=Disable';
 
     let url = `/payment-history/${this.ccdCaseNumber}?view=case-transactions&takePayment=true&${partUrl}`;
     this.router.navigateByUrl(url);
@@ -214,15 +218,17 @@ export class FeeSummaryComponent implements OnInit {
   }
   redirectToFeeSearchPage(event: any, page?: string) {
     event.preventDefault();
-    let dcn = this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
-    const ISBSenable = this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
-    const isTurnOff = this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
+    let partUrl =this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
+      partUrl +=this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
+      partUrl +=this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
+      partUrl +=this.isNewPcipalOff ? '&isNewPcipalOff=Enable' : '&isNewPcipalOff=Disable';
+      partUrl +=this.isOldPcipalOff ? '&isOldPcipalOff=Enable' : '&isOldPcipalOff=Disable';
 
     if(this.viewStatus === 'feeRemovalConfirmation' || this.viewStatus === 'add_remission') {
       this.viewStatus = 'main';
       return;
     }
-    let url = `/fee-search?ccdCaseNumber=${this.ccdCaseNumber}&selectedOption=${this.paymentLibComponent.SELECTED_OPTION}&paymentGroupRef=${this.paymentGroupRef}${dcn}${ISBSenable}${isTurnOff}`;
+    let url = `/fee-search?ccdCaseNumber=${this.ccdCaseNumber}&selectedOption=${this.paymentLibComponent.SELECTED_OPTION}&paymentGroupRef=${this.paymentGroupRef}${partUrl}`;
     this.router.navigateByUrl(url);
   }
   takePayment() {
