@@ -6,6 +6,7 @@ import { PaymentLibComponent } from '../../payment-lib.component';
 import { IRemission } from '../../interfaces/IRemission';
 import { IFee } from '../../interfaces/IFee';
 import { PaymentToPayhubRequest } from '../../interfaces/PaymentToPayhubRequest';
+import { PayhubAntennaRequest } from '../../interfaces/PayhubAntennaRequest';
 import { SafeHtml } from '@angular/platform-browser';
 import {Router} from '@angular/router';
 import {Location} from '@angular/common';
@@ -216,7 +217,6 @@ export class FeeSummaryComponent implements OnInit {
   }
   redirectToFeeSearchPage(event: any, page?: string) {
     event.preventDefault();
-
     let partUrl =this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
       partUrl +=this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
       partUrl +=this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
@@ -234,7 +234,8 @@ export class FeeSummaryComponent implements OnInit {
     this.isConfirmationBtnDisabled = true;
     const seriveName = this.service ==='AA07' ? 'DIVORCE': this.service ==='AA08' ? 'PROBATE' : 'FINREM',
 
-      requestBody = new PaymentToPayhubRequest(this.ccdCaseNumber, this.outStandingAmount, this.service, seriveName);
+      requestBody = new PaymentToPayhubRequest(this.ccdCaseNumber, this.outStandingAmount, this.service, seriveName),
+      antennaReqBody = new PayhubAntennaRequest(this.ccdCaseNumber, this.outStandingAmount, this.service, seriveName);
 
     if(this.platForm === '8x8') {
       this.paymentViewService.postPaymentToPayHub(requestBody, this.paymentGroupRef).subscribe(
@@ -252,7 +253,7 @@ export class FeeSummaryComponent implements OnInit {
       );
     } else if(this.platForm === 'Antenna') {
 
-      this.paymentViewService.postPaymentAntennaToPayHub(requestBody, this.paymentGroupRef).subscribe(
+      this.paymentViewService.postPaymentAntennaToPayHub(antennaReqBody, this.paymentGroupRef).subscribe(
         response => {
           this.isBackButtonEnable=false;
           window.location.href = '/pcipalThirdCall';
