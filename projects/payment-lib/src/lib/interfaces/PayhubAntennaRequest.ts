@@ -1,7 +1,6 @@
 export class PayhubAntennaRequest {
   currency = 'GBP';
   site_id: string;
-  description = 'PayBubble payment';
   service: string;
   ccd_case_number: string;
   amount: number;
