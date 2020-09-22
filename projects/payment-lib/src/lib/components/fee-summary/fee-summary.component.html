@@ -223,7 +223,6 @@
         </form>
       </div>
     </ng-container>
-
 <ccpay-add-remission 
   *ngIf="viewStatus === 'add_remission' && currentFee" 
   [isTurnOff]="isTurnOff" 
@@ -235,4 +234,5 @@
   [paymentGroupRef]="paymentGroupRef"
   (cancelRemission)="cancelRemission()">
 </ccpay-add-remission>
+
 <div *ngIf="viewStatus === 'payhub_view' && payhubHtml" [innerHTML]="payhubHtml | sanitizeHtml" id="payhub-html-id"></div>
