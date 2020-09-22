@@ -56,7 +56,7 @@
   </div>
    <ng-container *ngIf="viewStatus === 'unidentifiedContinueConfirm'">
       <ccpay-error-banner *ngIf="errorMessage.showError" [errorMessage]="errorMessage"></ccpay-error-banner>
-    <input #myInput type='hidden' id='iFrameDrivenImageValue' value='MARKUNSOLICITEDCONFIRMATION'>
+    <input #myInput type='hidden' id='iFrameDrivenImageValue' value='MARKUNIDENTIFIED'>
       <div class="govuk-warning-text">
         <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
         <strong class="govuk-warning-text__text">
