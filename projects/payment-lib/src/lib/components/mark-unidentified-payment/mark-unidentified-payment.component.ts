@@ -109,18 +109,12 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
       let allocatedRequest = {
         allocation_reason: '',
         allocation_status:'Unidentified',
-        explanation: '',
         payment_allocation_status: {
           description: '',
           name: 'Unidentified'
         },
-        payment_group_reference: '',
-        payment_reference: '',
-        reason: '',
-        receiving_office: '',
         unidentified_reason: reason,
         user_id: this.siteID,
-        user_name: ''
       }
       const postStrategicBody = new AllocatePaymentRequest
       (this.ccdReference, this.unassignedRecord, this.siteID, this.exceptionReference, allocatedRequest);

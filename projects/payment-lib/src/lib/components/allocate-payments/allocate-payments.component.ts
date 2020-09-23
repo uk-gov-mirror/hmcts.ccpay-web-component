@@ -259,10 +259,6 @@ export class AllocatePaymentsComponent implements OnInit {
           name: 'Allocated'
         },
         payment_group_reference: this.paymentGroup.payment_group_reference,
-        payment_reference: '',
-        reason: '',
-        receiving_office: '',
-        unidentified_reason:'',
         user_id: this.siteID,
         user_name: this.userName
       }

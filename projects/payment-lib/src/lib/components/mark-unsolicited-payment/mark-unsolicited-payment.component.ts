@@ -79,18 +79,13 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
       let allocatedRequest = {
         allocation_reason: '',
         allocation_status:'Transferred',
-        explanation: '',
         payment_allocation_status: {
           description: '',
           name: 'Transferred'
         },
-        payment_group_reference: '',
-        payment_reference: '',
         reason: controls.reason.value,
         receiving_office: this.selectedSiteId,
-        unidentified_reason: '',
         user_id: this.siteID,
-        user_name: ''
       }
       const postStrategicBody = new AllocatePaymentRequest
       (this.ccdReference, this.unassignedRecord, this.siteID, this.exceptionReference, allocatedRequest);
