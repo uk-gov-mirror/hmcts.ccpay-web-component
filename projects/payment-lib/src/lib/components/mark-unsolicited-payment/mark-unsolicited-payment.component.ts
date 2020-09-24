@@ -77,7 +77,6 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
     const controls = this.markPaymentUnsolicitedForm.controls;
     if(!this.isStrategicFixEnable) {
       let allocatedRequest = {
-        allocation_reason: '',
         allocation_status:'Transferred',
         payment_allocation_status: {
           description: '',

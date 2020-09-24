@@ -107,7 +107,6 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
 
     if(!this.isStrategicFixEnable) {
       let allocatedRequest = {
-        allocation_reason: '',
         allocation_status:'Unidentified',
         payment_allocation_status: {
           description: '',
