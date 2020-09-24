@@ -250,7 +250,7 @@ export class AllocatePaymentsComponent implements OnInit {
   finalServiceCall() {
     if(!this.isStrategicFixEnable) {
       let allocatedRequest = {
-        allocation_reason: this.paymentReason,
+        reason: this.paymentReason,
         allocation_status:'Allocated',
         explanation: this.otherPaymentExplanation,
         payment_allocation_status: {
@@ -258,10 +258,6 @@ export class AllocatePaymentsComponent implements OnInit {
           name: 'Allocated'
         },
         payment_group_reference: this.paymentGroup.payment_group_reference,
-        payment_reference: '',
-        reason: '',
-        receiving_office: '',
-        unidentified_reason:'',
         user_id: this.siteID,
         user_name: this.userName
       }
