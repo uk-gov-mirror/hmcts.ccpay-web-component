@@ -235,4 +235,6 @@
   (cancelRemission)="cancelRemission()">
 </ccpay-add-remission>
 
-<div *ngIf="viewStatus === 'payhub_view' && payhubHtml" [innerHTML]="payhubHtml | sanitizeHtml" id="payhub-html-id"></div>
+<input *ngIf="viewStatus === 'payhub_view' && payhubHtml" #myInput type='hidden' id='iFrameDrivenImageValue' value='PCIPAL'>
+<div *ngIf="viewStatus === 'payhub_view' && payhubHtml" [innerHTML]="payhubHtml | sanitizeHtml" id="payhub-html-id">
+</div>
