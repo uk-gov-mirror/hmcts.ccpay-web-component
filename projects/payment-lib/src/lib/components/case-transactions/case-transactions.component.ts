@@ -33,6 +33,7 @@ export class CaseTransactionsComponent implements OnInit {
   dcnNumber: string;
   paymentRef: string;
   isTurnOff: boolean;
+  isStrategicFixEnable: boolean;
   isNewPcipalOff: boolean;
   isOldPcipalOff: boolean;
 
@@ -72,6 +73,7 @@ export class CaseTransactionsComponent implements OnInit {
     this.selectedOption = this.paymentLibComponent.SELECTED_OPTION.toLocaleLowerCase();
 
     this.isTurnOff = this.paymentLibComponent.ISTURNOFF;
+    this.isStrategicFixEnable = this.paymentLibComponent.ISSFENABLE;
     this.isNewPcipalOff = this.paymentLibComponent.ISNEWPCIPALOFF;
     this.isOldPcipalOff = this.paymentLibComponent.ISOLDPCIPALOFF;
     if(!this.isTurnOff) {
@@ -363,6 +365,7 @@ checkForExceptionRecord(): void {
     if(!this.isAnyFeeGroupAvilable || this.isTurnOff) {
     let url = this.isBulkScanEnable ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
       url += this.isTurnOff ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
+      url += this.isStrategicFixEnable ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
       url += this.isNewPcipalOff ? '&isNewPcipalOff=Enable' : '&isNewPcipalOff=Disable';
       url += this.isOldPcipalOff ? '&isOldPcipalOff=Enable' : '&isOldPcipalOff=Disable';
 
