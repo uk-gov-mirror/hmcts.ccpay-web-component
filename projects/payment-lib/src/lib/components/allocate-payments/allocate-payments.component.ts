@@ -9,6 +9,8 @@ import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
 import {IBSPayments} from '../../interfaces/IBSPayments';
 import {AllocatePaymentRequest} from '../../interfaces/AllocatePaymentRequest';
 import {IAllocationPaymentsRequest} from '../../interfaces/IAllocationPaymentsRequest';
+import { HttpErrorResponse } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-allocate-payments',
@@ -24,7 +26,9 @@ export class AllocatePaymentsComponent implements OnInit {
   unAllocatedPayment: IBSPayments = {
     amount: 0
   };
+  //error1: HttpErrorResponse;
   siteID: string = null;
+  //errorMessage1 = this.errorHandlerService.handleError(this.error1);
   errorMessage = this.errorHandlerService.getServerErrorMessage(false);
   paymentGroup: IPaymentGroup;
   paymentGroups: IPaymentGroup[] = [];	
@@ -271,8 +275,11 @@ export class AllocatePaymentsComponent implements OnInit {
            this.gotoCasetransationPage();
           }
         },
-        (error: any) => {
-          this.errorMessage = this.errorHandlerService.getServerErrorMessage(true);
+        (error: HttpErrorResponse) => {
+          //this.errorMessage1 = this.errorHandlerService.handleError(error);
+          this.errorMessage.title = "Submission failed due to below reason";
+          this.errorMessage.body = JSON.parse(error.toString())["err"];
+          this.errorMessage.showError = true;
           window.scrollTo(0, 0);
           this.isConfirmButtondisabled = false;
         });

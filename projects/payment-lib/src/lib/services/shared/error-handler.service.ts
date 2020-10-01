@@ -26,12 +26,18 @@ export class ErrorHandlerService {
         } else {
           errorMessage = err.error;
         }
-      } else if (err.error.messsage === undefined) {
+      } 
+      if (err.status === undefined) {
         errorMessage = 'Server error';
       } else {
-        errorMessage = `${err.error.message}`;
+        errorMessage = err.error;
       }
     }
+    // return _throw({
+    //   title: "There is a problem with the service",
+    //   body: JSON.parse(err.error)["err"],
+    //   showError: true
+    // });
     return _throw(errorMessage);
   }
 
