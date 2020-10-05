@@ -277,8 +277,8 @@ export class AllocatePaymentsComponent implements OnInit {
         },
         (error: HttpErrorResponse) => {
           //this.errorMessage1 = this.errorHandlerService.handleError(error);
-          this.errorMessage.title = "Submission failed due to below reason";
-          this.errorMessage.body = JSON.parse(error.toString())["err"];
+          this.errorMessage.title = "There was a Problem";
+          this.errorMessage.body = JSON.parse(error.toString())["err"].substr(7,JSON.parse(error.toString())["err"].length-1);
           this.errorMessage.showError = true;
           window.scrollTo(0, 0);
           this.isConfirmButtondisabled = false;
