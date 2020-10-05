@@ -90,7 +90,7 @@ downloadReport(){
           } else if(res['data'].length === 0 && selectedReportName === 'SURPLUS_AND_SHORTFALL' ) {
             res.data= shortFallsRptDefault;
           } 
-          if(res['data'].length > 0) {
+          if(res['data'].length > 1) {
             for( var i=0; i< res['data'].length; i++) {
               if(res['data'][i]["payment_asset_dcn"] !== undefined) {
                 res['data'][i]['env_ref'] = res['data'][i]["payment_asset_dcn"].substr(0,13);
@@ -124,7 +124,7 @@ downloadReport(){
           } else if(res['data'].length === 0 && selectedReportName === 'UNPROCESSED'){
             res.data = unProcessedRptDefault;
           }
-          if(res['data'].length > 0) {
+          if(res['data'].length > 1) {
           for( var i=0; i< res['data'].length; i++) {
             if(res['data'][i]["amount"] !== undefined) {
               res['data'][i]['amount'] = this.convertToFloatValue(res['data'][i]['amount']);
