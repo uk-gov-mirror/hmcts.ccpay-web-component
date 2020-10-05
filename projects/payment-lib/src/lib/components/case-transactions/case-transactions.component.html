@@ -60,15 +60,11 @@
       [FEE_RECORDS_EXISTS]="isAnyFeeGroupAvilable"
       [ISTURNOFF]="isTurnOff"
       [PAYMENTREF]="paymentRef"
+      [ISNEWPCIPALOFF]="isNewPcipalOff"
+      [ISOLDPCIPALOFF]="isOldPcipalOff"
       (getUnprocessedFeeCount) = "getUnprocessedFeeCount($event)"
       (selectedUnprocessedFeeEvent) = "selectedUnprocessedFeeEvent($event)">
       </ccpay-app-unprocessed-payments>
-      <!-- <hr class="govuk-section-records-break">
-      <ccpay-app-processed-payments
-      *ngIf="takePayment" [NONPAYMENTS]="nonPayments"
-      (goToPaymentViewComponent) = "goToPaymentViewComponent($event)"	>
-      </ccpay-app-processed-payments>
-      <hr class="govuk-section-records-break"> -->
     </div>
     <div  *ngIf="takePayment" class=" govuk-!-margin-top-9">
 
@@ -380,6 +376,8 @@
       *ngIf="isBulkScanEnable"
       [IS_BUTTON_ENABLE]="takePayment"
       [ISTURNOFF]="isTurnOff"
+      [ISNEWPCIPALOFF]="isNewPcipalOff"
+      [ISOLDPCIPALOFF]="isOldPcipalOff"
       [FEE_RECORDS_EXISTS]="isFeeRecordsExist" 
       [IS_OS_AMT_AVAILABLE]="isGrpOutstandingAmtPositive" 
       (selectedUnprocessedFeeEvent) = "selectedUnprocessedFeeEvent($event)">
