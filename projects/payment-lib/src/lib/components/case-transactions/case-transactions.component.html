@@ -60,6 +60,7 @@
       [FEE_RECORDS_EXISTS]="isAnyFeeGroupAvilable"
       [ISTURNOFF]="isTurnOff"
       [PAYMENTREF]="paymentRef"
+      [ISSFENABLE]="isStrategicFixEnable"
       (getUnprocessedFeeCount) = "getUnprocessedFeeCount($event)"
       (selectedUnprocessedFeeEvent) = "selectedUnprocessedFeeEvent($event)">
       </ccpay-app-unprocessed-payments>
@@ -381,6 +382,7 @@
       [IS_BUTTON_ENABLE]="takePayment"
       [ISTURNOFF]="isTurnOff"
       [FEE_RECORDS_EXISTS]="isFeeRecordsExist" 
+      [ISSFENABLE]="isStrategicFixEnable"
       [IS_OS_AMT_AVAILABLE]="isGrpOutstandingAmtPositive" 
       (selectedUnprocessedFeeEvent) = "selectedUnprocessedFeeEvent($event)">
     </ccpay-app-unprocessed-payments>

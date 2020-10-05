@@ -14,8 +14,11 @@ import { IBSPayments } from './interfaces/IBSPayments';
     <app-allocate-payments *ngIf="viewName === 'allocate-payments'"
     [isTurnOff]="ISTURNOFF"></app-allocate-payments>
     <ccpay-fee-summary *ngIf="viewName === 'fee-summary'"
-      [ccdCaseNumber]="CCD_CASE_NUMBER" [paymentGroupRef]="paymentGroupReference"
-      [isTurnOff]="ISTURNOFF"></ccpay-fee-summary>
+      [ccdCaseNumber]="CCD_CASE_NUMBER" 
+      [paymentGroupRef]="paymentGroupReference"
+      [isTurnOff]="ISTURNOFF"
+      [isStrategicFixEnable]="ISSFENABLE"
+      ></ccpay-fee-summary>
     <ccpay-reports *ngIf="viewName === 'reports'"></ccpay-reports>
     `
 })
