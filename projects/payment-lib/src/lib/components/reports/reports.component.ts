@@ -84,13 +84,14 @@ downloadReport(){
       this.paymentViewService.downloadSelectedReport(selectedReportName,selectedStartDate,selectedEndDate).subscribe(
         response =>  {
           this.errorMessage = this.errorHandlerService.getServerErrorMessage(false);
-          let res= {data: this.applyDateFormat(JSON.parse(response))};
+          const result = JSON.parse(response);
+          let res= {data: this.applyDateFormat(result)};
           if(res['data'].length === 0 && selectedReportName === 'PROCESSED_UNALLOCATED' ){
             res.data= processedUnallocated;
           } else if(res['data'].length === 0 && selectedReportName === 'SURPLUS_AND_SHORTFALL' ) {
             res.data= shortFallsRptDefault;
           } 
-          if(res['data'].length > 0) {
+          if(result['data'].length > 0) {
             for( var i=0; i< res['data'].length; i++) {
               if(res['data'][i]["payment_asset_dcn"] !== undefined) {
                 res['data'][i]['env_ref'] = res['data'][i]["payment_asset_dcn"].substr(0,13);
@@ -118,13 +119,14 @@ downloadReport(){
       this.bulkScaningPaymentService.downloadSelectedReport(selectedReportName,selectedStartDate,selectedEndDate).subscribe(
         response =>  {
           this.errorMessage = this.errorHandlerService.getServerErrorMessage(false);
-          let res = {data: this.applyDateFormat(JSON.parse(response))};
+          const result = JSON.parse(response);
+          let res = {data: this.applyDateFormat(result)};
           if(res['data'].length === 0 && selectedReportName === 'DATA_LOSS' ){
             res.data= dataLossRptDefault;
           } else if(res['data'].length === 0 && selectedReportName === 'UNPROCESSED'){
             res.data = unProcessedRptDefault;
           }
-          if(res['data'].length > 0) {
+          if(result['data'].length > 0) {
           for( var i=0; i< res['data'].length; i++) {
             if(res['data'][i]["amount"] !== undefined) {
               res['data'][i]['amount'] = this.convertToFloatValue(res['data'][i]['amount']);
