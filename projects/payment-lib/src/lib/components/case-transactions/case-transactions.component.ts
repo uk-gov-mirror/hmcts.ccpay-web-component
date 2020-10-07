@@ -75,7 +75,6 @@ export class CaseTransactionsComponent implements OnInit {
           this.paymentGroups = paymentGroups['payment_groups'];
           this.calculateAmounts();
           this.calculateRefundAmount();
-          this.checkForExceptionRecord();
         },
         (error: any) => {
           this.errorMessage = <any>error;
@@ -96,6 +95,7 @@ export class CaseTransactionsComponent implements OnInit {
         }
       );
     }
+    this.checkForExceptionRecord();
   }
 
   setDefaults(): void {
