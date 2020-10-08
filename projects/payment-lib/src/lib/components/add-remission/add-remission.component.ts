@@ -19,6 +19,7 @@ export class AddRemissionComponent implements OnInit {
   @Input() service: string;
   @Input() paymentGroupRef: string;
   @Input() isTurnOff: boolean;
+  @Input() isStrategicFixEnable: boolean;
   @Output() cancelRemission: EventEmitter<void> = new EventEmitter();
 
   remissionForm: FormGroup;
@@ -133,12 +134,11 @@ export class AddRemissionComponent implements OnInit {
       }
     );
 
-    const dcn = this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
-    const ISBSenable = this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
-    const isTurnOff = this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
-    const partUrl = `selectedOption=${this.option}${dcn}${ISBSenable}${isTurnOff}`;
-
-    let url = `/payment-history/${this.ccdCaseNumber}?view=case-transactions&takePayment=true&${partUrl}`;
+    let partUrl = this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
+    partUrl += this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
+    partUrl += this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
+    partUrl += this.isStrategicFixEnable ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
+    let url = `/payment-history/${this.ccdCaseNumber}?view=case-transactions&takePayment=true&selectedOption=${this.option}${partUrl}`;
     this.router.navigateByUrl(url);
   }
 }
