@@ -37,6 +37,7 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
   exceptionReference: string = null;
   selectedSiteId: string;
   selectedSiteName: string;
+  isStrategicFixEnable: boolean = true;
 
   constructor(private formBuilder: FormBuilder,
   private paymentViewService: PaymentViewService,
@@ -48,6 +49,7 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
     this.viewStatus = 'mainForm';
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
     this.bspaymentdcn = this.paymentLibComponent.bspaymentdcn;
+    this.isStrategicFixEnable = this.paymentLibComponent.ISSFENABLE;
     this.getUnassignedPayment();
 
     const emailPattern = '^[a-z0-9](\\.?[a-z0-9_-]){0,}@[a-z0-9-]+\\.([a-z]{1,6}\\.)?[a-z]{2,6}$';
@@ -73,6 +75,32 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
   confirmPayments() {
     this.isConfirmButtondisabled = true;
     const controls = this.markPaymentUnsolicitedForm.controls;
+    if(!this.isStrategicFixEnable) {
+      let allocatedRequest = {
+        allocation_status:'Transferred',
+        payment_allocation_status: {
+          description: '',
+          name: 'Transferred'
+        },
+        reason: controls.reason.value,
+        receiving_office: this.selectedSiteId,
+        user_id: this.siteID,
+      }
+      const postStrategicBody = new AllocatePaymentRequest
+      (this.ccdReference, this.unassignedRecord, this.siteID, this.exceptionReference, allocatedRequest);
+      this.bulkScaningPaymentService.postBSWoPGStrategic(postStrategicBody).subscribe(
+        res => {
+          this.errorMessage = this.getErrorMessage(false);
+          let response = JSON.parse(res);
+          if (response.success) {
+           this.gotoCasetransationPage();
+          }
+        },
+        (error: any) => {
+          this.errorMessage = this.getErrorMessage(true);
+          this.isConfirmButtondisabled = false;
+        });
+    } else {
     // controls.responsibleOffice.setValue('P219');
     this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'PROCESSED').subscribe(
       res1 => {
@@ -115,6 +143,7 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
         this.isConfirmButtondisabled = false;
       }
     );
+    }
   }
  saveAndContinue() {
     this.resetForm([false,false,false,false,false,false], 'all');

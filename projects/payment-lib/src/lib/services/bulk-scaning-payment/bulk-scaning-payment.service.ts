@@ -42,6 +42,16 @@ export class BulkScaningPaymentService {
       catchError(this.errorHandlerService.handleError)
     );
   }
+  postBSPaymentStrategic(body: AllocatePaymentRequest, paymentGroupRef: string): Observable<any> {
+    return this.https.post(`${this.paymentLibService.API_ROOT}/payment-groups/${paymentGroupRef}/bulk-scan-payments-strategic`, body).pipe(
+      catchError(this.errorHandlerService.handleError)
+    );
+  }
+  postBSWoPGStrategic(body: AllocatePaymentRequest): Observable<any> {
+    return this.https.post(`${this.paymentLibService.API_ROOT}/payment-groups/bulk-scan-payments-strategic`, body).pipe(
+      catchError(this.errorHandlerService.handleError)
+    );
+  }
   patchBSChangeStatus(dcnNumber: string, status: string): Observable<any> {
     return this.https.patch(`${this.paymentLibService.API_ROOT}/bulk-scan-payments/${dcnNumber}/status/${status}`, status).pipe(
       catchError(this.errorHandlerService.handleError)

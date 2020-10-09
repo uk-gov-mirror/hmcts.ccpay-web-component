@@ -42,7 +42,7 @@ export class FeeSummaryComponent implements OnInit {
   isPaymentExist: boolean = false;
   isRemissionsExist: Boolean = false;
   isRemissionsMatch = false;
-
+  isStrategicFixEnable: boolean;
 
   constructor(
     private router: Router,
@@ -56,6 +56,7 @@ export class FeeSummaryComponent implements OnInit {
     this.viewStatus = 'main';
     this.bsPaymentDcnNumber = this.paymentLibComponent.bspaymentdcn;
     this.selectedOption = this.paymentLibComponent.SELECTED_OPTION.toLocaleLowerCase();
+    this.isStrategicFixEnable = this.paymentLibComponent.ISSFENABLE;
 
     this.paymentViewService.getBSfeature().subscribe(
       features => {
@@ -190,12 +191,11 @@ export class FeeSummaryComponent implements OnInit {
         this.paymentLibComponent.ISBSENABLE = false;
       }
     );
-
-    const dcn = this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
-    const ISBSenable = this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
-    const isTurnOff = this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
-    const partUrl = `selectedOption=${this.paymentLibComponent.SELECTED_OPTION}${dcn}${ISBSenable}${isTurnOff}`;
-
+    let partUrl = `selectedOption=${this.paymentLibComponent.SELECTED_OPTION}`;
+        partUrl +=this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
+        partUrl +=this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
+        partUrl +=this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
+        partUrl +=this.paymentLibComponent.ISSFENABLE ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
     let url = `/payment-history/${this.ccdCaseNumber}?view=case-transactions&takePayment=true&${partUrl}`;
     this.router.navigateByUrl(url);
   }
@@ -204,15 +204,15 @@ export class FeeSummaryComponent implements OnInit {
   }
   redirectToFeeSearchPage(event: any, page?: string) {
     event.preventDefault();
-    let dcn = this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
-    const ISBSenable = this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
-    const isTurnOff = this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
-
+    let partUrl = this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
+    partUrl +=this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
+    partUrl +=this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
+    partUrl +=this.paymentLibComponent.ISSFENABLE ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
     if(this.viewStatus === 'feeRemovalConfirmation' || this.viewStatus === 'add_remission') {
       this.viewStatus = 'main';
       return;
     }
-    let url = `/fee-search?ccdCaseNumber=${this.ccdCaseNumber}&selectedOption=${this.paymentLibComponent.SELECTED_OPTION}&paymentGroupRef=${this.paymentGroupRef}${dcn}${ISBSenable}${isTurnOff}`;
+    let url = `/fee-search?ccdCaseNumber=${this.ccdCaseNumber}&selectedOption=${this.paymentLibComponent.SELECTED_OPTION}&paymentGroupRef=${this.paymentGroupRef}${partUrl}`;
     this.router.navigateByUrl(url);
   }
   takePayment() {

@@ -33,6 +33,7 @@ export class CaseTransactionsComponent implements OnInit {
   dcnNumber: string;
   paymentRef: string;
   isTurnOff: boolean;
+  isStrategicFixEnable: boolean;
   isAddFeeBtnEnabled: boolean = true;
   isExceptionRecord: boolean = false;
   isUnprocessedRecordSelected: boolean = false;
@@ -67,8 +68,8 @@ export class CaseTransactionsComponent implements OnInit {
     this.isBulkScanEnable = this.paymentLibComponent.ISBSENABLE;
     this.dcnNumber = this.paymentLibComponent.DCN_NUMBER;
     this.selectedOption = this.paymentLibComponent.SELECTED_OPTION.toLocaleLowerCase();
-
     this.isTurnOff = this.paymentLibComponent.ISTURNOFF;
+    this.isStrategicFixEnable = this.paymentLibComponent.ISSFENABLE;
     if(!this.isTurnOff) {
       this.caseTransactionsService.getPaymentGroups(this.ccdCaseNumber).subscribe(
         paymentGroups => {
@@ -356,9 +357,11 @@ checkForExceptionRecord(): void {
   redirectToFeeSearchPage(event: any) {
     event.preventDefault();
     if(!this.isAnyFeeGroupAvilable || this.isTurnOff) {
-    const turnOffUrl = this.isTurnOff ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
-    const url = this.isBulkScanEnable ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
-    this.router.navigateByUrl(`/fee-search?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}${url}${turnOffUrl}`);
+      let url = this.isBulkScanEnable ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
+        url += this.isTurnOff ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
+        url += this.isStrategicFixEnable ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
+    this.router.navigateByUrl(`/fee-search?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}${url}`);
+    this.router.navigateByUrl(`/fee-search?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}${url}`);
     } else {
       this.paymentLibComponent.bspaymentdcn = null;
       this.paymentLibComponent.paymentGroupReference = this.paymentRef;

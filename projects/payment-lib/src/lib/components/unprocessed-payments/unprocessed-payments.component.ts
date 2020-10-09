@@ -16,6 +16,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
   @Input('ISTURNOFF') ISTURNOFF: boolean;
   @Input('IS_BUTTON_ENABLE') IS_BUTTON_ENABLE: boolean;
   @Input('IS_OS_AMT_AVAILABLE') IS_OS_AMT_AVAILABLE: boolean;
+  @Input('ISSFENABLE') ISSFENABLE: boolean;
 
   @Output() selectedUnprocessedFeeEvent: EventEmitter<string> = new EventEmitter();
   @Output() getUnprocessedFeeCount: EventEmitter<string> = new EventEmitter();
@@ -36,6 +37,8 @@ export class UnprocessedPaymentsComponent implements OnInit {
   serviceId: string = null;
   isBulkScanEnable;
   isTurnOff: boolean = true;
+  isStFixEnable;
+
   constructor(private router: Router,
     private bulkScaningPaymentService: BulkScaningPaymentService,
     private paymentLibComponent: PaymentLibComponent) { }
@@ -47,7 +50,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
     this.dcnNumber = this.paymentLibComponent.DCN_NUMBER;
     this.isBulkScanEnable = this.paymentLibComponent.ISBSENABLE;
     this.isTurnOff = this.paymentLibComponent.ISTURNOFF;
-
+    this.isStFixEnable = this.paymentLibComponent.ISSFENABLE;
 
     this.getUnassignedPaymentlist();
      }
@@ -107,10 +110,11 @@ export class UnprocessedPaymentsComponent implements OnInit {
   }
   redirectToFeeSearchPage(event: any) {
     event.preventDefault();
-    const url = this.isBulkScanEnable ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
-    const isTurnOff = this.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
+    let url = this.isBulkScanEnable ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
+      url += this.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
+      url += this.isStFixEnable ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
 
-    this.router.navigateByUrl(`/fee-search?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}&dcn=${this.recordId}${url}${isTurnOff}`);
+    this.router.navigateByUrl(`/fee-search?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}&dcn=${this.recordId}${url}`);
   }
   loadUnsolicitedPage(viewName: string) {
     this.paymentLibComponent.bspaymentdcn = this.recordId;
@@ -125,6 +129,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
     this.paymentLibComponent.bspaymentdcn = this.recordId;
     this.paymentLibComponent.unProcessedPaymentServiceId = this.serviceId
     this.paymentLibComponent.isTurnOff = this.ISTURNOFF;
+    this.paymentLibComponent.ISSFENABLE = this.isStFixEnable;
 
     if(!this.ISTURNOFF) {
       this.paymentLibComponent.paymentGroupReference = this.PAYMENTREF;
