@@ -115,7 +115,7 @@ getAllocationStatus(payments: any){
 }
 
 checkForExceptionRecord(): void {
-  if(this.paymentGroups.length === 0 && this.selectedOption.toLocaleLowerCase() === 'ccdorexception') {
+  if(this.paymentGroups.length === 0 && (this.selectedOption.toLocaleLowerCase() === 'ccdorexception') || this.selectedOption.toLocaleLowerCase() === 'rc') {
     this.bulkScaningPaymentService.getBSPaymentsByCCD(this.ccdCaseNumber).subscribe(
       recordData => {
        if(recordData['data'] && recordData['data'].exception_record_reference && recordData['data'].exception_record_reference.length > 0 && recordData['data'].ccd_reference >0) {
@@ -147,6 +147,7 @@ checkForExceptionRecord(): void {
       this.isAddFeeBtnEnabled = true;
     }
   }
+
   if (this.paymentGroups.length > 0)
   this.paymentGroups.forEach(paymentGroup => {
     if (paymentGroup.payments) {
