@@ -65,6 +65,7 @@
 
   <ng-container *ngIf="(viewStatus === 'mainForm' && !isTurnOff) || viewStatus === 'allocatePaymentConfirmation'">
     <ccpay-error-banner *ngIf="errorMessage.showError" [errorMessage]="errorMessage"></ccpay-error-banner>
+    <input #myInput type='hidden' id='iFrameDrivenImageValue' value='{{feedbackUrlLabel}}'>
     <h1 class="govuk-heading-xl">Confirm association</h1>
     <h2 class="govuk-heading-l govuk-heading-l--custom">
       Amount to be allocated: {{amountForAllocation | currency:'GBP':'symbol-narrow':'1.2-2'}}
