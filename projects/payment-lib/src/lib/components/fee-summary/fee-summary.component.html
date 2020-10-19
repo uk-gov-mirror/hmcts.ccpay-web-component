@@ -191,5 +191,12 @@
       </div>
     </ng-container>
 
-<ccpay-add-remission *ngIf="viewStatus === 'add_remission' && currentFee" [isTurnOff]="isTurnOff" [fee]="currentFee" [service]="service" [ccdCaseNumber]="ccdCaseNumber" [paymentGroupRef]="paymentGroupRef" (cancelRemission)="cancelRemission()"></ccpay-add-remission>
+<ccpay-add-remission *ngIf="viewStatus === 'add_remission' && currentFee"
+ [isTurnOff]="isTurnOff"
+ [isStrategicFixEnable]="isStrategicFixEnable" 
+ [fee]="currentFee" 
+ [service]="service" 
+ [ccdCaseNumber]="ccdCaseNumber" 
+ [paymentGroupRef]="paymentGroupRef" 
+ (cancelRemission)="cancelRemission()"></ccpay-add-remission>
 <div *ngIf="viewStatus === 'payhub_view' && payhubHtml" [innerHTML]="payhubHtml | sanitizeHtml" id="payhub-html-id"></div>

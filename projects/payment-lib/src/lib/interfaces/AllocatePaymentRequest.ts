@@ -15,8 +15,21 @@ export class AllocatePaymentRequest {
   payment_method: String;
   requestor: String;
   site_id: String;
+  payment_allocation_dto?: {
+    allocation_reason: String,
+    allocation_status: String,
+    explanation: String,
+    payment_allocation_status: Object,
+    payment_group_reference: String,
+    payment_reference: String,
+    reason: String,
+    receiving_office: String,
+    unidentified_reason: String,
+    user_id: String,
+    user_name: String
+  }
 
-  constructor(ccd_case_number : string, unAllocatedPayment: IBSPayments, siteID: string, exceptionRecord: string) {
+  constructor(ccd_case_number : string, unAllocatedPayment: IBSPayments, siteID: string, exceptionRecord: string, allocatedRequest?: any) {
     this.amount = unAllocatedPayment.amount;
     this.banked_date = unAllocatedPayment.date_banked;
     this.ccd_case_number = ccd_case_number;
@@ -37,5 +50,9 @@ export class AllocatePaymentRequest {
     this.payment_method = unAllocatedPayment.payment_method;
     this.requestor= siteID==='AA07' ? 'DIVORCE' : siteID==='AA08' ? 'PROBATE' : 'FINREM';
     this.site_id= siteID;
+    if(allocatedRequest) {
+      this.payment_allocation_dto = allocatedRequest;
+    }
+
   }
 }
