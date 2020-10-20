@@ -38,6 +38,7 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
   selectedSiteId: string;
   selectedSiteName: string;
   isStrategicFixEnable: boolean = true;
+  siteIDList;
 
   constructor(private formBuilder: FormBuilder,
   private paymentViewService: PaymentViewService,
@@ -52,7 +53,14 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
     this.isStrategicFixEnable = this.paymentLibComponent.ISSFENABLE;
     this.getUnassignedPayment();
 
-    const emailPattern = '^[a-z0-9](\\.?[a-z0-9_-]){0,}@[a-z0-9-]+\\.([a-z]{1,6}\\.)?[a-z]{2,6}$';
+    this.paymentViewService.getSiteID().subscribe(
+      siteids => {
+        this.siteIDList = siteids;
+      },
+      err => {
+
+      }
+    );
     
     this.markPaymentUnsolicitedForm = this.formBuilder.group({
       reason: new FormControl('', Validators.compose([
