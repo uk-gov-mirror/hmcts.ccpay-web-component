@@ -55,7 +55,7 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
 
     this.paymentViewService.getSiteID().subscribe(
       siteids => {
-        this.siteIDList = siteids;
+        this.siteIDList = JSON.parse(siteids);
       },
       err => {
 
