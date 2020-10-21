@@ -21,6 +21,7 @@ export class AllocatePaymentsComponent implements OnInit {
   viewStatus: string;
   ccdCaseNumber: string;
   bspaymentdcn: string;
+  feedbackUrlLabel:string;
   unAllocatedPayment: IBSPayments = {
     amount: 0
   };
@@ -351,6 +352,7 @@ export class AllocatePaymentsComponent implements OnInit {
           title:'Amount left to be allocated',
           reason:'',
         };
+      this.feedbackUrlLabel = this.isRemainingAmountGtZero ? 'CONFIRMALLOCATION_SURPLUS' : this.isRemainingAmountLtZero ? 'CONFIRMALLOCATION_SHORTFALL' : 'CONFIRMALLOCATION';
       this.remainingAmount =  this.isRemainingAmountGtZero ? remainingToBeAssigned : this.isRemainingAmountLtZero ? remainingToBeAssigned * -1 : 0;
       this.afterFeeAllocateOutstanding = remainingToBeAssigned >= 0 ? 0 : (remainingToBeAssigned * -1);
       this.amountForAllocation = GroupOutstandingAmount >= this.unAllocatedPayment.amount ? this.unAllocatedPayment.amount : GroupOutstandingAmount;
