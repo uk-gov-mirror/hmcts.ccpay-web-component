@@ -59,6 +59,7 @@
       [IS_BUTTON_ENABLE]="takePayment"
       [FEE_RECORDS_EXISTS]="isAnyFeeGroupAvilable"
       [ISTURNOFF]="isTurnOff"
+      [ISSFENABLE]="isStrategicFixEnable"
       [PAYMENTREF]="paymentRef"
       [ISNEWPCIPALOFF]="isNewPcipalOff"
       [ISOLDPCIPALOFF]="isOldPcipalOff"
@@ -378,6 +379,7 @@
       [ISTURNOFF]="isTurnOff"
       [ISNEWPCIPALOFF]="isNewPcipalOff"
       [ISOLDPCIPALOFF]="isOldPcipalOff"
+      [ISSFENABLE]="isStrategicFixEnable"
       [FEE_RECORDS_EXISTS]="isFeeRecordsExist" 
       [IS_OS_AMT_AVAILABLE]="isGrpOutstandingAmtPositive" 
       (selectedUnprocessedFeeEvent) = "selectedUnprocessedFeeEvent($event)">
@@ -395,6 +397,7 @@
   *ngIf="isBulkScanEnable && !takePayment"
   [IS_BUTTON_ENABLE]="takePayment"
   [ISTURNOFF]="isTurnOff"
+  [ISSFENABLE]="isStrategicFixEnable"
   [FEE_RECORDS_EXISTS]="isFeeRecordsExist" 
   [IS_OS_AMT_AVAILABLE]="isGrpOutstandingAmtPositive" 
   (selectedUnprocessedFeeEvent) = "selectedUnprocessedFeeEvent($event)">
@@ -437,6 +440,7 @@
 </div>
 </div>
 
+<input #myInput type='hidden' id='iFrameDrivenImageValue' value='FEEREMOVALCONFIRMATION_2'>
 <ng-container *ngIf="viewStatus === 'feeRemovalConfirmation'">
   <div class="govuk-warning-text">
     <span class="govuk-warning-text__icon" aria-hidden="true">!</span>

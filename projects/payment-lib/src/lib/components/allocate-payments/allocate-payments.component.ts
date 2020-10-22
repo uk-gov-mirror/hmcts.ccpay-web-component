@@ -21,6 +21,7 @@ export class AllocatePaymentsComponent implements OnInit {
   viewStatus: string;
   ccdCaseNumber: string;
   bspaymentdcn: string;
+  feedbackUrlLabel:string;
   unAllocatedPayment: IBSPayments = {
     amount: 0
   };
@@ -55,6 +56,7 @@ export class AllocatePaymentsComponent implements OnInit {
   userName: string = null;
   paymentSectionLabel: any;
   paymentRef: string = null;
+  isStrategicFixEnable: boolean = true;
 
   reasonList: { [key: string]: { [key: string]: string } }= {
     overPayment: {
@@ -98,6 +100,7 @@ export class AllocatePaymentsComponent implements OnInit {
     this.bspaymentdcn = this.paymentLibComponent.bspaymentdcn;
     this.paymentRef = this.paymentLibComponent.paymentGroupReference;
     this.selectedOption = this.paymentLibComponent.SELECTED_OPTION;
+    this.isStrategicFixEnable = this.paymentLibComponent.ISSFENABLE;
     this.isTurnOff = this.paymentLibComponent.isTurnOff;
     this.overUnderPaymentForm = this.formBuilder.group({
       moreDetails: new FormControl('', Validators.compose([
@@ -246,6 +249,36 @@ export class AllocatePaymentsComponent implements OnInit {
     }
   }
   finalServiceCall() {
+    if(!this.isStrategicFixEnable) {
+      let allocatedRequest = {
+        reason: this.paymentReason,
+        allocation_status:'Allocated',
+        explanation: this.otherPaymentExplanation,
+        payment_allocation_status: {
+          description: '',
+          name: 'Allocated'
+        },
+        payment_group_reference: this.paymentGroup.payment_group_reference,
+        user_id: this.siteID,
+        user_name: this.userName
+      }
+      const postStrategicBody = new AllocatePaymentRequest
+      (this.ccdReference, this.unAllocatedPayment, this.siteID, this.exceptionReference, allocatedRequest);
+      this.bulkScaningPaymentService.postBSPaymentStrategic(postStrategicBody , this.paymentGroup.payment_group_reference).subscribe(
+        res => {
+          this.errorMessage = this.errorHandlerService.getServerErrorMessage(false);
+          let response = JSON.parse(res);
+          if (response.success) {
+           this.gotoCasetransationPage();
+          }
+        },
+        (error: any) => {
+          this.errorMessage = this.errorHandlerService.getServerErrorMessage(true);
+          window.scrollTo(0, 0);
+          this.isConfirmButtondisabled = false;
+        });
+
+    } else {
     this.bulkScaningPaymentService.patchBSChangeStatus(this.unAllocatedPayment.dcn_reference, 'PROCESSED').subscribe(
       res1 => {
         this.errorMessage = this.errorHandlerService.getServerErrorMessage(false);
@@ -272,6 +305,7 @@ export class AllocatePaymentsComponent implements OnInit {
                 (error: any) => {
                   this.bulkScaningPaymentService.patchBSChangeStatus(this.unAllocatedPayment.dcn_reference, 'COMPLETE').subscribe();
                   this.errorMessage = this.errorHandlerService.getServerErrorMessage(true);
+                  window.scrollTo(0, 0);
                   this.isConfirmButtondisabled = false;
                 }
                 );
@@ -280,6 +314,7 @@ export class AllocatePaymentsComponent implements OnInit {
             (error: any) => {
               this.bulkScaningPaymentService.patchBSChangeStatus(this.unAllocatedPayment.dcn_reference, 'COMPLETE').subscribe();
               this.errorMessage = this.errorHandlerService.getServerErrorMessage(true);
+              window.scrollTo(0, 0);
               this.isConfirmButtondisabled = false;
             }
           );
@@ -287,9 +322,11 @@ export class AllocatePaymentsComponent implements OnInit {
       },
       (error: any) => {
         this.errorMessage = this.errorHandlerService.getServerErrorMessage(true);
+        window.scrollTo(0, 0);
         this.isConfirmButtondisabled = false;
       }
     );  
+  }
   }
 
   saveAndContinue(){
@@ -315,6 +352,7 @@ export class AllocatePaymentsComponent implements OnInit {
           title:'Amount left to be allocated',
           reason:'',
         };
+      this.feedbackUrlLabel = this.isRemainingAmountGtZero ? 'CONFIRMALLOCATION_SURPLUS' : this.isRemainingAmountLtZero ? 'CONFIRMALLOCATION_SHORTFALL' : 'CONFIRMALLOCATION';
       this.remainingAmount =  this.isRemainingAmountGtZero ? remainingToBeAssigned : this.isRemainingAmountLtZero ? remainingToBeAssigned * -1 : 0;
       this.afterFeeAllocateOutstanding = remainingToBeAssigned >= 0 ? 0 : (remainingToBeAssigned * -1);
       this.amountForAllocation = GroupOutstandingAmount >= this.unAllocatedPayment.amount ? this.unAllocatedPayment.amount : GroupOutstandingAmount;

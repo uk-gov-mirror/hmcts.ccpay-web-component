@@ -18,6 +18,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
   @Input('IS_OS_AMT_AVAILABLE') IS_OS_AMT_AVAILABLE: boolean;
   @Input('ISNEWPCIPALOFF') ISNEWPCIPALOFF: boolean;
   @Input('ISOLDPCIPALOFF') ISOLDPCIPALOFF: boolean;
+  @Input('ISSFENABLE') ISSFENABLE: boolean;
 
   @Output() selectedUnprocessedFeeEvent: EventEmitter<string> = new EventEmitter();
   @Output() getUnprocessedFeeCount: EventEmitter<string> = new EventEmitter();
@@ -40,6 +41,8 @@ export class UnprocessedPaymentsComponent implements OnInit {
   isNewpcipaloff;
   isOldpcipaloff;
   isTurnOff: boolean = true;
+  isStFixEnable;
+
   constructor(private router: Router,
     private bulkScaningPaymentService: BulkScaningPaymentService,
     private paymentLibComponent: PaymentLibComponent) { }
@@ -53,6 +56,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
     this.isTurnOff = this.paymentLibComponent.ISTURNOFF;
     this.isNewpcipaloff = this.paymentLibComponent.ISNEWPCIPALOFF;
     this.isOldpcipaloff = this.paymentLibComponent.ISOLDPCIPALOFF;
+    this.isStFixEnable = this.paymentLibComponent.ISSFENABLE;
 
     this.getUnassignedPaymentlist();
   }
@@ -114,6 +118,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
     event.preventDefault();
     let url = this.isBulkScanEnable ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
     url += this.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
+    url += this.isStFixEnable ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
     url += this.isOldpcipaloff ? '&isOldPcipalOff=Enable' : '&isOldPcipalOff=Disable';
     url += this.isNewpcipaloff ? '&isNewPcipalOff=Enable' : '&isNewPcipalOff=Disable';
 
@@ -134,6 +139,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
     this.paymentLibComponent.isTurnOff = this.ISTURNOFF;
     this.paymentLibComponent.isNewPcipalOff = this.ISNEWPCIPALOFF;
     this.paymentLibComponent.isOldPcipalOff = this.ISOLDPCIPALOFF;
+    this.paymentLibComponent.ISSFENABLE = this.isStFixEnable;
 
     if(!this.ISTURNOFF) {
       this.paymentLibComponent.paymentGroupReference = this.PAYMENTREF;
