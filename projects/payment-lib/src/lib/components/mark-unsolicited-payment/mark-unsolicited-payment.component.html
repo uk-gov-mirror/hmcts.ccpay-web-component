@@ -43,7 +43,7 @@
       </label>
       <select class="form-control short-input" id="responsibleOffice" formControlName="responsibleOffice" (change)="selectchange($event)">
         <option value="" selected='selected'>Please select</option>
-        <option  *ngFor="let siteID of siteIDList;" value="{{siteID.site_id}}">{{siteID.site_name}}</option>
+        <option  *ngFor="let siteID of siteIDList;" value="{{siteID.siteId}}">{{siteID.siteName}} ({{siteID.siteId}})</option>
       </select>
     </div>
    <div class="govuk-button--group">
