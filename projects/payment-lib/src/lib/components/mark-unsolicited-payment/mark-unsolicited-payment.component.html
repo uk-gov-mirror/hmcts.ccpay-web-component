@@ -1,5 +1,6 @@
 <div class="mkpay-unidentified">
   <div *ngIf="viewStatus === 'mainForm'">
+  <ccpay-error-banner *ngIf="errorMessage.showError" [errorMessage]="errorMessage"></ccpay-error-banner>
   <h1 class="heading-large">Mark payment as transferred</h1>
   <div class="govuk-grid-column-full govuk-!-padding-bottom-3">
     <hr class="govuk-section-break govuk-section-break--visible">
@@ -45,6 +46,12 @@
         <option value="" selected='selected'>Please select</option>
         <option  *ngFor="let siteID of siteIDList;" value="{{siteID.siteId}}">{{siteID.siteName}} ({{siteID.siteId}})</option>
       </select>
+      <p class="inline-error-message" *ngIf="isReasonEmpty || reasonHasError || reasonMinHasError || reasonMaxHasError">
+        <span *ngIf="isReasonEmpty">Enter a reason for marking this payment as transferred.</span>
+        <span *ngIf="reasonHasError">Enter a valid reason</span>
+        <span *ngIf="reasonMinHasError">Reason should be at least 3 characters.</span>
+        <span *ngIf="reasonMaxHasError">Reason should be 255 characters or under.</span>
+      </p>
     </div>
    <div class="govuk-button--group">
       <button type="submit" class="button" (click)="saveAndContinue()">

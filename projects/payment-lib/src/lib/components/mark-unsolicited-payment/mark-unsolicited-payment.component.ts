@@ -6,8 +6,8 @@ import { IBSPayments } from '../../interfaces/IBSPayments';
 import { UnsolicitedPaymentsRequest } from '../../interfaces/UnsolicitedPaymentsRequest';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import { AllocatePaymentRequest } from '../../interfaces/AllocatePaymentRequest';
-import { stringLiteral } from 'babel-types';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { ErrorHandlerService } from '../../services/shared/error-handler.service';
+
 
 @Component({
   selector: 'app-mark-unsolicited-payment',
@@ -55,10 +55,11 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
 
     this.paymentViewService.getSiteID().subscribe(
       siteids => {
+        this.errorMessage = this.getErrorMessage(false);
         this.siteIDList = JSON.parse(siteids);
       },
       err => {
-
+        this.errorMessage = this.getErrorMessage(true);
       }
     );
     
@@ -251,8 +252,8 @@ cancelMarkUnsolicitedPayments(type?:string){
 
   getErrorMessage(isErrorExist) {
     return {
-      title: "There is a problem with the service",
-      body: "Try again later",
+      title: "Something went wrong.",
+      body: "Please try again later.",
       showError: isErrorExist
     };
   }
