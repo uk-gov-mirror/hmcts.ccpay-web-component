@@ -161,12 +161,12 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
     this.resetForm([false,false,false,false,false,false], 'all');
         const formerror = this.markPaymentUnsolicitedForm.controls.reason.errors;
         const reasonField = this.markPaymentUnsolicitedForm.controls.reason;
-        // this.markPaymentUnsolicitedForm.controls.responsibleOffice.setValue('P219');
-        const officeIdField = this.selectedSiteId;
+        //const officeIdField = this.selectedSiteId;
+        const officeIdField  = this.markPaymentUnsolicitedForm.controls.responsibleOffice;
     if (this.markPaymentUnsolicitedForm.dirty && this.markPaymentUnsolicitedForm.valid) {
       const controls = this.markPaymentUnsolicitedForm.controls;
       this.emailId = controls.emailId.value;
-      this.responsibleOffice = officeIdField;
+      this.responsibleOffice = officeIdField.value;
       this.responsiblePerson = controls.responsiblePerson.value;
       this.reason = controls.reason.value;
       this.viewStatus = 'unsolicitedContinueConfirm';
@@ -183,12 +183,12 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
       if(formerror && formerror.maxlength && formerror.maxlength.actualLength > 255 ) {
         this.resetForm([false,false,false,true,false,false], 'reason');
       }
-      // if(officeIdField.value == '') {
-      //   this.resetForm([false,false,false,false,true,false], 'responsibleOffice');
-      // }
-      // if(officeIdField.value != '' && officeIdField.invalid) {
-      //   this.resetForm([false,false,false,false,false,true],'responsibleOffice');
-      // }
+      if(officeIdField.value == '') {
+        this.resetForm([false,false,false,false,true,false], 'responsibleOffice');
+      }
+      if(officeIdField.value != '' && officeIdField.invalid) {
+        this.resetForm([false,false,false,false,false,true],'responsibleOffice');
+      }
     }
   }
   resetForm(val, field) {
