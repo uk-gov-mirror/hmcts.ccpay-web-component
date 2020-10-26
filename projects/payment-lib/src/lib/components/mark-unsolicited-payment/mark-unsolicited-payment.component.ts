@@ -82,7 +82,7 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
           description: '',
           name: 'Transferred'
         },
-        reason: controls.reason.value,
+        unidentified_reason: controls.reason.value,
         receiving_office: this.selectedSiteId,
         user_id: this.siteID,
       }
