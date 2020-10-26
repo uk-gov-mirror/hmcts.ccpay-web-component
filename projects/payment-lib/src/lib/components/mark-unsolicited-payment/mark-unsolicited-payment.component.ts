@@ -32,7 +32,8 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
   responsiblePerson: string;
   responsibleOffice: string;
   emailId: string;
-  isConfirmButtondisabled:Boolean = false;
+  isConfirmButtondisabled: Boolean = false;
+  isContinueButtondisabled: Boolean = false;
   ccdReference: string = null;
   exceptionReference: string = null;
   selectedSiteId: string;
@@ -55,10 +56,12 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
 
     this.paymentViewService.getSiteID().subscribe(
       siteids => {
+        this.isContinueButtondisabled = false;
         this.errorMessage = this.getErrorMessage(false);
         this.siteIDList = JSON.parse(siteids);
       },
       err => {
+        this.isContinueButtondisabled = true;
         this.errorMessage = this.getErrorMessage(true);
       }
     );
