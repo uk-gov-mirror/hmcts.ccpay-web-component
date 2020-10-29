@@ -48,7 +48,7 @@ export class AllocatePaymentRequest {
       name: 'success'
     }
     this.payment_method = unAllocatedPayment.payment_method;
-    this.requestor= siteID==='AA07' ? 'DIVORCE' : siteID==='AA09' ? 'FINREM' : 'PROBATE';
+    this.requestor= siteID==='AA07' ? 'DIVORCE' : siteID==='AA08' ? 'PROBATE' : 'FINREM';
     this.site_id= siteID;
     if(allocatedRequest) {
       this.payment_allocation_dto = allocatedRequest;
