@@ -235,6 +235,13 @@
   (cancelRemission)="cancelRemission()">
 </ccpay-add-remission>
 
-<input *ngIf="viewStatus === 'payhub_view' && payhubHtml" #myInput type='hidden' id='iFrameDrivenImageValue' value='PCIPAL'>
-<div *ngIf="viewStatus === 'payhub_view' && payhubHtml" [innerHTML]="payhubHtml | sanitizeHtml" id="payhub-html-id">
-</div>
+<ccpay-add-remission *ngIf="viewStatus === 'add_remission' && currentFee"
+ [isTurnOff]="isTurnOff"
+ [isStrategicFixEnable]="isStrategicFixEnable" 
+ [fee]="currentFee" 
+ [service]="service" 
+ [ccdCaseNumber]="ccdCaseNumber" 
+ [paymentGroupRef]="paymentGroupRef" 
+ (cancelRemission)="cancelRemission()"></ccpay-add-remission>
+ <input *ngIf="viewStatus === 'payhub_view' && payhubHtml" #myInput type='hidden' id='iFrameDrivenImageValue' value='PCIPAL'>
+<div *ngIf="viewStatus === 'payhub_view' && payhubHtml" [innerHTML]="payhubHtml | sanitizeHtml" id="payhub-html-id"></div>

@@ -59,6 +59,7 @@
       [IS_BUTTON_ENABLE]="takePayment"
       [FEE_RECORDS_EXISTS]="isAnyFeeGroupAvilable"
       [ISTURNOFF]="isTurnOff"
+      [ISSFENABLE]="isStrategicFixEnable"
       [PAYMENTREF]="paymentRef"
       [ISSFENABLE]="isStrategicFixEnable"
       [ISNEWPCIPALOFF]="isNewPcipalOff"
@@ -397,6 +398,7 @@
   *ngIf="isBulkScanEnable && !takePayment"
   [IS_BUTTON_ENABLE]="takePayment"
   [ISTURNOFF]="isTurnOff"
+  [ISSFENABLE]="isStrategicFixEnable"
   [FEE_RECORDS_EXISTS]="isFeeRecordsExist" 
   [IS_OS_AMT_AVAILABLE]="isGrpOutstandingAmtPositive" 
   (selectedUnprocessedFeeEvent) = "selectedUnprocessedFeeEvent($event)">

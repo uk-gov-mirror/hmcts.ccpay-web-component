@@ -275,8 +275,6 @@ export class AllocatePaymentsComponent implements OnInit {
         (error: any) => {
           this.errorMessage = this.errorHandlerService.getServerErrorMessage(true);
           window.scrollTo(0, 0);
-          //const elm = document.getElementById('bsErrorMsgBanner');
-          //elm.scrollIntoView({behavior: 'smooth', block: "center", inline: 'nearest'});
           this.isConfirmButtondisabled = false;
         });
 

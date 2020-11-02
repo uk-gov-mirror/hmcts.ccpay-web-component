@@ -47,6 +47,7 @@ export class FeeSummaryComponent implements OnInit {
   isPaymentExist: boolean = false;
   isRemissionsExist: Boolean = false;
   isRemissionsMatch = false;
+  isStrategicFixEnable: boolean;
 
   constructor(
     private router: Router,
@@ -60,6 +61,7 @@ export class FeeSummaryComponent implements OnInit {
     this.viewStatus = 'main';
     this.bsPaymentDcnNumber = this.paymentLibComponent.bspaymentdcn;
     this.selectedOption = this.paymentLibComponent.SELECTED_OPTION.toLocaleLowerCase();
+    this.isStrategicFixEnable = this.paymentLibComponent.ISSFENABLE;
 
     if ((!this.isOldPcipalOff && this.isNewPcipalOff)) {
       this.platForm = '8x8';

@@ -71,7 +71,6 @@ export class CaseTransactionsComponent implements OnInit {
     this.isBulkScanEnable = this.paymentLibComponent.ISBSENABLE;
     this.dcnNumber = this.paymentLibComponent.DCN_NUMBER;
     this.selectedOption = this.paymentLibComponent.SELECTED_OPTION.toLocaleLowerCase();
-
     this.isTurnOff = this.paymentLibComponent.ISTURNOFF;
     this.isStrategicFixEnable = this.paymentLibComponent.ISSFENABLE;
     this.isNewPcipalOff = this.paymentLibComponent.ISNEWPCIPALOFF;

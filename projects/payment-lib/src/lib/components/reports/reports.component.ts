@@ -127,15 +127,13 @@ downloadReport(){
             res.data = unProcessedRptDefault;
           }
           if(result['data'].length > 0) {
-            for( var i=0; i< res['data'].length; i++) {
-              if(res['data'][i]["payment_asset_dcn"] !== undefined) {
-                res['data'][i]['env_ref'] = res['data'][i]["payment_asset_dcn"].substr(0,13);
-                res['data'][i]['env_item'] = res['data'][i]["payment_asset_dcn"].substr(13,21);
-              }
-              if(res['data'][i]["amount"] !== undefined) {
-                res['data'][i]['amount'] = this.convertToFloatValue(res['data'][i]['amount']);
-              }
-          }
+          for( var i=0; i< res['data'].length; i++) {
+            if(res['data'][i]["amount"] !== undefined) {
+              res['data'][i]['amount'] = this.convertToFloatValue(res['data'][i]['amount']);
+            }
+            if(res['data'][i]["payment_asset_dcn"] !== undefined) {
+            res['data'][i]['env_ref'] = res['data'][i]["payment_asset_dcn"].substr(0,13);
+            res['data'][i]['env_item'] = res['data'][i]["payment_asset_dcn"].substr(13,21);
           }
           this.isDownLoadButtondisabled = false;
           this.xlFileService.exportAsExcelFile(res['data'], this.getFileName(this.reportsForm.get('selectedreport').value, selectedStartDate, selectedEndDate ));
