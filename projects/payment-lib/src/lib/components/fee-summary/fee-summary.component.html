@@ -223,18 +223,6 @@
         </form>
       </div>
     </ng-container>
-<ccpay-add-remission 
-  *ngIf="viewStatus === 'add_remission' && currentFee" 
-  [isTurnOff]="isTurnOff" 
-  [isOldPcipalOff]="isOldPcipalOff" 
-  [isNewPcipalOff]="isNewPcipalOff" 
-  [fee]="currentFee" 
-  [service]="service" 
-  [ccdCaseNumber]="ccdCaseNumber"
-  [paymentGroupRef]="paymentGroupRef"
-  (cancelRemission)="cancelRemission()">
-</ccpay-add-remission>
-
 <ccpay-add-remission *ngIf="viewStatus === 'add_remission' && currentFee"
  [isTurnOff]="isTurnOff"
  [isStrategicFixEnable]="isStrategicFixEnable" 
