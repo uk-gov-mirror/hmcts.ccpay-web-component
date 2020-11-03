@@ -90,7 +90,7 @@ downloadReport(){
             res.data= processedUnallocated;
           } else if(res['data'].length === 0 && selectedReportName === 'SURPLUS_AND_SHORTFALL' ) {
             res.data= shortFallsRptDefault;
-          }  
+          } 
           if(result['data'].length > 0) {
             for( var i=0; i< res['data'].length; i++) {
               if(res['data'][i]["payment_asset_dcn"] !== undefined) {
@@ -107,7 +107,7 @@ downloadReport(){
                 res['data'][i]['payment_amount'] = this.convertToFloatValue(res['data'][i]['payment_amount']);
               }
             }
-          }
+          } 
           this.isDownLoadButtondisabled = false;
           this.xlFileService.exportAsExcelFile(res['data'], this.getFileName(this.reportsForm.get('selectedreport').value, selectedStartDate, selectedEndDate));
         },
@@ -135,6 +135,8 @@ downloadReport(){
             res['data'][i]['env_ref'] = res['data'][i]["payment_asset_dcn"].substr(0,13);
             res['data'][i]['env_item'] = res['data'][i]["payment_asset_dcn"].substr(13,21);
           }
+        }
+        }
           this.isDownLoadButtondisabled = false;
           this.xlFileService.exportAsExcelFile(res['data'], this.getFileName(this.reportsForm.get('selectedreport').value, selectedStartDate, selectedEndDate ));
         },
@@ -203,6 +205,7 @@ downloadReport(){
       return value;
     });
   }
+  
   convertToFloatValue(amt) {
     return amt ? Number.parseFloat(amt).toFixed(2): '0.00';
   }

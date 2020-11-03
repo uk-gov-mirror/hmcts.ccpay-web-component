@@ -42,7 +42,6 @@ export class UnprocessedPaymentsComponent implements OnInit {
   isNewpcipaloff;
   isOldpcipaloff;
   isTurnOff: boolean = true;
-  isStFixEnable;
 
   constructor(private router: Router,
     private bulkScaningPaymentService: BulkScaningPaymentService,
