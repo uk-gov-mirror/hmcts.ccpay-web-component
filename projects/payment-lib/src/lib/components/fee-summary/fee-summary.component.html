@@ -225,7 +225,9 @@
     </ng-container>
 <ccpay-add-remission *ngIf="viewStatus === 'add_remission' && currentFee"
  [isTurnOff]="isTurnOff"
- [isStrategicFixEnable]="isStrategicFixEnable" 
+ [isStrategicFixEnable]="isStrategicFixEnable"
+ [isOldPcipalOff]="isOldPcipalOff" 
+ [isNewPcipalOff]="isNewPcipalOff"
  [fee]="currentFee" 
  [service]="service" 
  [ccdCaseNumber]="ccdCaseNumber" 
