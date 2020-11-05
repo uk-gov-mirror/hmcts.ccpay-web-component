@@ -61,6 +61,7 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
         this.siteIDList = JSON.parse(siteids);
       },
       err => {
+        window.scrollTo(0, 0);
         this.isContinueButtondisabled = true;
         this.errorMessage = this.getErrorMessage(true);
       }
