@@ -418,10 +418,20 @@ checkForExceptionRecord(): void {
     }
   }
 
-  confirmRemoveFee(fee: IFee){
+  confirmRemoveFee(paymentGroupRef: any, fee: IFee){
+
     this.isRemoveBtnDisabled = false;
     this.feeId = fee;
-    this.viewStatus = 'feeRemovalConfirmation';
+    this.paymentViewService.getPaymentGroupDetails(paymentGroupRef).subscribe(
+      paymentGroup => {
+       if(paymentGroup.payments.length > 0){
+        this.viewStatus = 'feeRemovalConfirmation';
+      }
+      },
+      (error: any) => {
+        this.errorMessage = <any>error;
+      }
+    );
   }
   cancelRemoval() {
     this.viewStatus = 'main';
