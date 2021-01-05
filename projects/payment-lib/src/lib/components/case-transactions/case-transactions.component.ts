@@ -424,7 +424,7 @@ checkForExceptionRecord(): void {
     this.feeId = fee;
     this.paymentViewService.getPaymentGroupDetails(paymentGroupRef).subscribe(
       paymentGroup => {
-       if(paymentGroup.payments.length > 0){
+       if(paymentGroup.payments.length === 0){
         this.viewStatus = 'feeRemovalConfirmation';
       }
       },
