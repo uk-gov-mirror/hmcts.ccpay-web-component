@@ -157,7 +157,17 @@ export class FeeSummaryComponent implements OnInit {
   confirmRemoveFee(fee: IFee){
     this.isRemoveBtnDisabled = false;
     this.currentFee = fee;
-    this.viewStatus = 'feeRemovalConfirmation';
+
+    this.paymentViewService.getPaymentGroupDetails(this.paymentGroupRef).subscribe(
+      paymentGroup => {
+       if(paymentGroup.payments.length > 0){
+        this.viewStatus = 'feeRemovalConfirmation';
+      }
+      },
+      (error: any) => {
+        this.errorMessage = <any>error;
+      }
+    );
   }
 
   removeFee(fee: any){
