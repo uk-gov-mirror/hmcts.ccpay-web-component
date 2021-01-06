@@ -44,6 +44,7 @@ export class CaseTransactionsComponent implements OnInit {
   isRemissionsMatch: boolean;
   viewStatus = 'main';
   isRemoveBtnDisabled: boolean = false;
+  isPaymentEx: boolean = false;
   feeId:IFee;
   clAmountDue: number = 0;
   unprocessedRecordCount: number;
@@ -420,13 +421,17 @@ checkForExceptionRecord(): void {
 
   confirmRemoveFee(paymentGroupRef: any, fee: IFee){
 
+
     this.isRemoveBtnDisabled = false;
     this.feeId = fee;
     this.paymentViewService.getPaymentGroupDetails(paymentGroupRef).subscribe(
       paymentGroup => {
-       if(paymentGroup.payments.length === 0){
-        this.viewStatus = 'feeRemovalConfirmation';
-      }
+        if( paymentGroup.payments.length === 0 && paymentGroup.remissions.length === 0 ){
+          this.isPaymentEx = false;
+          this.viewStatus = 'feeRemovalConfirmation';
+        } else {
+          this.isPaymentEx = true;
+        }
       },
       (error: any) => {
         this.errorMessage = <any>error;
