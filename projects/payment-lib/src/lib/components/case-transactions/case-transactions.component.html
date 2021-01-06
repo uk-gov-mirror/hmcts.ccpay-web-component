@@ -3,6 +3,7 @@
   <main class="govuk-main-wrapper">
     <div *ngIf="viewStatus === 'main'&& !isTurnOff && takePayment">
 
+    <ccpay-error-banner *ngIf="rmErrorMessage.showError" [errorMessage]="rmErrorMessage"></ccpay-error-banner>
 
     <div   *ngIf="takePayment" class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">

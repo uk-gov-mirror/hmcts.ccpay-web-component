@@ -26,6 +26,8 @@ export class FeeSummaryComponent implements OnInit {
   bsPaymentDcnNumber: string;
   paymentGroup: IPaymentGroup;
   errorMessage: string;
+  rmErrorMessage = this.getErrorMessage(false);
+
   viewStatus = 'main';
   currentFee: IFee;
   totalFee: number;
@@ -160,6 +162,7 @@ export class FeeSummaryComponent implements OnInit {
 
     this.paymentViewService.getPaymentGroupDetails(this.paymentGroupRef).subscribe(
       paymentGroup => {
+        this.rmErrorMessage = this.getErrorMessage(false);
         if( paymentGroup.payments.length === 0 && paymentGroup.remissions.length === 0 ){
           this.isPaymentExist = false;
           this.viewStatus = 'feeRemovalConfirmation';
@@ -168,7 +171,7 @@ export class FeeSummaryComponent implements OnInit {
         }
       },
       (error: any) => {
-        this.errorMessage = <any>error;
+        this.rmErrorMessage = this.getErrorMessage(true);
       }
     );
   }
@@ -190,6 +193,14 @@ export class FeeSummaryComponent implements OnInit {
           this.isRemoveBtnDisabled = false;
       }
     );
+  }
+
+  getErrorMessage(isErrorExist) {
+    return {
+      title: "There is a problem with the service",
+      body: "Try again later",
+      showError: isErrorExist
+    };
   }
 
  loadCaseTransactionPage() {

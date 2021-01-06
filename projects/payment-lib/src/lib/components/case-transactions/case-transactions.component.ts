@@ -25,6 +25,7 @@ export class CaseTransactionsComponent implements OnInit {
   remissions: IRemission[] = [];
   fees: IFee[] = [];
   errorMessage: string;
+  rmErrorMessage = this.getErrorMessage(false);
   totalFees: number;
   totalPayments: number;
   totalNonOffPayments: number;
@@ -426,6 +427,7 @@ checkForExceptionRecord(): void {
     this.feeId = fee;
     this.paymentViewService.getPaymentGroupDetails(paymentGroupRef).subscribe(
       paymentGroup => {
+        this.rmErrorMessage = this.getErrorMessage(false);
         if( paymentGroup.payments.length === 0 && paymentGroup.remissions.length === 0 ){
           this.isPaymentEx = false;
           this.viewStatus = 'feeRemovalConfirmation';
@@ -434,7 +436,7 @@ checkForExceptionRecord(): void {
         }
       },
       (error: any) => {
-        this.errorMessage = <any>error;
+        this.rmErrorMessage = this.getErrorMessage(true);
       }
     );
   }
@@ -456,5 +458,13 @@ checkForExceptionRecord(): void {
 
   isCheckAmountdueExist(amountDue: any) {
     return typeof amountDue === 'undefined';
+  }
+
+  getErrorMessage(isErrorExist) {
+    return {
+      title: "There is a problem with the service",
+      body: "Try again later",
+      showError: isErrorExist
+    };
   }
 }
