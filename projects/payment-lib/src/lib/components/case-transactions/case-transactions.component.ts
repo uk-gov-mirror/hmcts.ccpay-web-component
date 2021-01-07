@@ -430,10 +430,12 @@ checkForExceptionRecord(): void {
       paymentGroup => {
         this.rmErrorMessage = this.getErrorMessage(false);
         if( paymentGroup.payments.length === 0 && paymentGroup.remissions.length === 0 ){
+          this.isPaymentEx = false;
           this.paymentFeeId = `${fee}-enabled`;
           this.viewStatus = 'feeRemovalConfirmation';
         } else {
-          this.paymentFeeId = `${fee}-disabled`;;
+          this.paymentFeeId = `${fee}-disabled`;
+          this.isPaymentEx = true;
         }
       },
       (error: any) => {

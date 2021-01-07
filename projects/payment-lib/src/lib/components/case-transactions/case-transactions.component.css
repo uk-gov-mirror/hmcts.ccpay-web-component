@@ -120,3 +120,11 @@ details summary {
 .summary-table-font {
   font-size: 36px;
 }
+
+.govuk-table__cell {
+    padding: 10px 20px 10px 0;
+    text-align: left;
+}
+.govuk-feetable__border {
+    border-bottom: 1px solid #bfc1c3;
+}
