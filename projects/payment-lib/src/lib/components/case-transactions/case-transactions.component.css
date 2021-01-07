@@ -126,5 +126,14 @@ details summary {
     text-align: left;
 }
 .govuk-feetable__border {
-    border-bottom: 1px solid #bfc1c3;
+    border-bottom: 0px;
+    padding-top: 25px;
+}
+
+.govuk-label__font {
+    font-size: 24px;
+}
+
+.govuk-error-message__font {
+    font-size: 16px;
 }
