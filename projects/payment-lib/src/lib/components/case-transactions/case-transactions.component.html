@@ -102,10 +102,10 @@
                 <td class="govuk-table__cell govuk-!-font-weight-bold"  [attr.rowspan]="paymentGroup.fees.length" *ngIf="paymentGroup.old && i==0"> {{getGroupOutstandingAmount(paymentGroup)| currency:'GBP':'symbol-narrow':'1.2-2'}}* </td>
                 <td class="govuk-table__cell" *ngIf="!paymentGroup.old"> {{calculateAmountDue(fee) | currency:'GBP':'symbol-narrow':'1.2-2'}} </td>
                 <td class="govuk-table__cell" *ngIf="!paymentGroup.old">
-                   <a (click)="confirmRemoveFee(paymentGroup.payment_group_reference, fee.id)" [ngClass]='!isCheckAmountdueExist(fee.amount_due) || fee.remissions || isPaymentEx ? "disable-link" : ""'>Remove</a>
+                   <a (click)="confirmRemoveFee(paymentGroup.payment_group_reference, fee.id)" [ngClass]='!isCheckAmountdueExist(fee.amount_due) || fee.remissions || isFeeIdDisabaled(fee.id) ? "disable-link" : ""'>Remove</a>
                 </td>
                 <td class="govuk-table__cell" *ngIf="paymentGroup.old">
-                  <a (click)="confirmRemoveFee(paymentGroup.payment_group_reference, fee.id)" [ngClass]='paymentGroup.payments?.length > 0 || paymentGroup.remissions?.length > 0 || isPaymentEx ? "disable-link" : ""'>Remove</a>
+                  <a (click)="confirmRemoveFee(paymentGroup.payment_group_reference, fee.id)" [ngClass]='paymentGroup.payments?.length > 0 || paymentGroup.remissions?.length > 0 || isFeeIdDisabaled(fee.id) ? "disable-link" : ""'>Remove</a>
                </td>
               </tr>
             </tbody>

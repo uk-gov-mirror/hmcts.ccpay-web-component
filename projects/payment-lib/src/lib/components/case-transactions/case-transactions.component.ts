@@ -44,6 +44,7 @@ export class CaseTransactionsComponent implements OnInit {
   isBulkScanEnable;
   isRemissionsMatch: boolean;
   viewStatus = 'main';
+  paymentFeeId:string = null;
   isRemoveBtnDisabled: boolean = false;
   isPaymentEx: boolean = false;
   feeId:IFee;
@@ -429,10 +430,10 @@ checkForExceptionRecord(): void {
       paymentGroup => {
         this.rmErrorMessage = this.getErrorMessage(false);
         if( paymentGroup.payments.length === 0 && paymentGroup.remissions.length === 0 ){
-          this.isPaymentEx = false;
+          this.paymentFeeId = `${fee}-enabled`;
           this.viewStatus = 'feeRemovalConfirmation';
         } else {
-          this.isPaymentEx = true;
+          this.paymentFeeId = `${fee}-disabled`;;
         }
       },
       (error: any) => {
@@ -440,6 +441,7 @@ checkForExceptionRecord(): void {
       }
     );
   }
+
   cancelRemoval() {
     this.viewStatus = 'main';
   }
@@ -459,7 +461,9 @@ checkForExceptionRecord(): void {
   isCheckAmountdueExist(amountDue: any) {
     return typeof amountDue === 'undefined';
   }
-
+  isFeeIdDisabaled(fee: any) {
+    return this.paymentFeeId ? this.paymentFeeId === `${fee}-disabled` : false;
+  }
   getErrorMessage(isErrorExist) {
     return {
       title: "There is a problem with the service",
