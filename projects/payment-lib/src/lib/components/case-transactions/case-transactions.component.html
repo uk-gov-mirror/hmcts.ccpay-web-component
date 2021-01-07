@@ -94,17 +94,17 @@
             </thead>
             <tbody class="govuk-table__body" *ngFor="let paymentGroup of paymentGroups;">
               <tr class="govuk-table__row " *ngFor="let fee of paymentGroup.fees; let i = index;">
-                <td class="govuk-feetable__cell govuk-feetable__border">	{{fee.code}} </td>
-                <td class="govuk-feetable__cell govuk-feetable__border">{{fee.description}}</td>
-                <td class="govuk-feetable__cell govuk-feetable__border">{{fee.volume? fee.volume : '-'}}</td>
-                <td class="govuk-feetable__cell govuk-feetable__border">{{ fee.fee_amount | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
-                <td class="govuk-feetable__cell govuk-feetable__border">{{fee.calculated_amount | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
-                <td class="govuk-feetable__cell govuk-feetable__border govuk-!-font-weight-bold"  [attr.rowspan]="paymentGroup.fees.length" *ngIf="paymentGroup.old && i==0"> {{getGroupOutstandingAmount(paymentGroup)| currency:'GBP':'symbol-narrow':'1.2-2'}}* </td>
-                <td class="govuk-feetable__cell govuk-feetable__border" *ngIf="!paymentGroup.old"> {{calculateAmountDue(fee) | currency:'GBP':'symbol-narrow':'1.2-2'}} </td>
-                <td class="govuk-feetable__cell govuk-feetable__border" *ngIf="!paymentGroup.old">
+                <td class="govuk-table__cell">	{{fee.code}} </td>
+                <td class="govuk-table__cell">{{fee.description}}</td>
+                <td class="govuk-table__cell">{{fee.volume? fee.volume : '-'}}</td>
+                <td class="govuk-table__cell">{{ fee.fee_amount | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
+                <td class="govuk-table__cell">{{fee.calculated_amount | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
+                <td class="govuk-table__cell govuk-!-font-weight-bold"  [attr.rowspan]="paymentGroup.fees.length" *ngIf="paymentGroup.old && i==0"> {{getGroupOutstandingAmount(paymentGroup)| currency:'GBP':'symbol-narrow':'1.2-2'}}* </td>
+                <td class="govuk-table__cell" *ngIf="!paymentGroup.old"> {{calculateAmountDue(fee) | currency:'GBP':'symbol-narrow':'1.2-2'}} </td>
+                <td class="govuk-table__cell" *ngIf="!paymentGroup.old">
                    <a (click)="confirmRemoveFee(paymentGroup.payment_group_reference, fee.id)" [ngClass]='!isCheckAmountdueExist(fee.amount_due) || fee.remissions || isFeeIdDisabaled(fee.id) ? "disable-link" : ""'>Remove</a>
                 </td>
-                <td class="govuk-feetable__cell govuk-feetable__border" *ngIf="paymentGroup.old">
+                <td class="govuk-table__cell" *ngIf="paymentGroup.old">
                   <a (click)="confirmRemoveFee(paymentGroup.payment_group_reference, fee.id)" [ngClass]='paymentGroup.payments?.length > 0 || paymentGroup.remissions?.length > 0 || isFeeIdDisabaled(fee.id) ? "disable-link" : ""'>Remove</a>
                </td>
               </tr>
