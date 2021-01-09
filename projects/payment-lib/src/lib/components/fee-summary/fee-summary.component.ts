@@ -163,7 +163,7 @@ export class FeeSummaryComponent implements OnInit {
     this.paymentViewService.getPaymentGroupDetails(this.paymentGroupRef).subscribe(
       paymentGroup => {
         this.rmErrorMessage = this.getErrorMessage(false);
-        if( paymentGroup.payments.length === 0 && paymentGroup.remissions.length === 0 ){
+        if( !paymentGroup.payments && paymentGroup.remissions.length === 0 ){
           this.isPaymentExist = false;
           this.viewStatus = 'feeRemovalConfirmation';
         } else {

@@ -429,7 +429,7 @@ checkForExceptionRecord(): void {
     this.paymentViewService.getPaymentGroupDetails(paymentGroupRef).subscribe(
       paymentGroup => {
         this.rmErrorMessage = this.getErrorMessage(false);
-        if( paymentGroup.payments.length === 0 && paymentGroup.remissions.length === 0 ){
+        if( !paymentGroup.payments && paymentGroup.remissions.length === 0 ){
           this.isPaymentEx = false;
           this.paymentFeeId = `${fee}-enabled`;
           this.viewStatus = 'feeRemovalConfirmation';
