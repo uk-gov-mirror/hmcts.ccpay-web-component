@@ -42,6 +42,7 @@ export class CaseTransactionsComponent implements OnInit {
   isAnyFeeGroupAvilable: boolean = true;
   isHistoricGroupAvailable: boolean = false;
   isBulkScanEnable;
+  feeCode: string = null;
   isRemissionsMatch: boolean;
   viewStatus = 'main';
   paymentFeeId:string = null;
@@ -421,11 +422,12 @@ checkForExceptionRecord(): void {
     }
   }
 
-  confirmRemoveFee(paymentGroupRef: any, fee: IFee){
+  confirmRemoveFee(paymentGroupRef: any, fee: IFee, feeCode: any){
 
 
     this.isRemoveBtnDisabled = false;
     this.feeId = fee;
+    this.feeCode = feeCode;
     this.paymentViewService.getPaymentGroupDetails(paymentGroupRef).subscribe(
       paymentGroup => {
         this.rmErrorMessage = this.getErrorMessage(false);
