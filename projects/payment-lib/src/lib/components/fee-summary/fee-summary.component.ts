@@ -112,10 +112,8 @@ export class FeeSummaryComponent implements OnInit {
   }
 
   addRemission(fee: IFee) {
-    if (this.service) {
-      this.currentFee = fee;
-      this.viewStatus = 'add_remission';
-    }
+    this.currentFee = fee;
+    this.viewStatus = 'add_remission';
   }
 
   getPaymentGroup() {
@@ -217,9 +215,8 @@ export class FeeSummaryComponent implements OnInit {
   }
   takePayment() {
     this.isConfirmationBtnDisabled = true;
-    const seriveName = this.service ==='AA07' ? 'DIVORCE': this.service ==='AA08' ? 'PROBATE' : 'FINREM',
 
-      requestBody = new PaymentToPayhubRequest(this.ccdCaseNumber, this.outStandingAmount, this.service, seriveName);
+      requestBody = new PaymentToPayhubRequest(this.ccdCaseNumber, this.outStandingAmount);
     this.paymentViewService.postPaymentToPayHub(requestBody, this.paymentGroupRef).subscribe(
       response => {
         this.location.go(`payment-history?view=fee-summary`);
