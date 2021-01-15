@@ -216,7 +216,7 @@ export class FeeSummaryComponent implements OnInit {
   takePayment() {
     this.isConfirmationBtnDisabled = true;
 
-      requestBody = new PaymentToPayhubRequest(this.ccdCaseNumber, this.outStandingAmount);
+      const requestBody = new PaymentToPayhubRequest(this.ccdCaseNumber, this.outStandingAmount, 'case-Type');
     this.paymentViewService.postPaymentToPayHub(requestBody, this.paymentGroupRef).subscribe(
       response => {
         this.location.go(`payment-history?view=fee-summary`);
