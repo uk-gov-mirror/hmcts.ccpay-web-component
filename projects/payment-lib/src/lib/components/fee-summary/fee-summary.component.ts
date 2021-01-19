@@ -113,10 +113,8 @@ export class FeeSummaryComponent implements OnInit {
   }
 
   addRemission(fee: IFee) {
-    if (this.service) {
-      this.currentFee = fee;
-      this.viewStatus = 'add_remission';
-    }
+    this.currentFee = fee;
+    this.viewStatus = 'add_remission';
   }
 
   getPaymentGroup() {

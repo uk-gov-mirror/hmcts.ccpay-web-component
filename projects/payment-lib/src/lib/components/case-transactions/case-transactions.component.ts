@@ -50,7 +50,7 @@ export class CaseTransactionsComponent implements OnInit {
   isFeeRecordsExist: boolean = false;
   isGrpOutstandingAmtPositive: boolean = false;
   totalRefundAmount: Number;
-
+  caseType: String;
   constructor(private router: Router,
   private paymentViewService: PaymentViewService,
   private bulkScaningPaymentService: BulkScaningPaymentService,
@@ -60,6 +60,7 @@ export class CaseTransactionsComponent implements OnInit {
   ngOnInit() {
     this.isGrpOutstandingAmtPositive = false;
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
+    this.caseType = this.paymentLibComponent.CASETYPE;
     if(this.paymentLibComponent.CCD_CASE_NUMBER === '') {
       this.ccdCaseNumber = this.paymentLibComponent.EXC_REFERENCE;
     }
@@ -360,6 +361,8 @@ checkForExceptionRecord(): void {
       let url = this.isBulkScanEnable ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
         url += this.isTurnOff ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
         url += this.isStrategicFixEnable ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
+        url += this.isStrategicFixEnable ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
+        url += `&caseType=${this.caseType}`;
     this.router.navigateByUrl(`/fee-search?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}${url}`);
     this.router.navigateByUrl(`/fee-search?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}${url}`);
     } else {
