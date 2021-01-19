@@ -16,7 +16,7 @@ const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 export class AddRemissionComponent implements OnInit {
   @Input() fee: IFee;
   @Input() ccdCaseNumber: string;
-  @Input() service: string;
+  @Input() caseType: string;
   @Input() paymentGroupRef: string;
   @Input() isTurnOff: boolean;
   @Input() isStrategicFixEnable: boolean;
@@ -99,7 +99,7 @@ export class AddRemissionComponent implements OnInit {
     const newNetAmount = this.remissionForm.controls.amount.value,
      remissionAmount = this.fee.net_amount - newNetAmount,
      requestBody = new AddRemissionRequest
-    (this.ccdCaseNumber, this.fee, remissionAmount, this.remissionForm.controls.remissionCode.value, this.service);
+    (this.ccdCaseNumber, this.fee, remissionAmount, this.remissionForm.controls.remissionCode.value, this.caseType);
     this.paymentViewService.postPaymentGroupWithRemissions(decodeURIComponent(this.paymentGroupRef).trim(), this.fee.id, requestBody).subscribe(
       response => {
         if (JSON.parse(response).success) {

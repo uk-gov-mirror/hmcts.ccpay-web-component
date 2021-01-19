@@ -22,6 +22,7 @@ export class FeeSummaryComponent implements OnInit {
   @Input() paymentGroupRef: string;
   @Input() ccdCaseNumber: string;
   @Input() isTurnOff: string;
+  @Input() caseType: string;
 
   bsPaymentDcnNumber: string;
   paymentGroup: IPaymentGroup;
@@ -217,9 +218,7 @@ export class FeeSummaryComponent implements OnInit {
   }
   takePayment() {
     this.isConfirmationBtnDisabled = true;
-    const seriveName = this.service ==='AA07' ? 'DIVORCE': this.service ==='AA08' ? 'PROBATE' : 'FINREM',
-
-      requestBody = new PaymentToPayhubRequest(this.ccdCaseNumber, this.outStandingAmount, this.service, seriveName);
+    const requestBody = new PaymentToPayhubRequest(this.ccdCaseNumber, this.outStandingAmount, this.caseType);
     this.paymentViewService.postPaymentToPayHub(requestBody, this.paymentGroupRef).subscribe(
       response => {
         this.location.go(`payment-history?view=fee-summary`);
