@@ -26,7 +26,7 @@ export class FeeSummaryComponent implements OnInit {
   @Input() isOldPcipalOff: string;
   @Input() isNewPcipalOff: string;
 
-
+  rmErrorMessage = this.getErrorMessage(false);
   bsPaymentDcnNumber: string;
   paymentGroup: IPaymentGroup;
   errorMessage: string;
@@ -170,7 +170,21 @@ export class FeeSummaryComponent implements OnInit {
   confirmRemoveFee(fee: IFee){
     this.isRemoveBtnDisabled = false;
     this.currentFee = fee;
-    this.viewStatus = 'feeRemovalConfirmation';
+
+    this.paymentViewService.getPaymentGroupDetails(this.paymentGroupRef).subscribe(
+      paymentGroup => {
+        this.rmErrorMessage = this.getErrorMessage(false);
+        if( !paymentGroup.payments && paymentGroup.remissions.length === 0 ){
+          this.isPaymentExist = false;
+          this.viewStatus = 'feeRemovalConfirmation';
+        } else {
+          this.isPaymentExist = true;
+        }
+      },
+      (error: any) => {
+        this.rmErrorMessage = this.getErrorMessage(true);
+      }
+    );
   }
 
   removeFee(fee: any){
@@ -282,5 +296,12 @@ export class FeeSummaryComponent implements OnInit {
   }
   isCheckAmountdueExist(amountDue: any) {
     return typeof amountDue === 'undefined';
+  }
+  getErrorMessage(isErrorExist) {
+    return {
+      title: "There is a problem with the service",
+      body: "Try again later",
+      showError: isErrorExist
+    };
   }
 }

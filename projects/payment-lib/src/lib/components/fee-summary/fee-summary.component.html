@@ -11,6 +11,7 @@
 </div>
 <div class="fee-summary" *ngIf="viewStatus === 'main'">
     <main class="govuk-main-wrapper">
+        <ccpay-error-banner *ngIf="rmErrorMessage.showError" [errorMessage]="rmErrorMessage"></ccpay-error-banner>
         <input #myInput type='hidden' id='iFrameDrivenImageValue' value='FEESUMMARY'>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">

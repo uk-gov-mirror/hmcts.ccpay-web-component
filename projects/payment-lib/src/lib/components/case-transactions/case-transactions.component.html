@@ -2,8 +2,7 @@
 
   <main class="govuk-main-wrapper">
     <div *ngIf="viewStatus === 'main'&& !isTurnOff && takePayment">
-
-
+        <ccpay-error-banner *ngIf="rmErrorMessage.showError" [errorMessage]="rmErrorMessage"></ccpay-error-banner>
     <div   *ngIf="takePayment" class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-xl">Case transactions</h1>
@@ -98,12 +97,22 @@
                 <td class="govuk-table__cell govuk-!-font-weight-bold"  [attr.rowspan]="paymentGroup.fees.length" *ngIf="paymentGroup.old && i==0"> {{getGroupOutstandingAmount(paymentGroup)| currency:'GBP':'symbol-narrow':'1.2-2'}}* </td>
                 <td class="govuk-table__cell" *ngIf="!paymentGroup.old"> {{calculateAmountDue(fee) | currency:'GBP':'symbol-narrow':'1.2-2'}} </td>
                 <td class="govuk-table__cell" *ngIf="!paymentGroup.old">
-                   <a (click)="confirmRemoveFee(fee.id)" [ngClass]='!isCheckAmountdueExist(fee.amount_due) || fee.remissions ? "disable-link" : ""'>Remove</a>
+                    <a (click)="confirmRemoveFee(paymentGroup.payment_group_reference, fee.id, fee.code)" [ngClass]='!isCheckAmountdueExist(fee.amount_due) || fee.remissions || isFeeIdDisabaled(fee.id) ? "disable-link" : ""'>Remove</a>
                 </td>
                 <td class="govuk-table__cell" *ngIf="paymentGroup.old">
-                  <a (click)="confirmRemoveFee(fee.id)" [ngClass]='paymentGroup.payments?.length > 0 || paymentGroup.remissions?.length > 0 ? "disable-link" : ""'>Remove</a>
+                    <a (click)="confirmRemoveFee(paymentGroup.payment_group_reference, fee.id, fee.code)" [ngClass]='paymentGroup.payments?.length > 0 || paymentGroup.remissions?.length > 0 || isFeeIdDisabaled(fee.id) ? "disable-link" : ""'>Remove</a>
                </td>
               </tr>
+              <tr class="govuk-table__row" *ngIf="isPaymentEx" >
+                  <td class="govuk-feetable__border" colspan="7"><div class="govuk-form-group govuk-form-group--error">
+                    <label class="govuk-label govuk-label--l govuk-label__font" for="cost-per-item-error">
+                        There is a Problem
+                      </label>
+                    <span id="cost-per-item-error-error" class="govuk-error-message govuk-error-message__font">
+                      <span class="govuk-visually-hidden">Error:</span> This fee ({{feeCode}}) can't be removed because it's already associated with a payment
+                    </span>
+                  </div></td>
+                </tr>
             </tbody>
             <tbody class="govuk-table__body" *ngIf="paymentGroups?.length === 0">
               <tr class="govuk-table__row" >

@@ -25,6 +25,7 @@ export class CaseTransactionsComponent implements OnInit {
   remissions: IRemission[] = [];
   fees: IFee[] = [];
   errorMessage: string;
+  rmErrorMessage = this.getErrorMessage(false);
   totalFees: number;
   totalPayments: number;
   totalNonOffPayments: number;
@@ -42,8 +43,11 @@ export class CaseTransactionsComponent implements OnInit {
   isUnprocessedRecordSelected: boolean = false;
   exceptionRecordReference: string;
   isAnyFeeGroupAvilable: boolean = true;
+  feeCode: string = null;
   isHistoricGroupAvailable: boolean = false;
+  paymentFeeId:string = null;
   isBulkScanEnable;
+  isPaymentEx: boolean = false;
   isRemissionsMatch: boolean;
   viewStatus = 'main';
   isRemoveBtnDisabled: boolean = false;
@@ -426,10 +430,26 @@ checkForExceptionRecord(): void {
     }
   }
 
-  confirmRemoveFee(fee: IFee){
+  confirmRemoveFee(paymentGroupRef: any, fee: IFee, feeCode: any){
     this.isRemoveBtnDisabled = false;
     this.feeId = fee;
-    this.viewStatus = 'feeRemovalConfirmation';
+    this.feeCode = feeCode;
+    this.paymentViewService.getPaymentGroupDetails(paymentGroupRef).subscribe(
+      paymentGroup => {
+        this.rmErrorMessage = this.getErrorMessage(false);
+        if( !paymentGroup.payments && paymentGroup.remissions.length === 0 ){
+          this.isPaymentEx = false;
+          this.paymentFeeId = `${fee}-enabled`;
+          this.viewStatus = 'feeRemovalConfirmation';
+        } else {
+          this.paymentFeeId = `${fee}-disabled`;
+          this.isPaymentEx = true;
+        }
+      },
+      (error: any) => {
+        this.rmErrorMessage = this.getErrorMessage(true);
+      }
+    );
   }
   cancelRemoval() {
     this.viewStatus = 'main';
@@ -449,5 +469,15 @@ checkForExceptionRecord(): void {
 
   isCheckAmountdueExist(amountDue: any) {
     return typeof amountDue === 'undefined';
+  }
+  isFeeIdDisabaled(fee: any) {
+    return this.paymentFeeId ? this.paymentFeeId === `${fee}-disabled` : false;
+  }
+  getErrorMessage(isErrorExist) {
+    return {
+      title: "There is a problem with the service",
+      body: "Try again later",
+      showError: isErrorExist
+    };
   }
 }
