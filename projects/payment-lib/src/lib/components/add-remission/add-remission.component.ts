@@ -103,7 +103,8 @@ export class AddRemissionComponent implements OnInit {
     this.paymentViewService.postPaymentGroupWithRemissions(decodeURIComponent(this.paymentGroupRef).trim(), this.fee.id, requestBody).subscribe(
       response => {
         if (JSON.parse(response).success) {
-          const LDUrl = this.isTurnOff ? '&isTurnOff=Enable' : '&isTurnOff=Disable'
+          let LDUrl = this.isTurnOff ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
+          LDUrl += `&caseType=${this.caseType}`
           if (this.paymentLibComponent.bspaymentdcn) {
             this.router.routeReuseStrategy.shouldReuseRoute = () => false;
             this.router.onSameUrlNavigation = 'reload';
@@ -138,6 +139,7 @@ export class AddRemissionComponent implements OnInit {
     partUrl += this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
     partUrl += this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
     partUrl += this.isStrategicFixEnable ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
+    partUrl += `&caseType=${this.caseType}`;
     let url = `/payment-history/${this.ccdCaseNumber}?view=case-transactions&takePayment=true&selectedOption=${this.option}${partUrl}`;
     this.router.navigateByUrl(url);
   }

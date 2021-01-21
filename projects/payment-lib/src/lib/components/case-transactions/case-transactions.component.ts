@@ -362,8 +362,8 @@ checkForExceptionRecord(): void {
         url += this.isTurnOff ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
         url += this.isStrategicFixEnable ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
         url += this.isStrategicFixEnable ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
-        url += `&caseType=${this.caseType}`;
-    this.router.navigateByUrl(`/fee-search?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}${url}`);
+        url +=`&caseType=${this.caseType}`;
+
     this.router.navigateByUrl(`/fee-search?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}${url}`);
     } else {
       this.paymentLibComponent.bspaymentdcn = null;
