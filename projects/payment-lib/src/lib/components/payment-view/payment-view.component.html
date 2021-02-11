@@ -21,7 +21,7 @@
       </div>
     </div>
 
-    <div *ngIf="!errorMessage && paymentGroup">
+    <div class="payment-view-alignment" *ngIf="!errorMessage && paymentGroup">
 
         <input #myInput type='hidden' id='iFrameDrivenImageValue' value='PAYMENTDETAILS'>
 
@@ -44,17 +44,17 @@
           <td class="bold tb-col-w">Payment amount</td>
           <td>£{{ paymentGroup.payments[0].amount | number:'.2' }}</td>
         </tr>
-        <tr class="section" *ngIf="paymentGroup.payments[0] && paymentGroup.payments[0].external_reference">
-          <td class="bold tb-col-w">GovPay Transaction ID</td>
-          <td>{{ paymentGroup.payments[0].external_reference }}</td>
+        <tr class="section" *ngIf="paymentGroup.payments[0] && paymentGroup.payments[0].external_reference">
+          <td class="bold tb-col-w">GovPay Transaction ID</td>
+          <td>{{ paymentGroup.payments[0].external_reference }}</td>
         </tr>
-        <tr class="section" *ngIf="paymentGroup.payments[0] && paymentGroup.payments[0].document_control_number && !paymentGroup.payments[0].external_reference">
-          <td class="bold tb-col-w">Payment asset number(DCN)</td>
-          <td>{{ paymentGroup.payments[0].document_control_number }}</td>
+        <tr class="section" *ngIf="paymentGroup.payments[0] && paymentGroup.payments[0].document_control_number && !paymentGroup.payments[0].external_reference">
+          <td class="bold tb-col-w">Payment asset number(DCN)</td>
+          <td>{{ paymentGroup.payments[0].document_control_number }}</td>
         </tr>
-        <tr class="section" *ngIf="paymentGroup.payments[0] && paymentGroup.payments[0].document_control_number && !paymentGroup.payments[0].external_reference">
-          <td class="bold tb-col-w">Banked date</td>
-          <td>{{ paymentGroup.payments[0].banked_date | date:'dd MMM yyyy' }}</td>
+        <tr class="section" *ngIf="paymentGroup.payments[0] && paymentGroup.payments[0].document_control_number && !paymentGroup.payments[0].external_reference">
+          <td class="bold tb-col-w">Banked date</td>
+          <td>{{ paymentGroup.payments[0].banked_date | date:'dd MMM yyyy' }}</td>
         </tr>
       </tbody>
       </table>
