@@ -52,7 +52,7 @@ export class CaseTransactionsComponent implements OnInit {
   isGrpOutstandingAmtPositive: boolean = false;
   totalRefundAmount: Number;
   caseType: String;
-  testLS: any = ls.get<any>('ccdNumber');
+  lsCcdNumber: any = ls.get<any>('ccdNumber');
   constructor(private router: Router,
   private paymentViewService: PaymentViewService,
   private bulkScaningPaymentService: BulkScaningPaymentService,
@@ -74,6 +74,10 @@ export class CaseTransactionsComponent implements OnInit {
     this.isTurnOff = this.paymentLibComponent.ISTURNOFF;
     this.isStrategicFixEnable = this.paymentLibComponent.ISSFENABLE;
     if(!this.isTurnOff) {
+      if(this.lsCcdNumber !== this.ccdCaseNumber) {
+        this.router.navigateByUrl(`/ccd-search?takePayment=true`);
+      }
+
       this.caseTransactionsService.getPaymentGroups(this.ccdCaseNumber).subscribe(
         paymentGroups => {
           this.paymentGroups = paymentGroups['payment_groups'];
