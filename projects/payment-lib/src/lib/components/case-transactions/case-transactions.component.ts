@@ -8,6 +8,7 @@ import {IFee} from '../../interfaces/IFee';
 import {IPayment} from '../../interfaces/IPayment';
 import {IRemission} from '../../interfaces/IRemission';
 import {Router} from '@angular/router';
+import * as ls from "local-storage";
 
 @Component({
   selector: 'ccpay-case-transactions',
@@ -51,6 +52,7 @@ export class CaseTransactionsComponent implements OnInit {
   isGrpOutstandingAmtPositive: boolean = false;
   totalRefundAmount: Number;
   caseType: String;
+  testLS: any = ls.get<any>('ccdNumber');
   constructor(private router: Router,
   private paymentViewService: PaymentViewService,
   private bulkScaningPaymentService: BulkScaningPaymentService,
