@@ -13,12 +13,12 @@
     <div   *ngIf="takePayment" class="govuk-grid-row">
       <div *ngIf='!isExceptionRecord' class="govuk-grid-column-two-thirds govuk-!-padding-bottom-6 govuk-!-padding-top-6">
         <h3 class="heading-medium">CCD reference:</h3>
-        <span> {{ ccdCaseNumber | ccdHyphens }}{{testLS}}</span>
+        <span> {{ ccdCaseNumber | ccdHyphens }}</span>
       </div>
 
       <div *ngIf='isExceptionRecord' class="govuk-grid-column-two-thirds govuk-!-padding-bottom-6 govuk-!-padding-top-6">
         <h3 class="heading-medium">Exception reference:</h3>
-        <span> {{ ccdCaseNumber | ccdHyphens }}{{testLS}}</span>
+        <span> {{ ccdCaseNumber | ccdHyphens }}</span>
       </div>
 
       <div class="govuk-grid-column-full govuk-!-padding-bottom-3">
