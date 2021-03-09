@@ -6,8 +6,8 @@ import { IBSPayments } from '../../interfaces/IBSPayments';
 import { UnsolicitedPaymentsRequest } from '../../interfaces/UnsolicitedPaymentsRequest';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import { AllocatePaymentRequest } from '../../interfaces/AllocatePaymentRequest';
-import { stringLiteral } from 'babel-types';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { ErrorHandlerService } from '../../services/shared/error-handler.service';
+
 
 @Component({
   selector: 'app-mark-unsolicited-payment',
@@ -32,12 +32,14 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
   responsiblePerson: string;
   responsibleOffice: string;
   emailId: string;
-  isConfirmButtondisabled:Boolean = false;
+  isConfirmButtondisabled: Boolean = false;
+  isContinueButtondisabled: Boolean = false;
   ccdReference: string = null;
   exceptionReference: string = null;
   selectedSiteId: string;
   selectedSiteName: string;
   isStrategicFixEnable: boolean = true;
+  siteIDList;
 
   constructor(private formBuilder: FormBuilder,
   private paymentViewService: PaymentViewService,
@@ -52,7 +54,18 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
     this.isStrategicFixEnable = this.paymentLibComponent.ISSFENABLE;
     this.getUnassignedPayment();
 
-    const emailPattern = '^[a-z0-9](\\.?[a-z0-9_-]){0,}@[a-z0-9-]+\\.([a-z]{1,6}\\.)?[a-z]{2,6}$';
+    this.paymentViewService.getSiteID().subscribe(
+      siteids => {
+        this.isContinueButtondisabled = false;
+        this.errorMessage = this.getErrorMessage(false);
+        this.siteIDList = JSON.parse(siteids);
+      },
+      err => {
+        window.scrollTo(0, 0);
+        this.isContinueButtondisabled = true;
+        this.errorMessage = this.getErrorMessage(true);
+      }
+    );
     
     this.markPaymentUnsolicitedForm = this.formBuilder.group({
       reason: new FormControl('', Validators.compose([
@@ -149,12 +162,12 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
     this.resetForm([false,false,false,false,false,false], 'all');
         const formerror = this.markPaymentUnsolicitedForm.controls.reason.errors;
         const reasonField = this.markPaymentUnsolicitedForm.controls.reason;
-        // this.markPaymentUnsolicitedForm.controls.responsibleOffice.setValue('P219');
-        const officeIdField = this.selectedSiteId;
+        //const officeIdField = this.selectedSiteId;
+        const officeIdField  = this.markPaymentUnsolicitedForm.controls.responsibleOffice;
     if (this.markPaymentUnsolicitedForm.dirty && this.markPaymentUnsolicitedForm.valid) {
       const controls = this.markPaymentUnsolicitedForm.controls;
       this.emailId = controls.emailId.value;
-      this.responsibleOffice = officeIdField;
+      this.responsibleOffice = officeIdField.value;
       this.responsiblePerson = controls.responsiblePerson.value;
       this.reason = controls.reason.value;
       this.viewStatus = 'unsolicitedContinueConfirm';
@@ -171,12 +184,12 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
       if(formerror && formerror.maxlength && formerror.maxlength.actualLength > 255 ) {
         this.resetForm([false,false,false,true,false,false], 'reason');
       }
-      // if(officeIdField.value == '') {
-      //   this.resetForm([false,false,false,false,true,false], 'responsibleOffice');
-      // }
-      // if(officeIdField.value != '' && officeIdField.invalid) {
-      //   this.resetForm([false,false,false,false,false,true],'responsibleOffice');
-      // }
+      if(officeIdField.value == '') {
+        this.resetForm([false,false,false,false,true,false], 'responsibleOffice');
+      }
+      if(officeIdField.value != '' && officeIdField.invalid) {
+        this.resetForm([false,false,false,false,false,true],'responsibleOffice');
+      }
     }
   }
   resetForm(val, field) {
@@ -243,8 +256,8 @@ cancelMarkUnsolicitedPayments(type?:string){
 
   getErrorMessage(isErrorExist) {
     return {
-      title: "There is a problem with the service",
-      body: "Try again later",
+      title: "Something went wrong.",
+      body: "Please try again later.",
       showError: isErrorExist
     };
   }

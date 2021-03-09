@@ -115,4 +115,7 @@ export class PaymentViewService {
   getBSfeature(): Observable<any> {
     return this.https.get('api/payment-history/bulk-scan-feature', { withCredentials: true }).pipe( catchError(this.errorHandlerService.handleError));
   }
+  getSiteID(): Observable<any> {
+    return this.https.get('api/payment-history/refdata/legacy-sites', { withCredentials: true }).pipe( catchError(this.errorHandlerService.handleError));
+  }
 }
