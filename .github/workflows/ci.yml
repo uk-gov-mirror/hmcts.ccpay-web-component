@@ -31,4 +31,4 @@ jobs:
         env:
           NODE_AUTH_TOKEN:  ${{ secrets.NPM_API_TOKEN }}
         if: startsWith(github.ref, 'refs/tags')
-        run: npm config set email jenkins-reform@HMCTS.NET && cd dist/payment-lib && npm publish
+        run: cd dist/payment-lib && npm publish
