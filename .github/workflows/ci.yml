@@ -23,12 +23,12 @@ jobs:
         with:
           node-version: 10.6.0
           registry-url: https://registry.npmjs.org/
+          scope: jenkins-reform@HMCTS.NET
       - name: Yarn install
         run: yarn --frozen-lockfile
       - name: Build library
         run: yarn run build:library
       - name: Publish library
-        scope: jenkins-reform@HMCTS.NET
         if: startsWith(github.ref, 'refs/tags')
         run: cd dist/payment-lib && npm publish
         env:
