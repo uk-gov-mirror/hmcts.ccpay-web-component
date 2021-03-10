@@ -30,5 +30,3 @@ jobs:
       - name: Publish library
         if: startsWith(github.ref, 'refs/tags')
         run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_API_TOKEN}}
