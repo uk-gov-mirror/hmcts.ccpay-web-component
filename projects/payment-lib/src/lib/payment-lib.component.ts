@@ -14,8 +14,12 @@ import { IBSPayments } from './interfaces/IBSPayments';
     <app-allocate-payments *ngIf="viewName === 'allocate-payments'"
     [isTurnOff]="ISTURNOFF"></app-allocate-payments>
     <ccpay-fee-summary *ngIf="viewName === 'fee-summary'"
-      [ccdCaseNumber]="CCD_CASE_NUMBER" [paymentGroupRef]="paymentGroupReference"
-      [isTurnOff]="ISTURNOFF"></ccpay-fee-summary>
+      [ccdCaseNumber]="CCD_CASE_NUMBER" 
+      [paymentGroupRef]="paymentGroupReference"
+      [isTurnOff]="ISTURNOFF"
+      [isOldPcipalOff]="ISOLDPCIPALOFF"
+      [isNewPcipalOff]="ISNEWPCIPALOFF"
+      ></ccpay-fee-summary>
     <ccpay-reports *ngIf="viewName === 'reports'"></ccpay-reports>
     `
 })
@@ -34,6 +38,8 @@ export class PaymentLibComponent implements OnInit {
   @Input('ISBSENABLE') ISBSENABLE: Boolean;
   @Input('ISSFENABLE') ISSFENABLE: boolean;
   @Input('ISTURNOFF') ISTURNOFF: boolean;
+  @Input('ISOLDPCIPALOFF') ISOLDPCIPALOFF: boolean;
+  @Input('ISNEWPCIPALOFF') ISNEWPCIPALOFF: boolean;
 
   paymentMethod: string;
   bspaymentdcn: string;
@@ -42,6 +48,8 @@ export class PaymentLibComponent implements OnInit {
   paymentReference: string;
   viewName: string;
   isTurnOff: boolean;
+  isOldPcipalOff: boolean;
+  isNewPcipalOff: boolean;
   unProcessedPayment: IBSPayments = null;
 
   constructor(private paymentLibService: PaymentLibService) { }
