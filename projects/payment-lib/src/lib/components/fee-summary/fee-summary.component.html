@@ -54,30 +54,77 @@
 
           <tbody class="govuk-table__body" *ngIf="paymentGroup.fees">
               <tr class="govuk-table__row" *ngFor="let fee of paymentGroup.fees; let i = index;">
-                  <td class="no-border grey-text subcolumn-1">Remission amount:</td>
-                  <td class="no-border subcolumn-2">{{ getRemissionByFeeCode(fee.code)?.hwf_amount? ( getRemissionByFeeCode(fee.code)?.hwf_amount  | currency:'GBP':'symbol-narrow':'1.2-2') : '-' }}</td>
-                 
                       <td class="govuk-table__cell">{{ fee.description }}
                           <br>
-                              <a (click)="addRemission(fee)"  [ngClass]="{'remissionDisable': !service}" *ngIf="(getRemissionByFeeCode(fee.code)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code)?.hwf_amount) && !isPaymentExist && !isTurnOff">
+                              <a (click)="addRemission(fee)" [ngClass]="{'remissionDisable': !service}" *ngIf="(getRemissionByFeeCode(fee.code)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code)?.hwf_amount) && !isPaymentExist && !isTurnOff">
                                   Add help with fees or remission
                               </a>
-                              <a (click)="addRemission(fee)"  [ngClass]="{'remissionDisable': !service}" *ngIf="(getRemissionByFeeCode(fee.code)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code)?.hwf_amount) && isTurnOff">
+                              <a (click)="addRemission(fee)" [ngClass]="{'remissionDisable': !service}" *ngIf="(getRemissionByFeeCode(fee.code)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code)?.hwf_amount) && isTurnOff">
                                   Add help with fees or remission
                             </a>
-                              <a href="v1addhelpwithfees.html">Add help with fees or remission</a>
-                          </td>
+                      </td>
+                      <td class="govuk-table__cell" *ngIf = "getRemissionByFeeCode(fee.code)?.hwf_amount !== 0 || getRemissionByFeeCode(fee.code)?.hwf_amount">{{ getRemissionByFeeCode(fee.code)?.hwf_amount? ( getRemissionByFeeCode(fee.code)?.hwf_amount  | currency:'GBP':'symbol-narrow':'1.2-2') : '-' }}</td>
                       <td class="govuk-table__cell" scope="row" style="text-align: center" *ngIf="fee.volume && fee.volume > 0">{{ fee.volume }}</td>      
-                      <td class="govuk-table__cell" scope="row" style="text-align: center">1</td>
                       <td class="govuk-table__cell" style="text-align: right;"></td>
                       <td class="govuk-table__cell" style="text-align: right;">{{ fee.fee_amount | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
                   </tr>
-                  
-              
-
           </tbody>
       </table>
   </div>
+  <div style="display: flex; flex-direction: column; width:960px;">
+      <p class=" govuk-!-margin-top-2" style="align-self: flex-end;">{{ fee.net_amount  | currency:'GBP':'symbol-narrow':'1.2-2' }}</p>
+</div>
+<div class="govuk-form-group govuk-form-group--mg" *ngIf="!bsPaymentDcnNumber">
+    <label class="govuk-label custom-govuk-label govuk-fieldset__heading--fz" for="responsibleOffice">
+      <strong>What service is this fee for?</strong>
+    </label>
+    <select class="govuk-select govuk-select--custom" id="responsibleOffice" [(ngModel)]="service" name="responsibleOffice">
+      <option value="" selected='selected'>Please select</option>
+      <option value="AA07">Divorce</option>
+      <option value="AA09">Financial Remedy</option>
+      <option value="AA08">Probate</option>
+    </select>
+  </div>
+
+  <div class="govuk-form-group govuk-form-group--mg" *ngIf="!bsPaymentDcnNumber && isOldPcipalOff && isNewPcipalOff">
+      <fieldset class="govuk-fieldset">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+          <span class="govuk-fieldset__heading govuk-fieldset__heading--fz">
+            Which system are you using to take the payment?
+          </span>
+        </legend>
+        <div class="govuk-radios govuk-radios--small">
+          <div class="govuk-radios__item">
+            <input id="changed-name" class="govuk-radios__input" [(ngModel)]="platForm" type="radio" aria-label="8x8" value="8x8">	
+            <label class="govuk-label govuk-radios__label" for="changed-name">	
+              8x8	
+            </label>	
+          </div>	
+          <div class="govuk-radios__item">	
+            <input id="changed-name-2" class="govuk-radios__input" [(ngModel)]="platForm" type="radio" aria-label="Antenna" value="Antenna">	
+            <label class="govuk-label govuk-radios__label" for="changed-name-2">	
+              Antenna	
+            </label>	
+          </div>	
+        </div>	
+      </fieldset>
+    </div>
+
+    <div>
+        <button *ngIf="!bsPaymentDcnNumber" type="submit" (click)="takePayment()"
+        [disabled]="totalFee <= 0 || !platForm || !service || isConfirmationBtnDisabled"
+        [ngClass]='totalFee <= 0 || !platForm || !service || isConfirmationBtnDisabled? "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"'>
+          Take payment
+      </button>
+      <button *ngIf="bsPaymentDcnNumber" type="button" (click)="goToAllocatePage(outStandingAmount, isFeeAmountZero)" class="button govuk-!-margin-right-1">
+        <span *ngIf="outStandingAmount > 0 || (isFeeAmountZero && outStandingAmount === 0)">
+          Allocate payment
+        </span>
+        <span *ngIf="outStandingAmount < 0 || (!isFeeAmountZero && outStandingAmount === 0)">
+          Continue
+        </span>
+      </button>
+    </div>
 
   <!-- <table class="govuk-table"  *ngIf="!errorMessage && paymentGroup">
     <thead class="govuk-table__head">
