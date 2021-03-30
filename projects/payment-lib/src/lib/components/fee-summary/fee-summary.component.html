@@ -14,7 +14,7 @@
       <input #myInput type='hidden' id='iFrameDrivenImageValue' value='FEESUMMARY'>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <h1 class="heading-xlarge">Fee Summary</h1>
+      <h1 class="heading-xlarge">Summary</h1>
     </div>
 
 
@@ -41,7 +41,45 @@
     </div>
   </div>
 
-  <table class="govuk-table"  *ngIf="!errorMessage && paymentGroup">
+  <div class="govuk-!-margin-top-3">
+      <table class="govuk-table  govuk-!-margin-bottom-2" *ngIf="!errorMessage && paymentGroup">
+          <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                  <th class="govuk-table__header" scope="col" style="width: 600px;">Description</th>
+                  <th class="govuk-table__header" scope="col" style="width: 60px;">Quantity</th>
+                  <th class="govuk-table__header" scope="col" style="width: 80px; text-align: right;"></th>
+                  <th class="govuk-table__header" scope="col" style="width: 100px; text-align: right;">Amount</th>
+              </tr>
+          </thead>
+
+          <tbody class="govuk-table__body" *ngIf="paymentGroup.fees">
+              <tr class="govuk-table__row" *ngFor="let fee of paymentGroup.fees; let i = index;">
+                  <td class="no-border grey-text subcolumn-1">Remission amount:</td>
+                  <td class="no-border subcolumn-2">{{ getRemissionByFeeCode(fee.code)?.hwf_amount? ( getRemissionByFeeCode(fee.code)?.hwf_amount  | currency:'GBP':'symbol-narrow':'1.2-2') : '-' }}</td>
+                 
+                      <td class="govuk-table__cell">{{ fee.description }}
+                          <br>
+                              <a (click)="addRemission(fee)"  [ngClass]="{'remissionDisable': !service}" *ngIf="(getRemissionByFeeCode(fee.code)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code)?.hwf_amount) && !isPaymentExist && !isTurnOff">
+                                  Add help with fees or remission
+                              </a>
+                              <a (click)="addRemission(fee)"  [ngClass]="{'remissionDisable': !service}" *ngIf="(getRemissionByFeeCode(fee.code)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code)?.hwf_amount) && isTurnOff">
+                                  Add help with fees or remission
+                            </a>
+                              <a href="v1addhelpwithfees.html">Add help with fees or remission</a>
+                          </td>
+                      <td class="govuk-table__cell" scope="row" style="text-align: center" *ngIf="fee.volume && fee.volume > 0">{{ fee.volume }}</td>      
+                      <td class="govuk-table__cell" scope="row" style="text-align: center">1</td>
+                      <td class="govuk-table__cell" style="text-align: right;"></td>
+                      <td class="govuk-table__cell" style="text-align: right;">{{ fee.fee_amount | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
+                  </tr>
+                  
+              
+
+          </tbody>
+      </table>
+  </div>
+
+  <!-- <table class="govuk-table"  *ngIf="!errorMessage && paymentGroup">
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
         <th class="govuk-table__header govuk-!-font-weight-bold" scope="col">Fee Code</th>
@@ -196,7 +234,7 @@
       </td>
     </tr>
   </tbody>
-  </table>
+  </table> -->
 </main>
 </div>
 
