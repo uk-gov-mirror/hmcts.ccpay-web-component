@@ -58,6 +58,7 @@
 .remissionDisable{
       color: grey;
     cursor: default;
+    padding-left: 10px;
 }
 
 .heading-xlarge{
@@ -81,4 +82,8 @@
 
 .govuk-table__fessheader{
   font-weight: 700;
+}
+
+a {
+  padding-left: 10px;
 }

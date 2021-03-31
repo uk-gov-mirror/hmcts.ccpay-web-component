@@ -113,7 +113,8 @@ export class AddRemissionComponent implements OnInit {
             this.router.onSameUrlNavigation = 'reload';
             this.router.navigateByUrl(`/payment-history/${this.ccdCaseNumber}?view=fee-summary&selectedOption=${this.option}&paymentGroupRef=${this.paymentGroupRef}&dcn=${this.paymentLibComponent.bspaymentdcn}${LDUrl}`);
           }else {
-            this.gotoCasetransationPage();
+            // this.gotoCasetransationPage();
+            this.gotoSummaryPage();
           }
 
         }
@@ -124,6 +125,36 @@ export class AddRemissionComponent implements OnInit {
       }
     );
   }
+
+  gotoSummaryPage() {
+    this.paymentLibComponent.viewName = 'fee-summary';
+    this.paymentLibComponent.TAKEPAYMENT = true;
+    this.paymentLibComponent.ISTURNOFF = this.isTurnOff;
+    this.paymentLibComponent.ISNEWPCIPALOFF = this.isNewPcipalOff;
+    this.paymentLibComponent.ISOLDPCIPALOFF = this.isOldPcipalOff;
+
+    this.paymentViewService.getBSfeature().subscribe(
+      features => {
+        let result = JSON.parse(features).filter(feature => feature.uid === BS_ENABLE_FLAG);
+        this.paymentLibComponent.ISBSENABLE = result[0] ? result[0].enable : false;
+      },
+      err => {
+        this.paymentLibComponent.ISBSENABLE = false;
+      }
+    );
+
+    let partUrl = this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
+     partUrl += this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
+     partUrl += this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
+     partUrl += this.isStrategicFixEnable ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
+  
+
+    const url = `/payment-history/${this.ccdCaseNumber}?view=fee-summary&paymentGroupRef=${this.paymentGroupRef}&selectedOption=${this.option}${partUrl}`;
+    this.router.navigateByUrl(url).then(() => {
+      window.location.reload();
+    });
+  }
+
   gotoCasetransationPage() {
     this.paymentLibComponent.viewName = 'case-transactions';
     this.paymentLibComponent.TAKEPAYMENT = true;

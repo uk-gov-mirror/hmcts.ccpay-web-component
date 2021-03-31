@@ -57,11 +57,11 @@
                       <td class="govuk-table__cell">{{ fee.description }}{{ fee.code }}
                           <br>
                           <span class="no-border subcolumn-3" *ngIf="!isTurnOff">
-                              <a (click)="confirmRemoveFee(fee.id)" [ngClass]='isPaymentExist || fee.remissions ? "disable-link" : ""'>remove fee</a>
-                            </span>
+                              <a (click)="confirmRemoveFee(fee.id)" [ngClass]='isPaymentExist || fee.remissions ? "disable-link" : ""'>Remove</a>
+                          </span>
                            
                             <span class="no-border subcolumn-3" *ngIf="isTurnOff">
-                              <a (click)="confirmRemoveFee(fee.id)">remove fee</a>
+                              <a (click)="confirmRemoveFee(fee.id)">Remove</a>
                             </span>
                            
                             <a (click)="addRemission(fee)" [ngClass]="{'remissionDisable': !service}" *ngIf="(getRemissionByFeeCode(fee.code)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code)?.hwf_amount) && !isPaymentExist && !isTurnOff">
@@ -70,30 +70,42 @@
                             <a (click)="addRemission(fee)" [ngClass]="{'remissionDisable': !service}" *ngIf="(getRemissionByFeeCode(fee.code)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code)?.hwf_amount) && isTurnOff">
                                   Add help with fees or remission
                             </a>
-                         
-                              <br>
-                            <div class="govuk-table__cell_border" *ngIf = "getRemissionByFeeCode(fee.code)?.hwf_amount > 0">Remission,{{ getRemissionByFeeCode(fee.code)?.hwf_reference }}</div>
                       </td>
+                      
                       <td class="govuk-table__cell" *ngIf="fee.volume && fee.volume > 0">
                           {{ fee.volume }}
-                          <div class="govuk-table__cell_border" *ngIf = "getRemissionByFeeCode(fee.code)?.hwf_amount ===''"></div>
-                      
                       </td> 
+                      
                       <td class="govuk-table__cell" *ngIf="fee.volume === 0 || fee.volume === '' ">
                           1
-                          <div class="govuk-table__cell_border" *ngIf = "getRemissionByFeeCode(fee.code)?.hwf_amount === ''"></div>
-                      
                       </td> 
-                      <td class="govuk-table__cell" style="text-align: right;">
+                      
+                      <td  style="text-align: right;">
                         <div class="govuk-table__cell_border" ></div>
                       </td>
                       <td class="govuk-table__cell" style="text-align: right;">{{ fee.fee_amount | currency:'GBP':'symbol-narrow':'1.2-2' }}
+                      </td>
+                  
+              </tr>
+              <!-- <tr>
+                  <td *ngIf = "getRemissionByFeeCode(fee.code)?.hwf_amount > 0">
                       <br>
-                      <br>
-                      <div class="govuk-table__cell_border" style="text-align: right;">
-                      -{{ getRemissionByFeeCode(fee.code)?.hwf_amount? ( getRemissionByFeeCode(fee.code)?.hwf_amount  | currency:'GBP':'symbol-narrow':'1.2-2') : '-' }}
-                    </div> </td>
-                  </tr>
+                        <div class="govuk-table__cell_border" *ngIf = "getRemissionByFeeCode(fee.code)?.hwf_amount > 0">Remission,{{ getRemissionByFeeCode(fee.code)?.hwf_reference }}</div>
+                    </td>
+                    <td *ngIf = "getRemissionByFeeCode(fee.code)?.hwf_amount ===''">
+                        <div class="govuk-table__cell_border"></div>
+                    </td>
+                    <td *ngIf = "getRemissionByFeeCode(fee.code)?.hwf_amount === ''">
+                        <br>
+                          <div class="govuk-table__cell_border" *ngIf = "getRemissionByFeeCode(fee.code)?.hwf_amount === ''"></div>
+                      </td>
+                      <td>
+                          <br>
+                            <div class="govuk-table__cell_border" style="text-align: right;">
+                                -{{ getRemissionByFeeCode(fee.code)?.hwf_amount? ( getRemissionByFeeCode(fee.code)?.hwf_amount  | currency:'GBP':'symbol-narrow':'1.2-2') : '-' }}
+                              </div> 
+                        </td>
+              </tr> -->
           </tbody>
       </table>
   </div>
@@ -343,7 +355,7 @@
           </button>
         </form>
       </div>
-    </ng-container>
+  </ng-container>
 <ccpay-add-remission 
   *ngIf="viewStatus === 'add_remission' && currentFee" 
   [isTurnOff]="isTurnOff" 
