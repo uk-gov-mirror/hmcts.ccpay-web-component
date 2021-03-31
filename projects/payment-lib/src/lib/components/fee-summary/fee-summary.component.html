@@ -10,12 +10,22 @@
   </ol>
 </div>
 <div class="fee-summary" *ngIf="viewStatus === 'main'">
-    <main class="govuk-main-wrapper">
+    <main>
       <input #myInput type='hidden' id='iFrameDrivenImageValue' value='FEESUMMARY'>
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <h1 class="heading-xlarge">Summary</h1>
+      <!-- <div _ngcontent-uig-c11="" class="display:flex; flex-direction:row; justify-content: space-between; width:960px;">
+        <h1 _ngcontent-uig-c11="" class="heading-large govuk-!-margin-top-3 govuk-!-margin-bottom-4">Summary</h1>
+        <p _ngcontent-uig-c11="" class="govuk-!-margin-top-5" style="align-self: flex-end;">Case reference:{{ccdCaseNumber}}</p>
+    </div> -->
+
+    <div style="display:flex; flex-direction:row; justify-content: space-between; width:960px;">
+      <h1 class="heading-large govuk-!-margin-top-3 govuk-!-margin-bottom-4">Summary</h1>
+      <p class="govuk-!-margin-top-5" style="align-self: flex-end;">Case reference:{{ccdCaseNumber}}</p>
     </div>
+  <!-- <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-thirds">
+      <h1 class="heading-large">Summary</h1>
+      <p class="govuk-!-margin-top-5" style="align-self: flex-end;">Case reference:{{ccdCaseNumber}}</p>
+    </div> -->
 
 <!-- 
      <div class="govuk-grid-column-one-third" align="right">
@@ -27,8 +37,7 @@
 
             <a *ngIf="isTurnOff" (click)="redirectToFeeSearchPage($event,'summary')" class="button">Add a new fee</a>	
     </div> -->
-  </div>
-
+  
 
   <div *ngIf="errorMessage">
     <div class="error-summary" role="group" aria-labelledby="failure-error-summary-heading" tabindex="-1">
@@ -56,11 +65,11 @@
               <tr class="govuk-table__row" *ngFor="let fee of paymentGroup.fees; let i = index;">
                       <td class="govuk-table__cell">{{ fee.description }}{{ fee.code }}
                           <br>
-                          <span class="no-border subcolumn-3" *ngIf="!isTurnOff">
+                          <span class="no-border" *ngIf="!isTurnOff">
                               <a (click)="confirmRemoveFee(fee.id)" [ngClass]='isPaymentExist || fee.remissions ? "disable-link" : ""'>Remove</a>
                           </span>
                            
-                            <span class="no-border subcolumn-3" *ngIf="isTurnOff">
+                            <span class="no-border" *ngIf="isTurnOff">
                               <a (click)="confirmRemoveFee(fee.id)">Remove</a>
                             </span>
                            
@@ -70,21 +79,36 @@
                             <a (click)="addRemission(fee)" [ngClass]="{'remissionDisable': !service}" *ngIf="(getRemissionByFeeCode(fee.code)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code)?.hwf_amount) && isTurnOff">
                                   Add help with fees or remission
                             </a>
+                            <span *ngIf = "getRemissionByFeeCode(fee.code)?.hwf_amount > 0">
+                              <br>
+                                <div class="govuk-table__cell_border" *ngIf = "getRemissionByFeeCode(fee.code)?.hwf_amount > 0">Remission,{{ getRemissionByFeeCode(fee.code)?.hwf_reference }}</div>
+                            </span>
                       </td>
-                      
+                
                       <td class="govuk-table__cell" *ngIf="fee.volume && fee.volume > 0">
-                          {{ fee.volume }}
-                      </td> 
-                      
-                      <td class="govuk-table__cell" *ngIf="fee.volume === 0 || fee.volume === '' ">
-                          1
-                      </td> 
+                          {{ fee.volume }}<br>
+                          <span  *ngIf = "getRemissionByFeeCode(fee.code)?.hwf_amount > 0">
+                            <br>
+                             <div class="govuk-table__cell_border">1</div>
+                          </span>
+                      </td>
                       
                       <td  style="text-align: right;">
-                        <div class="govuk-table__cell_border" ></div>
+                        <br>
+                        <br>
+                        <div *ngIf = "getRemissionByFeeCode(fee.code)?.hwf_amount > 0" class="govuk-table__cell_border"></div>
                       </td>
-                      <td class="govuk-table__cell" style="text-align: right;">{{ fee.fee_amount | currency:'GBP':'symbol-narrow':'1.2-2' }}
+                      <td class="govuk-table__cell" style="text-align: right;">
+                        {{ fee.fee_amount | currency:'GBP':'symbol-narrow':'1.2-2' }} <br>
+                       
+                        <span *ngIf = "getRemissionByFeeCode(fee.code)?.hwf_amount > 0">
+                            <br>
+                            <div class="govuk-table__cell_rmborder" style="text-align: right;">
+                                -{{ getRemissionByFeeCode(fee.code)?.hwf_amount? ( getRemissionByFeeCode(fee.code)?.hwf_amount  | currency:'GBP':'symbol-narrow':'1.2-2') : '-' }}
+                              </div> 
+                            </span>
                       </td>
+                      
                   
               </tr>
               <!-- <tr>
@@ -109,7 +133,18 @@
           </tbody>
       </table>
   </div>
-   <div class="display:flex; flex-direction:row; justify-content: space-between; width:960px;">
+  <div style="display:flex; flex-direction:row;">
+    <button  *ngIf="!isTurnOff" (click)="redirectToFeeSearchPage($event,'summary')"
+            [disabled]="isPaymentExist"
+            [ngClass]='isPaymentExist ? "govuk-button govuk-button--secondary button--disabled" : "govuk-button govuk-button--secondary"'>
+              Add a new fee
+    </button>
+  <a *ngIf="isTurnOff" (click)="redirectToFeeSearchPage($event,'summary')" class="govuk-button govuk-button--secondary">Add a new fee</a>	
+ <div  class="feeAddButton">
+        <p class=" govuk-!-margin-top-2" style="align-self: flex-end;">Total to pay: {{ outStandingAmount | currency:'GBP':'symbol-narrow':'1.2-2'}}</p>
+  </div>
+</div>
+  <!--  <div class="display:flex; flex-direction:row; justify-content: space-between; width:960px;">
             <button  *ngIf="!isTurnOff" (click)="redirectToFeeSearchPage($event,'summary')"
             [disabled]="isPaymentExist"
             [ngClass]='isPaymentExist ? "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"'>
@@ -120,7 +155,7 @@
             <div style="display: flex; flex-direction: column; width:960px;">
                 <p class=" govuk-!-margin-top-2" style="align-self: flex-end;">Total to pay: {{ outStandingAmount | currency:'GBP':'symbol-narrow':'1.2-2'}}</p>
           </div>
-    </div>
+    </div> -->
   
 <div class="govuk-form-group govuk-form-group--mg" *ngIf="!bsPaymentDcnNumber">
     <label class="govuk-label custom-govuk-label govuk-fieldset__heading--fz" for="responsibleOffice">

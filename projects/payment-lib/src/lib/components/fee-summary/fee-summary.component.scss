@@ -19,7 +19,7 @@
     line-height: 1.31579;
     vertical-align: top;
     max-width: 320px;
-  
+    padding: .63158em 0.05264em .47368em 0;
     .no-padding {
       padding: 0;
     }
@@ -75,7 +75,12 @@
 }
 
 .govuk-table__header, .govuk-table__cell_border {
-  padding: 10px 20px 10px 0;
+  padding: 10px 0px 10px 0;
+  border-top: 1px solid #bfc1c3;
+  text-align: left;
+}
+.govuk-table__header, .govuk-table__cell_rmborder {
+  padding: 10px 0px 10px 0;
   border-top: 1px solid #bfc1c3;
   text-align: left;
 }
@@ -83,7 +88,6 @@
 .govuk-table__fessheader{
   font-weight: 700;
 }
-
-a {
-  padding-left: 10px;
+.feeAddButton {
+  padding-left: 67rem;
 }
