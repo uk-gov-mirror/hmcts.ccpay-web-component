@@ -15,8 +15,8 @@
   }
 
   table th, table td {
-    font-size: 15px;
-    font-weight: 500;
+    font-family: "GDS Transport", arial, sans-serif;
+    line-height: 1.31579;
     vertical-align: top;
     max-width: 320px;
   
@@ -71,4 +71,14 @@
   cursor: default;
   pointer-events: none;
   color: #8e8c8c;
+}
+
+.govuk-table__header, .govuk-table__cell_border {
+  padding: 10px 20px 10px 0;
+  border-top: 1px solid #bfc1c3;
+  text-align: left;
+}
+
+.govuk-table__fessheader{
+  font-weight: 700;
 }
