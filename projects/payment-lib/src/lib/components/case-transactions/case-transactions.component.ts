@@ -448,4 +448,13 @@ checkForExceptionRecord(): void {
   isCheckAmountdueExist(amountDue: any) {
     return typeof amountDue === 'undefined';
   }
+
+  redirectPage(redirectUrl: string){
+    if(redirectUrl == 'casetransaction'){
+      window.location.href = 'https://paybubble.demo.platform.hmcts.net/payment-history/'+this.ccdCaseNumber+'?selectedOption=CCDorException&dcn=null&view=case-transactions&takePayment=true&isBulkScanning=Enable&isStFixEnable=Enable&isTurnOff=Disable';
+    }
+    if(redirectUrl == 'feesummary'){
+      window.location.href = 'https://paybubble.demo.platform.hmcts.net/payment-history/'+this.ccdCaseNumber+'?selectedOption=CCDorException&dcn=null&view=fee-summary&takePayment=true&isBulkScanning=Enable&isStFixEnable=Enable&isTurnOff=Disable'
+    }
+  }
 }
