@@ -65,18 +65,20 @@
               <tr class="govuk-table__row" *ngFor="let fee of paymentGroup.fees; let i = index;">
                       <td class="govuk-table__cell">{{ fee.description }}{{ fee.code }}
                           <br>
-                          <span class="no-border" *ngIf="!isTurnOff">
-                              <a (click)="confirmRemoveFee(fee.id)" [ngClass]='isPaymentExist || fee.remissions ? "disable-link" : ""'>Remove</a>
+                         
+                          <span class="no-border" *ngIf="(isPaymentExist || (getRemissionByFeeCode(fee.code)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code)?.hwf_amount)) && !isTurnOff">
+                    
+                              <a (click)="confirmRemoveFee(fee.id)" [ngClass]='isPaymentExist || fee.remissions? "disable-link" : ""'>Remove</a>
                           </span>
-                           
-                            <span class="no-border" *ngIf="isTurnOff">
+
+                          <span class="no-border" *ngIf="(!isPaymentExist || (getRemissionByFeeCode(fee.code)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code)?.hwf_amount)) && isTurnOff">
                               <a (click)="confirmRemoveFee(fee.id)">Remove</a>
                             </span>
                            
-                            <a (click)="addRemission(fee)" [ngClass]="{'remissionDisable': !service}" *ngIf="(getRemissionByFeeCode(fee.code)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code)?.hwf_amount) && !isPaymentExist && !isTurnOff">
+                            <a (click)="addRemission(fee)" [ngClass]='!service ? "remissionDisable" : "remissionActive"' *ngIf="(getRemissionByFeeCode(fee.code)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code)?.hwf_amount) && !isPaymentExist && !isTurnOff">
                                   Add help with fees or remission
                             </a>
-                            <a (click)="addRemission(fee)" [ngClass]="{'remissionDisable': !service}" *ngIf="(getRemissionByFeeCode(fee.code)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code)?.hwf_amount) && isTurnOff">
+                            <a (click)="addRemission(fee)" [ngClass]='!service ? "remissionDisable" : "remissionActive"' *ngIf="(getRemissionByFeeCode(fee.code)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code)?.hwf_amount) && isTurnOff">
                                   Add help with fees or remission
                             </a>
                             <span *ngIf = "getRemissionByFeeCode(fee.code)?.hwf_amount > 0">
@@ -137,7 +139,7 @@
     <button  *ngIf="!isTurnOff" (click)="redirectToFeeSearchPage($event,'summary')"
             [disabled]="isPaymentExist"
             [ngClass]='isPaymentExist ? "govuk-button govuk-button--secondary button--disabled" : "govuk-button govuk-button--secondary"'>
-              Add a new fee
+              Add fee
     </button>
   <a *ngIf="isTurnOff" (click)="redirectToFeeSearchPage($event,'summary')" class="govuk-button govuk-button--secondary">Add a new fee</a>	
  <div  class="feeAddButton">

@@ -364,7 +364,7 @@
     </details>
   
 
-        <div *ngIf="takePayment">
+        <div>
             <button type="submit" (click)="loadFeeSummaryPage(paymentGroup)"
               [disabled]="(getGroupOutstandingAmount(paymentGroup) <= 0 || isUnprocessedRecordSelected)"
               [ngClass]='(getGroupOutstandingAmount(paymentGroup) <= 0 || isUnprocessedRecordSelected) ? "govuk-button govuk-button--secondary govuk-button--disabled govuk-!-margin-right-1" : "govuk-button govuk-button--secondary govuk-!-margin-right-1"'>

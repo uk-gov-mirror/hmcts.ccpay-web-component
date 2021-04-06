@@ -19,7 +19,7 @@
     line-height: 1.31579;
     vertical-align: top;
     max-width: 320px;
-    padding: .63158em 0.05264em .47368em 0;
+    padding: .63158em 0.05264em 0.07368em 0;
     .no-padding {
       padding: 0;
     }
@@ -48,6 +48,10 @@
     }
 }
 
+.govuk-button--secondary{
+  font-size: 19px;
+}
+
 .govuk-form-group--mg {
    margin-top: 10px !important;
 }
@@ -59,6 +63,10 @@
       color: grey;
     cursor: default;
     padding-left: 10px;
+}
+
+.a:active {
+  color: #2b8cc4;
 }
 
 .heading-xlarge{
@@ -90,4 +98,8 @@
 }
 .feeAddButton {
   padding-left: 67rem;
+}
+
+.remissionActive {
+  padding-left: 10px;
 }
