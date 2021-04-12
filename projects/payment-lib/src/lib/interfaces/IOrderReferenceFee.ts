@@ -5,4 +5,5 @@ export interface IOrderReferenceFee {
   orderParty: string;
   orderCCDEvent: string;
   orderCreated: Date;
+  orderAddBtnEnable: boolean;
 }

@@ -63,6 +63,7 @@ export class CaseTransactionsComponent implements OnInit {
   orderParty: string;
   orderCreated: Date;
   orderCCDEvent: string;
+  orderAddBtnEnable: boolean;
   orderFeesTotal: number= 0.00;
   orderRemissionTotal: number = 0.00;
   orderTotalPayments: number = 0.00;
@@ -189,16 +190,49 @@ checkForExceptionRecord(): void {
   calculateOrderFeesAmounts(): void {
     let feesTotal = 0.00;
     this.paymentGroups.forEach(paymentGroup => {
-          feesTotal = 0.00;
+      this.resetOrderVariables();
           if (paymentGroup.fees) {
                 paymentGroup.fees.forEach(fee => {
-                feesTotal = feesTotal + fee.calculated_amount;
+                  this.orderFeesTotal = this.orderFeesTotal + fee.calculated_amount
             }
-            )}
-      this.orderLevelFees.push({orderRefId:paymentGroup['payment_group_reference'],orderTotalFees: feesTotal,orderStatus: 'Paid',orderParty:'Santosh', orderCCDEvent:'Case Creation',orderCreated: new Date() });
+          )}
+          if (paymentGroup.remissions) {
+            paymentGroup.remissions.forEach(remission => {
+              this.orderRemissionTotal = this.orderRemissionTotal + remission.hwf_amount;
+            });
+          }
+
+          if (paymentGroup.payments) {
+            paymentGroup.payments.forEach(payment => {
+              if (payment.status.toUpperCase() === 'SUCCESS') {
+                this.orderTotalPayments = this.orderTotalPayments + payment.amount;
+              }
+            });
+          }  
+
+    this.orderPendingPayments = (this.orderFeesTotal - this.orderRemissionTotal) - this.orderTotalPayments;
+    if(this.orderPendingPayments === 0){
+      this.orderStatus = 'Paid';
+      this.orderAddBtnEnable = false;
+    } else if (this.orderFeesTotal > 0 && this.orderTotalPayments > 0 && ( this.orderTotalPayments < this.orderPendingPayments) ) {
+      this.orderStatus = 'Partially paid'
+      this.orderAddBtnEnable = true;
+    } else {
+      this.orderStatus = 'Not paid'
+      this.orderAddBtnEnable = true;
+    } 
+      this.orderLevelFees.push({orderRefId:paymentGroup['payment_group_reference'],orderTotalFees: this.orderFeesTotal,orderStatus: this.orderStatus,orderParty:'Santosh', orderCCDEvent:'Case Creation',orderCreated: new Date(), orderAddBtnEnable: this.orderAddBtnEnable});
   });
   };
 
+  resetOrderVariables(): void {
+    this.orderFeesTotal = 0.00;
+    this.orderTotalPayments = 0.00;
+    this.orderRemissionTotal = 0.00;
+    this.orderPendingPayments = 0.00;
+    this.isAddFeeBtnEnabled = true;
+
+  }
   calculateAmounts(): void {
     let feesTotal = 0.00,
       paymentsTotal = 0.00,
@@ -465,7 +499,13 @@ checkForExceptionRecord(): void {
     });
     this.orderPendingPayments = (this.orderFeesTotal - this.orderRemissionTotal) - this.orderTotalPayments;
     this.orderRef = orderReferenceObj.orderRefId;
-    this.orderStatus = 'Paid';
+    if(this.orderPendingPayments === 0){
+      this.orderStatus = 'Paid';
+    } else if (this.orderFeesTotal > 0 && this.orderTotalPayments && ( this.orderTotalPayments < this.orderPendingPayments) ) {
+      this.orderStatus = 'Partially paid'
+    } else {
+      this.orderStatus = 'Not paid'
+    }
     this.orderParty = 'Santosh';
     this.orderCreated = new Date();
     this.orderCCDEvent = 'Create Case';
