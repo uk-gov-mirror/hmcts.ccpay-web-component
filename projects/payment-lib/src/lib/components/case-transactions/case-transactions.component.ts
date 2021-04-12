@@ -391,6 +391,17 @@ checkForExceptionRecord(): void {
 
   redirectToFeeSearchPage(event: any) {
     event.preventDefault();
+    let url = this.isBulkScanEnable ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
+    url += this.isTurnOff ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
+    url += this.isStrategicFixEnable ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
+    url += this.isNewPcipalOff ? '&isNewPcipalOff=Enable' : '&isNewPcipalOff=Disable';
+    url += this.isOldPcipalOff ? '&isOldPcipalOff=Enable' : '&isOldPcipalOff=Disable';
+
+  this.router.navigateByUrl(`/fee-search?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}${url}`);
+  }
+
+  redirectToOrderFeeSearchPage(event: any, orderef: any) {
+    event.preventDefault();
     if(!this.isAnyFeeGroupAvilable || this.isTurnOff) {
     let url = this.isBulkScanEnable ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
       url += this.isTurnOff ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
@@ -401,11 +412,12 @@ checkForExceptionRecord(): void {
     this.router.navigateByUrl(`/fee-search?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}${url}`);
     } else {
       this.paymentLibComponent.bspaymentdcn = null;
-      this.paymentLibComponent.paymentGroupReference = this.paymentRef;
+      this.paymentLibComponent.paymentGroupReference = orderef;
       this.paymentLibComponent.isTurnOff = this.isTurnOff;
       this.paymentLibComponent.viewName = 'fee-summary';
     }
   }
+
 
   redirectToReportsPage(event: any) {
     event.preventDefault();
