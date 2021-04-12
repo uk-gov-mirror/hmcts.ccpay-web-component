@@ -16,6 +16,8 @@ export class UnprocessedPaymentsComponent implements OnInit {
   @Input('ISTURNOFF') ISTURNOFF: boolean;
   @Input('IS_BUTTON_ENABLE') IS_BUTTON_ENABLE: boolean;
   @Input('IS_OS_AMT_AVAILABLE') IS_OS_AMT_AVAILABLE: boolean;
+  @Input('ISNEWPCIPALOFF') ISNEWPCIPALOFF: boolean;
+  @Input('ISOLDPCIPALOFF') ISOLDPCIPALOFF: boolean;
   @Input('ISSFENABLE') ISSFENABLE: boolean;
 
   @Output() selectedUnprocessedFeeEvent: EventEmitter<string> = new EventEmitter();
@@ -36,6 +38,8 @@ export class UnprocessedPaymentsComponent implements OnInit {
   isExceptionCase: boolean = false;
   serviceId: string = null;
   isBulkScanEnable;
+  isNewpcipaloff;
+  isOldpcipaloff;
   isTurnOff: boolean = true;
   isStFixEnable;
 
@@ -50,10 +54,12 @@ export class UnprocessedPaymentsComponent implements OnInit {
     this.dcnNumber = this.paymentLibComponent.DCN_NUMBER;
     this.isBulkScanEnable = this.paymentLibComponent.ISBSENABLE;
     this.isTurnOff = this.paymentLibComponent.ISTURNOFF;
+    this.isNewpcipaloff = this.paymentLibComponent.ISNEWPCIPALOFF;
+    this.isOldpcipaloff = this.paymentLibComponent.ISOLDPCIPALOFF;
     this.isStFixEnable = this.paymentLibComponent.ISSFENABLE;
 
     this.getUnassignedPaymentlist();
-     }
+  }
 
   getUnassignedPaymentlist() {
      if (this.selectedOption === 'dcn') {
@@ -111,10 +117,12 @@ export class UnprocessedPaymentsComponent implements OnInit {
   redirectToFeeSearchPage(event: any) {
     event.preventDefault();
     let url = this.isBulkScanEnable ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
-      url += this.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
-      url += this.isStFixEnable ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
-      url +=`&caseType=${this.paymentLibComponent.CASETYPE}`;
-      
+    url += this.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
+    url += this.isStFixEnable ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
+    url +=`&caseType=${this.paymentLibComponent.CASETYPE}`;
+    url += this.isOldpcipaloff ? '&isOldPcipalOff=Enable' : '&isOldPcipalOff=Disable';
+    url += this.isNewpcipaloff ? '&isNewPcipalOff=Enable' : '&isNewPcipalOff=Disable';
+
     this.router.navigateByUrl(`/fee-search?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}&dcn=${this.recordId}${url}`);
   }
   loadUnsolicitedPage(viewName: string) {
@@ -130,6 +138,8 @@ export class UnprocessedPaymentsComponent implements OnInit {
     this.paymentLibComponent.bspaymentdcn = this.recordId;
     this.paymentLibComponent.unProcessedPaymentServiceId = this.serviceId
     this.paymentLibComponent.isTurnOff = this.ISTURNOFF;
+    this.paymentLibComponent.isNewPcipalOff = this.ISNEWPCIPALOFF;
+    this.paymentLibComponent.isOldPcipalOff = this.ISOLDPCIPALOFF;
     this.paymentLibComponent.ISSFENABLE = this.isStFixEnable;
 
     if(!this.ISTURNOFF) {

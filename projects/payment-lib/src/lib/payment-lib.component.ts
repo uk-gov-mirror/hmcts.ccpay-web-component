@@ -18,9 +18,13 @@ import { IBSPayments } from './interfaces/IBSPayments';
     [caseType]="CASETYPE"
     ></app-allocate-payments>
     <ccpay-fee-summary *ngIf="viewName === 'fee-summary'"
-      [ccdCaseNumber]="CCD_CASE_NUMBER" [paymentGroupRef]="paymentGroupReference"
+      [ccdCaseNumber]="CCD_CASE_NUMBER" 
+      [paymentGroupRef]="paymentGroupReference"
       [isTurnOff]="ISTURNOFF"
-      [caseType]="CASETYPE"></ccpay-fee-summary>
+      [caseType]="CASETYPE"
+      [isOldPcipalOff]="ISOLDPCIPALOFF"
+      [isNewPcipalOff]="ISNEWPCIPALOFF"
+      ></ccpay-fee-summary>
     <ccpay-reports *ngIf="viewName === 'reports'"></ccpay-reports>
     `
 })
@@ -39,7 +43,12 @@ export class PaymentLibComponent implements OnInit {
   @Input('ISBSENABLE') ISBSENABLE: Boolean;
   @Input('ISSFENABLE') ISSFENABLE: boolean;
   @Input('ISTURNOFF') ISTURNOFF: boolean;
+<<<<<<< HEAD
   @Input('CASETYPE') CASETYPE: String;
+=======
+  @Input('ISOLDPCIPALOFF') ISOLDPCIPALOFF: boolean;
+  @Input('ISNEWPCIPALOFF') ISNEWPCIPALOFF: boolean;
+>>>>>>> d4bc6ee7bd6d836df6b4ef5c9446e7cb4a53e380
 
   paymentMethod: string;
   bspaymentdcn: string;
@@ -48,7 +57,12 @@ export class PaymentLibComponent implements OnInit {
   paymentReference: string;
   viewName: string;
   isTurnOff: boolean;
+<<<<<<< HEAD
   caseType: string;
+=======
+  isOldPcipalOff: boolean;
+  isNewPcipalOff: boolean;
+>>>>>>> d4bc6ee7bd6d836df6b4ef5c9446e7cb4a53e380
   unProcessedPayment: IBSPayments = null;
 
   constructor(private paymentLibService: PaymentLibService) { }
