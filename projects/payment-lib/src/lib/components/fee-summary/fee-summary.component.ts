@@ -6,6 +6,7 @@ import { PaymentLibComponent } from '../../payment-lib.component';
 import { IRemission } from '../../interfaces/IRemission';
 import { IFee } from '../../interfaces/IFee';
 import { PaymentToPayhubRequest } from '../../interfaces/PaymentToPayhubRequest';
+import { PayhubAntennaRequest } from '../../interfaces/PayhubAntennaRequest';
 import { SafeHtml } from '@angular/platform-browser';
 import {Router} from '@angular/router';
 import {Location} from '@angular/common';
@@ -22,6 +23,9 @@ export class FeeSummaryComponent implements OnInit {
   @Input() paymentGroupRef: string;
   @Input() ccdCaseNumber: string;
   @Input() isTurnOff: string;
+  @Input() isOldPcipalOff: string;
+  @Input() isNewPcipalOff: string;
+
 
   bsPaymentDcnNumber: string;
   paymentGroup: IPaymentGroup;
@@ -31,6 +35,7 @@ export class FeeSummaryComponent implements OnInit {
   totalFee: number;
   payhubHtml: SafeHtml;
   service: string = "";
+  platForm: string = "";
   upPaymentErrorMessage: string;
   selectedOption:string;
   isBackButtonEnable: boolean = true;
@@ -57,6 +62,14 @@ export class FeeSummaryComponent implements OnInit {
     this.bsPaymentDcnNumber = this.paymentLibComponent.bspaymentdcn;
     this.selectedOption = this.paymentLibComponent.SELECTED_OPTION.toLocaleLowerCase();
     this.isStrategicFixEnable = this.paymentLibComponent.ISSFENABLE;
+
+    if ((!this.isOldPcipalOff && this.isNewPcipalOff)) {
+      this.platForm = '8x8';
+    } else if ((this.isOldPcipalOff && !this.isNewPcipalOff)) {
+      this.platForm = 'Antenna';
+    } else if ((this.isOldPcipalOff && this.isNewPcipalOff)){
+      this.platForm = '8x8';
+    }
 
     this.paymentViewService.getBSfeature().subscribe(
       features => {
@@ -191,11 +204,15 @@ export class FeeSummaryComponent implements OnInit {
         this.paymentLibComponent.ISBSENABLE = false;
       }
     );
+
     let partUrl = `selectedOption=${this.paymentLibComponent.SELECTED_OPTION}`;
-        partUrl +=this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
-        partUrl +=this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
-        partUrl +=this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
-        partUrl +=this.paymentLibComponent.ISSFENABLE ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
+      partUrl +=this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
+      partUrl +=this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
+      partUrl +=this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
+      partUrl +=this.paymentLibComponent.ISSFENABLE ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
+      partUrl +=this.isNewPcipalOff ? '&isNewPcipalOff=Enable' : '&isNewPcipalOff=Disable';
+      partUrl +=this.isOldPcipalOff ? '&isOldPcipalOff=Enable' : '&isOldPcipalOff=Disable';
+
     let url = `/payment-history/${this.ccdCaseNumber}?view=case-transactions&takePayment=true&${partUrl}`;
     this.router.navigateByUrl(url);
   }
@@ -204,10 +221,13 @@ export class FeeSummaryComponent implements OnInit {
   }
   redirectToFeeSearchPage(event: any, page?: string) {
     event.preventDefault();
-    let partUrl = this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
-    partUrl +=this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
-    partUrl +=this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
-    partUrl +=this.paymentLibComponent.ISSFENABLE ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
+    let partUrl =this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
+      partUrl +=this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
+      partUrl +=this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
+      partUrl +=this.paymentLibComponent.ISSFENABLE ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
+      partUrl +=this.isNewPcipalOff ? '&isNewPcipalOff=Enable' : '&isNewPcipalOff=Disable';
+      partUrl +=this.isOldPcipalOff ? '&isOldPcipalOff=Enable' : '&isOldPcipalOff=Disable';
+
     if(this.viewStatus === 'feeRemovalConfirmation' || this.viewStatus === 'add_remission') {
       this.viewStatus = 'main';
       return;
@@ -219,21 +239,40 @@ export class FeeSummaryComponent implements OnInit {
     this.isConfirmationBtnDisabled = true;
     const seriveName = this.service ==='AA07' ? 'DIVORCE': this.service ==='AA08' ? 'PROBATE' : 'FINREM',
 
-      requestBody = new PaymentToPayhubRequest(this.ccdCaseNumber, this.outStandingAmount, this.service, seriveName);
-    this.paymentViewService.postPaymentToPayHub(requestBody, this.paymentGroupRef).subscribe(
-      response => {
-        this.location.go(`payment-history?view=fee-summary`);
-        this.payhubHtml = response;
-        this.viewStatus = 'payhub_view';
-        this.isBackButtonEnable=false;
-      },
-      (error: any) => {
-        this.errorMessage = error;
-        this.isConfirmationBtnDisabled = false;
-        this.router.navigateByUrl('/pci-pal-failure');
-      }
-    );
+      requestBody = new PaymentToPayhubRequest(this.ccdCaseNumber, this.outStandingAmount, this.service, seriveName),
+      antennaReqBody = new PayhubAntennaRequest(this.ccdCaseNumber, this.outStandingAmount, this.service, seriveName);
+
+    if(this.platForm === '8x8') {
+      this.paymentViewService.postPaymentToPayHub(requestBody, this.paymentGroupRef).subscribe(
+        response => {
+          this.location.go(`payment-history?view=fee-summary`);
+          this.payhubHtml = response;
+          this.viewStatus = 'payhub_view';
+          this.isBackButtonEnable=false;
+        },
+        (error: any) => {
+          this.errorMessage = error;
+          this.isConfirmationBtnDisabled = false;
+          this.router.navigateByUrl('/pci-pal-failure');
+        }
+      );
+    } else if(this.platForm === 'Antenna') {
+
+      this.paymentViewService.postPaymentAntennaToPayHub(antennaReqBody, this.paymentGroupRef).subscribe(
+        response => {
+          this.isBackButtonEnable=false;
+          window.location.href = '/makePaymentByTelephoneyProvider';
+        },
+        (error: any) => {
+          this.errorMessage = error;
+          this.isConfirmationBtnDisabled = false;
+          this.router.navigateByUrl('/pci-pal-failure');
+        }
+      );
+    }
+
   }
+
   goToAllocatePage(outStandingAmount: number, isFeeAmountZero: Boolean) {
     if (outStandingAmount > 0 || (outStandingAmount === 0 && isFeeAmountZero)) {
       this.paymentLibComponent.paymentGroupReference = this.paymentGroupRef;

@@ -33,6 +33,8 @@ export class CaseTransactionsComponent implements OnInit {
   dcnNumber: string;
   paymentRef: string;
   isTurnOff: boolean;
+  isNewPcipalOff: boolean;
+  isOldPcipalOff: boolean;
   isStrategicFixEnable: boolean;
   isAddFeeBtnEnabled: boolean = true;
   isExceptionRecord: boolean = false;
@@ -69,6 +71,8 @@ export class CaseTransactionsComponent implements OnInit {
     this.dcnNumber = this.paymentLibComponent.DCN_NUMBER;
     this.selectedOption = this.paymentLibComponent.SELECTED_OPTION.toLocaleLowerCase();
     this.isTurnOff = this.paymentLibComponent.ISTURNOFF;
+    this.isNewPcipalOff = this.paymentLibComponent.ISNEWPCIPALOFF;
+    this.isOldPcipalOff = this.paymentLibComponent.ISOLDPCIPALOFF;
     this.isStrategicFixEnable = this.paymentLibComponent.ISSFENABLE;
     if(!this.isTurnOff) {
       this.caseTransactionsService.getPaymentGroups(this.ccdCaseNumber).subscribe(
@@ -357,10 +361,12 @@ checkForExceptionRecord(): void {
   redirectToFeeSearchPage(event: any) {
     event.preventDefault();
     if(!this.isAnyFeeGroupAvilable || this.isTurnOff) {
-      let url = this.isBulkScanEnable ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
-        url += this.isTurnOff ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
-        url += this.isStrategicFixEnable ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
-    this.router.navigateByUrl(`/fee-search?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}${url}`);
+    let url = this.isBulkScanEnable ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
+      url += this.isTurnOff ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
+      url += this.isStrategicFixEnable ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
+      url += this.isNewPcipalOff ? '&isNewPcipalOff=Enable' : '&isNewPcipalOff=Disable';
+      url += this.isOldPcipalOff ? '&isOldPcipalOff=Enable' : '&isOldPcipalOff=Disable';
+
     this.router.navigateByUrl(`/fee-search?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}${url}`);
     } else {
       this.paymentLibComponent.bspaymentdcn = null;

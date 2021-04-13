@@ -1,11 +1,7 @@
-export class PaymentToPayhubRequest {
+export class PayhubAntennaRequest {
   currency = 'GBP';
   site_id: string;
-  description = 'PayBubble payment';
-  channel = 'telephony';
-  provider = 'pci pal';
   service: string;
-
   ccd_case_number: string;
   amount: number;
 
