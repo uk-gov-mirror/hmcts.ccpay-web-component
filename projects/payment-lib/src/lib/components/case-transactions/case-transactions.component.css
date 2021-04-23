@@ -45,6 +45,7 @@
 }
 .govuk-button {
   font-size: 19px;
+  margin-bottom: 0px !important;
 }
 
 .groupamount.govuk-table__header,

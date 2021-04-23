@@ -59,22 +59,24 @@
             <table class="govuk-table">
                 <thead class="govuk-table__head">
                 <tr class="govuk-table__row">
-                  <td class="govuk-table__header" scope="col">Reference</td>
                   <td class="govuk-table__header" scope="col">Status</td>
                   <td class="govuk-table__header" scope="col">Amount</td>
                   <td class="govuk-table__header" scope="col">Party</td>
+                  <td class="govuk-table__header" scope="col">Request reference	</td>
+                  <td class="govuk-table__header" scope="col"></td>
                   <td class="govuk-table__header" scope="col"></td>
                 </tr>
                 </thead>
                 <tbody class="govuk-table__body" *ngFor="let orderRef of orderLevelFees;let i = index;">
                   <tr class="govuk-table__row">
-                    <td class="govuk-table__cell">	
-                        <a href="javascript:void(0)" (click)="goToOrderViewDetailSection(orderRef)">{{orderRef.orderRefId}}</a>
-                   </td>
                     <td class="govuk-table__cell">{{orderRef.orderStatus}}</td>
                     <td class="govuk-table__cell">{{orderRef.orderTotalFees}}</td>
                     <td class="govuk-table__cell">{{orderRef.orderParty}}</td> 
-                    <td> <button type="submit" (click)="redirectToOrderFeeSearchPage($event,orderRef.orderRefId)"
+                    <td class="govuk-table__cell">{{orderRef.orderRefId}}</td> 
+                    <td class="govuk-table__cell">	
+                        <a href="javascript:void(0)" (click)="goToOrderViewDetailSection(orderRef)">View details</a>
+                   </td>
+                    <td> <button type="submit" *ngIf="orderRef.orderAddBtnEnable" (click)="redirectToOrderFeeSearchPage($event,orderRef.orderRefId)"
                       [disabled]="!orderRef.orderAddBtnEnable"
                       [ngClass]='!orderRef.orderAddBtnEnable ? "govuk-button govuk-button--secondary govuk-button--disabled govuk-!-margin-right-1" : "govuk-button govuk-button--secondary govuk-!-margin-right-1"'>
                       Take telephony payment
