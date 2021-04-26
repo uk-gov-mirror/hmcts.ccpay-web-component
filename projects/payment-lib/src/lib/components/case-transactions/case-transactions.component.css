@@ -120,3 +120,33 @@ details summary {
 .summary-table-font {
   font-size: 36px;
 }
+
+.col-60 {
+    width: 60%;
+}
+
+.col-55 {
+    width:55%;
+}
+
+.order-class {
+    padding-top:3em;
+}
+
+.govuk-table__header:last-child {
+text-align: right;
+}
+
+.govuk-table__cell:last-child {
+    text-align: right;
+}
+
+.govuk-grid-column-two-thirds  {
+    width: 64% !important;
+    padding: 0 !important;
+}
+
+.govuk-heading-l {
+    font-size: 36px;
+    margin-bottom: 10px;
+}

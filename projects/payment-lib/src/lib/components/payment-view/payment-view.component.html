@@ -31,10 +31,10 @@
       </div>
       <table>
         <tbody>
-      <tr class="section" *ngIf="isTurnOff">
+      <!-- <tr class="section" *ngIf="isTurnOff">
           <td class="bold tb-col-w">Payment group reference</td>
           <td>{{ paymentGroup.payment_group_reference }}</td>
-        </tr>
+        </tr> -->
         <tr class="section">
           <td class="bold tb-col-w">Payment reference</td>
           <td>{{ paymentGroup.payments[0].reference }}</td>
@@ -43,7 +43,31 @@
           <td class="bold tb-col-w">Payment amount</td>
           <td>£{{ paymentGroup.payments[0].amount | number:'.2' }}</td>
         </tr>
-        <tr class="section" *ngIf="paymentGroup.payments[0] && paymentGroup.payments[0].external_reference">
+        <tr class="section">
+            <td class="bold tb-col-w">Payment method</td>
+            <td>{{ paymentGroup.payments[0].method  }}</td>
+        </tr>
+        <tr class="section">
+            <td class="bold tb-col-w">Type</td>
+            <td>{{ paymentGroup.payments[0].amount | number:'.2' }}</td>
+        </tr>
+        <tr class="section">
+            <td class="bold tb-col-w">Channel</td>
+            <td>{{ paymentGroup.payments[0].channel  }}</td>
+        </tr>
+        <tr class="section">
+            <td class="bold tb-col-w">Method</td>
+            <td>{{ paymentGroup.payments[0].method }}</td>
+        </tr>
+        <tr class="section">
+            <td class="bold tb-col-w">Status</td>
+            <td>{{ paymentGroup.payments[0].status }}</td>
+         </tr>
+        <tr class="section">
+            <td class="bold tb-col-w">Allocaton Status</td>
+            <td>£{{ paymentGroup.payments[0].payment_allocation[0].allocation_status }}</td>
+          </tr>
+        <!-- <tr class="section" *ngIf="paymentGroup.payments[0] && paymentGroup.payments[0].external_reference">
           <td class="bold tb-col-w">GovPay Transaction ID</td>
           <td>{{ paymentGroup.payments[0].external_reference }}</td>
         </tr>
@@ -54,9 +78,14 @@
         <tr class="section" *ngIf="paymentGroup.payments[0] && paymentGroup.payments[0].document_control_number && !paymentGroup.payments[0].external_reference">
           <td class="bold tb-col-w">Banked date</td>
           <td>{{ paymentGroup.payments[0].banked_date | date:'dd MMM yyyy' }}</td>
-        </tr>
+        </tr> -->
         </tbody>
       </table>
+
+      <div>
+            <!-- Status histories -->
+      <ccpay-payment-statuses *ngIf="isStatusAllocated"></ccpay-payment-statuses>
+      </div>
 
       <div class="govuk-grid-row" *ngIf="paymentGroup.fees.length > 0">
         <div class="column">
@@ -79,23 +108,23 @@
             <td class="bold tb-col-w" [ngClass]="{'tr-border': !fee.apportion_amount && !fee.remissions && !isTurnOff }">Fee amount</td>
             <td [ngClass]="{'tr-border': !fee.apportion_amount && !fee.remissions && !isTurnOff }">£{{ fee.calculated_amount | number:'.2' }}</td>
           </tr>
-          <tr *ngIf="fee.net_amount && isTurnOff">
+          <!-- <tr *ngIf="fee.net_amount && isTurnOff">
             <td class="bold tb-col-w" [ngClass]="{'tr-border': !fee.apportion_amount && !fee.remissions}" >Net amount</td>
             <td [ngClass]="{'tr-border': !fee.apportion_amount && !fee.remissions}">£{{ fee.net_amount | number:'.2' }}</td>
-          </tr>
+          </tr> -->
           <tr *ngIf="fee.apportion_amount">
             <td class="bold tb-col-w tr-border" [ngClass]="{'tr-border': !fee.remissions}">Allocated amount</td>
             <td [ngClass]="{'tr-border': !fee.remissions}">£{{ fee.apportion_amount | number:'.2' }}</td>
           </tr>
 
-          <tr *ngIf="fee.remissions">
+          <!-- <tr *ngIf="fee.remissions">
             <td class="bold tb-col-w">Remission code</td>
             <td>{{fee.remissions.hwf_reference}}</td>
           </tr>
           <tr *ngIf="fee.remissions">
             <td class="bold tb-col-w tr-border">Remission amount</td>
             <td class="tr-border">£{{ fee.remissions.hwf_amount | number:'.2'}}</td>
-          </tr>
+          </tr> -->
           </tbody>
         </table>
 
@@ -107,8 +136,7 @@
       <!-- pba details -->
       <ccpay-pba-details *ngIf="!isCardPayment" [payment]="paymentGroup.payments[0]"></ccpay-pba-details>
 
-      <!-- Status histories -->
-      <ccpay-payment-statuses *ngIf="isStatusAllocated"></ccpay-payment-statuses>
+  
 
     </div>
 

@@ -17,14 +17,14 @@
       <thead>
         <tr>
           <th>Status</th>
-          <th>Amount</th>
-          <th>Date</th>
+          <!-- <th>Amount</th> -->
+          <th>Date and time</th>
         </tr>
       </thead> 
       <tbody>
         <tr *ngFor="let status of statuses.status_histories">
           <td>{{ status.status }}</td>
-          <td>£{{ statuses.amount | number:'.2' }}</td>
+          <!-- <td>£{{ statuses.amount | number:'.2' }}</td> -->
           <td>{{ status.date_created | date:'dd MMM yyyy hh:mm:ss'}}</td>
         </tr>
     </tbody>
