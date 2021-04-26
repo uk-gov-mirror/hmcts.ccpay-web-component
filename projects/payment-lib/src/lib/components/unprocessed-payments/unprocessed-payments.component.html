@@ -1,4 +1,4 @@
-<ng-container *ngIf="ISTAKEPAYMENT">
+<ng-container *ngIf="IS_BUTTON_ENABLE">
     <div class="unprocessed-payments govuk-grid-column-full govuk-!-padding-bottom-3">
         <input #myInput type='hidden' id='iFrameDrivenImageValue' value='CASETRANSACTION'>
         <h3 class="heading-medium" *ngIf="!IS_BUTTON_ENABLE">Unprocessed payments</h3>
@@ -90,13 +90,13 @@
 </ng-container>
 
 
-<ng-container *ngIf="!ISTAKEPAYMENT">
+<ng-container *ngIf="!IS_BUTTON_ENABLE">
     <table class="govuk-table">
-        <thead class="govuk-table__head"> </thead>
+        <thead class="govuk-table__head"></thead>
           <tbody class="govuk-table__body">
           <tr class="govuk-table__row" *ngFor="let unassignedRecord of unassignedRecordList; let i of index;">
                     <td class="govuk-table__cell whitespace-inherit" class="col-13">
-                    Unallocated
+                    Unallocated 
                     </td>
                     <td class="govuk-table__cell whitespace-inherit"> {{unassignedRecord.amount | currency :'GBP':'symbol':'1.2-2'}}</td>
                     <td class="govuk-table__cell whitespace-inherit"></td>

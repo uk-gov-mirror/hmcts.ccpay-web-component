@@ -12,6 +12,7 @@ const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 })
 export class PaymentViewComponent implements OnInit {
   @Input() isTurnOff: boolean;
+  @Input() isTakePayment: boolean;
   paymentGroup: IPaymentGroup;
   errorMessage: string;
   ccdCaseNumber: string;

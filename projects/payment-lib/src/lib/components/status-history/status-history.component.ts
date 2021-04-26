@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { IStatusHistories } from '../../interfaces/IStatusHistories';
 import { StatusHistoryService } from '../../services/status-history/status-history.service';
 import { PaymentLibComponent } from '../../payment-lib.component';
@@ -9,6 +9,7 @@ import { PaymentLibComponent } from '../../payment-lib.component';
   styleUrls: ['./status-history.component.css']
 })
 export class StatusHistoryComponent implements OnInit {
+  @Input() isTakePayment: boolean;
   pageTitle: string = 'Payment status history';
   statuses: IStatusHistories;
   errorMessage: string;

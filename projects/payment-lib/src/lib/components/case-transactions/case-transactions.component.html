@@ -404,12 +404,22 @@
       [ISSFENABLE]="isStrategicFixEnable"
       [FEE_RECORDS_EXISTS]="isFeeRecordsExist" 
       [IS_OS_AMT_AVAILABLE]="isGrpOutstandingAmtPositive" 
-      [ISTAKEPAYMENT]="takePayment"
       (selectedUnprocessedFeeEvent) = "selectedUnprocessedFeeEvent($event)">
       </ccpay-app-unprocessed-payments>
     </div>
 
 <div *ngIf="!takePayment" class="govuk-grid-row govuk-grid__surplus-payments">
+    <div *ngIf="errorMessage">
+        <div class="error-summary" role="group" aria-labelledby="failure-error-summary-heading" tabindex="-1">
+          <h2 class="heading-medium error-summary-heading" id="failure-error-summary-heading">
+              Sorry, there is a problem with the service
+          </h2>
+          <p>Payment requests and payments cannot currently be shown. Try again.</p>
+          <div class="govuk-error-summary__body">
+            {{ errorMessage }}
+          </div>
+        </div>
+      </div>
   <div class="govuk-grid-column-full">
       <div>
           <h3 class="heading-medium">Payment requests</h3>
@@ -485,7 +495,6 @@
       [ISSFENABLE]="isStrategicFixEnable"
       [FEE_RECORDS_EXISTS]="isFeeRecordsExist" 
       [IS_OS_AMT_AVAILABLE]="isGrpOutstandingAmtPositive" 
-      [ISTAKEPAYMENT]="takePayment"
       (selectedUnprocessedFeeEvent) = "selectedUnprocessedFeeEvent($event)">
   </ccpay-app-unprocessed-payments>
   </div>
