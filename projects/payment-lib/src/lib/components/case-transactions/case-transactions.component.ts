@@ -131,192 +131,192 @@ export class CaseTransactionsComponent implements OnInit {
   }
 
   setDefaults(): void {
-    this.totalPayments = 0.00;
-    this.totalRemissions = 0.00;
-    this.totalNonOffPayments = 0.00;
-    this.totalFees = 0.00;
-}
-
-getAllocationStatus(payments: any){
-
-  let paymentAllocation = payments.payment_allocation,
-      isAllocationStatusExist = paymentAllocation.length >0;
-  return isAllocationStatusExist ? paymentAllocation[0].allocation_status : '-';
-  //return "-";
-
-}
-
-checkForExceptionRecord(): void {
-  if(this.paymentGroups.length === 0 && (this.selectedOption.toLocaleLowerCase() === 'ccdorexception' || this.selectedOption.toLocaleLowerCase() === 'rc')) {
-    this.bulkScaningPaymentService.getBSPaymentsByCCD(this.ccdCaseNumber).subscribe(
-      recordData => {
-       if(recordData['data'] && recordData['data'].exception_record_reference && recordData['data'].exception_record_reference.length > 0 && recordData['data'].ccd_reference >0) {
-          this.isExceptionRecord = false;
-          this.isAddFeeBtnEnabled = true;
-        }
-
-        if(recordData['data'] && recordData['data'].exception_record_reference && recordData['data'].exception_record_reference.length > 0 && recordData['data'].ccd_reference === undefined) {
-          this.isExceptionRecord = true;
-          this.isAddFeeBtnEnabled = false;
-        }
-
-        if(recordData['data'] && recordData['data'].exception_record_reference && recordData['data'].exception_record_reference.length === undefined && recordData['data'].ccd_reference >0) {
-          this.isExceptionRecord = false;
-          this.isAddFeeBtnEnabled = true;
-        }
-      });
+      this.totalPayments = 0.00;
+      this.totalRemissions = 0.00;
+      this.totalNonOffPayments = 0.00;
+      this.totalFees = 0.00;
   }
 
-  if (this.paymentGroups.length === 0 && this.selectedOption.toLocaleLowerCase() === 'dcn') {
-    if (this.paymentLibComponent.CCD_CASE_NUMBER.length > 0 && this.paymentLibComponent.EXC_REFERENCE.length > 0) {
-      this.isExceptionRecord = false;
-      this.isAddFeeBtnEnabled = true;
-    } else if(this.paymentLibComponent.CCD_CASE_NUMBER.length === 0 && this.paymentLibComponent.EXC_REFERENCE.length > 0) {
-      this.isExceptionRecord = true;
-      this.isAddFeeBtnEnabled = false;
-    } else {
-      this.isExceptionRecord = false;
-      this.isAddFeeBtnEnabled = true;
-    }
+  getAllocationStatus(payments: any){
+
+    let paymentAllocation = payments.payment_allocation,
+        isAllocationStatusExist = paymentAllocation.length >0;
+    return isAllocationStatusExist ? paymentAllocation[0].allocation_status : '-';
+    //return "-";
+
   }
-  if (this.paymentGroups.length > 0)
-  this.paymentGroups.forEach(paymentGroup => {
-    if (paymentGroup.payments) {
-      paymentGroup.payments.forEach(payment => {
-        if (payment.case_reference !== undefined && payment.ccd_case_number === undefined) {
-          this.isExceptionRecord = true;
-          this.isAddFeeBtnEnabled = false;
-        } else {
-          this.isExceptionRecord = false;
-          this.isAddFeeBtnEnabled = true;
-        }
 
-      });
-    }
-  });
-}
-
-calculateOrderFeesAmounts(): void {
-  let feesTotal = 0.00;
-  this.paymentGroups.forEach(paymentGroup => {
-    this.resetOrderVariables();
-        if (paymentGroup.fees) {
-              paymentGroup.fees.forEach(fee => {
-                this.orderFeesTotal = this.orderFeesTotal + fee.calculated_amount
+  checkForExceptionRecord(): void {
+    if(this.paymentGroups.length === 0 && (this.selectedOption.toLocaleLowerCase() === 'ccdorexception' || this.selectedOption.toLocaleLowerCase() === 'rc')) {
+      this.bulkScaningPaymentService.getBSPaymentsByCCD(this.ccdCaseNumber).subscribe(
+        recordData => {
+        if(recordData['data'] && recordData['data'].exception_record_reference && recordData['data'].exception_record_reference.length > 0 && recordData['data'].ccd_reference >0) {
+            this.isExceptionRecord = false;
+            this.isAddFeeBtnEnabled = true;
           }
-        )}
-        if (paymentGroup.remissions) {
-          paymentGroup.remissions.forEach(remission => {
-            this.orderRemissionTotal = this.orderRemissionTotal + remission.hwf_amount;
-          });
-        }
 
-        if (paymentGroup.payments) {
-          paymentGroup.payments.forEach(payment => {
-            if (payment.status.toUpperCase() === 'SUCCESS') {
-              this.orderTotalPayments = this.orderTotalPayments + payment.amount;
+          if(recordData['data'] && recordData['data'].exception_record_reference && recordData['data'].exception_record_reference.length > 0 && recordData['data'].ccd_reference === undefined) {
+            this.isExceptionRecord = true;
+            this.isAddFeeBtnEnabled = false;
+          }
+
+          if(recordData['data'] && recordData['data'].exception_record_reference && recordData['data'].exception_record_reference.length === undefined && recordData['data'].ccd_reference >0) {
+            this.isExceptionRecord = false;
+            this.isAddFeeBtnEnabled = true;
+          }
+        });
+    }
+
+    if (this.paymentGroups.length === 0 && this.selectedOption.toLocaleLowerCase() === 'dcn') {
+      if (this.paymentLibComponent.CCD_CASE_NUMBER.length > 0 && this.paymentLibComponent.EXC_REFERENCE.length > 0) {
+        this.isExceptionRecord = false;
+        this.isAddFeeBtnEnabled = true;
+      } else if(this.paymentLibComponent.CCD_CASE_NUMBER.length === 0 && this.paymentLibComponent.EXC_REFERENCE.length > 0) {
+        this.isExceptionRecord = true;
+        this.isAddFeeBtnEnabled = false;
+      } else {
+        this.isExceptionRecord = false;
+        this.isAddFeeBtnEnabled = true;
+      }
+    }
+    if (this.paymentGroups.length > 0)
+    this.paymentGroups.forEach(paymentGroup => {
+      if (paymentGroup.payments) {
+        paymentGroup.payments.forEach(payment => {
+          if (payment.case_reference !== undefined && payment.ccd_case_number === undefined) {
+            this.isExceptionRecord = true;
+            this.isAddFeeBtnEnabled = false;
+          } else {
+            this.isExceptionRecord = false;
+            this.isAddFeeBtnEnabled = true;
+          }
+
+        });
+      }
+    });
+  }
+
+  calculateOrderFeesAmounts(): void {
+    let feesTotal = 0.00;
+    this.paymentGroups.forEach(paymentGroup => {
+      this.resetOrderVariables();
+          if (paymentGroup.fees) {
+                paymentGroup.fees.forEach(fee => {
+                  this.orderFeesTotal = this.orderFeesTotal + fee.calculated_amount
             }
-          });
-        }  
+          )}
+          if (paymentGroup.remissions) {
+            paymentGroup.remissions.forEach(remission => {
+              this.orderRemissionTotal = this.orderRemissionTotal + remission.hwf_amount;
+            });
+          }
 
+          if (paymentGroup.payments) {
+            paymentGroup.payments.forEach(payment => {
+              if (payment.status.toUpperCase() === 'SUCCESS') {
+                this.orderTotalPayments = this.orderTotalPayments + payment.amount;
+              }
+            });
+          }  
+
+    this.orderPendingPayments = (this.orderFeesTotal - this.orderRemissionTotal) - this.orderTotalPayments;
+    if(this.orderPendingPayments === 0){
+      this.orderStatus = 'Paid';
+      this.orderAddBtnEnable = false;
+    } else if (this.orderFeesTotal > 0 && this.orderTotalPayments > 0 && ( this.orderTotalPayments < this.orderPendingPayments) ) {
+      this.orderStatus = 'Partially paid'
+      this.orderAddBtnEnable = true;
+    } else {
+      this.orderStatus = 'Not paid'
+      this.orderAddBtnEnable = true;
+    } 
+      this.orderLevelFees.push({orderRefId:paymentGroup['payment_group_reference'],orderTotalFees: this.orderFeesTotal,orderStatus: this.orderStatus,orderParty:'Santosh', orderCCDEvent:'Case Creation',orderCreated: new Date(), orderAddBtnEnable: this.orderAddBtnEnable});
+  });
+  };
+
+  resetOrderVariables(): void {
+    this.orderFeesTotal = 0.00;
+    this.orderTotalPayments = 0.00;
+    this.orderRemissionTotal = 0.00;
+    this.orderPendingPayments = 0.00;
+    this.isAddFeeBtnEnabled = true;
+
+  };
+
+  goToOrderViewDetailSection(orderReferenceObj: any){
+    this.orderFeesTotal = 0.00;
+    this.orderRemissionTotal = 0.00;
+    this.orderTotalPayments = 0.00;
+    this.orderPendingPayments =0.00;
+
+  this.orderDetail = this.paymentGroups.filter(x=> x.payment_group_reference === orderReferenceObj.orderRefId);
+  this.orderDetail.forEach(orderDetail => {
+    if (orderDetail.fees) {
+        orderDetail.fees.forEach(fee => {
+          this.orderFeesTotal = this.orderFeesTotal + fee.calculated_amount;
+        });
+    }
+    if (orderDetail.remissions) {
+      orderDetail.remissions.forEach(remission => {
+        this.orderRemissionTotal = this.orderRemissionTotal + remission.hwf_amount;
+      });
+    if (orderDetail.payments) {
+      orderDetail.payments.forEach(payment => {
+        if (payment.status.toUpperCase() === 'SUCCESS') {
+          this.orderTotalPayments = this.orderTotalPayments + payment.amount;
+        }
+      });
+    }  
+  }
+  });
   this.orderPendingPayments = (this.orderFeesTotal - this.orderRemissionTotal) - this.orderTotalPayments;
+  this.orderRef = orderReferenceObj.orderRefId;
   if(this.orderPendingPayments === 0){
     this.orderStatus = 'Paid';
-    this.orderAddBtnEnable = false;
-  } else if (this.orderFeesTotal > 0 && this.orderTotalPayments > 0 && ( this.orderTotalPayments < this.orderPendingPayments) ) {
+  } else if (this.orderFeesTotal > 0 && this.orderTotalPayments && ( this.orderTotalPayments < this.orderPendingPayments) ) {
     this.orderStatus = 'Partially paid'
-    this.orderAddBtnEnable = true;
   } else {
     this.orderStatus = 'Not paid'
-    this.orderAddBtnEnable = true;
-  } 
-    this.orderLevelFees.push({orderRefId:paymentGroup['payment_group_reference'],orderTotalFees: this.orderFeesTotal,orderStatus: this.orderStatus,orderParty:'Santosh', orderCCDEvent:'Case Creation',orderCreated: new Date(), orderAddBtnEnable: this.orderAddBtnEnable});
-});
-};
-
-resetOrderVariables(): void {
-  this.orderFeesTotal = 0.00;
-  this.orderTotalPayments = 0.00;
-  this.orderRemissionTotal = 0.00;
-  this.orderPendingPayments = 0.00;
-  this.isAddFeeBtnEnabled = true;
-
-};
-
-goToOrderViewDetailSection(orderReferenceObj: any){
-  this.orderFeesTotal = 0.00;
-  this.orderRemissionTotal = 0.00;
-  this.orderTotalPayments = 0.00;
-  this.orderPendingPayments =0.00;
-
- this.orderDetail = this.paymentGroups.filter(x=> x.payment_group_reference === orderReferenceObj.orderRefId);
- this.orderDetail.forEach(orderDetail => {
-   if (orderDetail.fees) {
-       orderDetail.fees.forEach(fee => {
-         this.orderFeesTotal = this.orderFeesTotal + fee.calculated_amount;
-       });
-   }
-   if (orderDetail.remissions) {
-     orderDetail.remissions.forEach(remission => {
-       this.orderRemissionTotal = this.orderRemissionTotal + remission.hwf_amount;
-     });
-   if (orderDetail.payments) {
-     orderDetail.payments.forEach(payment => {
-       if (payment.status.toUpperCase() === 'SUCCESS') {
-         this.orderTotalPayments = this.orderTotalPayments + payment.amount;
-       }
-     });
-   }  
- }
- });
- this.orderPendingPayments = (this.orderFeesTotal - this.orderRemissionTotal) - this.orderTotalPayments;
- this.orderRef = orderReferenceObj.orderRefId;
- if(this.orderPendingPayments === 0){
-   this.orderStatus = 'Paid';
- } else if (this.orderFeesTotal > 0 && this.orderTotalPayments && ( this.orderTotalPayments < this.orderPendingPayments) ) {
-   this.orderStatus = 'Partially paid'
- } else {
-   this.orderStatus = 'Not paid'
- }
- this.orderParty = 'Santosh';
- this.orderCreated = new Date();
- this.orderCCDEvent = 'Create Case';
- this.viewStatus= 'order-full-view';
-}
-
-redirectToOrderFeeSearchPage(event: any, orderef: any) {
-  event.preventDefault();
-  if(!this.isAnyFeeGroupAvilable || this.isTurnOff) {
-  let url = this.isBulkScanEnable ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
-    url += this.isTurnOff ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
-    url += this.isStrategicFixEnable ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
-    url += this.isNewPcipalOff ? '&isNewPcipalOff=Enable' : '&isNewPcipalOff=Disable';
-    url += this.isOldPcipalOff ? '&isOldPcipalOff=Enable' : '&isOldPcipalOff=Disable';
-
-  this.router.navigateByUrl(`/fee-search?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}${url}`);
-  } else {
-    this.paymentLibComponent.bspaymentdcn = null;
-    this.paymentLibComponent.paymentGroupReference = orderef;
-    this.paymentLibComponent.isTurnOff = this.isTurnOff;
-    this.paymentLibComponent.viewName = 'fee-summary';
   }
-}
+  this.orderParty = 'Santosh';
+  this.orderCreated = new Date();
+  this.orderCCDEvent = 'Create Case';
+  this.viewStatus= 'order-full-view';
+  }
 
-goToCaseTransationPage(event: any) {
- event.preventDefault();
- this.viewStatus = 'case-transactions'
- this.paymentLibComponent.viewName = 'case-transactions';
- 
-//  this.paymentViewService.getBSfeature().subscribe(
-//    features => {
-//      let result = JSON.parse(features).filter(feature => feature.uid === BS_ENABLE_FLAG);
-//      this.paymentLibComponent.ISBSENABLE = result[0] ? result[0].enable : false;
-//    },
-//    err => {
-//      this.paymentLibComponent.ISBSENABLE = false;
-//    }
-//  );
-}
+  redirectToOrderFeeSearchPage(event: any, orderef: any) {
+    event.preventDefault();
+    if(!this.isAnyFeeGroupAvilable || this.isTurnOff) {
+    let url = this.isBulkScanEnable ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
+      url += this.isTurnOff ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
+      url += this.isStrategicFixEnable ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
+      url += this.isNewPcipalOff ? '&isNewPcipalOff=Enable' : '&isNewPcipalOff=Disable';
+      url += this.isOldPcipalOff ? '&isOldPcipalOff=Enable' : '&isOldPcipalOff=Disable';
+
+    this.router.navigateByUrl(`/fee-search?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}${url}`);
+    } else {
+      this.paymentLibComponent.bspaymentdcn = null;
+      this.paymentLibComponent.paymentGroupReference = orderef;
+      this.paymentLibComponent.isTurnOff = this.isTurnOff;
+      this.paymentLibComponent.viewName = 'fee-summary';
+    }
+  }
+
+  goToCaseTransationPage(event: any) {
+  event.preventDefault();
+  this.viewStatus = 'main'
+  this.paymentLibComponent.viewName = 'case-transactions';
+  
+  //  this.paymentViewService.getBSfeature().subscribe(
+  //    features => {
+  //      let result = JSON.parse(features).filter(feature => feature.uid === BS_ENABLE_FLAG);
+  //      this.paymentLibComponent.ISBSENABLE = result[0] ? result[0].enable : false;
+  //    },
+  //    err => {
+  //      this.paymentLibComponent.ISBSENABLE = false;
+  //    }
+  //  );
+  }
 
 
   calculateAmounts(): void {
@@ -324,7 +324,7 @@ goToCaseTransationPage(event: any) {
       paymentsTotal = 0.00,
       remissionsTotal = 0.00,
       nonOffLinePayment = 0.00;
-  
+
     this.paymentGroups.forEach(paymentGroup => {
       if (paymentGroup.fees) {
         paymentGroup.fees.forEach(fee => {
@@ -510,27 +510,20 @@ goToCaseTransationPage(event: any) {
 
   redirectToFeeSearchPage(event: any) {
     event.preventDefault();
-    if(!this.isAnyFeeGroupAvilable || this.isTurnOff) {
     let url = this.isBulkScanEnable ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
-      url += this.isTurnOff ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
-      url += this.isStrategicFixEnable ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
-      url +=`&caseType=${this.caseType}`
-      url += this.isNewPcipalOff ? '&isNewPcipalOff=Enable' : '&isNewPcipalOff=Disable';
-      url += this.isOldPcipalOff ? '&isOldPcipalOff=Enable' : '&isOldPcipalOff=Disable';
+    url += this.isTurnOff ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
+    url += this.isStrategicFixEnable ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
+    url += this.isNewPcipalOff ? '&isNewPcipalOff=Enable' : '&isNewPcipalOff=Disable';
+    url += this.isOldPcipalOff ? '&isOldPcipalOff=Enable' : '&isOldPcipalOff=Disable';
 
-    this.router.navigateByUrl(`/fee-search?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}${url}`);
-    } else {
-      this.paymentLibComponent.bspaymentdcn = null;
-      this.paymentLibComponent.paymentGroupReference = this.paymentRef;
-      this.paymentLibComponent.isTurnOff = this.isTurnOff;
-      this.paymentLibComponent.viewName = 'fee-summary';
-    }
+  this.router.navigateByUrl(`/fee-search?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}${url}`);
   }
 
   redirectToReportsPage(event: any) {
     event.preventDefault();
     this.router.navigateByUrl(`/reports?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}`);
   }
+
   loadFeeSummaryPage(paymentGroup: IPaymentGroup) {
     this.paymentLibComponent.bspaymentdcn = null;
     this.paymentLibComponent.paymentGroupReference = paymentGroup.payment_group_reference;
@@ -562,6 +555,7 @@ goToCaseTransationPage(event: any) {
       this.isUnprocessedRecordSelected = false;
     }
   }
+
   getUnprocessedFeeCount(unProcessedRecordCount: number) {
     this.unprocessedRecordCount = unProcessedRecordCount;
   }
@@ -580,9 +574,11 @@ goToCaseTransationPage(event: any) {
     this.feeId = fee;
     this.viewStatus = 'feeRemovalConfirmation';
   }
+
   cancelRemoval() {
     this.viewStatus = 'main';
   }
+
   removeFee(fee: any){
     this.isRemoveBtnDisabled = true;
     this.paymentViewService.deleteFeeFromPaymentGroup(fee).subscribe(
