@@ -1,4 +1,3 @@
-
 export interface IBSPayments {
   id?:string;
   dcn_reference?: string,
@@ -15,5 +14,6 @@ export interface IBSPayments {
   date_banked?: string,
   date_created?: string,
   date_updated?: string,
-  length?: number
+  length?: number,
+  expanded?: boolean
 }
