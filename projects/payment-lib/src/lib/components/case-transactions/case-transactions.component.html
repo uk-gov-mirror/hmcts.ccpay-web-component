@@ -557,8 +557,10 @@
                       <td class="govuk-table__cell">	
                               <a href="javascript:void(0)" (click)="goToOrderViewDetailSection(orderRef)">View details</a>
                       </td>
-                      <td> <button type="submit" (click)="redirectToOrderFeeSearchPage($event,orderRef.orderRefId)"
-                        [disabled]="!orderRef.orderAddBtnEnable"
+                      <td  style="text-align: right;">
+                        
+                        <button type="submit" (click)="redirectToOrderFeeSearchPage($event,orderRef.orderRefId)"
+                        *ngIf="orderRef.orderAddBtnEnable"
                         [ngClass]='!orderRef.orderAddBtnEnable ? "govuk-button govuk-button--secondary govuk-button--disabled govuk-!-margin-right-1" : "govuk-button govuk-button--secondary govuk-!-margin-right-1"'>
                         Take telephony payment
                       </button></td>
@@ -605,20 +607,23 @@
                     <td class="govuk-table__cell" colspan="8">No payments recorded</td>
                   </tbody>
                 </table>
-                <ccpay-app-unprocessed-payments class="govuk-table"
-                *ngIf="isBulkScanEnable"
-                [IS_BUTTON_ENABLE]="takePayment"
-                [ISTURNOFF]="isTurnOff"
-                [ISSFENABLE]="isStrategicFixEnable"
-                [FEE_RECORDS_EXISTS]="isFeeRecordsExist" 
-                [IS_OS_AMT_AVAILABLE]="isGrpOutstandingAmtPositive" 
-                (selectedUnprocessedFeeEvent) = "selectedUnprocessedFeeEvent($event)">
-            </ccpay-app-unprocessed-payments>
+               
           </ng-container>
         
             <ng-container *ngIf="allPayments?.length  === 0">
                 <br/>No payments.
             </ng-container>
+
+            <ccpay-app-unprocessed-payments class="govuk-table"
+            *ngIf="isBulkScanEnable"
+            [IS_BUTTON_ENABLE]="takePayment"
+            [ISTURNOFF]="isTurnOff"
+            [ISSFENABLE]="isStrategicFixEnable"
+            [FEE_RECORDS_EXISTS]="isFeeRecordsExist" 
+            [IS_OS_AMT_AVAILABLE]="isGrpOutstandingAmtPositive" 
+            (selectedUnprocessedFeeEvent) = "selectedUnprocessedFeeEvent($event)">
+        </ccpay-app-unprocessed-payments>
+        
           </div>
           <!-- <div class="govuk-grid-row">
               <ccpay-app-unprocessed-payments
