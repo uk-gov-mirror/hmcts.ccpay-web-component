@@ -504,10 +504,10 @@
           <div class="govuk-grid-row">
               <h1 class="govuk-grid-column-two-thirds govuk-heading-l govuk-!-margin-top-0">Case transactions</h1>
               <ng-container *ngIf='!isExceptionRecord' class=" govuk-!-margin-bottom-6" style="align-self: flex-end;">
-                  Case reference: <b>{{ ccdCaseNumber | ccdHyphens }}</b>
+                <b> Case reference: </b>{{ ccdCaseNumber | ccdHyphens }}
               </ng-container>
               <ng-container *ngIf='isExceptionRecord' class=" govuk-!-margin-bottom-3 col-55" style="align-self: flex-end;">
-                  Exception reference:<b>{{ ccdCaseNumber | ccdHyphens }}</b>
+                  <b> Exception reference:</b>{{ ccdCaseNumber | ccdHyphens }}
               </ng-container>
               <div class="govuk-grid-row">
               <table class="govuk-table">
@@ -535,7 +535,7 @@
           <input #myInput type='hidden' id='iFrameDrivenImageValue' value='ORDERIDDETAILS'>
 
             <!--Payment Request-->
-          <div>
+          <div class="paymentrequest">
               <span class="heading-medium">Payment requests</span>
               <ng-container *ngIf="orderLevelFees?.length > 0">
               <table class="govuk-table" *ngIf="orderLevelFees?.length > 0">
@@ -614,7 +614,7 @@
                 <br/>No payments.
             </ng-container>
 
-            <ccpay-app-unprocessed-payments class="govuk-table"
+            <ccpay-app-unprocessed-payments
             *ngIf="isBulkScanEnable"
             [IS_BUTTON_ENABLE]="takePayment"
             [ISTURNOFF]="isTurnOff"

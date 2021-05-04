@@ -59,3 +59,25 @@
   width: 50%;
   border-bottom: 1px solid #eee;
 }
+
+.unassigned {
+  border-top: hidden;
+}
+
+.col-10 {
+  width: 10%;
+}
+.noborders > td{
+  border-color: transparent;
+  border-top-style: hidden;
+  border-right-style: hidden;
+  border-left-style: hidden;
+}
+
+.govuk-button--secondary {
+  margin-bottom: 10px;
+}
+.govuk-summary-list {
+  font-size: 19px;
+  width: 35%;
+}

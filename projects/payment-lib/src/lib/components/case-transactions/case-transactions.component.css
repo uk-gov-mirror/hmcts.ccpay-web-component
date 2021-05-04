@@ -118,12 +118,16 @@ details summary {
     width: 15%;
 }
 
-.col-15 {
+.col-10 {
     width: 10%;
 }
 
 .col-55 {
     width:55% !important;
+}
+
+.govuk-table {
+    margin-bottom: 1px;
 }
 
 .hmcts-banner > .hmcts-banner__message {
@@ -155,4 +159,8 @@ text-align: right;
 .govuk-heading-l {
     font-size: 36px;
     margin-bottom: 10px;
+}
+
+.paymentrequest {
+    margin-top: 1em;
 }
