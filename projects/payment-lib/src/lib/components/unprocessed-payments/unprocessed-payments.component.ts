@@ -124,8 +124,9 @@ export class UnprocessedPaymentsComponent implements OnInit {
     return this.bulkScaningPaymentService.removeUnwantedString(method,' ');
   }
 
-  redirectToFeeSearchPage(event: any) {
+  redirectToFeeSearchPage(event: any, dcn_reference:any) {
     event.preventDefault();
+    this.recordId = dcn_reference;
     let url = this.isBulkScanEnable ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
     url += this.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
     url += this.isStFixEnable ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
@@ -136,7 +137,8 @@ export class UnprocessedPaymentsComponent implements OnInit {
     this.router.navigateByUrl(`/fee-search?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}&dcn=${this.recordId}${url}`);
   }
 
-  loadUnsolicitedPage(viewName: string) {
+  loadUnsolicitedPage(viewName: string, dcn_reference:any) {
+    this.recordId = dcn_reference;
     this.paymentLibComponent.bspaymentdcn = this.recordId;
     this.paymentLibComponent.viewName = viewName;
   }

@@ -132,7 +132,7 @@
                     <div  *ngIf="IS_BUTTON_ENABLE && !isTurnOff" style="text-align: right;">
                         <button type="button"
                         [disabled]="!isAllocatedToNewFeebtnEnabled"
-                        [ngClass]="!isAllocatedToNewFeebtnEnabled ? 'button govuk-button--secondary button--disabled' : 'button govuk-button--secondary'" (click)="redirectToFeeSearchPage(unassignedRecord)">
+                        [ngClass]="!isAllocatedToNewFeebtnEnabled ? 'button govuk-button--secondary button--disabled' : 'button govuk-button--secondary'" (click)="redirectToFeeSearchPage(unassignedRecord,unassignedRecord.dcn_reference)">
                           Allocate to a new fee
                         </button><br/>
                         <button type="button" 
@@ -174,14 +174,14 @@
                           <div class=" govuk-!-margin-bottom-5">
                               <button type="button" 
                               [disabled]="!isMarkAsUnidentifiedbtnEnabled"
-                              [ngClass]='!isMarkAsUnidentifiedbtnEnabled ?  "button govuk-button--secondary button--disabled" : "button govuk-button--secondary"' (click)="loadUnsolicitedPage('unidentifiedPage')">
+                              [ngClass]='!isMarkAsUnidentifiedbtnEnabled ?  "button govuk-button--secondary button--disabled" : "button govuk-button--secondary"' (click)="loadUnsolicitedPage('unidentifiedPage',unassignedRecord.dcn_reference)">
                                 Mark as unidentified
                               </button>
                           </div>
                           <div>
                               <button type="button" 
                           [disabled]="!isUnprocessedRecordSelected"
-                          [ngClass]='!isUnprocessedRecordSelected ?  "button govuk-button--secondary button--disabled" : "button govuk-button--secondary"' (click)="loadUnsolicitedPage('unsolicitedPage')">
+                          [ngClass]='!isUnprocessedRecordSelected ?  "button govuk-button--secondary button--disabled" : "button govuk-button--secondary"' (click)="loadUnsolicitedPage('unsolicitedPage',unassignedRecord.dcn_reference)">
                             Mark as transferred
                           </button>  
                           </div>
