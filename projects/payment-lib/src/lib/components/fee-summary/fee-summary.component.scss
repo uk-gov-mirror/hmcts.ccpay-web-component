@@ -72,3 +72,25 @@
   pointer-events: none;
   color: #8e8c8c;
 }
+
+.govuk-table__header, .govuk-table__cell_border {
+  padding: 10px 0px 0px 0;
+  border-top: 1px solid #bfc1c3;
+  text-align: left;
+}
+.govuk-table__header, .govuk-table__cell_rmborder {
+  padding: 10px 0px 0px 0;
+  border-top: 1px solid #bfc1c3;
+  text-align: left;
+}
+
+.govuk-table__fessheader{
+  font-weight: 700;
+}
+.feeAddButton {
+  padding-left: 69rem;
+}
+
+.remissionActive {
+  padding-left: 10px;
+}

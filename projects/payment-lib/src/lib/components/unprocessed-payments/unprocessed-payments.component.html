@@ -132,7 +132,7 @@
                     <div  *ngIf="IS_BUTTON_ENABLE && !isTurnOff" style="text-align: right;">
                         <button type="button"
                         [disabled]="!isAllocatedToNewFeebtnEnabled"
-                        [ngClass]="!isAllocatedToNewFeebtnEnabled ? 'button govuk-button--secondary button--disabled' : 'button govuk-button--secondary'" (click)="redirectToFeeSearchPage(unassignedRecord,unassignedRecord.dcn_reference)">
+                        [ngClass]="!isAllocatedToNewFeebtnEnabled ? 'button govuk-button--secondary button--disabled' : 'button govuk-button--secondary'" (click)="redirectToFeeSearchPage($event,unassignedRecord.dcn_reference)">
                           Allocate to a new fee
                         </button><br/>
                         <button type="button" 
