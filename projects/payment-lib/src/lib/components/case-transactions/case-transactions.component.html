@@ -473,7 +473,7 @@
                     <td class="govuk-table__cell whitespace-inherit">{{ payment.status }}</td>
                     <td class="govuk-table__cell whitespace-inherit">{{ payment.amount | currency :'GBP':'symbol':'1.2-2' }}</td>
                     <td class="govuk-table__cell whitespace-inherit">{{ payment.date_created | date:'dd MMM yyyy HH:mm:ss' }}</td>
-                    <td class="govuk-table__cell whitespace-inherit">{{ payment.reference }}</td>
+                    <td class="govuk-table__cell whitespace-inherit">{{ payment.paymentGroupReference }}</td>
                     <td class="govuk-table__cell whitespace-inherit"></td>
                     <td class="govuk-table__cell whitespace-inherit">
                         <a href="javascript:void(0)" (click)="goToPayementView(payment.paymentGroupReference, payment.reference, payment.method)"> View details </a>
@@ -595,7 +595,7 @@
                         <td class="govuk-table__cell whitespace-inherit">{{ payment.status }}</td>
                         <td class="govuk-table__cell whitespace-inherit">{{ payment.amount | currency :'GBP':'symbol':'1.2-2' }}</td>
                         <td class="govuk-table__cell whitespace-inherit">{{ payment.date_created | date:'dd MMM yyyy HH:mm:ss' }}</td>
-                        <td class="govuk-table__cell whitespace-inherit">{{ payment.reference }}</td>
+                        <td class="govuk-table__cell whitespace-inherit">{{ payment.paymentGroupReference }}</td>
                         <td class="govuk-table__cell whitespace-inherit"></td>
                         <td class="govuk-table__cell whitespace-inherit">
                             <a href="javascript:void(0)" (click)="goToPayementView(payment.paymentGroupReference, payment.reference, payment.method)"> View details </a>
@@ -717,7 +717,7 @@
                     <td class="govuk-table__cell whitespace-inherit">{{ payment.status }}</td>
                     <td class="govuk-table__cell whitespace-inherit">{{ payment.amount | currency :'GBP':'symbol':'1.2-2' }}</td>
                     <td class="govuk-table__cell whitespace-inherit">{{ payment.date_created | date:'dd MMM yyyy HH:mm:ss' }}</td>
-                    <td class="govuk-table__cell whitespace-inherit">{{ payment.reference }}</td>
+                    <td class="govuk-table__cell whitespace-inherit">{{ payment.paymentGroupReference }}</td>
                     <td class="govuk-table__cell whitespace-inherit"></td>
                     <td class="govuk-table__cell whitespace-inherit">
                         <a href="javascript:void(0)" (click)="goToPayementView(payment.paymentGroupReference, payment.reference, payment.method)"> View details </a>
@@ -885,7 +885,7 @@
         <tbody class="govuk-table__body">
           <tr class="govuk-table__row"  *ngFor="let payment of order.payments">
               <td class="govuk-table__cell whitespace-inherit">
-                <a href="javascript:void(0)" (click)="goToPayementView(payment.paymentGroupReference, payment.reference, payment.method)">{{ payment.reference }}</a>
+                <a href="javascript:void(0)" (click)="goToPayementView(payment.paymentGroupReference, payment.reference, payment.method)">View details</a>
               </td>
               <td class="govuk-table__cell whitespace-inherit">{{ payment.date_created | date:'dd MMM yyyy HH:mm:ss' }}</td>
               <td class="govuk-table__cell whitespace-inherit">{{ payment.amount | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
