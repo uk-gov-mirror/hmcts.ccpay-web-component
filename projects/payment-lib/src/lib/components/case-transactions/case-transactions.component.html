@@ -822,7 +822,7 @@
             <p style="float: right;">Total fees:{{orderFeesTotal | currency:'GBP':'symbol-narrow':'1.2-2' }}</p>
         </div>
     </div>
-    <div class="hmcts-banner" *ngIf="isHistoricGroupAvailable">
+    <!-- <div class="hmcts-banner" *ngIf="isHistoricGroupAvailable">
       <svg class="hmcts-banner__icon" fill="currentColor" role="presentation" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" height="25" width="25">
           <path d="M13.7,18.5h-2.4v-2.4h2.4V18.5z M12.5,13.7c-0.7,0-1.2-0.5-1.2-1.2V7.7c0-0.7,0.5-1.2,1.2-1.2s1.2,0.5,1.2,1.2v4.8
         C13.7,13.2,13.2,13.7,12.5,13.7z M12.5,0.5c-6.6,0-12,5.4-12,12s5.4,12,12,12s12-5.4,12-12S19.1,0.5,12.5,0.5z"></path>
@@ -831,10 +831,11 @@
         <span class="hmcts-banner__assistive">information</span>
         * These fees have already been processed offline. Check the notes in CCD for more information.
       </div>
-    </div>
+    </div> -->
 
      <!-- remissions -->
-     <div class="govuk-grid-column-full order-class"> 
+  <ng-container *ngFor="let order of orderDetail;" >
+     <div *ngIf="order.remissions?.length > 0" class="govuk-grid-column-full order-class"> 
      <table class="govuk-table">
        <thead class="govuk-table__head">
          <tr class="govuk-table__row">
@@ -844,7 +845,7 @@
              <td class="govuk-table__header" scope="col">Amount</td>
            </tr>
        </thead>
-       <tbody class="govuk-table__body" *ngFor="let order of orderDetail;">
+       <tbody class="govuk-table__body" >
          <tr class="govuk-table__row" *ngFor="let remission of order.remissions">
             <td class="govuk-table__cell whitespace-inherit">{{ remission.hwf_reference }}</td>
              <td class="govuk-table__cell whitespace-inherit">{{ remission.remission_reference }}</td>
@@ -852,25 +853,27 @@
              <td class="govuk-table__cell whitespace-inherit">{{ remission.hwf_amount | currency:'GBP':'symbol-narrow':'1.2-2'}}</td>
            </tr>
        </tbody>
-       <tbody class="govuk-table__body" *ngFor="let order of orderDetail;">
-          <tr class="govuk-table__row" *ngIf="order.remissions?.length === 0" >
-            <td class="govuk-table__cell" colspan="7" style="text-align:left;">No help with fees or remissions.</td>
-          </tr>
-        </tbody>
+       
 
      </table>
-    </div>
-    <div style="width: 100%;text-align: right;">
+     <div style="width: 100%;text-align: right;">
         <p>Total reductions:{{orderRemissionTotal | currency:'GBP':'symbol-narrow':'1.2-2'  }}</p>
     </div>
     <div style="width: 100%;text-align:right;">
-      <br>
-        <p style="float: right;">Fees minus reductions:{{(orderFeesTotal - orderRemissionTotal) | currency:'GBP':'symbol-narrow':'1.2-2'  }}</p>
+        <br>
+          <p style="float: right;">Fees minus reductions:{{(orderFeesTotal - orderRemissionTotal) | currency:'GBP':'symbol-narrow':'1.2-2'  }}</p>
+      </div>
     </div>
-
-
+    <div *ngIf="order.remissions?.length === 0">
+       <span class="mar-17" >No help with fees or remissions.</span>
+    </div>
+    
+  </ng-container>
+    
+   
      <!--Payments-->
-     <div class="govuk-grid-column-full order-class"> 
+    <ng-container *ngFor="let order of orderDetail;" >
+     <div *ngIf="order.payments?.length > 0" class="govuk-grid-column-full order-class"> 
      <table class="govuk-table ">
         <thead class="govuk-table__head">
           <tr class="govuk-table__row">
@@ -879,7 +882,7 @@
               <td class="govuk-table__header" scope="col">Amount</td>
             </tr>
         </thead>
-        <tbody class="govuk-table__body" *ngFor="let order of orderDetail;">
+        <tbody class="govuk-table__body">
           <tr class="govuk-table__row"  *ngFor="let payment of order.payments">
               <td class="govuk-table__cell whitespace-inherit">
                 <a href="javascript:void(0)" (click)="goToPayementView(payment.paymentGroupReference, payment.reference, payment.method)">{{ payment.reference }}</a>
@@ -888,14 +891,14 @@
               <td class="govuk-table__cell whitespace-inherit">{{ payment.amount | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
             </tr>
         </tbody>
-        <tbody class="govuk-table__body" *ngFor="let order of orderDetail;">
-            <tr class="govuk-table__row" *ngIf="order.payments?.length === 0" >
-              <td class="govuk-table__cell" colspan="7" style="text-align:left;">No Payments</td>
-            </tr>
-          </tbody>
-
       </table>
     </div>
+    <div *ngIf="order.payments === undefined || order.payments === null">
+        <h3 class="mar-17" class="heading-medium">Payments</h3>
+              <span class="mar-17" >No Payments</span>
+    </div>
+    
+  </ng-container>
     <div style="width: 100%;">
         <p style="float: right;">Total left to pay:{{((orderFeesTotal - orderRemissionTotal)- orderTotalPayments )| currency:'GBP':'symbol-narrow':'1.2-2' }}</p>
     </div>
