@@ -290,6 +290,7 @@ export class CaseTransactionsComponent implements OnInit {
     let url = this.isBulkScanEnable ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
       url += this.isTurnOff ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
       url += this.isStrategicFixEnable ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
+      url +=`&caseType=${this.caseType}`
       url += this.isNewPcipalOff ? '&isNewPcipalOff=Enable' : '&isNewPcipalOff=Disable';
       url += this.isOldPcipalOff ? '&isOldPcipalOff=Enable' : '&isOldPcipalOff=Disable';
 
@@ -408,7 +409,7 @@ export class CaseTransactionsComponent implements OnInit {
           if (paymentGroup.fees) {
             paymentGroup.fees.forEach(fee => {
               feesTotal = feesTotal + fee.calculated_amount;
-
+          
               this.isRemissionsMatch = false;
               paymentGroup.remissions.forEach(rem => {
                 if(rem.fee_code === fee.code) {
