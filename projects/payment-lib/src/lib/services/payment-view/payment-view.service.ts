@@ -118,4 +118,8 @@ export class PaymentViewService {
   getSiteID(): Observable<any> {
     return this.https.get('api/payment-history/refdata/legacy-sites', { withCredentials: true }).pipe( catchError(this.errorHandlerService.handleError));
   }
+  getPartyDetails(caseNumber: string): Observable<any> {
+    const url = `${this.paymentLibService.API_ROOT}/case-payment-orders?case-ids=${caseNumber}`;
+    return this.https.get(url, { withCredentials: true }).pipe( catchError(this.errorHandlerService.handleError));
+  }
 }

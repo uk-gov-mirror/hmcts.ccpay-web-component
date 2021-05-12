@@ -95,6 +95,16 @@ export class CaseTransactionsComponent implements OnInit {
     this.isNewPcipalOff = this.paymentLibComponent.ISNEWPCIPALOFF;
     this.isOldPcipalOff = this.paymentLibComponent.ISOLDPCIPALOFF;
     this.isStrategicFixEnable = this.paymentLibComponent.ISSFENABLE;
+
+
+    this.paymentViewService.getPartyDetails(this.ccdCaseNumber).subscribe(
+      response => {
+        console.log(response)
+      },
+      (error: any) => {
+        this.errorMessage = <any>error;
+      }
+    );
     if(!this.isTurnOff) {
       if(this.lsCcdNumber !== this.ccdCaseNumber) {
         this.router.navigateByUrl(`/ccd-search?takePayment=true`);
