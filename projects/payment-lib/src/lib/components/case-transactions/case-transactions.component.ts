@@ -241,7 +241,14 @@ export class CaseTransactionsComponent implements OnInit {
       this.orderStatus = 'Not paid'
       this.orderAddBtnEnable = true;
     } 
-      this.orderLevelFees.push({orderRefId:paymentGroup['payment_group_reference'],orderTotalFees: this.orderFeesTotal,orderStatus: this.orderStatus,orderParty:'Santosh', orderCCDEvent:'Case Creation',orderCreated: new Date(), orderAddBtnEnable: this.orderAddBtnEnable});
+      this.orderLevelFees.push({
+      orderRefId: this.cpoDetails['orderReference'],
+      orderTotalFees: this.orderFeesTotal,
+      orderStatus: this.orderStatus,
+      orderParty:this.cpoDetails['responsibleParty'],
+      orderCCDEvent:this.cpoDetails['action'],
+      orderCreated: this.cpoDetails['createdTimestamp'],
+      orderAddBtnEnable: this.orderAddBtnEnable});
   });
   };
 
