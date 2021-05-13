@@ -62,6 +62,7 @@ export class CaseTransactionsComponent implements OnInit {
   orderDetail: any[] = [];
   orderRemissionDetails: any[] = [];
   orderLevelFees: IOrderReferenceFee[] = [];
+  cpoDetails: any;
   orderRef: string;
   orderStatus: string;
   orderParty: string;
@@ -99,7 +100,7 @@ export class CaseTransactionsComponent implements OnInit {
 
     this.paymentViewService.getPartyDetails(this.ccdCaseNumber).subscribe(
       response => {
-        console.log(response)
+        this.cpoDetails = JSON.parse(response).data.content[0];
       },
       (error: any) => {
         this.errorMessage = <any>error;
