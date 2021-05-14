@@ -62,7 +62,7 @@ export class CaseTransactionsComponent implements OnInit {
   orderDetail: any[] = [];
   orderRemissionDetails: any[] = [];
   orderLevelFees: IOrderReferenceFee[] = [];
-  cpoDetails: any;
+  cpoDetails: any = null;
   orderRef: string;
   orderStatus: string;
   orderParty: string;
@@ -97,15 +97,6 @@ export class CaseTransactionsComponent implements OnInit {
     this.isOldPcipalOff = this.paymentLibComponent.ISOLDPCIPALOFF;
     this.isStrategicFixEnable = this.paymentLibComponent.ISSFENABLE;
 
-
-    this.paymentViewService.getPartyDetails(this.ccdCaseNumber).subscribe(
-      response => {
-        this.cpoDetails = JSON.parse(response).data.content[0];
-      },
-      (error: any) => {
-        this.errorMessage = <any>error;
-      }
-    );
     if(!this.isTurnOff) {
       if(this.lsCcdNumber !== this.ccdCaseNumber) {
         this.router.navigateByUrl(`/ccd-search?takePayment=true`);
@@ -114,9 +105,17 @@ export class CaseTransactionsComponent implements OnInit {
       this.caseTransactionsService.getPaymentGroups(this.ccdCaseNumber).subscribe(
         paymentGroups => {
           this.paymentGroups = paymentGroups['payment_groups'];
-          this.calculateAmounts();
-          this.calculateOrderFeesAmounts();
-          this.calculateRefundAmount();
+          this.paymentViewService.getPartyDetails(this.ccdCaseNumber).subscribe(
+            response => {
+              this.cpoDetails = JSON.parse(response).data.content[0];
+              this.calculateAmounts();
+              this.calculateOrderFeesAmounts();
+              this.calculateRefundAmount();
+            },
+            (error: any) => {
+              this.errorMessage = <any>error;
+            }
+          );
         },
         (error: any) => {
           this.errorMessage = <any>error;
@@ -128,9 +127,17 @@ export class CaseTransactionsComponent implements OnInit {
       this.caseTransactionsService.getPaymentGroups(this.ccdCaseNumber).subscribe(
         paymentGroups => {
           this.paymentGroups = paymentGroups['payment_groups'];
-          this.calculateAmounts();
-          this.calculateOrderFeesAmounts();
-          this.totalRefundAmount = this.calculateRefundAmount();
+          this.paymentViewService.getPartyDetails(this.ccdCaseNumber).subscribe(
+            response => {
+              this.cpoDetails = JSON.parse(response).data.content[0];
+              this.calculateAmounts();
+              this.calculateOrderFeesAmounts();
+              this.totalRefundAmount = this.calculateRefundAmount();
+            },
+            (error: any) => {
+              this.errorMessage = <any>error;
+            }
+          );
         },
         (error: any) => {
           this.errorMessage = <any>error;
@@ -208,7 +215,6 @@ export class CaseTransactionsComponent implements OnInit {
   }
 
   calculateOrderFeesAmounts(): void {
-    let feesTotal = 0.00;
     this.paymentGroups.forEach(paymentGroup => {
       this.resetOrderVariables();
           if (paymentGroup.fees) {
