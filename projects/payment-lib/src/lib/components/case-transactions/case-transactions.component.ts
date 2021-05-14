@@ -114,6 +114,8 @@ export class CaseTransactionsComponent implements OnInit {
             },
             (error: any) => {
               this.errorMessage = <any>error;
+              this.isAnyFeeGroupAvilable = false;
+              this.setDefaults();
             }
           );
         },
@@ -136,6 +138,7 @@ export class CaseTransactionsComponent implements OnInit {
             },
             (error: any) => {
               this.errorMessage = <any>error;
+              this.setDefaults();
             }
           );
         },
@@ -302,9 +305,9 @@ export class CaseTransactionsComponent implements OnInit {
   } else {
     this.orderStatus = 'Not paid'
   }
-  this.orderParty = 'Santosh';
-  this.orderCreated = new Date();
-  this.orderCCDEvent = 'Create Case';
+  this.orderParty = orderReferenceObj.orderParty;
+  this.orderCreated = orderReferenceObj.createdTimestamp;
+  this.orderCCDEvent = orderReferenceObj.action;
   this.viewStatus= 'order-full-view';
   }
 
