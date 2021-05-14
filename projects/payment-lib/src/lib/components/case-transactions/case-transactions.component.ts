@@ -306,8 +306,8 @@ export class CaseTransactionsComponent implements OnInit {
     this.orderStatus = 'Not paid'
   }
   this.orderParty = orderReferenceObj.orderParty;
-  this.orderCreated = orderReferenceObj.createdTimestamp;
-  this.orderCCDEvent = orderReferenceObj.action;
+  this.orderCreated = orderReferenceObj.orderCreated;
+  this.orderCCDEvent = orderReferenceObj.orderCCDEvent;
   this.viewStatus= 'order-full-view';
   }
 
