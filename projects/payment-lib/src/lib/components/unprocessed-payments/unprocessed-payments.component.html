@@ -137,7 +137,7 @@
                         </button><br/>
                         <button type="button" 
                         [disabled]="!isAllocateToExistingFeebtnEnabled"
-                        [ngClass]='!isAllocateToExistingFeebtnEnabled ?  "button govuk-button--secondary button--disabled" : "button govuk-button--secondary"' (click)="goToAllocatePage()">
+                        [ngClass]='!isAllocateToExistingFeebtnEnabled ?  "button govuk-button--secondary button--disabled" : "button govuk-button--secondary"' (click)="goToAllocatePage(unassignedRecord.dcn_reference)">
                           Allocate to an existing fee
                         </button>
                 </div>
