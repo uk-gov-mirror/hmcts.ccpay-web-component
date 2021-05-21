@@ -1,5 +1,31 @@
 <div class="allocate-payments">
-  <div *ngIf="viewStatus==='mainForm' && isTurnOff">
+  <ng-container *ngIf="viewStatus === 'mainForm' && !isTurnOff">
+  
+    <div style="display:flex; flex-direction:row; justify-content: space-between; width:960px;">
+        <h1 class="govuk-heading-l govuk-!-margin-top-3 govuk-!-margin-bottom-4">Select payment request</h1>
+        <p class="govuk-!-margin-top-5" style="align-self: flex-end;">Case reference: {{ccdReference}}</p>
+    </div>
+ 
+    <div  *ngFor="let orderRef of orderLevelFees; let i of index;" class="multiple-choice unprocessed-payments--radio-button">
+      <input id="'orderfee'+i+''"
+      aria-label="orderLevelRecord"
+      name="orderLevelRecord"
+    
+      (click)="OrderListSelectEvent(orderRef.orderRefId)"
+      type="radio"
+      value="{{orderRef.orderTotalFees}}" />
+      <label for="radio-inline-1"> {{orderRef.orderTotalFees | currency :'GBP':'symbol':'1.2-2'}}({{orderRef.orderStatus}})</label>
+    </div>
+  
+    <div style="display:flex; flex-direction:row; justify-content: space-between; width:960px;">
+        <button [disabled]="isContinueButtondisabled" type="submit" (click)="redirectToOrderFeeSearchPage()" class="govuk-button">
+          Continue
+        </button>
+      </div>
+   
+  </ng-container>
+
+   <div *ngIf="viewStatus==='mainForm' && isTurnOff">
     <input #myInput type='hidden' id='iFrameDrivenImageValue' value='ALLOCATEPAYMENTS'>
     <div class="govuk-breadcrumbs" *ngIf="paymentRef">
       <ol class="govuk-breadcrumbs__list">
@@ -67,10 +93,10 @@
     </div>
   </div>
 
-  <ng-container *ngIf="(viewStatus === 'mainForm' && !isTurnOff) || viewStatus === 'allocatePaymentConfirmation'">
+  <ng-container *ngIf="(viewStatus === 'mainForm' && isTurnOff) || viewStatus === 'allocatePaymentConfirmation'">
     <ccpay-error-banner *ngIf="errorMessage.showError" [errorMessage]="errorMessage"></ccpay-error-banner>
     <input #myInput type='hidden' id='iFrameDrivenImageValue' value='{{feedbackUrlLabel}}'>
-    <h1 class="govuk-heading-xl">Confirm association</h1>
+    <h1 class="govuk-heading-xl">Confirm allocation</h1>
     <h2 class="govuk-heading-l govuk-heading-l--custom">
       Amount to be allocated: {{amountForAllocation | currency:'GBP':'symbol-narrow':'1.2-2'}}
     </h2>

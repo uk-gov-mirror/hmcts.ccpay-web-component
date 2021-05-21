@@ -17,12 +17,14 @@ import { UnsolicitedPaymentsRequest } from '../../interfaces/UnsolicitedPayments
 import { Meta } from '@angular/platform-browser';
 import { AllocatePaymentRequest } from '../../interfaces/AllocatePaymentRequest';
 import { IAllocationPaymentsRequest } from '../../interfaces/IAllocationPaymentsRequest';
-
+import {IOrderReferenceFee} from '../../interfaces/IOrderReferenceFee';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PaymentViewService {
+  private ordersList  = <BehaviorSubject<IOrderReferenceFee[]>>new BehaviorSubject([]);
 
   private meta: Meta;
 
@@ -121,5 +123,12 @@ export class PaymentViewService {
   getPartyDetails(caseNumber: string): Observable<any> {
     const url = `${this.paymentLibService.API_ROOT}/case-payment-orders?case-ids=${caseNumber}`;
     return this.https.get(url, { withCredentials: true }).pipe( catchError(this.errorHandlerService.handleError));
+  }
+  
+  setOrdersList(orderLevelFees: IOrderReferenceFee[]): void {
+    this.ordersList.next(Object.assign([], orderLevelFees));
+}
+  getOrdersList() {
+    return this.ordersList;
   }
 }

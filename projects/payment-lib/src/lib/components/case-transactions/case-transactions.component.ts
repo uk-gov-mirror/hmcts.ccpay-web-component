@@ -4,12 +4,14 @@ import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
 import {CaseTransactionsService} from '../../services/case-transactions/case-transactions.service';
 import { BulkScaningPaymentService } from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
+import { OrderslistService } from '../../services/orderslist.service';
 import {IFee} from '../../interfaces/IFee';
 import {IPayment} from '../../interfaces/IPayment';
 import {IRemission} from '../../interfaces/IRemission';
 import {IOrderReferenceFee} from '../../interfaces/IOrderReferenceFee';
 import {Router} from '@angular/router';
 import * as ls from "local-storage";
+import { BehaviorSubject } from 'rxjs';
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 
 @Component({
@@ -73,12 +75,14 @@ export class CaseTransactionsComponent implements OnInit {
   orderRemissionTotal: number = 0.00;
   orderTotalPayments: number = 0.00;
   orderPendingPayments: number =0.00;
-  
+
   constructor(private router: Router,
   private paymentViewService: PaymentViewService,
   private bulkScaningPaymentService: BulkScaningPaymentService,
   private caseTransactionsService: CaseTransactionsService,
-  private paymentLibComponent: PaymentLibComponent) { }
+  private paymentLibComponent: PaymentLibComponent,
+  private OrderslistService: OrderslistService
+  ) { }
 
   ngOnInit() {
     this.isGrpOutstandingAmtPositive = false;
@@ -97,13 +101,16 @@ export class CaseTransactionsComponent implements OnInit {
     this.isOldPcipalOff = this.paymentLibComponent.ISOLDPCIPALOFF;
     this.isStrategicFixEnable = this.paymentLibComponent.ISSFENABLE;
     if(!this.isTurnOff) {
-      if(this.lsCcdNumber !== this.ccdCaseNumber) {
+      if(this.lsCcdNumber === this.ccdCaseNumber) {
         this.router.navigateByUrl(`/ccd-search?takePayment=true`);
       }
 
       this.caseTransactionsService.getPaymentGroups(this.ccdCaseNumber).subscribe(
         paymentGroups => {
           this.paymentGroups = paymentGroups['payment_groups'];
+          // this.calculateAmounts();
+          // this.calculateOrderFeesAmounts();
+          // this.calculateRefundAmount();
           this.paymentViewService.getPartyDetails(this.ccdCaseNumber).subscribe(
             response => {
               this.cpoDetails = JSON.parse(response).data.content[0];
@@ -126,6 +133,9 @@ export class CaseTransactionsComponent implements OnInit {
       this.caseTransactionsService.getPaymentGroups(this.ccdCaseNumber).subscribe(
         paymentGroups => {
           this.paymentGroups = paymentGroups['payment_groups'];
+          // this.calculateAmounts();
+          // this.calculateOrderFeesAmounts();
+          // this.totalRefundAmount = this.calculateRefundAmount();
           this.paymentViewService.getPartyDetails(this.ccdCaseNumber).subscribe(
             response => {
               this.cpoDetails = JSON.parse(response).data.content[0];
@@ -247,7 +257,13 @@ export class CaseTransactionsComponent implements OnInit {
       this.orderStatus = 'Not paid'
       this.orderAddBtnEnable = true;
     } 
+    
+    //this.orderLevelFees.push({orderRefId:paymentGroup['payment_group_reference'],orderTotalFees: this.orderFeesTotal,orderStatus: this.orderStatus,orderParty:'Santosh', orderCCDEvent:'Case Creation',orderCreated: new Date(), orderAddBtnEnable: this.orderAddBtnEnable});
+ 
       this.orderLevelFees.push({orderRefId:this.cpoDetails['orderReference'],orderTotalFees: this.orderFeesTotal,orderStatus: this.orderStatus,orderParty:this.cpoDetails['responsibleParty'], orderCCDEvent:this.cpoDetails['action'],orderCreated: this.cpoDetails['createdTimestamp'], orderAddBtnEnable: this.orderAddBtnEnable});
+      if(this.orderStatus !== 'Paid') {
+        this.OrderslistService.setOrdersList(this.orderLevelFees);
+      }
   });
   };
 

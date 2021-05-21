@@ -201,13 +201,13 @@
                           <span class="no-border" *ngIf="(isPaymentExist || (getRemissionByFeeCode(fee.code)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code)?.hwf_amount)) && !isTurnOff">
                              
                          
-                              <a (click)="confirmRemoveFee(fee.id)" *ngIf="(!isPaymentExist || !fee.remissions)" [ngClass]='isPaymentExist || fee.remissions? "disable-link" : ""'> <br>Remove</a>
+                              <a (click)="confirmRemoveFee(fee.id)" *ngIf="(!isPaymentExist || !fee.remissions) && !bsPaymentDcnNumber" [ngClass]='isPaymentExist || fee.remissions? "disable-link" : ""'> <br>Remove</a>
                           </span>
 
-                          <span class="no-border" *ngIf="(!isPaymentExist || (getRemissionByFeeCode(fee.code)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code)?.hwf_amount)) && isTurnOff">
+                          <span class="no-border" *ngIf="(!isPaymentExist || (getRemissionByFeeCode(fee.code)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code)?.hwf_amount)) && isTurnOff && !bsPaymentDcnNumber">
                               <a (click)="confirmRemoveFee(fee.id)">Remove</a>
                             </span>
-                           
+                         
                             <a (click)="addRemission(fee)" [ngClass]='!service ? "remissionDisable" : "remissionActive"' *ngIf="(getRemissionByFeeCode(fee.code)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code)?.hwf_amount) && !isPaymentExist && !isTurnOff">
                                   Add help with fees or remission
                             </a>
@@ -267,7 +267,7 @@
       </table>
   </div>
   <div style="display:flex; flex-direction:row;">
-      <button  *ngIf="!isTurnOff" (click)="redirectToFeeSearchPage($event,'summary')"
+      <button  *ngIf="!isTurnOff && !bsPaymentDcnNumber" (click)="redirectToFeeSearchPage($event,'summary')"
               [disabled]="isPaymentExist"
               [ngClass]='isPaymentExist ? "govuk-button govuk-button--secondary button--disabled" : "govuk-button govuk-button--secondary"'>
                 Add fee

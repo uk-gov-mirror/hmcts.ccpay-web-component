@@ -3,6 +3,7 @@ import { BulkScaningPaymentService } from '../../services/bulk-scaning-payment/b
 import { PaymentLibComponent } from '../../payment-lib.component';
 import { IBSPayments } from '../../interfaces/IBSPayments';
 import {Router} from '@angular/router';
+import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 
 @Component({
   selector: 'ccpay-app-unprocessed-payments',
@@ -46,7 +47,9 @@ export class UnprocessedPaymentsComponent implements OnInit {
 
   constructor(private router: Router,
     private bulkScaningPaymentService: BulkScaningPaymentService,
-    private paymentLibComponent: PaymentLibComponent) { }
+    private paymentLibComponent: PaymentLibComponent,
+    private paymentViewService: PaymentViewService
+    ) { }
 
   ngOnInit() {
     // Todo ...
@@ -58,6 +61,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
     this.isNewpcipaloff = this.paymentLibComponent.ISNEWPCIPALOFF;
     this.isOldpcipaloff = this.paymentLibComponent.ISOLDPCIPALOFF;
     this.isStFixEnable = this.paymentLibComponent.ISSFENABLE;
+    
 
     this.getUnassignedPaymentlist();
 
@@ -149,8 +153,8 @@ export class UnprocessedPaymentsComponent implements OnInit {
    this.selectedUnprocessedFeeEvent.emit(selectedRecordReference);
   }
 
-  goToAllocatePage() {
-    this.paymentLibComponent.bspaymentdcn = this.recordId;
+  goToAllocatePage(dcn_reference:any) {
+    this.paymentLibComponent.bspaymentdcn = dcn_reference;
     this.paymentLibComponent.unProcessedPaymentServiceId = this.serviceId
     this.paymentLibComponent.isTurnOff = this.ISTURNOFF;
     this.paymentLibComponent.isNewPcipalOff = this.ISNEWPCIPALOFF;
