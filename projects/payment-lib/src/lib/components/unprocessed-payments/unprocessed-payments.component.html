@@ -92,8 +92,8 @@
 
 <ng-container *ngIf="!IS_BUTTON_ENABLE">
     <table class="govuk-table">
-        <thead *ngIf='PAYMENTSLENGTH !== 0 && unassignedRecordList.length !== 0' class="govuk-table__head"></thead>
-        <thead class="govuk-table__head" *ngIf='PAYMENTSLENGTH === 0 && unassignedRecordList.length !== 0'>
+       
+        <thead class="govuk-table__head" *ngIf='PAYMENTSLENGTH === 0 '>
             <tr class="govuk-table__row">
                 <td class="govuk-table__header" scope="col">Status</td>
                 <td class="govuk-table__header" scope="col">Amount</td>
@@ -126,8 +126,8 @@
     <div class="unprocessed-payments">
         <input #myInput type='hidden' id='iFrameDrivenImageValue' value='CASETRANSACTION'>
           <table class="table">
-              <thead *ngIf='PAYMENTSLENGTH !== 0 && unassignedRecordList.length !== 0'> </thead>
-              <thead class="govuk-table__head" *ngIf='PAYMENTSLENGTH === 0 && unassignedRecordList.length !== 0'>
+             
+              <thead class="govuk-table__head" *ngIf='PAYMENTSLENGTH === 0 '>
                   <tr class="govuk-table__row">
                       <td class="govuk-table__header" scope="col">Status</td>
                       <td class="govuk-table__header" scope="col">Amount</td>
