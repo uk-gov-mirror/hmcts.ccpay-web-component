@@ -259,8 +259,13 @@ export class CaseTransactionsComponent implements OnInit {
     } 
     
     //this.orderLevelFees.push({orderRefId:paymentGroup['payment_group_reference'],orderTotalFees: this.orderFeesTotal,orderStatus: this.orderStatus,orderParty:'Santosh', orderCCDEvent:'Case Creation',orderCreated: new Date(), orderAddBtnEnable: this.orderAddBtnEnable});
- 
-      this.orderLevelFees.push({orderRefId:paymentGroup['payment_group_reference'],orderTotalFees: this.orderFeesTotal,orderStatus: this.orderStatus,orderParty:this.cpoDetails['responsibleParty'], orderCCDEvent:this.cpoDetails['action'],orderCreated: this.cpoDetails['createdTimestamp'], orderAddBtnEnable: this.orderAddBtnEnable});
+      if (this.cpoDetails !== undefined) {
+        this.orderLevelFees.push({orderRefId:paymentGroup['payment_group_reference'],orderTotalFees: this.orderFeesTotal,orderStatus: this.orderStatus,orderParty:this.cpoDetails['responsibleParty'], orderCCDEvent:this.cpoDetails['action'],orderCreated: this.cpoDetails['createdTimestamp'], orderAddBtnEnable: this.orderAddBtnEnable});
+      
+      } else {
+        this.orderLevelFees.push({orderRefId:paymentGroup['payment_group_reference'],orderTotalFees: this.orderFeesTotal,orderStatus: this.orderStatus,orderParty:'', orderCCDEvent:'',orderCreated: new Date(), orderAddBtnEnable: this.orderAddBtnEnable});
+      }
+
       if(this.orderStatus !== 'Paid') {
         this.OrderslistService.setOrdersList(this.orderLevelFees);
       }
