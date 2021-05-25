@@ -259,7 +259,7 @@ export class CaseTransactionsComponent implements OnInit {
     } 
     
     //this.orderLevelFees.push({orderRefId:paymentGroup['payment_group_reference'],orderTotalFees: this.orderFeesTotal,orderStatus: this.orderStatus,orderParty:'Santosh', orderCCDEvent:'Case Creation',orderCreated: new Date(), orderAddBtnEnable: this.orderAddBtnEnable});
-      if (this.cpoDetails !== undefined) {
+      if (this.cpoDetails !== null) {
         this.orderLevelFees.push({orderRefId:paymentGroup['payment_group_reference'],orderTotalFees: this.orderFeesTotal,orderStatus: this.orderStatus,orderParty:this.cpoDetails['responsibleParty'], orderCCDEvent:this.cpoDetails['action'],orderCreated: this.cpoDetails['createdTimestamp'], orderAddBtnEnable: this.orderAddBtnEnable});
       
       } else {
@@ -316,9 +316,15 @@ export class CaseTransactionsComponent implements OnInit {
   } else {
     this.orderStatus = 'Not paid'
   }
+
+  if( this.cpoDetails !== null){
   this.orderParty = this.cpoDetails['responsibleParty'];
   this.orderCreated = this.cpoDetails['createdTimestamp'];
   this.orderCCDEvent = this.cpoDetails['action'];
+  } else {
+  this.orderParty = '';
+  this.orderCCDEvent = '';
+  }
   this.viewStatus= 'order-full-view';
   }
 
