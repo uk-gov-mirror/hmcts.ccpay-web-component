@@ -260,7 +260,7 @@ export class CaseTransactionsComponent implements OnInit {
     
     //this.orderLevelFees.push({orderRefId:paymentGroup['payment_group_reference'],orderTotalFees: this.orderFeesTotal,orderStatus: this.orderStatus,orderParty:'Santosh', orderCCDEvent:'Case Creation',orderCreated: new Date(), orderAddBtnEnable: this.orderAddBtnEnable});
  
-      this.orderLevelFees.push({orderRefId:this.cpoDetails['orderReference'],orderTotalFees: this.orderFeesTotal,orderStatus: this.orderStatus,orderParty:this.cpoDetails['responsibleParty'], orderCCDEvent:this.cpoDetails['action'],orderCreated: this.cpoDetails['createdTimestamp'], orderAddBtnEnable: this.orderAddBtnEnable});
+      this.orderLevelFees.push({orderRefId:paymentGroup['payment_group_reference'],orderTotalFees: this.orderFeesTotal,orderStatus: this.orderStatus,orderParty:this.cpoDetails['responsibleParty'], orderCCDEvent:this.cpoDetails['action'],orderCreated: this.cpoDetails['createdTimestamp'], orderAddBtnEnable: this.orderAddBtnEnable});
       if(this.orderStatus !== 'Paid') {
         this.OrderslistService.setOrdersList(this.orderLevelFees);
       }
@@ -311,9 +311,9 @@ export class CaseTransactionsComponent implements OnInit {
   } else {
     this.orderStatus = 'Not paid'
   }
-  this.orderParty = 'Santosh';
-  this.orderCreated = new Date();
-  this.orderCCDEvent = 'Create Case';
+  this.orderParty = this.cpoDetails['responsibleParty'];
+  this.orderCreated = this.cpoDetails['createdTimestamp'];
+  this.orderCCDEvent = this.cpoDetails['action'];
   this.viewStatus= 'order-full-view';
   }
 

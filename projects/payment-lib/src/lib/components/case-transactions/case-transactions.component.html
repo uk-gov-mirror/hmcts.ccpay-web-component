@@ -617,6 +617,7 @@
             <ccpay-app-unprocessed-payments
             *ngIf="isBulkScanEnable"
             [IS_BUTTON_ENABLE]="takePayment"
+            [PAYMENTSLENGTH]="allPayments?.length"
             [ISTURNOFF]="isTurnOff"
             [ISSFENABLE]="isStrategicFixEnable"
             [FEE_RECORDS_EXISTS]="isFeeRecordsExist" 
