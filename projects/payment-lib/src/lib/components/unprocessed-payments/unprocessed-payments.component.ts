@@ -20,6 +20,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
   @Input('ISNEWPCIPALOFF') ISNEWPCIPALOFF: boolean;
   @Input('ISOLDPCIPALOFF') ISOLDPCIPALOFF: boolean;
   @Input('ISSFENABLE') ISSFENABLE: boolean;
+  @Input('PAYMENTSLENGTH') PAYMENTSLENGTH:Number;
 
   @Output() selectedUnprocessedFeeEvent: EventEmitter<string> = new EventEmitter();
   @Output() getUnprocessedFeeCount: EventEmitter<string> = new EventEmitter();
