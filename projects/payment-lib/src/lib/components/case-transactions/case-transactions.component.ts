@@ -114,9 +114,6 @@ export class CaseTransactionsComponent implements OnInit {
           this.paymentViewService.getPartyDetails(this.ccdCaseNumber).subscribe(
             response => {
               this.cpoDetails = JSON.parse(response).data.content[0];
-              // this.calculateAmounts();
-              // this.calculateOrderFeesAmounts();
-              // this.calculateRefundAmount();
             },
             (error: any) => {
               this.errorMessage = <any>error;
@@ -139,9 +136,6 @@ export class CaseTransactionsComponent implements OnInit {
           this.paymentViewService.getPartyDetails(this.ccdCaseNumber).subscribe(
             response => {
               this.cpoDetails = JSON.parse(response).data.content[0];
-              // this.calculateAmounts();
-              // this.calculateOrderFeesAmounts();
-              // this.totalRefundAmount = this.calculateRefundAmount();
             },
             (error: any) => {
               this.errorMessage = <any>error;
@@ -330,21 +324,21 @@ export class CaseTransactionsComponent implements OnInit {
 
   redirectToOrderFeeSearchPage(event: any, orderef: any) {
     event.preventDefault();
-    if(!this.isAnyFeeGroupAvilable || this.isTurnOff) {
-    let url = this.isBulkScanEnable ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
-      url += this.isTurnOff ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
-      url += this.isStrategicFixEnable ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
-      url +=`&caseType=${this.caseType}`
-      url += this.isNewPcipalOff ? '&isNewPcipalOff=Enable' : '&isNewPcipalOff=Disable';
-      url += this.isOldPcipalOff ? '&isOldPcipalOff=Enable' : '&isOldPcipalOff=Disable';
+    // if(!this.isAnyFeeGroupAvilable || this.isTurnOff) {
+    // let url = this.isBulkScanEnable ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
+    //   url += this.isTurnOff ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
+    //   url += this.isStrategicFixEnable ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
+    //   url +=`&caseType=${this.caseType}`
+    //   url += this.isNewPcipalOff ? '&isNewPcipalOff=Enable' : '&isNewPcipalOff=Disable';
+    //   url += this.isOldPcipalOff ? '&isOldPcipalOff=Enable' : '&isOldPcipalOff=Disable';
 
-    this.router.navigateByUrl(`/fee-search?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}${url}`);
-    } else {
+    // this.router.navigateByUrl(`/fee-search?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}${url}`);
+    // } else {
       this.paymentLibComponent.bspaymentdcn = null;
       this.paymentLibComponent.paymentGroupReference = orderef;
       this.paymentLibComponent.isTurnOff = this.isTurnOff;
       this.paymentLibComponent.viewName = 'fee-summary';
-    }
+    //}
   }
 
   goToCaseTransationPage(event: any) {
@@ -439,6 +433,7 @@ export class CaseTransactionsComponent implements OnInit {
     });
 
   }
+
   calculateRefundAmount() {
     if(!this.isTurnOff){
         let isNewPaymentGroup = false;

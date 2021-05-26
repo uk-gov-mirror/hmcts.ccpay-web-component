@@ -114,6 +114,10 @@ details summary {
     width: 60%;
 }
 
+.col-32 {
+    width: 32%; 
+}
+
 .col-15 {
     width: 15%;
 }
