@@ -380,6 +380,7 @@
         [ISOLDPCIPALOFF]="isOldPcipalOff"
         [ISSFENABLE]="isStrategicFixEnable"
         [FEE_RECORDS_EXISTS]="isFeeRecordsExist" 
+        (getUnprocessedFeeCount) = "getUnprocessedFeeCount($event)"
         [IS_OS_AMT_AVAILABLE]="isGrpOutstandingAmtPositive" 
         [PAYMENTSLENGTH]="1"
         (selectedUnprocessedFeeEvent) = "selectedUnprocessedFeeEvent($event)">
@@ -402,6 +403,7 @@
         [ISSFENABLE]="isStrategicFixEnable"
         [FEE_RECORDS_EXISTS]="isFeeRecordsExist" 
         [IS_OS_AMT_AVAILABLE]="isGrpOutstandingAmtPositive" 
+        (getUnprocessedFeeCount) = "getUnprocessedFeeCount($event)"
         [PAYMENTSLENGTH]="1"
         (selectedUnprocessedFeeEvent) = "selectedUnprocessedFeeEvent($event)">
         </ccpay-app-unprocessed-payments>
@@ -495,6 +497,7 @@
             [FEE_RECORDS_EXISTS]="isFeeRecordsExist" 
             [IS_OS_AMT_AVAILABLE]="isGrpOutstandingAmtPositive" 
             [PAYMENTSLENGTH]="1"
+            (getUnprocessedFeeCount) = "getUnprocessedFeeCount($event)"
             (selectedUnprocessedFeeEvent) = "selectedUnprocessedFeeEvent($event)">
         </ccpay-app-unprocessed-payments>
         </div>
@@ -626,6 +629,7 @@
             [ISSFENABLE]="isStrategicFixEnable"
             [FEE_RECORDS_EXISTS]="isFeeRecordsExist" 
             [PAYMENTSLENGTH]="1"
+            (getUnprocessedFeeCount) = "getUnprocessedFeeCount($event)"
             [IS_OS_AMT_AVAILABLE]="isGrpOutstandingAmtPositive" 
             (selectedUnprocessedFeeEvent) = "selectedUnprocessedFeeEvent($event)">
         </ccpay-app-unprocessed-payments>
@@ -741,6 +745,7 @@
             [ISTURNOFF]="isTurnOff"
             [ISSFENABLE]="isStrategicFixEnable"
             [PAYMENTSLENGTH]="1"
+            (getUnprocessedFeeCount) = "getUnprocessedFeeCount($event)"
             [FEE_RECORDS_EXISTS]="isFeeRecordsExist" 
             [IS_OS_AMT_AVAILABLE]="isGrpOutstandingAmtPositive" 
             (selectedUnprocessedFeeEvent) = "selectedUnprocessedFeeEvent($event)">
