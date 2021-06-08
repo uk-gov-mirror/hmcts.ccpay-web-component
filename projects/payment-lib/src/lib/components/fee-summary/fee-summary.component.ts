@@ -62,6 +62,7 @@ export class FeeSummaryComponent implements OnInit {
 
   ngOnInit() {
     this.viewStatus = 'main';
+    this.caseType = this.paymentLibComponent.CASETYPE;
     this.bsPaymentDcnNumber = this.paymentLibComponent.bspaymentdcn;
     this.selectedOption = this.paymentLibComponent.SELECTED_OPTION.toLocaleLowerCase();
     this.isStrategicFixEnable = this.paymentLibComponent.ISSFENABLE;
