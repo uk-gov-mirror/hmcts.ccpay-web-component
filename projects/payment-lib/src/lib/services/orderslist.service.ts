@@ -7,6 +7,8 @@ import {IOrderReferenceFee} from '../interfaces/IOrderReferenceFee';
 })
 export class OrderslistService {
   private ordersList: BehaviorSubject<IOrderReferenceFee[]> = new BehaviorSubject<IOrderReferenceFee[]>(null);
+  private caseType = new BehaviorSubject("");
+  getcaseType = this.caseType.asObservable();
 
   constructor() { }
 
@@ -15,5 +17,12 @@ export class OrderslistService {
   }
   getOrdersList() {
     return this.ordersList;
+  }
+
+  setCaseType(caseType: string){
+    this.caseType.next(caseType);
+  }
+  getCaseType(){
+    return this.caseType;
   }
 }

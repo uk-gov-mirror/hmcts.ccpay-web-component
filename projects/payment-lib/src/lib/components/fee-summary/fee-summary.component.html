@@ -208,10 +208,10 @@
                               <a (click)="confirmRemoveFee(fee.id)">Remove</a>
                             </span>
                          
-                            <a (click)="addRemission(fee)" [ngClass]='!service ? "remissionDisable" : "remissionActive"' *ngIf="(getRemissionByFeeCode(fee.code)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code)?.hwf_amount) && !isPaymentExist && !isTurnOff">
+                            <a (click)="addRemission(fee)" class="remissionActive"  *ngIf="(getRemissionByFeeCode(fee.code)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code)?.hwf_amount) && !isPaymentExist && !isTurnOff">
                                   Add help with fees or remission
                             </a>
-                            <a (click)="addRemission(fee)" [ngClass]='!service ? "remissionDisable" : "remissionActive"' *ngIf="(getRemissionByFeeCode(fee.code)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code)?.hwf_amount) && isTurnOff">
+                            <a (click)="addRemission(fee)" class="remissionActive"   *ngIf="(getRemissionByFeeCode(fee.code)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code)?.hwf_amount) && isTurnOff">
                                   Add help with fees or remission
                             </a>
                             <span *ngIf = "getRemissionByFeeCode(fee.code)?.hwf_amount > 0">
@@ -277,7 +277,7 @@
           <p class=" govuk-!-margin-top-2" style="align-self: flex-end;">Total to pay: {{ outStandingAmount | currency:'GBP':'symbol-narrow':'1.2-2'}}</p>
     </div>
   </div>
-
+<!-- 
   <div class="govuk-form-group govuk-form-group--mg" *ngIf="!bsPaymentDcnNumber">
       <label class="govuk-label custom-govuk-label govuk-fieldset__heading--fz" for="responsibleOffice">
         <strong>What service is this fee for?</strong>
@@ -288,7 +288,7 @@
         <option value="AA09">Financial Remedy</option>
         <option value="AA08">Probate</option>
       </select>
-  </div>
+  </div> -->
 
   <div class="govuk-form-group govuk-form-group--mg" *ngIf="!bsPaymentDcnNumber && isOldPcipalOff && isNewPcipalOff">
       <fieldset class="govuk-fieldset">

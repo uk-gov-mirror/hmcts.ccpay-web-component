@@ -13,6 +13,7 @@ import { IOrderReferenceFee } from '../../interfaces/IOrderReferenceFee';
 import { OrderslistService } from '../../services/orderslist.service';
 
 
+
 @Component({
   selector: 'app-allocate-payments',
   templateUrl: './allocate-payments.component.html',
@@ -128,6 +129,7 @@ export class AllocatePaymentsComponent implements OnInit {
     });
     this.OrderslistService.getOrdersList().subscribe( (data) =>
     this.orderLevelFees = data.filter(data => data.orderStatus !== 'Paid'));
+    this.OrderslistService.getCaseType().subscribe( (data) => this.caseType = data);
     this.getUnassignedPayment();
   }
   getGroupOutstandingAmount(paymentGroup: IPaymentGroup): number {

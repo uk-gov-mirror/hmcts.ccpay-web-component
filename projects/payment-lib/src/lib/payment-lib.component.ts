@@ -43,7 +43,7 @@ export class PaymentLibComponent implements OnInit {
   @Input('ISBSENABLE') ISBSENABLE: Boolean;
   @Input('ISSFENABLE') ISSFENABLE: boolean;
   @Input('ISTURNOFF') ISTURNOFF: boolean;
-  @Input('CASETYPE') CASETYPE: String;
+  @Input('CASETYPE') CASETYPE: string;
   @Input('ISOLDPCIPALOFF') ISOLDPCIPALOFF: boolean;
   @Input('ISNEWPCIPALOFF') ISNEWPCIPALOFF: boolean;
 
