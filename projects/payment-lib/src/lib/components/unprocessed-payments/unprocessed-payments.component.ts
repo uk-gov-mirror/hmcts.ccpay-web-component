@@ -45,6 +45,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
   isTurnOff: boolean = true;
   isStFixEnable;
   unassignedRecordSelectedList: IBSPayments;
+  unassignedRecordListLength: number;
 
   constructor(private router: Router,
     private bulkScaningPaymentService: BulkScaningPaymentService,
@@ -112,6 +113,9 @@ export class UnprocessedPaymentsComponent implements OnInit {
   setValuesForUnassignedRecord(unassignedPayments) {
    
     this.unassignedRecordList = unassignedPayments.payments;
+    if(this.unassignedRecordList){
+          this.unassignedRecordListLength = unassignedPayments.payments.length
+    }
     this.serviceId = unassignedPayments.responsible_service_id;
     if (unassignedPayments['ccd_reference'] === undefined) {
       this.isExceptionCase = true;

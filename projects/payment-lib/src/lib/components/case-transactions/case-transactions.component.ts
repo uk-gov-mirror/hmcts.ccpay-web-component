@@ -54,7 +54,7 @@ export class CaseTransactionsComponent implements OnInit {
   feeId:IFee;
   clAmountDue: number = 0;
   unprocessedRecordCount: number;
-  isFeeRecordsExist: boolean = false;
+    isFeeRecordsExist: boolean = false;
   isGrpOutstandingAmtPositive: boolean = false;
   totalRefundAmount: Number;
   caseType: String;
