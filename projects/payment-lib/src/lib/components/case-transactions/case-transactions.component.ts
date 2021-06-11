@@ -241,7 +241,7 @@ export class CaseTransactionsComponent implements OnInit {
           }  
 
     this.orderPendingPayments = (this.orderFeesTotal - this.orderRemissionTotal) - this.orderTotalPayments;
-    if(this.orderPendingPayments === 0){
+    if(this.orderPendingPayments === 0.00){
       this.orderStatus = 'Paid';
       this.orderAddBtnEnable = false;
     } else if (this.orderFeesTotal > 0 && this.orderTotalPayments > 0 && ( this.orderTotalPayments < this.orderPendingPayments) ) {

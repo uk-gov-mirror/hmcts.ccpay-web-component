@@ -172,3 +172,8 @@ text-align: right;
 .mar-17 {
     margin-left: 17px;
 }
+
+.col-61 {
+    width:61px !important;
+    padding: 0!important;
+}
