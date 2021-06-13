@@ -375,6 +375,7 @@
         <ccpay-app-unprocessed-payments
         *ngIf="isBulkScanEnable"
         [IS_BUTTON_ENABLE]="takePayment"
+        [PAYMENTREF]="paymentRef"
         [ISTURNOFF]="isTurnOff"
         [ISNEWPCIPALOFF]="isNewPcipalOff"
         [ISOLDPCIPALOFF]="isOldPcipalOff"
@@ -405,6 +406,7 @@
         [IS_OS_AMT_AVAILABLE]="isGrpOutstandingAmtPositive" 
         (getUnprocessedFeeCount) = "getUnprocessedFeeCount($event)"
         [PAYMENTSLENGTH]="1"
+        [PAYMENTREF]="paymentRef"
         (selectedUnprocessedFeeEvent) = "selectedUnprocessedFeeEvent($event)">
         </ccpay-app-unprocessed-payments>
       </div>
@@ -494,9 +496,10 @@
             [IS_BUTTON_ENABLE]="takePayment"
             [ISTURNOFF]="isTurnOff"
             [ISSFENABLE]="isStrategicFixEnable"
-            [FEE_RECORDS_EXISTS]="isFeeRecordsExist" 
+            [FEE_RECORDS_EXISTS]="isFeeRecordsExist"  
             [IS_OS_AMT_AVAILABLE]="isGrpOutstandingAmtPositive" 
             [PAYMENTSLENGTH]="1"
+            [PAYMENTREF]="paymentRef"
             (getUnprocessedFeeCount) = "getUnprocessedFeeCount($event)"
             (selectedUnprocessedFeeEvent) = "selectedUnprocessedFeeEvent($event)">
         </ccpay-app-unprocessed-payments>
@@ -627,7 +630,8 @@
             [PAYMENTSLENGTH]="allPayments?.length"
             [ISTURNOFF]="isTurnOff"
             [ISSFENABLE]="isStrategicFixEnable"
-            [FEE_RECORDS_EXISTS]="isFeeRecordsExist" 
+            [PAYMENTREF]="paymentRef"
+            [FEE_RECORDS_EXISTS]="isFeeRecordsExist"  
             [PAYMENTSLENGTH]="1"
             (getUnprocessedFeeCount) = "getUnprocessedFeeCount($event)"
             [IS_OS_AMT_AVAILABLE]="isGrpOutstandingAmtPositive" 
@@ -745,8 +749,9 @@
             [ISTURNOFF]="isTurnOff"
             [ISSFENABLE]="isStrategicFixEnable"
             [PAYMENTSLENGTH]="1"
+            [PAYMENTREF]="paymentRef"
             (getUnprocessedFeeCount) = "getUnprocessedFeeCount($event)"
-            [FEE_RECORDS_EXISTS]="isFeeRecordsExist" 
+            [FEE_RECORDS_EXISTS]="isAnyFeeGroupAvilable" 
             [IS_OS_AMT_AVAILABLE]="isGrpOutstandingAmtPositive" 
             (selectedUnprocessedFeeEvent) = "selectedUnprocessedFeeEvent($event)">
               </ccpay-app-unprocessed-payments>

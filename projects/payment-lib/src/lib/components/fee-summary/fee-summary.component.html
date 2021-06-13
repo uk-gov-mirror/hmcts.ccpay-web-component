@@ -267,7 +267,7 @@
       </table>
   </div>
   <div style="display:flex; flex-direction:row;">
-      <button  *ngIf="!isTurnOff && !bsPaymentDcnNumber" (click)="redirectToFeeSearchPage($event,'summary')"
+      <button  *ngIf="!isTurnOff" (click)="redirectToFeeSearchPage($event,'summary')"
               [disabled]="isPaymentExist"
               [ngClass]='isPaymentExist ? "govuk-button govuk-button--secondary button--disabled" : "govuk-button govuk-button--secondary"'>
                 Add fee

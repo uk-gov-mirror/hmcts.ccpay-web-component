@@ -446,6 +446,7 @@ export class CaseTransactionsComponent implements OnInit {
             fees = [];
 
           if (paymentGroup.fees) {
+            this.isFeeRecordsExist = true;
             paymentGroup.fees.forEach(fee => {
               feesTotal = feesTotal + fee.calculated_amount;
           
