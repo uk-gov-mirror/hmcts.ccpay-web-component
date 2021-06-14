@@ -108,12 +108,12 @@ export class CaseTransactionsComponent implements OnInit {
       this.caseTransactionsService.getPaymentGroups(this.ccdCaseNumber).subscribe(
         paymentGroups => {
           this.paymentGroups = paymentGroups['payment_groups'];
-          this.calculateAmounts();
-          this.calculateOrderFeesAmounts();
-          this.calculateRefundAmount();
           this.paymentViewService.getPartyDetails(this.ccdCaseNumber).subscribe(
             response => {
               this.cpoDetails = JSON.parse(response).data.content[0];
+              this.calculateAmounts();
+              this.calculateOrderFeesAmounts();
+              this.calculateRefundAmount();
             },
             (error: any) => {
               this.errorMessage = <any>error;
@@ -131,12 +131,12 @@ export class CaseTransactionsComponent implements OnInit {
       this.caseTransactionsService.getPaymentGroups(this.ccdCaseNumber).subscribe(
         paymentGroups => {
           this.paymentGroups = paymentGroups['payment_groups'];
-          this.calculateAmounts();
-          this.calculateOrderFeesAmounts();
-          this.totalRefundAmount = this.calculateRefundAmount();
           this.paymentViewService.getPartyDetails(this.ccdCaseNumber).subscribe(
             response => {
               this.cpoDetails = JSON.parse(response).data.content[0];
+              this.calculateAmounts();
+              this.calculateOrderFeesAmounts();
+              this.totalRefundAmount = this.calculateRefundAmount();
             },
             (error: any) => {
               this.errorMessage = <any>error;
@@ -256,7 +256,7 @@ export class CaseTransactionsComponent implements OnInit {
     } 
     
     //this.orderLevelFees.push({orderRefId:paymentGroup['payment_group_reference'],orderTotalFees: this.orderFeesTotal,orderStatus: this.orderStatus,orderParty:'Santosh', orderCCDEvent:'Case Creation',orderCreated: new Date(), orderAddBtnEnable: this.orderAddBtnEnable});
-      if (this.cpoDetails['responsibleParty'] !== null) {
+      if (this.cpoDetails !== null) {
         this.orderLevelFees.push({orderRefId:paymentGroup['payment_group_reference'],orderTotalFees: this.orderFeesTotal,orderStatus: this.orderStatus,orderParty:this.cpoDetails['responsibleParty'], orderCCDEvent:this.cpoDetails['action'],orderCreated: this.cpoDetails['createdTimestamp'], orderAddBtnEnable: this.orderAddBtnEnable});
       
       } else {
