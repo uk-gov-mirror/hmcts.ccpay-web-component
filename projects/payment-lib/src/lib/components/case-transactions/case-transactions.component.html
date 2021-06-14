@@ -564,7 +564,7 @@
                   <tbody class="govuk-table__body" *ngFor="let orderRef of orderLevelFees;let i = index;">
                       <td class="govuk-table__cell">{{orderRef.orderStatus}}</td>
                       <td class="govuk-table__cell">{{ orderRef.orderTotalFees | currency :'GBP':'symbol':'1.2-2' }}</td>
-                      <td *ngIf="cpoDetails !== null" class="govuk-table__cell">{{ orderRef.orderParty}}</td> 
+                      <td *ngIf="cpoDetails !== null" class="govuk-table__cell">{{orderParty}}</td> 
                       <td *ngIf="cpoDetails === null" class="govuk-table__cell"></td> 
                       <td class="govuk-table__cell">{{orderRef.orderRefId}}</td>
                       <td class="govuk-table__cell">	
@@ -689,7 +689,7 @@
                         <tr class="govuk-table__row">
                           <td class="govuk-table__cell">{{orderRef.orderStatus}}</td>
                           <td class="govuk-table__cell">{{orderRef.orderTotalFees | currency :'GBP':'symbol':'1.2-2'}}</td>
-                          <td class="govuk-table__cell">{{orderRef.orderParty}}</td> 
+                          <td class="govuk-table__cell">{{orderParty}}</td> 
                           <td class="govuk-table__cell">{{orderRef.orderRefId}}</td> 
                           <td class="govuk-table__cell"></td> 
                           <td class="govuk-table__cell">	

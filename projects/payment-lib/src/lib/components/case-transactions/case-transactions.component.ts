@@ -256,7 +256,7 @@ export class CaseTransactionsComponent implements OnInit {
     } 
     
     //this.orderLevelFees.push({orderRefId:paymentGroup['payment_group_reference'],orderTotalFees: this.orderFeesTotal,orderStatus: this.orderStatus,orderParty:'Santosh', orderCCDEvent:'Case Creation',orderCreated: new Date(), orderAddBtnEnable: this.orderAddBtnEnable});
-      if (this.cpoDetails !== null) {
+      if (this.cpoDetails['responsibleParty'] !== null) {
         this.orderLevelFees.push({orderRefId:paymentGroup['payment_group_reference'],orderTotalFees: this.orderFeesTotal,orderStatus: this.orderStatus,orderParty:this.cpoDetails['responsibleParty'], orderCCDEvent:this.cpoDetails['action'],orderCreated: this.cpoDetails['createdTimestamp'], orderAddBtnEnable: this.orderAddBtnEnable});
       
       } else {
