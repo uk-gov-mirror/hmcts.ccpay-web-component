@@ -141,7 +141,7 @@
             <ng-container *ngFor="let unassignedRecord of unassignedRecordList; let i of index;">
              <tr>
                 <td  class="govuk-table__cell whitespace-inherit col-10" >
-                  Unallocated </td>
+                  Unallocated  </td>
                 <td class="govuk-table__cell whitespace-inherit">
                     {{unassignedRecord.amount | currency :'GBP':'symbol':'1.2-2'}}
                 </td>
@@ -153,12 +153,12 @@
                         <button type="button"
                         [disabled]="!isAllocatedToNewFeebtnEnabled"
                         [ngClass]="!isAllocatedToNewFeebtnEnabled ? 'button govuk-button--secondary button--disabled' : 'button govuk-button--secondary'" (click)="redirectToFeeSearchPage($event,unassignedRecord.dcn_reference)">
-                          Allocate to a new fee
+                          Allocate to a new fee 
                         </button><br/>
                         <button type="button" 
                         [disabled]="!isAllocateToExistingFeebtnEnabled"
                         [ngClass]='!isAllocateToExistingFeebtnEnabled ?  "button govuk-button--secondary button--disabled" : "button govuk-button--secondary"' (click)="goToAllocatePage(unassignedRecord.dcn_reference)">
-                          Allocate to an existing fee
+                          Allocate to an existing fee 
                         </button>
                 </div>
                 </td>

@@ -9,6 +9,8 @@ export class OrderslistService {
   private ordersList: BehaviorSubject<IOrderReferenceFee[]> = new BehaviorSubject<IOrderReferenceFee[]>(null);
   private caseType = new BehaviorSubject("");
   getcaseType = this.caseType.asObservable();
+  private feeExists = new BehaviorSubject<boolean>(null);
+  getFeeExist = this.feeExists.asObservable();
 
   constructor() { }
 
@@ -24,5 +26,12 @@ export class OrderslistService {
   }
   getCaseType(){
     return this.caseType;
+  }
+
+  setFeeExists(feeExists: boolean){
+    this.feeExists.next(feeExists);
+  }
+  getFeeExists(){
+    return this.feeExists;
   }
 }

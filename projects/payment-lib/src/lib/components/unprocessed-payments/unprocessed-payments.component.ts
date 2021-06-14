@@ -4,6 +4,7 @@ import { PaymentLibComponent } from '../../payment-lib.component';
 import { IBSPayments } from '../../interfaces/IBSPayments';
 import {Router} from '@angular/router';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
+import { OrderslistService } from '../../services/orderslist.service';
 
 @Component({
   selector: 'ccpay-app-unprocessed-payments',
@@ -21,6 +22,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
   @Input('ISOLDPCIPALOFF') ISOLDPCIPALOFF: boolean;
   @Input('ISSFENABLE') ISSFENABLE: boolean;
   @Input('PAYMENTSLENGTH') PAYMENTSLENGTH:Number;
+  @Input('LEVEL')LEVEL:Number;
 
   @Output() selectedUnprocessedFeeEvent: EventEmitter<string> = new EventEmitter();
   @Output() getUnprocessedFeeCount: EventEmitter<string> = new EventEmitter();
@@ -46,11 +48,13 @@ export class UnprocessedPaymentsComponent implements OnInit {
   isStFixEnable;
   unassignedRecordSelectedList: IBSPayments;
   unassignedRecordListLength: number;
+  showContent: boolean;
 
   constructor(private router: Router,
     private bulkScaningPaymentService: BulkScaningPaymentService,
     private paymentLibComponent: PaymentLibComponent,
-    private paymentViewService: PaymentViewService
+    private paymentViewService: PaymentViewService,
+    private OrderslistService: OrderslistService
     ) { }
 
   ngOnInit() {
@@ -63,8 +67,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
     this.isNewpcipaloff = this.paymentLibComponent.ISNEWPCIPALOFF;
     this.isOldpcipaloff = this.paymentLibComponent.ISOLDPCIPALOFF;
     this.isStFixEnable = this.paymentLibComponent.ISSFENABLE;
-    
-
+    this.OrderslistService.getFeeExists().subscribe( (data) => this.FEE_RECORDS_EXISTS = data);;
     this.getUnassignedPaymentlist();
 
   }
