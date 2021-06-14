@@ -110,6 +110,7 @@ export class CaseTransactionsComponent implements OnInit {
           this.paymentGroups = paymentGroups['payment_groups'];
           this.calculateAmounts();
           this.calculateRefundAmount();
+          this.calculateOrderFeesAmounts();
           this.paymentViewService.getPartyDetails(this.ccdCaseNumber).subscribe(
             response => {
               this.cpoDetails = JSON.parse(response).data.content[0];
@@ -119,7 +120,7 @@ export class CaseTransactionsComponent implements OnInit {
               this.isCPODown = true;
             }
           );
-          setTimeout(()=> this.calculateOrderFeesAmounts(), 3000);
+         
         },
         (error: any) => {
           this.errorMessage = <any>error;
@@ -132,6 +133,7 @@ export class CaseTransactionsComponent implements OnInit {
         paymentGroups => {
           this.paymentGroups = paymentGroups['payment_groups'];
           this.calculateAmounts();
+          this.calculateOrderFeesAmounts();
           this.totalRefundAmount = this.calculateRefundAmount();
           this.paymentViewService.getPartyDetails(this.ccdCaseNumber).subscribe(
             response => {
@@ -144,7 +146,7 @@ export class CaseTransactionsComponent implements OnInit {
               this.isCPODown = true;
             }
           );
-          setTimeout(()=> this.calculateOrderFeesAmounts(), 3000);
+         
         },
         (error: any) => {
           this.errorMessage = <any>error;
