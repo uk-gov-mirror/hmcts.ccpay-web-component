@@ -177,3 +177,8 @@ text-align: right;
     width:61px !important;
     padding: 0!important;
 }
+
+.error {
+    width: 960px;  
+    margin: auto;
+}

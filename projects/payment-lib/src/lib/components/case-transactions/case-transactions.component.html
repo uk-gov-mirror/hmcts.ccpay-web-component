@@ -564,7 +564,7 @@
                   <tbody class="govuk-table__body" *ngFor="let orderRef of orderLevelFees;let i = index;">
                       <td class="govuk-table__cell">{{orderRef.orderStatus}}</td>
                       <td class="govuk-table__cell">{{ orderRef.orderTotalFees | currency :'GBP':'symbol':'1.2-2' }}</td>
-                      <td *ngIf="cpoDetails !== null" class="govuk-table__cell">{{cpoDetails['responsibleParty']}}</td> 
+                      <td *ngIf="cpoDetails !== null" class="govuk-table__cell">{{ orderRef.orderParty}}</td> 
                       <td *ngIf="cpoDetails === null" class="govuk-table__cell"></td> 
                       <td class="govuk-table__cell">{{orderRef.orderRefId}}</td>
                       <td class="govuk-table__cell">	
@@ -662,15 +662,13 @@
    <ng-container *ngIf="!takePayment && viewStatus !== 'order-full-view'">
       <div  class="govuk-grid-row govuk-grid__surplus-payments">
           <div *ngIf="errorMessage">
-              <div class="error-summary" role="group" aria-labelledby="failure-error-summary-heading" tabindex="-1">
-                <h2 class="heading-medium error-summary-heading" id="failure-error-summary-heading">
-                    Sorry, there is a problem with the service
-                </h2>
-                <p>Payment requests and payments cannot currently be shown. Try again.</p>
-                <div class="govuk-error-summary__body">
-                  {{ errorMessage }}
-                </div>
+              <div *ngIf="isCPODown && !isAnyFeeGroupAvilable" class=" error govuk-inset-text govuk-!-margin-top-7">
+                  No party information currently available - try again later.
               </div>
+              <div *ngIf="isAnyFeeGroupAvilable" class="error">
+                  <h3 class="govuk-heading-m govuk-!-margin-top-7 govuk-!-margin-bottom-1">Sorry, there is a problem with the service</h3>
+                  <p>Payment requests and payments cannot currently be shown. Try again.</p>
+            </div>
             </div>
         <div class="govuk-grid-column-full">
             <div>

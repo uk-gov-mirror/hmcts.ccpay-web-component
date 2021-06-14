@@ -75,7 +75,7 @@ export class CaseTransactionsComponent implements OnInit {
   orderRemissionTotal: number = 0.00;
   orderTotalPayments: number = 0.00;
   orderPendingPayments: number =0.00;
-
+  isCPODown: boolean;
   constructor(private router: Router,
   private paymentViewService: PaymentViewService,
   private bulkScaningPaymentService: BulkScaningPaymentService,
@@ -117,6 +117,7 @@ export class CaseTransactionsComponent implements OnInit {
             },
             (error: any) => {
               this.errorMessage = <any>error;
+              this.isCPODown = true;
             }
           );
         },
@@ -139,11 +140,13 @@ export class CaseTransactionsComponent implements OnInit {
             },
             (error: any) => {
               this.errorMessage = <any>error;
+              this.isCPODown = true;
             }
           );
         },
         (error: any) => {
           this.errorMessage = <any>error;
+          this.isAnyFeeGroupAvilable = false;
           this.setDefaults();
         }
       );
