@@ -228,7 +228,7 @@
                           </span>
                       </td>
                       
-                      <td  style="text-align: right;">
+                      <td  class="govuk-table__cell" style="text-align: right;">
                        <br>
                         <div *ngIf = "getRemissionByFeeCode(fee.code)?.hwf_amount > 0" class="govuk-table__cell_border"> <br><br></div>
                       </td>
@@ -274,7 +274,7 @@
       </button>
     <a *ngIf="isTurnOff" (click)="redirectToFeeSearchPage($event,'summary')" class="govuk-button govuk-button--secondary">Add a new fee</a>	
    <div  class="feeAddButton">
-          <p class=" govuk-!-margin-top-2" style="align-self: flex-end;">Total to pay: {{ outStandingAmount | currency:'GBP':'symbol-narrow':'1.2-2'}}</p>
+          <p class="paddigleft govuk-!-margin-top-2">Total to pay: {{ outStandingAmount | currency:'GBP':'symbol-narrow':'1.2-2'}}</p>
     </div>
   </div>
 <!-- 

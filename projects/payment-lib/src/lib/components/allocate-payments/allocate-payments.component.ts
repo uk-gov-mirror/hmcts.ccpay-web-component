@@ -265,7 +265,7 @@ export class AllocatePaymentsComponent implements OnInit {
     }
   }
   finalServiceCall() {
-    if(!this.isStrategicFixEnable) {
+    if(this.isStrategicFixEnable) {
       let allocatedRequest = {
         reason: this.paymentReason,
         allocation_status:'Allocated',

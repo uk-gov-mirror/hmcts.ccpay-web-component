@@ -17,7 +17,7 @@
   table th, table td {
     font-size: 19px;
     vertical-align: top;
-    max-width: 320px;
+   // max-width: 320px;
   
     .no-padding {
       padding: 0;
@@ -82,6 +82,10 @@ table th {
   border-top: 1px solid #bfc1c3;
   text-align: left;
 }
+
+.govuk-table__header, .govuk-table__cell {
+  padding: 10px 0px 10px 0;
+}
 .govuk-table__header, .govuk-table__cell_rmborder {
   padding: 10px 0px 0px 0;
   border-top: 1px solid #bfc1c3;
@@ -101,5 +105,9 @@ table th {
 
 .remissionActive {
   padding-left: 10px;
+}
+
+.paddigleft {
+  padding-left: 2em;;
 }
 

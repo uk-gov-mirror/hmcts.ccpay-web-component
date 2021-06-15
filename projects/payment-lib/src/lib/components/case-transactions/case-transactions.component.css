@@ -182,3 +182,12 @@ text-align: right;
     width: 960px;  
     margin: auto;
 }
+
+.summarypage {
+    padding-left: 38em;
+}
+
+.summarypagealign {
+    width:100%;
+    text-align: right;
+}

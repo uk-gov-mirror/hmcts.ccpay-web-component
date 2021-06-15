@@ -123,7 +123,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
     if (unassignedPayments['ccd_reference'] === undefined) {
       this.isExceptionCase = true;
     }
-    this.isRecordExist =  this.unassignedRecordList.length === 0;
+    // this.isRecordExist =  this.unassignedRecordList.length === 0;
     this.getUnprocessedFeeCount.emit(<any>this.unassignedRecordList.length);
     this.unprocessedPaymentSelectEvent(this.unassignedRecordList);
   }
@@ -159,6 +159,13 @@ export class UnprocessedPaymentsComponent implements OnInit {
    this.isUnprocessedRecordSelected = true;
    this.validateButtons();
    this.selectedUnprocessedFeeEvent.emit(selectedRecordReference);
+  }
+
+  resetButtons() {
+    this.isUnprocessedRecordSelected = false;
+    this.isAllocateToExistingFeebtnEnabled  = false;
+    this.isMarkAsUnidentifiedbtnEnabled  = false;
+    this.isAllocatedToNewFeebtnEnabled = false;
   }
 
   goToAllocatePage(dcn_reference:any) {

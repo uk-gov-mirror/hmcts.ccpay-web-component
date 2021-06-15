@@ -248,10 +248,10 @@ export class CaseTransactionsComponent implements OnInit {
           }  
 
     this.orderPendingPayments = (this.orderFeesTotal - this.orderRemissionTotal) - this.orderTotalPayments;
-    if(this.orderPendingPayments === 0.00){
+    if(this.orderPendingPayments <= 0.00 ){
       this.orderStatus = 'Paid';
       this.orderAddBtnEnable = false;
-    } else if (this.orderFeesTotal > 0 && this.orderTotalPayments > 0 && ( this.orderTotalPayments < this.orderPendingPayments) ) {
+    } else if (this.orderFeesTotal > 0 && (this.orderTotalPayments > 0 || this.orderRemissionTotal > 0) && ( this.orderTotalPayments < this.orderPendingPayments) ) {
       this.orderStatus = 'Partially paid'
       this.orderAddBtnEnable = true;
     } else {
@@ -310,9 +310,9 @@ export class CaseTransactionsComponent implements OnInit {
   });
   this.orderPendingPayments = (this.orderFeesTotal - this.orderRemissionTotal) - this.orderTotalPayments;
   this.orderRef = orderReferenceObj.orderRefId;
-  if(this.orderPendingPayments === 0){
+  if(this.orderPendingPayments <= 0.00 ){
     this.orderStatus = 'Paid';
-  } else if (this.orderFeesTotal > 0 && this.orderTotalPayments && ( this.orderTotalPayments < this.orderPendingPayments) ) {
+  } else if (this.orderFeesTotal > 0 && (this.orderTotalPayments > 0 || this.orderRemissionTotal > 0)  && ( this.orderTotalPayments < this.orderPendingPayments) ) {
     this.orderStatus = 'Partially paid'
   } else {
     this.orderStatus = 'Not paid'
@@ -495,6 +495,7 @@ export class CaseTransactionsComponent implements OnInit {
             grpOutstandingAmount = (feesTotal - remissionsTotal) - paymentsTotal;
             if(grpOutstandingAmount > 0 && isNewPaymentGroup) {
               this.isAnyFeeGroupAvilable = true;
+              this.isFeeRecordsExist = true;
               this.paymentRef = paymentGroup.payment_group_reference;
             }
             if(paymentGroup.fees && paymentGroup.fees.length > 0 && grpOutstandingAmount <= 0 && isNewPaymentGroup) {
