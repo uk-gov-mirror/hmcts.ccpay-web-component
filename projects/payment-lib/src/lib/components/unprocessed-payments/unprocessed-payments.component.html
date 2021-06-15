@@ -216,6 +216,10 @@
       
         </div>
 </ng-container>
+
+<ng-container *ngIf="viewStatus === 'main'">
+
+</ng-container>
 <ng-container *ngIf="PAYMENTSLENGTH === 0 && unassignedRecordListLength === 0">
   <br/>No payment requests on this case.<br/>
 </ng-container>

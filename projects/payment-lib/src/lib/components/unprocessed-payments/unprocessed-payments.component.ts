@@ -176,7 +176,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
     this.paymentLibComponent.isOldPcipalOff = this.ISOLDPCIPALOFF;
     this.paymentLibComponent.ISSFENABLE = this.isStFixEnable;
 
-    if(!this.ISTURNOFF) {
+    if(this.ISTURNOFF) {
       this.paymentLibComponent.paymentGroupReference = this.PAYMENTREF;
       this.paymentLibComponent.viewName = 'fee-summary';
     }else {
