@@ -196,7 +196,7 @@
 
           <tbody class="govuk-table__body" *ngIf="paymentGroup.fees">
               <tr class="govuk-table__row" *ngFor="let fee of paymentGroup.fees; let i = index;">
-                      <td class="govuk-table__cell">{{ fee.description }}{{ fee.code }}
+                      <td class="govuk-table__cell">{{ fee.description }}
                         
                           <span class="no-border" *ngIf="(isPaymentExist || (getRemissionByFeeCode(fee.code)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code)?.hwf_amount)) && !isTurnOff">
                              
