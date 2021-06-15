@@ -662,16 +662,17 @@
    </ng-container>
 
    <ng-container *ngIf="!takePayment && viewStatus !== 'order-full-view'">
+      <div *ngIf="errorMessage">
+          <div *ngIf="isCPODown && isAnyFeeGroupAvilable" class=" error govuk-inset-text govuk-!-margin-top-7">
+              No party information currently available - try again later.
+          </div>
+          <div *ngIf="!isAnyFeeGroupAvilable" class="error">
+              <h3 class="govuk-heading-m govuk-!-margin-top-7 govuk-!-margin-bottom-1">Sorry, there is a problem with the service</h3>
+              <p>Payment requests and payments cannot currently be shown. Try again.</p>
+        </div>
+        </div>
       <div  class="govuk-grid-row govuk-grid__surplus-payments">
-          <div *ngIf="errorMessage">
-              <div *ngIf="isCPODown && isAnyFeeGroupAvilable" class=" error govuk-inset-text govuk-!-margin-top-7">
-                  No party information currently available - try again later.
-              </div>
-              <div *ngIf="!isAnyFeeGroupAvilable" class="error">
-                  <h3 class="govuk-heading-m govuk-!-margin-top-7 govuk-!-margin-bottom-1">Sorry, there is a problem with the service</h3>
-                  <p>Payment requests and payments cannot currently be shown. Try again.</p>
-            </div>
-            </div>
+          
         <div class="govuk-grid-column-full">
             <div>
                 <span class="heading-medium">Payment requests</span>
