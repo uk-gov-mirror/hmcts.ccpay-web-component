@@ -433,7 +433,7 @@
                     <thead class="govuk-table__head">
                     <tr class="govuk-table__row">
                         <td class="govuk-table__header col-14" scope="col">Status</td>
-                        <td class="govuk-table__header   col-10" scope="col">Amount</td>
+                        <td class="govuk-table__header  col-10" scope="col">Amount</td>
                         <td class="govuk-table__header  col-17" scope="col">Party</td>
                         <td class="govuk-table__header  col-24" scope="col">Request reference</td>
                         <td class="govuk-table__header  col-13" scope="col"></td>
@@ -566,8 +566,8 @@
                   <tbody class="govuk-table__body" *ngFor="let orderRef of orderLevelFees;let i = index;">
                       <td class="govuk-table__cell whitespace-inherit">{{orderRef.orderStatus}}</td>
                       <td class="govuk-table__cell whitespace-inherit">{{ orderRef.orderTotalFees | currency :'GBP':'symbol':'1.2-2' }}</td>
-                      <td *ngIf="cpoDetails !== null whitespace-inherit" class="govuk-table__cell">{{cpoDetails['responsibleParty']}}</td> 
-                      <td *ngIf="cpoDetails === null whitespace-inherit" class="govuk-table__cell"></td> 
+                      <td *ngIf="cpoDetails !== null" class="govuk-table__cell whitespace-inherit">{{cpoDetails['responsibleParty']}}</td> 
+                      <td *ngIf="cpoDetails === null" class="govuk-table__cell whitespace-inherit"></td> 
                       <td class="govuk-table__cell whitespace-inherit">{{orderRef.orderRefId}}</td>
                       <td class="govuk-table__cell">	
                               <a href="javascript:void(0)" (click)="goToOrderViewDetailSection(orderRef)">View details</a>
