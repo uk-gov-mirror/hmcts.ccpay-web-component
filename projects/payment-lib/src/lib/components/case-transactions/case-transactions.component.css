@@ -107,23 +107,66 @@ details summary {
 }
 
 .col-28 {
-    width: 28%;
+    width: 28% !important;
 }
 
 .col-60 {
-    width: 60%;
+    width: 60% !important;
 }
 
 .col-32 {
-    width: 32%; 
+    width: 32% !important;
 }
 
 .col-15 {
-    width: 15%;
+    width: 15% !important;
+    padding-left: 0px !important;
+    padding-right:0px !important;
+    padding-left:0px !important;
 }
 
+.col-16 {
+    width: 16% !important;;
+}
+.col-17 {
+    width: 17% !important;;
+}
+.col-12 {
+    width: 12% !important;;
+}
+.col-9 {
+    width: 9% !important;;
+}
 .col-10 {
-    width: 10%;
+    width: 10% !important;
+  }
+
+.col-13 {
+    width: 13% !important;
+}
+.col-21 {
+    width: 21% !important;
+}
+td {
+    
+    white-space: nowrap;
+    overflow: hidden !important;
+}
+
+
+.col-19 {
+    width: 19% !important;
+    padding-left:0px !important;
+}
+
+.col-18 {
+    width: 18% !important;
+    padding-left:0px !important; 
+    padding-right:0px !important;
+}
+
+.col-37 {
+    width: 37% !important; 
 }
 
 .col-55 {
@@ -194,4 +237,13 @@ text-align: right;
 
 .govuk-inset-text {
     font-size: 2.1875rem;
+}
+
+table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+th, td {
+    word-wrap: break-word;
 }

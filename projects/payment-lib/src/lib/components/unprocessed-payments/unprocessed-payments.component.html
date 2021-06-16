@@ -127,45 +127,44 @@
         <input #myInput type='hidden' id='iFrameDrivenImageValue' value='CASETRANSACTION'>
           <table class="table">
              
-              <thead class="govuk-table__head" *ngIf='PAYMENTSLENGTH === 0 && unassignedRecordListLength > 0'>
+              <thead class="govuk-table__head" *ngIf='PAYMENTSLENGTH > 0 || unassignedRecordListLength > 0'>
                   <tr class="govuk-table__row">
-                      <td class="govuk-table__header" scope="col">Status</td>
-                      <td class="govuk-table__header" scope="col">Amount</td>
-                      <td class="govuk-table__header" scope="col">Date</td>
-                      <td class="govuk-table__header" scope="col">Request reference</td>
-                      <td class="govuk-table__header" scope="col"></td>
+                      <td class="govuk-table__header col-13" scope="col">Status</td>
+                      <td class="govuk-table__header col-10" scope="col">Amount</td>
+                      <td class="govuk-table__header col-17" scope="col">Date allocated</td>
+                      <td class="govuk-table__header col-24" colspan="3" scope="col">Request reference</td>
+                      <td class="govuk-table__header col-13" scope="col"></td>
                       <td class="govuk-table__header" scope="col"></td>
                     </tr>
                 </thead>
               <tbody>
             <ng-container *ngFor="let unassignedRecord of unassignedRecordList; let i of index;">
              <tr>
-                <td  class="govuk-table__cell whitespace-inherit col-10" >
-                  Unallocated  </td>
-                <td class="govuk-table__cell whitespace-inherit">
+                <td  class="govuk-table__cell whitespace-inherit col-13" >
+                  Unallocated 
+               </td>
+                <td class="govuk-table__cell whitespace-inherit col-10">
                     {{unassignedRecord.amount | currency :'GBP':'symbol':'1.2-2'}}
                 </td>
-                <td class="govuk-table__cell whitespace-inherit"></td>
-                <td class="govuk-table__cell whitespace-inherit"></td>
-                <td class="govuk-table__cell whitespace-inherit"></td>
-                <td class="govuk-table__cell whitespace-inherit">
+                <td class="govuk-table__cell whitespace-inherit" colspan="8">
                     <div  *ngIf="IS_BUTTON_ENABLE && !isTurnOff" style="text-align: right;">
                         <button type="button"
                         [disabled]="!isAllocatedToNewFeebtnEnabled"
                         [ngClass]="!isAllocatedToNewFeebtnEnabled ? 'button govuk-button--secondary button--disabled' : 'button govuk-button--secondary'" (click)="redirectToFeeSearchPage($event,unassignedRecord.dcn_reference)">
-                          Allocate to a new fee 
+                          Allocate to new payment request
                         </button><br/>
                         <button type="button" 
                         [disabled]="!isAllocateToExistingFeebtnEnabled"
                         [ngClass]='!isAllocateToExistingFeebtnEnabled ?  "button govuk-button--secondary button--disabled" : "button govuk-button--secondary"' (click)="goToAllocatePage(unassignedRecord.dcn_reference)">
-                          Allocate to an existing fee 
+                          Allocate to existing payment request 
                         </button>
                 </div>
+            
                 </td>
              </tr>
            
               <!-- <ng-container> -->
-                <tr>
+             <tr>
                   <td class="unassigned noborders" colspan="8">
                       <summary (click)="unassignedRecord.expanded = !unassignedRecord.expanded" class="govuk-details__summary">
                           <span class="govuk-details__summary-text">
@@ -184,7 +183,7 @@
                               </div>
                               <div class="govuk-summary-list__row">
                                   <dt class="govuk-summary-list__key">
-                                      Payment assest number (DCN)
+                                      Payment assest number (DCN) 
                                   </dt>
                                   <dd class="govuk-summary-list__value">
                                       {{unassignedRecord.dcn_reference}}
@@ -208,7 +207,7 @@
 
                       </div>
                   </td> 
-                </tr>
+                </tr> 
               <!-- </ng-container> -->
              </ng-container>
               </tbody>
@@ -221,6 +220,6 @@
 
 </ng-container>
 <ng-container *ngIf="PAYMENTSLENGTH === 0 && unassignedRecordListLength === 0">
-  <br/>No payment requests on this case.<br/>
+  <br/>No payments.<br/>
 </ng-container>
 

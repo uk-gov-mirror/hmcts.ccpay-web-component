@@ -37,9 +37,22 @@
 }
 
 .col-13 {
-  width: 13%;
+  width: 13% !important;
+}
+.col-17 {
+  width: 17% !important;
+}
+.col-12 {
+  width: 12% !important;
 }
 
+.col9 {
+  width: 9% !important;
+}
+
+.col-15 {
+  width: 15% !important;
+}
 
 .lowercase { text-transform: lowercase; }
 .capitalize::first-letter {
@@ -64,8 +77,29 @@
   border-top: hidden;
 }
 
+.col-16 {
+  width: 16% !important;
+}
+
 .col-10 {
-  width: 10%;
+  width: 10% !important;
+}
+
+.col-19 {
+  width: 19% !important;
+  padding-left:0px !important;
+}
+
+.col-18 {
+  width: 18% !important;
+  padding-left:0px !important; 
+   padding-right:0px !important;
+}
+.col-21 {
+  width: 21% !important;
+}
+.col-37 {
+  width: 37% !important; 
 }
 .noborders > td{
   border-color: transparent;
@@ -83,4 +117,18 @@
 
 .govuk-summary-list__key {
   width: 35%;
+}
+td {
+  white-space: nowrap;
+  overflow: hidden !important;
+
+  }
+
+  table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+th, td {
+    word-wrap: break-word;
 }
