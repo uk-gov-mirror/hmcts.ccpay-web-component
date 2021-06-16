@@ -118,6 +118,10 @@ details summary {
     width: 32% !important;
 }
 
+.col-34 {
+    width: 34% !important;
+}
+
 .col-15 {
     width: 15% !important;
     padding-left: 0px !important;
@@ -147,6 +151,11 @@ details summary {
 .col-21 {
     width: 21% !important;
 }
+
+.col-27 {
+    width: 27% !important;
+}
+
 td {
     
     white-space: nowrap;
@@ -227,12 +236,14 @@ text-align: right;
 }
 
 .summarypage {
-    padding-left: 38em;
+    padding-left: 36em;
+    margin-top: 2em;
 }
 
 .summarypagealign {
     width:100%;
     text-align: right;
+    margin-top: 2em;
 }
 
 .govuk-inset-text {
@@ -246,4 +257,19 @@ table {
 
 th, td {
     word-wrap: break-word;
+}
+
+.totalPay {
+    padding-right: 14px;
+    float: right;
+    margin-top:2em;
+}
+
+.govuk-back-link {
+    font-size: 1.5rem !important;
+}
+
+.totalfees {
+    float: right;
+    margin-top:2em;
 }
