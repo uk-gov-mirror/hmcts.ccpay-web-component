@@ -162,6 +162,10 @@ details summary {
     width: 20% !important;
 }
 
+.govuk-table__cell, .govuk-table__header {
+    padding: 10px 10px 10px 0;
+}
+
 
 .col-27 {
     width: 27% !important;
