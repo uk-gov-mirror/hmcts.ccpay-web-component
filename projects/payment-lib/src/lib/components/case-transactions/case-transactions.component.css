@@ -148,6 +148,9 @@ details summary {
 .col-10 {
     width: 10% !important;
   }
+  .col-11 {
+    width: 11% !important;
+  }
 
 .col-13 {
     width: 13% !important;
@@ -156,9 +159,6 @@ details summary {
     width: 21% !important;
 }
 
-.col-21 {
-    width: 11% !important;
-}
 
 .col-27 {
     width: 27% !important;

@@ -47,7 +47,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
   isTurnOff: boolean = true;
   isStFixEnable;
   unassignedRecordSelectedList: IBSPayments;
-  unassignedRecordListLength: number;
+  unassignedRecordListLength: number = 0;
   showContent: boolean;
 
   constructor(private router: Router,
