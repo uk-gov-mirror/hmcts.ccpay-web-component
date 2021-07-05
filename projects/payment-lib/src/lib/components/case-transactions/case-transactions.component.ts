@@ -39,6 +39,7 @@ export class CaseTransactionsComponent implements OnInit {
   paymentRef: string;
   isTurnOff: boolean;
   isNewPcipalOff: boolean;
+  isRefundRemission:boolean = true;
   isOldPcipalOff: boolean;
   isStrategicFixEnable: boolean;
   isAddFeeBtnEnabled: boolean = true;
@@ -566,6 +567,22 @@ export class CaseTransactionsComponent implements OnInit {
     url += this.isOldPcipalOff ? '&isOldPcipalOff=Enable' : '&isOldPcipalOff=Disable';
     url +=`&caseType=${this.caseType}`
   this.router.navigateByUrl(`/fee-search?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}${url}`);
+  }
+
+  addRemission(fee: IFee) {
+    this.feeId = fee;
+    this.viewStatus = 'addremission';
+  }
+  redirectToremissionPage(event: any) {
+    event.preventDefault();
+    this.paymentLibComponent.viewName='remission'
+  //   let url = this.isBulkScanEnable ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
+  //   url += this.isTurnOff ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
+  //   url += this.isStrategicFixEnable ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
+  //   url += this.isNewPcipalOff ? '&isNewPcipalOff=Enable' : '&isNewPcipalOff=Disable';
+  //   url += this.isOldPcipalOff ? '&isOldPcipalOff=Enable' : '&isOldPcipalOff=Disable';
+  //   url +=`&caseType=${this.caseType}`
+  // this.router.navigateByUrl(`/fee-search?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}${url}`);
   }
 
   redirectToReportsPage(event: any) {

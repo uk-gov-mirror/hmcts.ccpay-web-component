@@ -27,6 +27,7 @@ import { keyValuePipe } from './pipes/key-value.pipe';
 import { SanitizeHtmlPipe } from './pipes/sanitize-html.pipe';
 import { ReportsComponent } from './components/reports/reports.component';
 import { XlFileService } from './services/xl-file/xl-file.service';
+import { RefundsComponent } from './components/refunds/refunds.component';
 
 
 @NgModule({
@@ -56,7 +57,8 @@ import { XlFileService } from './services/xl-file/xl-file.service';
     keyValuePipe,
     SanitizeHtmlPipe,
     ReportsComponent,
-    ErrorBannerComponent
+    ErrorBannerComponent,
+    RefundsComponent
   ],
   exports: [ PaymentLibComponent ],
   providers: [ 

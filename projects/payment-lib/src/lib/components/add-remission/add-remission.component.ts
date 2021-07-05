@@ -17,8 +17,10 @@ export class AddRemissionComponent implements OnInit {
   @Input() fee: IFee;
   @Input() ccdCaseNumber: string;
   @Input() caseType: string;
+  @Input() viewCompStatus: string;
   @Input() paymentGroupRef: string;
   @Input() isTurnOff: boolean;
+  @Input() isRefundRemission: boolean;
   @Input() isOldPcipalOff: boolean;
   @Input() isNewPcipalOff: boolean;
   @Input() isStrategicFixEnable: boolean;
@@ -31,6 +33,7 @@ export class AddRemissionComponent implements OnInit {
   option: string = null;
   isConfirmationBtnDisabled: boolean = false;
   bsPaymentDcnNumber: string;
+  selectedValue = 'RemissionSelection';
 
   isRemissionCodeEmpty: boolean = false;
   remissionCodeHasError: boolean = false;
@@ -85,6 +88,64 @@ export class AddRemissionComponent implements OnInit {
     }
   }
 
+  addRemissionCode() {
+    this.resetRemissionForm([false, false, false, false, false], 'All');
+    const remissionctrls=this.remissionForm.controls,
+      isRemissionLessThanFee = this.fee.calculated_amount > remissionctrls.amount.value; 
+    if (this.remissionForm.dirty && this.remissionForm.valid && isRemissionLessThanFee) {
+      this.viewStatus = 'applyremissioncode';
+      this.viewCompStatus = '';
+    }else {
+
+      if(remissionctrls['remissionCode'].value == '' ) {
+        this.resetRemissionForm([true, false, false, false, false], 'remissionCode');
+      }
+      if(remissionctrls['remissionCode'].value != '' && remissionctrls['remissionCode'].invalid ) {
+        this.resetRemissionForm([false, true, false, false, false], 'remissionCode');
+      }
+      if(remissionctrls['remissionCode'].value != '' && remissionctrls['remissionCode'].valid ) {
+        this.viewStatus = 'applyremissioncode';
+        this.viewCompStatus = '';
+      }
+
+    }
+  }
+
+
+  onSelectionChange(value: string) {
+    this.selectedValue = value;
+    this.hasErrors = false;
+  }
+
+
+  continueRemission(){
+    this.resetRemissionForm([false, false, false, false, false], 'All');
+    const remissionctrls=this.remissionForm.controls,
+      isRemissionLessThanFee = this.fee.calculated_amount > remissionctrls.amount.value; 
+    if (this.remissionForm.dirty && this.remissionForm.valid && isRemissionLessThanFee) {
+      this.viewCompStatus = '';
+      this.viewStatus = "applyremissioncode";
+    }else {
+
+      if(remissionctrls['remissionCode'].value == '' ) {
+        this.resetRemissionForm([true, false, false, false, false], 'remissionCode');
+      }
+      if(remissionctrls['remissionCode'].value != '' && remissionctrls['remissionCode'].invalid ) {
+        this.resetRemissionForm([false, true, false, false, false], 'remissionCode');
+      }
+      if(remissionctrls['amount'].value == '' ) {
+        this.resetRemissionForm([false, false, true, false, false], 'amount');
+      }
+      if(remissionctrls['amount'].value != '' && remissionctrls['amount'].invalid ) {
+        this.resetRemissionForm([false, true, false, true, false], 'amount');
+      }
+      if(remissionctrls.amount.valid && !isRemissionLessThanFee){
+        this.resetRemissionForm([false, false, false, false, true], 'amount');
+      }
+    
+    }
+ 
+  }
   resetRemissionForm(val, field){
     if(field==='remissionCode' || field==='All') {
       this.isRemissionCodeEmpty = val[0];
@@ -124,6 +185,33 @@ export class AddRemissionComponent implements OnInit {
         this.isConfirmationBtnDisabled = false;
       }
     );
+  }
+
+  gotoConfirmationPage() {
+    this.resetRemissionForm([false, false, false, false, false], 'All');
+    const remissionctrls=this.remissionForm.controls,
+      isRemissionLessThanFee = this.fee.calculated_amount > remissionctrls.amount.value; 
+    if (this.remissionForm.dirty && this.remissionForm.valid && isRemissionLessThanFee) {
+      this.viewCompStatus = '';
+      this.viewStatus = "remissionconfirmation";
+    }else {
+      if(remissionctrls['amount'].value == '' ) {
+        this.resetRemissionForm([false, false, true, false, false], 'amount');
+      }
+      if(remissionctrls['amount'].value != '' && remissionctrls['amount'].invalid ) {
+        this.resetRemissionForm([false, true, false, true, false], 'amount');
+      }
+      if(remissionctrls.amount.valid && !isRemissionLessThanFee){
+        this.resetRemissionForm([false, false, false, false, true], 'amount');
+      }
+     
+    }
+    
+  }
+
+  gotoremissionPage() {
+    this.viewStatus = "applyremissioncode";
+    this.isRefundRemission = true;
   }
   gotoCasetransationPage() {
     this.paymentLibComponent.viewName = 'case-transactions';
