@@ -35,7 +35,7 @@ export class AddRemissionComponent implements OnInit {
   option: string = null;
   isConfirmationBtnDisabled: boolean = false;
   bsPaymentDcnNumber: string;
-  selectedValue = 'RemissionSelection';
+  selectedValue = 'yes';
   amount: any;
   retroRemission: boolean = false;
   remissionReference: string;
