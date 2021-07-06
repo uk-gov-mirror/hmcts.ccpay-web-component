@@ -24,6 +24,8 @@ export class AddRemissionComponent implements OnInit {
   @Input() isOldPcipalOff: boolean;
   @Input() isNewPcipalOff: boolean;
   @Input() isStrategicFixEnable: boolean;
+  @Input() orderStatus: string;
+  @Input() paidAmount: Number;
   @Output() cancelRemission: EventEmitter<void> = new EventEmitter();
 
   remissionForm: FormGroup;
@@ -34,6 +36,7 @@ export class AddRemissionComponent implements OnInit {
   isConfirmationBtnDisabled: boolean = false;
   bsPaymentDcnNumber: string;
   selectedValue = 'RemissionSelection';
+  amount: number = 100;
 
   isRemissionCodeEmpty: boolean = false;
   remissionCodeHasError: boolean = false;
@@ -191,26 +194,23 @@ export class AddRemissionComponent implements OnInit {
     this.resetRemissionForm([false, false, false, false, false], 'All');
     const remissionctrls=this.remissionForm.controls,
       isRemissionLessThanFee = this.fee.calculated_amount > remissionctrls.amount.value; 
-    if (this.remissionForm.dirty && this.remissionForm.valid && isRemissionLessThanFee) {
-      this.viewCompStatus = '';
-      this.viewStatus = "remissionconfirmation";
-    }else {
+    if (this.remissionForm.dirty &&  isRemissionLessThanFee) {
       if(remissionctrls['amount'].value == '' ) {
         this.resetRemissionForm([false, false, true, false, false], 'amount');
-      }
-      if(remissionctrls['amount'].value != '' && remissionctrls['amount'].invalid ) {
+      } else if(remissionctrls['amount'].value != '' && remissionctrls['amount'].invalid ) {
         this.resetRemissionForm([false, true, false, true, false], 'amount');
-      }
-      if(remissionctrls.amount.valid && !isRemissionLessThanFee){
+      } else if(remissionctrls.amount.valid && !isRemissionLessThanFee){
         this.resetRemissionForm([false, false, false, false, true], 'amount');
+      } else {
+        this.viewCompStatus = '';
+        this.viewStatus = "remissionconfirmation";
       }
-     
     }
-    
   }
 
   gotoremissionPage() {
-    this.viewStatus = "applyremissioncode";
+    this.viewStatus = '';
+    this.viewCompStatus = "addremission";
     this.isRefundRemission = true;
   }
   gotoCasetransationPage() {
