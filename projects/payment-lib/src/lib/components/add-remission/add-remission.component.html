@@ -204,7 +204,7 @@
       <table class="govuk-table">
           <tr class="govuk-table__row">
               <td class="govuk-table__cell govuk-!-font-weight-bold">Payment reference</td>
-              <td class="govuk-table__cell">paymentGroupRef</td>
+              <td class="govuk-table__cell">{{paymentGroupRef}}</td>
           </tr>
           <tr class="govuk-table__row">
               <td class="govuk-table__cell govuk-!-font-weight-bold">Payment amount</td>
@@ -224,7 +224,7 @@
           </tr>
           <tr class="govuk-table__row">
               <td class="govuk-table__cell govuk-!-font-weight-bold">Remission amount</td>
-              <td class="govuk-table__cell">{{  remissionForm.controls.amount.value  | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
+              <td class="govuk-table__cell">{{ (amount - remissionForm.controls.amount.value)  | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
           </tr>
        
       </table>
@@ -256,7 +256,7 @@
         </div>
         <h2 class="govuk-heading-l">What happens next</h2>
         <p class="govuk-body">
-          A refund request for £250 has been created and will be passed to a team leader to approve.
+          A refund request for {{paidAmount - (amount - remissionForm.controls.amount.value)}} has been created and will be passed to a team leader to approve.
         </p>
         <p class="govuk-body">
           <a (click)="gotoCasetransationPage()"  class="govuk-link">Return to case</a>

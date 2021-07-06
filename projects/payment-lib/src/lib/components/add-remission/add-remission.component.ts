@@ -25,7 +25,7 @@ export class AddRemissionComponent implements OnInit {
   @Input() isNewPcipalOff: boolean;
   @Input() isStrategicFixEnable: boolean;
   @Input() orderStatus: string;
-  @Input() paidAmount: Number;
+  @Input() paidAmount: any;
   @Output() cancelRemission: EventEmitter<void> = new EventEmitter();
 
   remissionForm: FormGroup;
@@ -36,7 +36,7 @@ export class AddRemissionComponent implements OnInit {
   isConfirmationBtnDisabled: boolean = false;
   bsPaymentDcnNumber: string;
   selectedValue = 'RemissionSelection';
-  amount: number = 100;
+  amount: any;
   retroRemission: boolean = false;
   remissionReference: string;
 
@@ -52,6 +52,7 @@ export class AddRemissionComponent implements OnInit {
     private paymentLibComponent: PaymentLibComponent) { }
 
   ngOnInit() {
+    this.amount = this.fee.fee_amount;
     this.option = this.paymentLibComponent.SELECTED_OPTION;
     this.bsPaymentDcnNumber = this.paymentLibComponent.bspaymentdcn;
     this.remissionForm = this.formBuilder.group({
@@ -179,7 +180,7 @@ export class AddRemissionComponent implements OnInit {
           if (this.retroRemission) {
             this.viewCompStatus  = '';
             this.viewStatus = 'confirmationpage';
-            this.remissionReference =response.remission_reference;
+            this.remissionReference =JSON.parse(response).data.remission_reference;
 
           } else {
           let LDUrl = this.isTurnOff ? '&isTurnOff=Enable' : '&isTurnOff=Disable'
