@@ -50,5 +50,14 @@
   .heading-large {
     margin-top: 0.25em;
   }
-
+  .govuk-panel--confirmation {
+    color: #FFFFFF;
+    background: #00703C;
+}
+.govuk-panel__title {
+  font-size: 5rem;
+}
+.govuk-body-m, .govuk-body {
+  font-size: 2.1875rem;
+}
 }

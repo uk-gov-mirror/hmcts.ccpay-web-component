@@ -37,6 +37,8 @@ export class AddRemissionComponent implements OnInit {
   bsPaymentDcnNumber: string;
   selectedValue = 'RemissionSelection';
   amount: number = 100;
+  retroRemission: boolean = false;
+  remissionReference: string;
 
   isRemissionCodeEmpty: boolean = false;
   remissionCodeHasError: boolean = false;
@@ -63,7 +65,8 @@ export class AddRemissionComponent implements OnInit {
       ]))
     });
     this.viewStatus = 'main';
-  }
+    this.paymentLibComponent.CCD_CASE_NUMBER
+    }
 
   addRemission() {
     this.resetRemissionForm([false, false, false, false, false], 'All');
@@ -162,13 +165,23 @@ export class AddRemissionComponent implements OnInit {
 
   confirmRemission() {
     this.isConfirmationBtnDisabled = true;
+    if( this.isRefundRemission) {
+      this.retroRemission = true;
+    }
     const newNetAmount = this.remissionForm.controls.amount.value,
      remissionAmount = this.fee.net_amount - newNetAmount,
      requestBody = new AddRemissionRequest
-    (this.ccdCaseNumber, this.fee, remissionAmount, this.remissionForm.controls.remissionCode.value, this.caseType);
+    (this.ccdCaseNumber, this.fee, remissionAmount, this.remissionForm.controls.remissionCode.value, this.caseType, this.retroRemission);
     this.paymentViewService.postPaymentGroupWithRemissions(decodeURIComponent(this.paymentGroupRef).trim(), this.fee.id, requestBody).subscribe(
       response => {
         if (JSON.parse(response).success) {
+
+          if (this.retroRemission) {
+            this.viewCompStatus  = '';
+            this.viewStatus = 'confirmationpage';
+            this.remissionReference =response.remission_reference;
+
+          } else {
           let LDUrl = this.isTurnOff ? '&isTurnOff=Enable' : '&isTurnOff=Disable'
             LDUrl += `&caseType=${this.caseType}`
             LDUrl += this.isNewPcipalOff ? '&isNewPcipalOff=Enable' : '&isNewPcipalOff=Disable'
@@ -177,9 +190,11 @@ export class AddRemissionComponent implements OnInit {
             this.router.routeReuseStrategy.shouldReuseRoute = () => false;
             this.router.onSameUrlNavigation = 'reload';
             this.router.navigateByUrl(`/payment-history/${this.ccdCaseNumber}?view=fee-summary&selectedOption=${this.option}&paymentGroupRef=${this.paymentGroupRef}&dcn=${this.paymentLibComponent.bspaymentdcn}${LDUrl}`);
+          
           }else {
             this.gotoCasetransationPage();
           }
+        }
 
         }
       },
@@ -191,6 +206,7 @@ export class AddRemissionComponent implements OnInit {
   }
 
   gotoConfirmationPage() {
+    if (this.selectedValue == 'No') {
     this.resetRemissionForm([false, false, false, false, false], 'All');
     const remissionctrls=this.remissionForm.controls,
       isRemissionLessThanFee = this.fee.calculated_amount > remissionctrls.amount.value; 
@@ -206,10 +222,15 @@ export class AddRemissionComponent implements OnInit {
         this.viewStatus = "remissionconfirmation";
       }
     }
+  } else {
+    this.viewCompStatus = '';
+    this.viewStatus = "remissionconfirmation";
+  }
   }
 
   gotoremissionPage() {
     this.viewStatus = '';
+    this.selectedValue = 'Yes';
     this.viewCompStatus = "addremission";
     this.isRefundRemission = true;
   }
