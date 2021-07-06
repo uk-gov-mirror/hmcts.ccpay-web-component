@@ -213,6 +213,11 @@ export class AddRemissionComponent implements OnInit {
     this.viewCompStatus = "addremission";
     this.isRefundRemission = true;
   }
+
+  cancelRefundRemission() {
+    this.viewCompStatus = '';
+    this.viewStatus = "applyremissioncode";
+  }
   gotoCasetransationPage() {
     this.paymentLibComponent.viewName = 'case-transactions';
     this.paymentLibComponent.TAKEPAYMENT = true;

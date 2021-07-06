@@ -135,7 +135,6 @@
                           <input 
                           id="yes"
                           class="govuk-radios__input"
-                          formControlName="RemissionSelection"
                           name="RemissionSelection"
                           type="radio"
                           value="yes" 
@@ -151,8 +150,7 @@
                         <div class="govuk-radios__item" >
                             <input class="govuk-radios__input" 
                               id="No"
-                              aria-label ="Enter DCN"
-                              formControlName="RemissionSelection"
+                              aria-label ="No"
                               name="RemissionSelection"
                               type="radio"
                               value="No" 
@@ -229,7 +227,7 @@
        
       </table>
 
-      <button type="submit" class="button govuk-button--secondary" (click)="cancelRemission.emit()">
+      <button type="submit" class="button govuk-button--secondary" (click)="cancelRefundRemission()">
         Cancel
       </button>
       <button type="submit"
