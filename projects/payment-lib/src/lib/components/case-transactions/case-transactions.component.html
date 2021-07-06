@@ -663,7 +663,7 @@
       </div>
    </ng-container>
 
-   <ng-container *ngIf="!takePayment && viewStatus !== 'order-full-view'">
+   <ng-container *ngIf="!takePayment && viewStatus !== 'order-full-view' && viewStatus !== 'addremission' && viewStatus !== 'feeRemovalConfirmation' ">
       <div *ngIf="errorMessage">
           <div *ngIf="isCPODown && isAnyFeeGroupAvilable" class=" error govuk-inset-text govuk-!-margin-top-7">
               No party information currently available - try again later.
@@ -786,7 +786,7 @@
       </div>
     <div class="govuk-grid-column-full">
         <div class="column">
-          <h1 class="heading-large govuk-!-margin-top-0">Payment request</h1>
+          <h1 class="heading-large govuk-!-margin-top-0">Service request</h1>
         </div>
         <table >
             <tbody>

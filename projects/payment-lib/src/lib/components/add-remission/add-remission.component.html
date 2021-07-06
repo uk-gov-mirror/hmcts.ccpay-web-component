@@ -89,7 +89,8 @@
 
   </ng-container>
   <ng-container *ngIf="viewCompStatus === 'addremission' && isRefundRemission">
-      <h1 class="heading-large">Process refund</h1>
+      <h1 class="heading-large">Process remission</h1>
+      <h1 class="heading-medium">#{{ccdCaseNumber}}</h1>
       <h1 class="heading-large">Enter help with fees or remission reference</h1>
       <form novalidate>
           <div class="govuk-form-group">
@@ -120,7 +121,8 @@
   </ng-container>
 
   <ng-container *ngIf="viewStatus === 'applyremissioncode'" >
-      <h1 class="heading-large">Process refund</h1>
+      <h1 class="heading-large">Process remission</h1>
+      <h1 class="heading-medium">#{{ccdCaseNumber}}</h1>
       <div class="govuk-form-group">
           <form novalidate>
               <div class="govuk-form-group">
