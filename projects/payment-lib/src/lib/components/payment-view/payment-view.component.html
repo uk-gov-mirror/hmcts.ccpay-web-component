@@ -1,4 +1,4 @@
-<ng-container>
+<ng-container *ngIf="viewStatus !== 'addremission'">
 <div class="govuk-width-container">
 
   <div class="govuk-breadcrumbs">
@@ -131,6 +131,9 @@
           </tbody>
         </table>
 
+        <a (click)="addRemission(fee)" class="govuk-button govuk-button--secondary" style="float: left; margin:2em">Add remission</a>
+            
+
       </div>
 
       <!-- card details -->
@@ -145,6 +148,21 @@
 
   </main>
 </div>
+</ng-container>
+<ng-container *ngIf="viewStatus === 'addremission' && feeId">
+<ccpay-add-remission 
+[isTurnOff]="isTurnOff"
+[isStrategicFixEnable]="isStrategicFixEnable" 
+[isOldPcipalOff]="isOldPcipalOff" 
+[viewCompStatus]= "viewStatus"
+[isNewPcipalOff]="isNewPcipalOff" 
+[fee]="feeId" 
+[orderStatus] ="paymentGroup.payments[0].status"
+[paidAmount]= "paymentGroup.payments[0].amount"
+[isRefundRemission]="isRefundRemission"
+[caseType]="caseType" 
+[paymentGroupRef]="paymentGroup.payments[0].reference" 
+[ccdCaseNumber]="ccdCaseNumber"></ccpay-add-remission>
 </ng-container>
 
 <!-- <ng-container *ngIf="isTakePayment">

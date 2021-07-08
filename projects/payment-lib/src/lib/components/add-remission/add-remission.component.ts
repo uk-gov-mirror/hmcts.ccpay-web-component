@@ -73,6 +73,7 @@ export class AddRemissionComponent implements OnInit {
     this.resetRemissionForm([false, false, false, false, false], 'All');
     const remissionctrls=this.remissionForm.controls,
       isRemissionLessThanFee = this.fee.calculated_amount > remissionctrls.amount.value; 
+      this.isRemissionLessThanFeeError = this.fee.calculated_amount > remissionctrls.amount.value; 
     if (this.remissionForm.dirty && this.remissionForm.valid && isRemissionLessThanFee) {
       this.viewStatus = 'confirmation';
     }else {

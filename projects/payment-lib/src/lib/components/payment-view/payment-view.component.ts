@@ -2,7 +2,7 @@ import {Component, OnInit, Input} from '@angular/core';
 import {PaymentViewService} from '../../services/payment-view/payment-view.service';
 import {PaymentLibComponent} from '../../payment-lib.component';
 import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
-
+import {IFee} from '../../interfaces/IFee';
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 
 @Component({
@@ -13,6 +13,12 @@ const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 export class PaymentViewComponent implements OnInit {
   @Input() isTurnOff: boolean;
   @Input() isTakePayment: boolean;
+  @Input() caseType: boolean;
+  @Input() isNewPcipalOff: boolean;
+  @Input() isOldPcipalOff: boolean;
+  @Input() orderRef: boolean;
+  @Input() orderStatus: boolean;
+  @Input() orderTotalPayments: boolean;
   paymentGroup: IPaymentGroup;
   errorMessage: string;
   ccdCaseNumber: string;
@@ -20,6 +26,10 @@ export class PaymentViewComponent implements OnInit {
   dcnNumber: string;
   isStatusAllocated: boolean;
   isRemissionsMatch: boolean;
+  feeId:IFee;
+  viewStatus: string;
+  isRefundRemission: boolean = false;
+  isStrategicFixEnable: boolean;
 
   constructor(private paymentViewService: PaymentViewService,
               private paymentLibComponent: PaymentLibComponent) {
@@ -87,4 +97,9 @@ export class PaymentViewComponent implements OnInit {
     );
   }
 
+  addRemission(fee: IFee) {
+    this.feeId = fee;
+    this.viewStatus = 'addremission';
+    this.isRefundRemission = true;
+  }
 }

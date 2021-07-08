@@ -7,7 +7,9 @@ import { IBSPayments } from './interfaces/IBSPayments';
   template: `
     <ccpay-payment-list *ngIf="viewName === 'payment-list'"></ccpay-payment-list>
     <ccpay-payment-view *ngIf="viewName === 'payment-view'"
-    [isTurnOff]="ISTURNOFF" [isTakePayment]="TAKEPAYMENT"></ccpay-payment-view>
+    [isTurnOff]="ISTURNOFF" [isTakePayment]="TAKEPAYMENT"  [caseType]="CASETYPE"
+    [isOldPcipalOff]="ISOLDPCIPALOFF"
+    [isNewPcipalOff]="ISNEWPCIPALOFF"></ccpay-payment-view>
     <ccpay-case-transactions  *ngIf="viewName === 'case-transactions'"></ccpay-case-transactions>
     <app-mark-unidentified-payment *ngIf="viewName === 'unidentifiedPage'"
     [caseType]="CASETYPE"></app-mark-unidentified-payment>
