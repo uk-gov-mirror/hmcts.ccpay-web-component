@@ -119,6 +119,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
     let url = this.isBulkScanEnable ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
     url += this.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
     url += this.isStFixEnable ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
+    url +=`&caseType=${this.paymentLibComponent.CASETYPE}`;
     url += this.isOldpcipaloff ? '&isOldPcipalOff=Enable' : '&isOldPcipalOff=Disable';
     url += this.isNewpcipaloff ? '&isNewPcipalOff=Enable' : '&isNewPcipalOff=Disable';
 

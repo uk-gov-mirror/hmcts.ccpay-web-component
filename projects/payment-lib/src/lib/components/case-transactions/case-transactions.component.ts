@@ -8,6 +8,7 @@ import {IFee} from '../../interfaces/IFee';
 import {IPayment} from '../../interfaces/IPayment';
 import {IRemission} from '../../interfaces/IRemission';
 import {Router} from '@angular/router';
+import * as ls from "local-storage";
 
 @Component({
   selector: 'ccpay-case-transactions',
@@ -52,7 +53,8 @@ export class CaseTransactionsComponent implements OnInit {
   isFeeRecordsExist: boolean = false;
   isGrpOutstandingAmtPositive: boolean = false;
   totalRefundAmount: Number;
-
+  caseType: String;
+  lsCcdNumber: any = ls.get<any>('ccdNumber');
   constructor(private router: Router,
   private paymentViewService: PaymentViewService,
   private bulkScaningPaymentService: BulkScaningPaymentService,
@@ -62,6 +64,7 @@ export class CaseTransactionsComponent implements OnInit {
   ngOnInit() {
     this.isGrpOutstandingAmtPositive = false;
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
+    this.caseType = this.paymentLibComponent.CASETYPE;
     if(this.paymentLibComponent.CCD_CASE_NUMBER === '') {
       this.ccdCaseNumber = this.paymentLibComponent.EXC_REFERENCE;
     }
@@ -75,6 +78,10 @@ export class CaseTransactionsComponent implements OnInit {
     this.isOldPcipalOff = this.paymentLibComponent.ISOLDPCIPALOFF;
     this.isStrategicFixEnable = this.paymentLibComponent.ISSFENABLE;
     if(!this.isTurnOff) {
+      if(this.lsCcdNumber !== this.ccdCaseNumber) {
+        this.router.navigateByUrl(`/ccd-search?takePayment=true`);
+      }
+
       this.caseTransactionsService.getPaymentGroups(this.ccdCaseNumber).subscribe(
         paymentGroups => {
           this.paymentGroups = paymentGroups['payment_groups'];
@@ -364,6 +371,7 @@ checkForExceptionRecord(): void {
     let url = this.isBulkScanEnable ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
       url += this.isTurnOff ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
       url += this.isStrategicFixEnable ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
+      url +=`&caseType=${this.caseType}`
       url += this.isNewPcipalOff ? '&isNewPcipalOff=Enable' : '&isNewPcipalOff=Disable';
       url += this.isOldPcipalOff ? '&isOldPcipalOff=Enable' : '&isOldPcipalOff=Disable';
 

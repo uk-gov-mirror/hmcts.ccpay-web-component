@@ -9,14 +9,19 @@ import { IBSPayments } from './interfaces/IBSPayments';
     <ccpay-payment-view *ngIf="viewName === 'payment-view'"
     [isTurnOff]="ISTURNOFF"></ccpay-payment-view>
     <ccpay-case-transactions  *ngIf="viewName === 'case-transactions'"></ccpay-case-transactions>
-    <app-mark-unidentified-payment *ngIf="viewName === 'unidentifiedPage'"></app-mark-unidentified-payment>
-    <app-mark-unsolicited-payment *ngIf="viewName === 'unsolicitedPage'"></app-mark-unsolicited-payment>
+    <app-mark-unidentified-payment *ngIf="viewName === 'unidentifiedPage'"
+    [caseType]="CASETYPE"></app-mark-unidentified-payment>
+    <app-mark-unsolicited-payment *ngIf="viewName === 'unsolicitedPage'"
+    [caseType]="CASETYPE"></app-mark-unsolicited-payment>
     <app-allocate-payments *ngIf="viewName === 'allocate-payments'"
-    [isTurnOff]="ISTURNOFF"></app-allocate-payments>
+    [isTurnOff]="ISTURNOFF"
+    [caseType]="CASETYPE"
+    ></app-allocate-payments>
     <ccpay-fee-summary *ngIf="viewName === 'fee-summary'"
       [ccdCaseNumber]="CCD_CASE_NUMBER" 
       [paymentGroupRef]="paymentGroupReference"
       [isTurnOff]="ISTURNOFF"
+      [caseType]="CASETYPE"
       [isOldPcipalOff]="ISOLDPCIPALOFF"
       [isNewPcipalOff]="ISNEWPCIPALOFF"
       ></ccpay-fee-summary>
@@ -38,6 +43,7 @@ export class PaymentLibComponent implements OnInit {
   @Input('ISBSENABLE') ISBSENABLE: Boolean;
   @Input('ISSFENABLE') ISSFENABLE: boolean;
   @Input('ISTURNOFF') ISTURNOFF: boolean;
+  @Input('CASETYPE') CASETYPE: String;
   @Input('ISOLDPCIPALOFF') ISOLDPCIPALOFF: boolean;
   @Input('ISNEWPCIPALOFF') ISNEWPCIPALOFF: boolean;
 
@@ -48,6 +54,7 @@ export class PaymentLibComponent implements OnInit {
   paymentReference: string;
   viewName: string;
   isTurnOff: boolean;
+  caseType: string;
   isOldPcipalOff: boolean;
   isNewPcipalOff: boolean;
   unProcessedPayment: IBSPayments = null;

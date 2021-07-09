@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { PaymentLibComponent } from '../../payment-lib.component';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
@@ -13,6 +13,7 @@ import { AllocatePaymentRequest } from '../../interfaces/AllocatePaymentRequest'
   styleUrls: ['./mark-unidentified-payment.component.scss']
 })
 export class MarkUnidentifiedPaymentComponent implements OnInit {
+  @Input() caseType: string;
   markPaymentUnidentifiedForm: FormGroup;
   viewStatus: string;
   ccdCaseNumber: string;
@@ -113,10 +114,10 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
           name: 'Unidentified'
         },
         unidentified_reason: reason,
-        user_id: this.siteID,
+        user_id: this.caseType,
       }
       const postStrategicBody = new AllocatePaymentRequest
-      (this.ccdReference, this.unassignedRecord, this.siteID, this.exceptionReference, allocatedRequest);
+      (this.ccdReference, this.unassignedRecord, this.caseType, this.exceptionReference, allocatedRequest);
       this.bulkScaningPaymentService.postBSWoPGStrategic(postStrategicBody).subscribe(
         res => {
           this.errorMessage = this.getErrorMessage(false);

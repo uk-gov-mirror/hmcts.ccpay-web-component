@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { PaymentLibComponent } from '../../payment-lib.component';
 import { BulkScaningPaymentService } from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
@@ -15,6 +15,7 @@ import { ErrorHandlerService } from '../../services/shared/error-handler.service
   styleUrls: ['./mark-unsolicited-payment.component.scss']
 })
 export class MarkUnsolicitedPaymentComponent implements OnInit {
+  @Input() caseType: string;
   markPaymentUnsolicitedForm: FormGroup;
   viewStatus: string;
   reasonHasError: boolean = false;
@@ -97,10 +98,10 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
         },
         unidentified_reason: controls.reason.value,
         receiving_office: this.selectedSiteId,
-        user_id: this.siteID,
+        user_id: this.caseType,
       }
       const postStrategicBody = new AllocatePaymentRequest
-      (this.ccdReference, this.unassignedRecord, this.siteID, this.exceptionReference, allocatedRequest);
+      (this.ccdReference, this.unassignedRecord, this.caseType, this.exceptionReference, allocatedRequest);
       this.bulkScaningPaymentService.postBSWoPGStrategic(postStrategicBody).subscribe(
         res => {
           this.errorMessage = this.getErrorMessage(false);

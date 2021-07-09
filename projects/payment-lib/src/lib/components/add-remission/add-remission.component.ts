@@ -16,7 +16,7 @@ const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 export class AddRemissionComponent implements OnInit {
   @Input() fee: IFee;
   @Input() ccdCaseNumber: string;
-  @Input() service: string;
+  @Input() caseType: string;
   @Input() paymentGroupRef: string;
   @Input() isTurnOff: boolean;
   @Input() isOldPcipalOff: boolean;
@@ -101,11 +101,12 @@ export class AddRemissionComponent implements OnInit {
     const newNetAmount = this.remissionForm.controls.amount.value,
      remissionAmount = this.fee.net_amount - newNetAmount,
      requestBody = new AddRemissionRequest
-    (this.ccdCaseNumber, this.fee, remissionAmount, this.remissionForm.controls.remissionCode.value, this.service);
+    (this.ccdCaseNumber, this.fee, remissionAmount, this.remissionForm.controls.remissionCode.value, this.caseType);
     this.paymentViewService.postPaymentGroupWithRemissions(decodeURIComponent(this.paymentGroupRef).trim(), this.fee.id, requestBody).subscribe(
       response => {
         if (JSON.parse(response).success) {
           let LDUrl = this.isTurnOff ? '&isTurnOff=Enable' : '&isTurnOff=Disable'
+            LDUrl += `&caseType=${this.caseType}`
             LDUrl += this.isNewPcipalOff ? '&isNewPcipalOff=Enable' : '&isNewPcipalOff=Disable'
             LDUrl += this.isOldPcipalOff ? '&isOldPcipalOff=Enable' : '&isOldPcipalOff=Disable'
           if (this.paymentLibComponent.bspaymentdcn) {
@@ -145,6 +146,7 @@ export class AddRemissionComponent implements OnInit {
      partUrl += this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
      partUrl += this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
      partUrl += this.isStrategicFixEnable ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
+     partUrl += `&caseType=${this.caseType}`;
      partUrl += this.paymentLibComponent.ISNEWPCIPALOFF ? '&isNewPcipalOff=Enable' : '&isNewPcipalOff=Disable';
      partUrl += this.paymentLibComponent.ISOLDPCIPALOFF ? '&isOldPcipalOff=Enable' : '&isOldPcipalOff=Disable';
 

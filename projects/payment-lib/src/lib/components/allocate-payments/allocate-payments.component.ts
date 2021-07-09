@@ -17,6 +17,8 @@ import {IAllocationPaymentsRequest} from '../../interfaces/IAllocationPaymentsRe
 })
 export class AllocatePaymentsComponent implements OnInit {
   @Input() isTurnOff: boolean;
+  @Input() caseType: string;
+
   overUnderPaymentForm: FormGroup;
   viewStatus: string;
   ccdCaseNumber: string;
@@ -259,11 +261,11 @@ export class AllocatePaymentsComponent implements OnInit {
           name: 'Allocated'
         },
         payment_group_reference: this.paymentGroup.payment_group_reference,
-        user_id: this.siteID,
+        case_type: this.caseType,
         user_name: this.userName
       }
       const postStrategicBody = new AllocatePaymentRequest
-      (this.ccdReference, this.unAllocatedPayment, this.siteID, this.exceptionReference, allocatedRequest);
+      (this.ccdReference, this.unAllocatedPayment, this.caseType, this.exceptionReference, allocatedRequest);
       this.bulkScaningPaymentService.postBSPaymentStrategic(postStrategicBody , this.paymentGroup.payment_group_reference).subscribe(
         res => {
           this.errorMessage = this.errorHandlerService.getServerErrorMessage(false);

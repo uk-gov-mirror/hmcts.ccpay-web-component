@@ -23,6 +23,7 @@ export class FeeSummaryComponent implements OnInit {
   @Input() paymentGroupRef: string;
   @Input() ccdCaseNumber: string;
   @Input() isTurnOff: string;
+  @Input() caseType: string;
   @Input() isOldPcipalOff: string;
   @Input() isNewPcipalOff: string;
 
@@ -125,10 +126,8 @@ export class FeeSummaryComponent implements OnInit {
   }
 
   addRemission(fee: IFee) {
-    if (this.service) {
-      this.currentFee = fee;
-      this.viewStatus = 'add_remission';
-    }
+    this.currentFee = fee;
+    this.viewStatus = 'add_remission';
   }
 
   getPaymentGroup() {
@@ -210,6 +209,7 @@ export class FeeSummaryComponent implements OnInit {
       partUrl +=this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
       partUrl +=this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
       partUrl +=this.paymentLibComponent.ISSFENABLE ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
+      partUrl +=`&caseType=${this.paymentLibComponent.CASETYPE}`;
       partUrl +=this.isNewPcipalOff ? '&isNewPcipalOff=Enable' : '&isNewPcipalOff=Disable';
       partUrl +=this.isOldPcipalOff ? '&isOldPcipalOff=Enable' : '&isOldPcipalOff=Disable';
 
@@ -225,6 +225,7 @@ export class FeeSummaryComponent implements OnInit {
       partUrl +=this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
       partUrl +=this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
       partUrl +=this.paymentLibComponent.ISSFENABLE ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
+      partUrl +=`&caseType=${this.paymentLibComponent.CASETYPE}`;
       partUrl +=this.isNewPcipalOff ? '&isNewPcipalOff=Enable' : '&isNewPcipalOff=Disable';
       partUrl +=this.isOldPcipalOff ? '&isOldPcipalOff=Enable' : '&isOldPcipalOff=Disable';
 
@@ -237,10 +238,8 @@ export class FeeSummaryComponent implements OnInit {
   }
   takePayment() {
     this.isConfirmationBtnDisabled = true;
-    const seriveName = this.service ==='AA07' ? 'DIVORCE': this.service ==='AA08' ? 'PROBATE' : 'FINREM',
-
-      requestBody = new PaymentToPayhubRequest(this.ccdCaseNumber, this.outStandingAmount, this.service, seriveName),
-      antennaReqBody = new PayhubAntennaRequest(this.ccdCaseNumber, this.outStandingAmount, this.service, seriveName);
+      const requestBody = new PaymentToPayhubRequest(this.ccdCaseNumber, this.outStandingAmount, this.caseType),
+      antennaReqBody = new PayhubAntennaRequest(this.ccdCaseNumber, this.outStandingAmount, this.caseType);
 
     if(this.platForm === '8x8') {
       this.paymentViewService.postPaymentToPayHub(requestBody, this.paymentGroupRef).subscribe(
