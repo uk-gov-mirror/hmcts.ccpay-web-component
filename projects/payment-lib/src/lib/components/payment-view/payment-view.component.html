@@ -1,4 +1,5 @@
-<ng-container *ngIf="viewStatus !== 'addremission'">
+<ng-container *ngIf="viewStatus !== 'addremission' && viewStatus !== 'issueRefund'">
+  {{viewStatus}}
 <div class="govuk-width-container">
 
   <div class="govuk-breadcrumbs">
@@ -89,10 +90,15 @@
             <!-- Status histories -->
       <ccpay-payment-statuses *ngIf="isStatusAllocated" [isTakePayment]="isTakePayment"></ccpay-payment-statuses>
       </div>
-
+      <p>
+          <button (click)="issueRefund(paymentGroup)" class="govuk-button govuk-button--secondary">Issue refund</button>
+      </p>
+   
       <div class="govuk-grid-row" *ngIf="paymentGroup.fees.length > 0">
         <div class="column">
+        
           <h2 class="heading-large">Fee and remission details</h2>
+        
         </div>
       </div>
 
@@ -130,8 +136,7 @@
           </tr> -->
           </tbody>
         </table>
-
-        <a (click)="addRemission(fee)" class="govuk-button govuk-button--secondary" style="float: left; margin:2em">Add remission</a>
+        <button (click)="addRemission(fee)" class="govuk-button govuk-button--secondary"> Add remission</button>
             
 
       </div>
@@ -165,6 +170,21 @@
 [ccdCaseNumber]="ccdCaseNumber"></ccpay-add-remission>
 </ng-container>
 
+<ng-container *ngIf="viewStatus === 'issueRefund' && paymentGroup">
+    <ccpay-add-remission 
+    [isTurnOff]="isTurnOff"
+    [isStrategicFixEnable]="isStrategicFixEnable" 
+    [isOldPcipalOff]="isOldPcipalOff" 
+    [viewCompStatus]= "viewStatus"
+    [isNewPcipalOff]="isNewPcipalOff" 
+    [fee]="feeId" 
+    [orderStatus] ="paymentGroup.payments[0].status"
+    [paidAmount]= "paymentGroup.payments[0].amount"
+    [isRefundRemission]="isRefundRemission"
+    [caseType]="caseType" 
+    [paymentGroupRef]="paymentGroup.payments[0].reference" 
+    [ccdCaseNumber]="ccdCaseNumber"></ccpay-add-remission>
+</ng-container>
 <!-- <ng-container *ngIf="isTakePayment">
     <div class="govuk-width-container">
 
@@ -274,7 +294,6 @@
        -->
             <!-- pba details -->
             <!-- <ccpay-pba-details *ngIf="!isCardPayment" [payment]="paymentGroup.payments[0]"></ccpay-pba-details> -->
-      
             <!-- Status histories -->
             <!-- <ccpay-payment-statuses *ngIf="isStatusAllocated"[isTakePayment]="isTakePayment" ></ccpay-payment-statuses>
       

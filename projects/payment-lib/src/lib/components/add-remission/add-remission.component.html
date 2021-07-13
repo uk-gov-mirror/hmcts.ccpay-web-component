@@ -108,12 +108,20 @@
             
             </form>
             <div class="govuk-button-group">
+                <button (click)="gotoCasetransationPage()" class="govuk-button govuk-button--secondary"> Previous</button>
+                <button (click)="addRemissionCode()" class="govuk-button"> Continue</button>
+<!-- 
                 <a (click) ="gotoCasetransationPage()" role="button" draggable="false" class="govuk-button govuk-button--secondary" data-module="govuk-button">
                 Previous
               </a>
               <a (click)="addRemissionCode()" role="button" draggable="false" class="govuk-button" data-module="govuk-button">
                 Continue
-              </a>
+              </a> -->
+              <p>
+                  <a (click)="gotoCasetransationPage()" class="govuk-link" data-module="govuk-button">
+                      Cancel
+                  </a>
+              </p>
             </div>
           </div>
       </form>
@@ -127,6 +135,7 @@
           <form novalidate>
               <div class="govuk-form-group">
                   <form [formGroup]="remissionForm" novalidate>
+                      <fieldset class="govuk-fieldset">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                         <h1 class="heading-medium">
                             Do you want to give a full remission of {{ amount | currency:'GBP':'symbol-narrow':'1.2-2' }} 
@@ -171,24 +180,33 @@
                               <div id="amount-currency" class="govuk-visually-hidden">in pounds</div>
                 <div class="hmcts-currency-input">
                 <div class="hmcts-currency-input__symbol" aria-hidden="true">£</div>
-                <input class="govuk-input govuk-input--width-10" [ngClass]="{'inline-error-class': isAmountEmpty || amountHasError || !isRemissionLessThanFeeError}" id="amount" aria-label="amount"  name="amount" type="text" aria-describedby="amount-currency" formControlName="amount">
-                <p class="inline-error-message" *ngIf="isAmountEmpty || amountHasError || !isRemissionLessThanFeeError">
+                <input class="govuk-input govuk-input--width-10" [ngClass]="{'inline-error-class': isAmountEmpty || amountHasError || isRemissionLessThanFeeError}" id="amount" aria-label="amount"  name="amount" type="text" aria-describedby="amount-currency" formControlName="amount">
+                <p class="inline-error-message" *ngIf="isAmountEmpty || amountHasError || isRemissionLessThanFeeError">
                   <span *ngIf="isAmountEmpty">Enter a amount</span>
                   <span *ngIf="amountHasError">Enter a vaild amount</span>
-                  <span *ngIf="!isRemissionLessThanFeeError">The remission amount must be less than the total fee</span>
+                  <span *ngIf="isRemissionLessThanFeeError">The remission amount must be less than the total fee</span>
                 </p>
               </div>
                         </div>
                       </div>
+                      </fieldset>
                   </form>
             
                   <div class="govuk-button-group">
-                      <a (click) ="gotoremissionPage()" role="button" draggable="false" class="govuk-button govuk-button--secondary" data-module="govuk-button">
+                      <button (click)="gotoremissionPage()" class="govuk-button govuk-button--secondary"> Previous</button>
+                <button (click)="gotoConfirmationPage()" class="govuk-button"> Continue</button>
+                    
+                      <!-- <a (click) ="gotoremissionPage()" role="button" draggable="false" class="govuk-button govuk-button--secondary" data-module="govuk-button">
                       Previous
                     </a>
                     <a (click)="gotoConfirmationPage()" role="button" draggable="false" class="govuk-button" data-module="govuk-button">
                       Continue
-                    </a>
+                    </a> -->
+                    <p>
+                        <a (click)="gotoCasetransationPage()" class="govuk-link" data-module="govuk-button">
+                            Cancel
+                        </a>
+                    </p>
                   </div>
               </div>
     
@@ -246,6 +264,11 @@
       (click)="confirmRemission()">
         Add remission
       </button>
+      <p>
+          <a (click)="gotoCasetransationPage()" class="govuk-link" data-module="govuk-button">
+              Cancel
+          </a>
+      </p>
 
   </ng-container>
 
@@ -271,6 +294,30 @@
        </p>
       </div>
     </div>
+  </ng-container>
+
+  <ng-container *ngIf="viewStatus === 'issueRefund'">
+      <h1 class="heading-large">Process refund</h1>
+      <h1 class="heading-medium">#{{ccdCaseNumber}}</h1>
+      <h1 class="heading-large">Why are you making this refund?
+        </h1>
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" aria-describedby="how-contacted-conditional-hint">
+              <div
+                [ngClass]="refundHasError ? 'govuk-radios govuk-radios--conditional form-group-error' : 'govuk-radios govuk-radios--conditional'"
+                data-module="govuk-radios" >
+                <div class="govuk-radios__item" *ngFor="let refund of refund.reason | keyValue">
+                  <input class="govuk-radios__input" id="{{refund.key}}" name="refund" type="radio"
+                    [(ngModel)]="refundReason" value={{refund.value}}
+                    (click)="selectRadioButton(refund.key, 'refund')">
+                  <label class="govuk-label govuk-radios__label govuk-font__custom" for="how-contacted-conditional">
+                    {{refund.value}}
+                  </label>
+                </div>
+              </div>
+    
+            </fieldset>
+          </div>
   </ng-container>
 
 </div>

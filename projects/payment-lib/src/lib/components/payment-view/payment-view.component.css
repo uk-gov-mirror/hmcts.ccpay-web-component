@@ -8,3 +8,9 @@
 .payment-view-alignment {
     margin-left: 30px;
 }
+
+.govuk-button {
+    font-size: 2.1875rem;
+    float: left;
+    margin-top:2em
+}

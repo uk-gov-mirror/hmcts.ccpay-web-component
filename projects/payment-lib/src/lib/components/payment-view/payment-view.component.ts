@@ -102,4 +102,10 @@ export class PaymentViewComponent implements OnInit {
     this.viewStatus = 'addremission';
     this.isRefundRemission = true;
   }
+
+  issueRefund(paymentgrp: IPaymentGroup ) {
+    this.paymentGroup = paymentgrp;
+    this.viewStatus = 'issueRefund';
+    this.isRefundRemission = true;
+  }
 }

@@ -28,6 +28,15 @@ export class AddRemissionComponent implements OnInit {
   @Input() paidAmount: any;
   @Output() cancelRemission: EventEmitter<void> = new EventEmitter();
 
+  refund = {
+    reason: {
+      duplicate: 'Duplicate payment',
+      humanerror: 'Human error',
+      caseWithdrawn: 'Case withdrawn',
+      other: 'Other'
+    }
+  }
+
   remissionForm: FormGroup;
   hasErrors = false;
   viewStatus = 'main';
@@ -39,12 +48,15 @@ export class AddRemissionComponent implements OnInit {
   amount: any;
   retroRemission: boolean = false;
   remissionReference: string;
+  paymentExplanationHasError: boolean = false;
+  refundReason:string;
 
   isRemissionCodeEmpty: boolean = false;
   remissionCodeHasError: boolean = false;
   isAmountEmpty: boolean = false;
   amountHasError: boolean = false;
   isRemissionLessThanFeeError: boolean = false;
+  refundHasError:boolean = false;
 
   constructor(private formBuilder: FormBuilder,
     private router: Router,
@@ -210,13 +222,13 @@ export class AddRemissionComponent implements OnInit {
   gotoConfirmationPage() {
     if (this.selectedValue == 'No') {
     this.resetRemissionForm([false, false, false, false, false], 'All');
-    const remissionctrls=this.remissionForm.controls,
+    var remissionctrls=this.remissionForm.controls,
       isRemissionLessThanFee = this.fee.calculated_amount > remissionctrls.amount.value; 
-    if (this.remissionForm.dirty &&  isRemissionLessThanFee) {
+    if (this.remissionForm.dirty ) {
       if(remissionctrls['amount'].value == '' ) {
         this.resetRemissionForm([false, false, true, false, false], 'amount');
       } else if(remissionctrls['amount'].value != '' && remissionctrls['amount'].invalid ) {
-        this.resetRemissionForm([false, true, false, true, false], 'amount');
+        this.resetRemissionForm([false, false, false, true, false], 'amount');
       } else if(remissionctrls.amount.valid && !isRemissionLessThanFee){
         this.resetRemissionForm([false, false, false, false, true], 'amount');
       } else {
@@ -224,7 +236,7 @@ export class AddRemissionComponent implements OnInit {
         this.viewStatus = "remissionconfirmation";
       }
     }
-  } else {
+  }  else {
     this.viewCompStatus = '';
     this.viewStatus = "remissionconfirmation";
   }
@@ -232,13 +244,25 @@ export class AddRemissionComponent implements OnInit {
 
   gotoremissionPage() {
     this.viewStatus = '';
-    this.selectedValue = 'Yes';
+    this.selectedValue = 'yes';
     this.viewCompStatus = "addremission";
     this.isRefundRemission = true;
   }
 
+  selectRadioButton(key, type) {
+    // this.isMoreDetailsBoxHide = true;
+    // if( type === 'explanation' && key === 'other' ){
+    //   this.isPaymentDetailsEmpty = false;
+    //   this.isPaymentDetailsInvalid = false;
+    //   this.paymentDetailsMinHasError = false;
+    //   this.paymentDetailsMaxHasError = false;
+    //   this.isMoreDetailsBoxHide = false;
+    // }
+  }
+
   cancelRefundRemission() {
     this.viewCompStatus = '';
+    this.selectedValue = 'yes';
     this.viewStatus = "applyremissioncode";
   }
   gotoCasetransationPage() {
@@ -267,6 +291,8 @@ export class AddRemissionComponent implements OnInit {
      partUrl += this.paymentLibComponent.ISOLDPCIPALOFF ? '&isOldPcipalOff=Enable' : '&isOldPcipalOff=Disable';
 
     const url = `/payment-history/${this.ccdCaseNumber}?view=case-transactions&takePayment=true&selectedOption=${this.option}${partUrl}`;
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
     this.router.navigateByUrl(url);
   }
 }

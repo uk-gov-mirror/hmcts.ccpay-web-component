@@ -93,6 +93,15 @@ export class AllocatePaymentsComponent implements OnInit {
     }
   }
 
+  refund = {
+    reason: {
+      duplicate: 'Duplicate payment',
+      humanerror: 'Human error',
+      caseWithdrawn: 'Case withdrawn',
+      other: 'Other'
+    }
+  }
+
 
   constructor(
   private errorHandlerService: ErrorHandlerService,
