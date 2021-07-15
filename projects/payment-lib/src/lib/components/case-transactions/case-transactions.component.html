@@ -910,6 +910,7 @@
               <td class="govuk-table__header" scope="col"></td>
               <td class="govuk-table__header" scope="col">Date created</td>
               <td class="govuk-table__header" scope="col">Amount</td>
+              <td class="govuk-table__header" scope="col"></td>
             </tr>
         </thead>
         <tbody class="govuk-table__body">
@@ -919,6 +920,9 @@
               </td>
               <td class="govuk-table__cell whitespace-inherit">{{ payment.date_created | date:'dd MMM yyyy' }}</td>
               <td class="govuk-table__cell whitespace-inherit">{{ payment.amount | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
+              <td class="govuk-table__cell" style="text-align: right;">
+                <button (click)="issueRefund(payment)" class="govuk-button govuk-button--secondary">Issue refund</button>
+          </td>
             </tr>
         </tbody>
       </table>
@@ -942,6 +946,20 @@
 [viewCompStatus]= "viewStatus"
 [isNewPcipalOff]="isNewPcipalOff" 
 [fee]="feeId" 
+[orderStatus] ="orderStatus"
+[paidAmount]= "orderTotalPayments"
+[isRefundRemission]="isRefundRemission"
+[caseType]="caseType" 
+[paymentGroupRef]="orderRef" 
+[ccdCaseNumber]="ccdCaseNumber"></ccpay-add-remission>
+
+<ccpay-add-remission *ngIf="viewStatus === 'issuerefund' && payment"
+[isTurnOff]="isTurnOff"
+[isStrategicFixEnable]="isStrategicFixEnable" 
+[isOldPcipalOff]="isOldPcipalOff" 
+[viewCompStatus]= "viewStatus"
+[isNewPcipalOff]="isNewPcipalOff" 
+[payment]="payment" 
 [orderStatus] ="orderStatus"
 [paidAmount]= "orderTotalPayments"
 [isRefundRemission]="isRefundRemission"

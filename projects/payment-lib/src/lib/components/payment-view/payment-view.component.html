@@ -1,4 +1,4 @@
-<ng-container *ngIf="viewStatus !== 'addremission' && viewStatus !== 'issueRefund'">
+<ng-container *ngIf="viewStatus !== 'addremission' && viewStatus !== 'issueRefund' && viewStatus !== 'issuerefund'">
   {{viewStatus}}
 <div class="govuk-width-container">
 
@@ -90,10 +90,10 @@
             <!-- Status histories -->
       <ccpay-payment-statuses *ngIf="isStatusAllocated" [isTakePayment]="isTakePayment"></ccpay-payment-statuses>
       </div>
-      <p>
-          <button (click)="issueRefund(paymentGroup)" class="govuk-button govuk-button--secondary">Issue refund</button>
-      </p>
-   
+     <div class="remission">
+        <button (click)="issueRefund(paymentGroup)" class="govuk-button govuk-button--secondary">Issue refund</button>
+     </div>
+      
       <div class="govuk-grid-row" *ngIf="paymentGroup.fees.length > 0">
         <div class="column">
         
@@ -170,14 +170,14 @@
 [ccdCaseNumber]="ccdCaseNumber"></ccpay-add-remission>
 </ng-container>
 
-<ng-container *ngIf="viewStatus === 'issueRefund' && paymentGroup">
+<ng-container *ngIf="viewStatus === 'issuerefund'">
     <ccpay-add-remission 
     [isTurnOff]="isTurnOff"
     [isStrategicFixEnable]="isStrategicFixEnable" 
     [isOldPcipalOff]="isOldPcipalOff" 
+    [payment] = 'paymentGroup.payments[0]'
     [viewCompStatus]= "viewStatus"
     [isNewPcipalOff]="isNewPcipalOff" 
-    [fee]="feeId" 
     [orderStatus] ="paymentGroup.payments[0].status"
     [paidAmount]= "paymentGroup.payments[0].amount"
     [isRefundRemission]="isRefundRemission"

@@ -60,6 +60,7 @@ export class CaseTransactionsComponent implements OnInit {
   totalRefundAmount: Number;
   caseType: String;
   lsCcdNumber: any = ls.get<any>('ccdNumber');
+  payment: IPayment;
 
   //Order changes
   orderDetail: any[] = [];
@@ -660,5 +661,11 @@ export class CaseTransactionsComponent implements OnInit {
 
   isCheckAmountdueExist(amountDue: any) {
     return typeof amountDue === 'undefined';
+  }
+
+  issueRefund(payment: IPayment) {
+    this.viewStatus = 'issuerefund';
+    this.payment =payment;
+    this.isRefundRemission = true;
   }
 }

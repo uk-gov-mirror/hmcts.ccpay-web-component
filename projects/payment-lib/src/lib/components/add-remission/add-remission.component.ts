@@ -5,6 +5,7 @@ import {Router} from '@angular/router';
 import { AddRemissionRequest } from '../../interfaces/AddRemissionRequest';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import { PaymentLibComponent } from '../../payment-lib.component';
+import { IPayment } from '../../interfaces/IPayment';
 
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 
@@ -15,6 +16,7 @@ const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 })
 export class AddRemissionComponent implements OnInit {
   @Input() fee: IFee;
+  @Input() payment: IPayment;
   @Input() ccdCaseNumber: string;
   @Input() caseType: string;
   @Input() viewCompStatus: string;
@@ -64,7 +66,9 @@ export class AddRemissionComponent implements OnInit {
     private paymentLibComponent: PaymentLibComponent) { }
 
   ngOnInit() {
+    if(this.fee) {
     this.amount = this.fee.fee_amount;
+    }
     this.option = this.paymentLibComponent.SELECTED_OPTION;
     this.bsPaymentDcnNumber = this.paymentLibComponent.bspaymentdcn;
     this.remissionForm = this.formBuilder.group({
@@ -77,7 +81,9 @@ export class AddRemissionComponent implements OnInit {
         Validators.pattern('^[0-9]+(\\.[0-9]{2})?$')
       ]))
     });
+    if(this.viewCompStatus === ''){
     this.viewStatus = 'main';
+    }
     this.paymentLibComponent.CCD_CASE_NUMBER
     }
 
@@ -249,6 +255,26 @@ export class AddRemissionComponent implements OnInit {
     this.isRefundRemission = true;
   }
 
+  gotoRefundPage() {
+    this.viewCompStatus = 'issuerefund';
+    this.viewStatus = '';
+    this.isRefundRemission = true;
+  }
+
+  gotoRefundConfirmation(payment: IPayment) {
+    if(!this.refundReason) {
+      this.refundHasError = true;
+    } else {
+    this.viewCompStatus = '';
+    this.viewStatus = 'refundconfirmation';
+    }
+  }
+
+  changeRefundReason() {
+    this.viewCompStatus = 'issuerefund';
+    this.viewStatus = '';
+    this.isRefundRemission = true;
+  }
   selectRadioButton(key, type) {
     // this.isMoreDetailsBoxHide = true;
     // if( type === 'explanation' && key === 'other' ){

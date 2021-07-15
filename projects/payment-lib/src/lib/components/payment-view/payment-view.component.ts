@@ -3,6 +3,7 @@ import {PaymentViewService} from '../../services/payment-view/payment-view.servi
 import {PaymentLibComponent} from '../../payment-lib.component';
 import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
 import {IFee} from '../../interfaces/IFee';
+import { IPayment } from '../../interfaces/IPayment';
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 
 @Component({
@@ -19,6 +20,8 @@ export class PaymentViewComponent implements OnInit {
   @Input() orderRef: boolean;
   @Input() orderStatus: boolean;
   @Input() orderTotalPayments: boolean;
+  @Input() payment: IPayment;
+
   paymentGroup: IPaymentGroup;
   errorMessage: string;
   ccdCaseNumber: string;
@@ -105,7 +108,7 @@ export class PaymentViewComponent implements OnInit {
 
   issueRefund(paymentgrp: IPaymentGroup ) {
     this.paymentGroup = paymentgrp;
-    this.viewStatus = 'issueRefund';
+    this.viewStatus = 'issuerefund';
     this.isRefundRemission = true;
   }
 }
