@@ -152,7 +152,7 @@
                           (change)= "onSelectionChange('yes')"
                           [checked]='true' 
                           data-aria-controls="yes"/>
-                          <label class="govuk-label govuk-radios__label govuk-label--m" for="yes">
+                          <label class="govuk-label govuk-radios__label govuk-label--s" for="yes">
                               Yes
                           </label>
             
@@ -168,7 +168,7 @@
                               (change)= "onSelectionChange('No')"
                               data-aria-controls="No"
                               />
-                              <label class="govuk-label govuk-radios__label govuk-label--m" for="No">
+                              <label class="govuk-label govuk-radios__label govuk-label--s" for="No">
                                 No
                             </label>
                         </div>
@@ -194,7 +194,7 @@
             
                   <div class="govuk-button-group">
                       <button (click)="gotoremissionPage()" class="govuk-button govuk-button--secondary"> Previous</button>
-                <button (click)="gotoConfirmationPage()" class="govuk-button"> Continue</button>
+                <button (click)="gotoConfirmationPage(payment)" class="govuk-button"> Continue</button>
                     
                       <!-- <a (click) ="gotoremissionPage()" role="button" draggable="false" class="govuk-button govuk-button--secondary" data-module="govuk-button">
                       Previous
@@ -223,15 +223,15 @@
       <table class="govuk-table">
           <tr class="govuk-table__row">
               <td class="govuk-table__cell govuk-!-font-weight-bold">Payment reference</td>
-              <td class="govuk-table__cell">{{paymentGroupRef}}</td>
+              <td class="govuk-table__cell">{{remessionPayment.reference}}</td>
           </tr>
           <tr class="govuk-table__row">
               <td class="govuk-table__cell govuk-!-font-weight-bold">Payment amount</td>
-              <td class="govuk-table__cell">{{paidAmount}}</td>
+              <td class="govuk-table__cell">{{remessionPayment.amount}}</td>
           </tr>
           <tr class="govuk-table__row">
               <td class="govuk-table__cell govuk-!-font-weight-bold">Payment status</td>
-              <td class="govuk-table__cell">{{orderStatus}}</td>
+              <td class="govuk-table__cell">{{remessionPayment.status}}</td>
           </tr>
           <tr class="govuk-table__row">
               <td class="govuk-table__cell govuk-!-font-weight-bold">Fee</td>
@@ -302,22 +302,36 @@
       <h1 class="heading-large">Why are you making this refund?
         </h1>
         <div class="govuk-form-group">
-          
-            <fieldset class="govuk-fieldset" aria-describedby="how-contacted-conditional-hint">
-              <div
-                [ngClass]="refundHasError ? 'govuk-radios govuk-radios--conditional form-group-error' : 'govuk-radios govuk-radios--conditional'"
-                data-module="govuk-radios" >
-                <div class="govuk-radios__item" *ngFor="let refund of refund.reason | keyValue">
-                  <input class="govuk-radios__input" id="{{refund.key}}" name="refund" type="radio"
-                    [(ngModel)]="refundReason" value={{refund.value}}
-                    (click)="selectRadioButton(refund.key, 'refund')">
-                  <label class="govuk-label govuk-radios__label govuk-font__custom" for="how-contacted-conditional">
-                    {{refund.value}}
-                  </label>
-                </div>
-              </div>
-    
-            </fieldset>
+            <form novalidate>
+                <div class="govuk-form-group">
+                  <form [formGroup]="remissionForm" novalidate>
+                    <fieldset class="govuk-fieldset" aria-describedby="how-contacted-conditional-hint">
+                          <div
+                            [ngClass]="refundHasError ? 'govuk-radios govuk-radios--conditional form-group-error' : 'govuk-radios govuk-radios--conditional'"
+                            data-module="govuk-radios" >
+                            <div class="govuk-radios__item" *ngFor="let refund of refund.reason | keyValue">
+                              <input class="govuk-radios__input" id="{{refund.key}}" name="refundReason" type="radio"
+                              formControlName="refundReason" value={{refund.value}}
+                                (change)="selectRadioButton(refund.key, refund.value)">
+                              <label class="govuk-label--s govuk-radios__label govuk-font__custom" for="how-contacted-conditional">
+                                {{refund.value}}
+                              </label>
+                            </div>
+
+                            <div class="govuk-radios__conditional" *ngIf="refundReason === 'Other'" >
+                                <label class="govuk-label govuk-label--m" for="amount">
+                                    Enter reason
+                                </label>
+                              <input class="govuk-input govuk-input--width-10" [ngClass]="{'inline-error-class': isReasonEmpty}" id="reason" aria-label="reason"  name="reason" type="text" aria-describedby="reason" formControlName="reason">
+                              <p class="inline-error-message" *ngIf="isReasonEmpty">
+                                <span *ngIf="isReasonEmpty">Reason cannot be empty</span>
+                              </p>
+                            </div>
+                          </div>
+                    </fieldset>
+                  </form>
+               </div>
+               </form>
         </div>
         <div class="govuk-button-group">
             <button (click)="gotoCasetransationPage()" class="govuk-button govuk-button--secondary"> Previous</button>

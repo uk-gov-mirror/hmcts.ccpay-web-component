@@ -61,6 +61,7 @@ export class CaseTransactionsComponent implements OnInit {
   caseType: String;
   lsCcdNumber: any = ls.get<any>('ccdNumber');
   payment: IPayment;
+  paymentGroup: IPaymentGroup;
 
   //Order changes
   orderDetail: any[] = [];
@@ -302,6 +303,7 @@ export class CaseTransactionsComponent implements OnInit {
         this.orderRemissionTotal = this.orderRemissionTotal + remission.hwf_amount;
       });
     if (orderDetail.payments) {
+      this.payment = orderDetail.payments[0];
       orderDetail.payments.forEach(payment => {
         if (payment.status.toUpperCase() === 'SUCCESS') {
           this.orderTotalPayments = this.orderTotalPayments + payment.amount;
@@ -573,6 +575,18 @@ export class CaseTransactionsComponent implements OnInit {
   addRemission(fee: IFee) {
     this.feeId = fee;
     this.viewStatus = 'addremission';
+    this.paymentViewService.getApportionPaymentDetails(this.payment.reference).subscribe(
+      paymentGroup => {
+        this.paymentGroup = paymentGroup;
+
+        this.paymentGroup.payments = this.paymentGroup.payments.filter
+        (paymentGroupObj => paymentGroupObj['reference'].includes(this.paymentLibComponent.paymentReference));
+        this.payment = this.paymentGroup.payments[0];
+        // const paymentAllocation = this.paymentGroup.payments[0].payment_allocation;
+        // this.isStatusAllocated = paymentAllocation.length > 0 && paymentAllocation[0].allocation_status === 'Allocated' || paymentAllocation.length === 0;
+      },  
+      (error: any) => this.errorMessage = error
+    );
   }
   redirectToremissionPage(event: any) {
     event.preventDefault();

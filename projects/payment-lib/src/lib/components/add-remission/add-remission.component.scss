@@ -21,6 +21,7 @@
   .govuk-label--s,
   .hmcts-currency-input__symbol {
     font-size: 19px;
+    font-weight: 400;
   }
 
   .inline-error-class {
@@ -34,10 +35,10 @@
     margin-top: 10px;
   }
 
-  .govuk-button {
-    margin-right: 2em;
+  .govuk-button, .govuk-link {
+    margin-right: 1em;
     font-size: 19px;
-    font-weight: 400;
+    font-weight: 200;
   }
 
   .govuk-button-group {

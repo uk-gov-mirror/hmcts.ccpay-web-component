@@ -52,10 +52,12 @@ export class AddRemissionComponent implements OnInit {
   remissionReference: string;
   paymentExplanationHasError: boolean = false;
   refundReason:string;
+  remessionPayment:IPayment;
 
   isRemissionCodeEmpty: boolean = false;
   remissionCodeHasError: boolean = false;
   isAmountEmpty: boolean = false;
+  isReasonEmpty: boolean = false;
   amountHasError: boolean = false;
   isRemissionLessThanFeeError: boolean = false;
   refundHasError:boolean = false;
@@ -69,6 +71,9 @@ export class AddRemissionComponent implements OnInit {
     if(this.fee) {
     this.amount = this.fee.fee_amount;
     }
+    if (this.payment){
+      this.remessionPayment = this.payment;
+    }
     this.option = this.paymentLibComponent.SELECTED_OPTION;
     this.bsPaymentDcnNumber = this.paymentLibComponent.bspaymentdcn;
     this.remissionForm = this.formBuilder.group({
@@ -79,7 +84,9 @@ export class AddRemissionComponent implements OnInit {
       amount: new FormControl('', Validators.compose([
         Validators.required,
         Validators.pattern('^[0-9]+(\\.[0-9]{2})?$')
-      ]))
+      ])),
+      refundReason: new FormControl('', Validators.compose([Validators.required])),
+      reason: new FormControl()
     });
     if(this.viewCompStatus === ''){
     this.viewStatus = 'main';
@@ -165,6 +172,9 @@ export class AddRemissionComponent implements OnInit {
       if(remissionctrls['amount'].value != '' && remissionctrls['amount'].invalid ) {
         this.resetRemissionForm([false, true, false, true, false], 'amount');
       }
+      if(remissionctrls['reason'].value == '') {
+        this.resetRemissionForm([false, false, false, true, false, true], 'reason');
+      }
       if(remissionctrls.amount.valid && !isRemissionLessThanFee){
         this.resetRemissionForm([false, false, false, false, true], 'amount');
       }
@@ -180,6 +190,8 @@ export class AddRemissionComponent implements OnInit {
       this.isAmountEmpty = val[2];
       this.amountHasError = val[3];
       this.isRemissionLessThanFeeError = val[4];
+    } else if (field==='reason' || field==='All'){
+      this.isReasonEmpty = val[5];
     }
   }
 
@@ -225,7 +237,7 @@ export class AddRemissionComponent implements OnInit {
     );
   }
 
-  gotoConfirmationPage() {
+  gotoConfirmationPage(payment: IPayment) {
     if (this.selectedValue == 'No') {
     this.resetRemissionForm([false, false, false, false, false], 'All');
     var remissionctrls=this.remissionForm.controls,
@@ -262,8 +274,16 @@ export class AddRemissionComponent implements OnInit {
   }
 
   gotoRefundConfirmation(payment: IPayment) {
+    this.refundReason = this.remissionForm.controls['refundReason'].value;
     if(!this.refundReason) {
       this.refundHasError = true;
+    } else if(this.refundReason == 'Other' && (this.remissionForm.controls['reason'].value == '' || this.remissionForm.controls['reason'].value == null)) {
+        this.resetRemissionForm([false, false, false, true, false, true], 'reason');
+    } else if (this.refundReason == 'Other' && this.remissionForm.controls['reason'].value !== '') {
+      this.refundHasError = false;
+      this.refundReason = this.remissionForm.controls['reason'].value;
+      this.viewCompStatus = '';
+      this.viewStatus = 'refundconfirmation';
     } else {
     this.viewCompStatus = '';
     this.viewStatus = 'refundconfirmation';
@@ -271,11 +291,18 @@ export class AddRemissionComponent implements OnInit {
   }
 
   changeRefundReason() {
+    this.remissionForm.controls['refundReason'].setValue('Duplicate payment');
+    this.refundHasError = false;
     this.viewCompStatus = 'issuerefund';
     this.viewStatus = '';
     this.isRefundRemission = true;
   }
   selectRadioButton(key, type) {
+    this.refundReason = this.remissionForm.controls['refundReason'].value;
+    if(key === 'Other') {
+      this.refundHasError = false;
+      this.refundReason = key;
+    }
     // this.isMoreDetailsBoxHide = true;
     // if( type === 'explanation' && key === 'other' ){
     //   this.isPaymentDetailsEmpty = false;
