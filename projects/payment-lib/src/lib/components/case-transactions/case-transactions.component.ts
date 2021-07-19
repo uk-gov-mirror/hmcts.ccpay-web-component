@@ -466,7 +466,10 @@ export class CaseTransactionsComponent implements OnInit {
                 if(rem.fee_code === fee.code) {
                   this.isRemissionsMatch = true;
                   fee['remissions'] = rem;
-                  fees.push(fee);
+                  if(!fees.find(k => k.code=fee.code))
+                  {
+                    fees.push(fee);
+                  }
                 }
               });
 

@@ -281,14 +281,16 @@
           </h1>
           
           <div class="govuk-panel__body">
-            <p class="govuk-body" style="color: white"><strong>Refund reference: {{remissionReference}}</strong></p>
+            <p class="govuk-body" style="color: white"><strong> <div *ngIf="remessionPayment.status === 'Success'">Refund reference:</div> {{remissionReference}}</strong></p>
           </div>
     
         </div>
+        <div *ngIf="remessionPayment.status === 'Success'">
         <h2 class="govuk-heading-l">What happens next</h2>
         <p class="govuk-body">
           A refund request for {{paidAmount - (amount - remissionForm.controls.amount.value)}} has been created and will be passed to a team leader to approve.
         </p>
+      </div>
         <p class="govuk-body">
           <a (click)="gotoCasetransationPage()"  class="govuk-link">Return to case</a>
        </p>
