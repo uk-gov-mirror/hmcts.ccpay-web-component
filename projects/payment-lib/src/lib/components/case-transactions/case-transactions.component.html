@@ -832,10 +832,10 @@
                 <td class="govuk-table__cell col-60 whitespace-inherit">{{fee.description}}</td>
                 <td class="govuk-table__cell">{{fee.volume? fee.volume : '-'}} X {{ fee.fee_amount | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
                 <td class="govuk-table__cell">{{ (fee.volume *fee.fee_amount) | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
-                <td class="govuk-table__cell" style="text-align: right;">
-                    <button (click)="addRemission(fee)" class="govuk-button govuk-button--secondary"> Add remission</button>
+                <td class="govuk-table__cell" style="text-align: right;" >
+                    <button (click)="addRemission(fee)" *ngIf="(getRemissionByFeeCode(fee.code,order.remissions)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code,order.remissions)?.hwf_amount)" class="govuk-button govuk-button--secondary"> Add remission</button>
                   <!-- <a (click)="addRemission(fee)" class="govuk-button govuk-button--secondary" style="float: right; margin-bottom: 0">Add remission</a> -->
-              </td>
+                </td>
               </tr>
             </tbody>
             <tbody class="govuk-table__body" *ngFor="let order of orderDetail;">
@@ -846,7 +846,7 @@
           </table>
 
         </div>
-        <div style="width: 100%;">
+        <div style="width: 100%;">  
             <p class="totalfees">Total fees: {{orderFeesTotal | currency:'GBP':'symbol-narrow':'1.2-2' }}</p>
         </div>
     </div>

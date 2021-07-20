@@ -65,6 +65,8 @@ export class CaseTransactionsComponent implements OnInit {
 
   //Order changes
   orderDetail: any[] = [];
+
+  isAddRemissionEnable: boolean = false;
   orderRemissionDetails: any[] = [];
   orderLevelFees: IOrderReferenceFee[] = [];
   cpoDetails: any = null;
@@ -112,8 +114,9 @@ export class CaseTransactionsComponent implements OnInit {
         paymentGroups => {
           this.paymentGroups = paymentGroups['payment_groups'];
           this.calculateAmounts();
-          this.calculateRefundAmount();
           this.calculateOrderFeesAmounts();
+          this.calculateRefundAmount();
+          
           this.paymentViewService.getPartyDetails(this.ccdCaseNumber).subscribe(
             response => {
               this.cpoDetails = JSON.parse(response).data.content[0];
@@ -466,10 +469,10 @@ export class CaseTransactionsComponent implements OnInit {
                 if(rem.fee_code === fee.code) {
                   this.isRemissionsMatch = true;
                   fee['remissions'] = rem;
-                  if(!fees.find(k => k.code=fee.code))
-                  {
+                  // if(!fees.find(k => k.code=fee.code))
+                  // {
                     fees.push(fee);
-                  }
+                  //}
                 }
               });
 
@@ -685,4 +688,17 @@ export class CaseTransactionsComponent implements OnInit {
     this.payment =payment;
     this.isRefundRemission = true;
   }
+
+getRemissionByFeeCode(feeCode: string, remissions: IRemission[]): IRemission {
+    if (remissions && remissions.length > 0) {
+      for (const remission of remissions) {
+        if (remission.fee_code === feeCode) {
+          return remission;
+          this.isAddFeeBtnEnabled = true;
+        }
+      }
+    }
+    return null;
+  }
+
 }
