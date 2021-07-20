@@ -204,7 +204,7 @@ export class AddRemissionComponent implements OnInit {
       this.retroRemission = true;
     }
     const newNetAmount = this.remissionForm.controls.amount.value,
-     remissionAmount = newNetAmount,
+    remissionAmount = this.fee.net_amount - newNetAmount,
      requestBody = new AddRemissionRequest
     (this.ccdCaseNumber, this.fee, remissionAmount, this.remissionForm.controls.remissionCode.value, this.caseType, this.retroRemission);
     this.paymentViewService.postPaymentGroupWithRemissions(decodeURIComponent(this.paymentGroupRef).trim(), this.fee.id, requestBody).subscribe(
