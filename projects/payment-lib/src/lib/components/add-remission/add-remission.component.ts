@@ -72,6 +72,7 @@ export class AddRemissionComponent implements OnInit {
     this.amount = this.fee.fee_amount;
     }
     if (this.payment){
+      this.remessionPayment = this.payment;
       if(this.payment.status === 'Success') {
         this.isPaymentSuccess = true;
       }

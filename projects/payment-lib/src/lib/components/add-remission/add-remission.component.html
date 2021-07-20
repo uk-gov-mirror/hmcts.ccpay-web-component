@@ -248,7 +248,7 @@
               <td class="govuk-table__cell" *ngIf="selectedValue === 'yes'">{{ amount | currency:'GBP':'symbol-narrow':'1.2-2' }} 
                   <a (click)="addRemissionCode()" class="govuk-link right" >Change</a>
               </td>
-              <td class="govuk-table__cell" *ngIf="selectedValue === 'No' ">{{ remissionForm.controls.amount.value  | currency:'GBP':'symbol-narrow':'1.2-2' }}
+              <td class="govuk-table__cell" *ngIf="selectedValue === 'No' ">{{amount - remissionForm.controls.amount.value  | currency:'GBP':'symbol-narrow':'1.2-2' }}
                   <a (click)="addRemissionCode()" class="govuk-link right" >Change</a>
               </td>
           </tr>
