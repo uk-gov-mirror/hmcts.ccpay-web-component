@@ -69,7 +69,7 @@ export class AddRemissionComponent implements OnInit {
 
   ngOnInit() {
     if(this.fee) {
-    this.amount = this.fee.fee_amount;
+    this.amount = (this.fee.volume * this.fee.fee_amount);
     }
     if (this.payment){
       this.remessionPayment = this.payment;
