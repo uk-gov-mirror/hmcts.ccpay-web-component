@@ -699,6 +699,6 @@ getRemissionByFeeCode(feeCode: string, remissions: IRemission[]): IRemission {
       }
     }
     return null;
-  }
+}
 
 }

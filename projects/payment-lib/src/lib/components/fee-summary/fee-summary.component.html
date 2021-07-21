@@ -233,7 +233,7 @@
                         <div *ngIf = "getRemissionByFeeCode(fee.code)?.hwf_amount > 0" class="govuk-table__cell_border"> <br><br></div>
                       </td>
                       <td class="govuk-table__cell" style="text-align: right;">
-                        {{ fee.fee_amount | currency:'GBP':'symbol-narrow':'1.2-2' }}
+                        {{ fee.calculated_amount | currency:'GBP':'symbol-narrow':'1.2-2' }}
                         <span *ngIf = "getRemissionByFeeCode(fee.code)?.hwf_amount > 0">
                             <br>
                             <div class="govuk-table__cell_rmborder" style="text-align: right;">

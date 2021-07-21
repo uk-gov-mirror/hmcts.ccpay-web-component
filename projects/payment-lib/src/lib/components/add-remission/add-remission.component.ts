@@ -69,7 +69,7 @@ export class AddRemissionComponent implements OnInit {
 
   ngOnInit() {
     if(this.fee) {
-    this.amount = (this.fee.volume * this.fee.fee_amount);
+    this.amount = (this.fee.volume * this.fee.calculated_amount);
     }
     if (this.payment){
       this.remessionPayment = this.payment;
@@ -205,7 +205,7 @@ export class AddRemissionComponent implements OnInit {
       this.retroRemission = true;
     }
     const newNetAmount = this.remissionForm.controls.amount.value,
-    remissionAmount = this.fee.net_amount - newNetAmount,
+    remissionAmount = this.fee.calculated_amount - newNetAmount,
      requestBody = new AddRemissionRequest
     (this.ccdCaseNumber, this.fee, remissionAmount, this.remissionForm.controls.remissionCode.value, this.caseType, this.retroRemission);
     this.paymentViewService.postPaymentGroupWithRemissions(decodeURIComponent(this.paymentGroupRef).trim(), this.fee.id, requestBody).subscribe(
