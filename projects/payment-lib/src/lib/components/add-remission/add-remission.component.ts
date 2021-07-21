@@ -214,7 +214,7 @@ export class AddRemissionComponent implements OnInit {
 
           if (this.retroRemission) {
             this.viewCompStatus  = '';
-            this.viewStatus = 'confirmationpage';
+            this.viewStatus = 'remissionconfirmationpage';
             this.remissionReference =JSON.parse(response).data.remission_reference;
 
           } else {
@@ -241,6 +241,15 @@ export class AddRemissionComponent implements OnInit {
     );
   }
 
+  confirmRefund() {
+    this.isConfirmationBtnDisabled = true;
+    if( this.isRefundRemission) {
+      this.retroRemission = true;
+    }
+    this.viewCompStatus  = '';
+    this.viewStatus = 'refundconfirmationpage';
+  }
+
   gotoConfirmationPage(payment: IPayment) {
     if (this.selectedValue == 'No') {
     this.resetRemissionForm([false, false, false, false, false], 'All');
@@ -255,12 +264,12 @@ export class AddRemissionComponent implements OnInit {
         this.resetRemissionForm([false, false, false, false, true], 'amount');
       } else {
         this.viewCompStatus = '';
-        this.viewStatus = "remissionconfirmation";
+        this.viewStatus = "checkremissionpage";
       }
     }
   }  else {
     this.viewCompStatus = '';
-    this.viewStatus = "remissionconfirmation";
+    this.viewStatus = "checkremissionpage";
   }
   }
 
@@ -287,10 +296,10 @@ export class AddRemissionComponent implements OnInit {
       this.refundHasError = false;
       this.refundReason = this.remissionForm.controls['reason'].value;
       this.viewCompStatus = '';
-      this.viewStatus = 'refundconfirmation';
+      this.viewStatus = 'checkrefundpage';
     } else {
     this.viewCompStatus = '';
-    this.viewStatus = 'refundconfirmation';
+    this.viewStatus = 'checkrefundpage';
     }
   }
 
@@ -303,6 +312,7 @@ export class AddRemissionComponent implements OnInit {
   }
 
   selectRadioButton(key, type) {
+    this.refundHasError = false;
     this.refundReason = this.remissionForm.controls['refundReason'].value;
     if(key === 'Other') {
       this.refundHasError = false;
