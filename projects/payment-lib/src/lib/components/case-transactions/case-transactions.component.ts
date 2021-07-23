@@ -594,6 +594,23 @@ export class CaseTransactionsComponent implements OnInit {
       (error: any) => this.errorMessage = error
     );
   }
+
+  addRefundForRemission() {
+    this.viewStatus = 'addrefundforremission';
+    this.paymentViewService.getApportionPaymentDetails(this.payment.reference).subscribe(
+      paymentGroup => {
+        this.paymentGroup = paymentGroup;
+
+        this.paymentGroup.payments = this.paymentGroup.payments.filter
+        (paymentGroupObj => paymentGroupObj['reference'].includes(this.paymentLibComponent.paymentReference));
+        this.payment = this.paymentGroup.payments[0];
+        // const paymentAllocation = this.paymentGroup.payments[0].payment_allocation;
+        // this.isStatusAllocated = paymentAllocation.length > 0 && paymentAllocation[0].allocation_status === 'Allocated' || paymentAllocation.length === 0;
+      },  
+      (error: any) => this.errorMessage = error
+    );
+  }
+
   redirectToremissionPage(event: any) {
     event.preventDefault();
     this.paymentLibComponent.viewName='remission'

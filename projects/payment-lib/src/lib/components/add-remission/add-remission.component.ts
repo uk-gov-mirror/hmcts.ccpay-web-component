@@ -61,6 +61,7 @@ export class AddRemissionComponent implements OnInit {
   isRemissionLessThanFeeError: boolean = false;
   refundHasError:boolean = false;
   isPaymentSuccess: boolean = false;
+  remissionamt:number;
 
   constructor(private formBuilder: FormBuilder,
     private router: Router,
@@ -148,10 +149,10 @@ export class AddRemissionComponent implements OnInit {
   }
 
 
-  onSelectionChange(value: string) {
-    this.selectedValue = value;
-    this.hasErrors = false;
-  }
+  // onSelectionChange(value: string) {
+  //   this.selectedValue = value;
+  //   this.hasErrors = false;
+  // }
 
 
   continueRemission(){
@@ -204,10 +205,17 @@ export class AddRemissionComponent implements OnInit {
     if( this.isRefundRemission) {
       this.retroRemission = true;
     }
+
+    if(this.remessionPayment.status === 'Success') {
+      this.remissionamt = this.fee.calculated_amount - this.remissionForm.controls.amount.value;
+    } else {
+      this.remissionamt = this.remissionForm.controls.amount.value;
+    }
+    this.remissionamt = this.fee.calculated_amount - this.remissionForm.controls.amount.value;
     const newNetAmount = this.remissionForm.controls.amount.value,
-    remissionAmount = this.fee.calculated_amount - newNetAmount,
+    // remissionAmount = this.fee.calculated_amount - newNetAmount,
      requestBody = new AddRemissionRequest
-    (this.ccdCaseNumber, this.fee, remissionAmount, this.remissionForm.controls.remissionCode.value, this.caseType, this.retroRemission);
+    (this.ccdCaseNumber, this.fee, this.remissionamt, this.remissionForm.controls.remissionCode.value, this.caseType, this.retroRemission);
     this.paymentViewService.postPaymentGroupWithRemissions(decodeURIComponent(this.paymentGroupRef).trim(), this.fee.id, requestBody).subscribe(
       response => {
         if (JSON.parse(response).success) {
@@ -251,7 +259,7 @@ export class AddRemissionComponent implements OnInit {
   }
 
   gotoConfirmationPage(payment: IPayment) {
-    if (this.selectedValue == 'No') {
+   // if (this.selectedValue == 'No') {
     this.resetRemissionForm([false, false, false, false, false], 'All');
     var remissionctrls=this.remissionForm.controls,
       isRemissionLessThanFee = this.fee.calculated_amount > remissionctrls.amount.value; 
@@ -267,10 +275,10 @@ export class AddRemissionComponent implements OnInit {
         this.viewStatus = "checkremissionpage";
       }
     }
-  }  else {
-    this.viewCompStatus = '';
-    this.viewStatus = "checkremissionpage";
-  }
+  // }  else {
+  //   this.viewCompStatus = '';
+  //   this.viewStatus = "checkremissionpage";
+  // }
   }
 
   gotoremissionPage() {
