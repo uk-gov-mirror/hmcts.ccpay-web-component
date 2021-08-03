@@ -140,13 +140,13 @@
                   <form [formGroup]="remissionForm" novalidate>
                       <fieldset class="govuk-fieldset">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                    
+                    {{remessionPayment.status}}
                         <h1 *ngIf="remessionPayment.status === 'Success'" class="heading-medium">
                             Enter the amount to be refunded
                         </h1> 
 
-                        <h1 *ngIf="remessionPayment.status === 'fail'" class="heading-medium">
-                            Enter the amount to be refunded
+                        <h1 *ngIf="remessionPayment.status !== 'Success'" class="heading-medium">
+                            Enter the remission amount
                         </h1> 
                       </legend>
                       <!-- <div class="govuk-radios govuk-radios--conditional" data-module="govuk-radios"> -->
@@ -462,7 +462,7 @@
       <button type="submit"
       [disabled]="isConfirmationBtnDisabled"
       [ngClass]='isConfirmationBtnDisabled ? "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"'
-      (click)="confirmRefund()">
+      (click)="confirmRetroRefund()">
         Submit refund
       </button>
       <p>
@@ -473,7 +473,7 @@
 
   </ng-container>
 
-  <ng-container *ngIf="viewStatus === 'refundconfirmationpage'">
+  <ng-container *ngIf="viewStatus === 'retrorefundconfirmationpage'">
     <div class="govuk-grid-row">
       <div >
         <div class="govuk-panel govuk-panel--confirmation">

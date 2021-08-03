@@ -35,6 +35,7 @@ import { IBSPayments } from './interfaces/IBSPayments';
 export class PaymentLibComponent implements OnInit {
   @Input('API_ROOT') API_ROOT: string;
   @Input('BULKSCAN_API_ROOT') BULKSCAN_API_ROOT: string;
+  @Input('REFUNDS_API_ROOT') REFUNDS_API_ROOT: string;
   @Input('CCD_CASE_NUMBER') CCD_CASE_NUMBER: string;
   @Input('EXC_REFERENCE') EXC_REFERENCE: string;
   @Input('PAYMENT_METHOD') PAYMENT_METHOD: string;
@@ -67,6 +68,7 @@ export class PaymentLibComponent implements OnInit {
   ngOnInit() {
     this.paymentLibService.setApiRootUrl(this.API_ROOT);
     this.paymentLibService.setBulkScanApiRootUrl(this.BULKSCAN_API_ROOT);
+    this.paymentLibService.setRefundndsApiRootUrl(this.REFUNDS_API_ROOT);
     if (this.PAYMENT_GROUP_REF) {
       this.paymentGroupReference = this.PAYMENT_GROUP_REF;
     }

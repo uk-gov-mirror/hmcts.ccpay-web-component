@@ -6,6 +6,8 @@ import { AddRemissionRequest } from '../../interfaces/AddRemissionRequest';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import { PaymentLibComponent } from '../../payment-lib.component';
 import { IPayment } from '../../interfaces/IPayment';
+import { RefundsService } from '../../services/refunds/refunds.service';
+import { IRefundReasons } from '../../interfaces/IRefundReasons';
 
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 
@@ -62,11 +64,13 @@ export class AddRemissionComponent implements OnInit {
   refundHasError:boolean = false;
   isPaymentSuccess: boolean = false;
   remissionamt:number;
+  refundReasons:IRefundReasons[];
 
   constructor(private formBuilder: FormBuilder,
     private router: Router,
     private paymentViewService: PaymentViewService,
-    private paymentLibComponent: PaymentLibComponent) { }
+    private paymentLibComponent: PaymentLibComponent,
+    private RefundService: RefundsService) { }
 
   ngOnInit() {
     if(this.fee) {
@@ -258,6 +262,15 @@ export class AddRemissionComponent implements OnInit {
     this.viewStatus = 'refundconfirmationpage';
   }
 
+  confirmRetroRefund() {
+    this.isConfirmationBtnDisabled = true;
+    if( this.isRefundRemission) {
+      this.retroRemission = true;
+    }
+    this.viewCompStatus  = '';
+    this.viewStatus = 'retrorefundconfirmationpage';
+  }
+
   gotoConfirmationPage(payment: IPayment) {
    // if (this.selectedValue == 'No') {
     this.resetRemissionForm([false, false, false, false, false], 'All');
@@ -289,6 +302,10 @@ export class AddRemissionComponent implements OnInit {
   }
 
   gotoRefundPage() {
+    this.RefundService.getRefundReasons().subscribe(
+      refundReasons => { 
+        this.refundReasons = refundReasons;
+      } );
     this.viewCompStatus = 'issuerefund';
     this.viewStatus = '';
     this.isRefundRemission = true;
