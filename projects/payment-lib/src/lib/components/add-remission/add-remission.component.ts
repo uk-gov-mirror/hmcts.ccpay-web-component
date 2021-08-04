@@ -64,7 +64,8 @@ export class AddRemissionComponent implements OnInit {
   refundHasError:boolean = false;
   isPaymentSuccess: boolean = false;
   remissionamt:number;
-  refundReasons:IRefundReasons[];
+  refundReasons: any[] = [];
+  // refundReasons:IRefundReasons[];
 
   constructor(private formBuilder: FormBuilder,
     private router: Router,
@@ -99,6 +100,12 @@ export class AddRemissionComponent implements OnInit {
     if(this.viewCompStatus === ''){
     this.viewStatus = 'main';
     }
+    if(this.viewCompStatus === 'issuerefund'){
+      this.RefundService.getRefundReasons().subscribe(
+        refundReasons => { 
+          this.refundReasons = refundReasons['data'];
+        } );
+      }
     this.paymentLibComponent.CCD_CASE_NUMBER
   }
 
@@ -302,10 +309,6 @@ export class AddRemissionComponent implements OnInit {
   }
 
   gotoRefundPage() {
-    this.RefundService.getRefundReasons().subscribe(
-      refundReasons => { 
-        this.refundReasons = refundReasons;
-      } );
     this.viewCompStatus = 'issuerefund';
     this.viewStatus = '';
     this.isRefundRemission = true;

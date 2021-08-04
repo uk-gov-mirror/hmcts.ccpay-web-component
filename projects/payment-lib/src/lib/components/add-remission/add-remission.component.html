@@ -356,12 +356,12 @@
                             <p class="inline-error-message" *ngIf="refundHasError">
                               <span *ngIf="refundHasError">Select a reason why you’re making this refund</span>
                             </p>
-                            <div class="govuk-radios__item" *ngFor="let refund of refund.reason | keyValue">
-                              <input class="govuk-radios__input" id="{{refund.key}}" name="refundReason" type="radio"
-                              formControlName="refundReason" value={{refund.value}}
-                                (change)="selectRadioButton(refund.key, refund.value)">
+                            <div class="govuk-radios__item" *ngFor="let refund of refundReasons">
+                              <input class="govuk-radios__input" id="{{refund.name}}" name="refundReason" type="radio"
+                              formControlName="refundReason" value={{refund.name}}
+                                (change)="selectRadioButton(refund.name, refund.name)">
                               <label class="govuk-label--s govuk-radios__label govuk-font__custom" for="how-contacted-conditional">
-                                {{refund.value}}
+                                {{refund.name}}
                               </label>
                             </div>
 
