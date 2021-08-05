@@ -21,6 +21,7 @@ const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 })
 export class CaseTransactionsComponent implements OnInit {
   takePayment: boolean;
+  servicerequest: string;
   ccdCaseNumber: string;
   excReference: string;
   paymentGroups: any[] = [];
@@ -75,12 +76,14 @@ export class CaseTransactionsComponent implements OnInit {
   orderParty: string;
   orderCreated: Date;
   orderCCDEvent: string;
+  serviveRequestValue: string;
   orderAddBtnEnable: boolean;
   orderFeesTotal: number= 0.00;
   orderRemissionTotal: number = 0.00;
   orderTotalPayments: number = 0.00;
   orderPendingPayments: number =0.00;
   isCPODown: boolean;
+  test: boolean;
   constructor(private router: Router,
   private paymentViewService: PaymentViewService,
   private bulkScaningPaymentService: BulkScaningPaymentService,
@@ -98,6 +101,12 @@ export class CaseTransactionsComponent implements OnInit {
     }
     this.excReference = this.paymentLibComponent.EXC_REFERENCE;
     this.takePayment = this.paymentLibComponent.TAKEPAYMENT;
+    this.servicerequest = this.paymentLibComponent.SERVICEREQUEST;
+    if (this.paymentLibComponent.SERVICEREQUEST === 'true') {
+      this.serviveRequestValue = 'true';
+    } else {
+      this.serviveRequestValue = 'false';
+    }
     this.isBulkScanEnable = this.paymentLibComponent.ISBSENABLE;
     this.dcnNumber = this.paymentLibComponent.DCN_NUMBER;
     this.selectedOption = this.paymentLibComponent.SELECTED_OPTION.toLocaleLowerCase();
