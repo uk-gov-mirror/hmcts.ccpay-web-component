@@ -19,6 +19,10 @@ import { AllocatePaymentRequest } from '../../interfaces/AllocatePaymentRequest'
 import { IAllocationPaymentsRequest } from '../../interfaces/IAllocationPaymentsRequest';
 import {IOrderReferenceFee} from '../../interfaces/IOrderReferenceFee';
 import { BehaviorSubject } from 'rxjs';
+import { RefundsRequest } from '../../interfaces/RefundsRequest';
+import { AddRetroRemissionRequest } from '../../interfaces/AddRetroRemissionRequest';
+import { PostRefundRetroRemission } from '../../interfaces/PostRefundRetroRemission';
+import { PostIssueRefundRetroRemission } from '../../interfaces/PostIssueRefundRetroRemission';
 
 @Injectable({
   providedIn: 'root'
@@ -93,6 +97,7 @@ export class PaymentViewService {
       catchError(this.errorHandlerService.handleError)
     );
   }
+
   deleteFeeFromPaymentGroup(feeId: number): Observable<any> {
         this.logger.info('Payment-view-service deleteFeeFromPaymentGroup for: ', feeId);
     return this.https.delete(`${this.paymentLibService.API_ROOT}/fees/${feeId}`).pipe(
@@ -130,5 +135,25 @@ export class PaymentViewService {
 }
   getOrdersList() {
     return this.ordersList;
+  }
+
+  //issue refund
+  postRefundsReason(body: PostRefundRetroRemission): Observable<any> {
+    return this.https.post(`${this.paymentLibService.API_ROOT}/refund-for-payment`, body).pipe(
+      catchError(this.errorHandlerService.handleError)
+    );
+  }
+
+  // retro remissions
+  postPaymentGroupWithRetroRemissions(paymentGroupReference: string, feeId: number, body: AddRetroRemissionRequest): Observable<any> {
+    return this.https.post(`${this.paymentLibService.API_ROOT}/payment-groups/${paymentGroupReference}/fees/${feeId}/retro-remission`, body).pipe(
+      catchError(this.errorHandlerService.handleError)
+    );
+  }
+
+  postRefundRetroRemission(body:PostIssueRefundRetroRemission) {
+    return this.https.post(`${this.paymentLibService.API_ROOT}/refund-retro-remisstion`, body).pipe(
+      catchError(this.errorHandlerService.handleError)
+    );
   }
 }

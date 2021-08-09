@@ -7,7 +7,7 @@ import {Observable} from 'rxjs/Observable';
 import {catchError} from 'rxjs/operators';
 import { AllocatePaymentRequest } from '../../interfaces/AllocatePaymentRequest';
 import { IRefundReasons } from '../../interfaces/IRefundReasons';
-
+import { IssueRefundRequest } from '../../interfaces/IssueRefundRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -29,8 +29,8 @@ export class RefundsService {
       );
   }
  
-  postBSAllocatePayment(body: AllocatePaymentRequest, paymentRef: string): Observable<any> {
-    return this.https.post(`${this.paymentLibService.API_ROOT}/payment-groups/${paymentRef}/bulk-scan-payments`, body).pipe(
+  postIssueRefund(body: IssueRefundRequest): Observable<any> {
+    return this.https.post(`${this.paymentLibService.REFUNDS_API_ROOT}/refund`, body).pipe(
       catchError(this.errorHandlerService.handleError)
     );
   }
