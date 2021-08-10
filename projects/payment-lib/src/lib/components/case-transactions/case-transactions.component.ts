@@ -88,6 +88,7 @@ export class CaseTransactionsComponent implements OnInit {
   isPBA: boolean = false;
   isIssueRefunfBtnEnable: boolean = false;
   isAddRemissionBtnEnabled: boolean = false;
+  isRefundRemissionBtnEnable: boolean = false;
   constructor(private router: Router,
   private paymentViewService: PaymentViewService,
   private bulkScaningPaymentService: BulkScaningPaymentService,
@@ -761,6 +762,23 @@ chkIssueRefundBtnEnable(payment: IPayment) {
   if(payment.method === 'payment by account' && payment.status === 'Success') {
     this.isIssueRefunfBtnEnable = true;
   }
+}
+
+chkIsRefundRemissionBtnEnable():boolean  {
+  this.orderDetail.forEach(orderDetail => {
+    if (orderDetail.payments) {
+      orderDetail.payments.forEach(payment => {
+        if (payment.method.toLocaleLowerCase() === 'payment by account' && payment.status.toLocaleLowerCase() === 'success') {
+          this.isRefundRemissionBtnEnable = true;
+        }
+      });
+    }  
+  });
+  if (this.isRefundRemissionBtnEnable) {
+    return true;
+  } else {
+  return false; 
+  };
 }
 
 }
