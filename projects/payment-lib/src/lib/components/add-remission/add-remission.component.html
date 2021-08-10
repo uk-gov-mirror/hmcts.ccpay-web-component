@@ -287,7 +287,7 @@
                               </label>
                             </div>
 
-                            <div class="govuk-radios__conditional" *ngIf="refundReason === 'RR004'" >
+                            <div class="govuk-radios__conditional" *ngIf="selectedRefundReason === 'Other'" >
                                 <label class="govuk-label govuk-label--m" for="amount">
                                     Enter reason
                                 </label>
@@ -322,7 +322,7 @@
       <table class="govuk-table">
           <tr class="govuk-table__row">
               <td class="govuk-table__cell govuk-!-font-weight-bold">Reason for refund</td>
-              <td class="govuk-table__cell"> {{ refundReason }}
+              <td class="govuk-table__cell"> {{ selectedRefundReason }}
                <a (click)="changeIssueRefundReason()" class="govuk-link right" >Change</a>
               </td>
           </tr>

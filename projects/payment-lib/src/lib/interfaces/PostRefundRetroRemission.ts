@@ -1,9 +1,9 @@
 export class PostRefundRetroRemission {
-    paymentReference: string;
-    refundReason: string;
+  payment_reference: string;
+  refund_reason: string;
   
-    constructor(paymentReference : string, refundReason : string) {
-      this.paymentReference= paymentReference;
-      this.refundReason = refundReason;
+    constructor(payment_reference : string, refund_reason : string) {
+      this.payment_reference= payment_reference;
+      this.refund_reason = refund_reason;
     } 
 }

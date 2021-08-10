@@ -60,6 +60,7 @@ export class AddRemissionComponent implements OnInit {
   refundReference: string;
   paymentExplanationHasError: boolean = false;
   refundReason:string;
+  selectedRefundReason: string;
   refundCode:string;
   remessionPayment:IPayment;
   isRemissionCodeEmpty: boolean = false;
@@ -361,17 +362,17 @@ export class AddRemissionComponent implements OnInit {
     if( this.isRefundRemission) {
       this.retroRemission = true;
     }
+    if(this.selectedRefundReason.toLocaleLowerCase() === 'other') {
+      this.refundReason = 'RR004-'+this.selectedRefundReason;
+    }
     const requestBody = new PostRefundRetroRemission(this.payment.reference,this.refundReason);
     this.paymentViewService.postRefundsReason(requestBody).subscribe(
-      res => {
-        const response = JSON.parse(res);
-        if (response.success) {
-          if (JSON.parse(response).success) {
+      response => {
+          if (JSON.parse(response)) {
             this.viewCompStatus  = '';
             this.viewStatus = 'refundconfirmationpage';
             this.refundReference =JSON.parse(response).data.refundReference;
           }
-        }
       },
       (error: any) => {
 
@@ -385,18 +386,15 @@ export class AddRemissionComponent implements OnInit {
     if( this.isRefundRemission) {
       this.retroRemission = true;
     }
-    const requestBody = new IssueRefundRequest(this.payment.reference,'Retro remission',0);
+    const requestBody = new IssueRefundRequest(this.payment.reference,'RR004-Retro remission',this.payment.amount);
   
     this.refundService.postIssueRefund(requestBody).subscribe(
-      res => {
-        const response = JSON.parse(res);
-        if (response.success) {
+      response => {
           if (JSON.parse(response).success) {
             this.viewCompStatus  = '';
             this.viewStatus = 'retrorefundconfirmationpage';
-            this.refundReference =JSON.parse(response).data.refundReference;
+            this.refundReference =JSON.parse(response).data.refund_reference;
           }
-        }
       },
       (error: any) => {
 
@@ -405,7 +403,7 @@ export class AddRemissionComponent implements OnInit {
 
   selectRadioButton(key, value) {
     this.refundHasError = false;
-    this.refundReason = this.remissionForm.controls['refundReason'].value;
+    this.selectedRefundReason = key;
     if(key === 'Other') {
       this.refundHasError = false;
       this.refundReason = key;
