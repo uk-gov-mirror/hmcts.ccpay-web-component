@@ -35,6 +35,7 @@ export class PaymentViewComponent implements OnInit {
   isRefundRemission: boolean = false;
   isStrategicFixEnable: boolean;
   isAddFeeBtnEnabled: boolean = false;
+  isIssueRefunfBtnEnable: boolean = false;
 
   constructor(private paymentViewService: PaymentViewService,
               private paymentLibComponent: PaymentLibComponent) {
@@ -124,5 +125,11 @@ getRemissionByFeeCode(feeCode: string, remissions: IRemission[]): IRemission {
       }
     }
     return null;
+}
+
+chkIssueRefundBtnEnable(payment: IPayment) {
+  if(payment.method === 'payment by account' && payment.status === 'Success') {
+    this.isIssueRefunfBtnEnable = true;
+  }
 }
 }

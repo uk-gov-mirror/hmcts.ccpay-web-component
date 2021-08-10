@@ -296,3 +296,8 @@ th, td {
     float: right;
     margin-top:2em;
 }
+
+.refundBtn {
+    text-align: right;
+    width: 18%;
+}

@@ -12,6 +12,7 @@ import {IOrderReferenceFee} from '../../interfaces/IOrderReferenceFee';
 import {Router} from '@angular/router';
 import * as ls from "local-storage";
 import { BehaviorSubject } from 'rxjs';
+import { pureFunction1, pipeBind1 } from '@angular/core/src/render3';
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 
 @Component({
@@ -84,6 +85,9 @@ export class CaseTransactionsComponent implements OnInit {
   orderPendingPayments: number =0.00;
   isCPODown: boolean;
   test: boolean;
+  isPBA: boolean = false;
+  isIssueRefunfBtnEnable: boolean = false;
+  isAddRemissionBtnEnabled: boolean = false;
   constructor(private router: Router,
   private paymentViewService: PaymentViewService,
   private bulkScaningPaymentService: BulkScaningPaymentService,
@@ -716,16 +720,48 @@ export class CaseTransactionsComponent implements OnInit {
     this.isRefundRemission = true;
   }
 
-getRemissionByFeeCode(feeCode: string, remissions: IRemission[]): IRemission {
-    if (remissions && remissions.length > 0) {
-      for (const remission of remissions) {
+chkForAddRemission(feeCode: string): boolean {
+  if(this.chkForPBAPayment()) {
+    if (this.orderDetail[0]['remissions'] && this.orderDetail[0]['remissions'].length > 0) {
+      for (const remission of this.orderDetail[0]['remissions']) {
         if (remission.fee_code === feeCode) {
-          return remission;
-          this.isAddFeeBtnEnabled = true;
+          this.isPBA = false;
+          return false;
         }
       }
+    } else {
+      this.isPBA = true;;
+      return true;
     }
-    return null;
+  } else {
+    this.isPBA = false;
+    return false;
+  }
+    
+}
+
+chkForPBAPayment():boolean {
+  this.orderDetail.forEach(orderDetail => {
+    if (orderDetail.payments) {
+      orderDetail.payments.forEach(payment => {
+        if (payment.method.toLocaleLowerCase() === 'payment by account') {
+          this.isPBA = true;
+        }
+      });
+    }  
+  });
+  if (this.isPBA) {
+    return true;
+  } else {
+  return false; 
+  };
+}
+
+chkIssueRefundBtnEnable(payment: IPayment) {
+  if(payment.method === 'payment by account' && payment.status === 'Success') {
+    this.isIssueRefunfBtnEnable = true;
+  }
 }
 
 }
+

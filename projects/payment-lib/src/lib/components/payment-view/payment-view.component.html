@@ -90,7 +90,7 @@
             <!-- Status histories -->
       <ccpay-payment-statuses *ngIf="isStatusAllocated" [isTakePayment]="isTakePayment"></ccpay-payment-statuses>
       </div>
-     <div class="remission">
+     <div *ngIf="chkIssueRefundBtnEnable(paymentGroup.payments[0])" class="remission">
         <button (click)="issueRefund(paymentGroup)" class="govuk-button govuk-button--secondary">Issue refund</button>
      </div>
       
@@ -137,9 +137,12 @@
           </tbody>
         </table>
         <button (click)="addRemission(fee)" *ngIf="(getRemissionByFeeCode(fee.code,fee.remissions)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code,fee.remissions)?.hwf_amount)" class="govuk-button govuk-button--secondary"> Add remission</button>
-            
+           
+        <!-- <button  *ngIf="paymentGroup.payments[0].method === 'payment by account'" (click)="addRemission(fee)" class="govuk-button govuk-button--secondary"> Add remission</button>
+             -->
 
       </div>
+
 
       <!-- card details -->
       <!-- <ccpay-card-details *ngIf="isCardPayment && !isTelephonyPayment"></ccpay-card-details> -->
