@@ -1,6 +1,6 @@
 {
   "name": "ccpay-web-component",
-  "version": "4.0.0-beta353",
+  "version": "4.0.0-beta354",
   "scripts": {
     "ng": "ng",
     "build:library": "ng build payment-lib",
@@ -61,7 +61,7 @@
     "protractor": "~5.4.2",
     "server": "^1.0.18",
     "ts-node": "~8.0.2",
-    "tsickle": ">=0.34.0",
+    "tsickle": "~0.34.0",
     "tslib": "^1.7.1",
     "tslint": "~5.12.1",
     "typescript": "3.2.4",
