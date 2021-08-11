@@ -1,5 +1,4 @@
-<ng-container *ngIf="viewStatus !== 'addremission' && viewStatus !== 'issueRefund' && viewStatus !== 'issuerefund'">
-  {{viewStatus}}
+<ng-container *ngIf="viewStatus === 'paymentview'">
 <div class="govuk-width-container">
 
   <div class="govuk-breadcrumbs">
@@ -23,7 +22,7 @@
       </div>
     </div>
 
-    <div class="payment-view-alignment" *ngIf="!errorMessage && paymentGroup">
+    <div class="payment-view-alignment" *ngIf="!errorMessage">
 
       <input #myInput type='hidden' id='iFrameDrivenImageValue' value='PAYMENTDETAILS'>
       <div class="govuk-grid-row">

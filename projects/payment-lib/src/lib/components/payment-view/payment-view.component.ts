@@ -47,7 +47,7 @@ export class PaymentViewComponent implements OnInit {
     this.selectedOption = this.paymentLibComponent.SELECTED_OPTION;
     this.dcnNumber = this.paymentLibComponent.DCN_NUMBER;
     this.isTurnOff = this.paymentLibComponent.ISTURNOFF;
-
+    this.viewStatus = 'paymentview';
     this.paymentViewService.getApportionPaymentDetails(this.paymentLibComponent.paymentReference).subscribe(
       paymentGroup => {
         let fees = [];
@@ -72,6 +72,7 @@ export class PaymentViewComponent implements OnInit {
         (paymentGroupObj => paymentGroupObj['reference'].includes(this.paymentLibComponent.paymentReference));
         const paymentAllocation = this.paymentGroup.payments[0].payment_allocation;
         this.isStatusAllocated = paymentAllocation.length > 0 && paymentAllocation[0].allocation_status === 'Allocated' || paymentAllocation.length === 0;
+        console.log(this.paymentGroup.payments[0] + '1');
       },  
       (error: any) => this.errorMessage = error
     );
