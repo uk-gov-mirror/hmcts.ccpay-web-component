@@ -1,4 +1,4 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, OnInit, Input, ChangeDetectionStrategy} from '@angular/core';
 import {PaymentViewService} from '../../services/payment-view/payment-view.service';
 import {PaymentLibComponent} from '../../payment-lib.component';
 import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
@@ -10,7 +10,8 @@ const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 @Component({
   selector: 'ccpay-payment-view',
   templateUrl: './payment-view.component.html',
-  styleUrls: ['./payment-view.component.css']
+  styleUrls: ['./payment-view.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PaymentViewComponent implements OnInit {
   @Input() isTurnOff: boolean;
@@ -127,9 +128,14 @@ getRemissionByFeeCode(feeCode: string, remissions: IRemission[]): IRemission {
     return null;
 }
 
-chkIssueRefundBtnEnable(payment: IPayment) {
+chkIssueRefundBtnEnable(payment: IPayment):boolean {
   if(payment.method === 'payment by account' && payment.status === 'Success') {
     this.isIssueRefunfBtnEnable = true;
   }
+  if (this.isIssueRefunfBtnEnable) {
+    return true;
+  } else {
+  return false; 
+  };
 }
 }

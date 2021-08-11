@@ -1,6 +1,6 @@
 {
   "name": "ccpay-web-component",
-  "version": "4.0.0-beta351",
+  "version": "4.0.0-beta352",
   "scripts": {
     "ng": "ng",
     "build:library": "ng build payment-lib",
@@ -114,8 +114,8 @@
     "hosted-git-info": ">=2.8.9 <3.0.0 || >=3.0.8",
     "websocket-extensions": ">=0.1.4",
     "redis": ">=3.1.1",
-    "trim-newlines":">=3.0.1 <4.0.0 || >=4.0.1",
-    "glob-parent":">=5.1.2"
+    "trim-newlines": ">=3.0.1 <4.0.0 || >=4.0.1",
+    "glob-parent": ">=5.1.2"
   },
   "license": "MIT"
 }

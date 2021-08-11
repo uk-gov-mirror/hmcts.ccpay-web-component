@@ -334,7 +334,8 @@ export class AddRemissionComponent implements OnInit {
         this.resetRemissionForm([false, false, false, true, false, true], 'reason');
     } else if (this.refundReason == 'RR004' && this.remissionForm.controls['reason'].value !== '') {
       this.refundHasError = false;
-      this.refundReason = this.refundReason + '-' + this.remissionForm.controls['reason'].value;
+      this.refundReason +=  '-' + this.remissionForm.controls['reason'].value;
+      this.selectedRefundReason = this.remissionForm.controls['reason'].value;
       this.viewCompStatus = '';
       this.viewStatus = 'checkissuerefundpage';
     } else {
@@ -362,9 +363,7 @@ export class AddRemissionComponent implements OnInit {
     if( this.isRefundRemission) {
       this.retroRemission = true;
     }
-    if(this.selectedRefundReason.toLocaleLowerCase() === 'other') {
-      this.refundReason = 'RR004-'+this.selectedRefundReason;
-    }
+   
     const requestBody = new PostRefundRetroRemission(this.payment.reference,this.refundReason);
     this.paymentViewService.postRefundsReason(requestBody).subscribe(
       response => {

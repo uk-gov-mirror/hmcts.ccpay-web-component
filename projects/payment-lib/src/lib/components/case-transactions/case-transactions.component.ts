@@ -758,10 +758,15 @@ chkForPBAPayment():boolean {
   };
 }
 
-chkIssueRefundBtnEnable(payment: IPayment) {
+chkIssueRefundBtnEnable(payment: IPayment):boolean {
   if(payment.method === 'payment by account' && payment.status === 'Success') {
     this.isIssueRefunfBtnEnable = true;
   }
+  if (this.isIssueRefunfBtnEnable) {
+    return true;
+  } else {
+  return false; 
+  };
 }
 
 chkIsRefundRemissionBtnEnable():boolean  {
