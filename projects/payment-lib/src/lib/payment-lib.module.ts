@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 
 import {PaymentListComponent} from './components/payment-list/payment-list.component';
 import {PaymentViewComponent} from './components/payment-view/payment-view.component';
+import {RefundListComponent} from './components/refund-list/refund-list.component';
+
 import {CardDetailsComponent} from './components/card-details/card-details.component';
 import {PageNotFoundComponent} from './components/page-not-found.component';
 import {PaymentLibComponent} from './payment-lib.component';
@@ -40,6 +42,7 @@ import { XlFileService } from './services/xl-file/xl-file.service';
     PaymentLibComponent,
     PaymentListComponent,
     PaymentViewComponent,
+    RefundListComponent,
     CardDetailsComponent,
     PageNotFoundComponent,
     StatusHistoryComponent,
