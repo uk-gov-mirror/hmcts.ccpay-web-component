@@ -456,7 +456,7 @@
                   
                     <tbody class="govuk-table__body" *ngIf="orderLevelFees?.length === 0">
                       <tr class="govuk-table__row" >
-                        <td class="govuk-table__cell" colspan="7" style="text-align:left;">No payment requests on this case.</td>
+                        <td class="govuk-table__cell" colspan="7" style="text-align:left;">No service requests on this case.</td>
                       </tr>
                     </tbody>
                 </table>
@@ -583,12 +583,12 @@
               </table>
             </ng-container>
               <ng-container *ngIf="orderLevelFees?.length === 0">
-                  <br/>No payment requests on this case.<br/>
+                  <br/>No service requests on this case.<br/>
               </ng-container>
               <span>
                   <br/>
                   <a (click)="redirectToFeeSearchPage($event)"
-                    [class.disabled]="!isAddFeeBtnEnabled">Create payment request and pay</a><br/>
+                    [class.disabled]="!isAddFeeBtnEnabled">Create service request and pay</a><br/>
             </span>
           </div>
           <div>
@@ -706,13 +706,13 @@
                       
                         <tbody class="govuk-table__body" *ngIf="orderLevelFees?.length === 0">
                           <tr class="govuk-table__row" >
-                            <td class="govuk-table__cell" colspan="7" style="text-align:left;">No payment requests on this case.</td>
+                            <td class="govuk-table__cell" colspan="7" style="text-align:left;">No service requests on this case.</td>
                           </tr>
                         </tbody>
                     </table>
                   </ng-container>
                   <ng-container *ngIf="orderLevelFees?.length === 0">
-                    <br/>No payment requests on this case.<br/>
+                    <br/>No service requests on this case.<br/>
                   </ng-container>
                   <!-- <span>
                       <a (click)="redirectToFeeSearchPage($event)"
