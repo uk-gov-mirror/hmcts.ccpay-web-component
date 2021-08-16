@@ -28,14 +28,28 @@ import { SanitizeHtmlPipe } from './pipes/sanitize-html.pipe';
 import { ReportsComponent } from './components/reports/reports.component';
 import { XlFileService } from './services/xl-file/xl-file.service';
 import { RefundsComponent } from './components/refunds/refunds.component';
-
+import { TableComponent } from './components/table/table.component';
+import {  MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   imports: [
     CommonModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatFormFieldModule,
+    MatInputModule,
+    BrowserAnimationsModule,
+    NoopAnimationsModule
   ],
   declarations: [
     PaymentLibComponent,
@@ -58,7 +72,8 @@ import { RefundsComponent } from './components/refunds/refunds.component';
     SanitizeHtmlPipe,
     ReportsComponent,
     ErrorBannerComponent,
-    RefundsComponent
+    RefundsComponent,
+    TableComponent
   ],
   exports: [ PaymentLibComponent ],
   providers: [ 

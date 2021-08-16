@@ -385,11 +385,13 @@ export class AddRemissionComponent implements OnInit {
     if( this.isRefundRemission) {
       this.retroRemission = true;
     }
-    const requestBody = new IssueRefundRequest(this.payment.reference,'RR004-Retro remission',this.payment.amount);
+
+    const requestBody = new PostRefundRetroRemission(this.payment.reference,'RR004-Retro remission');
+    // const requestBody = new IssueRefundRequest(this.payment.reference,'RR004-Retro remission',this.payment.amount);
   
-    this.refundService.postIssueRefund(requestBody).subscribe(
+    this.paymentViewService.postRefundsReason(requestBody).subscribe(
       response => {
-          if (JSON.parse(response).success) {
+          if (JSON.parse(response)) {
             this.viewCompStatus  = '';
             this.viewStatus = 'retrorefundconfirmationpage';
             this.refundReference =JSON.parse(response).data.refund_reference;
