@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, RequiredValidator } from '@angular/forms';
 import { IFee } from '../../interfaces/IFee';
 import {Router} from '@angular/router';
@@ -13,6 +13,7 @@ import { AddRetroRemissionRequest } from '../../interfaces/AddRetroRemissionRequ
 import { IssueRefundRequest } from '../../interfaces/IssueRefundRequest';
 import { PostRefundRetroRemission } from '../../interfaces/PostRefundRetroRemission';
 import { PostIssueRefundRetroRemission } from '../../interfaces/PostIssueRefundRetroRemission';
+import {ChangeDetectorRef} from '@angular/core';
 
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 
@@ -80,7 +81,8 @@ export class AddRemissionComponent implements OnInit {
     private router: Router,
     private paymentViewService: PaymentViewService,
     private paymentLibComponent: PaymentLibComponent,
-    private refundService: RefundsService) { }
+    private refundService: RefundsService,
+    private cd: ChangeDetectorRef) { }
 
   ngOnInit() {
     if(this.fee) {
@@ -109,10 +111,12 @@ export class AddRemissionComponent implements OnInit {
     if(this.viewCompStatus === ''){
     this.viewStatus = 'main';
     }
+
     if(this.viewCompStatus === 'issuerefund'){
       this.refundService.getRefundReasons().subscribe(
         refundReasons => { 
           this.refundReasons = refundReasons['data'];
+          this.cd.detectChanges();
         } );
       }
     this.paymentLibComponent.CCD_CASE_NUMBER
@@ -235,12 +239,14 @@ export class AddRemissionComponent implements OnInit {
     this.selectedValue = 'yes';
     this.viewCompStatus = "addremission";
     this.isRefundRemission = true;
+    this.errorMessage = '';
   }
 
   gotoCheckRetroRemissionPage(payment: IPayment) {
+    this.errorMessage = '';
     this.resetRemissionForm([false, false, false, false, false], 'All');
     var remissionctrls=this.remissionForm.controls,
-      isRemissionLessThanFee = this.fee.calculated_amount > remissionctrls.amount.value; 
+      isRemissionLessThanFee = this.fee.calculated_amount >= remissionctrls.amount.value; 
     if (this.remissionForm.dirty ) {
       if(remissionctrls['amount'].value == '' ) {
         this.resetRemissionForm([false, false, true, false, false], 'amount');
@@ -256,9 +262,10 @@ export class AddRemissionComponent implements OnInit {
   }
 
   gotoProcessRetroRemissionPage() {
-    this.viewStatus = 'processretroremissonpage';
-    this.viewCompStatus = "";
+    this.viewStatus = '';
+    this.viewCompStatus = 'addremission';
     this.isRefundRemission = true;
+    this.errorMessage = '';
   }
 
   confirmRetroRemission() {
@@ -299,11 +306,13 @@ export class AddRemissionComponent implements OnInit {
       (error: any) => {
         this.errorMessage = error;
         this.isConfirmationBtnDisabled = false;
+        this.cd.detectChanges();
       }
     );
   }
 
   processRefund() {
+    this.errorMessage = '';
     this.isConfirmationBtnDisabled = true;
     if( this.isRefundRemission) {
       this.retroRemission = true;
@@ -315,7 +324,7 @@ export class AddRemissionComponent implements OnInit {
       if (JSON.parse(response)) {
             this.viewCompStatus  = '';
             this.viewStatus = 'refundconfirmationpage';
-            this.refundReference =JSON.parse(response).refundReference;
+            this.refundReference =JSON.parse(response).refund_reference;
         }
       },
       (error: any) => {
@@ -327,6 +336,7 @@ export class AddRemissionComponent implements OnInit {
   // Issue Refund changes
 
   gotoIssueRefundConfirmation(payment: IPayment) {
+    this.errorMessage = '';
     this.refundReason = this.remissionForm.controls['refundReason'].value;
     if(!this.refundReason) {
       this.refundHasError = true;
@@ -345,13 +355,15 @@ export class AddRemissionComponent implements OnInit {
   }
 
   gotoIssueRefundPage() {
+    this.errorMessage = '';
     this.viewCompStatus = 'issuerefund';
     this.viewStatus = '';
     this.isRefundRemission = true;
   }
 
   changeIssueRefundReason() {
-    this.remissionForm.controls['refundReason'].setValue('Duplicate payment');
+   // this.remissionForm.controls['refundReason'].setValue('Duplicate payment');
+   this.errorMessage = '';
     this.refundHasError = false;
     this.viewCompStatus = 'issuerefund';
     this.viewStatus = '';
@@ -360,6 +372,7 @@ export class AddRemissionComponent implements OnInit {
 
   confirmIssueRefund() {
     this.isConfirmationBtnDisabled = true;
+    this.errorMessage = '';
     if( this.isRefundRemission) {
       this.retroRemission = true;
     }
@@ -374,7 +387,9 @@ export class AddRemissionComponent implements OnInit {
           }
       },
       (error: any) => {
-
+        this.errorMessage = error;
+        this.isConfirmationBtnDisabled = false;
+        this.cd.detectChanges();
       })
   }
 
@@ -382,6 +397,7 @@ export class AddRemissionComponent implements OnInit {
 
   confirmRetroRefund() {
     this.isConfirmationBtnDisabled = true;
+    this.errorMessage = '';
     if( this.isRefundRemission) {
       this.retroRemission = true;
     }
@@ -398,7 +414,8 @@ export class AddRemissionComponent implements OnInit {
           }
       },
       (error: any) => {
-
+        this.errorMessage = error;
+        this.isConfirmationBtnDisabled = false;
       });
   }
 
@@ -412,6 +429,7 @@ export class AddRemissionComponent implements OnInit {
   }
 
   gotoCasetransationPage() {
+    this.errorMessage = '';
     this.paymentLibComponent.viewName = 'case-transactions';
     this.paymentLibComponent.TAKEPAYMENT = true;
     this.paymentLibComponent.ISTURNOFF = this.isTurnOff;

@@ -38,20 +38,20 @@
         </tr> -->
         <tr class="section">
           <td class="bold tb-col-w">Payment reference</td>
-          <td>{{ paymentGroup.payments[0].reference }}</td>
+          <td>{{ paymentGroup?.payments[0]?.reference }}</td>
         </tr>
         <tr class="section">
           <td class="bold tb-col-w">Payment amount</td>
-          <td>£{{ paymentGroup.payments[0].amount | number:'.2' }}</td>
+          <td>£{{ paymentGroup?.payments[0]?.amount | number:'.2' }}</td>
         </tr>
         <tr class="section">
             <td class="bold tb-col-w">Payment method</td>
-            <td>{{ paymentGroup.payments[0].method  }}</td>
+            <td>{{ paymentGroup?.payments[0]?.method  }}</td>
         </tr>
         <tr class="section">
             <td class="bold tb-col-w">Type</td>
-            <td *ngIf="paymentGroup.payments[0].method !== 'card'">Credit</td>
-            <td *ngIf="paymentGroup.payments[0].method === 'card'">CARD</td>
+            <td *ngIf="paymentGroup?.payments[0]?.method !== 'card'">Credit</td>
+            <td *ngIf="paymentGroup?.payments[0]?.method === 'card'">CARD</td>
         </tr>
         <tr class="section">
             <td class="bold tb-col-w">Channel</td>
@@ -59,16 +59,16 @@
         </tr>
         <tr class="section">
             <td class="bold tb-col-w">Method</td>
-            <td *ngIf="paymentGroup.payments[0].method !== 'card'">{{ paymentGroup.payments[0].method }}</td>
-            <td *ngIf="paymentGroup.payments[0].method === 'card'">CARD</td>
+            <td *ngIf="paymentGroup?.payments[0]?.method !== 'card'">{{ paymentGroup.payments[0].method }}</td>
+            <td *ngIf="paymentGroup?.payments[0]?.method === 'card'">CARD</td>
         </tr>
         <tr class="section">
             <td class="bold tb-col-w">Status</td>
-            <td>{{ paymentGroup.payments[0].status }}</td>
+            <td>{{ paymentGroup?.payments[0]?.status }}</td>
          </tr>
         <tr class="section">
             <td class="bold tb-col-w">Allocaton Status</td>
-            <td>{{ paymentGroup.payments[0].payment_allocation[0].allocation_status }}</td>
+            <td>{{ paymentGroup?.payments[0]?.payment_allocation[0]?.allocation_status }}</td>
           </tr>
         <!-- <tr class="section" *ngIf="paymentGroup.payments[0] && paymentGroup.payments[0].external_reference">
           <td class="bold tb-col-w">GovPay Transaction ID</td>
@@ -135,7 +135,7 @@
           </tr> -->
           </tbody>
         </table>
-        <button (click)="addRemission(fee)" *ngIf="(getRemissionByFeeCode(fee.code,fee.remissions)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code,fee.remissions)?.hwf_amount)" class="govuk-button govuk-button--secondary"> Add remission</button>
+        <button (click)="addRemission(fee)" *ngIf="chkForAddRemission(fee.code)" class="govuk-button govuk-button--secondary"> Add remission</button>
            
         <!-- <button  *ngIf="paymentGroup.payments[0].method === 'payment by account'" (click)="addRemission(fee)" class="govuk-button govuk-button--secondary"> Add remission</button>
              -->
@@ -164,11 +164,12 @@
 [viewCompStatus]= "viewStatus"
 [isNewPcipalOff]="isNewPcipalOff" 
 [fee]="feeId" 
+[payment] = "payment"
 [orderStatus] ="paymentGroup.payments[0].status"
 [paidAmount]= "paymentGroup.payments[0].amount"
 [isRefundRemission]="isRefundRemission"
 [caseType]="caseType" 
-[paymentGroupRef]="paymentGroup.payments[0].reference" 
+[paymentGroupRef]="paymentGroup.payment_group_reference" 
 [ccdCaseNumber]="ccdCaseNumber"></ccpay-add-remission>
 </ng-container>
 

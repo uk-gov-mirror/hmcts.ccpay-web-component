@@ -831,7 +831,7 @@
               <td class="govuk-table__header" scope="col">Fee</td>
               <td class="govuk-table__header" scope="col">Amount</td>
               <td class="govuk-table__header" scope="col">Total</td>
-              <td *ngIf="isPBA" class="govuk-table__header" scope="col"></td>
+              <td  class="govuk-table__header" scope="col"></td>
             </tr>
             </thead>
             <tbody class="govuk-table__body" *ngFor="let order of orderDetail;">
@@ -842,6 +842,9 @@
                 <td  *ngIf="chkForAddRemission(fee.code)" class="govuk-table__cell" style="text-align: right;" >
                     <button (click)="addRemission(fee)" class="govuk-button govuk-button--secondary"> Add remission</button>
                 </td>
+                <td  *ngIf="!chkForAddRemission(fee.code)" class="govuk-table__cell" style="text-align: right;" >
+                  
+              </td>
               </tr>
             </tbody>
             <tbody class="govuk-table__body" *ngFor="let order of orderDetail;">
@@ -877,7 +880,7 @@
              <td class="govuk-table__header col-27 whitespace-inherit" scope="col">Reference</td>
              <td class="govuk-table__header whitespace-inherit" scope="col">Fee</td>
              <td class="govuk-table__header whitespace-inherit" scope="col">Amount</td>
-             <td *ngIf="chkIsRefundRemissionBtnEnable()" class="govuk-table__header whitespace-inherit refundBtn" scope="col"></td>
+             <td  class="govuk-table__header whitespace-inherit refundBtn" scope="col"></td>
            </tr>
        </thead>
        <tbody class="govuk-table__body" >
@@ -889,6 +892,9 @@
              <td *ngIf="chkIsRefundRemissionBtnEnable()" class="govuk-table__cell refundBtn whitespace-inherit"  >
                 <button (click)="addRefundForRemission(order.payments[0])" class="govuk-button govuk-button--secondary"> Refund remission</button>
              </td>
+             <td *ngIf="!chkIsRefundRemissionBtnEnable()" class="govuk-table__cell refundBtn whitespace-inherit"  >
+              
+           </td>
            </tr>
        </tbody>
        
@@ -919,7 +925,7 @@
               <td class="govuk-table__header" scope="col"></td>
               <td class="govuk-table__header" scope="col">Date created</td>
               <td class="govuk-table__header" scope="col">Amount</td>
-              <td *ngIf="isIssueRefunfBtnEnable" class="govuk-table__header" scope="col"></td>
+              <td class="govuk-table__header" scope="col"></td>
             </tr>
         </thead>
         <tbody class="govuk-table__body">
@@ -931,7 +937,9 @@
               <td class="govuk-table__cell whitespace-inherit">{{ payment.amount | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
               <td *ngIf="chkIssueRefundBtnEnable(payment)" class="govuk-table__cell" style="text-align: right;">
                 <button (click)="issueRefund(payment)" class="govuk-button govuk-button--secondary">Issue refund</button>
-          </td>
+              </td>
+              <td  *ngIf="!chkIssueRefundBtnEnable(payment)" class="govuk-table__cell" style="text-align: right;">
+              </td>
             </tr>
         </tbody>
       </table>

@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, ChangeDetectionStrategy} from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
 import {PaymentViewService} from '../../services/payment-view/payment-view.service';
 import {PaymentLibComponent} from '../../payment-lib.component';
 import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
@@ -6,12 +6,12 @@ import {IFee} from '../../interfaces/IFee';
 import { IPayment } from '../../interfaces/IPayment';
 import {IRemission} from '../../interfaces/IRemission';
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
+import {ChangeDetectorRef} from '@angular/core';
 
 @Component({
   selector: 'ccpay-payment-view',
   templateUrl: './payment-view.component.html',
-  styleUrls: ['./payment-view.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./payment-view.component.css']
 })
 export class PaymentViewComponent implements OnInit {
   @Input() isTurnOff: boolean;
@@ -39,7 +39,8 @@ export class PaymentViewComponent implements OnInit {
   isIssueRefunfBtnEnable: boolean = false;
 
   constructor(private paymentViewService: PaymentViewService,
-              private paymentLibComponent: PaymentLibComponent) {
+              private paymentLibComponent: PaymentLibComponent,
+              private cd: ChangeDetectorRef) {
   }
 
   ngOnInit() {
@@ -107,8 +108,19 @@ export class PaymentViewComponent implements OnInit {
 
   addRemission(fee: IFee) {
     this.feeId = fee;
-    this.viewStatus = 'addremission';
-    this.isRefundRemission = true;
+    this.paymentViewService.getApportionPaymentDetails(this.paymentGroup.payments[0].reference).subscribe(
+      paymentGroup => {
+        this.paymentGroup = paymentGroup;
+
+        this.paymentGroup.payments = this.paymentGroup.payments.filter
+        (paymentGroupObj => paymentGroupObj['reference'].includes(this.paymentLibComponent.paymentReference));
+        this.payment = this.paymentGroup.payments[0];
+        this.viewStatus = 'addremission';
+        this.isRefundRemission = true;
+        this.cd.detectChanges();
+      },  
+      (error: any) => this.errorMessage = error
+    );
   }
 
   issueRefund(paymentgrp: IPaymentGroup ) {
@@ -138,5 +150,30 @@ chkIssueRefundBtnEnable(payment: IPayment):boolean {
   } else {
   return false; 
   };
+}
+
+chkForPBAPayment():boolean {
+  
+  if (this.paymentGroup.payments[0].method.toLocaleLowerCase() === 'payment by account') {
+    return true;
+  }
+  return false;
+}
+
+chkForAddRemission(feeCode: string): boolean {
+  if(this.chkForPBAPayment()) {
+    if (this.paymentGroup.remissions && this.paymentGroup.remissions.length > 0) {
+      for (const remission of this.paymentGroup.remissions) {
+        if (remission.fee_code === feeCode) {
+          return false;
+        }
+      }
+    } else {
+      return true;
+    }
+  } else {
+    return false;
+  }
+    
 }
 }
