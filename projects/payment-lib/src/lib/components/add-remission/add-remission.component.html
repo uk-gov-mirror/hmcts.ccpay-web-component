@@ -178,7 +178,7 @@
           </tr>
           <tr class="govuk-table__row">
               <td class="govuk-table__cell govuk-!-font-weight-bold">Payment amount</td>
-              <td class="govuk-table__cell">{{remessionPayment ? remessionPayment.amount: ' '}}</td>
+              <td class="govuk-table__cell">{{ remessionPayment ? remessionPayment.amount: ' ' | currency :'GBP':'symbol':'1.2-2'}} </td>
           </tr>
           <tr class="govuk-table__row">
               <td class="govuk-table__cell govuk-!-font-weight-bold">Payment status</td>
@@ -333,7 +333,7 @@
           </tr>
           <tr class="govuk-table__row">
               <td class="govuk-table__cell govuk-!-font-weight-bold">Payment amount</td>
-              <td class="govuk-table__cell">{{this.payment.amount}}</td>
+              <td class="govuk-table__cell">{{this.payment.amount | currency:'GBP':'symbol-narrow':'1.2-2'}}</td>
           </tr>
       </table>
 
@@ -370,7 +370,7 @@
           </tr>
           <tr class="govuk-table__row">
               <td class="govuk-table__cell govuk-!-font-weight-bold">Refund amount</td>
-              <td class="govuk-table__cell">{{this.payment.amount}}</td>
+              <td class="govuk-table__cell">{{this.payment.amount | currency:'GBP':'symbol-narrow':'1.2-2'}}</td>
           </tr>
           <tr class="govuk-table__row">
               <td class="govuk-table__cell govuk-!-font-weight-bold">Fee code</td>
@@ -378,7 +378,7 @@
           </tr>
           <tr class="govuk-table__row">
               <td class="govuk-table__cell govuk-!-font-weight-bold">Fee amount</td>
-              <td class="govuk-table__cell">{{this.remission.hwf_amount}}</td>
+              <td class="govuk-table__cell">{{this.remission.hwf_amount | currency:'GBP':'symbol-narrow':'1.2-2'}}</td>
           </tr>
       </table>
 
@@ -413,7 +413,7 @@
         <div *ngIf="isPaymentSuccess">
         <h2 class="govuk-heading-l">What happens next</h2>
         <p class="govuk-body">
-          A refund request for {{this.payment.amount}} has been passed to a team leader to approve.
+          A refund request for {{this.payment.amount | currency:'GBP':'symbol-narrow':'1.2-2'}} has been passed to a team leader to approve.
         </p>
       </div>
         <p class="govuk-body">

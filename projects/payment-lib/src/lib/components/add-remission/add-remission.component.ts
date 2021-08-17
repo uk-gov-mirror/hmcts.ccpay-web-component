@@ -277,19 +277,20 @@ export class AddRemissionComponent implements OnInit {
   confirmRetroRemission() {
     this.isConfirmationBtnDisabled = true;
     this.retroRemission = true;
+    this.remissionamt = this.remissionForm.controls.amount.value;
 
-    if(this.remessionPayment.status === 'Success') {
-      if(this.fee.calculated_amount.toString() === this.remissionForm.controls.amount.value) {
-        this.remissionamt =this.remissionForm.controls.amount.value
-      }
-      else 
-      {
-        this.remissionamt = this.fee.calculated_amount - this.remissionForm.controls.amount.value;
-      }
+    // if(this.remessionPayment.status === 'Success') {
+    //   if(this.fee.calculated_amount.toString() === this.remissionForm.controls.amount.value) {
+    //     this.remissionamt =this.remissionForm.controls.amount.value
+    //   }
+    //   else 
+    //   {
+    //     this.remissionamt = this.fee.calculated_amount - this.remissionForm.controls.amount.value;
+    //   }
 
-    } else {
-      this.remissionamt = this.remissionForm.controls.amount.value;
-    }
+    // } else {
+    //   this.remissionamt = this.remissionForm.controls.amount.value;
+    // }
     const requestBody = new AddRetroRemissionRequest(this.remissionamt,this.remissionForm.controls.remissionCode.value )
     this.paymentViewService.postPaymentGroupWithRetroRemissions(decodeURIComponent(this.paymentGroupRef).trim(), this.fee.id, requestBody).subscribe(
       response => {
