@@ -362,7 +362,7 @@
       <table class="govuk-table">
           <tr class="govuk-table__row">
               <td class="govuk-table__cell govuk-!-font-weight-bold">Reason for refund</td>
-              <td class="govuk-table__cell"> Retro remission </td>
+              <td class="govuk-table__cell"> Retrospective remission </td>
           </tr>
           <tr class="govuk-table__row">
               <td class="govuk-table__cell govuk-!-font-weight-bold">Payment reference</td>
@@ -371,6 +371,14 @@
           <tr class="govuk-table__row">
               <td class="govuk-table__cell govuk-!-font-weight-bold">Refund amount</td>
               <td class="govuk-table__cell">{{this.payment.amount}}</td>
+          </tr>
+          <tr class="govuk-table__row">
+              <td class="govuk-table__cell govuk-!-font-weight-bold">Fee code</td>
+              <td class="govuk-table__cell">{{this.remission.fee_code}}</td>
+          </tr>
+          <tr class="govuk-table__row">
+              <td class="govuk-table__cell govuk-!-font-weight-bold">Fee amount</td>
+              <td class="govuk-table__cell">{{this.remission.hwf_amount}}</td>
           </tr>
       </table>
 

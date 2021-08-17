@@ -14,6 +14,7 @@ import { IssueRefundRequest } from '../../interfaces/IssueRefundRequest';
 import { PostRefundRetroRemission } from '../../interfaces/PostRefundRetroRemission';
 import { PostIssueRefundRetroRemission } from '../../interfaces/PostIssueRefundRetroRemission';
 import {ChangeDetectorRef} from '@angular/core';
+import { IRemission } from '../../interfaces/IRemission';
 
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 
@@ -25,6 +26,7 @@ const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 export class AddRemissionComponent implements OnInit {
   @Input() fee: IFee;
   @Input() payment: IPayment;
+  @Input() remission: IRemission;
   @Input() ccdCaseNumber: string;
   @Input() caseType: string;
   @Input() viewCompStatus: string;
@@ -85,6 +87,10 @@ export class AddRemissionComponent implements OnInit {
     private cd: ChangeDetectorRef) { }
 
   ngOnInit() {
+
+    if(this.remission) {
+      this.cd.detectChanges();
+    }
     if(this.fee) {
     this.amount = (this.fee.volume * this.fee.calculated_amount);
     }
@@ -204,7 +210,7 @@ export class AddRemissionComponent implements OnInit {
   addRemissionCode() {
     this.resetRemissionForm([false, false, false, false, false, false], 'All');
     const remissionctrls=this.remissionForm.controls,
-      isRemissionLessThanFee = this.fee.calculated_amount > remissionctrls.amount.value; 
+      isRemissionLessThanFee = this.fee.calculated_amount >= remissionctrls.amount.value; 
       this.remissionForm.controls['refundReason'].setErrors(null);
       this.remissionForm.controls['amount'].setErrors(null);
     if (this.remissionForm.dirty && this.remissionForm.valid && isRemissionLessThanFee) {
@@ -273,7 +279,14 @@ export class AddRemissionComponent implements OnInit {
     this.retroRemission = true;
 
     if(this.remessionPayment.status === 'Success') {
-      this.remissionamt = this.fee.calculated_amount - this.remissionForm.controls.amount.value;
+      if(this.fee.calculated_amount.toString() === this.remissionForm.controls.amount.value) {
+        this.remissionamt =this.remissionForm.controls.amount.value
+      }
+      else 
+      {
+        this.remissionamt = this.fee.calculated_amount - this.remissionForm.controls.amount.value;
+      }
+
     } else {
       this.remissionamt = this.remissionForm.controls.amount.value;
     }
@@ -383,7 +396,7 @@ export class AddRemissionComponent implements OnInit {
           if (JSON.parse(response)) {
             this.viewCompStatus  = '';
             this.viewStatus = 'refundconfirmationpage';
-            this.refundReference =JSON.parse(response).data.refundReference;
+            this.refundReference =JSON.parse(response).refund_reference;
           }
       },
       (error: any) => {
@@ -402,7 +415,7 @@ export class AddRemissionComponent implements OnInit {
       this.retroRemission = true;
     }
 
-    const requestBody = new PostRefundRetroRemission(this.payment.reference,'RR004-Retro remission');
+    const requestBody = new PostRefundRetroRemission(this.payment.reference,'RR004-Retrospective remission');
     // const requestBody = new IssueRefundRequest(this.payment.reference,'RR004-Retro remission',this.payment.amount);
   
     this.paymentViewService.postRefundsReason(requestBody).subscribe(
@@ -410,7 +423,7 @@ export class AddRemissionComponent implements OnInit {
           if (JSON.parse(response)) {
             this.viewCompStatus  = '';
             this.viewStatus = 'retrorefundconfirmationpage';
-            this.refundReference =JSON.parse(response).data.refund_reference;
+            this.refundReference =JSON.parse(response).refund_reference;
           }
       },
       (error: any) => {

@@ -609,7 +609,7 @@ export class CaseTransactionsComponent implements OnInit {
     );
   }
 
-  addRefundForRemission(payment: IPayment) {
+  addRefundForRemission(payment: IPayment, remission: IRemission[]) {
     this.viewStatus = 'addrefundforremission';
     this.payment = payment;
     this.paymentViewService.getApportionPaymentDetails(this.payment.reference).subscribe(
@@ -619,6 +619,7 @@ export class CaseTransactionsComponent implements OnInit {
         this.paymentGroup.payments = this.paymentGroup.payments.filter
         (paymentGroupObj => paymentGroupObj['reference'].includes(this.payment.reference));
         this.payment = this.paymentGroup.payments[0];
+        this.remissions = remission;
         // const paymentAllocation = this.paymentGroup.payments[0].payment_allocation;
         // this.isStatusAllocated = paymentAllocation.length > 0 && paymentAllocation[0].allocation_status === 'Allocated' || paymentAllocation.length === 0;
       },  
