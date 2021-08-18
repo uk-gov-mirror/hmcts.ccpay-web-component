@@ -26,8 +26,8 @@ export class ErrorHandlerService {
         } else {
           errorMessage = err.error;
         }
-      } else if (err.statusText) {
-        errorMessage = `${err.statusText}`;
+      } else if (err.error) {
+        errorMessage = JSON.parse(err.error)["err"].split('-')[1];
       }
        else if (err.error.messsage === undefined) {
         errorMessage = 'Server error';

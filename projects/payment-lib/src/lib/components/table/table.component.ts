@@ -14,11 +14,11 @@ import {MatPaginator } from '@angular/material/paginator';
   styleUrls: ['./table.component.css']
 })
 export class TableComponent {
-  displayedColumns = ['id', 'name', 'progress', 'color'];
+  displayedColumns = ['ccdCaseNumber', 'refundReference', 'reason', 'createBy', 'updateDate', 'Action'];
   dataSource: MatTableDataSource<any>;
   userLst;
 
-  userData = [
+  usersData = [
     {
       "refundReference": "001",
       "amount": "100",
@@ -32,7 +32,7 @@ export class TableComponent {
       "updateDate": "2021-07-20T09:12:52.778Z"
     },
     {
-      "refundReference": "001",
+      "refundReference": "002",
       "amount": "200",
       "reason": "reason2",
       "status": "SUBMITTED",
@@ -56,18 +56,6 @@ export class TableComponent {
       "updateDate": "2021-07-20T09:12:52.778Z"
     }, 
     {
-      "refundReference": "001",
-      "amount": "100",
-      "reason": "reason1",
-      "status": "SUBMITTED",
-      "paymentReference": "RC1",
-      "ccdCaseNumber": "10101010101010101010",
-      "createBy": "USER1",
-      "updateBy": "USER1",
-      "createDate": "2021-07-20T09:12:52.778Z",
-      "updateDate": "2021-07-20T09:12:52.778Z"
-    },
-    {
       "refundReference": "004",
       "amount": "400",
       "reason": "reason4",
@@ -79,18 +67,7 @@ export class TableComponent {
       "createDate": "2021-07-20T09:12:52.778Z",
       "updateDate": "2021-07-20T09:12:52.778Z"
     },
-    {
-      "refundReference": "001",
-      "amount": "100",
-      "reason": "reason1",
-      "status": "SUBMITTED",
-      "paymentReference": "RC1",
-      "ccdCaseNumber": "10101010101010101010",
-      "createBy": "USER1",
-      "updateBy": "USER1",
-      "createDate": "2021-07-20T09:12:52.778Z",
-      "updateDate": "2021-07-20T09:12:52.778Z"
-    },
+ 
     {
       "refundReference": "005",
       "amount": "500",
@@ -105,18 +82,6 @@ export class TableComponent {
     },
     {
       "refundReference": "006",
-      "amount": "100",
-      "reason": "reason1",
-      "status": "SUBMITTED",
-      "paymentReference": "RC1",
-      "ccdCaseNumber": "10101010101010101010",
-      "createBy": "USER1",
-      "updateBy": "USER1",
-      "createDate": "2021-07-20T09:12:52.778Z",
-      "updateDate": "2021-07-20T09:12:52.778Z"
-    },
-    {
-      "refundReference": "001",
       "amount": "600",
       "reason": "reason6",
       "status": "SUBMITTED",
@@ -150,7 +115,7 @@ export class TableComponent {
       "updateBy": "USER8",
       "createDate": "2021-07-20T09:12:52.778Z",
       "updateDate": "2021-07-20T09:12:52.778Z"
-    }, 
+    }
   ];
 
 
@@ -163,9 +128,9 @@ export class TableComponent {
     for (let i = 1; i <= 100; i++) { users.push(createNewUser(i)); }
 
     // Assign the data to the data source for the table to render
-    this.dataSource = new MatTableDataSource(this.userData);
-    this.userLst = this.userData.reduce((r,{createBy}) => (r[createBy]='', r) , {});
-    //this.userLst = JSON.parse(this.userLst);
+    this.dataSource = new MatTableDataSource(this.usersData);
+    this.userLst = this.usersData.reduce((r,{createBy}) => (r[createBy]='', r) , {});
+    // this.userLst = JSON.parse(this.userLst);
   }
 
   
