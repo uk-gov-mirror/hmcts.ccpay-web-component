@@ -61,6 +61,7 @@ export class AddRemissionComponent implements OnInit {
   retroRemission: boolean = false;
   remissionReference: string;
   refundReference: string;
+  refundAmount: string;
   paymentExplanationHasError: boolean = false;
   refundReason:string;
   selectedRefundReason: string;
@@ -338,7 +339,8 @@ export class AddRemissionComponent implements OnInit {
       if (JSON.parse(response)) {
             this.viewCompStatus  = '';
             this.viewStatus = 'refundconfirmationpage';
-            this.refundReference =JSON.parse(response).refund_reference;
+            this.refundReference = JSON.parse(response).refund_reference;
+            this.refundAmount = JSON.parse(response).refund_amount;
         }
       },
       (error: any) => {
@@ -398,6 +400,9 @@ export class AddRemissionComponent implements OnInit {
             this.viewCompStatus  = '';
             this.viewStatus = 'refundconfirmationpage';
             this.refundReference =JSON.parse(response).refund_reference;
+            if(JSON.parse(response).refund_amount) {
+            this.refundAmount = JSON.parse(response).refund_amount;
+            }
           }
       },
       (error: any) => {
@@ -425,6 +430,9 @@ export class AddRemissionComponent implements OnInit {
             this.viewCompStatus  = '';
             this.viewStatus = 'retrorefundconfirmationpage';
             this.refundReference =JSON.parse(response).refund_reference;
+            if(JSON.parse(response).refund_amount) {
+              this.refundAmount = JSON.parse(response).refund_amount;
+              }
           }
       },
       (error: any) => {

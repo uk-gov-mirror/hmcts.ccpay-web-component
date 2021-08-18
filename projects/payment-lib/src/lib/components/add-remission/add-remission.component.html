@@ -218,7 +218,7 @@
             Remission added
           </h1>
           <div *ngIf="remessionPayment.status === 'Success'" class="govuk-panel__body">
-              <p class="govuk-body" style="color: white"><strong>The amount to be refunded should be {{remissionForm.controls.amount.value  | currency:'GBP':'symbol-narrow':'1.2-2' }}</strong></p>
+              <p class="govuk-body" style="color: white"><strong>The amount to be refunded should be {{remissionForm.controls.amount.value | currency:'GBP':'symbol-narrow':'1.2-2' }}</strong></p>
              
             </div>
           </div>
@@ -249,7 +249,7 @@
           <div *ngIf="isPaymentSuccess">
           <h2 class="govuk-heading-l">What happens next</h2>
           <p class="govuk-body">
-            A refund request for {{remissionForm.controls.amount.value  | currency:'GBP':'symbol-narrow':'1.2-2' }} has been created and will be passed to a team leader to approve.
+            A refund request for {{refundAmount  | currency:'GBP':'symbol-narrow':'1.2-2' }} has been created and will be passed to a team leader to approve.
           </p>
         </div>
           <p class="govuk-body">
@@ -370,7 +370,7 @@
           </tr>
           <tr class="govuk-table__row">
               <td class="govuk-table__cell govuk-!-font-weight-bold">Refund amount</td>
-              <td class="govuk-table__cell">{{this.payment.amount | currency:'GBP':'symbol-narrow':'1.2-2'}}</td>
+              <td class="govuk-table__cell">{{this.remission.hwf_amount | currency:'GBP':'symbol-narrow':'1.2-2'}}</td>
           </tr>
           <tr class="govuk-table__row">
               <td class="govuk-table__cell govuk-!-font-weight-bold">Fee code</td>
@@ -413,7 +413,7 @@
         <div *ngIf="isPaymentSuccess">
         <h2 class="govuk-heading-l">What happens next</h2>
         <p class="govuk-body">
-          A refund request for {{this.payment.amount | currency:'GBP':'symbol-narrow':'1.2-2'}} has been passed to a team leader to approve.
+          A refund request for {{ refundAmount| currency:'GBP':'symbol-narrow':'1.2-2'}} has been passed to a team leader to approve.
         </p>
       </div>
         <p class="govuk-body">

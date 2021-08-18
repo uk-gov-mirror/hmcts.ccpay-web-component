@@ -26,9 +26,10 @@ export class ErrorHandlerService {
         } else {
           errorMessage = err.error;
         }
-      } else if (err.error !== undefined) {
-        errorMessage = err.error} 
-      else if (err.error.messsage === undefined) {
+      } else if (err.statusText) {
+        errorMessage = `${err.statusText}`;
+      }
+       else if (err.error.messsage === undefined) {
         errorMessage = 'Server error';
       } else {
         errorMessage = `${err.error.message}`;
