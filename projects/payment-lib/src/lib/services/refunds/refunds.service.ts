@@ -28,6 +28,15 @@ export class RefundsService {
         catchError(this.errorHandlerService.handleError)
       );
   }
+
+  getUserDetails(): Observable<any> {
+    return this.http.get<any>(`${this.paymentLibService.REFUNDS_API_ROOT}/get-user-details`, {
+    withCredentials: true
+  })
+    .pipe(
+      catchError(this.errorHandlerService.handleError)
+    );
+}
  
   postIssueRefund(body: IssueRefundRequest): Observable<any> {
     return this.https.post(`${this.paymentLibService.REFUNDS_API_ROOT}/refund`, body).pipe(

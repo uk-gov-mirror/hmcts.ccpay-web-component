@@ -89,6 +89,7 @@ export class AddRemissionComponent implements OnInit {
 
   ngOnInit() {
 
+    
     if(this.remission) {
       this.cd.detectChanges();
     }
@@ -126,6 +127,11 @@ export class AddRemissionComponent implements OnInit {
           this.cd.detectChanges();
         } );
       }
+
+      this.refundService.getUserDetails().subscribe(
+        userdetail => { 
+          console.log(userdetail['data']);
+        } );
     this.paymentLibComponent.CCD_CASE_NUMBER
   }
 
