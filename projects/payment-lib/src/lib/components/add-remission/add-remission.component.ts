@@ -59,7 +59,7 @@ export class AddRemissionComponent implements OnInit {
   selectedValue = 'yes';
   amount: any;
   retroRemission: boolean = false;
-  remissionReference: string;
+  remissionReference: string = '';
   refundReference: string;
   refundAmount: string;
   paymentExplanationHasError: boolean = false;
@@ -337,6 +337,9 @@ export class AddRemissionComponent implements OnInit {
     this.isConfirmationBtnDisabled = true;
     if( this.isRefundRemission) {
       this.retroRemission = true;
+    }
+    if (this.remissionReference === undefined || this.remissionReference === '') {
+      this.remissionReference = this.remission.remission_reference;
     }
     const requestBody = new PostIssueRefundRetroRemission(this.remissionReference);
   
