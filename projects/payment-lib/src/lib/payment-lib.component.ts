@@ -53,6 +53,7 @@ export class PaymentLibComponent implements OnInit {
   @Input('CASETYPE') CASETYPE: string;
   @Input('ISOLDPCIPALOFF') ISOLDPCIPALOFF: boolean;
   @Input('ISNEWPCIPALOFF') ISNEWPCIPALOFF: boolean;
+  @Input('rootUrl') rootUrl: boolean;
 
   paymentMethod: string;
   bspaymentdcn: string;
