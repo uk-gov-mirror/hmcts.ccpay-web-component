@@ -48,7 +48,9 @@
     word-wrap: break-word;
     font-size: 19px;
     line-height: 25px;
-    font-family: "nta",Arial,sans-serif;
+    color: #005ea5;
+    cursor: pointer;
+    font-family: inherit;
   }
   
   
