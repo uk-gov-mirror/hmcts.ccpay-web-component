@@ -91,7 +91,7 @@
                       <td class="govuk-table__cell">	{{fee.code}} </td>
                       <td class="govuk-table__cell">{{fee.description}}</td>
                       <td class="govuk-table__cell">{{fee.volume? fee.volume : '-'}}</td>
-                      <td class="govuk-table__cell">{{ fee.fee_amount | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
+                      <td class="govuk-table__cell">{{ fee.net_amount | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
                       <td class="govuk-table__cell">{{fee.calculated_amount | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
                       <td class="govuk-table__cell govuk-!-font-weight-bold"  [attr.rowspan]="paymentGroup.fees.length" *ngIf="paymentGroup.old && i==0"> {{getGroupOutstandingAmount(paymentGroup)| currency:'GBP':'symbol-narrow':'1.2-2'}}* </td>
                       <td class="govuk-table__cell" *ngIf="!paymentGroup.old"> {{calculateAmountDue(fee) | currency:'GBP':'symbol-narrow':'1.2-2'}} </td>
@@ -284,7 +284,7 @@
               <td class="govuk-table__cell govuk-table__cell--col1">{{fee.code}}</td>
               <td class="govuk-table__cell govuk-table__cell--col2"> {{fee.description}} </td>
               <td class="govuk-table__cell govuk-table__cell--col3 align-center"> {{fee.volume? fee.volume : '-'}} </td>
-              <td class="govuk-table__cell govuk-table__cell--col4"> {{ fee.fee_amount | currency:'GBP':'symbol-narrow':'1.2-2' }} </td>
+              <td class="govuk-table__cell govuk-table__cell--col4"> {{ fee.net_amount | currency:'GBP':'symbol-narrow':'1.2-2' }} </td>
               <td class="govuk-table__cell govuk-table__cell--col5"> {{fee.calculated_amount | currency:'GBP':'symbol-narrow':'1.2-2' }} </td>
               <td class="govuk-table__cell govuk-table__cell--col6 govuk-table__custom--col6" [attr.rowspan]="paymentGroup.fees.length" *ngIf="i==0">
                 {{getGroupOutstandingAmount(paymentGroup) | currency:'GBP':'symbol-narrow':'1.2-2' }} </td>
@@ -837,8 +837,8 @@
             <tbody class="govuk-table__body" *ngFor="let order of orderDetail;">
               <tr class="govuk-table__row" *ngFor="let fee of order.fees; let i = index;">
                 <td class="govuk-table__cell col-60 whitespace-inherit">{{fee.description}}</td>
-                <td class="govuk-table__cell">{{fee.volume? fee.volume : '-'}} X {{ fee.fee_amount | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
-                <td class="govuk-table__cell">{{ (fee.volume *fee.fee_amount) | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
+                <td class="govuk-table__cell">{{fee.volume? fee.volume : '-'}} X {{ fee.net_amount | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
+                <td class="govuk-table__cell">{{ (fee.volume *fee.net_amount) | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
                 <td  *ngIf="chkForAddRemission(fee.code)" class="govuk-table__cell" style="text-align: right;" >
                     <button (click)="addRemission(fee)" class="govuk-button govuk-button--secondary"> Add remission</button>
                 </td>
