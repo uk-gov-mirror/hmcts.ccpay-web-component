@@ -128,11 +128,11 @@ export class AddRemissionComponent implements OnInit {
         } );
       }
 
-      this.refundService.getUserDetails().subscribe(
-        userdetail => { 
-          console.log(userdetail);
-          console.log(userdetail['data']);
-        } );
+      // this.refundService.getUserDetails().subscribe(
+      //   userdetail => { 
+      //     console.log(userdetail);
+      //     console.log(userdetail['data']);
+      //   } );
     this.paymentLibComponent.CCD_CASE_NUMBER
   }
 

@@ -1,13 +1,8 @@
-
 import {Component, ViewChild} from '@angular/core';
 import { MatTableDataSource} from '@angular/material/table';
 import {MatSort } from '@angular/material/sort';
 import {MatPaginator } from '@angular/material/paginator';
 
-
-/**
- * @title Data table with sorting, pagination, and filtering.
- */
 @Component({
   selector: 'ccpay-table',
   templateUrl: './table.component.html',
@@ -20,98 +15,98 @@ export class TableComponent {
 
   usersData = [
     {
-      "refundReference": "001",
+      "refundReference": "RF-1324-6846-2454-5445",
       "amount": "100",
-      "reason": "reason1",
+      "reason": "Case Withdrawn",
       "status": "SUBMITTED",
       "paymentReference": "RC1",
-      "ccdCaseNumber": "10101010101010101010",
-      "createBy": "USER1",
+      "ccdCaseNumber": "1010-1010-1010-1010",
+      "createBy": "USER1 USER1",
       "updateBy": "USER1",
       "createDate": "2021-07-20T09:12:52.778Z",
       "updateDate": "2021-07-20T09:12:52.778Z"
     },
     {
-      "refundReference": "002",
+      "refundReference": "RF-1324-6846-2454-5446",
       "amount": "200",
-      "reason": "reason2",
+      "reason": "Case Withdrawn",
       "status": "SUBMITTED",
       "paymentReference": "RC2",
-      "ccdCaseNumber": "10101010101010101010",
-      "createBy": "USER2",
+      "ccdCaseNumber": "1010-1010-1010-1010",
+      "createBy": "USER2 USER2",
       "updateBy": "USER2",
       "createDate": "2021-07-20T09:12:52.778Z",
       "updateDate": "2021-07-20T09:12:52.778Z"
     }, 
     {
-      "refundReference": "003",
+      "refundReference": "RF-1324-6846-2454-5447",
       "amount": "300",
-      "reason": "reason3",
+      "reason": "reason3 hhhh hhh hhh hhh hhhh",
       "status": "SUBMITTED",
       "paymentReference": "RC3",
-      "ccdCaseNumber": "10101010101010101010",
-      "createBy": "USER3",
+      "ccdCaseNumber": "1010-1010-1010-1010",
+      "createBy": "USER3 USER3",
       "updateBy": "USER3",
       "createDate": "2021-07-20T09:12:52.778Z",
       "updateDate": "2021-07-20T09:12:52.778Z"
     }, 
     {
-      "refundReference": "004",
+      "refundReference": "RF-1324-6846-2454-5448",
       "amount": "400",
-      "reason": "reason4",
+      "reason": "Case Withdrawn",
       "status": "SUBMITTED",
       "paymentReference": "RC4",
-      "ccdCaseNumber": "10101010101010101010",
-      "createBy": "USER4",
+      "ccdCaseNumber": "1010-1010-1010-1010",
+      "createBy": "USER4 USER4",
       "updateBy": "USER4",
       "createDate": "2021-07-20T09:12:52.778Z",
       "updateDate": "2021-07-20T09:12:52.778Z"
     },
  
     {
-      "refundReference": "005",
+      "refundReference": "RF-1324-6846-2454-5449",
       "amount": "500",
-      "reason": "reason5",
+      "reason": "Case Withdrawn",
       "status": "SUBMITTED",
       "paymentReference": "RC5",
-      "ccdCaseNumber": "10101010101010101010",
-      "createBy": "USER5",
+      "ccdCaseNumber": "1010-1010-1010-1010",
+      "createBy": "USER5 USER5",
       "updateBy": "USER5",
       "createDate": "2021-07-20T09:12:52.778Z",
       "updateDate": "2021-07-20T09:12:52.778Z"
     },
     {
-      "refundReference": "006",
+      "refundReference": "RF-1324-6846-2454-5450",
       "amount": "600",
-      "reason": "reason6",
+      "reason": "Case Withdrawn",
       "status": "SUBMITTED",
       "paymentReference": "RC6",
-      "ccdCaseNumber": "10101010101010101010",
-      "createBy": "USER6",
+      "ccdCaseNumber": "1010-1010-1010-1010",
+      "createBy": "USER6 USER6",
       "updateBy": "USER6",
       "createDate": "2021-07-20T09:12:52.778Z",
       "updateDate": "2021-07-20T09:12:52.778Z"
     },
     {
-      "refundReference": "007",
+      "refundReference": "RF-1324-6846-2454-5451",
       "amount": "700",
-      "reason": "reason7",
+      "reason": "Case Withdrawn",
       "status": "SUBMITTED",
       "paymentReference": "RC7",
-      "ccdCaseNumber": "10101010101010101010",
-      "createBy": "USER7",
+      "ccdCaseNumber": "1010-1010-1010-1010",
+      "createBy": "USER7 USER7",
       "updateBy": "USER7",
       "createDate": "2021-07-20T09:12:52.778Z",
       "updateDate": "2021-07-20T09:12:52.778Z"
     },
     {
-      "refundReference": "008",
+      "refundReference": "RF-1324-6846-2454-5452",
       "amount": "800",
-      "reason": "reason8",
+      "reason": "Case Withdrawn",
       "status": "SUBMITTED",
       "paymentReference": "RC8",
-      "ccdCaseNumber": "10101010101010101010",
-      "createBy": "USER8",
+      "ccdCaseNumber": "1010-1010-1010-1010",
+      "createBy": "USER8 USER8",
       "updateBy": "USER8",
       "createDate": "2021-07-20T09:12:52.778Z",
       "updateDate": "2021-07-20T09:12:52.778Z"
@@ -130,7 +125,7 @@ export class TableComponent {
     // Assign the data to the data source for the table to render
     this.dataSource = new MatTableDataSource(this.usersData);
     this.userLst = this.usersData.reduce((r,{createBy}) => (r[createBy]='', r) , {});
-    // this.userLst = JSON.parse(this.userLst);
+     this.userLst = Object.keys(this.userLst);
   }
 
   

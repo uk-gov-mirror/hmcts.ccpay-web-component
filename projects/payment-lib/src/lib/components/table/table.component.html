@@ -10,7 +10,7 @@
     </label>
     <select class="govuk-select" id="sort" name="sort" (change)="selectchange($event)">
       <option value="" selected='selected'>All caseworkers</option>
-      <option  *ngFor="let name of userLst;" value="{{name.createBy}}">{{name.createBy}}</option>
+      <option  *ngFor="let name of userLst;" value="{{name}}">{{name}}</option>
     </select>
   </div>
 
@@ -20,13 +20,13 @@
   <mat-table [dataSource]="dataSource" matSort>
 
     <ng-container matColumnDef="ccdCaseNumber">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Case ID </mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.ccdCaseNumber}} </mat-cell>
+      <mat-header-cell style="width:5% !important;" *matHeaderCellDef mat-sort-header>Case ID </mat-header-cell>
+      <mat-cell style="width:5% !important;" *matCellDef="let row"> {{row.ccdCaseNumber}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="refundReference">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Refund reference </mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.refundReference}}% </mat-cell>
+      <mat-header-cell style="width:7% !important;" *matHeaderCellDef mat-sort-header> Refund reference </mat-header-cell>
+      <mat-cell style="width:7% !important;" *matCellDef="let row"> {{row.refundReference}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="reason">
@@ -46,7 +46,7 @@
 
       <ng-container matColumnDef="Action">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Action </mat-header-cell>
-          <mat-cell *matCellDef="let row" [style.color]="row.color"> TBD</mat-cell>
+          <mat-cell *matCellDef="let row" [style.color]="row.color"> <a href="https://fees-and-payments.herokuapp.com/orders/pages/v1caseinccd?casetype=civil&amp;state=withdrawn&amp;result=submitted&amp;user=teamleader">Review case</a>&nbsp;<a href="https://fees-and-payments.herokuapp.com/orders/pages/refund/review-approve?casetype=civil&amp;state=withdrawn&amp;user=teamleader">Process refund</a></mat-cell>
         </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

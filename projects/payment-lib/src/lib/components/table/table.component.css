@@ -15,7 +15,7 @@
 } */
 
 .mat-cell {
-    padding: 10px 10px 10px 0;
+    padding: 0px 10px 0px 0;
     text-align: left;
     word-wrap: break-word;
     white-space: inherit!important;

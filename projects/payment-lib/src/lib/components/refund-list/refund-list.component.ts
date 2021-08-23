@@ -1,4 +1,5 @@
 import {Component, OnInit, Input} from '@angular/core';
+import { RefundsService } from '../../services/refunds/refunds.service';
 
 @Component({
   selector: 'ccpay-refund-list',
@@ -6,15 +7,20 @@ import {Component, OnInit, Input} from '@angular/core';
   styleUrls: ['./refund-list.component.css']
 })
 export class RefundListComponent implements OnInit {
-  @Input('ROLE') ROLE: String;
+  @Input('USERID') USERID: string;
 
-  constructor() {
+  constructor(private refundService: RefundsService) {
   }
 
   tableApprovalHeader: string;
   tableRejectedHeader: string;
 
   ngOnInit() {
+    this.refundService.getUserDetails().subscribe(
+      userdetail => { 
+        console.log(userdetail);
+        console.log(userdetail['data']);
+      } );
       this.tableApprovalHeader = 'Refunds to be approved';
       this.tableRejectedHeader = 'Refunds returned to caseworker';
   }
