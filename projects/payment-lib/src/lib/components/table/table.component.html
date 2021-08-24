@@ -20,7 +20,7 @@
 
     <ng-container matColumnDef="ccdCaseNumber">
       <mat-header-cell  *matHeaderCellDef mat-sort-header>Case ID </mat-header-cell>
-      <mat-cell  *matCellDef="let row"> {{row.ccd_case_number}} </mat-cell>
+      <mat-cell  *matCellDef="let row"> {{row.ccd_case_number | ccdHyphens }} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="refundReference">
