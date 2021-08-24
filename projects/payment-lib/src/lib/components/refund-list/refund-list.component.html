@@ -9,7 +9,7 @@
     <h2 class="govuk-heading-l">{{tableApprovalHeader}}</h2>
   </div>
 </div>
-<div><ccpay-table [DATASOURCE]="submittedRefundList"></ccpay-table></div>
+<div><ccpay-table [DATASOURCE]="submittedRefundList" [STATUS]="approvalStatus"></ccpay-table></div>
 
 
 <div class="hmcts-page-heading">
@@ -18,5 +18,5 @@
   </div>
  
 </div>
-<div><ccpay-table [DATASOURCE]="rejectedRefundList"></ccpay-table></div>
+<div><ccpay-table [DATASOURCE]="rejectedRefundList" [STATUS]="rejectStatus"></ccpay-table></div>
 

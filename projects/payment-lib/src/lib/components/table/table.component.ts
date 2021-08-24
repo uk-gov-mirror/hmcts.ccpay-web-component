@@ -12,6 +12,8 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 })
 export class TableComponent {
   @Input('DATASOURCE') DATASOURCE: IRefundList[];
+  @Input('STATUS') STATUS: string;
+  isApprovalFlow: boolean;
   
   displayedColumns = ['ccd_case_number', 'refund_reference', 'reason', 'user_full_name', 'date_updated', 'Action'];
   dataSource: MatTableDataSource<any>;
@@ -135,7 +137,12 @@ export class TableComponent {
      this.userLst = Object.keys(this.userLst);
   }
 
-  
+  ngOnInit() { 
+    if(this.STATUS.toLowerCase() === 'sent for approval') {
+      this.isApprovalFlow = true;
+    }
+    this.isApprovalFlow = false;
+  }
   /**
    * Set the paginator and sort after the view init since this component will
    * be able to query its view for the initialized paginator and sort.

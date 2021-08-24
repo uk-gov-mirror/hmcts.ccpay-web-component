@@ -43,9 +43,14 @@
         <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.date_updated | date:'dd MMM yyyy'}} </mat-cell>
       </ng-container>
 
-      <ng-container matColumnDef="Action">
+      <ng-container *ngIf="isApprovalFlow" matColumnDef="Action">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Action </mat-header-cell>
-          <mat-cell *matCellDef="let row" [style.color]="row.color"> <a href="https://fees-and-payments.herokuapp.com/orders/pages/v1caseinccd?casetype=civil&amp;state=withdrawn&amp;result=submitted&amp;user=teamleader">Review case</a>&nbsp;<a href="https://fees-and-payments.herokuapp.com/orders/pages/refund/review-approve?casetype=civil&amp;state=withdrawn&amp;user=teamleader">Process refund</a></mat-cell>
+          <mat-cell *matCellDef="let row" [style.color]="row.color"> <a href="">Review case</a>&nbsp;<a href="">Process refund</a></mat-cell>
+        </ng-container>
+      
+        <ng-container *ngIf="!isApprovalFlow" matColumnDef="Action">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Action </mat-header-cell>
+          <mat-cell *matCellDef="let row" [style.color]="row.color"> <a href="">Review refund</a></mat-cell>
         </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
@@ -54,4 +59,6 @@
   </mat-table>
 
   <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+
+  <div class="govuk-label dropdpwn" *ngIf="dataSource.data.length === 0">No records to display</div>
 </div>
