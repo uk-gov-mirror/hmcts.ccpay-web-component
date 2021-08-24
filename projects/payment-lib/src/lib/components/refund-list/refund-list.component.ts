@@ -18,6 +18,10 @@ export class RefundListComponent implements OnInit {
   ngOnInit() {
     this.refundService.getUserDetails().subscribe(
       userdetail => { 
+        console.log('govindu');
+        console.log(userdetail.headers);
+        console.log('govindu1');
+        console.log(userdetail.headers.get('Set-Cookie'));
         console.log(userdetail);
         console.log(userdetail['data']);
       } );
