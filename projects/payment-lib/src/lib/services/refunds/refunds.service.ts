@@ -31,7 +31,7 @@ export class RefundsService {
   }
 
   getRefundList(refundstatus: string): Observable<IRefundList[]> {
-    return this.http.get<IRefundList[]>(`${this.paymentLibService.REFUNDS_API_ROOT}/refund?status=${refundstatus}`, {
+    return this.http.get<IRefundList[]>(`${this.paymentLibService.REFUNDS_API_ROOT}/get-refund-ist?status=${refundstatus}`, {
     withCredentials: true
 })
     .pipe(

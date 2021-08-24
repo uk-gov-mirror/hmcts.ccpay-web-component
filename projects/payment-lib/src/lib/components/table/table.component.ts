@@ -13,7 +13,7 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 export class TableComponent {
   @Input('DATASOURCE') DATASOURCE: IRefundList[];
   
-  displayedColumns = ['ccdCaseNumber', 'refundReference', 'reason', 'createBy', 'updateDate', 'Action'];
+  displayedColumns = ['ccd_case_number', 'refund_reference', 'reason', 'user_full_name', 'date_updated', 'Action'];
   dataSource: MatTableDataSource<any>;
   userLst;
   actualcount: number;
@@ -22,101 +22,101 @@ export class TableComponent {
 
   usersData = [
     {
-      "refundReference": "RF-1324-6846-2454-5445",
+      "refund_reference": "RF-1324-6846-2454-5445",
       "amount": "100",
       "reason": "Case Withdrawn",
       "status": "SUBMITTED",
-      "paymentReference": "RC1",
-      "ccdCaseNumber": "1010-1010-1010-1010",
-      "createBy": "USER1 USER1",
+      "payment_reference": "RC1",
+      "ccd_case_number": "1010-1010-1010-1010",
+      "user_full_name": "USER1 USER1",
       "updateBy": "USER1",
-      "createDate": "2021-07-20T09:12:52.778Z",
-      "updateDate": "2021-07-20T09:12:52.778Z"
+      "date_created": "2021-07-20T09:12:52.778Z",
+      "date_updated": "2021-07-20T09:12:52.778Z"
     },
     {
-      "refundReference": "RF-1324-6846-2454-5446",
+      "refund_reference": "RF-1324-6846-2454-5446",
       "amount": "200",
       "reason": "Case Withdrawn",
       "status": "SUBMITTED",
-      "paymentReference": "RC2",
-      "ccdCaseNumber": "1010-1010-1010-1010",
-      "createBy": "USER2 USER2",
+      "payment_reference": "RC2",
+      "ccd_case_number": "1010-1010-1010-1010",
+      "user_full_name": "USER2 USER2",
       "updateBy": "USER2",
-      "createDate": "2021-07-20T09:12:52.778Z",
-      "updateDate": "2021-07-20T09:12:52.778Z"
+      "date_created": "2021-07-20T09:12:52.778Z",
+      "date_updated": "2021-07-20T09:12:52.778Z"
     }, 
     {
-      "refundReference": "RF-1324-6846-2454-5447",
+      "refund_reference": "RF-1324-6846-2454-5447",
       "amount": "300",
       "reason": "reason3 hhhh hhh hhh hhh hhhh",
       "status": "SUBMITTED",
-      "paymentReference": "RC3",
-      "ccdCaseNumber": "1010-1010-1010-1010",
-      "createBy": "USER3 USER3",
+      "payment_reference": "RC3",
+      "ccd_case_number": "1010-1010-1010-1010",
+      "user_full_name": "USER3 USER3",
       "updateBy": "USER3",
-      "createDate": "2021-07-20T09:12:52.778Z",
-      "updateDate": "2021-07-20T09:12:52.778Z"
+      "date_created": "2021-07-20T09:12:52.778Z",
+      "date_updated": "2021-07-20T09:12:52.778Z"
     }, 
     {
-      "refundReference": "RF-1324-6846-2454-5448",
+      "refund_reference": "RF-1324-6846-2454-5448",
       "amount": "400",
       "reason": "Case Withdrawn",
       "status": "SUBMITTED",
-      "paymentReference": "RC4",
-      "ccdCaseNumber": "1010-1010-1010-1010",
-      "createBy": "USER4 USER4",
+      "payment_reference": "RC4",
+      "ccd_case_number": "1010-1010-1010-1010",
+      "user_full_name": "USER4 USER4",
       "updateBy": "USER4",
-      "createDate": "2021-07-20T09:12:52.778Z",
-      "updateDate": "2021-07-20T09:12:52.778Z"
+      "date_created": "2021-07-20T09:12:52.778Z",
+      "date_updated": "2021-07-20T09:12:52.778Z"
     },
  
     {
-      "refundReference": "RF-1324-6846-2454-5449",
+      "refund_reference": "RF-1324-6846-2454-5449",
       "amount": "500",
       "reason": "Case Withdrawn",
       "status": "SUBMITTED",
-      "paymentReference": "RC5",
-      "ccdCaseNumber": "1010-1010-1010-1010",
-      "createBy": "USER5 USER5",
+      "payment_reference": "RC5",
+      "ccd_case_number": "1010-1010-1010-1010",
+      "user_full_name": "USER5 USER5",
       "updateBy": "USER5",
-      "createDate": "2021-07-20T09:12:52.778Z",
-      "updateDate": "2021-07-20T09:12:52.778Z"
+      "date_created": "2021-07-20T09:12:52.778Z",
+      "date_updated": "2021-07-20T09:12:52.778Z"
     },
     {
-      "refundReference": "RF-1324-6846-2454-5450",
+      "refund_reference": "RF-1324-6846-2454-5450",
       "amount": "600",
       "reason": "Case Withdrawn",
       "status": "SUBMITTED",
-      "paymentReference": "RC6",
-      "ccdCaseNumber": "1010-1010-1010-1010",
-      "createBy": "USER6 USER6",
+      "payment_reference": "RC6",
+      "ccd_case_number": "1010-1010-1010-1010",
+      "user_full_name": "USER6 USER6",
       "updateBy": "USER6",
-      "createDate": "2021-07-20T09:12:52.778Z",
-      "updateDate": "2021-07-20T09:12:52.778Z"
+      "date_created": "2021-07-20T09:12:52.778Z",
+      "date_updated": "2021-07-20T09:12:52.778Z"
     },
     {
-      "refundReference": "RF-1324-6846-2454-5451",
+      "refund_reference": "RF-1324-6846-2454-5451",
       "amount": "700",
       "reason": "Case Withdrawn",
       "status": "SUBMITTED",
-      "paymentReference": "RC7",
-      "ccdCaseNumber": "1010-1010-1010-1010",
-      "createBy": "USER7 USER7",
+      "payment_reference": "RC7",
+      "ccd_case_number": "1010-1010-1010-1010",
+      "user_full_name": "USER7 USER7",
       "updateBy": "USER7",
-      "createDate": "2021-07-20T09:12:52.778Z",
-      "updateDate": "2021-07-20T09:12:52.778Z"
+      "date_created": "2021-07-20T09:12:52.778Z",
+      "date_updated": "2021-07-20T09:12:52.778Z"
     },
     {
-      "refundReference": "RF-1324-6846-2454-5452",
+      "refund_reference": "RF-1324-6846-2454-5452",
       "amount": "800",
       "reason": "Case Withdrawn",
       "status": "SUBMITTED",
-      "paymentReference": "RC8",
-      "ccdCaseNumber": "1010-1010-1010-1010",
-      "createBy": "USER8 USER8",
+      "payment_reference": "RC8",
+      "ccd_case_number": "1010-1010-1010-1010",
+      "user_full_name": "USER8 USER8",
       "updateBy": "USER8",
-      "createDate": "2021-07-20T09:12:52.778Z",
-      "updateDate": "2021-07-20T09:12:52.778Z"
+      "date_created": "2021-07-20T09:12:52.778Z",
+      "date_updated": "2021-07-20T09:12:52.778Z"
     }
   ];
 
@@ -128,9 +128,10 @@ export class TableComponent {
     this.refundList = this.DATASOURCE;
 
     // Assign the data to the data source for the table to render
-    this.dataSource = new MatTableDataSource(this.usersData);
+   //  this.dataSource = new MatTableDataSource(this.usersData);
+    this.dataSource = new MatTableDataSource(this.refundList);
     this.actualcount = this.dataSource.data.length;
-    this.userLst = this.usersData.reduce((r,{createBy}) => (r[createBy]='', r) , {});
+    this.userLst = this.usersData.reduce((r,{user_full_name}) => (r[user_full_name]='', r) , {});
      this.userLst = Object.keys(this.userLst);
   }
 
