@@ -7,6 +7,7 @@ import {Observable} from 'rxjs/Observable';
 import {catchError} from 'rxjs/operators';
 import { AllocatePaymentRequest } from '../../interfaces/AllocatePaymentRequest';
 import { IRefundReasons } from '../../interfaces/IRefundReasons';
+import { IRefundList } from '../../interfaces/IRefundList';
 import { IssueRefundRequest } from '../../interfaces/IssueRefundRequest';
 
 @Injectable({
@@ -28,6 +29,15 @@ export class RefundsService {
         catchError(this.errorHandlerService.handleError)
       );
   }
+
+  getRefundList(refundstatus: string): Observable<IRefundList[]> {
+    return this.http.get<IRefundList[]>(`${this.paymentLibService.REFUNDS_API_ROOT}/refund?status=${refundstatus}`, {
+    withCredentials: true
+})
+    .pipe(
+      catchError(this.errorHandlerService.handleError)
+    );
+}
 
   getUserDetails(): Observable<any> {
     return this.http.get<any>(`${this.paymentLibService.REFUNDS_API_ROOT}/get-user-details`, {

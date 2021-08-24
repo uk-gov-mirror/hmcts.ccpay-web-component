@@ -1,7 +1,9 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, ViewChild, Input} from '@angular/core';
 import { MatTableDataSource} from '@angular/material/table';
 import {MatSort } from '@angular/material/sort';
 import {MatPaginator } from '@angular/material/paginator';
+import { IRefundList } from '../../interfaces/IRefundList';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'ccpay-table',
@@ -9,11 +11,14 @@ import {MatPaginator } from '@angular/material/paginator';
   styleUrls: ['./table.component.css']
 })
 export class TableComponent {
+  @Input('DATASOURCE') DATASOURCE: IRefundList[];
+  
   displayedColumns = ['ccdCaseNumber', 'refundReference', 'reason', 'createBy', 'updateDate', 'Action'];
   dataSource: MatTableDataSource<any>;
   userLst;
   actualcount: number;
   count: number;
+  refundList: IRefundList[];
 
   usersData = [
     {
@@ -120,6 +125,7 @@ export class TableComponent {
   @ViewChild(MatSort) sort: MatSort;
 
   constructor() {
+    this.refundList = this.DATASOURCE;
 
     // Assign the data to the data source for the table to render
     this.dataSource = new MatTableDataSource(this.usersData);

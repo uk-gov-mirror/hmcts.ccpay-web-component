@@ -1,5 +1,6 @@
 import {Component, OnInit, Input} from '@angular/core';
 import { RefundsService } from '../../services/refunds/refunds.service';
+import { IRefundList } from '../../interfaces/IRefundList';
 
 @Component({
   selector: 'ccpay-refund-list',
@@ -14,6 +15,8 @@ export class RefundListComponent implements OnInit {
 
   tableApprovalHeader: string;
   tableRejectedHeader: string;
+  submittedRefundList: IRefundList[] = [];
+  rejectedRefundList: IRefundList[] = [];
 
   ngOnInit() {
     this.refundService.getUserDetails().subscribe(
@@ -25,8 +28,21 @@ export class RefundListComponent implements OnInit {
         console.log(userdetail);
         console.log(userdetail['data']);
       } );
-      this.tableApprovalHeader = 'Refunds to be approved';
-      this.tableRejectedHeader = 'Refunds returned to caseworker';
+
+    this.refundService.getRefundList('SUBMITTED').subscribe(
+      refundList => {
+        this.submittedRefundList = refundList['refund_list'];
+      }
+    );
+
+    this.refundService.getRefundList('sent for approval').subscribe(
+      refundList => {
+        this.rejectedRefundList = refundList['refund_list'];
+      }
+    );
+
+    this.tableApprovalHeader = 'Refunds to be approved';
+    this.tableRejectedHeader = 'Refunds returned to caseworker';
   }
   
 }
