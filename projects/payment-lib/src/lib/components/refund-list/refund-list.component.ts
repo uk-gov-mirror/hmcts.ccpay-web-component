@@ -29,13 +29,13 @@ export class RefundListComponent implements OnInit {
         console.log(userdetail['data']);
       } );
 
-    this.refundService.getRefundList('SUBMITTED').subscribe(
+    this.refundService.getRefundList('sent for approval').subscribe(
       refundList => {
         this.submittedRefundList = refundList['refund_list'];
       }
     );
 
-    this.refundService.getRefundList('sent for approval').subscribe(
+    this.refundService.getRefundList('sent back').subscribe(
       refundList => {
         this.rejectedRefundList = refundList['refund_list'];
       }
