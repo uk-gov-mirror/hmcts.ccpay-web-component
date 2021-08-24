@@ -11,8 +11,6 @@ import {IRemission} from '../../interfaces/IRemission';
 import {IOrderReferenceFee} from '../../interfaces/IOrderReferenceFee';
 import {Router} from '@angular/router';
 import * as ls from "local-storage";
-import { BehaviorSubject } from 'rxjs';
-import { pureFunction1, pipeBind1 } from '@angular/core/src/render3';
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 
 @Component({

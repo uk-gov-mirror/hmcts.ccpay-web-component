@@ -1,7 +1,8 @@
 import {Component, ViewChild} from '@angular/core';
-import { MatTableDataSource} from '@angular/material/table';
-import {MatSort } from '@angular/material/sort';
-import {MatPaginator } from '@angular/material/paginator';
+import {PaymentLibComponent} from '../../payment-lib.component';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'ccpay-table',
@@ -119,7 +120,9 @@ export class TableComponent {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor() {
+  constructor(
+    private paymentLibComponent: PaymentLibComponent
+  ) {
 
     // Assign the data to the data source for the table to render
     this.dataSource = new MatTableDataSource(this.usersData);
@@ -149,6 +152,9 @@ export class TableComponent {
     this.dataSource.filter = args.target.value;
     this.actualcount = this.dataSource.data.length;
   } 
+  goToRefundProcessComponent() {
+    this.paymentLibComponent.viewName = 'process-refund';
+  }
 }
 
 

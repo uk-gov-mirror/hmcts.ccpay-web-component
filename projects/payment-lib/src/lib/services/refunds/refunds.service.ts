@@ -5,7 +5,6 @@ import { WebComponentHttpClient } from '../shared/httpclient/webcomponent.http.c
 import {PaymentLibService} from '../../payment-lib.service';
 import {Observable} from 'rxjs/Observable';
 import {catchError} from 'rxjs/operators';
-import { AllocatePaymentRequest } from '../../interfaces/AllocatePaymentRequest';
 import { IRefundReasons } from '../../interfaces/IRefundReasons';
 import { IssueRefundRequest } from '../../interfaces/IssueRefundRequest';
 

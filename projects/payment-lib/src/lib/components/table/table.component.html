@@ -45,7 +45,7 @@
 
       <ng-container matColumnDef="Action">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Action </mat-header-cell>
-          <mat-cell *matCellDef="let row" [style.color]="row.color"> <a href="https://fees-and-payments.herokuapp.com/orders/pages/v1caseinccd?casetype=civil&amp;state=withdrawn&amp;result=submitted&amp;user=teamleader">Review case</a>&nbsp;<a href="https://fees-and-payments.herokuapp.com/orders/pages/refund/review-approve?casetype=civil&amp;state=withdrawn&amp;user=teamleader">Process refund</a></mat-cell>
+          <mat-cell *matCellDef="let row" [style.color]="row.color"> <a href="https://fees-and-payments.herokuapp.com/orders/pages/v1caseinccd?casetype=civil&amp;state=withdrawn&amp;result=submitted&amp;user=teamleader">Review case</a>&nbsp;<a href="javascript:void(0)" (click)="goToRefundProcessComponent()">Process refund</a></mat-cell>
         </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

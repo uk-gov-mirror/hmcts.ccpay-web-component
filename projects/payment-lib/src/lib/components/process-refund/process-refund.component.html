@@ -1,0 +1,135 @@
+<ng-container *ngIf="viewStatus === 'RefundProcess'">
+<div class="govuk-width-container">
+
+  <div class="govuk-breadcrumbs">
+    <ol class="govuk-breadcrumbs__list">
+      <li class="govuk-breadcrumbs__list-item">
+        <a href="#" class="govuk-back-link">Back</a>
+      </li>
+    </ol>
+  </div>
+
+  <main class="govuk-main-wrapper govuk-!-padding-top-0" id="main-content" role="main">
+
+    <div *ngIf="errorMessage">
+      <div class="error-summary" role="group" aria-labelledby="failure-error-summary-heading" tabindex="-1">
+        <h2 class="heading-medium error-summary-heading" id="failure-error-summary-heading">
+          Payment details could not be retrieved
+        </h2>
+        <div class="govuk-error-summary__body">
+        </div>
+      </div>
+    </div>
+
+    <div class="payment-view-alignment" *ngIf="!errorMessage">
+
+      <div class="govuk-grid-row">
+        <div class="column">
+          <h1 class="heading-large govuk-!-margin-top-0">Review refund details</h1>
+        </div>
+      </div>
+      <table>
+        <tbody>
+
+        <tr class="section">
+          <td class="bold tb-col-w">Payment to be refunded</td>
+          <td>	RF-6846-1682-8741-3548 (£550.00)</td>
+        </tr>
+        <tr class="section">
+          <td class="bold tb-col-w">Reason for refund</td>
+          <td>	Case withdrawn</td>
+        </tr>
+        <tr class="section">
+            <td class="bold tb-col-w">Amount to be refunded</td>
+            <td>£550.00</td>
+        </tr>
+        <tr class="section">
+            <td class="bold tb-col-w">Submitted by</td>
+            <td>Steve Smith</td>
+
+        </tr>
+        <tr class="section">
+            <td class="bold tb-col-w">Date submitted</td>
+            <td>	10 July 2021</td>
+        </tr>
+
+        </tbody>
+      </table>
+
+      <div>
+      </div>
+    </div>
+    <div style="display: flex;flex-direction: column;margin-left: 22px;margin-top: 10px; margin-bottom: 10px;">
+    <div class="govuk-grid-row">
+      <div class="column">
+        <h1 class="heading-large govuk-!-margin-top-0">What do you want to do with this refund?
+        </h1>
+      </div>
+    </div>
+    <div class="multiple-choice unprocessed-payments--radio-button">
+      <input id="orderfee"
+      aria-label="orderLevelRecord"
+      name="orderLevelRecord"
+  
+      type="radio"
+      value="test" />
+      <label for="radio-inline-1"> Approve refund</label>
+    </div>
+    <div class="multiple-choice unprocessed-payments--radio-button">
+      <input id="orderfee"
+      aria-label="orderLevelRecord"
+      name="orderLevelRecord"
+  
+      type="radio"
+      value="test" />
+      <label for="radio-inline-1"> Reject refund</label>
+    </div>
+    <div class="multiple-choice unprocessed-payments--radio-button">
+      <input id="orderfee"
+      aria-label="orderLevelRecord"
+      name="orderLevelRecord"
+  
+      type="radio"
+      value="test" />
+      <label for="radio-inline-1"> Return to caseworker</label>
+    </div>
+  </div>
+<div style="display: flex;flex-direction: column;margin-left: 22px; margin-top: 10px; margin-bottom: 10px;">
+    <div class="govuk-grid-row">
+      <div class="column">
+        <h2 class="heading-large govuk-!-margin-top-0">Why are you rejecting this refund?
+        </h2>
+      </div>
+    </div>
+    <div class="multiple-choice unprocessed-payments--radio-button">
+      <input id="orderfee"
+      aria-label="orderLevelRecord"
+      name="orderLevelRecord"
+  
+      type="radio"
+      value="test" />
+      <label for="radio-inline-1"> Approve refund</label>
+    </div>
+    <div class="multiple-choice unprocessed-payments--radio-button">
+      <input id="orderfee"
+      aria-label="orderLevelRecord"
+      name="orderLevelRecord"
+  
+      type="radio"
+      value="test" />
+      <label for="radio-inline-1"> Reject refund</label>
+    </div>
+    <div class="multiple-choice unprocessed-payments--radio-button">
+      <input id="orderfee"
+      aria-label="orderLevelRecord"
+      name="orderLevelRecord"
+  
+      type="radio"
+      value="test" />
+      <label for="radio-inline-1"> Return to caseworker</label>
+    </div>
+  </div>
+  </main>
+</div>
+</ng-container>
+

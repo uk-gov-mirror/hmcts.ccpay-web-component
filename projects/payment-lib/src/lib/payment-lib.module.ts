@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 
 import {PaymentListComponent} from './components/payment-list/payment-list.component';
 import {PaymentViewComponent} from './components/payment-view/payment-view.component';
+import {ProcessRefundComponent} from './components/process-refund/process-refund.component';
 import {RefundListComponent} from './components/refund-list/refund-list.component';
 
 import {CardDetailsComponent} from './components/card-details/card-details.component';
@@ -57,6 +58,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
     PaymentLibComponent,
     PaymentListComponent,
     PaymentViewComponent,
+    ProcessRefundComponent,
     RefundListComponent,
     CardDetailsComponent,
     PageNotFoundComponent,

@@ -11,6 +11,9 @@ import { IBSPayments } from './interfaces/IBSPayments';
     [isTurnOff]="ISTURNOFF" [isTakePayment]="TAKEPAYMENT"  [caseType]="CASETYPE"
     [isOldPcipalOff]="ISOLDPCIPALOFF"
     [isNewPcipalOff]="ISNEWPCIPALOFF"></ccpay-payment-view>
+
+    <ccpay-process-refund *ngIf="viewName === 'process-refund'"></ccpay-process-refund>
+
     <ccpay-case-transactions  *ngIf="viewName === 'case-transactions'"></ccpay-case-transactions>
     <app-mark-unidentified-payment *ngIf="viewName === 'unidentifiedPage'"
     [caseType]="CASETYPE"></app-mark-unidentified-payment>
