@@ -10,11 +10,11 @@
     </div>
   </div>
 
-<div class="govuk-form-group" style="float: right">
+<div *ngIf="dataSource.data.length > 0"  class="govuk-form-group" style="float: right">
     <label class="govuk-label dropdpwn" for="sort" >
       Filter by caseworker:
     </label>
-    <select *ngIf="dataSource.data.length > 0" class="govuk-select" id="sort" name="sort" (change)="selectchange($event)">
+    <select class="govuk-select" id="sort" name="sort" (change)="selectchange($event)">
       <option value="" selected='selected'>All caseworkers</option>
       <option  *ngFor="let name of userLst;" value="{{name}}">{{name}}</option>
     </select>
@@ -41,7 +41,7 @@
 
     <ng-container matColumnDef="createBy">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Submitted by </mat-header-cell>
-      <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.date_created | date:'dd MMM yyyy'}} </mat-cell>
+      <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.user_full_name | date:'dd MMM yyyy'}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="updateDate">

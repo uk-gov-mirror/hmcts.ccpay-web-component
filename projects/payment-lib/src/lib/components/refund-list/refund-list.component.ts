@@ -20,6 +20,8 @@ export class RefundListComponent implements OnInit {
   approvalStatus = 'sent for approval';
   rejectStatus = 'sent back';
   errorMessage = null;
+  isApproveTableVisible:boolean;
+  isRejectTableVisible:boolean;
 
   ngOnInit() {
     this.refundService.getUserDetails().subscribe(
@@ -32,9 +34,14 @@ export class RefundListComponent implements OnInit {
         console.log(userdetail['data']);
       } );
 
+  
+    this.tableApprovalHeader = 'Refunds to be approved';
+    this.tableRejectedHeader = 'Refunds returned to caseworker';
+
     this.refundService.getRefundList(this.approvalStatus,true).subscribe(
       refundList => {
-        this.submittedRefundList = refundList['refund_list'];
+        this.submittedRefundList = refundList['data']['refund_list'];
+        this.isApproveTableVisible = true;
       }
     ),
     (error: any) => {
@@ -43,15 +50,14 @@ export class RefundListComponent implements OnInit {
 
     this.refundService.getRefundList(this.rejectStatus,false).subscribe(
       refundList => {
-        this.rejectedRefundList = refundList['refund_list'];
+        this.rejectedRefundList = refundList['data']['refund_list'];
+        this.isRejectTableVisible = true;
       }
     ),
     (error: any) => {
       this.errorMessage = error;
     };
 
-    this.tableApprovalHeader = 'Refunds to be approved';
-    this.tableRejectedHeader = 'Refunds returned to caseworker';
   }
   
 }

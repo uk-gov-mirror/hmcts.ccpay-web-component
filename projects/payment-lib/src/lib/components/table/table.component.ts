@@ -11,12 +11,12 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
   styleUrls: ['./table.component.css']
 })
 export class TableComponent {
-  @Input('DATASOURCE') DATASOURCE: IRefundList[];
+  @Input('DATASOURCE') DATASOURCE: any[];
   @Input('STATUS') STATUS: string;
   @Input('errorMessage') errorMessage: string;
   isApprovalFlow: boolean;
   
-  displayedColumns = ['ccd_case_number', 'refund_reference', 'reason', 'user_full_name', 'date_updated', 'Action'];
+  displayedColumns = ['ccdCaseNumber', 'refundReference', 'reason', 'createBy', 'updateDate', 'Action'];
   dataSource: MatTableDataSource<any>;
   userLst;
   actualcount: number;
@@ -128,23 +128,32 @@ export class TableComponent {
   @ViewChild(MatSort) sort: MatSort;
 
   constructor() {
-    this.refundList = this.DATASOURCE;
+  
 
     // Assign the data to the data source for the table to render
    //  this.dataSource = new MatTableDataSource(this.usersData);
+    // this.dataSource = new MatTableDataSource(this.refundList);
+    // this.actualcount = this.dataSource.data.length;
+    // if( this.refundList !== undefined) {
+    // this.userLst = this.refundList.reduce((r,{user_full_name}) => (r[user_full_name]='', r) , {});
+    //  this.userLst = Object.keys(this.userLst);
+    // }
+  }
+
+  ngOnInit() { 
+    this.errorMessage = this.errorMessage;
+    if(this.STATUS.toLowerCase() === 'sent for approval') {
+      this.isApprovalFlow = true;
+    } else {
+    this.isApprovalFlow = false;
+    }
+    this.refundList = this.DATASOURCE;
     this.dataSource = new MatTableDataSource(this.refundList);
     this.actualcount = this.dataSource.data.length;
     if( this.refundList !== undefined) {
     this.userLst = this.refundList.reduce((r,{user_full_name}) => (r[user_full_name]='', r) , {});
      this.userLst = Object.keys(this.userLst);
     }
-  }
-
-  ngOnInit() { 
-    if(this.STATUS.toLowerCase() === 'sent for approval') {
-      this.isApprovalFlow = true;
-    }
-    this.isApprovalFlow = false;
   }
   /**
    * Set the paginator and sort after the view init since this component will
