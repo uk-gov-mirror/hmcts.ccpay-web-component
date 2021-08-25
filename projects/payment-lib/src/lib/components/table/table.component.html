@@ -14,13 +14,13 @@
     <label class="govuk-label dropdpwn" for="sort" >
       Filter by caseworker:
     </label>
-    <select class="govuk-select" id="sort" name="sort" (change)="selectchange($event)">
+    <select *ngIf="dataSource.data.length > 0" class="govuk-select" id="sort" name="sort" (change)="selectchange($event)">
       <option value="" selected='selected'>All caseworkers</option>
       <option  *ngFor="let name of userLst;" value="{{name}}">{{name}}</option>
     </select>
   </div>
  
-<div class="example-container mat-elevation-z8">
+<div *ngIf="dataSource.data.length > 0" class="example-container mat-elevation-z8">
 
   <mat-table [dataSource]="dataSource" matSort>
 
@@ -63,8 +63,7 @@
     <mat-row *matRowDef="let row; columns: displayedColumns;">
     </mat-row>
   </mat-table>
-
   <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
-
-  <div class="govuk-label dropdpwn" *ngIf="dataSource.data.length === 0">No records to display</div>
 </div>
+
+<div class="govuk-label dropdpwn" *ngIf="dataSource.data.length === 0">No records to display</div>

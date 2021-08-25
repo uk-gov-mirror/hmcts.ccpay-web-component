@@ -134,7 +134,7 @@ export class TableComponent {
    //  this.dataSource = new MatTableDataSource(this.usersData);
     this.dataSource = new MatTableDataSource(this.refundList);
     this.actualcount = this.dataSource.data.length;
-    this.userLst = this.usersData.reduce((r,{user_full_name}) => (r[user_full_name]='', r) , {});
+    this.userLst = this.refundList.reduce((r,{user_full_name}) => (r[user_full_name]='', r) , {});
      this.userLst = Object.keys(this.userLst);
   }
 
