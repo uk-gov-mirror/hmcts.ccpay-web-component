@@ -19,6 +19,7 @@ export class RefundListComponent implements OnInit {
   rejectedRefundList: IRefundList[] = [];
   approvalStatus = 'sent for approval';
   rejectStatus = 'sent back';
+  errorMessage = null;
 
   ngOnInit() {
     this.refundService.getUserDetails().subscribe(
@@ -35,13 +36,19 @@ export class RefundListComponent implements OnInit {
       refundList => {
         this.submittedRefundList = refundList['refund_list'];
       }
-    );
+    ),
+    (error: any) => {
+      this.errorMessage = error;
+    };
 
     this.refundService.getRefundList(this.rejectStatus,false).subscribe(
       refundList => {
         this.rejectedRefundList = refundList['refund_list'];
       }
-    );
+    ),
+    (error: any) => {
+      this.errorMessage = error;
+    };
 
     this.tableApprovalHeader = 'Refunds to be approved';
     this.tableRejectedHeader = 'Refunds returned to caseworker';

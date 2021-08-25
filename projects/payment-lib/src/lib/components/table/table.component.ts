@@ -13,6 +13,7 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 export class TableComponent {
   @Input('DATASOURCE') DATASOURCE: IRefundList[];
   @Input('STATUS') STATUS: string;
+  @Input('errorMessage') errorMessage: string;
   isApprovalFlow: boolean;
   
   displayedColumns = ['ccd_case_number', 'refund_reference', 'reason', 'user_full_name', 'date_updated', 'Action'];
