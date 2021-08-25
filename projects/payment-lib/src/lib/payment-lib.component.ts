@@ -5,7 +5,7 @@ import { IBSPayments } from './interfaces/IBSPayments';
 @Component({
   selector: 'ccpay-payment-lib',
   template: `
-  <ccpay-refund-list [USERID]="USERID" *ngIf="viewName === 'refund-list'"></ccpay-refund-list>
+  <ccpay-refund-list [USERID]="USERID" [LOGGEDINUSERROLES]="LOGGEDINUSERROLES" [LOGGEDINUSEREMAIL]="LOGGEDINUSEREMAIL" *ngIf="viewName === 'refund-list'"></ccpay-refund-list>
     <ccpay-payment-list *ngIf="viewName === 'payment-list'"></ccpay-payment-list>
     <ccpay-payment-view *ngIf="viewName === 'payment-view'"
     [isTurnOff]="ISTURNOFF" [isTakePayment]="TAKEPAYMENT"  [caseType]="CASETYPE"
@@ -56,6 +56,8 @@ export class PaymentLibComponent implements OnInit {
   @Input('rootUrl') rootUrl: boolean;
   @Input('REFUNDLIST') REFUNDLIST: string;
   @Input('USERID') USERID: string;
+  @Input('LOGGEDINUSERROLES') LOGGEDINUSERROLES: any[];
+  @Input('LOGGEDINUSEREMAIL') LOGGEDINUSEREMAIL:string;
 
   paymentMethod: string;
   bspaymentdcn: string;
