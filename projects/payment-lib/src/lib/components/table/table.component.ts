@@ -18,7 +18,7 @@ export class TableComponent {
 
   usersData = [
     {
-      "refundReference": "RF-1324-6846-2454-5445",
+      "refundReference": "RF-1629-8342-2480-9302",
       "amount": "100",
       "reason": "Case Withdrawn",
       "status": "SUBMITTED",
@@ -30,7 +30,7 @@ export class TableComponent {
       "updateDate": "2021-07-20T09:12:52.778Z"
     },
     {
-      "refundReference": "RF-1324-6846-2454-5446",
+      "refundReference": "RF-1629-8342-6657-5019",
       "amount": "200",
       "reason": "Case Withdrawn",
       "status": "SUBMITTED",
@@ -42,7 +42,7 @@ export class TableComponent {
       "updateDate": "2021-07-20T09:12:52.778Z"
     }, 
     {
-      "refundReference": "RF-1324-6846-2454-5447",
+      "refundReference": "RF-1629-8342-9397-9705",
       "amount": "300",
       "reason": "reason3 hhhh hhh hhh hhh hhhh",
       "status": "SUBMITTED",
@@ -54,7 +54,7 @@ export class TableComponent {
       "updateDate": "2021-07-20T09:12:52.778Z"
     }, 
     {
-      "refundReference": "RF-1324-6846-2454-5448",
+      "refundReference": "RF-1629-8343-2001-6182",
       "amount": "400",
       "reason": "Case Withdrawn",
       "status": "SUBMITTED",
@@ -67,7 +67,7 @@ export class TableComponent {
     },
  
     {
-      "refundReference": "RF-1324-6846-2454-5449",
+      "refundReference": "RF-1629-8343-6158-7661",
       "amount": "500",
       "reason": "Case Withdrawn",
       "status": "SUBMITTED",
@@ -152,7 +152,8 @@ export class TableComponent {
     this.dataSource.filter = args.target.value;
     this.actualcount = this.dataSource.data.length;
   } 
-  goToRefundProcessComponent() {
+  goToRefundProcessComponent(refundReference: string) {
+    this.paymentLibComponent.refundReference = refundReference;
     this.paymentLibComponent.viewName = 'process-refund';
   }
 }

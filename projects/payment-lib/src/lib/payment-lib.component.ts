@@ -12,7 +12,9 @@ import { IBSPayments } from './interfaces/IBSPayments';
     [isOldPcipalOff]="ISOLDPCIPALOFF"
     [isNewPcipalOff]="ISNEWPCIPALOFF"></ccpay-payment-view>
 
-    <ccpay-process-refund *ngIf="viewName === 'process-refund'"></ccpay-process-refund>
+    <ccpay-process-refund *ngIf="viewName === 'process-refund'"
+    [refundReference]="refundReference"
+    ></ccpay-process-refund>
 
     <ccpay-case-transactions  *ngIf="viewName === 'case-transactions'"></ccpay-case-transactions>
     <app-mark-unidentified-payment *ngIf="viewName === 'unidentifiedPage'"
@@ -65,6 +67,7 @@ export class PaymentLibComponent implements OnInit {
   unProcessedPaymentServiceId: string = null;
   paymentGroupReference: string;
   paymentReference: string;
+  refundReference: string;
   viewName: string;
   isTurnOff: boolean;
   caseType: string;

@@ -1,16 +1,14 @@
 <ng-container *ngIf="viewStatus === 'RefundProcess'">
 <div class="govuk-width-container">
 
-  <div class="govuk-breadcrumbs">
-    <ol class="govuk-breadcrumbs__list">
-      <li class="govuk-breadcrumbs__list-item">
-        <a href="#" class="govuk-back-link">Back</a>
-      </li>
-    </ol>
-  </div>
-
-  <main class="govuk-main-wrapper govuk-!-padding-top-0" id="main-content" role="main">
-
+  <main class="govuk-main-wrapper govuk-!-padding-top-0" [ngClass]="{'govuk-radios__conditional--hidden': isSuccesspageEnable}" id="main-content" role="main">
+    <div class="govuk-breadcrumbs">
+      <ol class="govuk-breadcrumbs__list">
+        <li class="govuk-breadcrumbs__list-item">
+          <a href="#" class="govuk-back-link">Back</a>
+        </li>
+      </ol>
+    </div>
     <div *ngIf="errorMessage">
       <div class="error-summary" role="group" aria-labelledby="failure-error-summary-heading" tabindex="-1">
         <h2 class="heading-medium error-summary-heading" id="failure-error-summary-heading">
@@ -59,76 +57,119 @@
       <div>
       </div>
     </div>
-    <div style="display: flex;flex-direction: column;margin-left: 22px;margin-top: 10px; margin-bottom: 10px;">
-    <div class="govuk-grid-row">
-      <div class="column">
-        <h1 class="heading-large govuk-!-margin-top-0">What do you want to do with this refund?
-        </h1>
+    <div style="display: flex;flex-direction: column;margin-left: 25px;margin-top: 30px;">
+      <form [formGroup]="processRefundForm" novalidate>
+        <div class="">
+        <fieldset class="govuk-fieldset" aria-describedby="sign-in-hint">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+            <h1 class="heading-large">
+              What do you want to do with this refund?
+            </h1>
+          </legend>
+          <div class="govuk-radios"  [ngClass]="{'form-group-error': refundActionsHasError}">
+            <p class="inline-error-message"
+            *ngIf="refundActionsHasError">
+            <span *ngIf="refundActionsHasError">Please select an action</span>
+          </p>
+            <div class="govuk-radios__item" *ngFor="let refundAction of refundActionList; let i = index;">
+              <input class="govuk-radios__input" 
+              id="refundAction-{{i}}" 
+              name="refundActionField"
+              type="radio"
+              formControlName="refundActionField"
+              (click)="checkRefundActions(refundAction.code)"
+                value="{{refundAction.code}}">
+              <label class="govuk-label govuk-radios__label process-refund-font" for="refundAction-{{i}}">
+                {{refundAction.code}}
+              </label>
+              <div id="sign-in-item-hint" class="govuk-hint govuk-radios__hint process-refund-font">
+                {{refundAction.label}}
+              </div>
+            </div>
+            <div class="govuk-radios__conditional" [ngClass]="{'govuk-radios__conditional--hidden': !isSendMeBackClicked}">
+              <div class="govuk-form-group">
+                <label class="govuk-label process-refund-font" for="contact-by-text">
+                  Add a reason
+                </label>
+                <textarea class="govuk-textarea govuk-!-width-one-third"
+                [ngClass]="{'inline-error-class': isReasonFieldEmpty || isReasonFieldInvalid || reasonFieldMinHasError || reasonFieldMaxHasError}"
+                  id="sendmeback"
+                  name="sendMeBackField" 
+                  formControlName="sendMeBackField"
+                rows="5"></textarea>
+                <p class="inline-error-message"
+                *ngIf="isReasonFieldEmpty || isReasonFieldInvalid || reasonFieldMinHasError || reasonFieldMaxHasError">
+                <span *ngIf="isReasonFieldEmpty">Add a reason</span>
+                <span *ngIf="isReasonFieldInvalid">Add a valid reason</span>
+                <span *ngIf="reasonFieldMinHasError">Reason should be at least 3 characters.</span>
+                <span *ngIf="reasonFieldMaxHasError">Reason should be 255 characters or under.</span>
+              </p>
+              </div>
+
+            </div>
+  
+          </div>
+      
+        </fieldset>
       </div>
-    </div>
-    <div class="multiple-choice unprocessed-payments--radio-button">
-      <input id="orderfee"
-      aria-label="orderLevelRecord"
-      name="orderLevelRecord"
-  
-      type="radio"
-      value="test" />
-      <label for="radio-inline-1"> Approve refund</label>
-    </div>
-    <div class="multiple-choice unprocessed-payments--radio-button">
-      <input id="orderfee"
-      aria-label="orderLevelRecord"
-      name="orderLevelRecord"
-  
-      type="radio"
-      value="test" />
-      <label for="radio-inline-1"> Reject refund</label>
-    </div>
-    <div class="multiple-choice unprocessed-payments--radio-button">
-      <input id="orderfee"
-      aria-label="orderLevelRecord"
-      name="orderLevelRecord"
-  
-      type="radio"
-      value="test" />
-      <label for="radio-inline-1"> Return to caseworker</label>
-    </div>
-  </div>
-<div style="display: flex;flex-direction: column;margin-left: 22px; margin-top: 10px; margin-bottom: 10px;">
-    <div class="govuk-grid-row">
-      <div class="column">
-        <h3 class="heading-large govuk-!-margin-top-0">Why are you rejecting this refund?
-        </h2>
+
+      <div [ngClass]="{'govuk-radios__conditional--hidden': !isRejectClicked}">
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+            <h2 class="heading-medium">
+              Why are you rejecting this refund?
+            </h2>
+          </legend>
+          <div class="govuk-radios" [ngClass]="{'form-group-error': refundRejectReasonHasError}">
+            <p class="inline-error-message"
+            *ngIf="refundRejectReasonHasError">
+            <span *ngIf="refundRejectReasonHasError">Please select a reject reason</span>
+          </p>
+            <div class="govuk-radios__item" *ngFor="let refundRejectReason of refundRejectReasonList; let j = index;">
+              <input class="govuk-radios__input" 
+              id="refundRejectReason-{{j}}"
+              formControlName="refundRejectReasonField"
+              name="refundRejectReasonField"
+              (click)="checkRefundActions(refundRejectReason.code)"
+              type="radio" value="{{refundRejectReason.code}}">
+              <label class="govuk-label govuk-radios__label process-refund-font" for="refundRejectReason-{{j}}">
+                {{refundRejectReason.name}}
+              </label>
+            </div>
+            </div>
+      <div class="govuk-radios__conditional" [ngClass]="{'govuk-radios__conditional--hidden': !isOtherClicked}" id="conditional-contact-3">
+        <div class="govuk-form-group">
+          <label class="govuk-label process-refund-font " for="contact-by-text">
+            Enter reason
+          </label>
+          <input class="govuk-input govuk-!-width-one-third" id="otherReason" 
+          [ngClass]="{'inline-error-class': isReasonEmpty || isReasonInvalid}"
+          formControlName="enterReasonField" name="enterReasonField" type="text"></div>
+          <p class="inline-error-message" *ngIf="isReasonEmpty || isReasonInvalid">
+            <span *ngIf="isReasonEmpty">Enter reason.</span>
+            <span *ngIf="isReasonInvalid">Enter a valid reason</span>
+          </p>
       </div>
-    </div>
-    <div class="multiple-choice unprocessed-payments--radio-button">
-      <input id="orderfee"
-      aria-label="orderLevelRecord"
-      name="orderLevelRecord"
-  
-      type="radio"
-      value="test" />
-      <label for="radio-inline-1"> Approve refund</label>
-    </div>
-    <div class="multiple-choice unprocessed-payments--radio-button">
-      <input id="orderfee"
-      aria-label="orderLevelRecord"
-      name="orderLevelRecord"
-  
-      type="radio"
-      value="test" />
-      <label for="radio-inline-1"> Reject refund</label>
-    </div>
-    <div class="multiple-choice unprocessed-payments--radio-button">
-      <input id="orderfee"
-      aria-label="orderLevelRecord"
-      name="orderLevelRecord"
-  
-      type="radio"
-      value="test" />
-      <label for="radio-inline-1"> Return to caseworker</label>
-    </div>
+      
+        </fieldset>
+      </div>
+</form>
   </div>
+  <button class="govuk-button" style="margin-left: 25px;" data-module="govuk-button" (click)="processRefundSubmit()">
+    Submit  
+  </button>
+  </main>
+  <main class="govuk-main-wrapper govuk-main-wrapper--l" [ngClass]="{'govuk-radios__conditional--hidden': !isSuccesspageEnable}" id="main-content" role="main" style="padding-top: 25px;">
+    <div class="govuk-grid-row">
+        <div class="govuk-panel govuk-panel-refund--confirmation">
+          <h1 class="heading-xlarge">
+            Refund undefined
+          </h1>
+        </div>
+        <p class="govuk-body process-refund-font">
+        <a href="/orders/pages/v1caseinccd?result=approved" class="govuk-link">Return to case</a>
+        </p>
+      </div>
   </main>
 </div>
 </ng-container>
