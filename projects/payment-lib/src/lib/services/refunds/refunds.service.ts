@@ -31,7 +31,7 @@ export class RefundsService {
   }
 
   getRefundList(refundstatus: string, selfexclusive:boolean): Observable<IRefundList[]> {
-    return this.http.get<IRefundList[]>(`${this.paymentLibService.REFUNDS_API_ROOT}/get-refund-list?status=${refundstatus}&?selfExclusive=${selfexclusive}`, {
+    return this.http.get<IRefundList[]>(`${this.paymentLibService.REFUNDS_API_ROOT}/get-refund-list?status=${refundstatus}&selfExclusive=${selfexclusive}`, {
     withCredentials: true
 })
     .pipe(
