@@ -12,7 +12,7 @@
     <div *ngIf="errorMessage">
       <div class="error-summary" role="group" aria-labelledby="failure-error-summary-heading" tabindex="-1">
         <h2 class="heading-medium error-summary-heading" id="failure-error-summary-heading">
-          Payment details could not be retrieved
+          There is a problem
         </h2>
         <div class="govuk-error-summary__body">
         </div>
@@ -31,24 +31,24 @@
 
         <tr class="section">
           <td class="bold tb-col-w">Payment to be refunded</td>
-          <td>	RF-6846-1682-8741-3548 (£550.00)</td>
+          <td>	{{refundlistsource.refund_reference}} (£{{refundlistsource.amount}})</td>
         </tr>
         <tr class="section">
           <td class="bold tb-col-w">Reason for refund</td>
-          <td>	Case withdrawn</td>
+          <td>	{{refundlistsource.reason}}</td>
         </tr>
         <tr class="section">
             <td class="bold tb-col-w">Amount to be refunded</td>
-            <td>£550.00</td>
+            <td>£{{refundlistsource.amount}}</td>
         </tr>
         <tr class="section">
             <td class="bold tb-col-w">Submitted by</td>
-            <td>Steve Smith</td>
+            <td>{{refundlistsource.user_full_name}}</td>
 
         </tr>
         <tr class="section">
             <td class="bold tb-col-w">Date submitted</td>
-            <td>	10 July 2021</td>
+            <td>	{{refundlistsource.date_created}}</td>
         </tr>
 
         </tbody>

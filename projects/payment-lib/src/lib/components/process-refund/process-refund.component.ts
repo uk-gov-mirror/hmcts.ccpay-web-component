@@ -12,6 +12,8 @@ import { IRefundRejectReason } from '../../interfaces/IRefundRejectReason';
 })
 export class ProcessRefundComponent implements OnInit {
   @Input() refundReference: string;
+  @Input() refundlistsource: any[];
+
   processRefundForm: FormGroup;
 
   errorMessage: string;

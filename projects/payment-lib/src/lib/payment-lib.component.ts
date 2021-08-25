@@ -14,6 +14,7 @@ import { IBSPayments } from './interfaces/IBSPayments';
 
     <ccpay-process-refund *ngIf="viewName === 'process-refund'"
     [refundReference]="refundReference"
+    [refundlistsource]="refundlistsource"
     ></ccpay-process-refund>
 
     <ccpay-case-transactions  *ngIf="viewName === 'case-transactions'"></ccpay-case-transactions>
@@ -68,6 +69,7 @@ export class PaymentLibComponent implements OnInit {
   paymentGroupReference: string;
   paymentReference: string;
   refundReference: string;
+  refundlistsource: any[];
   viewName: string;
   isTurnOff: boolean;
   caseType: string;

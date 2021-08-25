@@ -1,17 +1,10 @@
-<<<<<<< HEAD
-import {Component, ViewChild} from '@angular/core';
-import {PaymentLibComponent} from '../../payment-lib.component';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatSort } from '@angular/material/sort';
-import { MatPaginator } from '@angular/material/paginator';
-=======
 import {Component, ViewChild, Input} from '@angular/core';
+import {PaymentLibComponent} from '../../payment-lib.component';
 import { MatTableDataSource} from '@angular/material/table';
 import {MatSort } from '@angular/material/sort';
 import {MatPaginator } from '@angular/material/paginator';
 import { IRefundList } from '../../interfaces/IRefundList';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
->>>>>>> c560d85b881540c61a96407c38cd24f73ae693e1
 
 @Component({
   selector: 'ccpay-table',
@@ -33,11 +26,7 @@ export class TableComponent {
 
   usersData = [
     {
-<<<<<<< HEAD
       "refundReference": "RF-1629-8342-2480-9302",
-=======
-      "refund_reference": "RF-1324-6846-2454-5445",
->>>>>>> c560d85b881540c61a96407c38cd24f73ae693e1
       "amount": "100",
       "reason": "Case Withdrawn",
       "status": "SUBMITTED",
@@ -49,11 +38,7 @@ export class TableComponent {
       "date_updated": "2021-07-20T09:12:52.778Z"
     },
     {
-<<<<<<< HEAD
       "refundReference": "RF-1629-8342-6657-5019",
-=======
-      "refund_reference": "RF-1324-6846-2454-5446",
->>>>>>> c560d85b881540c61a96407c38cd24f73ae693e1
       "amount": "200",
       "reason": "Case Withdrawn",
       "status": "SUBMITTED",
@@ -65,11 +50,7 @@ export class TableComponent {
       "date_updated": "2021-07-20T09:12:52.778Z"
     }, 
     {
-<<<<<<< HEAD
       "refundReference": "RF-1629-8342-9397-9705",
-=======
-      "refund_reference": "RF-1324-6846-2454-5447",
->>>>>>> c560d85b881540c61a96407c38cd24f73ae693e1
       "amount": "300",
       "reason": "reason3 hhhh hhh hhh hhh hhhh",
       "status": "SUBMITTED",
@@ -81,11 +62,7 @@ export class TableComponent {
       "date_updated": "2021-07-20T09:12:52.778Z"
     }, 
     {
-<<<<<<< HEAD
       "refundReference": "RF-1629-8343-2001-6182",
-=======
-      "refund_reference": "RF-1324-6846-2454-5448",
->>>>>>> c560d85b881540c61a96407c38cd24f73ae693e1
       "amount": "400",
       "reason": "Case Withdrawn",
       "status": "SUBMITTED",
@@ -98,11 +75,7 @@ export class TableComponent {
     },
  
     {
-<<<<<<< HEAD
       "refundReference": "RF-1629-8343-6158-7661",
-=======
-      "refund_reference": "RF-1324-6846-2454-5449",
->>>>>>> c560d85b881540c61a96407c38cd24f73ae693e1
       "amount": "500",
       "reason": "Case Withdrawn",
       "status": "SUBMITTED",
@@ -205,6 +178,7 @@ export class TableComponent {
     this.actualcount = this.dataSource.data.length;
   } 
   goToRefundProcessComponent(refundReference: string) {
+    this.paymentLibComponent.refundlistsource = this.DATASOURCE;
     this.paymentLibComponent.refundReference = refundReference;
     this.paymentLibComponent.viewName = 'process-refund';
   }
