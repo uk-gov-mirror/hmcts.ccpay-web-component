@@ -7,8 +7,7 @@ import {Observable} from 'rxjs/Observable';
 import {catchError} from 'rxjs/operators';
 import { IRefundReasons } from '../../interfaces/IRefundReasons';
 import { IPatchRefundAction } from '../../interfaces/IPatchRefundAction';
-import { IRefundAction } from '../../interfaces/IRefundAction';
-
+import { IRefundList } from '../../interfaces/IRefundList';
 import { IssueRefundRequest } from '../../interfaces/IssueRefundRequest';
 
 @Injectable({
@@ -40,20 +39,29 @@ export class RefundsService {
     );
   }
 
-getRefundActions(refundReference: string): Observable<any> {
-  return this.http.get<any>(`${this.paymentLibService.REFUNDS_API_ROOT}/${refundReference}/actions`, {
-  withCredentials: true
-})
-  .pipe(
-    catchError(this.errorHandlerService.handleError)
-  );
-}
+  getRefundActions(refundReference: string): Observable<any> {
+    return this.http.get<any>(`${this.paymentLibService.REFUNDS_API_ROOT}/${refundReference}/actions`, {
+      withCredentials: true
+      })
+      .pipe(
+        catchError(this.errorHandlerService.handleError)
+      );
+  }
 patchRefundActions(body:IPatchRefundAction, refundReference: string, reviewerAction: string): Observable<any> {
   return this.http.patch<any>(`${this.paymentLibService.REFUNDS_API_ROOT}/${refundReference}/action/${reviewerAction}`, body)
   .pipe(
     catchError(this.errorHandlerService.handleError)
   );
 }
+  getRefundList(refundstatus: string, selfexclusive:boolean): Observable<IRefundList[]> {
+    return this.http.get<IRefundList[]>(`${this.paymentLibService.REFUNDS_API_ROOT}/get-refund-list?status=${refundstatus}&selfExclusive=${selfexclusive}`, {
+    withCredentials: true
+})
+    .pipe(
+      catchError(this.errorHandlerService.handleError)
+    );
+}
+
   getUserDetails(): Observable<any> {
     return this.http.get<any>(`${this.paymentLibService.REFUNDS_API_ROOT}/get-user-details`, {
     withCredentials: true

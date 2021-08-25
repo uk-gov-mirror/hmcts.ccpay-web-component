@@ -5,18 +5,32 @@
 </div>
 
 <div class="hmcts-page-heading">
-  <div class="hmcts-page-heading__title">
-    <h2 class="govuk-heading-l">{{tableApprovalHeader}}</h2>
+    <div class="hmcts-page-heading__title">
+      <h2 class="govuk-heading-l">{{tableApprovalHeader}}</h2>
+    </div>
   </div>
-</div>
-<div><ccpay-table></ccpay-table></div>
+  <div  *ngIf="!isApproveTableVisible">
+      <div class="govuk-label dropdpwn" >No records to display</div>
+  </div>
+  
+<ng-container *ngIf="isApproveTableVisible">
+    
+  <div><ccpay-table [DATASOURCE]="submittedRefundList" [STATUS]="approvalStatus" [errorMessage]="errorMessage"></ccpay-table></div>
+</ng-container>
 
 
 <div class="hmcts-page-heading">
-  <div class="hmcts-page-heading__title">
-    <h2 class="govuk-heading-l">{{tableRejectedHeader}}</h2>
+    <div class="hmcts-page-heading__title">
+      <h2 class="govuk-heading-l">{{tableRejectedHeader}}</h2>
+    </div>
+    
   </div>
- 
-</div>
-<div><ccpay-table></ccpay-table></div>
+  <div  *ngIf="!isRejectTableVisible">
+      <div class="govuk-label dropdpwn">No records to display</div>
+  </div>
+<ng-container *ngIf="isRejectTableVisible">
+    
+  <div><ccpay-table [DATASOURCE]="rejectedRefundList" [STATUS]="rejectStatus" [errorMessage]="errorMessage"></ccpay-table></div>
+</ng-container>
+
 

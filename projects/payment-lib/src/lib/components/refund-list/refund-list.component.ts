@@ -1,5 +1,6 @@
 import {Component, OnInit, Input} from '@angular/core';
 import { RefundsService } from '../../services/refunds/refunds.service';
+import { IRefundList } from '../../interfaces/IRefundList';
 
 @Component({
   selector: 'ccpay-refund-list',
@@ -14,6 +15,13 @@ export class RefundListComponent implements OnInit {
 
   tableApprovalHeader: string;
   tableRejectedHeader: string;
+  submittedRefundList: IRefundList[] = [];
+  rejectedRefundList: IRefundList[] = [];
+  approvalStatus = 'sent for approval';
+  rejectStatus = 'sent back';
+  errorMessage = null;
+  isApproveTableVisible:boolean;
+  isRejectTableVisible:boolean;
 
   ngOnInit() {
     this.refundService.getUserDetails().subscribe(
@@ -25,8 +33,31 @@ export class RefundListComponent implements OnInit {
         console.log(userdetail);
         console.log(userdetail['data']);
       } );
-      this.tableApprovalHeader = 'Refunds to be approved';
-      this.tableRejectedHeader = 'Refunds returned to caseworker';
+
+  
+    this.tableApprovalHeader = 'Refunds to be approved';
+    this.tableRejectedHeader = 'Refunds returned to caseworker';
+
+    this.refundService.getRefundList(this.approvalStatus,true).subscribe(
+      refundList => {
+        this.submittedRefundList = refundList['data']['refund_list'];
+        this.isApproveTableVisible = true;
+      }
+    ),
+    (error: any) => {
+      this.errorMessage = error;
+    };
+
+    this.refundService.getRefundList(this.rejectStatus,false).subscribe(
+      refundList => {
+        this.rejectedRefundList = refundList['data']['refund_list'];
+        this.isRejectTableVisible = true;
+      }
+    ),
+    (error: any) => {
+      this.errorMessage = error;
+    };
+
   }
   
 }

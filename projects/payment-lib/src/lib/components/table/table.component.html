@@ -1,10 +1,16 @@
-<!-- <div class="example-header">
-  <mat-form-field>
-    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-  </mat-form-field>
-</div> -->
+<div class="add-remission">
+  <div *ngIf="errorMessage">
+    <div class="error-summary" role="group" aria-labelledby="failure-error-summary-heading" tabindex="-1">
+      <h2 class="heading-medium error-summary-heading" id="failure-error-summary-heading">
+        Error in processing the request
+      </h2>
+      <div class="govuk-error-summary__body">
+        {{ errorMessage }}
+      </div>
+    </div>
+  </div>
 
-<div class="govuk-form-group" style="float: right">
+<div *ngIf="dataSource.data.length > 0"  class="govuk-form-group" style="float: right">
     <label class="govuk-label dropdpwn" for="sort" >
       Filter by caseworker:
     </label>
@@ -14,18 +20,18 @@
     </select>
   </div>
  
-<div class="example-container mat-elevation-z8">
+<div *ngIf="dataSource.data.length > 0" class="example-container mat-elevation-z8">
 
   <mat-table [dataSource]="dataSource" matSort>
 
     <ng-container matColumnDef="ccdCaseNumber">
       <mat-header-cell  *matHeaderCellDef mat-sort-header>Case ID </mat-header-cell>
-      <mat-cell  *matCellDef="let row"> {{row.ccdCaseNumber}} </mat-cell>
+      <mat-cell  *matCellDef="let row"> {{row.ccd_case_number | ccdHyphens }} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="refundReference">
       <mat-header-cell  *matHeaderCellDef mat-sort-header> Refund reference </mat-header-cell>
-      <mat-cell  *matCellDef="let row"> {{row.refundReference}} </mat-cell>
+      <mat-cell  *matCellDef="let row"> {{row.refund_reference}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="reason">
@@ -35,23 +41,29 @@
 
     <ng-container matColumnDef="createBy">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Submitted by </mat-header-cell>
-      <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.createBy}} </mat-cell>
+      <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.user_full_name | date:'dd MMM yyyy'}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="updateDate">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Date updated </mat-header-cell>
-        <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.updateDate | date:'dd MMM yyyy'}} </mat-cell>
+        <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.date_updated | date:'dd MMM yyyy'}} </mat-cell>
       </ng-container>
 
-      <ng-container matColumnDef="Action">
+      <ng-container *ngIf="isApprovalFlow" matColumnDef="Action">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Action </mat-header-cell>
-          <mat-cell *matCellDef="let row" [style.color]="row.color"> <a href="https://fees-and-payments.herokuapp.com/orders/pages/v1caseinccd?casetype=civil&amp;state=withdrawn&amp;result=submitted&amp;user=teamleader">Review case</a>&nbsp;<a href="javascript:void(0)" (click)="goToRefundProcessComponent(row.refundReference)">Process refund</a></mat-cell>
+          <mat-cell *matCellDef="let row" [style.color]="row.color"> <a href="">Review case</a>&nbsp;<a href="javascript:void(0)" (click)="goToRefundProcessComponent(row.refundReference)">Process refund</a></mat-cell>
+        </ng-container>
+      
+        <ng-container *ngIf="!isApprovalFlow" matColumnDef="Action">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Action </mat-header-cell>
+          <mat-cell *matCellDef="let row" [style.color]="row.color"> <a href="">Review refund</a></mat-cell>
         </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;">
     </mat-row>
   </mat-table>
-
   <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
 </div>
+
+<div class="govuk-label dropdpwn" *ngIf="dataSource.data.length === 0">No records to display</div>
