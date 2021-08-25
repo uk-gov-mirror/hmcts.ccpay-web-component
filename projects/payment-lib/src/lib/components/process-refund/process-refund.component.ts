@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import {RefundsService} from '../../services/refunds/refunds.service';
 import {PaymentLibComponent} from '../../payment-lib.component';
 import { IRefundAction } from '../../interfaces/IRefundAction';
+import { IRefundList } from '../../interfaces/IRefundList';
 import { IRefundRejectReason } from '../../interfaces/IRefundRejectReason';
 
 @Component({
@@ -12,7 +13,7 @@ import { IRefundRejectReason } from '../../interfaces/IRefundRejectReason';
 })
 export class ProcessRefundComponent implements OnInit {
   @Input() refundReference: string;
-  @Input() refundlistsource: any[];
+  @Input() refundlistsource: IRefundList;
 
   processRefundForm: FormGroup;
 
