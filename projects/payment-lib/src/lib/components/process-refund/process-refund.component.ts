@@ -16,7 +16,7 @@ export class ProcessRefundComponent implements OnInit {
 
   processRefundForm: FormGroup;
 
-  errorMessage =  this.getErrorMessage(false);
+  errorMessage =  this.getErrorMessage(false, '', '');
   sendmeback: string = null;
   viewStatus: string;
   refundActionList: IRefundAction[] = []; 
@@ -47,7 +47,7 @@ export class ProcessRefundComponent implements OnInit {
         this.refundActionList = <any>refundActionList.data;
       },
       err => {
-        this.errorMessage = this.getErrorMessage(true);
+        this.errorMessage = this.getErrorMessage(true, err.statusCode, err.err);
       }
     );
     this.processRefundForm = this.formBuilder.group({
@@ -87,7 +87,7 @@ export class ProcessRefundComponent implements OnInit {
           this.refundRejectReasonList = <any>refundRejectReasonList.data;
         },
         err => {
-          this.errorMessage = this.getErrorMessage(true);
+          this.errorMessage = this.getErrorMessage(true, err.statusCode, err.err);
         }
       );
     } else if (code === 'RE005') {
@@ -132,7 +132,7 @@ export class ProcessRefundComponent implements OnInit {
           this.isSuccesspageEnable = true;
         },
         err => {
-          this.errorMessage = this.getErrorMessage(true);
+          this.errorMessage = this.getErrorMessage(true, err.statusCode, err.err);
         }
       );
     } else {
@@ -167,10 +167,14 @@ export class ProcessRefundComponent implements OnInit {
     }
 
   }
-  getErrorMessage(isErrorExist) {
+  getErrorMessage(isErrorExist, status, errorMsg) {
+    let bodyTxt = 'Please try again later';
+    if (status !== 500) {
+      bodyTxt = errorMsg;
+    }
     return {
       title: 'Something went wrong',
-      body: 'Please try again later',
+      body: bodyTxt,
       showError: isErrorExist
     };
   }
