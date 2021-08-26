@@ -76,12 +76,19 @@ export class ProcessRefundComponent implements OnInit {
     if(code === 'Return to caseworker') {
       this.isConfirmButtondisabled = true;
       this.isSendMeBackClicked = true;
-    } else if(code === 'Approve') {
+      this.isRejectClicked = false;
+      this.isOtherClicked = false;
+
+    } else if (code === 'Approve') {
       this.isSendMeBackClicked = false;
       this.isConfirmButtondisabled = false;
-    } else if(code === 'Reject') {
+      this.isRejectClicked = false;
+      this.isOtherClicked = false;
+
+    } else if (code === 'Reject') {
       this.isRejectClicked = true;
       this.isSendMeBackClicked = false;
+      this.isOtherClicked = false;
       this.RefundsService.getRefundRejectReasons().subscribe(
         refundRejectReasonList => {
           this.refundRejectReasonList = <any>refundRejectReasonList.data;
@@ -92,6 +99,8 @@ export class ProcessRefundComponent implements OnInit {
       );
     } else if (code === 'RE005') {
       this.isOtherClicked = true;
+    } else if (code !== 'RE005') {
+      this.isOtherClicked = false;
     }
   }
   processRefundSubmit() {

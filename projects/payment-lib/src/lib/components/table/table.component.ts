@@ -177,8 +177,8 @@ export class TableComponent {
     this.dataSource.filter = args.target.value;
     this.actualcount = this.dataSource.data.length;
   } 
-  goToRefundProcessComponent(refundReference: string) {
-    this.paymentLibComponent.refundlistsource = this.DATASOURCE;
+  goToRefundProcessComponent(refundReference: string, refundDate: IRefundList ) {
+    this.paymentLibComponent.refundlistsource = refundDate;
     this.paymentLibComponent.refundReference = refundReference;
     this.paymentLibComponent.viewName = 'process-refund';
   }

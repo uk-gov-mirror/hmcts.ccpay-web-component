@@ -51,7 +51,7 @@
 
       <ng-container *ngIf="isApprovalFlow" matColumnDef="Action">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Action </mat-header-cell>
-          <mat-cell *matCellDef="let row" [style.color]="row.color"> <a href="">Review case</a>&nbsp;<a href="javascript:void(0)" (click)="goToRefundProcessComponent(row.refund_reference)">Process refund</a></mat-cell>
+          <mat-cell *matCellDef="let row" [style.color]="row.color"> <a href="">Review case</a>&nbsp;<a href="javascript:void(0)" (click)="goToRefundProcessComponent(row.refund_reference, row)">Process refund</a></mat-cell>
         </ng-container>
       
         <ng-container *ngIf="!isApprovalFlow" matColumnDef="Action">
