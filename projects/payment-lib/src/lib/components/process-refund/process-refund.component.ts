@@ -1,7 +1,6 @@
 import {Component, OnInit, Input} from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import {RefundsService} from '../../services/refunds/refunds.service';
-import {PaymentLibComponent} from '../../payment-lib.component';
 import { IRefundAction } from '../../interfaces/IRefundAction';
 import { IRefundList } from '../../interfaces/IRefundList';
 import { IRefundRejectReason } from '../../interfaces/IRefundRejectReason';
@@ -17,7 +16,7 @@ export class ProcessRefundComponent implements OnInit {
 
   processRefundForm: FormGroup;
 
-  errorMessage: string;
+  errorMessage =  this.getErrorMessage(false);
   sendmeback: string = null;
   viewStatus: string;
   refundActionList: IRefundAction[] = []; 
@@ -38,8 +37,7 @@ export class ProcessRefundComponent implements OnInit {
 
   isConfirmButtondisabled: boolean = true;
   constructor(private RefundsService: RefundsService,
-              private formBuilder: FormBuilder,
-              private paymentLibComponent: PaymentLibComponent) {
+              private formBuilder: FormBuilder) {
   }
 
   ngOnInit() {
@@ -49,7 +47,7 @@ export class ProcessRefundComponent implements OnInit {
         this.refundActionList = <any>refundActionList.data;
       },
       err => {
-        this.errorMessage = err;
+        this.errorMessage = this.getErrorMessage(true);
       }
     );
     this.processRefundForm = this.formBuilder.group({
@@ -89,7 +87,7 @@ export class ProcessRefundComponent implements OnInit {
           this.refundRejectReasonList = <any>refundRejectReasonList.data;
         },
         err => {
-          this.errorMessage = err;
+          this.errorMessage = this.getErrorMessage(true);
         }
       );
     } else if (code === 'RE005') {
@@ -134,7 +132,7 @@ export class ProcessRefundComponent implements OnInit {
           this.isSuccesspageEnable = true;
         },
         err => {
-          this.errorMessage = err;
+          this.errorMessage = this.getErrorMessage(true);
         }
       );
     } else {
@@ -168,6 +166,13 @@ export class ProcessRefundComponent implements OnInit {
       }
     }
 
+  }
+  getErrorMessage(isErrorExist) {
+    return {
+      title: 'Something went wrong',
+      body: 'Please try again later',
+      showError: isErrorExist
+    };
   }
   resetForm(vals, field) {
     if(field==='action' || field==='all') {
