@@ -34,6 +34,7 @@ export class ProcessRefundComponent implements OnInit {
   reasonFieldMaxHasError: boolean = false;
   isReasonEmpty: boolean = false;
   isReasonInvalid: boolean = false;
+  successMsg: string = null;
 
   isConfirmButtondisabled: boolean = true;
   constructor(private RefundsService: RefundsService,
@@ -139,6 +140,7 @@ export class ProcessRefundComponent implements OnInit {
       this.RefundsService.patchRefundActions(processRefundRequest, this.refundReference, status).subscribe(
         response => {
           this.isSuccesspageEnable = true;
+          this.successMsg = response.data;
         },
         err => {
           this.errorMessage = this.getErrorMessage(true, err.statusCode, err.err);
