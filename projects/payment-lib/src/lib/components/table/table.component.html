@@ -41,7 +41,7 @@
 
     <ng-container matColumnDef="createBy">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Submitted by </mat-header-cell>
-      <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.user_full_name | date:'dd MMM yyyy'}} </mat-cell>
+      <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.user_full_name }} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="updateDate">
