@@ -20,6 +20,7 @@ export class RefundStatusComponent implements OnInit {
   constructor(private refundService: RefundsService) { }
 
   ngOnInit() {
+    this.viewName = 'refundlist';
     this.refundService.getRefundStatusList(this.CCDCASENUMBER).subscribe(
       refundList => {
         this.rejectedRefundList = refundList['data']['refund_list'];
