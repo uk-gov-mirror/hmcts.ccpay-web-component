@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { RefundsService } from '../../services/refunds/refunds.service';
 import { IRefundList } from '../../interfaces/IRefundList';
+import { PaymentLibComponent } from '../../payment-lib.component';
 
 @Component({
   selector: 'ccpay-refund-status',
@@ -17,10 +18,11 @@ export class RefundStatusComponent implements OnInit {
   viewName: string;
   refundlist: IRefundList;
 
-  constructor(private refundService: RefundsService) { }
+  constructor(private refundService: RefundsService,
+    private paymentLibComponent: PaymentLibComponent,) { }
 
   ngOnInit() {
-    this.viewName = 'refundlist';
+    this.viewName = 'refundstatuslist';
     this.refundService.getRefundStatusList(this.CCDCASENUMBER).subscribe(
       refundList => {
         this.rejectedRefundList = refundList['data']['refund_list'];
@@ -33,6 +35,7 @@ export class RefundStatusComponent implements OnInit {
 
   goToRefundView(refundlist: IRefundList) {
     this.viewName = 'refundview';
+    this.paymentLibComponent.viewName='';
     this.refundlist = refundlist;
   }
 
