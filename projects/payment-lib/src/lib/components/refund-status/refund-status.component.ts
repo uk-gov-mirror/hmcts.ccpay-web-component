@@ -20,7 +20,7 @@ export class RefundStatusComponent implements OnInit {
   constructor(private refundService: RefundsService) { }
 
   ngOnInit() {
-    this.refundService.getRefundList(this.CCDCASENUMBER).subscribe(
+    this.refundService.getRefundList(undefined,undefined,this.CCDCASENUMBER).subscribe(
       refundList => {
         this.rejectedRefundList = refundList['data']['refund_list'];
       }
