@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { RefundsService } from '../../services/refunds/refunds.service';
 import { IRefundList } from '../../interfaces/IRefundList';
 
@@ -8,6 +8,8 @@ import { IRefundList } from '../../interfaces/IRefundList';
   styleUrls: ['./refund-status.component.css']
 })
 export class RefundStatusComponent implements OnInit {
+  @Input("CCDCASENUMBER") CCDCASENUMBER : string;
+
   rejectedRefundList: IRefundList[] = [];
   approvalStatus = 'sent for approval';
   rejectStatus = 'sent back';
@@ -18,7 +20,7 @@ export class RefundStatusComponent implements OnInit {
   constructor(private refundService: RefundsService) { }
 
   ngOnInit() {
-    this.refundService.getRefundList().subscribe(
+    this.refundService.getRefundList(this.CCDCASENUMBER).subscribe(
       refundList => {
         this.rejectedRefundList = refundList['data']['refund_list'];
       }
