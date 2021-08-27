@@ -65,6 +65,15 @@ patchRefundActions(body:IPatchRefundAction, refundReference: string, reviewerAct
     );
 }
 
+getRefundStatusList(ccdCaseNumber:string): Observable<IRefundList[]> {
+  return this.http.get<IRefundList[]>(`${this.paymentLibService.REFUNDS_API_ROOT}/get-refund-status-list?ccdCaseNumber=${ccdCaseNumber}`, {
+  withCredentials: true
+})
+  .pipe(
+    catchError(this.errorHandlerService.handleError)
+  );
+}
+
   getUserDetails(): Observable<any> {
     return this.http.get<any>(`${this.paymentLibService.REFUNDS_API_ROOT}/get-user-details`, {
     withCredentials: true
