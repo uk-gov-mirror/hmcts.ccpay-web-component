@@ -725,16 +725,13 @@ chkForAddRemission(feeCode: string): boolean {
     if (this.orderDetail[0]['remissions'] && this.orderDetail[0]['remissions'].length > 0) {
       for (const remission of this.orderDetail[0]['remissions']) {
         if (remission.fee_code === feeCode) {
-          this.isPBA = false;
           return false;
         }
       }
     } else {
-      this.isPBA = true;;
       return true;
     }
   } else {
-    this.isPBA = false;
     return false;
   }
     
