@@ -39,6 +39,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { RefundStatusComponent } from './components/refund-status/refund-status.component';
 
 @NgModule({
   imports: [
@@ -78,7 +79,8 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
     ReportsComponent,
     ErrorBannerComponent,
     RefundsComponent,
-    TableComponent
+    TableComponent,
+    RefundStatusComponent
   ],
   exports: [ PaymentLibComponent ],
   providers: [ 

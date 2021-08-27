@@ -720,9 +720,7 @@
                 </span> -->
   
               </div>
-         
-          
-        
+
         </div>
         <div class="govuk-grid-column-full">
             <div  *ngIf="serviveRequestValue === 'false'">
@@ -774,9 +772,16 @@
             <ng-container *ngIf="allPayments?.length  === 0">
                 <br/>No payments.
             </ng-container>
+
+            <span class="heading-medium"><br/>Refunds</span>
+            <ccpay-refund-status ></ccpay-refund-status>
           </div>
           </div>
+
+          
       </div>
+
+     
    </ng-container>
 
 
