@@ -632,9 +632,9 @@
               </ng-container>
         
           </div>
-          <div class="govuk-grid-column-full">
+          <div>
               <span class="heading-medium"><br/>Refunds</span>
-              <ccpay-refund-status [CCDCASENUMBER]="ccdCaseNumber"
+              <ccpay-refund-status
               [ccdCaseNumber]="ccdCaseNumber" 
               [isTurnOff]="isTurnOff"
               [isNewPcipalOff]="isNewPcipalOff"
@@ -754,7 +754,7 @@
         </div>
         <div class="govuk-grid-column-full">
             <span class="heading-medium"><br/>Refunds</span>
-            <ccpay-refund-status [CCDCASENUMBER]="ccdCaseNumber" ></ccpay-refund-status>
+            <ccpay-refund-status [ccdCaseNumber]="ccdCaseNumber" ></ccpay-refund-status>
         </div>
 
           

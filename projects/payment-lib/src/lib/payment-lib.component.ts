@@ -81,6 +81,7 @@ export class PaymentLibComponent implements OnInit {
   unProcessedPayment: IBSPayments = null;
   isRefundStatusView: boolean;
   isRedirectFromCaseTransactionPage: string;
+  isCallFromRefundList: boolean;
 
   constructor(private paymentLibService: PaymentLibService) { }
 

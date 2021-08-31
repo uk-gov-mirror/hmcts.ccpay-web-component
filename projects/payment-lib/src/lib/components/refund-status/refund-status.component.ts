@@ -4,6 +4,7 @@ import { IRefundList } from '../../interfaces/IRefundList';
 import { PaymentLibComponent } from '../../payment-lib.component';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import {Router} from '@angular/router';
+import { OrderslistService } from '../../services/orderslist.service';
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 
 @Component({
@@ -12,8 +13,6 @@ const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
   styleUrls: ['./refund-status.component.css']
 })
 export class RefundStatusComponent implements OnInit {
-  @Input("CCDCASENUMBER") CCDCASENUMBER : string;
-  @Input("VIEWSTATUSNAME") VIEWSTATUSNAME : string;
   @Input() isOldPcipalOff: string;
   @Input() isNewPcipalOff: string;
   @Input() ccdCaseNumber: string;
@@ -24,39 +23,47 @@ export class RefundStatusComponent implements OnInit {
   rejectStatus = 'sent back';
   errorMessage = null;
   viewName: string;
-  viewStatusName: string;
   refundlist: IRefundList;
   bsPaymentDcnNumber: string;
+  isCallFromRefundList: boolean;
 
   constructor(private refundService: RefundsService,
     private paymentLibComponent: PaymentLibComponent,
     private paymentViewService: PaymentViewService,
-    private router: Router) { }
+    private router: Router,
+    private OrderslistService: OrderslistService) { }
 
   ngOnInit() {
     this.bsPaymentDcnNumber = this.paymentLibComponent.bspaymentdcn;
+    this.isCallFromRefundList = this.paymentLibComponent.isCallFromRefundList;
     if(this.paymentLibComponent.isRefundStatusView) {
       this.viewName = 'refundview';
+      this.OrderslistService.getRefundView().subscribe( (data) => this.refundlist = data);
+      this.OrderslistService.getCCDCaseNumberforRefund.subscribe((data) => this.ccdCaseNumber = data);
     } else {
       this.viewName = 'refundstatuslist';
+      this.refundService.getRefundStatusList(this.ccdCaseNumber).subscribe(
+        refundList => {
+          this.rejectedRefundList = refundList['data']['refund_list'];
+        }
+      ),
+      (error: any) => {
+        this.errorMessage = error;
+      };
     }
-    this.refundService.getRefundStatusList(this.CCDCASENUMBER).subscribe(
-      refundList => {
-        this.rejectedRefundList = refundList['data']['refund_list'];
-      }
-    ),
-    (error: any) => {
-      this.errorMessage = error;
-    };
+   
   }
 
   goToRefundView(refundlist: IRefundList) {
+    this.OrderslistService.setRefundView(refundlist);
+    this.OrderslistService.setCCDCaseNumber(this.ccdCaseNumber);
     this.paymentLibComponent.viewName='refundstatuslist';
     this.paymentLibComponent.isRefundStatusView = true;
     this.refundlist = refundlist;
   }
 
   loadCaseTransactionPage() {
+    this.paymentLibComponent.isRefundStatusView = false;
     this.paymentLibComponent.TAKEPAYMENT = true;
     this.paymentLibComponent.viewName = 'case-transactions';
     this.paymentViewService.getBSfeature().subscribe(
@@ -77,8 +84,7 @@ export class RefundStatusComponent implements OnInit {
       partUrl +=`&caseType=${this.paymentLibComponent.CASETYPE}`;
       partUrl +=this.isNewPcipalOff ? '&isNewPcipalOff=Enable' : '&isNewPcipalOff=Disable';
       partUrl +=this.isOldPcipalOff ? '&isOldPcipalOff=Enable' : '&isOldPcipalOff=Disable';
-
-    let url = `/payment-history/${this.ccdCaseNumber}?view=case-transactions&takePayment=true&${partUrl}`;
+      let url = `/payment-history/${this.ccdCaseNumber}?view=case-transactions&takePayment=true&${partUrl}`;
     this.router.navigateByUrl(url);
   }
 

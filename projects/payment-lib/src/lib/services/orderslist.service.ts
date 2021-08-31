@@ -1,16 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import {IOrderReferenceFee} from '../interfaces/IOrderReferenceFee';
+import { IRefundList } from '../interfaces/IRefundList';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrderslistService {
   private ordersList: BehaviorSubject<IOrderReferenceFee[]> = new BehaviorSubject<IOrderReferenceFee[]>(null);
+  private refundView: BehaviorSubject<IRefundList> = new BehaviorSubject<IRefundList>(null);
   private caseType = new BehaviorSubject("");
   getcaseType = this.caseType.asObservable();
   private feeExists = new BehaviorSubject<boolean>(null);
   getFeeExist = this.feeExists.asObservable();
+  private ccdCaseNumber = new BehaviorSubject("");
+  getCCDCaseNumberforRefund = this.ccdCaseNumber.asObservable();
 
   constructor() { }
 
@@ -21,11 +25,25 @@ export class OrderslistService {
     return this.ordersList;
   }
 
+  setRefundView(refundList: IRefundList): void {
+    this.refundView.next(Object.assign([], refundList));
+  }
+  getRefundView() {
+    return this.refundView;
+  }
+
   setCaseType(caseType: string){
     this.caseType.next(caseType);
   }
   getCaseType(){
     return this.caseType;
+  }
+
+  setCCDCaseNumber(ccdCaseNumber: string){
+    this.ccdCaseNumber.next(ccdCaseNumber);
+  }
+  getCCDCaseNumber(){
+    return this.ccdCaseNumber;
   }
 
   setFeeExists(feeExists: boolean){

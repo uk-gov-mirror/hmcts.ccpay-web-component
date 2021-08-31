@@ -4,6 +4,7 @@ import { MatTableDataSource} from '@angular/material/table';
 import {MatSort } from '@angular/material/sort';
 import {MatPaginator } from '@angular/material/paginator';
 import { IRefundList } from '../../interfaces/IRefundList';
+import { OrderslistService } from '../../services/orderslist.service';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
@@ -29,7 +30,8 @@ export class TableComponent {
 
   constructor(
     private paymentLibComponent: PaymentLibComponent,
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
+    private OrderslistService: OrderslistService
   ) {}
 
   ngOnInit() { 
@@ -71,5 +73,12 @@ export class TableComponent {
     this.paymentLibComponent.refundlistsource = refundDate;
     this.paymentLibComponent.refundReference = refundReference;
     this.paymentLibComponent.viewName = 'process-refund';
+  }
+
+  goToRefundViewComponent(refundReference: string, refundData: IRefundList ) {
+    this.OrderslistService.setRefundView(refundData);
+    this.paymentLibComponent.viewName='refundstatuslist';
+    this.paymentLibComponent.isRefundStatusView = true;
+    this.paymentLibComponent.isCallFromRefundList = true;
   }
 }

@@ -1,6 +1,6 @@
 
 
-<div *ngIf="viewName==='refundstatuslist'">
+<ng-container *ngIf="viewName==='refundstatuslist'">
     <!-- payments -->
     
     <table class="govuk-table">
@@ -29,15 +29,16 @@
           <td class="govuk-table__cell" colspan="6">No refunds recorded</td>
         </tbody>
       </table>
-</div>
-<div  *ngIf="viewName==='refundview'" >
+</ng-container>
+
+<ng-container  *ngIf="viewName==='refundview'" >
     <div class="govuk-breadcrumbs">
         <ol class="govuk-breadcrumbs__list">
           <li class="govuk-breadcrumbs__list-item">
             <a (click)="loadCaseTransactionPage()" class="govuk-back-link govuk-label">Back</a>
           </li>
         </ol>
-      </div>
+    </div>
     <h2 class="govuk-heading-l">Refund details</h2>
     <table>
         <tbody>
@@ -62,6 +63,7 @@
     </table>
 
     <div>
+      <br/>
         <h2 class="govuk-heading-l">Refund status history</h2>
         <table>
             <tbody>
@@ -90,14 +92,21 @@
         </table>
     </div>
 
+    <ng-container *ngIf="isCallFromRefundList">
       <div>
-
-    <div></div>
+        <br/>
+        <a  class="govuk-button govuk-button--secondary">
+            Resubmit refund
+        </a>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="!isCallFromRefundList">
+      <div>
+        <br/>
         <a  class="govuk-button govuk-button--secondary">
             Process refund
         </a>
+      </div>
+    </ng-container>
 
-    
-
-
-</div> 
+</ng-container>
