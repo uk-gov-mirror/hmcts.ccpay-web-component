@@ -1,3 +1,5 @@
+
+
 <div *ngIf="viewName==='refundstatuslist'">
     <!-- payments -->
     
@@ -29,6 +31,13 @@
       </table>
 </div>
 <div  *ngIf="viewName==='refundview'" >
+    <div class="govuk-breadcrumbs">
+        <ol class="govuk-breadcrumbs__list">
+          <li class="govuk-breadcrumbs__list-item">
+            <a (click)="loadCaseTransactionPage()" class="govuk-back-link govuk-label">Back</a>
+          </li>
+        </ol>
+      </div>
     <h2 class="govuk-heading-l">Refund details</h2>
     <table>
         <tbody>
@@ -51,26 +60,30 @@
       
         </tbody>
     </table>
-<!-- 
+
     <div>
         <h2 class="govuk-heading-l">Refund status history</h2>
         <table>
             <tbody>
             <tr class="section">
               <td class="bold tb-col-w">Status</td>
-              <td>{{ refundlist?.refund_reference }}</td>
+              <td>TBD</td>
+              <!-- <td>{{ refundlist?.refund_reference }}</td> -->
             </tr>
             <tr class="section">
               <td class="bold tb-col-w">Date and time</td>
-              <td>{{refundlist?.payment_reference }}</td>
+              <td>TBD</td>
+              <!-- <td>{{refundlist?.payment_reference }}</td> -->
             </tr>
             <tr class="section">
                 <td class="bold tb-col-w">User</td>
-                <td>{{ refundlist?.reason  }}</td>
+                <td>TBD</td>
+                <!-- <td>{{ refundlist?.reason  }}</td> -->
             </tr>
             <tr class="section">
                 <td class="bold tb-col-w">Notes</td>
-                <td>£{{refundlist?.amount | number:'.2'  }}</td>
+                <td>TBD</td>
+                <!-- <td>£{{refundlist?.amount | number:'.2'  }}</td> -->
             </tr>
           
             </tbody>
@@ -79,12 +92,12 @@
 
       <div>
 
-    
-        <a href="/orders/pages/refund/review-approve?casetype=civil&amp;state=withdrawn&amp;user=teamleader" class="govuk-button govuk-button--secondary">
+    <div></div>
+        <a  class="govuk-button govuk-button--secondary">
             Process refund
         </a>
 
     
 
 
-</div> -->
+</div> 

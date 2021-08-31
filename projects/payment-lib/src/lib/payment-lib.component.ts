@@ -7,6 +7,7 @@ import { IBSPayments } from './interfaces/IBSPayments';
   template: `
   <ccpay-refund-list [USERID]="USERID" [LOGGEDINUSERROLES]="LOGGEDINUSERROLES" [LOGGEDINUSEREMAIL]="LOGGEDINUSEREMAIL" *ngIf="viewName === 'refund-list'"></ccpay-refund-list>
     <ccpay-payment-list *ngIf="viewName === 'payment-list'"></ccpay-payment-list>
+    <ccpay-refund-status *ngIf="viewName === 'refundstatuslist'"> </ccpay-refund-status >
     <ccpay-payment-view *ngIf="viewName === 'payment-view'"
     [isTurnOff]="ISTURNOFF" [isTakePayment]="TAKEPAYMENT"  [caseType]="CASETYPE"
     [isOldPcipalOff]="ISOLDPCIPALOFF"
@@ -78,6 +79,8 @@ export class PaymentLibComponent implements OnInit {
   isOldPcipalOff: boolean;
   isNewPcipalOff: boolean;
   unProcessedPayment: IBSPayments = null;
+  isRefundStatusView: boolean;
+  isRedirectFromCaseTransactionPage: string;
 
   constructor(private paymentLibService: PaymentLibService) { }
 
