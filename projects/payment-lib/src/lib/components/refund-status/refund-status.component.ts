@@ -1,10 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { RefundsService } from '../../services/refunds/refunds.service';
+import { FormBuilder, FormGroup, Validators, FormControl, RequiredValidator } from '@angular/forms';
 import { IRefundList } from '../../interfaces/IRefundList';
 import { PaymentLibComponent } from '../../payment-lib.component';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import {Router} from '@angular/router';
 import { OrderslistService } from '../../services/orderslist.service';
+import { IRefundReasons } from '../../interfaces/IRefundReasons';
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 
 @Component({
@@ -17,23 +19,33 @@ export class RefundStatusComponent implements OnInit {
   @Input() isNewPcipalOff: string;
   @Input() ccdCaseNumber: string;
   @Input() isTurnOff: boolean;
-
+  refundStatusForm: FormGroup;
+  selectedRefundReason: string;
   rejectedRefundList: IRefundList[] = [];
   approvalStatus = 'sent for approval';
   rejectStatus = 'sent back';
   errorMessage = null;
   viewName: string;
+  refundReason:string;
   refundlist: IRefundList;
   bsPaymentDcnNumber: string;
   isCallFromRefundList: boolean;
+  isAmountEmpty: boolean = false;
+  isReasonEmpty: boolean = false;
+  amountHasError: boolean = false;
+  isRemissionLessThanFeeError: boolean = false;
+  refundHasError:boolean = false;
+  refundReasons: any[] = [];
 
-  constructor(private refundService: RefundsService,
+  constructor(private formBuilder: FormBuilder,
+    private refundService: RefundsService,
     private paymentLibComponent: PaymentLibComponent,
     private paymentViewService: PaymentViewService,
     private router: Router,
     private OrderslistService: OrderslistService) { }
 
   ngOnInit() {
+    this.resetRemissionForm([false, false, false, false], 'All');
     this.bsPaymentDcnNumber = this.paymentLibComponent.bspaymentdcn;
     this.isCallFromRefundList = this.paymentLibComponent.isCallFromRefundList;
     if(this.paymentLibComponent.isRefundStatusView) {
@@ -51,7 +63,14 @@ export class RefundStatusComponent implements OnInit {
         this.errorMessage = error;
       };
     }
-   
+     this.refundStatusForm = this.formBuilder.group({
+      amount: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.pattern('^[0-9]+(\\.[0-9]{2})?$')
+      ])),
+      refundReason: new FormControl('', Validators.compose([Validators.required])),
+      reason: new FormControl()
+    });
   }
 
   goToRefundView(refundlist: IRefundList) {
@@ -86,6 +105,60 @@ export class RefundStatusComponent implements OnInit {
       partUrl +=this.isOldPcipalOff ? '&isOldPcipalOff=Enable' : '&isOldPcipalOff=Disable';
       let url = `/payment-history/${this.ccdCaseNumber}?view=case-transactions&takePayment=true&${partUrl}`;
     this.router.navigateByUrl(url);
+  }
+
+  gotoReviewAndReSubmitPage(){
+    this.viewName = 'reviewandsubmitview';
+    this.refundService.getRefundReasons().subscribe(
+      refundReasons => { 
+        this.refundReasons = refundReasons['data'];
+      } );
+  }
+  gotoRefundReasonPage(){
+    this.viewName = 'refundreasonpage';
+  }
+
+  goToReviewAndSubmitView() {
+    const remissionctrls=this.refundStatusForm.controls
+    if (this.refundStatusForm.dirty ) {
+    if(remissionctrls['amount'].value == '' ) {
+      this.resetRemissionForm([true, false, false, false], 'amount');
+    }
+    else if(remissionctrls['amount'].value != '' && remissionctrls['amount'].invalid ) {
+      this.resetRemissionForm([false, true, false, false], 'amount');
+    }
+    else if(remissionctrls['reason'].value == '') {
+      this.resetRemissionForm([false, false, false, true], 'reason');
+    } else {
+      this.refundlist.reason = remissionctrls['reason'].value;
+      this.viewName = 'reviewandsubmitview';
+    }
+  }
+    
+  }
+
+  resetRemissionForm(val, field){
+    if (field==='All'){
+      this.isAmountEmpty = val[0];
+      this.amountHasError = val[1];
+      this.isRemissionLessThanFeeError = val[2];
+      this.isReasonEmpty = val[3];
+    } else if (field==='amount' || field==='All'){
+      this.isAmountEmpty = val[0];
+      this.amountHasError = val[1];
+      this.isRemissionLessThanFeeError = val[2];
+    } else if (field==='reason' || field==='All'){
+      this.isReasonEmpty = val[3];
+    }
+  }
+
+  selectRadioButton(key, value) {
+    this.refundHasError = false;
+    this.selectedRefundReason = key;
+    if(key === 'Other') {
+      this.refundHasError = false;
+      this.refundReason = key;
+    }
   }
 
 }

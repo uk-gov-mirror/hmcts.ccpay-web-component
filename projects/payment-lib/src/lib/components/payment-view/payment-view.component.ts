@@ -24,7 +24,9 @@ export class PaymentViewComponent implements OnInit {
   @Input() orderTotalPayments: boolean;
   @Input() payment: IPayment;
 
+  isRefundRemissionBtnEnable: boolean;
   paymentGroup: IPaymentGroup;
+  remissions: IRemission;
   errorMessage: string;
   ccdCaseNumber: string;
   selectedOption: string;
@@ -37,6 +39,7 @@ export class PaymentViewComponent implements OnInit {
   isStrategicFixEnable: boolean;
   isAddFeeBtnEnabled: boolean = false;
   isIssueRefunfBtnEnable: boolean = false;
+  showpanel:boolean;
 
   constructor(private paymentViewService: PaymentViewService,
               private paymentLibComponent: PaymentLibComponent,
@@ -125,8 +128,9 @@ export class PaymentViewComponent implements OnInit {
 
   issueRefund(paymentgrp: IPaymentGroup ) {
     this.paymentGroup = paymentgrp;
-    this.viewStatus = 'issuerefund';
+    this.viewStatus = 'addrefundforremission';
     this.isRefundRemission = true;
+    this.showpanel = true;
   }
 
 getRemissionByFeeCode(feeCode: string, remissions: IRemission[]): IRemission {
@@ -142,6 +146,7 @@ getRemissionByFeeCode(feeCode: string, remissions: IRemission[]): IRemission {
 }
 
 chkIssueRefundBtnEnable(payment: IPayment):boolean {
+  if(payment !== null) {
   if(payment.method === 'payment by account' && payment.status === 'Success') {
     this.isIssueRefunfBtnEnable = true;
   }
@@ -150,6 +155,7 @@ chkIssueRefundBtnEnable(payment: IPayment):boolean {
   } else {
   return false; 
   };
+}
 }
 
 chkForPBAPayment():boolean {
@@ -175,5 +181,36 @@ chkForAddRemission(feeCode: string): boolean {
     return false;
   }
     
+}
+
+addRefundForRemission(payment: IPayment, remission: IRemission) {
+  this.showpanel = true;
+ 
+  this.payment = payment;
+  this.paymentViewService.getApportionPaymentDetails(this.payment.reference).subscribe(
+    paymentGroup => {
+      this.paymentGroup = paymentGroup;
+
+      this.paymentGroup.payments = this.paymentGroup.payments.filter
+      (paymentGroupObj => paymentGroupObj['reference'].includes(this.payment.reference));
+      this.payment = this.paymentGroup.payments[0];
+      this.remissions = remission;
+      this.viewStatus = 'addrefundforremission';
+      // const paymentAllocation = this.paymentGroup.payments[0].payment_allocation;
+      // this.isStatusAllocated = paymentAllocation.length > 0 && paymentAllocation[0].allocation_status === 'Allocated' || paymentAllocation.length === 0;
+    },  
+    (error: any) => this.errorMessage = error
+  );
+}
+
+chkIsRefundRemissionBtnEnable(payment: IPayment):boolean  {
+  if (payment.method.toLocaleLowerCase() === 'payment by account' && payment.status.toLocaleLowerCase() === 'success') {
+    this.isRefundRemissionBtnEnable = true;
+  }
+  if (this.isRefundRemissionBtnEnable) {
+    return true;
+  } else {
+  return false; 
+  };
 }
 }

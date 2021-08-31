@@ -95,18 +95,97 @@
     <ng-container *ngIf="isCallFromRefundList">
       <div>
         <br/>
-        <a  class="govuk-button govuk-button--secondary">
-            Resubmit refund
-        </a>
+        <button type="submit" class="button govuk-button--secondary" (click)="gotoReviewAndReSubmitPage()">Resubmit refund</button>
       </div>
     </ng-container>
     <ng-container *ngIf="!isCallFromRefundList">
       <div>
         <br/>
-        <a  class="govuk-button govuk-button--secondary">
-            Process refund
-        </a>
+        <button type="submit" class="button govuk-button--secondary" >Process refund</button>
       </div>
     </ng-container>
 
+</ng-container>
+
+<ng-container *ngIf="viewName==='reviewandsubmitview'" >
+    <div class="govuk-warning-text">
+        <h1 class="heading-large">Review and resubmit refund</h1>
+    </div>
+    <table class="govuk-table">
+        <tr class="govuk-table__row">
+            <td class="govuk-table__cell govuk-!-font-weight-bold">Reason for rejection</td>
+            <td class="govuk-table__cell">reason 1</td>
+        </tr>
+        <tr class="govuk-table__row">
+            <td class="govuk-table__cell govuk-!-font-weight-bold">Refund reference</td>
+            <td class="govuk-table__cell">{{ refundlist?.refund_reference}} </td>
+        </tr>
+        <tr class="govuk-table__row">
+            <td class="govuk-table__cell govuk-!-font-weight-bold">Reason for refund</td>
+            <td class="govuk-table__cell">{{ refundlist?.reason }}</td>
+            <a (click)="gotoRefundReasonPage()" class="govuk-link right" >Change</a>
+        </tr>
+        <tr class="govuk-table__row">
+            <td class="govuk-table__cell govuk-!-font-weight-bold">Payment reference</td>
+            <td class="govuk-table__cell">{{ refundlist?.payment_reference}} </td>
+        </tr>
+        <tr class="govuk-table__row">
+            <td class="govuk-table__cell govuk-!-font-weight-bold">Payment amount</td>
+            <td class="govuk-table__cell"> {{ refundlist?.amount | number:'.2'  }}
+             <a class="govuk-link right" >Change</a>
+            </td>
+        </tr>
+    </table>
+</ng-container>
+
+<ng-container *ngIf="viewName === 'refundreasonpage'">
+    <input #myInput type='hidden' id='iFrameDrivenImageValue' value='ISSUEREFUNDPAGE'> 
+    <h1 class="heading-large">Process refund</h1>
+    <h1 class="heading-medium">#{{ccdCaseNumber | ccdHyphens }}</h1>
+    <h1 class="heading-large">Why are you making this refund?
+      </h1>
+      <div class="govuk-form-group">
+          <form novalidate>
+              <div class="govuk-form-group">
+                <form [formGroup]="refundStatusForm" novalidate>
+                  <fieldset class="govuk-fieldset" aria-describedby="how-contacted-conditional-hint">
+                        <div
+                          [ngClass]="refundHasError ? 'govuk-radios govuk-radios--conditional form-group-error' : 'govuk-radios govuk-radios--conditional'"
+                          data-module="govuk-radios" >
+                          <p class="inline-error-message" *ngIf="refundHasError">
+                            <span *ngIf="refundHasError">Select a reason why you’re making this refund</span>
+                          </p>
+                          <div class="govuk-radios__item" *ngFor="let refund of refundReasons">
+                            <input class="govuk-radios__input" id="{{refund.name}}" name="refundReason" type="radio"
+                            formControlName="refundReason" value={{refund.code}}
+                              (change)="selectRadioButton(refund.name, refund.name)">
+                            <label class="govuk-label--s govuk-radios__label govuk-font__custom" for="how-contacted-conditional">
+                              {{refund.name}}
+                            </label>
+                          </div>
+
+                          <div class="govuk-radios__conditional" *ngIf="selectedRefundReason === 'Other'" >
+                              <label class="govuk-label govuk-label--m" for="amount">
+                                  Enter reason
+                              </label>
+                            <input class="govuk-input govuk-input--width-10" [ngClass]="{'inline-error-class': isReasonEmpty}" id="reason" aria-label="reason"  name="reason" type="text" aria-describedby="reason" formControlName="reason">
+                            <p class="inline-error-message" *ngIf="isReasonEmpty">
+                              <span *ngIf="isReasonEmpty">Enter a reason why you’re making this refund</span>
+                            </p>
+                          </div>
+                        </div>
+                  </fieldset>
+                </form>
+             </div>
+             </form>
+      </div>
+      <div class="govuk-button-group">
+          <button class="govuk-button govuk-button--secondary"> Previous</button>
+          <button (click)="goToReviewAndSubmitView()" class="govuk-button"> Continue</button>
+        <p>
+            <a  class="govuk-link" data-module="govuk-button">
+                Cancel
+            </a>
+        </p>
+      </div>
 </ng-container>
