@@ -58,7 +58,7 @@ export class RefundListComponent implements OnInit {
     }
 
     if(this.isApproveTableVisible) {
-    this.refundService.getRefundList(this.approvalStatus,false).subscribe(
+    this.refundService.getRefundList(this.approvalStatus,true).subscribe(
       refundList => {
         this.submittedRefundList = refundList['data']['refund_list'];
         this.isApproveTableVisible = true;
