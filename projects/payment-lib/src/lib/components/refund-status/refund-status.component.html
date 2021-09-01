@@ -65,31 +65,27 @@
     <div>
       <br/>
         <h2 class="govuk-heading-l">Refund status history</h2>
-        <table>
-            <tbody>
-            <tr class="section">
-              <td class="bold tb-col-w">Status</td>
-              <td>TBD</td>
-              <!-- <td>{{ refundlist?.refund_reference }}</td> -->
-            </tr>
-            <tr class="section">
-              <td class="bold tb-col-w">Date and time</td>
-              <td>TBD</td>
-              <!-- <td>{{refundlist?.payment_reference }}</td> -->
-            </tr>
-            <tr class="section">
-                <td class="bold tb-col-w">User</td>
-                <td>TBD</td>
-                <!-- <td>{{ refundlist?.reason  }}</td> -->
-            </tr>
-            <tr class="section">
-                <td class="bold tb-col-w">Notes</td>
-                <td>TBD</td>
-                <!-- <td>£{{refundlist?.amount | number:'.2'  }}</td> -->
-            </tr>
-          
+        <table class="govuk-table">
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                 <td class="govuk-table__header col-24 whitespace-inherit" scope="col">Status</td>
+                  <td class="govuk-table__header col-27 whitespace-inherit" scope="col">Date and time</td>
+                  <td class="govuk-table__header whitespace-inherit" scope="col">User</td>
+                  <td class="govuk-table__header whitespace-inherit" scope="col">Notes</td>
+                </tr>
+            </thead>
+            <tbody class="govuk-table__body" >
+              <tr class="govuk-table__row" >
+                 <td class="govuk-table__cell whitespace-inherit"></td>
+                  <td class="govuk-table__cell whitespace-inherit"></td>
+                  <td class="govuk-table__cell whitespace-inherit"></td>
+                  <td class="govuk-table__cell whitespace-inherit"></td>
+                </tr>
             </tbody>
-        </table>
+            
+     
+          </table>
+    
     </div>
 
     <ng-container *ngIf="isCallFromRefundList">
