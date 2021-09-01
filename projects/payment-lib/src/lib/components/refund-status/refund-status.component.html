@@ -74,7 +74,7 @@
                   <td class="govuk-table__header whitespace-inherit" scope="col">Notes</td>
                 </tr>
             </thead>
-            <tbody class="govuk-table__body" >
+            <tbody class="govuk-table__body" *ngFor="let refundStatusHistory of refundStatusHistories;">           
               <tr class="govuk-table__row" >
                  <td class="govuk-table__cell whitespace-inherit">{{refundStatusHistory.status}}</td>
                   <td class="govuk-table__cell whitespace-inherit">{{refundStatusHistory.created_by}}</td>
@@ -82,8 +82,6 @@
                   <td class="govuk-table__cell whitespace-inherit">{{refundStatusHistory.notes}}</td>
                 </tr>
             </tbody>
-            
-     
           </table>
     
     </div>
