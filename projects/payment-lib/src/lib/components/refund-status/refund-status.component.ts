@@ -7,6 +7,7 @@ import { PaymentViewService } from '../../services/payment-view/payment-view.ser
 import {Router} from '@angular/router';
 import { OrderslistService } from '../../services/orderslist.service';
 import { IRefundReasons } from '../../interfaces/IRefundReasons';
+import { IRefundStatusList } from '../../interfaces/IRefundStatusList';
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 
 @Component({
@@ -36,6 +37,7 @@ export class RefundStatusComponent implements OnInit {
   isRemissionLessThanFeeError: boolean = false;
   refundHasError:boolean = false;
   refundReasons: any[] = [];
+  refundStatusHistory: IRefundStatusList;
 
   constructor(private formBuilder: FormBuilder,
     private refundService: RefundsService,
@@ -71,6 +73,19 @@ export class RefundStatusComponent implements OnInit {
       refundReason: new FormControl('', Validators.compose([Validators.required])),
       reason: new FormControl()
     });
+
+    this.getRefundsStatusHistoryList();
+  }
+
+  getRefundsStatusHistoryList() {
+    this.refundService.getRefundStatusHistory(this.refundlist.refund_reference).subscribe(
+      refundList => {
+        this.refundStatusHistory = refundList;
+      }
+    ),
+    (error: any) => {
+      this.errorMessage = error;
+    };
   }
 
   goToRefundView(refundlist: IRefundList) {

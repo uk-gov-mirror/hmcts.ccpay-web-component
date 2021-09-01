@@ -10,6 +10,7 @@ import { IRefundReasons } from '../../interfaces/IRefundReasons';
 import { IPatchRefundAction } from '../../interfaces/IPatchRefundAction';
 import { IRefundList } from '../../interfaces/IRefundList';
 import { IssueRefundRequest } from '../../interfaces/IssueRefundRequest';
+import { IRefundStatusList } from '../../interfaces/IRefundStatusList';
 
 @Injectable({
   providedIn: 'root'
@@ -57,12 +58,23 @@ patchRefundActions(body:IPatchRefundAction, refundReference: string, reviewerAct
   );
 }
   getRefundList(refundstatus?: string, selfexclusive?:boolean): Observable<IRefundList[]> {
-    return this.http.get<IRefundList[]>(`${this.paymentLibService.REFUNDS_API_ROOT}/get-refund-list?status=${refundstatus}&selfExclusive=${selfexclusive}`, {
+    return this.http.get<IRefundList[]>(`${this.paymentLibService.REFUNDS_API_ROOT}/get-refund-list?status=${refundstatus}&selfExclusive=${selfexclusive}`, 
+    {
     withCredentials: true
 })
     .pipe(
       catchError(this.errorHandlerService.handleError)
     );
+}
+
+getRefundStatusHistory(Id?: string) {
+  return this.http.get<IRefundStatusList[]>(`${this.paymentLibService.REFUNDS_API_ROOT}/reference/${Id}/status-history`, 
+  {
+  withCredentials: true
+})
+  .pipe(
+    catchError(this.errorHandlerService.handleError)
+  );
 }
 
 getRefundStatusList(ccdCaseNumber:string): Observable<IRefundList[]> {
