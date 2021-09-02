@@ -77,7 +77,7 @@
       <tbody class="govuk-table__body" *ngFor="let refundStatusHistory of refundStatusHistories;">
         <tr class="govuk-table__row">
           <td class="govuk-table__cell whitespace-inherit">{{refundStatusHistory.status}}</td>
-          <td class="govuk-table__cell whitespace-inherit">{{refundStatusHistory.date_created}}</td>
+          <td class="govuk-table__cell whitespace-inherit">{{refundStatusHistory.date_created | date:'medium'}}</td>
           <td class="govuk-table__cell whitespace-inherit">{{refundStatusHistory.created_by}}</td>
           <td class="govuk-table__cell whitespace-inherit">{{refundStatusHistory.notes}}</td>
         </tr>
@@ -94,7 +94,7 @@
     </div>
     <div *ngIf="refundButtonState==='sent for approval'">
       <br />
-      <button type="submit" class="button govuk-button--secondary" >Process refund</button>
+      <button type="submit" class="button govuk-button--secondary">Process refund</button>
     </div>
   </ng-container>
 
