@@ -110,6 +110,10 @@ details summary {
     width: 28% !important;
 }
 
+.col-8 {
+    width: 8% !important;
+}
+
 .col-60 {
     width: 60% !important;
 }
