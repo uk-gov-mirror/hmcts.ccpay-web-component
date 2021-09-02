@@ -76,7 +76,7 @@ export class RefundStatusComponent implements OnInit {
     });
 
     this.getRefundsStatusHistoryList();
-    this.refundButtonState=this.refundlist.refund_status.name;
+    this.refundButtonState = this.refundlist.refund_status.name;
   }
 
   getRefundsStatusHistoryList() {
