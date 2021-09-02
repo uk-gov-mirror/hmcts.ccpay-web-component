@@ -728,9 +728,8 @@ chkForAddRemission(feeCode: string): boolean {
           return false;
         }
       }
-    } else {
       return true;
-    }
+    } 
   } else {
     return false;
   }
