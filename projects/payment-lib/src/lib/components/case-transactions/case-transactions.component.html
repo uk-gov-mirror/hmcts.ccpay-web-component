@@ -644,7 +644,7 @@
       </div>
    </ng-container>
 
-   <ng-container *ngIf="!takePayment && viewStatus !== 'order-full-view' && viewStatus !== 'addremission' && viewStatus !== 'feeRemovalConfirmation' ">
+   <ng-container *ngIf="!takePayment &&  viewStatus !=='issuerefund' && viewStatus !== 'addrefundforremission' && viewStatus !== 'order-full-view' && viewStatus !== 'addremission' && viewStatus !== 'feeRemovalConfirmation' ">
       <div *ngIf="errorMessage">
           <div *ngIf="isCPODown && isAnyFeeGroupAvilable" class=" error govuk-inset-text govuk-!-margin-top-7">
               No party information currently available - try again later.
