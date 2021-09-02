@@ -1,185 +1,188 @@
-
-
 <ng-container *ngIf="viewName==='refundstatuslist'">
-    <!-- payments -->
-    
-    <table class="govuk-table">
-        <thead class="govuk-table__head">
-          <tr class="govuk-table__row">
-              <td class="govuk-table__header" scope="col">Status</td>
-              <td class="govuk-table__header" scope="col">Amount</td>
-              <td class="govuk-table__header" scope="col">Date</td>
-              <td class="govuk-table__header" scope="col">Refund reference</td>
-              <td class="govuk-table__header" scope="col">Reason</td>
-              <td class="govuk-table__header" scope="col"></td>
-            </tr>
-        </thead>
-        <tbody class="govuk-table__body" *ngIf="rejectedRefundList?.length > 0">
-          <tr class="govuk-table__row"  *ngFor="let refundList of rejectedRefundList">
-              <td class="govuk-table__cell whitespace-inherit">{{ refundList.refund_status['name']}}</td>
-              <td class="channel govuk-table__cell whitespace-inherit">£{{ refundList.amount | number:'.2' }}</td>
-              <td class="govuk-table__cell capitalize whitespace-inherit">{{ refundList.date_created | date:'dd MMM yyyy'}}</td>
-              <td class="govuk-table__cell whitespace-inherit">{{ refundList.refund_reference }}</td>
-              <td class="govuk-table__cell whitespace-inherit"> {{refundList.reason}}</td><td class="govuk-table__cell whitespace-inherit">
-                  <a href="javascript:void(0)" (click)="goToRefundView(refundList)">Review</a>
-                </td>
-            </tr>
-        </tbody>
-        <tbody class="govuk-table__body" *ngIf="rejectedRefundList?.length === 0">
-          <td class="govuk-table__cell" colspan="6">No refunds recorded</td>
-        </tbody>
-      </table>
+  <!-- payments -->
+
+  <table class="govuk-table">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <td class="govuk-table__header" scope="col">Status</td>
+        <td class="govuk-table__header" scope="col">Amount</td>
+        <td class="govuk-table__header" scope="col">Date</td>
+        <td class="govuk-table__header" scope="col">Refund reference</td>
+        <td class="govuk-table__header" scope="col">Reason</td>
+        <td class="govuk-table__header" scope="col"></td>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body" *ngIf="rejectedRefundList?.length > 0">
+      <tr class="govuk-table__row" *ngFor="let refundList of rejectedRefundList">
+        <td class="govuk-table__cell whitespace-inherit">{{ refundList.refund_status['name']}}</td>
+        <td class="channel govuk-table__cell whitespace-inherit">£{{ refundList.amount | number:'.2' }}</td>
+        <td class="govuk-table__cell capitalize whitespace-inherit">{{ refundList.date_created | date:'dd MMM yyyy'}}
+        </td>
+        <td class="govuk-table__cell whitespace-inherit">{{ refundList.refund_reference }}</td>
+        <td class="govuk-table__cell whitespace-inherit"> {{refundList.reason}}</td>
+        <td class="govuk-table__cell whitespace-inherit">
+          <a href="javascript:void(0)" (click)="goToRefundView(refundList)">Review</a>
+        </td>
+      </tr>
+    </tbody>
+    <tbody class="govuk-table__body" *ngIf="rejectedRefundList?.length === 0">
+      <td class="govuk-table__cell" colspan="6">No refunds recorded</td>
+    </tbody>
+  </table>
 </ng-container>
 
-<ng-container  *ngIf="viewName==='refundview'" >
-    <div class="govuk-breadcrumbs">
-        <ol class="govuk-breadcrumbs__list">
-          <li class="govuk-breadcrumbs__list-item">
-            <a (click)="loadCaseTransactionPage()" class="govuk-back-link govuk-label">Back</a>
-          </li>
-        </ol>
-    </div>
-    <h2 class="govuk-heading-l">Refund details</h2>
-    <table>
-        <tbody>
-        <tr class="section">
-          <td class="bold tb-col-w">Refund reference</td>
-          <td>{{ refundlist?.refund_reference }}</td>
+<ng-container *ngIf="viewName==='refundview'">
+  <div class="govuk-breadcrumbs">
+    <ol class="govuk-breadcrumbs__list">
+      <li class="govuk-breadcrumbs__list-item">
+        <a (click)="loadCaseTransactionPage()" class="govuk-back-link govuk-label">Back</a>
+      </li>
+    </ol>
+  </div>
+  <h2 class="govuk-heading-l">Refund details</h2>
+  <table>
+    <tbody>
+      <tr class="section">
+        <td class="bold tb-col-w">Refund reference</td>
+        <td>{{ refundlist?.refund_reference }}</td>
+      </tr>
+      <tr class="section">
+        <td class="bold tb-col-w">Payment to be refunded</td>
+        <td>{{refundlist?.payment_reference }}</td>
+      </tr>
+      <tr class="section">
+        <td class="bold tb-col-w">Reason for refund</td>
+        <td>{{ refundlist?.reason }}</td>
+      </tr>
+      <tr class="section">
+        <td class="bold tb-col-w">Amount refunded</td>
+        <td>£{{refundlist?.amount | number:'.2' }}</td>
+      </tr>
+
+    </tbody>
+  </table>
+
+  <div>
+    <br />
+    <h2 class="govuk-heading-l">Refund status history</h2>
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__header col-24 whitespace-inherit" scope="col">Status</td>
+          <td class="govuk-table__header col-27 whitespace-inherit" scope="col">Date and time</td>
+          <td class="govuk-table__header whitespace-inherit" scope="col">Users</td>
+          <td class="govuk-table__header whitespace-inherit" scope="col">Notes</td>
         </tr>
-        <tr class="section">
-          <td class="bold tb-col-w">Payment to be refunded</td>
-          <td>{{refundlist?.payment_reference }}</td>
+      </thead>
+      <tbody class="govuk-table__body" *ngFor="let refundStatusHistory of refundStatusHistories;">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell whitespace-inherit">{{refundStatusHistory.status}}</td>
+          <td class="govuk-table__cell whitespace-inherit">{{refundStatusHistory.date_created}}</td>
+          <td class="govuk-table__cell whitespace-inherit">{{refundStatusHistory.created_by}}</td>
+          <td class="govuk-table__cell whitespace-inherit">{{refundStatusHistory.notes}}</td>
         </tr>
-        <tr class="section">
-            <td class="bold tb-col-w">Reason for refund</td>
-            <td>{{ refundlist?.reason  }}</td>
-        </tr>
-        <tr class="section">
-            <td class="bold tb-col-w">Amount refunded</td>
-            <td>£{{refundlist?.amount | number:'.2'  }}</td>
-        </tr>
-      
-        </tbody>
+      </tbody>
     </table>
 
+  </div>
+
+  <ng-container *ngIf="isCallFromRefundList">
     <div>
-      <br/>
-        <h2 class="govuk-heading-l">Refund status history</h2>
-        <table class="govuk-table">
-            <thead class="govuk-table__head">
-              <tr class="govuk-table__row">
-                 <td class="govuk-table__header col-24 whitespace-inherit" scope="col">Status</td>
-                  <td class="govuk-table__header col-27 whitespace-inherit" scope="col">Date and time</td>
-                  <td class="govuk-table__header whitespace-inherit" scope="col">User</td>
-                  <td class="govuk-table__header whitespace-inherit" scope="col">Notes</td>
-                </tr>
-            </thead>
-            <tbody class="govuk-table__body" *ngFor="let refundStatusHistory of refundStatusHistories;">           
-              <tr class="govuk-table__row" >
-                 <td class="govuk-table__cell whitespace-inherit">{{refundStatusHistory.status}}</td>
-                  <td class="govuk-table__cell whitespace-inherit">{{refundStatusHistory.created_by}}</td>
-                  <td class="govuk-table__cell whitespace-inherit">{{refundStatusHistory.created_by}}</td>
-                  <td class="govuk-table__cell whitespace-inherit">{{refundStatusHistory.notes}}</td>
-                </tr>
-            </tbody>
-          </table>
-    
+      <br />
+      <button type="submit" class="button govuk-button--secondary" (click)="gotoReviewAndReSubmitPage()">Resubmit
+        refund</button>
     </div>
-
-    <ng-container *ngIf="isCallFromRefundList">
-      <div>
-        <br/>
-        <button type="submit" class="button govuk-button--secondary" (click)="gotoReviewAndReSubmitPage()">Resubmit refund</button>
-      </div>
-    </ng-container>
-    <ng-container *ngIf="!isCallFromRefundList">
-      <div>
-        <br/>
-        <button type="submit" class="button govuk-button--secondary" >Process refund</button>
-      </div>
-    </ng-container>
+  </ng-container>
+  <ng-container *ngIf="!isCallFromRefundList">
+    <div>
+      <br />
+      <button type="submit" class="button govuk-button--secondary">Process refund</button>
+    </div>
+  </ng-container>
 
 </ng-container>
 
-<ng-container *ngIf="viewName==='reviewandsubmitview'" >
-    <div class="govuk-warning-text">
-        <h1 class="heading-large">Review and resubmit refund</h1>
-    </div>
-    <table class="govuk-table">
-        <tr class="govuk-table__row">
-            <td class="govuk-table__cell govuk-!-font-weight-bold">Reason for rejection</td>
-            <td class="govuk-table__cell">reason 1</td>
-        </tr>
-        <tr class="govuk-table__row">
-            <td class="govuk-table__cell govuk-!-font-weight-bold">Refund reference</td>
-            <td class="govuk-table__cell">{{ refundlist?.refund_reference}} </td>
-        </tr>
-        <tr class="govuk-table__row">
-            <td class="govuk-table__cell govuk-!-font-weight-bold">Reason for refund</td>
-            <td class="govuk-table__cell">{{ refundlist?.reason }}</td>
-            <a (click)="gotoRefundReasonPage()" class="govuk-link right" >Change</a>
-        </tr>
-        <tr class="govuk-table__row">
-            <td class="govuk-table__cell govuk-!-font-weight-bold">Payment reference</td>
-            <td class="govuk-table__cell">{{ refundlist?.payment_reference}} </td>
-        </tr>
-        <tr class="govuk-table__row">
-            <td class="govuk-table__cell govuk-!-font-weight-bold">Payment amount</td>
-            <td class="govuk-table__cell"> {{ refundlist?.amount | number:'.2'  }}
-             <a class="govuk-link right" >Change</a>
-            </td>
-        </tr>
-    </table>
+<ng-container *ngIf="viewName==='reviewandsubmitview'">
+  <div class="govuk-warning-text">
+    <h1 class="heading-large">Review and resubmit refund</h1>
+  </div>
+  <table class="govuk-table">
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell govuk-!-font-weight-bold">Reason for rejection</td>
+      <td class="govuk-table__cell">reason 1</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell govuk-!-font-weight-bold">Refund reference</td>
+      <td class="govuk-table__cell">{{ refundlist?.refund_reference}} </td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell govuk-!-font-weight-bold">Reason for refund</td>
+      <td class="govuk-table__cell">{{ refundlist?.reason }}</td>
+      <a (click)="gotoRefundReasonPage()" class="govuk-link right">Change</a>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell govuk-!-font-weight-bold">Payment reference</td>
+      <td class="govuk-table__cell">{{ refundlist?.payment_reference}} </td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell govuk-!-font-weight-bold">Payment amount</td>
+      <td class="govuk-table__cell"> {{ refundlist?.amount | number:'.2' }}
+        <a class="govuk-link right">Change</a>
+      </td>
+    </tr>
+  </table>
 </ng-container>
 
 <ng-container *ngIf="viewName === 'refundreasonpage'">
-    <input #myInput type='hidden' id='iFrameDrivenImageValue' value='ISSUEREFUNDPAGE'> 
-    <h1 class="heading-large">Process refund</h1>
-    <h1 class="heading-medium">#{{ccdCaseNumber | ccdHyphens }}</h1>
-    <h1 class="heading-large">Why are you making this refund?
-      </h1>
+  <input #myInput type='hidden' id='iFrameDrivenImageValue' value='ISSUEREFUNDPAGE'>
+  <h1 class="heading-large">Process refund</h1>
+  <h1 class="heading-medium">#{{ccdCaseNumber | ccdHyphens }}</h1>
+  <h1 class="heading-large">Why are you making this refund?
+  </h1>
+  <div class="govuk-form-group">
+    <form novalidate>
       <div class="govuk-form-group">
-          <form novalidate>
-              <div class="govuk-form-group">
-                <form [formGroup]="refundStatusForm" novalidate>
-                  <fieldset class="govuk-fieldset" aria-describedby="how-contacted-conditional-hint">
-                        <div
-                          [ngClass]="refundHasError ? 'govuk-radios govuk-radios--conditional form-group-error' : 'govuk-radios govuk-radios--conditional'"
-                          data-module="govuk-radios" >
-                          <p class="inline-error-message" *ngIf="refundHasError">
-                            <span *ngIf="refundHasError">Select a reason why you’re making this refund</span>
-                          </p>
-                          <div class="govuk-radios__item" *ngFor="let refund of refundReasons">
-                            <input class="govuk-radios__input" id="{{refund.name}}" name="refundReason" type="radio"
-                            formControlName="refundReason" value={{refund.code}}
-                              (change)="selectRadioButton(refund.name, refund.name)">
-                            <label class="govuk-label--s govuk-radios__label govuk-font__custom" for="how-contacted-conditional">
-                              {{refund.name}}
-                            </label>
-                          </div>
+        <form [formGroup]="refundStatusForm" novalidate>
+          <fieldset class="govuk-fieldset" aria-describedby="how-contacted-conditional-hint">
+            <div
+              [ngClass]="refundHasError ? 'govuk-radios govuk-radios--conditional form-group-error' : 'govuk-radios govuk-radios--conditional'"
+              data-module="govuk-radios">
+              <p class="inline-error-message" *ngIf="refundHasError">
+                <span *ngIf="refundHasError">Select a reason why you’re making this refund</span>
+              </p>
+              <div class="govuk-radios__item" *ngFor="let refund of refundReasons">
+                <input class="govuk-radios__input" id="{{refund.name}}" name="refundReason" type="radio"
+                  formControlName="refundReason" value={{refund.code}}
+                  (change)="selectRadioButton(refund.name, refund.name)">
+                <label class="govuk-label--s govuk-radios__label govuk-font__custom" for="how-contacted-conditional">
+                  {{refund.name}}
+                </label>
+              </div>
 
-                          <div class="govuk-radios__conditional" *ngIf="selectedRefundReason === 'Other'" >
-                              <label class="govuk-label govuk-label--m" for="amount">
-                                  Enter reason
-                              </label>
-                            <input class="govuk-input govuk-input--width-10" [ngClass]="{'inline-error-class': isReasonEmpty}" id="reason" aria-label="reason"  name="reason" type="text" aria-describedby="reason" formControlName="reason">
-                            <p class="inline-error-message" *ngIf="isReasonEmpty">
-                              <span *ngIf="isReasonEmpty">Enter a reason why you’re making this refund</span>
-                            </p>
-                          </div>
-                        </div>
-                  </fieldset>
-                </form>
-             </div>
-             </form>
+              <div class="govuk-radios__conditional" *ngIf="selectedRefundReason === 'Other'">
+                <label class="govuk-label govuk-label--m" for="amount">
+                  Enter reason
+                </label>
+                <input class="govuk-input govuk-input--width-10" [ngClass]="{'inline-error-class': isReasonEmpty}"
+                  id="reason" aria-label="reason" name="reason" type="text" aria-describedby="reason"
+                  formControlName="reason">
+                <p class="inline-error-message" *ngIf="isReasonEmpty">
+                  <span *ngIf="isReasonEmpty">Enter a reason why you’re making this refund</span>
+                </p>
+              </div>
+            </div>
+          </fieldset>
+        </form>
       </div>
-      <div class="govuk-button-group">
-          <button class="govuk-button govuk-button--secondary"> Previous</button>
-          <button (click)="goToReviewAndSubmitView()" class="govuk-button"> Continue</button>
-        <p>
-            <a  class="govuk-link" data-module="govuk-button">
-                Cancel
-            </a>
-        </p>
-      </div>
+    </form>
+  </div>
+  <div class="govuk-button-group">
+    <button class="govuk-button govuk-button--secondary"> Previous</button>
+    <button (click)="goToReviewAndSubmitView()" class="govuk-button"> Continue</button>
+    <p>
+      <a class="govuk-link" data-module="govuk-button">
+        Cancel
+      </a>
+    </p>
+  </div>
 </ng-container>
