@@ -31,6 +31,7 @@ export class RefundStatusComponent implements OnInit {
   refundlist: IRefundList;
   bsPaymentDcnNumber: string;
   isCallFromRefundList: boolean;
+  refundButtonState: String;
   isAmountEmpty: boolean = false;
   isReasonEmpty: boolean = false;
   amountHasError: boolean = false;
@@ -75,6 +76,7 @@ export class RefundStatusComponent implements OnInit {
     });
 
     this.getRefundsStatusHistoryList();
+    this.refundButtonState=this.refundlist.refund_status.name;
   }
 
   getRefundsStatusHistoryList() {
