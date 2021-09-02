@@ -168,9 +168,10 @@ chkForAddRemission(feeCode: string): boolean {
           return false;
         }
       }
-    } else {
       return true;
-    }
+    } 
+      return true;
+
   } else {
     return false;
   }

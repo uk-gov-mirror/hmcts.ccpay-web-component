@@ -722,7 +722,7 @@ export class CaseTransactionsComponent implements OnInit {
 
 chkForAddRemission(feeCode: string): boolean {
   if(this.chkForPBAPayment()) {
-    if (this.orderDetail[0]['remissions'] && this.orderDetail[0]['remissions'].length > 0) {
+    if (this.orderDetail[0]['remissions'].length > 0) {
       for (const remission of this.orderDetail[0]['remissions']) {
         if (remission.fee_code === feeCode) {
           return false;
@@ -730,6 +730,7 @@ chkForAddRemission(feeCode: string): boolean {
       }
       return true;
     } 
+    return true;
   } else {
     return false;
   }
