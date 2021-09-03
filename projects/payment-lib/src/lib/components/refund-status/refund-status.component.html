@@ -115,8 +115,12 @@
     </tr>
     <tr class="govuk-table__row">
       <td class="govuk-table__cell govuk-!-font-weight-bold">Reason for refund</td>
-      <td class="govuk-table__cell">{{ refundlist?.reason }}</td>
-      <a (click)="gotoRefundReasonPage()" class="govuk-link right">Change</a>
+      <td class="govuk-table__cell"> {{ refundlist?.reason}}
+          <a (click)="gotoRefundReasonPage()"  class="govuk-link right">Change</a>
+        </td>
+
+      <!-- <td class="govuk-table__cell">{{ refundlist?.reason }}</td>
+      <a (click)="gotoRefundReasonPage()" class="govuk-link right">Change</a> -->
     </tr>
     <tr class="govuk-table__row">
       <td class="govuk-table__cell govuk-!-font-weight-bold">Payment reference</td>
@@ -129,10 +133,25 @@
       </td>
     </tr>
   </table>
+  <div class="govuk-button-group">
+      <button (click)="gotoReviewRefundConfirmationPage()"   class="govuk-button" data-module="govuk-button">
+        Submit refund
+      </button>
+ </div>
+ <p>
+    <a href="../v1paymenthistory">Cancel</a>
+ </p>
 </ng-container>
 
-<ng-container *ngIf="viewName === 'refundreasonpage'">
-  <input #myInput type='hidden' id='iFrameDrivenImageValue' value='ISSUEREFUNDPAGE'>
+<ng-container *ngIf="viewName === 'issuerefund'">
+    <ccpay-add-remission 
+    [isFromRefundListPage] = "true"
+    [viewCompStatus] = "viewName"
+    [isRefundRemission] = "true"
+    [ccdCaseNumber]="ccdCaseNumber"
+    (refundListReason) = "getRefundListReason($event)"
+    ></ccpay-add-remission>
+  <!-- <input #myInput type='hidden' id='iFrameDrivenImageValue' value='ISSUEREFUNDPAGE'>
   <h1 class="heading-large">Process refund</h1>
   <h1 class="heading-medium">#{{ccdCaseNumber | ccdHyphens }}</h1>
   <h1 class="heading-large">Why are you making this refund?
@@ -182,5 +201,31 @@
         Cancel
       </a>
     </p>
-  </div>
+  </div> -->
 </ng-container>
+
+<ng-container *ngIf="viewName === 'reviewrefundconfirmationpage'">
+    <div class="govuk-grid-row">
+      <div >
+        <div class="govuk-panel govuk-panel--confirmation">
+          <h1 class="govuk-panel__title">
+            Refund submitted
+          </h1>
+          
+          <div class="govuk-panel__body">
+            <p class="govuk-body" style="color: white"><strong>Refund reference: </strong></p>
+          </div>
+    
+        </div>
+        
+        <h2 class="govuk-heading-l">What happens next</h2>
+        <p class="govuk-body">
+          A refund request for  has been passed to a team leader to approve.
+        </p>
+     
+        <p class="govuk-body">
+          <a  class="govuk-link">Return to case</a>
+       </p>
+      </div>
+    </div>
+  </ng-container>

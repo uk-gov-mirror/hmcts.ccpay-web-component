@@ -727,7 +727,7 @@ chkForAddRemission(feeCode: string): boolean {
         if (remission.fee_code === feeCode) {
           return false;
         }
-      }
+      } 
       return true;
     } 
     return true;

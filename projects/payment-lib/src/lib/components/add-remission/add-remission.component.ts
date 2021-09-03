@@ -38,7 +38,10 @@ export class AddRemissionComponent implements OnInit {
   @Input() isStrategicFixEnable: boolean;
   @Input() orderStatus: string;
   @Input() paidAmount: any;
+  @Input() isFromRefundListPage: boolean;
   @Output() cancelRemission: EventEmitter<void> = new EventEmitter();
+  @Output() refundListReason: EventEmitter<string> = new EventEmitter();
+  @Output() refundListAmount: EventEmitter<string> = new EventEmitter();
 
   refund = {
     reason: {
@@ -372,11 +375,21 @@ export class AddRemissionComponent implements OnInit {
       this.refundHasError = false;
       this.refundReason +=  '-' + this.remissionForm.controls['reason'].value;
       this.selectedRefundReason = this.remissionForm.controls['reason'].value;
-      this.viewCompStatus = '';
-      this.viewStatus = 'checkissuerefundpage';
+      if ( this.isFromRefundListPage ) {
+        this.refundListReason.emit(this.selectedRefundReason);
+      } else {
+        this.viewCompStatus = '';
+        this.viewStatus = 'checkissuerefundpage';
+      }
+      
     } else {
-    this.viewCompStatus = '';
-    this.viewStatus = 'checkissuerefundpage';
+      if ( this.isFromRefundListPage ) {
+        this.refundListReason.emit(this.selectedRefundReason);
+      } else {
+        this.viewCompStatus = '';
+        this.viewStatus = 'checkissuerefundpage';
+      }
+   
     }
   }
 

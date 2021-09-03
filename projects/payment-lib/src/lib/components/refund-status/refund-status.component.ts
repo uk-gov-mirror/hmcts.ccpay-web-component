@@ -132,7 +132,7 @@ export class RefundStatusComponent implements OnInit {
       });
   }
   gotoRefundReasonPage() {
-    this.viewName = 'refundreasonpage';
+    this.viewName = 'issuerefund';
   }
 
   goToReviewAndSubmitView() {
@@ -176,6 +176,15 @@ export class RefundStatusComponent implements OnInit {
       this.refundHasError = false;
       this.refundReason = key;
     }
+  }
+
+  getRefundListReason(refundListReason: string){
+    this.refundlist.reason = refundListReason;
+    this.viewName = 'reviewandsubmitview';
+  }
+
+  gotoReviewRefundConfirmationPage() {
+    this.viewName = 'reviewrefundconfirmationpage';
   }
 
 }
