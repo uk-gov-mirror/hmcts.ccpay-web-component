@@ -35,7 +35,7 @@
   <div class="govuk-breadcrumbs">
     <ol class="govuk-breadcrumbs__list">
       <li class="govuk-breadcrumbs__list-item">
-        <a (click)="loadCaseTransactionPage()" class="govuk-back-link govuk-label">Back</a>
+        <a (click)="loadRefundListPage()" class="govuk-back-link govuk-label">Back</a>
       </li>
     </ol>
   </div>
@@ -89,7 +89,7 @@
   <ng-container *ngIf="viewName==='refundview'">
     <div *ngIf="refundButtonState==='sent back'">
       <br />
-      <button type="submit" class="button govuk-button--secondary" (click)="gotoReviewAndReSubmitPage()">Resubmit
+      <button type="submit" class="button govuk-button--secondary btnmargin" (click)="gotoReviewAndReSubmitPage()">Resubmit
         refund</button>
     </div>
     <div *ngIf="refundButtonState==='sent for approval'">
@@ -129,17 +129,17 @@
     <tr class="govuk-table__row">
       <td class="govuk-table__cell govuk-!-font-weight-bold">Payment amount</td>
       <td class="govuk-table__cell"> {{ refundlist?.amount | number:'.2' }}
-        <a class="govuk-link right">Change</a>
+        <!-- <a class="govuk-link right">Change</a> -->
       </td>
     </tr>
   </table>
   <div class="govuk-button-group">
-      <button (click)="gotoReviewRefundConfirmationPage()"   class="govuk-button" data-module="govuk-button">
+      <button (click)="gotoReviewRefundConfirmationPage()"   class="govuk-button button" data-module="govuk-button">
         Submit refund
       </button>
  </div>
  <p>
-    <a href="../v1paymenthistory">Cancel</a>
+    <a href="gotoReviewDetailsPage()" class="cancelbtn">Cancel</a>
  </p>
 </ng-container>
 
@@ -213,14 +213,14 @@
           </h1>
           
           <div class="govuk-panel__body">
-            <p class="govuk-body" style="color: white"><strong>Refund reference: </strong></p>
+            <p class="govuk-body" style="color: white"><strong>Refund reference:{{refundReference}} </strong></p>
           </div>
     
         </div>
         
         <h2 class="govuk-heading-l">What happens next</h2>
         <p class="govuk-body">
-          A refund request for  has been passed to a team leader to approve.
+          A refund request for {{refundAmount}}  has been passed to a team leader to approve.
         </p>
      
         <p class="govuk-body">

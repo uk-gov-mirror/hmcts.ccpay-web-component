@@ -268,35 +268,63 @@
       <h1 class="heading-medium">#{{ccdCaseNumber | ccdHyphens }}</h1>
       <h1 class="heading-large">Why are you making this refund?
         </h1>
+       
+
         <div class="govuk-form-group">
             <form novalidate>
                 <div class="govuk-form-group">
                   <form [formGroup]="remissionForm" novalidate>
                     <fieldset class="govuk-fieldset" aria-describedby="how-contacted-conditional-hint">
+                       
                           <div
                             [ngClass]="refundHasError ? 'govuk-radios govuk-radios--conditional form-group-error' : 'govuk-radios govuk-radios--conditional'"
                             data-module="govuk-radios" >
                             <p class="inline-error-message" *ngIf="refundHasError">
                               <span *ngIf="refundHasError">Select a reason why you’re making this refund</span>
                             </p>
-                            <div class="govuk-radios__item" *ngFor="let refund of refundReasons">
-                              <input class="govuk-radios__input" id="{{refund.name}}" name="refundReason" type="radio"
-                              formControlName="refundReason" value={{refund.code}}
-                                (change)="selectRadioButton(refund.name, refund.name)">
-                              <label class="govuk-label--s govuk-radios__label govuk-font__custom" for="how-contacted-conditional">
-                                {{refund.name}}
-                              </label>
+
+                            <div>
+                                <select formControlName="refundReason" class="govuk-select" id="sort"  (change)="selectchange($event)">
+                                    <option value="" selected='selected'>Select Option</option>
+                                    <option  *ngFor="let refund of refundReasons;" id="{{refund.name}}"  value="{{refund.code}}">{{refund.name}}</option>
+                                  </select>
+                              
+                            </div>
+                                <br/>
+                                <div class="govuk-radios__conditional" *ngIf="showReasonText &&  !isRefundReasonsSelected" >
+                                    <label class="govuk-label govuk-label--m" for="amount">
+                                        Enter reason
+                                    </label>
+                                  <input class="govuk-input govuk-input--width-10" [ngClass]="{'inline-error-class': isReasonEmpty}" id="reason" aria-label="reason"  name="reason" type="text" aria-describedby="reason" formControlName="reason">
+                                  <p class="inline-error-message" *ngIf="isReasonEmpty">
+                                    <span *ngIf="isReasonEmpty">Enter a reason why you’re making this refund</span>
+                                  </p>
+                                </div>
+
+                            <div class = "container-fluid">
+                              <div class="row">
+                              <div class="govuk-radios__item col-md-4" *ngFor="let refund of commonRefundReasons; let i = index;">
+                                  <input   class="govuk-radios__input" id="{{refund.name}}" name="refundReason" type="radio"
+                                  formControlName="refundReason" value={{refund.code}}
+                                    (change)="selectRadioButton(refund.name, refund.name)">
+                                  <label class="govuk-label--s govuk-radios__label govuk-font__custom" for="how-contacted-conditional">
+                                    {{refund.name}}
+                                  </label>
+
+                                  <div class="govuk-radios__conditional" *ngIf="isRefundReasonsSelected && showReasonText && selectedRefundReason === refund.name " >
+                                      <label class="govuk-label govuk-label--m" for="{{refund.name}}">
+                                          Enter reason
+                                      </label>
+                                    <input class="govuk-input govuk-input--width-10" [ngClass]="{'inline-error-class': isReasonEmpty}" id="reason" aria-label="reason"  name="reason" type="text" aria-describedby="reason" formControlName="reason">
+                                    <p  class="inline-error-message" *ngIf="isReasonEmpty">
+                                      <span *ngIf="isReasonEmpty">Enter a reason why you’re making this refund</span>
+                                    </p>
+                                  </div>
+                              </div>
+                              </div>
                             </div>
 
-                            <div class="govuk-radios__conditional" *ngIf="selectedRefundReason === 'Other'" >
-                                <label class="govuk-label govuk-label--m" for="amount">
-                                    Enter reason
-                                </label>
-                              <input class="govuk-input govuk-input--width-10" [ngClass]="{'inline-error-class': isReasonEmpty}" id="reason" aria-label="reason"  name="reason" type="text" aria-describedby="reason" formControlName="reason">
-                              <p class="inline-error-message" *ngIf="isReasonEmpty">
-                                <span *ngIf="isReasonEmpty">Enter a reason why you’re making this refund</span>
-                              </p>
-                            </div>
+                           
                           </div>
                     </fieldset>
                   </form>
@@ -312,6 +340,7 @@
               </a>
           </p>
         </div>
+      
   </ng-container>
 
   <ng-container *ngIf="viewStatus === 'checkissuerefundpage'">
@@ -424,4 +453,6 @@
   </ng-container>
 
 </div>
+
+
 

@@ -11,7 +11,7 @@ import { IPatchRefundAction } from '../../interfaces/IPatchRefundAction';
 import { IRefundList } from '../../interfaces/IRefundList';
 import { IssueRefundRequest } from '../../interfaces/IssueRefundRequest';
 import { IRefundStatus } from '../../interfaces/IRefundStatus';
-
+import { IResubmitRefundRequest } from '../../interfaces/IResubmitRefundRequest';
 @Injectable({
   providedIn: 'root'
 })
@@ -96,6 +96,12 @@ getRefundStatusList(ccdCaseNumber:string): Observable<IRefundList[]> {
 }
  
   postIssueRefund(body: IssueRefundRequest): Observable<any> {
+    return this.https.post(`${this.paymentLibService.REFUNDS_API_ROOT}/refund`, body).pipe(
+      catchError(this.errorHandlerService.handleError)
+    );
+  }
+
+  postResubmitRefund(body: IResubmitRefundRequest): Observable<any> {
     return this.https.post(`${this.paymentLibService.REFUNDS_API_ROOT}/refund`, body).pipe(
       catchError(this.errorHandlerService.handleError)
     );

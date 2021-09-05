@@ -81,6 +81,9 @@ export class AddRemissionComponent implements OnInit {
   isRemissionApplied: boolean = false;
   remissionamt:number;
   refundReasons: any[] = [];
+  commonRefundReasons: any[] = [];
+  showReasonText: boolean;
+  isRefundReasonsSelected: boolean;
   // refundReasons:IRefundReasons[];
 
   constructor(private formBuilder: FormBuilder,
@@ -117,16 +120,19 @@ export class AddRemissionComponent implements OnInit {
         Validators.pattern('^[0-9]+(\\.[0-9]{2})?$')
       ])),
       refundReason: new FormControl('', Validators.compose([Validators.required])),
+      refundReasonOption: new FormControl('', Validators.compose([Validators.required])),
       reason: new FormControl()
     });
     if(this.viewCompStatus === ''){
     this.viewStatus = 'main';
     }
-
+ 
     if(this.viewCompStatus === 'issuerefund'){
       this.refundService.getRefundReasons().subscribe(
         refundReasons => { 
-          this.refundReasons = refundReasons['data'];
+          this.refundReasons = refundReasons['data'].filter((data) => data.recently_used === false);
+          this.cd.detectChanges();
+          this.commonRefundReasons = refundReasons['data'].filter((data) => data.recently_used === true);
           this.cd.detectChanges();
         } );
       }
@@ -369,9 +375,9 @@ export class AddRemissionComponent implements OnInit {
     this.refundReason = this.remissionForm.controls['refundReason'].value;
     if(!this.refundReason) {
       this.refundHasError = true;
-    } else if(this.refundReason == 'RR004' && (this.remissionForm.controls['reason'].value == '' || this.remissionForm.controls['reason'].value == null)) {
+    } else if(this.selectedRefundReason.includes('Other') && (this.remissionForm.controls['reason'].value == '' || this.remissionForm.controls['reason'].value == null)) {
         this.resetRemissionForm([false, false, false, true, false, true], 'reason');
-    } else if (this.refundReason == 'RR004' && this.remissionForm.controls['reason'].value !== '') {
+    } else if (this.selectedRefundReason.includes('Other') && this.remissionForm.controls['reason'].value !== '') {
       this.refundHasError = false;
       this.refundReason +=  '-' + this.remissionForm.controls['reason'].value;
       this.selectedRefundReason = this.remissionForm.controls['reason'].value;
@@ -465,12 +471,33 @@ export class AddRemissionComponent implements OnInit {
   }
 
   selectRadioButton(key, value) {
+    // const remissionctrls=this.remissionForm.controls;
+    // remissionctrls['refundReason'].reset();
+    this.isRefundReasonsSelected = true;
+    this.showReasonText = false;
     this.refundHasError = false;
     this.selectedRefundReason = key;
-    if(key === 'Other') {
+    if(this.selectedRefundReason.includes('Other')) {
+      this.showReasonText = true;
       this.refundHasError = false;
       this.refundReason = key;
     }
+  }
+
+  selectchange(args) {
+    // const remissionctrls=this.remissionForm.controls;
+    // remissionctrls['refundReason'].reset();
+    this.isRefundReasonsSelected = false;
+    this.showReasonText = false;
+    this.refundHasError = false;
+    this.selectedRefundReason = args.target.options[args.target.options.selectedIndex].id;
+    if(this.selectedRefundReason.includes('Other')) {
+      this.showReasonText = true;
+      this.refundHasError = false;
+      this.refundReason = args.target.options[args.target.options.selectedIndex].id;
+    }
+
+
   }
 
   gotoCasetransationPage() {

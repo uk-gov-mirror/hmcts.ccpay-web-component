@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { OrderslistService } from '../../services/orderslist.service';
 import { IRefundReasons } from '../../interfaces/IRefundReasons';
 import { IRefundStatus } from '../../interfaces/IRefundStatus';
+import { IResubmitRefundRequest } from '../../interfaces/IResubmitRefundRequest';
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 
 @Component({
@@ -39,6 +40,8 @@ export class RefundStatusComponent implements OnInit {
   refundHasError: boolean = false;
   refundReasons: any[] = [];
   refundStatusHistories: IRefundStatus[];
+  refundReference: string;
+  refundAmount: string;
 
   constructor(private formBuilder: FormBuilder,
     private refundService: RefundsService,
@@ -124,6 +127,14 @@ export class RefundStatusComponent implements OnInit {
     this.router.navigateByUrl(url);
   }
 
+  loadRefundListPage() {
+    this.paymentLibComponent.viewName = 'refund-list';
+  }
+
+  gotoReviewDetailsPage() {
+    this.viewName = 'refundview';
+  }
+
   gotoReviewAndReSubmitPage() {
     this.viewName = 'reviewandsubmitview';
     this.refundService.getRefundReasons().subscribe(
@@ -184,6 +195,19 @@ export class RefundStatusComponent implements OnInit {
   }
 
   gotoReviewRefundConfirmationPage() {
+    const resubmitRequest = new IResubmitRefundRequest(this.refundlist.reason,'ACCEPTED');
+    this.refundService.postResubmitRefund(resubmitRequest).subscribe(
+      response => {
+        if (JSON.parse(response)) {
+          this.refundReference = JSON.parse(response).refund_reference;
+          this.refundAmount = JSON.parse(response).refund_amount;
+        }
+      },
+      (error: any) => {
+        this.errorMessage = error;
+      
+      }
+    );
     this.viewName = 'reviewrefundconfirmationpage';
   }
 

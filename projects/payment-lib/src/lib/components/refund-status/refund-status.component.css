@@ -1,0 +1,17 @@
+.right {
+    float: right !important;
+  }
+
+  .button {
+    margin-bottom: 3em;
+    font-size: 19px;
+  }
+
+  .cancelbtn {
+    font-size: 19px;
+    font-weight: 400;
+  }
+
+  .btnmargin{
+    margin-bottom: 2em;
+  }
