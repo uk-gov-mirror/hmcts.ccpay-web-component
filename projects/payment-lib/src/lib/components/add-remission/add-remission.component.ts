@@ -120,7 +120,6 @@ export class AddRemissionComponent implements OnInit {
         Validators.pattern('^[0-9]+(\\.[0-9]{2})?$')
       ])),
       refundReason: new FormControl('', Validators.compose([Validators.required])),
-      refundReasonOption: new FormControl('', Validators.compose([Validators.required])),
       reason: new FormControl()
     });
     if(this.viewCompStatus === ''){

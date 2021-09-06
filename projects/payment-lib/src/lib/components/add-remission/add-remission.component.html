@@ -283,23 +283,7 @@
                               <span *ngIf="refundHasError">Select a reason why you’re making this refund</span>
                             </p>
 
-                            <div>
-                                <select formControlName="refundReason" class="govuk-select" id="sort"  (change)="selectchange($event)">
-                                    <option value="" selected='selected'>Select Option</option>
-                                    <option  *ngFor="let refund of refundReasons;" id="{{refund.name}}"  value="{{refund.code}}">{{refund.name}}</option>
-                                  </select>
-                              
-                            </div>
-                                <br/>
-                                <div class="govuk-radios__conditional" *ngIf="showReasonText &&  !isRefundReasonsSelected" >
-                                    <label class="govuk-label govuk-label--m" for="amount">
-                                        Enter reason
-                                    </label>
-                                  <input class="govuk-input govuk-input--width-10" [ngClass]="{'inline-error-class': isReasonEmpty}" id="reason" aria-label="reason"  name="reason" type="text" aria-describedby="reason" formControlName="reason">
-                                  <p class="inline-error-message" *ngIf="isReasonEmpty">
-                                    <span *ngIf="isReasonEmpty">Enter a reason why you’re making this refund</span>
-                                  </p>
-                                </div>
+                           
 
                             <div class = "container-fluid">
                               <div class="row">
@@ -323,6 +307,24 @@
                               </div>
                               </div>
                             </div>
+                            <br/>
+                            <div>
+                                <select formControlName="refundReason" class="govuk-select" id="sort"  (change)="selectchange($event)">
+                                    <option value="" selected='selected'>Select Option</option>
+                                    <option  *ngFor="let refund of refundReasons;" id="{{refund.name}}"  value="{{refund.code}}">{{refund.name}}</option>
+                                  </select>
+                              
+                            </div>
+                                <br/>
+                                <div class="govuk-radios__conditional" *ngIf="showReasonText &&  !isRefundReasonsSelected" >
+                                    <label class="govuk-label govuk-label--m" for="amount">
+                                        Enter reason
+                                    </label>
+                                  <input class="govuk-input govuk-input--width-10" [ngClass]="{'inline-error-class': isReasonEmpty}" id="reason" aria-label="reason"  name="reason" type="text" aria-describedby="reason" formControlName="reason">
+                                  <p class="inline-error-message" *ngIf="isReasonEmpty">
+                                    <span *ngIf="isReasonEmpty">Enter a reason why you’re making this refund</span>
+                                  </p>
+                                </div>
 
                            
                           </div>
