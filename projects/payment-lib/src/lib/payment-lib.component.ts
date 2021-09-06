@@ -1,5 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {PaymentLibService} from './payment-lib.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { PaymentLibService } from './payment-lib.service';
 import { IBSPayments } from './interfaces/IBSPayments';
 
 @Component({
@@ -7,8 +7,8 @@ import { IBSPayments } from './interfaces/IBSPayments';
   template: `
   <ccpay-refund-list [USERID]="USERID" [LOGGEDINUSERROLES]="LOGGEDINUSERROLES" [LOGGEDINUSEREMAIL]="LOGGEDINUSEREMAIL" *ngIf="viewName === 'refund-list'"></ccpay-refund-list>
     <ccpay-payment-list *ngIf="viewName === 'payment-list'"></ccpay-payment-list>
-    <ccpay-refund-status *ngIf="viewName === 'refundstatuslist'"> </ccpay-refund-status >
-    <ccpay-payment-view *ngIf="viewName === 'payment-view'"
+    <ccpay-refund-status [LOGGEDINUSERROLES]="LOGGEDINUSERROLES" *ngIf="viewName === 'refundstatuslist'"> </ccpay-refund-status >
+    <ccpay-payment-view [LOGGEDINUSERROLES]="LOGGEDINUSERROLES" *ngIf="viewName === 'payment-view'"
     [isTurnOff]="ISTURNOFF" [isTakePayment]="TAKEPAYMENT"  [caseType]="CASETYPE"
     [isOldPcipalOff]="ISOLDPCIPALOFF"
     [isNewPcipalOff]="ISNEWPCIPALOFF"></ccpay-payment-view>
@@ -18,7 +18,7 @@ import { IBSPayments } from './interfaces/IBSPayments';
     [refundlistsource]="refundlistsource"
     ></ccpay-process-refund>
 
-    <ccpay-case-transactions  *ngIf="viewName === 'case-transactions'"></ccpay-case-transactions>
+    <ccpay-case-transactions [LOGGEDINUSERROLES]="LOGGEDINUSERROLES" *ngIf="viewName === 'case-transactions'"></ccpay-case-transactions>
     <app-mark-unidentified-payment *ngIf="viewName === 'unidentifiedPage'"
     [caseType]="CASETYPE"></app-mark-unidentified-payment>
     <app-mark-unsolicited-payment *ngIf="viewName === 'unsolicitedPage'"
@@ -64,7 +64,7 @@ export class PaymentLibComponent implements OnInit {
   @Input('REFUNDLIST') REFUNDLIST: string;
   @Input('USERID') USERID: string;
   @Input('LOGGEDINUSERROLES') LOGGEDINUSERROLES: any[];
-  @Input('LOGGEDINUSEREMAIL') LOGGEDINUSEREMAIL:string;
+  @Input('LOGGEDINUSEREMAIL') LOGGEDINUSEREMAIL: string;
 
   paymentMethod: string;
   bspaymentdcn: string;
@@ -95,13 +95,13 @@ export class PaymentLibComponent implements OnInit {
     if (this.DCN_NUMBER) {
       this.bspaymentdcn = this.DCN_NUMBER;
     }
-    if(this.REFUNDLIST === "true") {
+    if (this.REFUNDLIST === "true") {
       this.VIEW = 'refund-list';
       this.viewName = this.VIEW;
     }
     if (this.VIEW === 'fee-summary') {
       this.viewName = 'fee-summary';
-    } else  if (this.VIEW !== 'reports' && this.VIEW !== 'refund-list') {
+    } else if (this.VIEW !== 'reports' && this.VIEW !== 'refund-list') {
       this.viewName = 'case-transactions';
     } else {
       this.viewName = this.VIEW;

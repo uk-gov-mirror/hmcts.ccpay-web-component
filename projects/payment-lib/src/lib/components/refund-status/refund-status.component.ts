@@ -17,6 +17,7 @@ const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
   styleUrls: ['./refund-status.component.css']
 })
 export class RefundStatusComponent implements OnInit {
+  @Input('LOGGEDINUSERROLES') LOGGEDINUSERROLES: string[] = [];
   @Input() isOldPcipalOff: string;
   @Input() isNewPcipalOff: string;
   @Input() ccdCaseNumber: string;
@@ -32,7 +33,7 @@ export class RefundStatusComponent implements OnInit {
   refundlist: IRefundList;
   bsPaymentDcnNumber: string;
   isCallFromRefundList: boolean;
-  refundButtonState: String;
+  refundButtonState: string = '';
   isAmountEmpty: boolean = false;
   isReasonEmpty: boolean = false;
   amountHasError: boolean = false;
@@ -42,6 +43,7 @@ export class RefundStatusComponent implements OnInit {
   refundStatusHistories: IRefundStatus[];
   refundReference: string;
   refundAmount: string;
+  allowedRolesToAccessRefund = ['payments-refund-approver', 'payments-refund'];
 
   constructor(private formBuilder: FormBuilder,
     private refundService: RefundsService,
@@ -56,10 +58,12 @@ export class RefundStatusComponent implements OnInit {
     this.isCallFromRefundList = this.paymentLibComponent.isCallFromRefundList;
     if (this.paymentLibComponent.isRefundStatusView) {
       this.viewName = 'refundview';
+      console.log("refundview " + this.LOGGEDINUSERROLES);
       this.OrderslistService.getRefundView().subscribe((data) => this.refundlist = data);
       this.OrderslistService.getCCDCaseNumberforRefund.subscribe((data) => this.ccdCaseNumber = data);
     } else {
       this.viewName = 'refundstatuslist';
+      console.log("refundstatuslist " + this.LOGGEDINUSERROLES);
       this.refundService.getRefundStatusList(this.ccdCaseNumber).subscribe(
         refundList => {
           this.rejectedRefundList = refundList['data']['refund_list'];
@@ -79,7 +83,12 @@ export class RefundStatusComponent implements OnInit {
     });
 
     this.getRefundsStatusHistoryList();
-    this.refundButtonState = this.refundlist.refund_status.name;
+
+    this.allowedRolesToAccessRefund.forEach((role) => {
+      if (this.LOGGEDINUSERROLES.indexOf(role) !== -1) {
+        this.refundButtonState = this.refundlist.refund_status.name;
+      }
+    });
   }
 
   getRefundsStatusHistoryList() {
