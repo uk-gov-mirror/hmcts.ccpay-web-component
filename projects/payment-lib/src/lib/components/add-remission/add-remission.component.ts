@@ -257,10 +257,6 @@ export class AddRemissionComponent implements OnInit {
   }
 
 
-  gotoPaymentDetailsPage(){
-    
-  }
-
   gotoAddRetroRemissionCodePage() {
     this.viewStatus = '';
     this.selectedValue = 'yes';
