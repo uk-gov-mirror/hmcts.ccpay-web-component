@@ -33,6 +33,7 @@
     color: #a71414;
     font-weight: bold;
     margin-top: 10px;
+    font-size: 20px;
   }
 
   .govuk-button, .govuk-link {
@@ -83,9 +84,17 @@
 .santosh {
   float: left;
 }
+
+.govuk-input--width-20{
+  max-width: 23ex;
+}
+
+.govuk-input{
+  font-size: 19px;
+}
 // .govuk-radios__item:nth-child(odd) {
 //   float: right;
 // }
 // .govuk-radios__item:nth-child(even) {
 //   float: left;
-// }
+// }  

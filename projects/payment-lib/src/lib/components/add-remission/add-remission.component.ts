@@ -256,6 +256,42 @@ export class AddRemissionComponent implements OnInit {
     }
   }
 
+
+  gotoPaymentDetailsPage(){
+    this.errorMessage = '';
+    this.viewStatus = 'main'
+    console.log("GO TO PAY HIST");
+    this.paymentLibComponent.viewName = 'payment-view';
+    this.paymentLibComponent.TAKEPAYMENT = false;
+    this.paymentLibComponent.ISTURNOFF = this.isTurnOff;
+    this.paymentLibComponent.ISNEWPCIPALOFF = this.isNewPcipalOff;
+    this.paymentLibComponent.ISOLDPCIPALOFF = this.isOldPcipalOff;
+    console.log(this.paymentLibComponent)
+
+    this.paymentViewService.getBSfeature().subscribe(
+      features => {
+        let result = JSON.parse(features).filter(feature => feature.uid === BS_ENABLE_FLAG);
+        this.paymentLibComponent.ISBSENABLE = result[0] ? result[0].enable : false;
+      },
+      err => {
+        this.paymentLibComponent.ISBSENABLE = false;
+      }
+    );
+
+    let partUrl = this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
+     partUrl += this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
+     partUrl += this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
+     partUrl += this.isStrategicFixEnable ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
+     partUrl += `&caseType=${this.caseType}`;
+     partUrl += this.paymentLibComponent.ISNEWPCIPALOFF ? '&isNewPcipalOff=Enable' : '&isNewPcipalOff=Disable';
+     partUrl += this.paymentLibComponent.ISOLDPCIPALOFF ? '&isOldPcipalOff=Enable' : '&isOldPcipalOff=Disable';
+
+    const url = `/payment-history/${this.ccdCaseNumber}?&selectedOption=${this.option}${partUrl}`;
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigateByUrl(url);
+  }
+
   gotoAddRetroRemissionCodePage() {
     this.viewStatus = '';
     this.selectedValue = 'yes';
@@ -531,6 +567,12 @@ export class AddRemissionComponent implements OnInit {
     this.router.navigateByUrl(url);
   }
 
+  getFormattedCurrency(currency:number){
+    if(currency.toString().includes(".")){
+      return currency
+    }
+     return currency.toString().concat(".00");
+  }
   // continueRemission(){
   //   this.resetRemissionForm([false, false, false, false, false], 'All');
   //   const remissionctrls=this.remissionForm.controls,

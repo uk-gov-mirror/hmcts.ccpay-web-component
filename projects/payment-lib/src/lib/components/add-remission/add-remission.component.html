@@ -178,7 +178,7 @@
           </tr>
           <tr class="govuk-table__row">
               <td class="govuk-table__cell govuk-!-font-weight-bold">Payment amount</td>
-              <td class="govuk-table__cell">£{{ remessionPayment ? remessionPayment.amount: ' ' | currency :'GBP':'symbol':'1.2-2'}} </td>
+              <td class="govuk-table__cell">£{{ remessionPayment ? getFormattedCurrency(remessionPayment.amount): ' ' | currency :'GBP':'symbol':'1.2-2'}} </td>
           </tr>
           <tr class="govuk-table__row">
               <td class="govuk-table__cell govuk-!-font-weight-bold">Payment status</td>
