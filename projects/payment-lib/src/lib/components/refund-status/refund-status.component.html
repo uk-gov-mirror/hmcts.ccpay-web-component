@@ -1,3 +1,13 @@
+<div *ngIf="errorMessage">
+  <div class="error-summary" role="group" aria-labelledby="failure-error-summary-heading" tabindex="-1">
+    <h2 class="heading-medium error-summary-heading" id="failure-error-summary-heading">
+      Error in processing the request
+    </h2>
+    <div class="govuk-error-summary__body">
+      {{ errorMessage }}
+    </div>
+  </div>
+</div>
 <ng-container *ngIf="viewName==='refundstatuslist'">
   <!-- payments -->
 
@@ -107,7 +117,7 @@
   <table class="govuk-table">
     <tr class="govuk-table__row">
       <td class="govuk-table__cell govuk-!-font-weight-bold">Reason for rejection</td>
-      <td class="govuk-table__cell">reason 1</td>
+      <td class="govuk-table__cell">{{refundreason}}</td>
     </tr>
     <tr class="govuk-table__row">
       <td class="govuk-table__cell govuk-!-font-weight-bold">Refund reference</td>
@@ -116,7 +126,7 @@
     <tr class="govuk-table__row">
       <td class="govuk-table__cell govuk-!-font-weight-bold">Reason for refund</td>
       <td class="govuk-table__cell"> {{ refundlist?.reason}}
-          <a (click)="gotoRefundReasonPage()" class="govuk-link right">Change</a>
+        <a (click)="gotoRefundReasonPage()" *ngIf="refundlist?.reason !== 'Retro Remission'" class="govuk-link right">Change</a>
         </td>
 
       <!-- <td class="govuk-table__cell">{{ refundlist?.reason }}</td>
@@ -129,7 +139,7 @@
     <tr class="govuk-table__row">
       <td class="govuk-table__cell govuk-!-font-weight-bold">Payment amount</td>
       <td class="govuk-table__cell"> {{ refundlist?.amount | number:'.2' }}
-        <a (click)="gotoAmountPage()"  class="govuk-link right">Change</a>
+        <a (click)="gotoAmountPage()" *ngIf="refundlist?.reason === 'Retro Remission'" class="govuk-link right">Change</a>
       </td>
       
     </tr>

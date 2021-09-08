@@ -46,6 +46,7 @@ export class RefundStatusComponent implements OnInit {
   refundCode: string;
   isRefundBtnDisabled: boolean = true;
   oldRefundReason: string;
+  refundreason: string;
   allowedRolesToAccessRefund = ['payments-refund-approver', 'payments-refund'];
 
   constructor(private formBuilder: FormBuilder,
@@ -105,7 +106,7 @@ export class RefundStatusComponent implements OnInit {
     ),
       (error: any) => {
         this.errorMessage = error;
-      };
+      }; 
   }
 
   goToRefundView(refundlist: IRefundList) {
@@ -147,15 +148,18 @@ export class RefundStatusComponent implements OnInit {
   }
 
   gotoReviewDetailsPage() {
-    this.paymentLibComponent.viewName='refundstatuslist';
-    this.paymentLibComponent.CCD_CASE_NUMBER = this.ccdCaseNumber;
     this.paymentLibComponent.isRefundStatusView = true;
-    this.paymentLibComponent.isCallFromRefundList = true;
+    this.ngOnInit();
+    // this.viewName='refundview';
+    // this.paymentLibComponent.CCD_CASE_NUMBER = this.ccdCaseNumber;
+    // this.paymentLibComponent.isRefundStatusView = true;
+    // this.paymentLibComponent.isCallFromRefundList = true;
   }
 
   gotoReviewAndReSubmitPage() {
     this.viewName = 'reviewandsubmitview';
     this.oldRefundReason = this.refundlist.reason;
+    this.refundreason = this.refundStatusHistories.filter(data => data.status==='sentback')[0].notes;
     this.refundService.getRefundReasons().subscribe(
       refundReasons => {
         this.refundReasons = refundReasons['data'];
@@ -244,13 +248,14 @@ export class RefundStatusComponent implements OnInit {
         if (JSON.parse(response)) {
           this.refundReference = JSON.parse(response).refund_reference;
           this.refundAmount = JSON.parse(response).refund_amount;
+          this.viewName = 'reviewrefundconfirmationpage';
         }
       },
       (error: any) => {
         this.errorMessage = error;
       }
     );
-    this.viewName = 'reviewrefundconfirmationpage';
+    
   }
 
 }
