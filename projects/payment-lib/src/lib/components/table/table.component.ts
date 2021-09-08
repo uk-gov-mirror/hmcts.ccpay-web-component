@@ -78,6 +78,7 @@ export class TableComponent {
   goToRefundViewComponent(refundReference: string, refundData: IRefundList ) {
     this.OrderslistService.setRefundView(refundData);
     this.paymentLibComponent.viewName='refundstatuslist';
+    this.paymentLibComponent.CCD_CASE_NUMBER = refundData.ccd_case_number;
     this.paymentLibComponent.isRefundStatusView = true;
     this.paymentLibComponent.isCallFromRefundList = true;
   }

@@ -309,7 +309,7 @@
                             </div>
                             <br/>
                             <div>
-                                <select formControlName="refundReason" class="govuk-select" id="sort"  (change)="selectchange($event)">
+                                <select formControlName="refundDDReason" class="govuk-select" id="sort"  (change)="selectchange($event)">
                                     <option value="" selected='selected'>Select Option</option>
                                     <option  *ngFor="let refund of refundReasons;" id="{{refund.name}}"  value="{{refund.code}}">{{refund.name}}</option>
                                   </select>

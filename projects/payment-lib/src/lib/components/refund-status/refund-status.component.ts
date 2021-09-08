@@ -43,6 +43,9 @@ export class RefundStatusComponent implements OnInit {
   refundStatusHistories: IRefundStatus[];
   refundReference: string;
   refundAmount: string;
+  refundCode: string;
+  isRefundBtnDisabled: boolean = true;
+  oldRefundReason: string;
   allowedRolesToAccessRefund = ['payments-refund-approver', 'payments-refund'];
 
   constructor(private formBuilder: FormBuilder,
@@ -56,14 +59,15 @@ export class RefundStatusComponent implements OnInit {
     this.resetRemissionForm([false, false, false, false], 'All');
     this.bsPaymentDcnNumber = this.paymentLibComponent.bspaymentdcn;
     this.isCallFromRefundList = this.paymentLibComponent.isCallFromRefundList;
+    // if(this.paymentLibComponent.isFromRefundStatusPage) {
+    //   this.viewName = 'reviewandsubmitview';
+    // }
     if (this.paymentLibComponent.isRefundStatusView) {
       this.viewName = 'refundview';
-      console.log("refundview " + this.LOGGEDINUSERROLES);
       this.OrderslistService.getRefundView().subscribe((data) => this.refundlist = data);
       this.OrderslistService.getCCDCaseNumberforRefund.subscribe((data) => this.ccdCaseNumber = data);
     } else {
       this.viewName = 'refundstatuslist';
-      console.log("refundstatuslist " + this.LOGGEDINUSERROLES);
       this.refundService.getRefundStatusList(this.ccdCaseNumber).subscribe(
         refundList => {
           this.rejectedRefundList = refundList['data']['refund_list'];
@@ -73,6 +77,8 @@ export class RefundStatusComponent implements OnInit {
           this.errorMessage = error;
         };
     }
+ 
+
     this.refundStatusForm = this.formBuilder.group({
       amount: new FormControl('', Validators.compose([
         Validators.required,
@@ -141,18 +147,32 @@ export class RefundStatusComponent implements OnInit {
   }
 
   gotoReviewDetailsPage() {
-    this.viewName = 'refundview';
+    this.paymentLibComponent.viewName='refundstatuslist';
+    this.paymentLibComponent.CCD_CASE_NUMBER = this.ccdCaseNumber;
+    this.paymentLibComponent.isRefundStatusView = true;
+    this.paymentLibComponent.isCallFromRefundList = true;
   }
 
   gotoReviewAndReSubmitPage() {
     this.viewName = 'reviewandsubmitview';
+    this.oldRefundReason = this.refundlist.reason;
     this.refundService.getRefundReasons().subscribe(
       refundReasons => {
         this.refundReasons = refundReasons['data'];
       });
   }
   gotoRefundReasonPage() {
+    this.isRefundBtnDisabled = false;
+    this.paymentLibComponent.isFromRefundStatusPage = true;
+    this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
     this.viewName = 'issuerefund';
+  }
+
+  gotoAmountPage() {
+    this.isRefundBtnDisabled = false;
+    this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
+    this.paymentLibComponent.isFromRefundStatusPage = true;
+    this.viewName ='processretroremissonpage';
   }
 
   goToReviewAndSubmitView() {
@@ -198,14 +218,28 @@ export class RefundStatusComponent implements OnInit {
     }
   }
 
-  getRefundListReason(refundListReason: string){
-    this.refundlist.reason = refundListReason;
+  getRefundListReason(refundListReason: any) {
+    if(this.paymentLibComponent.isFromRefundStatusPage && !this.paymentLibComponent.iscancelClicked) {
+    this.refundlist.reason = refundListReason.reason;
+    this.refundCode = refundListReason.code;
+    } else {
+      this.isRefundBtnDisabled = true;
+    }
+    this.viewName = 'reviewandsubmitview';
+    this.paymentLibComponent.CCD_CASE_NUMBER = this.ccdCaseNumber;
+  }
+
+  getRefundAmount(amount: number) {
+    this.refundlist.amount = amount;
     this.viewName = 'reviewandsubmitview';
   }
 
   gotoReviewRefundConfirmationPage() {
-    const resubmitRequest = new IResubmitRefundRequest(this.refundlist.reason,'ACCEPTED');
-    this.refundService.postResubmitRefund(resubmitRequest).subscribe(
+    if( this.oldRefundReason === this.refundlist.reason) {
+      this.refundCode = '';
+    }
+    const resubmitRequest = new IResubmitRefundRequest(this.refundCode,this.refundlist.amount);
+    this.refundService.patchResubmitRefund(resubmitRequest,this.refundlist.refund_reference).subscribe(
       response => {
         if (JSON.parse(response)) {
           this.refundReference = JSON.parse(response).refund_reference;
@@ -214,7 +248,6 @@ export class RefundStatusComponent implements OnInit {
       },
       (error: any) => {
         this.errorMessage = error;
-      
       }
     );
     this.viewName = 'reviewrefundconfirmationpage';

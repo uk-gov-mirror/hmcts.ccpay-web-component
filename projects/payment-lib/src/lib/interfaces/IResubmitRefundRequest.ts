@@ -1,11 +1,11 @@
 export class IResubmitRefundRequest {
-  reason: string;
-  status: string;
+  refund_reason: string;
+  amount: number;
   
   
-    constructor(reason : string, status: string) {
-      this.reason= reason;
-      this.status = status;
+    constructor(refund_reason : string, amount: number) {
+      this.refund_reason= refund_reason;
+      this.amount = amount;
   
     } 
   }

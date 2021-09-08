@@ -40,7 +40,8 @@ export class AddRemissionComponent implements OnInit {
   @Input() paidAmount: any;
   @Input() isFromRefundListPage: boolean;
   @Output() cancelRemission: EventEmitter<void> = new EventEmitter();
-  @Output() refundListReason: EventEmitter<string> = new EventEmitter();
+  //@Output() refundListReason: EventEmitter<any> = new EventEmitter({reason:string, code:string});
+  @Output() refundListReason = new EventEmitter<{reason: string, code: string}>();
   @Output() refundListAmount: EventEmitter<string> = new EventEmitter();
 
   refund = {
@@ -120,6 +121,7 @@ export class AddRemissionComponent implements OnInit {
         Validators.pattern('^[0-9]+(\\.[0-9]{2})?$')
       ])),
       refundReason: new FormControl('', Validators.compose([Validators.required])),
+      refundDDReason: new FormControl('', Validators.compose([Validators.required])),
       reason: new FormControl()
     });
     if(this.viewCompStatus === ''){
@@ -135,6 +137,10 @@ export class AddRemissionComponent implements OnInit {
           this.cd.detectChanges();
         } );
       }
+    
+      if(this.viewCompStatus === 'processretroremissonpage' && this.isFromRefundListPage){
+        this.viewStatus = 'processretroremissonpage';
+        }
 
       // this.refundService.getUserDetails().subscribe(
       //   userdetail => { 
@@ -149,6 +155,7 @@ export class AddRemissionComponent implements OnInit {
     const remissionctrls=this.remissionForm.controls,
       isRemissionLessThanFee = this.fee.calculated_amount > remissionctrls.amount.value; 
       this.remissionForm.controls['refundReason'].setErrors(null);
+      this.remissionForm.controls['refundDDReason'].setErrors(null);
       this.remissionForm.controls['amount'].setErrors(null);
     if (this.remissionForm.dirty && this.remissionForm.valid && isRemissionLessThanFee) {
       this.viewStatus = 'confirmation';
@@ -228,6 +235,7 @@ export class AddRemissionComponent implements OnInit {
     const remissionctrls=this.remissionForm.controls,
       isRemissionLessThanFee = this.fee.calculated_amount >= remissionctrls.amount.value; 
       this.remissionForm.controls['refundReason'].setErrors(null);
+      this.remissionForm.controls['refundDDReason'].setErrors(null);
       this.remissionForm.controls['amount'].setErrors(null);
     if (this.remissionForm.dirty && this.remissionForm.valid && isRemissionLessThanFee) {
       this.viewCompStatus = '';
@@ -371,8 +379,9 @@ export class AddRemissionComponent implements OnInit {
   // Issue Refund changes
 
   gotoIssueRefundConfirmation(payment: IPayment) {
+    this.paymentLibComponent.iscancelClicked = false;
     this.errorMessage = '';
-    this.refundReason = this.remissionForm.controls['refundReason'].value;
+    this.refundReason = this.remissionForm.controls['refundReason'].value === null ? this.remissionForm.controls['refundDDReason'].value : this.remissionForm.controls['refundReason'].value;
     if(!this.refundReason) {
       this.refundHasError = true;
     } else if(this.selectedRefundReason.includes('Other') && (this.remissionForm.controls['reason'].value == '' || this.remissionForm.controls['reason'].value == null)) {
@@ -382,7 +391,7 @@ export class AddRemissionComponent implements OnInit {
       this.refundReason +=  '-' + this.remissionForm.controls['reason'].value;
       this.selectedRefundReason = this.remissionForm.controls['reason'].value;
       if ( this.isFromRefundListPage ) {
-        this.refundListReason.emit(this.selectedRefundReason);
+        this.refundListReason.emit({reason: this.selectedRefundReason, code: this.refundReason});
       } else {
         this.viewCompStatus = '';
         this.viewStatus = 'checkissuerefundpage';
@@ -390,7 +399,8 @@ export class AddRemissionComponent implements OnInit {
       
     } else {
       if ( this.isFromRefundListPage ) {
-        this.refundListReason.emit(this.selectedRefundReason);
+        this.paymentLibComponent.isFromRefundStatusPage = true;
+        this.refundListReason.emit({reason: this.selectedRefundReason, code: this.refundReason});
       } else {
         this.viewCompStatus = '';
         this.viewStatus = 'checkissuerefundpage';
@@ -471,8 +481,9 @@ export class AddRemissionComponent implements OnInit {
   }
 
   selectRadioButton(key, value) {
-    // const remissionctrls=this.remissionForm.controls;
-    // remissionctrls['refundReason'].reset();
+    const remissionctrls=this.remissionForm.controls;
+    remissionctrls['refundDDReason'].reset();
+    remissionctrls['reason'].reset();
     this.isRefundReasonsSelected = true;
     this.showReasonText = false;
     this.refundHasError = false;
@@ -485,8 +496,9 @@ export class AddRemissionComponent implements OnInit {
   }
 
   selectchange(args) {
-    // const remissionctrls=this.remissionForm.controls;
-    // remissionctrls['refundReason'].reset();
+     const remissionctrls=this.remissionForm.controls;
+    remissionctrls['refundReason'].reset();
+    remissionctrls['reason'].reset();
     this.isRefundReasonsSelected = false;
     this.showReasonText = false;
     this.refundHasError = false;
@@ -501,6 +513,13 @@ export class AddRemissionComponent implements OnInit {
   }
 
   gotoCasetransationPage() {
+    if ( this.isFromRefundListPage ) {
+      this.paymentLibComponent.iscancelClicked = true;
+      this.refundListReason.emit({reason: this.selectedRefundReason, code: this.refundReason});
+      this.paymentLibComponent.isFromRefundStatusPage = true;
+      return;
+    } 
+    if(!this.paymentLibComponent.isFromRefundStatusPage) {
     this.errorMessage = '';
     this.paymentLibComponent.viewName = 'case-transactions';
     this.paymentLibComponent.TAKEPAYMENT = true;
@@ -530,6 +549,11 @@ export class AddRemissionComponent implements OnInit {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.onSameUrlNavigation = 'reload';
     this.router.navigateByUrl(url);
+    } else {
+      this.paymentLibComponent.viewName === 'refundstatuslist';
+      this.paymentLibComponent.isFromRefundStatusPage = true;
+    }
+
   }
 
   getFormattedCurrency(currency:number){

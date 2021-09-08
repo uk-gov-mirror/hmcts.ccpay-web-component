@@ -101,8 +101,9 @@ getRefundStatusList(ccdCaseNumber:string): Observable<IRefundList[]> {
     );
   }
 
-  postResubmitRefund(body: IResubmitRefundRequest): Observable<any> {
-    return this.https.post(`${this.paymentLibService.REFUNDS_API_ROOT}/refund`, body).pipe(
+  patchResubmitRefund(body: IResubmitRefundRequest, refund_reference: string): Observable<any> {
+    const opts = this.addHeaders({});
+    return this.http.patch<any>(`${this.paymentLibService.REFUNDS_API_ROOT}/resubmit/${refund_reference}`, body,opts).pipe(
       catchError(this.errorHandlerService.handleError)
     );
   }
