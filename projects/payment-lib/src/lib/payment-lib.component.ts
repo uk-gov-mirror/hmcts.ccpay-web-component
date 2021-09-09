@@ -84,6 +84,7 @@ export class PaymentLibComponent implements OnInit {
   isCallFromRefundList: boolean;
   isFromRefundStatusPage: boolean;
   iscancelClicked : boolean;
+  isFromPaymentDetailPage: boolean;
 
   constructor(private paymentLibService: PaymentLibService) { }
 

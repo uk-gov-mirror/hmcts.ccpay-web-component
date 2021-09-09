@@ -46,7 +46,7 @@
 
     <ng-container matColumnDef="updateDate">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Date updated </mat-header-cell>
-        <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.date_updated | date:'dd MMM yyyy'}} </mat-cell>
+        <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.date_updated | date:'d MMMM yyyy'}} </mat-cell>
       </ng-container>
 
       <ng-container *ngIf="isApprovalFlow" matColumnDef="Action">

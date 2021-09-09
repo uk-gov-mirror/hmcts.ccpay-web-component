@@ -118,6 +118,7 @@ export class PaymentViewComponent implements OnInit {
         this.paymentGroup.payments = this.paymentGroup.payments.filter
           (paymentGroupObj => paymentGroupObj['reference'].includes(this.paymentLibComponent.paymentReference));
         this.payment = this.paymentGroup.payments[0];
+        this.paymentLibComponent.isFromPaymentDetailPage = true;
         this.viewStatus = 'addremission';
         this.isRefundRemission = true;
         this.cd.detectChanges();

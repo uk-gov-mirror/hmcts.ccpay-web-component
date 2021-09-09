@@ -2,13 +2,13 @@ import { Component, OnInit, Input } from '@angular/core';
 import { RefundsService } from '../../services/refunds/refunds.service';
 import { FormBuilder, FormGroup, Validators, FormControl, RequiredValidator } from '@angular/forms';
 import { IRefundList } from '../../interfaces/IRefundList';
-import { PaymentLibComponent } from '../../payment-lib.component';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import { Router } from '@angular/router';
 import { OrderslistService } from '../../services/orderslist.service';
 import { IRefundReasons } from '../../interfaces/IRefundReasons';
 import { IRefundStatus } from '../../interfaces/IRefundStatus';
 import { IResubmitRefundRequest } from '../../interfaces/IResubmitRefundRequest';
+import { PaymentLibComponent } from '../../payment-lib.component';
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 
 @Component({
@@ -18,8 +18,8 @@ const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 })
 export class RefundStatusComponent implements OnInit {
   @Input('LOGGEDINUSERROLES') LOGGEDINUSERROLES: string[] = [];
-  @Input() isOldPcipalOff: string;
-  @Input() isNewPcipalOff: string;
+  @Input() isOldPcipalOff: boolean;
+  @Input() isNewPcipalOff: boolean;
   @Input() ccdCaseNumber: string;
   @Input() isTurnOff: boolean;
   refundStatusForm: FormGroup;

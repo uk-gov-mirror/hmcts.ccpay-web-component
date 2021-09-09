@@ -73,3 +73,8 @@
   .mat-column-reason {
     flex :2em;
   }
+
+  .govuk-select{
+   font-size: 19px;
+   font-weight: 400;
+  }

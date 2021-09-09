@@ -62,6 +62,14 @@
     color: #FFFFFF;
     background: #00703C;
 }
+
+.govuk-heading-l {
+  font-size: 36px;
+}
+
+.govuk-heading-m {
+  font-size: 24px;
+}
 .govuk-panel__title {
   font-size: 5rem;
 }

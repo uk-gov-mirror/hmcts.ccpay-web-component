@@ -39,6 +39,7 @@ export class AddRemissionComponent implements OnInit {
   @Input() orderStatus: string;
   @Input() paidAmount: any;
   @Input() isFromRefundListPage: boolean;
+  @Input() isFromPaymentDetailPage: boolean;
   @Output() cancelRemission: EventEmitter<void> = new EventEmitter();
   //@Output() refundListReason: EventEmitter<any> = new EventEmitter({reason:string, code:string});
   @Output() refundListReason = new EventEmitter<{reason: string, code: string}>();
@@ -271,6 +272,12 @@ export class AddRemissionComponent implements OnInit {
     this.viewCompStatus = "addremission";
     this.isRefundRemission = true;
     this.errorMessage = '';
+    if(this.isFromPaymentDetailPage) {
+      // this.paymentLibComponent.paymentMethod = this.payment.method;
+      // this.paymentLibComponent.paymentGroupReference = this.paymentGroupRef;
+      // this.paymentLibComponent.paymentReference = this.payment.payment_group_reference;
+      this.paymentLibComponent.viewName = 'payment-view';
+    }
   }
 
   gotoCheckRetroRemissionPage(payment: IPayment) {
