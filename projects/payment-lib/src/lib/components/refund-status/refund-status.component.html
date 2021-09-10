@@ -72,6 +72,7 @@
     </tbody>
   </table>
 
+<!-- Status history -->
   <div>
     <br />
     <h2 class="govuk-heading-m">Refund status history</h2>
@@ -104,7 +105,7 @@
     </div>
     <div *ngIf="refundButtonState==='sent for approval'">
       <br />
-      <button type="submit" class="button govuk-button--secondary">Process refund</button>
+      <button type="submit" class="button govuk-button--secondary" (click)="goToRefundProcessComponent(refundlist.refund_reference,refundlist)">Process refund</button>
     </div>
   </ng-container>
 

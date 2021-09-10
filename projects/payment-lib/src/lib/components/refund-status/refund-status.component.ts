@@ -90,7 +90,7 @@ export class RefundStatusComponent implements OnInit {
     });
 
     this.getRefundsStatusHistoryList();
-
+    
     this.allowedRolesToAccessRefund.forEach((role) => {
       if (this.LOGGEDINUSERROLES.indexOf(role) !== -1) {
         this.refundButtonState = this.refundlist.refund_status.name;
@@ -256,6 +256,12 @@ export class RefundStatusComponent implements OnInit {
       }
     );
     
+  }
+
+  goToRefundProcessComponent(refundReference: string, refundList: IRefundList ) {
+    this.paymentLibComponent.refundlistsource = refundList;
+    this.paymentLibComponent.refundReference = refundReference;
+    this.paymentLibComponent.viewName = 'process-refund';
   }
 
 }
