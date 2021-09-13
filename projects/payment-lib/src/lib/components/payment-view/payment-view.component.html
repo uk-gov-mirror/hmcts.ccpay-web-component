@@ -136,7 +136,7 @@
           </tr> -->
           </tbody>
         </table>
-        <button (click)="addRemission(fee)" class="govuk-button govuk-button--secondary"> Add remission</button>
+        <button *ngIf="chkForAddRemission(fee.code)" (click)="addRemission(fee)" class="govuk-button govuk-button--secondary"> Add remission</button>
            
         <!-- <button  *ngIf="paymentGroup.payments[0].method === 'payment by account'" (click)="addRemission(fee)" class="govuk-button govuk-button--secondary"> Add remission</button>
              -->

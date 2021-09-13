@@ -39,7 +39,6 @@ export class PaymentViewComponent implements OnInit {
   isAddFeeBtnEnabled: boolean = false;
   isIssueRefunfBtnEnable: boolean = false;
   allowedRolesToAccessRefund = ['payments-refund-approver', 'payments-refund'];
-  currentDate = new Date();
 
   constructor(private paymentViewService: PaymentViewService,
     private paymentLibComponent: PaymentLibComponent,
@@ -158,7 +157,7 @@ export class PaymentViewComponent implements OnInit {
   }
 
   chkForPBAPayment(): boolean {
-  let payment = this.paymentGroup.payments[0];
+    let payment = this.paymentGroup.payments[0];
     if (payment.method.toLocaleLowerCase() === 'payment by account' && this.allowFurtherAccessAfter4Days(payment)) {
       return true;
     }
@@ -166,7 +165,7 @@ export class PaymentViewComponent implements OnInit {
   }
 
   chkForAddRemission(feeCode: string): boolean {
-    if (this.chkForPBAPayment() && this.check4AllowedRoles2AccessRefund()) {
+    if (this.chkForPBAPayment() && this.check4AllowedRoles2AccessRefund() && this.allowFurtherAccessAfter4Days(this.paymentGroup.payments[0])) {
       if (this.paymentGroup.remissions && this.paymentGroup.remissions.length > 0) {
         for (const remission of this.paymentGroup.remissions) {
           if (remission.fee_code === feeCode) {
@@ -189,9 +188,8 @@ export class PaymentViewComponent implements OnInit {
   }
 
   allowFurtherAccessAfter4Days = (payment: IPayment): boolean => {
-    let tmp4DayAgo = this.currentDate;
+    let tmp4DayAgo = new Date();
     tmp4DayAgo.setDate(tmp4DayAgo.getDate() - 4);
-    let paymentDate = new Date(payment.date_created);
-    return tmp4DayAgo >= paymentDate;
+    return tmp4DayAgo >= new Date(payment.date_created);
   }
 }
