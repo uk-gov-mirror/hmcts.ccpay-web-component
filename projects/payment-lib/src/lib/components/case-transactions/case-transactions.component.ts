@@ -90,6 +90,7 @@ export class CaseTransactionsComponent implements OnInit {
   isRefundRemissionBtnEnable: boolean = false;
   allowedRolesToAccessRefund = ['payments-refund-approver', 'payments-refund'];
   currentDate = new Date();
+  isFromServiceRequestPage: boolean;
   constructor(private router: Router,
     private paymentViewService: PaymentViewService,
     private bulkScaningPaymentService: BulkScaningPaymentService,
@@ -177,6 +178,10 @@ export class CaseTransactionsComponent implements OnInit {
       );
     }
     this.checkForExceptionRecord();
+    this.OrderslistService.getisFromServiceRequestPages().subscribe((data) => this.isFromServiceRequestPage = data)
+    if (this.isFromServiceRequestPage) {
+      this.viewStatus = 'order-full-view';
+    }
   }
 
   setDefaults(): void {

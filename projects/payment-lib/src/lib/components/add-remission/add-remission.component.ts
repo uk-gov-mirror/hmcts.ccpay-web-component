@@ -15,6 +15,7 @@ import { PostRefundRetroRemission } from '../../interfaces/PostRefundRetroRemiss
 import { PostIssueRefundRetroRemission } from '../../interfaces/PostIssueRefundRetroRemission';
 import {ChangeDetectorRef} from '@angular/core';
 import { IRemission } from '../../interfaces/IRemission';
+import { OrderslistService } from '../../services/orderslist.service';
 
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 
@@ -40,6 +41,7 @@ export class AddRemissionComponent implements OnInit {
   @Input() paidAmount: any;
   @Input() isFromRefundListPage: boolean;
   @Input() isFromPaymentDetailPage: boolean;
+  @Input() isFromServiceRequestPage: boolean;
   @Output() cancelRemission: EventEmitter<void> = new EventEmitter();
   //@Output() refundListReason: EventEmitter<any> = new EventEmitter({reason:string, code:string});
   @Output() refundListReason = new EventEmitter<{reason: string, code: string}>();
@@ -93,7 +95,8 @@ export class AddRemissionComponent implements OnInit {
     private paymentViewService: PaymentViewService,
     private paymentLibComponent: PaymentLibComponent,
     private refundService: RefundsService,
-    private cd: ChangeDetectorRef) { }
+    private cd: ChangeDetectorRef,
+    private OrderslistService: OrderslistService) { }
 
   ngOnInit() {
 
@@ -519,7 +522,20 @@ export class AddRemissionComponent implements OnInit {
 
   }
 
+  gotoServiceRequestPage() {
+    event.preventDefault();
+    this.viewStatus = 'main'
+    this.paymentLibComponent.viewName = 'case-transactions123';
+    this.OrderslistService.setisFromServiceRequestPage(true);
+    this.paymentLibComponent.isFromServiceRequestPage = true;
+    return;
+  }
+
   gotoCasetransationPage() {
+    if (this.isFromServiceRequestPage) {
+      this. gotoServiceRequestPage();
+
+    }
     if ( this.isFromRefundListPage ) {
       this.paymentLibComponent.iscancelClicked = true;
       this.refundListReason.emit({reason: this.selectedRefundReason, code: this.refundReason});
@@ -551,6 +567,9 @@ export class AddRemissionComponent implements OnInit {
      partUrl += `&caseType=${this.caseType}`;
      partUrl += this.paymentLibComponent.ISNEWPCIPALOFF ? '&isNewPcipalOff=Enable' : '&isNewPcipalOff=Disable';
      partUrl += this.paymentLibComponent.ISOLDPCIPALOFF ? '&isOldPcipalOff=Enable' : '&isOldPcipalOff=Disable';
+     if(this.isFromPaymentDetailPage) {
+       partUrl += this.paymentLibComponent.isFromPaymentDetailPage
+     }
 
     const url = `/payment-history/${this.ccdCaseNumber}?view=case-transactions&takePayment=true&selectedOption=${this.option}${partUrl}`;
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
@@ -563,6 +582,9 @@ export class AddRemissionComponent implements OnInit {
 
   }
 
+  goToServiceRequestPage() {
+    this.paymentLibComponent.viewName
+  }
   getFormattedCurrency(currency:number){
     if(currency.toString().includes(".")){
       return currency

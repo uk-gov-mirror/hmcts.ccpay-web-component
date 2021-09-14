@@ -26,32 +26,32 @@
 
     <ng-container matColumnDef="ccdCaseNumber">
       <mat-header-cell  *matHeaderCellDef mat-sort-header>Case ID </mat-header-cell>
-      <mat-cell  *matCellDef="let row"> {{row.ccd_case_number | ccdHyphens }} </mat-cell>
+      <mat-cell  *matCellDef="let row" class="whitespace-inherit"> {{row.ccd_case_number | ccdHyphens }} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="refundReference">
       <mat-header-cell  *matHeaderCellDef mat-sort-header> Refund reference </mat-header-cell>
-      <mat-cell  *matCellDef="let row"> {{row.refund_reference}} </mat-cell>
+      <mat-cell  *matCellDef="let row" class="whitespace-inherit"> {{row.refund_reference}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="reason">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Reason </mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.reason}} </mat-cell>
+      <mat-cell *matCellDef="let row" class="whitespace-inherit"> {{row.reason}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="createBy">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Submitted by </mat-header-cell>
-      <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.user_full_name }} </mat-cell>
+      <mat-cell *matCellDef="let row" [style.color]="row.color" class="whitespace-inherit"> {{row.user_full_name }} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="updateDate">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Date updated </mat-header-cell>
-        <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.date_updated | date:'d MMMM yyyy'}} </mat-cell>
+        <mat-cell *matCellDef="let row" [style.color]="row.color" class="whitespace-inherit"> {{row.date_updated | date:'d MMMM yyyy'}} </mat-cell>
       </ng-container>
 
       <ng-container *ngIf="isApprovalFlow" matColumnDef="Action">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Action </mat-header-cell>
-          <mat-cell *matCellDef="let row" [style.color]="row.color"> <a href="">Review case</a>&nbsp;<a href="javascript:void(0)" (click)="goToRefundProcessComponent(row.refund_reference, row)">Process refund</a></mat-cell>
+          <mat-cell *matCellDef="let row" [style.color]="row.color" > <a href="">Review case</a>&nbsp;<a href="javascript:void(0)" (click)="goToRefundProcessComponent(row.refund_reference, row)">Process refund</a></mat-cell>
         </ng-container>
       
         <ng-container *ngIf="!isApprovalFlow" matColumnDef="Action">

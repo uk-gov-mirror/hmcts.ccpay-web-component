@@ -127,7 +127,7 @@
     <tr class="govuk-table__row">
       <td class="govuk-table__cell govuk-!-font-weight-bold">Reason for refund</td>
       <td class="govuk-table__cell"> {{ refundlist?.reason}}
-        <a (click)="gotoRefundReasonPage()" *ngIf="refundlist?.reason !== 'Retro Remission'" class="govuk-link right">Change</a>
+        <a (click)="gotoRefundReasonPage()" *ngIf="refundlist?.reason !== 'Retrospective remission'" class="govuk-link right">Change</a>
         </td>
 
       <!-- <td class="govuk-table__cell">{{ refundlist?.reason }}</td>
@@ -140,7 +140,7 @@
     <tr class="govuk-table__row">
       <td class="govuk-table__cell govuk-!-font-weight-bold">Payment amount</td>
       <td class="govuk-table__cell"> {{ refundlist?.amount | number:'.2' }}
-        <a (click)="gotoAmountPage()" *ngIf="refundlist?.reason === 'Retro Remission'" class="govuk-link right">Change</a>
+        <a (click)="gotoAmountPage()" *ngIf="refundlist?.reason === 'Retrospective remission'" class="govuk-link right">Change</a>
       </td>
       
     </tr>

@@ -65,6 +65,7 @@ export class PaymentLibComponent implements OnInit {
   @Input('USERID') USERID: string;
   @Input('LOGGEDINUSERROLES') LOGGEDINUSERROLES: any[];
   @Input('LOGGEDINUSEREMAIL') LOGGEDINUSEREMAIL: string;
+  @Input('isFromServiceRequestPage') isFromServiceRequestPage: boolean;
 
   paymentMethod: string;
   bspaymentdcn: string;
@@ -85,6 +86,7 @@ export class PaymentLibComponent implements OnInit {
   isFromRefundStatusPage: boolean;
   iscancelClicked : boolean;
   isFromPaymentDetailPage: boolean;
+  // isFromServiceRequestPage: boolean;
 
   constructor(private paymentLibService: PaymentLibService) { }
 

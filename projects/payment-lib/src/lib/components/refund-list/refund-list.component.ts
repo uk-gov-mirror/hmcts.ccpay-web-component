@@ -29,7 +29,7 @@ export class RefundListComponent implements OnInit {
   userLst
   ngOnInit() {
     
-    // this.refundService.getUserDetails().subscribe(
+    // this.refundService.getUserDetails().subsc
     //   userdetail => { 
     //     console.log('govindu');
     //     console.log(userdetail.headers);
@@ -39,23 +39,25 @@ export class RefundListComponent implements OnInit {
     //     console.log(userdetail['data']);
     //   } );
     this.userLst = this.LOGGEDINUSERROLES;
-    if(this.dropdownvalue === '') {
+
     
-    if(this.LOGGEDINUSERROLES.some(i =>i.includes('authorize'))){
+    if(this.LOGGEDINUSERROLES.some(i =>i.includes('payments-refund-approver'))){
+      this.isApproveTableVisible = true;
       this.isAuthorized = true;
     } else {
+      this.isApproveTableVisible = false;
       this.isAuthorized = false;
     }
-  }
+
   
     this.tableApprovalHeader = 'Refunds to be approved';
     this.tableRejectedHeader = 'Refunds returned to caseworker';
 
-    if(this.dropdownvalue !== 'caseworker-probate-authorize') {
-      this.isAuthorized = false;
-    } else {
-      this.isAuthorized = true;
-    }
+    // if(this.dropdownvalue !== 'caseworker-probate-authorize') {
+    //   this.isAuthorized = false;
+    // } else {
+    //   this.isAuthorized = true;
+    // }
 
     if(this.isApproveTableVisible) {
     this.refundService.getRefundList(this.approvalStatus,true).subscribe(
@@ -81,15 +83,15 @@ export class RefundListComponent implements OnInit {
 
   }
 
-  selectchange(args){ 
-    this.dropdownvalue = args.target.value;
-    if(args.target.value === 'caseworker-probate-authorize') {
-      this.isApproveTableVisible = true;
-    } else {
-      this.isApproveTableVisible = false;
-    }
-    this.ngOnInit();
+  // selectchange(args){ 
+  //   this.dropdownvalue = args.target.value;
+  //   if(args.target.value === 'caseworker-probate-authorize') {
+  //     this.isApproveTableVisible = true;
+  //   } else {
+  //     this.isApproveTableVisible = false;
+  //   }
+  //   this.ngOnInit();
     
-  } 
+  // } 
   
 }
