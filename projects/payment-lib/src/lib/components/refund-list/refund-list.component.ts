@@ -42,7 +42,7 @@ export class RefundListComponent implements OnInit {
 
     
     if(this.LOGGEDINUSERROLES.some(i =>i.includes('payments-refund-approver'))){
-      this.isApproveTableVisible = true;
+    //  this.isApproveTableVisible = true;
       this.isAuthorized = true;
     } else {
       this.isApproveTableVisible = false;
@@ -59,7 +59,7 @@ export class RefundListComponent implements OnInit {
     //   this.isAuthorized = true;
     // }
 
-    if(this.isApproveTableVisible) {
+   if(this.isAuthorized) {
     this.refundService.getRefundList(this.approvalStatus,true).subscribe(
       refundList => {
         this.submittedRefundList = refundList['data']['refund_list'];
