@@ -148,6 +148,7 @@ export class RefundStatusComponent implements OnInit {
   }
 
   gotoReviewDetailsPage() {
+    event.preventDefault();
     this.paymentLibComponent.isRefundStatusView = true;
     this.ngOnInit();
     // this.viewName='refundview';
@@ -246,8 +247,8 @@ export class RefundStatusComponent implements OnInit {
     this.refundService.patchResubmitRefund(resubmitRequest,this.refundlist.refund_reference).subscribe(
       response => {
         if (JSON.parse(response)) {
-          this.refundReference = JSON.parse(response).refund_reference;
-          this.refundAmount = JSON.parse(response).refund_amount;
+          this.refundReference = JSON.parse(response).data.refund_reference;
+          this.refundAmount = JSON.parse(response).data.refund_amount;
           this.viewName = 'reviewrefundconfirmationpage';
         }
       },
