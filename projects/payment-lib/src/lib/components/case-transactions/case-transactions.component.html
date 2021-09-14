@@ -935,8 +935,11 @@
     </div>
     
   </ng-container>
-    <div >
+    <div *ngIf="((orderFeesTotal - orderRemissionTotal)- orderTotalPayments) > 0" >
         <p class="totalPay">Total left to pay: <b>{{((orderFeesTotal - orderRemissionTotal)- orderTotalPayments )| currency:'GBP':'symbol-narrow':'1.2-2' }}</b> </p>
+    </div>
+    <div *ngIf="((orderFeesTotal - orderRemissionTotal)- orderTotalPayments) < 0" >
+        <p class="totalPay">Total left to pay: <b>0</b> </p>
     </div>
 
    

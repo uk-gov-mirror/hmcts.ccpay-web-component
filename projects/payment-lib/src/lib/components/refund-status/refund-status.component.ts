@@ -149,6 +149,7 @@ export class RefundStatusComponent implements OnInit {
 
   gotoReviewDetailsPage() {
     event.preventDefault();
+    this.errorMessage = false;
     this.paymentLibComponent.isRefundStatusView = true;
     this.ngOnInit();
     // this.viewName='refundview';
@@ -235,8 +236,15 @@ export class RefundStatusComponent implements OnInit {
   }
 
   getRefundAmount(amount: number) {
-    this.refundlist.amount = amount;
-    this.viewName = 'reviewandsubmitview';
+    if(this.paymentLibComponent.isFromRefundStatusPage && !this.paymentLibComponent.iscancelClicked) {
+     if (amount > 0) {
+      this.refundlist.amount = amount;
+      }
+      } else {
+        this.isRefundBtnDisabled = true;
+      }
+      this.viewName = 'reviewandsubmitview';
+      this.paymentLibComponent.CCD_CASE_NUMBER = this.ccdCaseNumber;
   }
 
   gotoReviewRefundConfirmationPage() {

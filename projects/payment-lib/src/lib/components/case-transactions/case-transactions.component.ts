@@ -86,7 +86,7 @@ export class CaseTransactionsComponent implements OnInit {
   test: boolean;
   isPBA: boolean = false;
   isIssueRefunfBtnEnable: boolean = false;
-  isAddRemissionBtnEnabled: boolean = false;
+  isAddRemissionBtnEnabled: boolean = false;  
   isRefundRemissionBtnEnable: boolean = false;
   allowedRolesToAccessRefund = ['payments-refund-approver', 'payments-refund'];
   currentDate = new Date();
@@ -132,10 +132,16 @@ export class CaseTransactionsComponent implements OnInit {
           this.calculateAmounts();
           this.calculateOrderFeesAmounts();
           this.calculateRefundAmount();
+          if (this.isFromServiceRequestPage) {
+            this.OrderslistService.getSelectedOrderRefId().subscribe((data) => this.orderRef = data);
+            this.goToOrderViewDetailSection(this.orderRef);
+            // this.viewStatus = 'order-full-view';
+          }
 
           this.paymentViewService.getPartyDetails(this.ccdCaseNumber).subscribe(
             response => {
               this.cpoDetails = JSON.parse(response).data.content[0];
+              
             },
             (error: any) => {
               this.errorMessage = <any>error;
@@ -179,9 +185,7 @@ export class CaseTransactionsComponent implements OnInit {
     }
     this.checkForExceptionRecord();
     this.OrderslistService.getisFromServiceRequestPages().subscribe((data) => this.isFromServiceRequestPage = data)
-    if (this.isFromServiceRequestPage) {
-      this.viewStatus = 'order-full-view';
-    }
+   
   }
 
   setDefaults(): void {
@@ -310,12 +314,20 @@ export class CaseTransactionsComponent implements OnInit {
   };
 
   goToOrderViewDetailSection(orderReferenceObj: any) {
+    if (this.isFromServiceRequestPage) { 
+      this.OrderslistService.setOrderRefId(orderReferenceObj);
+      this.orderRef = orderReferenceObj;
+    } else {
+      this.OrderslistService.setOrderRefId(orderReferenceObj.orderRefId);
+      this.orderRef = orderReferenceObj.orderRefId;
+    }
+
     this.orderFeesTotal = 0.00;
     this.orderRemissionTotal = 0.00;
     this.orderTotalPayments = 0.00;
     this.orderPendingPayments = 0.00;
 
-    this.orderDetail = this.paymentGroups.filter(x => x.payment_group_reference === orderReferenceObj.orderRefId);
+    this.orderDetail = this.paymentGroups.filter(x => x.payment_group_reference ===  this.orderRef);
     this.orderDetail.forEach(orderDetail => {
       if (orderDetail.fees) {
         orderDetail.fees.forEach(fee => {
@@ -337,7 +349,7 @@ export class CaseTransactionsComponent implements OnInit {
       }
     });
     this.orderPendingPayments = (this.orderFeesTotal - this.orderRemissionTotal) - this.orderTotalPayments;
-    this.orderRef = orderReferenceObj.orderRefId;
+   // this.orderRef = orderReferenceObj.orderRefId;
     if (this.orderPendingPayments <= 0.00) {
       this.orderStatus = 'Paid';
     } else if (this.orderFeesTotal > 0 && (this.orderTotalPayments > 0 || this.orderRemissionTotal > 0) && (this.orderTotalPayments < this.orderPendingPayments)) {
@@ -378,6 +390,7 @@ export class CaseTransactionsComponent implements OnInit {
 
   goToCaseTransationPage(event: any) {
     event.preventDefault();
+    this.isFromServiceRequestPage = false;
     this.viewStatus = 'main'
     this.paymentLibComponent.viewName = 'case-transactions';
 
@@ -762,7 +775,8 @@ export class CaseTransactionsComponent implements OnInit {
   }
 
   chkIssueRefundBtnEnable(payment: IPayment): boolean {
-    if (this.check4AllowedRoles2AccessRefund() && this.allowFurtherAccessAfter4Days(payment) && payment.method === 'payment by account' && payment.status.toLocaleLowerCase() === 'success') {
+    if (this.check4AllowedRoles2AccessRefund() && this.allowFurtherAccessAfter4Days(payment) && 
+    payment.method === 'payment by account' && payment.status.toLocaleLowerCase() === 'success') {
       this.isIssueRefunfBtnEnable = true;
     }
     if (this.isIssueRefunfBtnEnable) {

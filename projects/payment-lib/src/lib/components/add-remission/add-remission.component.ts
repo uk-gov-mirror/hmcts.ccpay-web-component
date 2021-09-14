@@ -270,6 +270,19 @@ export class AddRemissionComponent implements OnInit {
 
 
   gotoAddRetroRemissionCodePage() {
+
+    if(this.isRefundRemission) {
+      this.paymentLibComponent.iscancelClicked = true;
+      this.refundListAmount.emit();
+      this.paymentLibComponent.isFromRefundStatusPage = true;
+      return;
+    }
+    if ( this.isFromRefundListPage ) {
+      this.paymentLibComponent.iscancelClicked = true;
+      this.refundListReason.emit({reason: this.selectedRefundReason, code: this.refundReason});
+      this.paymentLibComponent.isFromRefundStatusPage = true;
+      return;
+    } 
     this.viewStatus = '';
     this.selectedValue = 'yes';
     this.viewCompStatus = "addremission";
@@ -284,8 +297,10 @@ export class AddRemissionComponent implements OnInit {
   }
 
   gotoCheckRetroRemissionPage(payment: IPayment) {
+    this.paymentLibComponent.iscancelClicked = false;
     this.errorMessage = '';
     this.resetRemissionForm([false, false, false, false, false], 'All');
+    if( !this.isRefundRemission) {
     var remissionctrls=this.remissionForm.controls,
       isRemissionLessThanFee = this.fee.calculated_amount >= remissionctrls.amount.value; 
     if (this.remissionForm.dirty ) {
@@ -296,10 +311,23 @@ export class AddRemissionComponent implements OnInit {
       } else if(remissionctrls.amount.valid && !isRemissionLessThanFee){
         this.resetRemissionForm([false, false, false, false, true], 'amount');
       } else {
-        this.viewCompStatus = '';
-        this.viewStatus = "checkretroremissionpage";
+          this.viewCompStatus = '';
+          this.viewStatus = "checkretroremissionpage";
       }
     }
+  } else {
+    var remissionctrls=this.remissionForm.controls;
+    //if (this.remissionForm.dirty ) {
+      if(remissionctrls['amount'].value == '' ) {
+        this.resetRemissionForm([false, false, true, false, false], 'amount');
+      } else {
+          this.viewCompStatus = '';
+          this.viewStatus = "checkretroremissionpage";
+          this.refundListAmount.emit(remissionctrls['amount'].value);
+      }
+    //}
+   
+  }
   }
 
   gotoProcessRetroRemissionPage() {
@@ -525,7 +553,7 @@ export class AddRemissionComponent implements OnInit {
   gotoServiceRequestPage() {
     event.preventDefault();
     this.viewStatus = 'main'
-    this.paymentLibComponent.viewName = 'case-transactions123';
+    this.paymentLibComponent.viewName = 'case-transactions';
     this.OrderslistService.setisFromServiceRequestPage(true);
     this.paymentLibComponent.isFromServiceRequestPage = true;
     return;

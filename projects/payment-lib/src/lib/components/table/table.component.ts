@@ -39,7 +39,7 @@ export class TableComponent {
     if(this.STATUS.toLowerCase() === 'sent for approval') {
       this.isApprovalFlow = true;
     } else {
-    this.isApprovalFlow = false;
+       this.isApprovalFlow = false;
     }
     this.refundList = this.DATASOURCE;
     this.dataSource = new MatTableDataSource(this.refundList);

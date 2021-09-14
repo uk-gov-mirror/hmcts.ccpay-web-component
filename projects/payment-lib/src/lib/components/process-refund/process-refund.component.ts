@@ -67,6 +67,7 @@ export class ProcessRefundComponent implements OnInit {
       ])),
       enterReasonField: new FormControl('', Validators.compose([
         Validators.required,
+        Validators.maxLength(30),
         Validators.pattern('^([a-zA-Z0-9\\s]*)$'),
       ])),
     });

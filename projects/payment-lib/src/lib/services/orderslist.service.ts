@@ -17,6 +17,8 @@ export class OrderslistService {
   getCCDCaseNumberforRefund = this.ccdCaseNumber.asObservable();
   private isFromServiceRequestPage = new BehaviorSubject<boolean>(null);
   getisFromServiceRequestPage = this.isFromServiceRequestPage.asObservable();
+  private OrderRefId = new BehaviorSubject("");
+  getOrderRefId = this.OrderRefId.asObservable();
 
   constructor() { }
 
@@ -60,5 +62,12 @@ export class OrderslistService {
   }
   getisFromServiceRequestPages(){
     return this.isFromServiceRequestPage;
+  }
+
+  setOrderRefId(OrderRefId: string){
+    this.OrderRefId.next(OrderRefId);
+  }
+  getSelectedOrderRefId(){
+    return this.OrderRefId;
   }
 }
