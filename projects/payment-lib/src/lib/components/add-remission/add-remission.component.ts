@@ -562,15 +562,14 @@ export class AddRemissionComponent implements OnInit {
   gotoServiceRequestPage() {
     event.preventDefault();
     this.viewStatus = 'main'
-    this.OrderslistService.setpaymentPageView(null);
     this.paymentLibComponent.viewName = 'case-transactions';
     this.OrderslistService.setisFromServiceRequestPage(true);
     this.OrderslistService.setnavigationPage('servicerequestpage');
-    this.paymentLibComponent.isFromServiceRequestPage = true;
   }
 
   gotoCasetransationPage() {
     if (this.isFromServiceRequestPage) {
+      this.paymentLibComponent.isFromRefundStatusPage = false;
       this. gotoServiceRequestPage();
     }
     if ( this.isFromRefundListPage ) {
@@ -578,16 +577,22 @@ export class AddRemissionComponent implements OnInit {
       this.refundListReason.emit({reason: this.selectedRefundReason, code: this.refundReason});
       this.paymentLibComponent.isFromRefundStatusPage = true;
     } 
-    if(!this.paymentLibComponent.isFromRefundStatusPage) {
+    if(!this.paymentLibComponent.isFromRefundStatusPage)  {
     this.OrderslistService.setpaymentPageView({method: this.payment.method,payment_group_reference: this.paymentGroupRef, reference:this.payment.reference});
-    this.OrderslistService.setnavigationPage('paymentdetailspage');
+    if (this.isFromServiceRequestPage) { 
+      this.OrderslistService.setnavigationPage('servicerequestpage');
+    } else {
+      this.OrderslistService.setnavigationPage('paymentdetailspage');
+    }
+
+   
     this.errorMessage = '';
     this.paymentLibComponent.viewName = 'case-transactions';
     this.paymentLibComponent.TAKEPAYMENT = true;
     this.paymentLibComponent.ISTURNOFF = this.isTurnOff;
     this.paymentLibComponent.ISNEWPCIPALOFF = this.isNewPcipalOff;
     this.paymentLibComponent.ISOLDPCIPALOFF = this.isOldPcipalOff;
-
+    this.paymentLibComponent.isFromServiceRequestPage = true;  
     this.paymentViewService.getBSfeature().subscribe(
       features => {
         let result = JSON.parse(features).filter(feature => feature.uid === BS_ENABLE_FLAG);

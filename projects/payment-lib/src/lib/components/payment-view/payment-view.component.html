@@ -90,7 +90,7 @@
             <!-- Status histories -->
       <ccpay-payment-statuses *ngIf="isStatusAllocated" [isTakePayment]="isTakePayment"></ccpay-payment-statuses>
       </div>
-     <div *ngIf="chkIssueRefundBtnEnable(paymentGroup.payments[0])" class="remission">
+     <div *ngIf="chkIssueRefundBtnEnable(paymentGroup?.payments[0])" class="remission">
         <button (click)="issueRefund(paymentGroup)" class="govuk-button govuk-button--secondary">Issue refund</button>
      </div>
       
