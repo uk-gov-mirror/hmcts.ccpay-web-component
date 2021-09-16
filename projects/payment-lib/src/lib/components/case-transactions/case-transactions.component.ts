@@ -88,10 +88,9 @@ export class CaseTransactionsComponent implements OnInit {
   test: boolean;
   isPBA: boolean = false;
   isIssueRefunfBtnEnable: boolean = false;
-  isAddRemissionBtnEnabled: boolean = false;  
+  isAddRemissionBtnEnabled: boolean = false;
   isRefundRemissionBtnEnable: boolean = false;
   allowedRolesToAccessRefund = ['payments-refund-approver', 'payments-refund'];
-  currentDate = new Date();
   isFromServiceRequestPage: boolean;
   navigationpage: string;
   remissionFeeAmt: number;
@@ -104,10 +103,10 @@ export class CaseTransactionsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.OrderslistService.getpaymentPageView().subscribe((data)=> this.paymentView = data);
+    this.OrderslistService.getpaymentPageView().subscribe((data) => this.paymentView = data);
     this.OrderslistService.getnavigationPageValue().subscribe((data) => this.navigationpage = data);
-    if (this.paymentView !== null && this.paymentView.payment_group_reference !== undefined && this.navigationpage ==='paymentdetailspage') {
-      this.goToPayementView(this.paymentView.payment_group_reference, this.paymentView.reference, this.paymentView.method) ;
+    if (this.paymentView !== null && this.paymentView.payment_group_reference !== undefined && this.navigationpage === 'paymentdetailspage') {
+      this.goToPayementView(this.paymentView.payment_group_reference, this.paymentView.reference, this.paymentView.method);
     }
     this.isGrpOutstandingAmtPositive = false;
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
@@ -150,7 +149,7 @@ export class CaseTransactionsComponent implements OnInit {
           this.paymentViewService.getPartyDetails(this.ccdCaseNumber).subscribe(
             response => {
               this.cpoDetails = JSON.parse(response).data.content[0];
-              
+
             },
             (error: any) => {
               this.errorMessage = <any>error;
@@ -194,7 +193,7 @@ export class CaseTransactionsComponent implements OnInit {
     }
     this.checkForExceptionRecord();
     this.OrderslistService.getisFromServiceRequestPages().subscribe((data) => this.isFromServiceRequestPage = data)
-   
+
   }
 
   setDefaults(): void {
@@ -301,10 +300,10 @@ export class CaseTransactionsComponent implements OnInit {
 
       //this.orderLevelFees.push({orderRefId:paymentGroup['payment_group_reference'],orderTotalFees: this.orderFeesTotal,orderStatus: this.orderStatus,orderParty:'Santosh', orderCCDEvent:'Case Creation',orderCreated: new Date(), orderAddBtnEnable: this.orderAddBtnEnable}); this.cpoDetails['createdTimestamp']
       if (this.cpoDetails !== null) {
-        this.orderLevelFees.push({ orderRefId: paymentGroup['payment_group_reference'], orderTotalFees: this.orderFeesTotal, orderStatus: this.orderStatus, orderParty: this.cpoDetails['responsibleParty'], orderCCDEvent: this.cpoDetails['action'], orderCreated:  paymentGroup['date_created'], orderAddBtnEnable: this.orderAddBtnEnable });
+        this.orderLevelFees.push({ orderRefId: paymentGroup['payment_group_reference'], orderTotalFees: this.orderFeesTotal, orderStatus: this.orderStatus, orderParty: this.cpoDetails['responsibleParty'], orderCCDEvent: this.cpoDetails['action'], orderCreated: paymentGroup['date_created'], orderAddBtnEnable: this.orderAddBtnEnable });
 
       } else {
-        this.orderLevelFees.push({ orderRefId: paymentGroup['payment_group_reference'], orderTotalFees: this.orderFeesTotal, orderStatus: this.orderStatus, orderParty: '', orderCCDEvent: '', orderCreated:  paymentGroup['date_created'], orderAddBtnEnable: this.orderAddBtnEnable });
+        this.orderLevelFees.push({ orderRefId: paymentGroup['payment_group_reference'], orderTotalFees: this.orderFeesTotal, orderStatus: this.orderStatus, orderParty: '', orderCCDEvent: '', orderCreated: paymentGroup['date_created'], orderAddBtnEnable: this.orderAddBtnEnable });
       }
 
       if (this.orderStatus !== 'Paid') {
@@ -323,7 +322,7 @@ export class CaseTransactionsComponent implements OnInit {
   };
 
   goToOrderViewDetailSection(orderReferenceObj: any) {
-    if (this.isFromServiceRequestPage) { 
+    if (this.isFromServiceRequestPage) {
       this.OrderslistService.setOrderRefId(orderReferenceObj);
       this.orderRef = orderReferenceObj;
     } else {
@@ -336,7 +335,7 @@ export class CaseTransactionsComponent implements OnInit {
     this.orderTotalPayments = 0.00;
     this.orderPendingPayments = 0.00;
 
-    this.orderDetail = this.paymentGroups.filter(x => x.payment_group_reference ===  this.orderRef);
+    this.orderDetail = this.paymentGroups.filter(x => x.payment_group_reference === this.orderRef);
     this.orderDetail.forEach(orderDetail => {
       if (orderDetail.fees) {
         orderDetail.fees.forEach(fee => {
@@ -358,7 +357,7 @@ export class CaseTransactionsComponent implements OnInit {
       }
     });
     this.orderPendingPayments = (this.orderFeesTotal - this.orderRemissionTotal) - this.orderTotalPayments;
-   // this.orderRef = orderReferenceObj.orderRefId;
+    // this.orderRef = orderReferenceObj.orderRefId;
     if (this.orderPendingPayments <= 0.00) {
       this.orderStatus = 'Paid';
     } else if (this.orderFeesTotal > 0 && (this.orderTotalPayments > 0 || this.orderRemissionTotal > 0) && (this.orderTotalPayments < this.orderPendingPayments)) {
@@ -787,8 +786,8 @@ export class CaseTransactionsComponent implements OnInit {
   }
 
   chkIssueRefundBtnEnable(payment: IPayment): boolean {
-    if (this.check4AllowedRoles2AccessRefund()  && 
-    payment.method === 'payment by account' && payment.status.toLocaleLowerCase() === 'success') {
+    if (this.check4AllowedRoles2AccessRefund() && this.allowFurtherAccessAfter4Days(payment) &&
+      payment.method === 'payment by account' && payment.status.toLocaleLowerCase() === 'success') {
       this.isIssueRefunfBtnEnable = true;
     }
     if (this.isIssueRefunfBtnEnable) {
@@ -802,7 +801,7 @@ export class CaseTransactionsComponent implements OnInit {
     this.orderDetail.forEach(orderDetail => {
       if (orderDetail.payments) {
         orderDetail.payments.forEach(payment => {
-          if (payment.method.toLocaleLowerCase() === 'payment by account' && payment.status.toLocaleLowerCase() === 'success') {
+          if (payment.method.toLocaleLowerCase() === 'payment by account' && payment.status.toLocaleLowerCase() === 'success' && this.allowFurtherAccessAfter4Days(payment)) {
             this.isRefundRemissionBtnEnable = true;
           }
         });
@@ -822,11 +821,9 @@ export class CaseTransactionsComponent implements OnInit {
   }
 
   allowFurtherAccessAfter4Days = (payment: IPayment): boolean => {
-    let tmp4DayAgo = this.currentDate;
+    let tmp4DayAgo = new Date();
     tmp4DayAgo.setDate(tmp4DayAgo.getDate() - 4);
-    let paymentDate = new Date(payment.date_created);
-    return tmp4DayAgo >= paymentDate;
+    return tmp4DayAgo >= new Date(payment.date_created);
   }
-  // this.allowPaymentAfter4Days(payment)
 }
 
