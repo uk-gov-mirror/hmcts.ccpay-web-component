@@ -875,7 +875,7 @@
              <td class="govuk-table__cell whitespace-inherit">{{ remission.fee_code }}</td>
              <td class="govuk-table__cell whitespace-inherit">{{ remission.hwf_amount | currency:'GBP':'symbol-narrow':'1.2-2'}}</td>
              <td *ngIf="chkIsRefundRemissionBtnEnable()" class="govuk-table__cell refundBtn whitespace-inherit"  >
-                <button (click)="addRefundForRemission(order.payments[0],remission)" class="govuk-button govuk-button--secondary"> Add refund</button>
+                <button (click)="addRefundForRemission(order.payments[0],remission,order.fees)" class="govuk-button govuk-button--secondary"> Add refund</button>
              </td>
              <td *ngIf="!chkIsRefundRemissionBtnEnable()" class="govuk-table__cell refundBtn whitespace-inherit"  >
               
@@ -986,6 +986,7 @@
 [paidAmount]= "orderTotalPayments"
 [isRefundRemission]="isRefundRemission"
 [caseType]="caseType" 
+[feeamount]="remissionFeeAmt"
 [remission] = "remissions"
 [isFromServiceRequestPage]="true" 
 [ccdCaseNumber]="ccdCaseNumber"></ccpay-add-remission>

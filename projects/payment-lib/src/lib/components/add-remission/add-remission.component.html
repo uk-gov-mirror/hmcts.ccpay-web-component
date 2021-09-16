@@ -328,7 +328,7 @@
                                     <p class="inline-error-message" *ngIf="isReasonEmpty">
                                         <span *ngIf="isReasonEmpty">Enter a reason why you’re making this refund</span>
                                       </p>
-                                  <input class="govuk-input govuk-input--width-10" [ngClass]="{'inline-error-class': isReasonEmpty}" id="reason" aria-label="reason"  name="reason" type="text" aria-describedby="reason" maxlength="30"  formControlName="reason">
+                                  <input class="govuk-input govuk-input--width-10" [ngClass]="{'inline-error-class': isReasonEmpty}" id="reason" aria-label="reason"  name="reason" type="text" aria-describedby="reason" maxlength="{{reasonLength}}"  formControlName="reason">
                                 
                                 </div>
 
@@ -415,7 +415,7 @@
           </tr>
           <tr class="govuk-table__row">
               <td class="govuk-table__cell govuk-!-font-weight-bold">Fee amount</td>
-              <td class="govuk-table__cell">{{this.remission.hwf_amount | currency:'GBP':'symbol-narrow':'1.2-2'}}</td>
+              <td class="govuk-table__cell">{{feeamount | currency:'GBP':'symbol-narrow':'1.2-2'}}</td>
           </tr>
       </table>
 

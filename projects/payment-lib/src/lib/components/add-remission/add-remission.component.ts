@@ -42,6 +42,7 @@ export class AddRemissionComponent implements OnInit {
   @Input() isFromRefundListPage: boolean;
   @Input() isFromPaymentDetailPage: boolean;
   @Input() isFromServiceRequestPage: boolean;
+  @Input() feeamount: number;
   @Output() cancelRemission: EventEmitter<void> = new EventEmitter();
   //@Output() refundListReason: EventEmitter<any> = new EventEmitter({reason:string, code:string});
   @Output() refundListReason = new EventEmitter<{reason: string, code: string}>();
@@ -89,6 +90,7 @@ export class AddRemissionComponent implements OnInit {
   showReasonText: boolean;
   isRefundReasonsSelected: boolean;
   default: string;
+  reasonLength: number;
   // refundReasons:IRefundReasons[];
 
   constructor(private formBuilder: FormBuilder,
@@ -237,6 +239,7 @@ export class AddRemissionComponent implements OnInit {
 
   // Add retro remission changes
   addRemissionCode() {
+    this.isRefundRemission = false;
     this.resetRemissionForm([false, false, false, false, false, false], 'All');
     const remissionctrls=this.remissionForm.controls,
       isRemissionLessThanFee = this.fee.calculated_amount >= remissionctrls.amount.value; 
@@ -463,6 +466,7 @@ export class AddRemissionComponent implements OnInit {
    // this.remissionForm.controls['refundReason'].setValue('Duplicate payment');
    this.errorMessage = '';
     this.refundHasError = false;
+    this.isReasonEmpty = false;
     this.viewCompStatus = 'issuerefund';
     this.viewStatus = '';
     this.isRefundRemission = true;
@@ -550,6 +554,8 @@ export class AddRemissionComponent implements OnInit {
     this.showReasonText = false;
     this.refundHasError = false;
     this.selectedRefundReason = args.target.options[args.target.options.selectedIndex].id;
+    this.reasonLength = (29-this.selectedRefundReason.split('- ')[1].length);
+
     if(this.selectedRefundReason.includes('Other')) {
       this.showReasonText = true;
       this.refundHasError = false;
@@ -578,7 +584,10 @@ export class AddRemissionComponent implements OnInit {
       this.paymentLibComponent.isFromRefundStatusPage = true;
     } 
     if(!this.paymentLibComponent.isFromRefundStatusPage)  {
-    this.OrderslistService.setpaymentPageView({method: this.payment.method,payment_group_reference: this.paymentGroupRef, reference:this.payment.reference});
+      if(this.payment) {
+        this.OrderslistService.setpaymentPageView({method: this.payment.method,payment_group_reference: this.paymentGroupRef, reference:this.payment.reference});
+   
+      }
     if (this.isFromServiceRequestPage) { 
       this.OrderslistService.setnavigationPage('servicerequestpage');
     } else {

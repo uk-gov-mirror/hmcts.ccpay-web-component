@@ -94,6 +94,7 @@ export class CaseTransactionsComponent implements OnInit {
   currentDate = new Date();
   isFromServiceRequestPage: boolean;
   navigationpage: string;
+  remissionFeeAmt: number;
   constructor(private router: Router,
     private paymentViewService: PaymentViewService,
     private bulkScaningPaymentService: BulkScaningPaymentService,
@@ -638,8 +639,9 @@ export class CaseTransactionsComponent implements OnInit {
     );
   }
 
-  addRefundForRemission(payment: IPayment, remission: IRemission[]) {
+  addRefundForRemission(payment: IPayment, remission: IRemission[],fees:any) {
     this.viewStatus = 'addrefundforremission';
+ 
     this.payment = payment;
     this.paymentViewService.getApportionPaymentDetails(this.payment.reference).subscribe(
       paymentGroup => {
@@ -649,6 +651,7 @@ export class CaseTransactionsComponent implements OnInit {
           (paymentGroupObj => paymentGroupObj['reference'].includes(this.payment.reference));
         this.payment = this.paymentGroup.payments[0];
         this.remissions = remission;
+        this.remissionFeeAmt = fees.filter(data=>data.code === this.remissions['fee_code'])[0].net_amount;
         // const paymentAllocation = this.paymentGroup.payments[0].payment_allocation;
         // this.isStatusAllocated = paymentAllocation.length > 0 && paymentAllocation[0].allocation_status === 'Allocated' || paymentAllocation.length === 0;
       },
@@ -752,7 +755,7 @@ export class CaseTransactionsComponent implements OnInit {
   }
 
   chkForAddRemission(feeCode: string): boolean {
-    if (this.chkForPBAPayment() && this.check4AllowedRoles2AccessRefund()) {
+    if (this.chkForPBAPayment()) {
       if (this.orderDetail[0]['remissions'].length > 0) {
         for (const remission of this.orderDetail[0]['remissions']) {
           if (remission.fee_code === feeCode) {
@@ -770,7 +773,7 @@ export class CaseTransactionsComponent implements OnInit {
     this.orderDetail.forEach(orderDetail => {
       if (orderDetail.payments) {
         orderDetail.payments.forEach(payment => {
-          if (payment.method.toLocaleLowerCase() === 'payment by account' && this.allowFurtherAccessAfter4Days(payment)) {
+          if (payment.method.toLocaleLowerCase() === 'payment by account' ) {
             this.isPBA = true;
           }
         });
@@ -784,7 +787,7 @@ export class CaseTransactionsComponent implements OnInit {
   }
 
   chkIssueRefundBtnEnable(payment: IPayment): boolean {
-    if (this.check4AllowedRoles2AccessRefund() && this.allowFurtherAccessAfter4Days(payment) && 
+    if (this.check4AllowedRoles2AccessRefund()  && 
     payment.method === 'payment by account' && payment.status.toLocaleLowerCase() === 'success') {
       this.isIssueRefunfBtnEnable = true;
     }
