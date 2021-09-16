@@ -754,7 +754,7 @@ export class CaseTransactionsComponent implements OnInit {
   }
 
   chkForAddRemission(feeCode: string): boolean {
-    if (this.chkForPBAPayment()) {
+    if (this.chkForPBAPayment() && this.check4AllowedRoles2AccessRefund()) {
       if (this.orderDetail[0]['remissions'].length > 0) {
         for (const remission of this.orderDetail[0]['remissions']) {
           if (remission.fee_code === feeCode) {
@@ -772,7 +772,7 @@ export class CaseTransactionsComponent implements OnInit {
     this.orderDetail.forEach(orderDetail => {
       if (orderDetail.payments) {
         orderDetail.payments.forEach(payment => {
-          if (payment.method.toLocaleLowerCase() === 'payment by account' ) {
+          if (payment.method.toLocaleLowerCase() === 'payment by account' && this.allowFurtherAccessAfter4Days(payment)) {
             this.isPBA = true;
           }
         });
