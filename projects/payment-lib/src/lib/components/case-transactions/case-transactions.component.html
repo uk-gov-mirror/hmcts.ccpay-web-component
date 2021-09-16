@@ -792,7 +792,7 @@
             </tr>
             <tr class="section">
                 <td class="bold tb-col-w">Date created</td>
-                <td>{{orderCreated}}</td>
+                <td>{{orderCreated | date:'dd MMMM yyyy'}}</td>
               </tr>
             <tr class="section">
               <td class="bold tb-col-w">Party</td>
@@ -956,6 +956,7 @@
 [isRefundRemission]="isRefundRemission"
 [caseType]="caseType" 
 [paymentGroupRef]="orderRef" 
+[isFromServiceRequestPage] = "true"
 [payment] = "payment"
 [ccdCaseNumber]="ccdCaseNumber"></ccpay-add-remission>
 
@@ -965,6 +966,7 @@
 [isOldPcipalOff]="isOldPcipalOff" 
 [viewCompStatus]= "viewStatus"
 [isNewPcipalOff]="isNewPcipalOff" 
+[isFromServiceRequestPage] = "true"
 [payment]="payment" 
 [orderStatus] ="orderStatus"
 [paidAmount]= "orderTotalPayments"

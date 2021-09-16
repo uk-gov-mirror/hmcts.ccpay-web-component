@@ -302,10 +302,11 @@
                                       <label class="govuk-label govuk-label--m" for="{{refund.name}}">
                                           Enter reason
                                       </label>
+                                      <p  class="inline-error-message" *ngIf="isReasonEmpty">
+                                          <span *ngIf="isReasonEmpty">Enter a reason why you’re making this refund</span>
+                                        </p>
                                     <input class="govuk-input govuk-input--width-10" [ngClass]="{'inline-error-class': isReasonEmpty}" id="reason" aria-label="reason"  name="reason" type="text" aria-describedby="reason" maxlength="30" formControlName="reason">
-                                    <p  class="inline-error-message" *ngIf="isReasonEmpty">
-                                      <span *ngIf="isReasonEmpty">Enter a reason why you’re making this refund</span>
-                                    </p>
+                                  
                                   </div>
                               </div>
                               </div>
@@ -313,7 +314,8 @@
                             <br/>
                             <div>
                                 <select formControlName="refundDDReason" class="govuk-select" id="sort"  (change)="selectchange($event)">
-                                    <option value="" selected='selected'>Select a different reason</option>
+                                  <option selected='selected' [defaultSelected]=true [value]="default" >{{default}}</option>  
+                                  <!-- <option value="" selected='selected'>Select a different reason</option> -->
                                     <option  *ngFor="let refund of refundReasons;" id="{{refund.name}}"  value="{{refund.code}}">{{refund.name}}</option>
                                   </select>
                               
@@ -323,10 +325,11 @@
                                     <label class="govuk-label govuk-label--m" for="amount">
                                         Enter reason
                                     </label>
-                                  <input class="govuk-input govuk-input--width-10" [ngClass]="{'inline-error-class': isReasonEmpty}" id="reason" aria-label="reason"  name="reason" type="text" aria-describedby="reason" formControlName="reason">
-                                  <p class="inline-error-message" *ngIf="isReasonEmpty">
-                                    <span *ngIf="isReasonEmpty">Enter a reason why you’re making this refund</span>
-                                  </p>
+                                    <p class="inline-error-message" *ngIf="isReasonEmpty">
+                                        <span *ngIf="isReasonEmpty">Enter a reason why you’re making this refund</span>
+                                      </p>
+                                  <input class="govuk-input govuk-input--width-10" [ngClass]="{'inline-error-class': isReasonEmpty}" id="reason" aria-label="reason"  name="reason" type="text" aria-describedby="reason" maxlength="30"  formControlName="reason">
+                                
                                 </div>
 
                            

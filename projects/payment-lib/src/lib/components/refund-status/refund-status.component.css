@@ -76,3 +76,7 @@
 .govuk-body-m, .govuk-body {
   font-size: 2.1875rem;
 }
+
+.govuk-input--width-10 {
+  max-width: 36ex;
+}

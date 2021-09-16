@@ -7,6 +7,7 @@ import { IPayment } from '../../interfaces/IPayment';
 import { IRemission } from '../../interfaces/IRemission';
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 import { ChangeDetectorRef } from '@angular/core';
+import { OrderslistService } from '../../services/orderslist.service';
 
 @Component({
   selector: 'ccpay-payment-view',
@@ -42,7 +43,8 @@ export class PaymentViewComponent implements OnInit {
 
   constructor(private paymentViewService: PaymentViewService,
     private paymentLibComponent: PaymentLibComponent,
-    private cd: ChangeDetectorRef) {
+    private cd: ChangeDetectorRef,
+    private OrderslistService: OrderslistService) {
   }
 
   ngOnInit() {
@@ -95,7 +97,8 @@ export class PaymentViewComponent implements OnInit {
   }
 
   goToCaseTransationPage(event: any) {
-    event.preventDefault()
+    event.preventDefault();
+    this.OrderslistService.setnavigationPage('casetransactions');
     this.paymentLibComponent.viewName = 'case-transactions';
     this.paymentViewService.getBSfeature().subscribe(
       features => {

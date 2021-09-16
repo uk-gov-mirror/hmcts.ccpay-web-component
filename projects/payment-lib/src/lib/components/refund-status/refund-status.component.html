@@ -31,7 +31,7 @@
         <td class="govuk-table__cell whitespace-inherit">{{ refundList.refund_reference }}</td>
         <td class="govuk-table__cell whitespace-inherit"> {{refundList.reason}}</td>
         <td class="govuk-table__cell whitespace-inherit">
-          <a href="javascript:void(0)" (click)="goToRefundView(refundList)">Review</a>
+          <a href="javascript:void(0)" (click)="goToRefundView(refundList,'casetransactions')">Review</a>
         </td>
       </tr>
     </tbody>
@@ -112,6 +112,13 @@
 </ng-container>
 
 <ng-container *ngIf="viewName==='reviewandsubmitview'">
+    <div class="govuk-breadcrumbs">
+        <ol class="govuk-breadcrumbs__list">
+          <li class="govuk-breadcrumbs__list-item">
+            <a (click)="gotoReviewDetailsPage()" class="govuk-back-link govuk-label">Back</a>
+          </li>
+        </ol>
+      </div>
   <div class="govuk-warning-text">
     <h1 class="heading-large">Review and resubmit refund</h1>
   </div>

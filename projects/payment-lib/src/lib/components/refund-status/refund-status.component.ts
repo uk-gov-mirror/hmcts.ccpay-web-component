@@ -48,6 +48,7 @@ export class RefundStatusComponent implements OnInit {
   oldRefundReason: string;
   refundreason: string;
   allowedRolesToAccessRefund = ['payments-refund-approver', 'payments-refund'];
+  navigationpage: string;
 
   constructor(private formBuilder: FormBuilder,
     private refundService: RefundsService,
@@ -109,12 +110,13 @@ export class RefundStatusComponent implements OnInit {
       }; 
   }
 
-  goToRefundView(refundlist: IRefundList) {
+  goToRefundView(refundlist: IRefundList,navigationpage: string) {
     this.OrderslistService.setRefundView(refundlist);
     this.OrderslistService.setCCDCaseNumber(this.ccdCaseNumber);
     this.paymentLibComponent.viewName = 'refundstatuslist';
     this.paymentLibComponent.isRefundStatusView = true;
     this.refundlist = refundlist;
+    this.OrderslistService.setnavigationPage(navigationpage);
   }
 
   loadCaseTransactionPage() {
@@ -144,7 +146,12 @@ export class RefundStatusComponent implements OnInit {
   }
 
   loadRefundListPage() {
+    this.OrderslistService.getnavigationPageValue().subscribe((data) => this.navigationpage = data);
+    if(this.navigationpage === 'casetransactions') {
+      this.loadCaseTransactionPage();
+    } else {
     this.paymentLibComponent.viewName = 'refund-list';
+    }
   }
 
   gotoReviewDetailsPage() {
@@ -171,6 +178,7 @@ export class RefundStatusComponent implements OnInit {
     this.isRefundBtnDisabled = false;
     this.paymentLibComponent.isFromRefundStatusPage = true;
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
+    this.errorMessage = false;
     this.viewName = 'issuerefund';
   }
 

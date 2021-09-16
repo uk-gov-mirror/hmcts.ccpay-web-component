@@ -88,6 +88,7 @@ export class AddRemissionComponent implements OnInit {
   commonRefundReasons: any[] = [];
   showReasonText: boolean;
   isRefundReasonsSelected: boolean;
+  default: string;
   // refundReasons:IRefundReasons[];
 
   constructor(private formBuilder: FormBuilder,
@@ -99,8 +100,7 @@ export class AddRemissionComponent implements OnInit {
     private OrderslistService: OrderslistService) { }
 
   ngOnInit() {
-
-    
+    this.default = 'Select a different reason';
     if(this.remission) {
       this.cd.detectChanges();
     }
@@ -128,6 +128,8 @@ export class AddRemissionComponent implements OnInit {
       refundDDReason: new FormControl('', Validators.compose([Validators.required])),
       reason: new FormControl()
     });
+    const remissionctrls=this.remissionForm.controls;
+    remissionctrls['refundDDReason'].setValue('Select a different reason', {onlySelf: true});
     if(this.viewCompStatus === ''){
     this.viewStatus = 'main';
     }
@@ -452,6 +454,9 @@ export class AddRemissionComponent implements OnInit {
     this.viewCompStatus = 'issuerefund';
     this.viewStatus = '';
     this.isRefundRemission = true;
+    this.errorMessage = false;
+    this.refundHasError = false;
+    this.isReasonEmpty = false;
   }
 
   changeIssueRefundReason() {
@@ -519,10 +524,14 @@ export class AddRemissionComponent implements OnInit {
   }
 
   selectRadioButton(key, value) {
+    localStorage.setItem("myradio", key);
     const remissionctrls=this.remissionForm.controls;
-    remissionctrls['refundDDReason'].reset();
+    remissionctrls['refundDDReason'].setValue('Select a different reason', {onlySelf: true});
+    // remissionctrls['refundDDReason'].reset();
     remissionctrls['reason'].reset();
     this.isRefundReasonsSelected = true;
+    this.errorMessage = false;
+    this.isReasonEmpty = false;
     this.showReasonText = false;
     this.refundHasError = false;
     this.selectedRefundReason = key;
@@ -534,7 +543,7 @@ export class AddRemissionComponent implements OnInit {
   }
 
   selectchange(args) {
-     const remissionctrls=this.remissionForm.controls;
+    const remissionctrls=this.remissionForm.controls;
     remissionctrls['refundReason'].reset();
     remissionctrls['reason'].reset();
     this.isRefundReasonsSelected = false;
@@ -553,24 +562,25 @@ export class AddRemissionComponent implements OnInit {
   gotoServiceRequestPage() {
     event.preventDefault();
     this.viewStatus = 'main'
+    this.OrderslistService.setpaymentPageView(null);
     this.paymentLibComponent.viewName = 'case-transactions';
     this.OrderslistService.setisFromServiceRequestPage(true);
+    this.OrderslistService.setnavigationPage('servicerequestpage');
     this.paymentLibComponent.isFromServiceRequestPage = true;
-    return;
   }
 
   gotoCasetransationPage() {
     if (this.isFromServiceRequestPage) {
       this. gotoServiceRequestPage();
-
     }
     if ( this.isFromRefundListPage ) {
       this.paymentLibComponent.iscancelClicked = true;
       this.refundListReason.emit({reason: this.selectedRefundReason, code: this.refundReason});
       this.paymentLibComponent.isFromRefundStatusPage = true;
-      return;
     } 
     if(!this.paymentLibComponent.isFromRefundStatusPage) {
+    this.OrderslistService.setpaymentPageView({method: this.payment.method,payment_group_reference: this.paymentGroupRef, reference:this.payment.reference});
+    this.OrderslistService.setnavigationPage('paymentdetailspage');
     this.errorMessage = '';
     this.paymentLibComponent.viewName = 'case-transactions';
     this.paymentLibComponent.TAKEPAYMENT = true;

@@ -81,10 +81,6 @@
   float: right; }
 }
 
-.govuk-input--width-20{
-  max-width: 23ex;
-}
-
 .govuk-input{
   font-size: 19px;
 }
@@ -93,3 +89,7 @@
   font-size: 19px;
   font-weight: 400;
  }
+
+ .govuk-input--width-10 {
+  max-width: 36ex;
+}

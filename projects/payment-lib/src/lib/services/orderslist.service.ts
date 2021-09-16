@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import {IOrderReferenceFee} from '../interfaces/IOrderReferenceFee';
 import { IRefundList } from '../interfaces/IRefundList';
+import { IPaymentView } from '../interfaces/IPaymentView';  
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,10 @@ export class OrderslistService {
   getisFromServiceRequestPage = this.isFromServiceRequestPage.asObservable();
   private OrderRefId = new BehaviorSubject("");
   getOrderRefId = this.OrderRefId.asObservable();
+  private navigationPage = new BehaviorSubject("");
+  getnavigationPage = this.navigationPage.asObservable();
+
+  private paymentPageView: BehaviorSubject<IPaymentView> = new BehaviorSubject<IPaymentView>(null);
 
   constructor() { }
 
@@ -69,5 +74,19 @@ export class OrderslistService {
   }
   getSelectedOrderRefId(){
     return this.OrderRefId;
+  }
+
+  setnavigationPage(navigationPage: string){
+    this.navigationPage.next(navigationPage);
+  }
+  getnavigationPageValue(){
+    return this.navigationPage;
+  }
+
+  setpaymentPageView(paymentpageList: IPaymentView): void {
+    this.paymentPageView.next(Object.assign([], paymentpageList));
+  }
+  getpaymentPageView() {
+    return this.paymentPageView;
   }
 }

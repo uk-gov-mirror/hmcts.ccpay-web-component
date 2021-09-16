@@ -8,6 +8,7 @@ import { OrderslistService } from '../../services/orderslist.service';
 import { IFee } from '../../interfaces/IFee';
 import { IPayment } from '../../interfaces/IPayment';
 import { IRemission } from '../../interfaces/IRemission';
+import { IPaymentView } from '../../interfaces/IPaymentView';
 import { IOrderReferenceFee } from '../../interfaces/IOrderReferenceFee';
 import { Router } from '@angular/router';
 import * as ls from "local-storage";
@@ -63,6 +64,7 @@ export class CaseTransactionsComponent implements OnInit {
   lsCcdNumber: any = ls.get<any>('ccdNumber');
   payment: IPayment;
   paymentGroup: IPaymentGroup;
+  paymentView: IPaymentView;
 
   //Order changes
   orderDetail: any[] = [];
@@ -91,6 +93,7 @@ export class CaseTransactionsComponent implements OnInit {
   allowedRolesToAccessRefund = ['payments-refund-approver', 'payments-refund'];
   currentDate = new Date();
   isFromServiceRequestPage: boolean;
+  navigationpage: string;
   constructor(private router: Router,
     private paymentViewService: PaymentViewService,
     private bulkScaningPaymentService: BulkScaningPaymentService,
@@ -100,6 +103,11 @@ export class CaseTransactionsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.OrderslistService.getpaymentPageView().subscribe((data)=> this.paymentView = data);
+    this.OrderslistService.getnavigationPageValue().subscribe((data) => this.navigationpage = data);
+    if (this.paymentView !== null && this.paymentView.payment_group_reference !== undefined && this.navigationpage ==='paymentdetailspage') {
+      this.goToPayementView(this.paymentView.payment_group_reference, this.paymentView.reference, this.paymentView.method) ;
+    }
     this.isGrpOutstandingAmtPositive = false;
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
     this.caseType = this.paymentLibComponent.CASETYPE;
@@ -290,12 +298,12 @@ export class CaseTransactionsComponent implements OnInit {
         this.orderAddBtnEnable = true;
       }
 
-      //this.orderLevelFees.push({orderRefId:paymentGroup['payment_group_reference'],orderTotalFees: this.orderFeesTotal,orderStatus: this.orderStatus,orderParty:'Santosh', orderCCDEvent:'Case Creation',orderCreated: new Date(), orderAddBtnEnable: this.orderAddBtnEnable});
+      //this.orderLevelFees.push({orderRefId:paymentGroup['payment_group_reference'],orderTotalFees: this.orderFeesTotal,orderStatus: this.orderStatus,orderParty:'Santosh', orderCCDEvent:'Case Creation',orderCreated: new Date(), orderAddBtnEnable: this.orderAddBtnEnable}); this.cpoDetails['createdTimestamp']
       if (this.cpoDetails !== null) {
-        this.orderLevelFees.push({ orderRefId: paymentGroup['payment_group_reference'], orderTotalFees: this.orderFeesTotal, orderStatus: this.orderStatus, orderParty: this.cpoDetails['responsibleParty'], orderCCDEvent: this.cpoDetails['action'], orderCreated: this.cpoDetails['createdTimestamp'], orderAddBtnEnable: this.orderAddBtnEnable });
+        this.orderLevelFees.push({ orderRefId: paymentGroup['payment_group_reference'], orderTotalFees: this.orderFeesTotal, orderStatus: this.orderStatus, orderParty: this.cpoDetails['responsibleParty'], orderCCDEvent: this.cpoDetails['action'], orderCreated:  paymentGroup['date_created'], orderAddBtnEnable: this.orderAddBtnEnable });
 
       } else {
-        this.orderLevelFees.push({ orderRefId: paymentGroup['payment_group_reference'], orderTotalFees: this.orderFeesTotal, orderStatus: this.orderStatus, orderParty: '', orderCCDEvent: '', orderCreated: new Date(), orderAddBtnEnable: this.orderAddBtnEnable });
+        this.orderLevelFees.push({ orderRefId: paymentGroup['payment_group_reference'], orderTotalFees: this.orderFeesTotal, orderStatus: this.orderStatus, orderParty: '', orderCCDEvent: '', orderCreated:  paymentGroup['date_created'], orderAddBtnEnable: this.orderAddBtnEnable });
       }
 
       if (this.orderStatus !== 'Paid') {
@@ -365,6 +373,7 @@ export class CaseTransactionsComponent implements OnInit {
     } else {
       this.orderParty = '';
       this.orderCCDEvent = '';
+      this.orderCreated = orderReferenceObj.orderCreated;
     }
     this.viewStatus = 'order-full-view';
   }
