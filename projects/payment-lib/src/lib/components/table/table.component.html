@@ -24,12 +24,12 @@
 
   <mat-table [dataSource]="dataSource" matSort>
 
-    <ng-container matColumnDef="ccdCaseNumber">
+    <ng-container matColumnDef="ccd_case_number">
       <mat-header-cell  *matHeaderCellDef mat-sort-header>Case ID </mat-header-cell>
       <mat-cell  *matCellDef="let row" class="whitespace-inherit"> {{row.ccd_case_number | ccdHyphens }} </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="refundReference">
+    <ng-container matColumnDef="refund_reference">
       <mat-header-cell  *matHeaderCellDef mat-sort-header> Refund reference </mat-header-cell>
       <mat-cell  *matCellDef="let row" class="whitespace-inherit"> {{row.refund_reference}} </mat-cell>
     </ng-container>
@@ -39,23 +39,23 @@
       <mat-cell *matCellDef="let row" class="whitespace-inherit"> {{row.reason}} </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="createBy">
+    <ng-container matColumnDef="user_full_name">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Submitted by </mat-header-cell>
       <mat-cell *matCellDef="let row" [style.color]="row.color" class="whitespace-inherit"> {{row.user_full_name }} </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="updateDate">
+    <ng-container matColumnDef="date_updated">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Date updated </mat-header-cell>
         <mat-cell *matCellDef="let row" [style.color]="row.color" class="whitespace-inherit"> {{row.date_updated | date:'d MMMM yyyy'}} </mat-cell>
       </ng-container>
 
       <ng-container *ngIf="isApprovalFlow" matColumnDef="Action">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Action </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
           <mat-cell *matCellDef="let row" [style.color]="row.color" > <a href="">Review case</a>&nbsp;<a href="javascript:void(0)" (click)="goToRefundProcessComponent(row.refund_reference, row)">Process refund</a></mat-cell>
         </ng-container>
       
         <ng-container *ngIf="!isApprovalFlow" matColumnDef="Action">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Action </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef > Action </mat-header-cell>
           <mat-cell *matCellDef="let row" [style.color]="row.color"> <a href="javascript:void(0)" (click)="goToRefundViewComponent(row.refund_reference, row)">Review refund</a></mat-cell>
         </ng-container>
 

@@ -5,6 +5,8 @@
     margin-right: 2px;
     margin-bottom:20px;
     padding: 0.5em;
+    font-size: 19px;
+    font-weight: 200;
   }
 
   td.govuk-table__cell {
@@ -93,4 +95,9 @@
 
  .govuk-input--width-10 {
   max-width: 36ex;
+}
+
+.govuk-label--m {
+  font-size: 19px;
+  font-weight: 400;
 }

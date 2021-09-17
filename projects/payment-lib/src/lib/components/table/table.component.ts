@@ -2,6 +2,7 @@ import {Component, ViewChild, Input, ChangeDetectorRef} from '@angular/core';
 import {PaymentLibComponent} from '../../payment-lib.component';
 import { MatTableDataSource} from '@angular/material/table';
 import {MatSort } from '@angular/material/sort';
+import {Sort } from '@angular/material/sort';
 import {MatPaginator } from '@angular/material/paginator';
 import { IRefundList } from '../../interfaces/IRefundList';
 import { OrderslistService } from '../../services/orderslist.service';
@@ -18,7 +19,8 @@ export class TableComponent {
   @Input('errorMessage') errorMessage: string;
   isApprovalFlow: boolean;
   
-  displayedColumns = ['ccdCaseNumber', 'refundReference', 'reason', 'createBy', 'updateDate', 'Action'];
+  // displayedColumns = ['ccdCaseNumber', 'refundReference', 'reason', 'createBy', 'updateDate', 'Action'];
+  displayedColumns = ['ccd_case_number', 'refund_reference', 'reason', 'user_full_name', 'date_updated', 'Action'];
   dataSource: MatTableDataSource<any>;
   userLst;
   actualcount: number;
@@ -54,8 +56,37 @@ export class TableComponent {
    * be able to query its view for the initialized paginator and sort.
    */
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+    // this.dataSource.sortingDataAccessor = (item, property) => {
+    //   switch(property) {
+    //     case 'ccdCaseNumber': return item.ccdCaseNumber;
+    //      case 'createBy': return item.createBy;
+    //      case 'updateDate': return item.updateDate;
+    //      case 'refundReference': return item.refundReference;
+    //      default: return item[property];
+    //   }
+    // };
+    // // this.dataSource.sortingDataAccessor = ((data: any, sortHeaderId: string) => {
+    // //   let toReturn: any;
+    // //   if (sortHeaderId === 'updateDate')
+    // //     toReturn = data[sortHeaderId];
+    // //   else
+    // //     toReturn = data.location[sortHeaderId];
+    // //   if (typeof toReturn === 'string')
+    // //     toReturn = toReturn.toLowerCase();
+    // //   return toReturn;
+    // // });
+
+    // // this.dataSource.sort = this.sort;
+    // // console.log('one');
+    // // console.log(this.dataSource);
     this.dataSource.sort = this.sort;
+
+    const sortState: Sort = {active: 'date_updated', direction: 'desc'};
+    this.sort.active = sortState.active;
+    this.sort.direction = sortState.direction;
+    this.sort.sortChange.emit(sortState);
+    this.dataSource.paginator = this.paginator;
+    // this.dataSource.sort = this.sort;
     this.cdRef.detectChanges();
   }
 
