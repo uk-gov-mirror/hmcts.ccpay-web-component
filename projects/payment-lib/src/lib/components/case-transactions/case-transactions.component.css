@@ -244,6 +244,9 @@ text-align: right;
     margin-bottom: 10px;
 }
 
+.govuk-heading-lw {
+    width:70%;
+}
 .paymentrequest {
     margin-top: 1em;
 }

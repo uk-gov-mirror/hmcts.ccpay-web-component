@@ -78,7 +78,7 @@ export class CaseTransactionsComponent implements OnInit {
   orderParty: string;
   orderCreated: Date;
   orderCCDEvent: string;
-  serviveRequestValue: string;
+  serviceRequestValue: string;
   orderAddBtnEnable: boolean;
   orderFeesTotal: number = 0.00;
   orderRemissionTotal: number = 0.00;
@@ -118,9 +118,9 @@ export class CaseTransactionsComponent implements OnInit {
     this.takePayment = this.paymentLibComponent.TAKEPAYMENT;
     this.servicerequest = this.paymentLibComponent.SERVICEREQUEST;
     if (this.paymentLibComponent.SERVICEREQUEST === 'true') {
-      this.serviveRequestValue = 'true';
+      this.serviceRequestValue = 'true';
     } else {
-      this.serviveRequestValue = 'false';
+      this.serviceRequestValue = 'false';
     }
     this.isBulkScanEnable = this.paymentLibComponent.ISBSENABLE;
     this.dcnNumber = this.paymentLibComponent.DCN_NUMBER;

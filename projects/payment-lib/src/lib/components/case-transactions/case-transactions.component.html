@@ -413,7 +413,6 @@
         (selectedUnprocessedFeeEvent) = "selectedUnprocessedFeeEvent($event)">
         </ccpay-app-unprocessed-payments>
       </div>
-
       <div *ngIf="!takePayment" class="govuk-grid-row govuk-grid__surplus-payments">
           <div *ngIf="errorMessage">
               <div class="error-summary" role="group" aria-labelledby="failure-error-summary-heading" tabindex="-1">
@@ -646,7 +645,7 @@
    </ng-container>
 
    <ng-container *ngIf="!takePayment && viewStatus !== 'issuerefund' && viewStatus !== 'addrefundforremission' && viewStatus !== 'order-full-view' && viewStatus !== 'addremission' && viewStatus !== 'feeRemovalConfirmation' ">
-      <div *ngIf="errorMessage">
+      <div *ngIf="errorMessage && serviceRequestValue === 'false'">
           <div *ngIf="isCPODown && isAnyFeeGroupAvilable" class=" error govuk-inset-text govuk-!-margin-top-7">
               No party information currently available - try again later.
           </div>
@@ -659,7 +658,7 @@
           
         <div class="govuk-grid-column-full">
               <!-- <div  *ngIf="serviveRequestValue === 'true'"> -->
-                  <span class="heading-medium">Service requests</span>
+                  <span *ngIf="serviceRequestValue === 'false'" class="heading-medium">Service requests</span>
                   <ng-container *ngIf="orderLevelFees?.length > 0">
                     <table class="govuk-table">
                         <thead class="govuk-table__head">
@@ -679,30 +678,27 @@
                             <td *ngIf="cpoDetails !== null" class="govuk-table__cell  whitespace-inherit">{{cpoDetails['responsibleParty']}}</td> 
                             <td *ngIf="cpoDetails === null" class="govuk-table__cell  whitespace-inherit"></td> 
                             <td class="govuk-table__cell whitespace-inherit">{{orderRef.orderRefId}}</td> 
-                            <td class="govuk-table__cell"></td> 
+                            <td class="govuk-table__cell"> <a href="#" *ngIf="serviceRequestValue !== 'false'"> Make a payment</a></td> 
                             <td class="govuk-table__cell">	
                                 <a href="javascript:void(0)" (click)="goToOrderViewDetailSection(orderRef)">Review</a>
                           </td>
                           </tr>
                         </tbody>
-                      
-                        <tbody class="govuk-table__body" *ngIf="orderLevelFees?.length === 0">
-                          <tr class="govuk-table__row" >
-                            <td class="govuk-table__cell" colspan="7" style="text-align:left;">No service requests on this case.</td>
-                          </tr>
-                        </tbody>
                     </table>
                   </ng-container>
-                  <ng-container *ngIf="orderLevelFees?.length === 0">
+                  <ng-container *ngIf="orderLevelFees?.length === 0 && serviceRequestValue === 'false'">
                     <br/>No service requests on this case.<br/>
                   </ng-container>
-              
+                  <ng-container *ngIf="orderLevelFees?.length === 0 && serviceRequestValue !== 'false'">
+                    <h1 class="govuk-heading-l govuk-heading-lw">If you are expecting to pay and are not able to see a service request,</h1>
+                    <p>please refresh and try in some time.</p>
+                  </ng-container>
   
               <!-- </div> -->
 
         </div>
         <div class="govuk-grid-column-full">
-            <div  *ngIf="serviveRequestValue === 'false'">
+            <div *ngIf="serviceRequestValue === 'false'">
             <span class="heading-medium"><br/>Payments</span>
             <ng-container *ngIf="allPayments?.length > 0">
               <table class="govuk-table">
@@ -753,7 +749,7 @@
             </ng-container>
           </div>
         </div>
-        <div class="govuk-grid-column-full">
+        <div class="govuk-grid-column-full" *ngIf="serviceRequestValue === 'false'">
             <span class="heading-medium"><br/>Refunds</span>
             <ccpay-refund-status [ccdCaseNumber]="ccdCaseNumber" ></ccpay-refund-status>
         </div>
