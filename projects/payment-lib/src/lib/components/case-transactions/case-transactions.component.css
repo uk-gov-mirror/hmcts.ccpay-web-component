@@ -308,3 +308,6 @@ th, td {
     text-align: right;
     width: 18%;
 }
+.of-visible {
+    overflow: visible !important;
+}

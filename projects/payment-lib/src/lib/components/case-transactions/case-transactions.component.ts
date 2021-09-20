@@ -91,6 +91,7 @@ export class CaseTransactionsComponent implements OnInit {
   isAddRemissionBtnEnabled: boolean = false;  
   isRefundRemissionBtnEnable: boolean = false;
   allowedRolesToAccessRefund = ['payments-refund-approver', 'payments-refund'];
+  isEligible4PBAPayment = ['pui-finance-manager', 'pui-user-manager', 'pui-organisation-manager', 'pui-case-manager'];
   currentDate = new Date();
   isFromServiceRequestPage: boolean;
   navigationpage: string;
@@ -817,7 +818,11 @@ export class CaseTransactionsComponent implements OnInit {
       this.LOGGEDINUSERROLES.indexOf(role) !== -1
     );
   }
-
+  check4AllowedRoles2AccessPBApayment = (): boolean => {
+    return this.isEligible4PBAPayment.some(role =>
+      this.LOGGEDINUSERROLES.indexOf(role) !== -1
+    );
+  }
   allowFurtherAccessAfter4Days = (payment: IPayment): boolean => {
     let tmp4DayAgo = this.currentDate;
     tmp4DayAgo.setDate(tmp4DayAgo.getDate() - 4);
