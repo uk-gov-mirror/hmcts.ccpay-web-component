@@ -10,8 +10,8 @@ import { IRefundReasons } from '../../interfaces/IRefundReasons';
 import { IPatchRefundAction } from '../../interfaces/IPatchRefundAction';
 import { IRefundList } from '../../interfaces/IRefundList';
 import { IssueRefundRequest } from '../../interfaces/IssueRefundRequest';
-import { IRefundStatus } from '../../interfaces/IRefundStatus';
 import { IResubmitRefundRequest } from '../../interfaces/IResubmitRefundRequest';
+import { IRefundStatusHistory } from '../../interfaces/IRefundStatusHistory';
 @Injectable({
   providedIn: 'root'
 })
@@ -68,7 +68,7 @@ patchRefundActions(body:IPatchRefundAction, refundReference: string, reviewerAct
 }
 
 getRefundStatusHistory(reference?: string) {
-  return this.http.get<IRefundStatus[]>(`${this.paymentLibService.REFUNDS_API_ROOT}/${reference}/status-history`, 
+  return this.http.get<IRefundStatusHistory>(`${this.paymentLibService.REFUNDS_API_ROOT}/${reference}/status-history`, 
   {
   withCredentials: true
 })
