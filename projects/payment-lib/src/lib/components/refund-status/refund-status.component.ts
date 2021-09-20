@@ -49,7 +49,7 @@ export class RefundStatusComponent implements OnInit {
   refundreason: string;
   allowedRolesToAccessRefund = ['payments-refund-approver', 'payments-refund'];
   navigationpage: string;
-  isLastUpdatedByCurrentUser: boolean = false;
+  isLastUpdatedByCurrentUser: boolean = true;
 
   constructor(private formBuilder: FormBuilder,
     private refundService: RefundsService,
