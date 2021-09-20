@@ -101,6 +101,7 @@ export class RefundStatusComponent implements OnInit {
   }
 
   getRefundsStatusHistoryList() {
+    if(this.refundlist !== undefined) {
     this.refundService.getRefundStatusHistory(this.refundlist.refund_reference).subscribe(
       statusHistoryList => {
         this.refundStatusHistories = statusHistoryList['data'].status_history_dto_list;
@@ -109,7 +110,8 @@ export class RefundStatusComponent implements OnInit {
     ),
       (error: any) => {
         this.errorMessage = error;
-      };
+      }; 
+    }
   }
 
   goToRefundView(refundlist: IRefundList, navigationpage: string) {

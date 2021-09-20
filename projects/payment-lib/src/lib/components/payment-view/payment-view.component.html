@@ -71,18 +71,7 @@
             <td class="bold tb-col-w">Allocaton Status</td>
             <td>{{ paymentGroup?.payments[0]?.payment_allocation[0]?.allocation_status }}</td>
           </tr>
-        <!-- <tr class="section" *ngIf="paymentGroup.payments[0] && paymentGroup.payments[0].external_reference">
-          <td class="bold tb-col-w">GovPay Transaction ID</td>
-          <td>{{ paymentGroup.payments[0].external_reference }}</td>
-        </tr>
-        <tr class="section" *ngIf="paymentGroup.payments[0] && paymentGroup.payments[0].document_control_number && !paymentGroup.payments[0].external_reference">
-          <td class="bold tb-col-w">Payment asset number(DCN)</td>
-          <td>{{ paymentGroup.payments[0].document_control_number }}</td>
-        </tr>
-        <tr class="section" *ngIf="paymentGroup.payments[0] && paymentGroup.payments[0].document_control_number && !paymentGroup.payments[0].external_reference">
-          <td class="bold tb-col-w">Banked date</td>
-          <td>{{ paymentGroup.payments[0].banked_date | date:'dd MMM yyyy' }}</td>
-        </tr> -->
+      
         </tbody>
       </table>
 
@@ -117,23 +106,12 @@
             <td class="bold tb-col-w" [ngClass]="{'tr-border': !fee.apportion_amount && !fee.remissions && !isTurnOff }">Fee amount</td>
             <td [ngClass]="{'tr-border': !fee.apportion_amount && !fee.remissions && !isTurnOff }">£{{ fee.calculated_amount | number:'.2' }}</td>
           </tr>
-          <!-- <tr *ngIf="fee.net_amount && isTurnOff">
-            <td class="bold tb-col-w" [ngClass]="{'tr-border': !fee.apportion_amount && !fee.remissions}" >Net amount</td>
-            <td [ngClass]="{'tr-border': !fee.apportion_amount && !fee.remissions}">£{{ fee.net_amount | number:'.2' }}</td>
-          </tr> -->
+        
           <tr *ngIf="fee.apportion_amount">
             <td class="bold tb-col-w tr-border" [ngClass]="{'tr-border': !fee.remissions}">Allocated amount</td>
             <td [ngClass]="{'tr-border': !fee.remissions}">£{{ fee.apportion_amount | number:'.2' }}</td>
           </tr>
 
-          <!-- <tr *ngIf="fee.remissions">
-            <td class="bold tb-col-w">Remission code</td>
-            <td>{{fee.remissions.hwf_reference}}</td>
-          </tr>
-          <tr *ngIf="fee.remissions">
-            <td class="bold tb-col-w tr-border">Remission amount</td>
-            <td class="tr-border">£{{ fee.remissions.hwf_amount | number:'.2'}}</td>
-          </tr> -->
           </tbody>
         </table>
         <button *ngIf="chkForAddRemission(fee.code)" (click)="addRemission(fee)" class="govuk-button govuk-button--secondary"> Add remission</button>

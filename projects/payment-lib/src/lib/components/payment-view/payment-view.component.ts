@@ -99,6 +99,7 @@ export class PaymentViewComponent implements OnInit {
   goToCaseTransationPage(event: any) {
     event.preventDefault();
     this.OrderslistService.setnavigationPage('casetransactions');
+    this.OrderslistService.setisFromServiceRequestPage(false);
     this.paymentLibComponent.viewName = 'case-transactions';
     this.paymentViewService.getBSfeature().subscribe(
       features => {
