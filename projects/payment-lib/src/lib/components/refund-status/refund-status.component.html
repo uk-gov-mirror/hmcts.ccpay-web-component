@@ -72,7 +72,7 @@
     </tbody>
   </table>
 
-<!-- Status history -->
+  <!-- Status history -->
   <div>
     <br />
     <h2 class="govuk-heading-m">Refund status history</h2>
@@ -88,7 +88,8 @@
       <tbody class="govuk-table__body" *ngFor="let refundStatusHistory of refundStatusHistories;">
         <tr class="govuk-table__row">
           <td class="govuk-table__cell whitespace-inherit">{{refundStatusHistory.status | capitalize}}</td>
-          <td class="govuk-table__cell whitespace-inherit">{{refundStatusHistory.date_created | date:'d MMMM yyyy hh:mm:ss'}}</td>
+          <td class="govuk-table__cell whitespace-inherit">{{refundStatusHistory.date_created | date:'d MMMM yyyy
+            hh:mm:ss'}}</td>
           <td class="govuk-table__cell whitespace-inherit">{{refundStatusHistory.created_by}}</td>
           <td class="govuk-table__cell whitespace-inherit">{{refundStatusHistory.notes}}</td>
         </tr>
@@ -98,27 +99,29 @@
   </div>
 
   <ng-container *ngIf="viewName==='refundview'">
-    <div *ngIf="refundButtonState==='sent back'">
+    <div *ngIf="isLastUpdatedByCurrentUser && refundButtonState==='sent back'">
       <br />
-      <button type="submit" class="button govuk-button--secondary btnmargin" (click)="gotoReviewAndReSubmitPage()">Resubmit
+      <button type="submit" class="button govuk-button--secondary btnmargin"
+        (click)="gotoReviewAndReSubmitPage()">Resubmit
         refund</button>
     </div>
-    <div *ngIf="refundButtonState==='sent for approval'">
+    <div *ngIf="isLastUpdatedByCurrentUser && refundButtonState==='sent for approval'">
       <br />
-      <button type="submit" class="button govuk-button--secondary" (click)="goToRefundProcessComponent(refundlist.refund_reference,refundlist)">Process refund</button>
+      <button type="submit" class="button govuk-button--secondary"
+        (click)="goToRefundProcessComponent(refundlist.refund_reference,refundlist)">Process refund</button>
     </div>
   </ng-container>
 
 </ng-container>
 
 <ng-container *ngIf="viewName==='reviewandsubmitview'">
-    <div class="govuk-breadcrumbs">
-        <ol class="govuk-breadcrumbs__list">
-          <li class="govuk-breadcrumbs__list-item">
-            <a (click)="gotoReviewDetailsPage()" class="govuk-back-link govuk-label">Back</a>
-          </li>
-        </ol>
-      </div>
+  <div class="govuk-breadcrumbs">
+    <ol class="govuk-breadcrumbs__list">
+      <li class="govuk-breadcrumbs__list-item">
+        <a (click)="gotoReviewDetailsPage()" class="govuk-back-link govuk-label">Back</a>
+      </li>
+    </ol>
+  </div>
   <div class="govuk-warning-text">
     <h1 class="heading-large">Review and resubmit refund</h1>
   </div>
@@ -134,8 +137,9 @@
     <tr class="govuk-table__row">
       <td class="govuk-table__cell govuk-!-font-weight-bold">Reason for refund</td>
       <td class="govuk-table__cell"> {{ refundlist?.reason}}
-        <a (click)="gotoRefundReasonPage()" *ngIf="refundlist?.reason !== 'Retrospective remission'" class="govuk-link right">Change</a>
-        </td>
+        <a (click)="gotoRefundReasonPage()" *ngIf="refundlist?.reason !== 'Retrospective remission'"
+          class="govuk-link right">Change</a>
+      </td>
 
       <!-- <td class="govuk-table__cell">{{ refundlist?.reason }}</td>
       <a (click)="gotoRefundReasonPage()" class="govuk-link right">Change</a> -->
@@ -147,63 +151,55 @@
     <tr class="govuk-table__row">
       <td class="govuk-table__cell govuk-!-font-weight-bold">Payment amount</td>
       <td class="govuk-table__cell"> £{{ refundlist?.amount | number:'.2' }}
-        <a (click)="gotoAmountPage()" *ngIf="refundlist?.reason === 'Retrospective remission'" class="govuk-link right">Change</a>
+        <a (click)="gotoAmountPage()" *ngIf="refundlist?.reason === 'Retrospective remission'"
+          class="govuk-link right">Change</a>
       </td>
-      
+
     </tr>
   </table>
   <div class="govuk-button-group">
-      <button [disabled]="isRefundBtnDisabled" (click)="gotoReviewRefundConfirmationPage()"   class="govuk-button button" data-module="govuk-button">
-        Submit refund
-      </button>
- </div>
- <p>
+    <button [disabled]="isRefundBtnDisabled" (click)="gotoReviewRefundConfirmationPage()" class="govuk-button button"
+      data-module="govuk-button">
+      Submit refund
+    </button>
+  </div>
+  <p>
     <a (click)="gotoReviewDetailsPage()" href="" class="cancelbtn">Cancel</a>
- </p>
+  </p>
 </ng-container>
 
 <ng-container *ngIf="viewName === 'issuerefund'">
-    <ccpay-add-remission 
-    [isFromRefundListPage] = "true"
-    [viewCompStatus] = "viewName"
-    [isRefundRemission] = "true"
-    [ccdCaseNumber]="ccdCaseNumber"
-    (refundListReason) = "getRefundListReason($event)"
-    ></ccpay-add-remission>
+  <ccpay-add-remission [isFromRefundListPage]="true" [viewCompStatus]="viewName" [isRefundRemission]="true"
+    [ccdCaseNumber]="ccdCaseNumber" (refundListReason)="getRefundListReason($event)"></ccpay-add-remission>
 </ng-container>
 
 <ng-container *ngIf="viewName === 'processretroremissonpage'">
-  <ccpay-add-remission 
-  [isFromRefundListPage] = "true"
-  [viewCompStatus] = "viewName"
-  [isRefundRemission] = "true"
-  [ccdCaseNumber]="ccdCaseNumber"
-  (refundListAmount) = "getRefundAmount($event)"
-  ></ccpay-add-remission>
+  <ccpay-add-remission [isFromRefundListPage]="true" [viewCompStatus]="viewName" [isRefundRemission]="true"
+    [ccdCaseNumber]="ccdCaseNumber" (refundListAmount)="getRefundAmount($event)"></ccpay-add-remission>
 </ng-container>
 
 <ng-container *ngIf="viewName === 'reviewrefundconfirmationpage'">
-    <div class="govuk-grid-row">
-      <div >
-        <div class="govuk-panel govuk-panel--confirmation">
-          <h1 class="govuk-panel__title">
-            Refund submitted
-          </h1>
-          
-          <div class="govuk-panel__body">
-            <p class="govuk-body" style="color: white"><strong>Refund reference:{{refundReference}} </strong></p>
-          </div>
-    
+  <div class="govuk-grid-row">
+    <div>
+      <div class="govuk-panel govuk-panel--confirmation">
+        <h1 class="govuk-panel__title">
+          Refund submitted
+        </h1>
+
+        <div class="govuk-panel__body">
+          <p class="govuk-body" style="color: white"><strong>Refund reference:{{refundReference}} </strong></p>
         </div>
-        
-        <h2 class="govuk-heading-l">What happens next</h2>
-        <p class="govuk-body">
-          A refund request for {{refundAmount}}  has been passed to a team leader to approve.
-        </p>
-     
-        <p class="govuk-body">
-          <a  (click)="loadCaseTransactionPage()" class="govuk-link">Return to case</a>
-       </p>
+
       </div>
+
+      <h2 class="govuk-heading-l">What happens next</h2>
+      <p class="govuk-body">
+        A refund request for {{refundAmount}} has been passed to a team leader to approve.
+      </p>
+
+      <p class="govuk-body">
+        <a (click)="loadCaseTransactionPage()" class="govuk-link">Return to case</a>
+      </p>
     </div>
-  </ng-container>
+  </div>
+</ng-container>
