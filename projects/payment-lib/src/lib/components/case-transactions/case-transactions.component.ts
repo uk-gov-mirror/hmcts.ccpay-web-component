@@ -143,6 +143,7 @@ export class CaseTransactionsComponent implements OnInit {
 
       this.caseTransactionsService.getPaymentGroups(this.ccdCaseNumber).subscribe(
         paymentGroups => {
+          this.isAnyFeeGroupAvilable =true;
           this.paymentGroups = paymentGroups['payment_groups'];
           this.calculateAmounts();
           this.calculateOrderFeesAmounts();
@@ -174,6 +175,7 @@ export class CaseTransactionsComponent implements OnInit {
     } else {
       this.caseTransactionsService.getPaymentGroups(this.ccdCaseNumber).subscribe(
         paymentGroups => {
+          this.isAnyFeeGroupAvilable =true;
           this.paymentGroups = paymentGroups['payment_groups'];
           this.calculateAmounts();
           this.calculateOrderFeesAmounts();

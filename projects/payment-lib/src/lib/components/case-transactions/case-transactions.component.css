@@ -305,3 +305,10 @@ th, td {
     text-align: right;
     width: 18%;
 }
+.col-25 {
+    width:25% !important;
+}
+
+.col-51 {
+    width:51% !important;
+}

@@ -18,3 +18,7 @@
 .remission {
     margin-bottom: 7em;
 }
+
+.govuk-error-summary__title {
+    font-size: 24px !important;
+  }

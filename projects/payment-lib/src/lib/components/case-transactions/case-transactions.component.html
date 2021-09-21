@@ -813,7 +813,7 @@
           <table class="govuk-table ">
             <thead class="govuk-table__head">
             <tr class="govuk-table__row">
-              <td class="govuk-table__header" scope="col">Fee</td>
+              <td class="govuk-table__header col-51" scope="col">Fee</td>
               <td class="govuk-table__header" scope="col">Amount</td>
               <td class="govuk-table__header" scope="col">Total</td>
               <td  class="govuk-table__header" scope="col"></td>
@@ -887,7 +887,6 @@
         <p>Total reductions: {{orderRemissionTotal | currency:'GBP':'symbol-narrow':'1.2-2'  }}</p>
     </div>
     <div class="summarypagealign">
-        <br>
           <p class="summarypage">Total fees to pay: {{(orderFeesTotal - orderRemissionTotal) | currency:'GBP':'symbol-narrow':'1.2-2'  }}</p>
       </div>
     </div>
@@ -900,12 +899,12 @@
    
      <!--Payments-->
     <ng-container *ngFor="let order of orderDetail;" >
-     <div *ngIf="order.payments?.length > 0" class="govuk-grid-column-full order-class"> 
+     <div *ngIf="order.payments?.length > 0" class="govuk-grid-column-full"> 
         <h3 class="heading-medium">Payments</h3>
      <table class="govuk-table ">
         <thead class="govuk-table__head">
           <tr class="govuk-table__row">
-              <td class="govuk-table__header" scope="col"></td>
+              <td class="govuk-table__header col-25" scope="col"></td>
               <td class="govuk-table__header" scope="col">Date created</td>
               <td class="govuk-table__header" scope="col">Amount</td>
               <td class="govuk-table__header" scope="col"></td>
