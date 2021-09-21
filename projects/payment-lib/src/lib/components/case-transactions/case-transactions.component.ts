@@ -103,9 +103,16 @@ export class CaseTransactionsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.OrderslistService.getpaymentPageView().subscribe((data) => this.paymentView = data);
-    this.OrderslistService.getnavigationPageValue().subscribe((data) => this.navigationpage = data);
-    if (this.paymentView !== null && this.paymentView.payment_group_reference !== undefined && this.navigationpage === 'paymentdetailspage') {
+    this.navigationpage  = ''
+;    if(this.OrderslistService.getpaymentPageView() !== null) {
+      this.OrderslistService.getpaymentPageView().subscribe((data) => this.paymentView = data);
+    }
+    if(this.OrderslistService.getnavigationPageValue() !== null) {
+      this.OrderslistService.getnavigationPageValue().subscribe((data) => this.navigationpage = data);
+    }
+    
+    
+    if (this.paymentView !== undefined && this.paymentView !== null && this.paymentView.payment_group_reference !== undefined && this.navigationpage === 'paymentdetailspage') {
       this.goToPayementView(this.paymentView.payment_group_reference, this.paymentView.reference, this.paymentView.method);
     }
     this.isGrpOutstandingAmtPositive = false;
@@ -192,7 +199,11 @@ export class CaseTransactionsComponent implements OnInit {
       );
     }
     this.checkForExceptionRecord();
-    this.OrderslistService.getisFromServiceRequestPages().subscribe((data) => this.isFromServiceRequestPage = data)
+    
+    if(this.OrderslistService.getisFromServiceRequestPages() !== null) {
+      this.OrderslistService.getisFromServiceRequestPages().subscribe((data) => this.isFromServiceRequestPage = data);
+    }
+  
 
   }
 
@@ -380,21 +391,10 @@ export class CaseTransactionsComponent implements OnInit {
 
   redirectToOrderFeeSearchPage(event: any, orderef: any) {
     event.preventDefault();
-    // if(!this.isAnyFeeGroupAvilable || this.isTurnOff) {
-    // let url = this.isBulkScanEnable ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
-    //   url += this.isTurnOff ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
-    //   url += this.isStrategicFixEnable ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
-    //   url +=`&caseType=${this.caseType}`
-    //   url += this.isNewPcipalOff ? '&isNewPcipalOff=Enable' : '&isNewPcipalOff=Disable';
-    //   url += this.isOldPcipalOff ? '&isOldPcipalOff=Enable' : '&isOldPcipalOff=Disable';
-
-    // this.router.navigateByUrl(`/fee-search?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}${url}`);
-    // } else {
     this.paymentLibComponent.bspaymentdcn = null;
     this.paymentLibComponent.paymentGroupReference = orderef;
     this.paymentLibComponent.isTurnOff = this.isTurnOff;
     this.paymentLibComponent.viewName = 'fee-summary';
-    //}
   }
 
   goToCaseTransationPage(event: any) {
@@ -402,16 +402,6 @@ export class CaseTransactionsComponent implements OnInit {
     this.isFromServiceRequestPage = false;
     this.viewStatus = 'main'
     this.paymentLibComponent.viewName = 'case-transactions';
-
-    //  this.paymentViewService.getBSfeature().subscribe(
-    //    features => {
-    //      let result = JSON.parse(features).filter(feature => feature.uid === BS_ENABLE_FLAG);
-    //      this.paymentLibComponent.ISBSENABLE = result[0] ? result[0].enable : false;
-    //    },
-    //    err => {
-    //      this.paymentLibComponent.ISBSENABLE = false;
-    //    }
-    //  );
   }
 
 
@@ -661,13 +651,6 @@ export class CaseTransactionsComponent implements OnInit {
   redirectToremissionPage(event: any) {
     event.preventDefault();
     this.paymentLibComponent.viewName = 'remission'
-    //   let url = this.isBulkScanEnable ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
-    //   url += this.isTurnOff ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
-    //   url += this.isStrategicFixEnable ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
-    //   url += this.isNewPcipalOff ? '&isNewPcipalOff=Enable' : '&isNewPcipalOff=Disable';
-    //   url += this.isOldPcipalOff ? '&isOldPcipalOff=Enable' : '&isOldPcipalOff=Disable';
-    //   url +=`&caseType=${this.caseType}`
-    // this.router.navigateByUrl(`/fee-search?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}${url}`);
   }
 
   redirectToReportsPage(event: any) {

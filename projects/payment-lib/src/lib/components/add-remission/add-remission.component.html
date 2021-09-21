@@ -93,7 +93,7 @@
 
   <!-- Add retro remission changes-->
 
-  <ng-container *ngIf="viewCompStatus === 'addremission' && isRefundRemission">
+  <ng-container *ngIf="viewCompStatus === 'addremission'">
       <input #myInput type='hidden' id='iFrameDrivenImageValue' value='PROCESSADDRETROREMISSIONPAGE'> 
       <h1 class="heading-large">Process remission</h1>
       <h1 class="heading-medium">#{{ccdCaseNumber | ccdHyphens }}</h1>
@@ -114,9 +114,9 @@
             
             </form>
             <div class="govuk-button-group">
-                <button (click)="gotoCasetransationPage()" class="govuk-button govuk-button--secondary"> Previous</button>
+                <button (click)="gotoServiceRequestPage($event)" class="govuk-button govuk-button--secondary"> Previous</button>
                 <button (click)="addRemissionCode()" class="govuk-button"> Continue</button>
-              <p><a (click)="gotoCasetransationPage()" class="govuk-link" data-module="govuk-button">Cancel</a></p>
+              <p><a (click)="gotoCasetransationPageCancelBtnClicked()" class="govuk-link" data-module="govuk-button">Cancel</a></p>
             </div>
           </div>
       </form>
@@ -160,7 +160,7 @@
                       <button (click)="gotoAddRetroRemissionCodePage()" class="govuk-button govuk-button--secondary"> Previous</button>
                       <button (click)="gotoCheckRetroRemissionPage(payment)" class="govuk-button"> Continue</button>
                     <p>
-                        <a (click)="gotoCasetransationPage()" class="govuk-link" data-module="govuk-button">Cancel</a>
+                        <a (click)="gotoCasetransationPageCancelBtnClicked()" class="govuk-link" data-module="govuk-button">Cancel</a>
                     </p>
                   </div>
               </div>
@@ -208,7 +208,7 @@
 
       <button type="submit" class="button govuk-button--secondary" (click)="gotoProcessRetroRemissionPage()">Previous</button>
       <button type="submit" [disabled]="isConfirmationBtnDisabled" [ngClass]='isConfirmationBtnDisabled ? "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"' (click)="confirmRetroRemission()"> Add remission </button>
-      <p> <a (click)="gotoCasetransationPage()" class="govuk-link" data-module="govuk-button"> Cancel</a> </p>
+      <p> <a (click)="gotoCasetransationPageCancelBtnClicked()" class="govuk-link" data-module="govuk-button"> Cancel</a> </p>
 
   </ng-container>
 
@@ -340,10 +340,10 @@
                </form>
         </div>
         <div class="govuk-button-group">
-            <button (click)="gotoCasetransationPage()" class="govuk-button govuk-button--secondary"> Previous</button>
+            <button (click)="gotoServiceRequestPage($event)" class="govuk-button govuk-button--secondary"> Previous</button>
             <button (click)="gotoIssueRefundConfirmation(payment)" class="govuk-button"> Continue</button>
           <p>
-              <a (click)="gotoCasetransationPage()" class="govuk-link" data-module="govuk-button">
+              <a (click)="gotoCasetransationPageCancelBtnClicked()" class="govuk-link" data-module="govuk-button">
                   Cancel
               </a>
           </p>
@@ -382,7 +382,7 @@
         Submit refund
       </button>
       <p>
-          <a (click)="gotoCasetransationPage()" class="govuk-link" data-module="govuk-button">
+          <a (click)="gotoCasetransationPageCancelBtnClicked()" class="govuk-link" data-module="govuk-button">
               Cancel
           </a>
       </p>
@@ -419,7 +419,7 @@
           </tr>
       </table>
 
-      <button type="submit" class="button govuk-button--secondary" (click)="gotoCasetransationPage()">Previous</button>
+      <button type="submit" class="button govuk-button--secondary" (click)="gotoServiceRequestPage($event)">Previous</button>
       <button type="submit"
       [disabled]="isConfirmationBtnDisabled"
       [ngClass]='isConfirmationBtnDisabled ? "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"'
@@ -427,7 +427,7 @@
         Submit refund
       </button>
       <p>
-          <a (click)="gotoCasetransationPage()" class="govuk-link" data-module="govuk-button">
+          <a (click)="gotoCasetransationPageCancelBtnClicked()" class="govuk-link" data-module="govuk-button">
               Cancel
           </a>
       </p>

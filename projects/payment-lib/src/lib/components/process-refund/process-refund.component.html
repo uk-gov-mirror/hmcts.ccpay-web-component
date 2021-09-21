@@ -32,24 +32,24 @@
 
         <tr class="section">
           <td class="bold tb-col-w">Payment to be refunded</td>
-          <td>	{{refundlistsource.refund_reference}} (£{{refundlistsource.amount}})</td>
+          <td>	{{refundlistsource?.refund_reference}} (£{{refundlistsource.amount}})</td>
         </tr>
         <tr class="section">
           <td class="bold tb-col-w">Reason for refund</td>
-          <td>	{{refundlistsource.reason}}</td>
+          <td>	{{refundlistsource?.reason}}</td>
         </tr>
         <tr class="section">
             <td class="bold tb-col-w">Amount to be refunded</td>
-            <td>{{refundlistsource.amount | currency :'GBP':'symbol':'1.2-2' }}</td>
+            <td>{{refundlistsource?.amount | currency :'GBP':'symbol':'1.2-2' }}</td>
         </tr>
         <tr class="section">
             <td class="bold tb-col-w">Submitted by</td>
-            <td>{{refundlistsource.user_full_name}}</td>
+            <td>{{refundlistsource?.user_full_name}}</td>
 
         </tr>
         <tr class="section">
             <td class="bold tb-col-w">Date submitted</td>
-            <td>	{{refundlistsource.date_created | date:'d MMMM yyyy' }}</td>
+            <td>	{{refundlistsource?.date_created | date:'d MMMM yyyy' }}</td>
         </tr>
 
         </tbody>
@@ -92,12 +92,6 @@
                 <label class="govuk-label process-refund-font" for="contact-by-text">
                   Add a reason
                 </label>
-                <textarea class="govuk-textarea govuk-!-width-one-third"
-                [ngClass]="{'inline-error-class': isReasonFieldEmpty || isReasonFieldInvalid || reasonFieldMinHasError || reasonFieldMaxHasError}"
-                  id="sendmeback"
-                  name="sendMeBackField" 
-                  formControlName="sendMeBackField"
-                rows="5"></textarea>
                 <p class="inline-error-message"
                 *ngIf="isReasonFieldEmpty || isReasonFieldInvalid || reasonFieldMinHasError || reasonFieldMaxHasError">
                 <span *ngIf="isReasonFieldEmpty">Add a reason</span>
@@ -105,6 +99,13 @@
                 <span *ngIf="reasonFieldMinHasError">Reason should be at least 3 characters.</span>
                 <span *ngIf="reasonFieldMaxHasError">Reason should be 255 characters or under.</span>
               </p>
+                <textarea class="govuk-textarea govuk-!-width-one-third"
+                [ngClass]="{'inline-error-class': isReasonFieldEmpty || isReasonFieldInvalid || reasonFieldMinHasError || reasonFieldMaxHasError}"
+                  id="sendmeback"
+                  name="sendMeBackField" 
+                  formControlName="sendMeBackField"
+                rows="5"></textarea>
+              
               </div>
 
             </div>
