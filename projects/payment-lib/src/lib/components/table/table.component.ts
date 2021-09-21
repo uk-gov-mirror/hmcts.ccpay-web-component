@@ -49,37 +49,16 @@ export class TableComponent {
     if( this.refundList !== undefined) {
     this.userLst = this.refundList.reduce((r,{user_full_name}) => (r[user_full_name]='', r) , {});
      this.userLst = Object.keys(this.userLst);
-     // this.userLst.sort((a, b) => a.user_full_name.localeCompare(b.user_full_name));
-    }
+     this.userLst.sort((a, b) =>
+   a.localeCompare(b)//using String.prototype.localCompare()
+);  }
   }
   /**
    * Set the paginator and sort after the view init since this component will
    * be able to query its view for the initialized paginator and sort.
    */
   ngAfterViewInit() {
-    // this.dataSource.sortingDataAccessor = (item, property) => {
-    //   switch(property) {
-    //     case 'ccdCaseNumber': return item.ccdCaseNumber;
-    //      case 'createBy': return item.createBy;
-    //      case 'updateDate': return item.updateDate;
-    //      case 'refundReference': return item.refundReference;
-    //      default: return item[property];
-    //   }
-    // };
-    // // this.dataSource.sortingDataAccessor = ((data: any, sortHeaderId: string) => {
-    // //   let toReturn: any;
-    // //   if (sortHeaderId === 'updateDate')
-    // //     toReturn = data[sortHeaderId];
-    // //   else
-    // //     toReturn = data.location[sortHeaderId];
-    // //   if (typeof toReturn === 'string')
-    // //     toReturn = toReturn.toLowerCase();
-    // //   return toReturn;
-    // // });
-
-    // // this.dataSource.sort = this.sort;
-    // // console.log('one');
-    // // console.log(this.dataSource);
+   
     this.dataSource.sort = this.sort;
 
     const sortState: Sort = {active: 'date_updated', direction: 'desc'};
@@ -87,7 +66,6 @@ export class TableComponent {
     this.sort.direction = sortState.direction;
     this.sort.sortChange.emit(sortState);
     this.dataSource.paginator = this.paginator;
-    // this.dataSource.sort = this.sort;
     this.cdRef.detectChanges();
   }
 
@@ -100,6 +78,7 @@ export class TableComponent {
   selectchange(args){ 
     this.dataSource.filter = args.target.value;
     this.actualcount = this.dataSource.data.length;
+    this.dataSource.paginator = this.paginator;
   } 
   goToRefundProcessComponent(refundReference: string, refundDate: IRefundList ) {
     this.paymentLibComponent.refundlistsource = refundDate;

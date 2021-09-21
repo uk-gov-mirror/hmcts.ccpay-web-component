@@ -575,7 +575,7 @@
                       <td  style="text-align: right;">
                         
                         <button type="submit" (click)="redirectToOrderFeeSearchPage($event,orderRef.orderRefId)"
-                        *ngIf="orderRef.orderAddBtnEnable"
+                        [disabled]="!orderRef.orderAddBtnEnable"
                         [ngClass]='!orderRef.orderAddBtnEnable ? "govuk-button govuk-button--secondary govuk-button--disabled govuk-!-margin-right-1" : "govuk-button govuk-button--secondary govuk-!-margin-right-1"'>
                         Take telephony payment
                       </button></td>
@@ -824,12 +824,10 @@
                 <td class="govuk-table__cell col-60 whitespace-inherit">{{fee.description}}</td>
                 <td class="govuk-table__cell">{{fee.volume? fee.volume : '-'}} X {{ fee.calculated_amount/fee.volume| currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
                 <td class="govuk-table__cell">{{ fee.net_amount | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
-                <td  *ngIf="chkForAddRemission(fee.code)" class="govuk-table__cell" style="text-align: right;" >
-                    <button (click)="addRemission(fee)" class="govuk-button govuk-button--secondary"> Add remission</button>
+                <td class="govuk-table__cell" style="text-align: right;" >
+                    <button  [disabled]="!chkForAddRemission(fee.code)"  (click)="addRemission(fee)" class="govuk-button govuk-button--secondary"> Add remission</button>
                 </td>
-                <td  *ngIf="!chkForAddRemission(fee.code)" class="govuk-table__cell" style="text-align: right;" >
-                 
-              </td>
+            
               </tr>
             </tbody>
             <tbody class="govuk-table__body" *ngFor="let order of orderDetail;">

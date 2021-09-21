@@ -152,6 +152,7 @@
                                 <span *ngIf="amountHasError">Enter a vaild amount</span>
                                 <span *ngIf="isRemissionLessThanFeeError">You cannot add a remission that's more than the fee amount.</span>
                               </p>
+              
                         </div>
                       </fieldset>
                   </form>
@@ -206,7 +207,7 @@
           </tr>
       </table>
 
-      <button type="submit" class="button govuk-button--secondary" (click)="gotoProcessRetroRemissionPage()">Previous</button>
+      <button type="submit" class="button govuk-button--secondary" (click)="addRemissionCode()">Previous</button>
       <button type="submit" [disabled]="isConfirmationBtnDisabled" [ngClass]='isConfirmationBtnDisabled ? "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"' (click)="confirmRetroRemission()"> Add remission </button>
       <p> <a (click)="gotoCasetransationPageCancelBtnClicked()" class="govuk-link" data-module="govuk-button"> Cancel</a> </p>
 
