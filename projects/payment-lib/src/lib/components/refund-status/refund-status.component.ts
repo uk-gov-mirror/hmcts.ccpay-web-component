@@ -47,9 +47,9 @@ export class RefundStatusComponent implements OnInit {
   isRefundBtnDisabled: boolean = true;
   oldRefundReason: string;
   refundreason: string;
-  allowedRolesToAccessRefund = ['payments-refund-approver', 'payments-refund'];
   navigationpage: string;
   isLastUpdatedByCurrentUser: boolean = true;
+  isProcessRefund: boolean = false;
 
   constructor(private formBuilder: FormBuilder,
     private refundService: RefundsService,
@@ -93,11 +93,17 @@ export class RefundStatusComponent implements OnInit {
 
     this.getRefundsStatusHistoryList();
 
-    this.allowedRolesToAccessRefund.forEach((role) => {
-      if (this.LOGGEDINUSERROLES.indexOf(role) !== -1) {
-        this.refundButtonState = this.refundlist.refund_status.name;
-      }
-    });
+    if (this.LOGGEDINUSERROLES.some(i => i.includes('payments-refund-approver'))) {
+      this.isProcessRefund = true;
+      this.refundButtonState = this.refundlist.refund_status.name;
+      return;
+    }
+
+    if (this.LOGGEDINUSERROLES.some(i => i.includes('payments-refund'))) {
+      this.isProcessRefund = false;
+      this.refundButtonState = this.refundlist.refund_status.name;
+    }
+
   }
 
   getRefundsStatusHistoryList() {
