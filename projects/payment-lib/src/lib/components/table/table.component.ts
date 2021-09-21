@@ -49,6 +49,7 @@ export class TableComponent {
     if( this.refundList !== undefined) {
     this.userLst = this.refundList.reduce((r,{user_full_name}) => (r[user_full_name]='', r) , {});
      this.userLst = Object.keys(this.userLst);
+     // this.userLst.sort((a, b) => a.user_full_name.localeCompare(b.user_full_name));
     }
   }
   /**
