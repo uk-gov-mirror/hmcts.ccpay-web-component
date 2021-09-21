@@ -93,7 +93,7 @@
 
   <!-- Add retro remission changes-->
 
-  <ng-container *ngIf="viewCompStatus === 'addremission' && isRefundRemission">
+  <ng-container *ngIf="viewCompStatus === 'addremission'">
       <input #myInput type='hidden' id='iFrameDrivenImageValue' value='PROCESSADDRETROREMISSIONPAGE'> 
       <h1 class="heading-large">Process remission</h1>
       <h1 class="heading-medium">#{{ccdCaseNumber | ccdHyphens }}</h1>

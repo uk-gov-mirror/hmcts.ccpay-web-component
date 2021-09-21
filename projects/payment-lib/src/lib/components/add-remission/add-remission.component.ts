@@ -239,6 +239,7 @@ export class AddRemissionComponent implements OnInit {
 
   // Add retro remission changes
   addRemissionCode() {
+    this.viewStatus = '';
     this.isRefundRemission = false;
     this.resetRemissionForm([false, false, false, false, false, false], 'All');
     const remissionctrls=this.remissionForm.controls,
