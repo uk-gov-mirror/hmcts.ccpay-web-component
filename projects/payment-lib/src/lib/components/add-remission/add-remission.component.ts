@@ -124,7 +124,7 @@ export class AddRemissionComponent implements OnInit {
       ])),
       amount: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('^[0-9]+(\\.[0-9]{2})?$')
+        Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$')
       ])),
       refundReason: new FormControl('', Validators.compose([Validators.required])),
       refundDDReason: new FormControl('', Validators.compose([Validators.required])),

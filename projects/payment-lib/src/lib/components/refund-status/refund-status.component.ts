@@ -85,7 +85,7 @@ export class RefundStatusComponent implements OnInit {
     this.refundStatusForm = this.formBuilder.group({
       amount: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('^[0-9]+(\\.[0-9]{2})?$')
+        Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$')
       ])),
       refundReason: new FormControl('', Validators.compose([Validators.required])),
       reason: new FormControl()
