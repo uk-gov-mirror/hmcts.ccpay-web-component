@@ -120,3 +120,6 @@
 .govuk-error-summary__title {
   font-size: 24px !important;
 }
+.govuk-error-summary__body {
+  font-size: 19px !important;
+}

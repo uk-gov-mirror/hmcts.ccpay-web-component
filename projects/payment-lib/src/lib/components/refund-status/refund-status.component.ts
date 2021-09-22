@@ -50,6 +50,7 @@ export class RefundStatusComponent implements OnInit {
   navigationpage: string;
   isLastUpdatedByCurrentUser: boolean = true;
   isProcessRefund: boolean = false;
+  changedAmount: number;
 
   constructor(private formBuilder: FormBuilder,
     private refundService: RefundsService,
@@ -178,6 +179,7 @@ export class RefundStatusComponent implements OnInit {
   gotoReviewAndReSubmitPage() {
     this.viewName = 'reviewandsubmitview';
     this.oldRefundReason = this.refundlist.reason;
+    this.changedAmount = this.refundlist.amount;
     this.refundreason = this.refundStatusHistories.filter(data => data.status === 'sentback')[0].notes;
     this.refundService.getRefundReasons().subscribe(
       refundReasons => {
@@ -193,6 +195,7 @@ export class RefundStatusComponent implements OnInit {
   }
 
   gotoAmountPage() {
+    this.errorMessage = false;
     this.isRefundBtnDisabled = false;
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
     this.paymentLibComponent.isFromRefundStatusPage = true;
@@ -256,7 +259,8 @@ export class RefundStatusComponent implements OnInit {
   getRefundAmount(amount: number) {
     if (this.paymentLibComponent.isFromRefundStatusPage && !this.paymentLibComponent.iscancelClicked) {
       if (amount > 0) {
-        this.refundlist.amount = amount;
+        this.changedAmount = amount;
+        // this.refundlist.amount = amount;
       }
     } else {
       this.isRefundBtnDisabled = true;
@@ -269,7 +273,7 @@ export class RefundStatusComponent implements OnInit {
     if (this.oldRefundReason === this.refundlist.reason) {
       this.refundCode = '';
     }
-    const resubmitRequest = new IResubmitRefundRequest(this.refundCode, this.refundlist.amount);
+    const resubmitRequest = new IResubmitRefundRequest(this.refundCode,  this.changedAmount);
     this.refundService.patchResubmitRefund(resubmitRequest, this.refundlist.refund_reference).subscribe(
       response => {
         if (JSON.parse(response)) {

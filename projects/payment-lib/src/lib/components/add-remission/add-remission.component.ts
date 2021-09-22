@@ -307,7 +307,7 @@ export class AddRemissionComponent implements OnInit {
     var remissionctrls=this.remissionForm.controls,
       isRemissionLessThanFee = this.fee.calculated_amount >= remissionctrls.amount.value; 
     if (this.remissionForm.dirty ) {
-      if(remissionctrls['amount'].value == '' ) {
+      if(remissionctrls['amount'].value == '' || remissionctrls['amount'].value < 0) {
         this.resetRemissionForm([false, false, true, false, false], 'amount');
       } else if(remissionctrls['amount'].value != '' && remissionctrls['amount'].invalid ) {
         this.resetRemissionForm([false, false, false, true, false], 'amount');
@@ -321,7 +321,7 @@ export class AddRemissionComponent implements OnInit {
   } else {
     var remissionctrls=this.remissionForm.controls;
     //if (this.remissionForm.dirty ) {
-      if(remissionctrls['amount'].value == '' ) {
+      if(remissionctrls['amount'].value == '' || remissionctrls['amount'].value < 0 ) {
         this.resetRemissionForm([false, false, true, false, false], 'amount');
       } else {
           this.viewCompStatus = '';
