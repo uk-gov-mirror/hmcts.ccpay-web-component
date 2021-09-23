@@ -678,7 +678,7 @@
                             <td *ngIf="cpoDetails !== null" class="govuk-table__cell  whitespace-inherit">{{cpoDetails['responsibleParty']}}</td> 
                             <td *ngIf="cpoDetails === null" class="govuk-table__cell  whitespace-inherit"></td> 
                             <td class="govuk-table__cell whitespace-inherit">{{orderRef.orderRefId}}</td> 
-                            <td class="govuk-table__cell of-visible"> <a href="javascript:void(0)" *ngIf="serviceRequestValue !== 'false' && check4AllowedRoles2AccessPBApayment()"> Make a payment</a></td> 
+                            <td class="govuk-table__cell of-visible"> <a href="javascript:void(0)" (click)="loadPBAAccountPage(orderRef)" *ngIf="serviceRequestValue !== 'false' && check4AllowedRoles2AccessPBApayment()"> Make a payment</a></td> 
                             <td class="govuk-table__cell">	
                                 <a href="javascript:void(0)" (click)="goToOrderViewDetailSection(orderRef)">Review</a>
                           </td>

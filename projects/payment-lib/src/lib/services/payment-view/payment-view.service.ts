@@ -71,6 +71,14 @@ export class PaymentViewService {
         catchError(this.errorHandlerService.handleError)
       );
   }
+
+  getPBAaccountDetails(): Observable<any> {
+    const url = `${this.paymentLibService.API_ROOT}/pba-accounts`;
+    return this.http.get(url, { withCredentials: true }).pipe(
+        catchError(this.errorHandlerService.handleError)
+      );
+  }
+
   postBSPayments(body: AllocatePaymentRequest): Observable<any> {
     return this.https.post(`${this.paymentLibService.API_ROOT}/payment-groups/bulk-scan-payments`, body).pipe(
       catchError(this.errorHandlerService.handleError)
