@@ -103,8 +103,11 @@ export class AddRemissionComponent implements OnInit {
 
   ngOnInit() {
     this.default = 'Select a different reason';
+    if(this.viewCompStatus !== ''){
+      this.viewStatus = '';
+      }
     if(this.remission) {
-      this.cd.detectChanges();
+      // this.cd.detectChanges();
     }
     if(this.fee) {
     this.amount = (this.fee.volume * this.fee.calculated_amount);

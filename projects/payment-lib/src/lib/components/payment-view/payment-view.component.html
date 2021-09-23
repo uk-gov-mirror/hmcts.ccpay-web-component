@@ -83,7 +83,7 @@
         <button [disabled]="!chkIssueRefundBtnEnable(paymentGroup?.payments[0])" (click)="issueRefund(paymentGroup)" class="govuk-button govuk-button--secondary">Issue refund</button>
      </div>
       
-      <div class="govuk-grid-row" *ngIf="paymentGroup.fees.length > 0">
+      <div class="govuk-grid-row" *ngIf="paymentGroup?.fees.length > 0">
         <div class="column">
         
           <h2 class="heading-large">Fee and remission details</h2>
@@ -124,8 +124,8 @@
       </div>
 
                 <!-- remissions -->
-
-    <div  class="order-class"> 
+                <div class="order-class">
+                  <div class="column">
     <table class="govuk-table">
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
@@ -142,22 +142,23 @@
             <td class="govuk-table__cell whitespace-inherit">{{ remission.remission_reference }}</td>
             <td class="govuk-table__cell whitespace-inherit">{{ remission.fee_code }}</td>
             <td class="govuk-table__cell whitespace-inherit">{{ remission.hwf_amount | currency:'GBP':'symbol-narrow':'1.2-2'}}</td>
-            <!-- <td *ngIf="chkIsRefundRemissionBtnEnable()" class="govuk-table__cell refundBtn whitespace-inherit"  >
+            <td *ngIf="chkIsRefundRemissionBtnEnable()" class="govuk-table__cell refundBtn whitespace-inherit"  >
                <button (click)="addRefundForRemission(paymentGroup.payments[0],remission,paymentGroup.fees)" class="govuk-button govuk-button--secondary"> Add refund</button>
             </td>
             <td *ngIf="!chkIsRefundRemissionBtnEnable()" class="govuk-table__cell refundBtn whitespace-inherit"  >
              
-          </td> -->
+          </td>
           </tr>
       </tbody>
       
 
     </table>
+                  </div></div>
     
    <div *ngIf="paymentGroup.remissions?.length === 0">
       <span class="mar-17" >No help with fees or remissions.</span>
    </div>
-    </div>
+   
    
 
 
@@ -174,6 +175,7 @@
 
   </main>
 </div>
+
 </ng-container>
 <ng-container *ngIf="viewStatus === 'addremission' && feeId">
 <ccpay-add-remission 
@@ -190,6 +192,26 @@
 [caseType]="caseType" 
 [paymentGroupRef]="paymentGroup.payment_group_reference" 
 [isFromPaymentDetailPage] = "true"
+[ccdCaseNumber]="ccdCaseNumber"></ccpay-add-remission>
+</ng-container>
+
+<ng-container *ngIf="viewStatus === 'addrefundforremission' && payment">
+
+<ccpay-add-remission 
+[isTurnOff]="isTurnOff"
+[isStrategicFixEnable]="isStrategicFixEnable" 
+[isOldPcipalOff]="isOldPcipalOff" 
+[viewCompStatus]= "viewStatus"
+[isNewPcipalOff]="isNewPcipalOff" 
+[payment]="payment" 
+[orderStatus] ="orderStatus"
+[paidAmount]= "orderTotalPayments"
+[isRefundRemission]="isRefundRemission"
+[caseType]="caseType" 
+[feeamount]="remissionFeeAmt"
+[remission] = "remissions"
+[isFromServiceRequestPage]="false" 
+[paymentGroupRef]="paymentGroup.payment_group_reference"
 [ccdCaseNumber]="ccdCaseNumber"></ccpay-add-remission>
 </ng-container>
 
