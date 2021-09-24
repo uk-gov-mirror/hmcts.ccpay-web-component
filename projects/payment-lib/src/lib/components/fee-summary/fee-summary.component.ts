@@ -64,13 +64,16 @@ export class FeeSummaryComponent implements OnInit {
     this.selectedOption = this.paymentLibComponent.SELECTED_OPTION.toLocaleLowerCase();
     this.isStrategicFixEnable = this.paymentLibComponent.ISSFENABLE;
 
-    if ((!this.isOldPcipalOff && this.isNewPcipalOff)) {
+      //8X8 Retirement code changes
+     this.platForm = 'Antenna';
+
+    /* if ((!this.isOldPcipalOff && this.isNewPcipalOff)) {
       this.platForm = '8x8';
     } else if ((this.isOldPcipalOff && !this.isNewPcipalOff)) {
       this.platForm = 'Antenna';
     } else if ((this.isOldPcipalOff && this.isNewPcipalOff)){
       this.platForm = '8x8';
-    }
+    } */
 
     this.paymentViewService.getBSfeature().subscribe(
       features => {
@@ -105,8 +108,8 @@ export class FeeSummaryComponent implements OnInit {
           if(unassignedPayments['data'].payments) {
             this.service = unassignedPayments['data'].responsible_service_id;
           } else {
-            this.upPaymentErrorMessage = 'error';  
-          }      
+            this.upPaymentErrorMessage = 'error';
+          }
         },
         (error: any) => this.upPaymentErrorMessage = error
       );
@@ -152,7 +155,7 @@ export class FeeSummaryComponent implements OnInit {
                   fees.push(fee);
                 }
               });
-    
+
               if(!this.isRemissionsMatch) {
                 fees.push(fee);
               }
@@ -241,7 +244,8 @@ export class FeeSummaryComponent implements OnInit {
       const requestBody = new PaymentToPayhubRequest(this.ccdCaseNumber, this.outStandingAmount, this.caseType),
       antennaReqBody = new PayhubAntennaRequest(this.ccdCaseNumber, this.outStandingAmount, this.caseType);
 
-    if(this.platForm === '8x8') {
+    //8X8 Retirement code changes
+    /* if(this.platForm === '8x8') {
       this.paymentViewService.postPaymentToPayHub(requestBody, this.paymentGroupRef).subscribe(
         response => {
           this.location.go(`payment-history?view=fee-summary`);
@@ -255,7 +259,8 @@ export class FeeSummaryComponent implements OnInit {
           this.router.navigateByUrl('/pci-pal-failure');
         }
       );
-    } else if(this.platForm === 'Antenna') {
+    } else  */
+    if(this.platForm === 'Antenna') {
 
       this.paymentViewService.postPaymentAntennaToPayHub(antennaReqBody, this.paymentGroupRef).subscribe(
         response => {
