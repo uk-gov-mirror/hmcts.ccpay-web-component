@@ -103,9 +103,9 @@ export class AddRemissionComponent implements OnInit {
 
   ngOnInit() {
     this.default = 'Select a different reason';
-    if(this.viewCompStatus !== ''){
-      this.viewStatus = '';
-      }
+    // if(this.viewCompStatus !== ''){
+    //   this.viewStatus = '';
+    //   }
     if(this.remission) {
       // this.cd.detectChanges();
     }
@@ -242,6 +242,7 @@ export class AddRemissionComponent implements OnInit {
 
   // Add retro remission changes
   addRemissionCode() {
+    this.errorMessage = false;
     this.viewStatus = '';
     this.isRefundRemission = false;
     this.resetRemissionForm([false, false, false, false, false, false], 'All');
@@ -279,7 +280,7 @@ export class AddRemissionComponent implements OnInit {
 
 
   gotoAddRetroRemissionCodePage() {
-
+    this.errorMessage = false;
     if(this.isRefundRemission) {
       this.paymentLibComponent.iscancelClicked = true;
       this.refundListAmount.emit();
@@ -344,7 +345,7 @@ export class AddRemissionComponent implements OnInit {
   }
 
   confirmRetroRemission() {
-    this.isConfirmationBtnDisabled = true;
+    if(!this.isConfirmationBtnDisabled) {
     this.retroRemission = true;
     this.remissionamt = this.remissionForm.controls.amount.value;
     const requestBody = new AddRetroRemissionRequest(this.remissionamt,this.remissionForm.controls.remissionCode.value )
@@ -363,6 +364,7 @@ export class AddRemissionComponent implements OnInit {
         this.cd.detectChanges();
       }
     );
+    }
   }
 
   processRefund() {

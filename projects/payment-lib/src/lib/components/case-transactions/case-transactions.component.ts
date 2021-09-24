@@ -392,11 +392,13 @@ export class CaseTransactionsComponent implements OnInit {
   }
 
   redirectToOrderFeeSearchPage(event: any, orderef: any) {
+    if(orderef.orderAddBtnEnable) {
     event.preventDefault();
     this.paymentLibComponent.bspaymentdcn = null;
     this.paymentLibComponent.paymentGroupReference = orderef;
     this.paymentLibComponent.isTurnOff = this.isTurnOff;
     this.paymentLibComponent.viewName = 'fee-summary';
+    }
   }
 
   goToCaseTransationPage(event: any) {
@@ -614,6 +616,7 @@ export class CaseTransactionsComponent implements OnInit {
   }
 
   addRemission(fee: IFee) {
+    if(this.chkForAddRemission(fee.code)) {
     this.feeId = fee;
     this.viewStatus = 'addremission';
     this.paymentViewService.getApportionPaymentDetails(this.payment.reference).subscribe(
@@ -628,6 +631,7 @@ export class CaseTransactionsComponent implements OnInit {
       },
       (error: any) => this.errorMessage = error
     );
+    }
   }
 
   addRefundForRemission(payment: IPayment, remission: IRemission[],fees:any) {
@@ -733,9 +737,11 @@ export class CaseTransactionsComponent implements OnInit {
   }
 
   issueRefund(payment: IPayment) {
+    if(this.chkIssueRefundBtnEnable(payment)) {
     this.viewStatus = 'issuerefund';
     this.payment = payment;
     this.isRefundRemission = true;
+    }
   }
 
   chkForAddRemission(feeCode: string): boolean {

@@ -22,7 +22,7 @@
  
 <div *ngIf="dataSource.data.length > 0" class="example-container mat-elevation-z8">
 
-  <mat-table [dataSource]="dataSource" matSort>
+  <mat-table [dataSource]="dataSource" >
 
     <ng-container matColumnDef="ccd_case_number">
       <mat-header-cell  *matHeaderCellDef >Case ID </mat-header-cell>
@@ -45,7 +45,7 @@
     </ng-container>
 
     <ng-container matColumnDef="date_updated">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Date updated </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef > Date updated </mat-header-cell>
         <mat-cell *matCellDef="let row" [style.color]="row.color" class="whitespace-inherit"> {{row.date_updated | date:'d MMMM yyyy'}} </mat-cell>
       </ng-container>
 

@@ -116,6 +116,7 @@ export class PaymentViewComponent implements OnInit {
   }
 
   addRemission(fee: IFee) {
+    if(this.chkForAddRemission(fee.code)) {
     this.feeId = fee;
     this.paymentViewService.getApportionPaymentDetails(this.paymentGroup.payments[0].reference).subscribe(
       paymentGroup => {
@@ -131,11 +132,11 @@ export class PaymentViewComponent implements OnInit {
       },
       (error: any) => this.errorMessage = error
     );
+    }
   }
 
   addRefundForRemission(payment: IPayment, remission: IRemission[],fees:any) {
-  
- 
+ if(this.chkIsRefundRemissionBtnEnable()) {
     this.payment = payment;
     this.paymentViewService.getApportionPaymentDetails(this.payment.reference).subscribe(
       paymentGroup => {
@@ -152,6 +153,7 @@ export class PaymentViewComponent implements OnInit {
       },
       (error: any) => this.errorMessage = error
     );
+ }
   }
 
   chkIsRefundRemissionBtnEnable(): boolean {
@@ -168,9 +170,11 @@ export class PaymentViewComponent implements OnInit {
   }
 
   issueRefund(paymentgrp: IPaymentGroup) {
+    if(this.chkIssueRefundBtnEnable(paymentgrp.payments[0])) {
     this.paymentGroup = paymentgrp;
     this.viewStatus = 'issuerefund';
     this.isRefundRemission = true;
+    }
   }
 
   getRemissionByFeeCode(feeCode: string, remissions: IRemission[]): IRemission {
