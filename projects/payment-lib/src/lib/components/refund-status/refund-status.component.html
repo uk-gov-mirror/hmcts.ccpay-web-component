@@ -156,7 +156,7 @@
     <tr class="govuk-table__row">
       <td class="govuk-table__cell govuk-!-font-weight-bold">Payment amount</td>
       <td class="govuk-table__cell"> £{{ changedAmount | number:'.2' }}
-        <a (click)="gotoAmountPage()" *ngIf="refundlist?.reason === 'Retro Remission'"
+        <a (click)="gotoAmountPage()" *ngIf="refundlist?.reason === 'Retrospective remission'"
           class="govuk-link right">Change</a>
       </td>
 
