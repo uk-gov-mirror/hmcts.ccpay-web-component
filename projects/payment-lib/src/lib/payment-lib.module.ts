@@ -38,8 +38,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+// import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+// import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RefundStatusComponent } from './components/refund-status/refund-status.component';
 
 @NgModule({
@@ -52,9 +52,9 @@ import { RefundStatusComponent } from './components/refund-status/refund-status.
     MatPaginatorModule,
     MatSortModule,
     MatFormFieldModule,
-    MatInputModule,
-    BrowserAnimationsModule,
-    NoopAnimationsModule
+    MatInputModule
+    // BrowserAnimationsModule,
+    // NoopAnimationsModule
   ],
   declarations: [
     PaymentLibComponent,
