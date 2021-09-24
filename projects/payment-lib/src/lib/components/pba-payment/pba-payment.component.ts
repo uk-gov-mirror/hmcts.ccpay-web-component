@@ -1,6 +1,8 @@
 import { Component, OnInit, Input} from '@angular/core';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import { PaymentLibComponent } from '../../payment-lib.component';
+import { IserviceRequestCardPayment } from '../../interfaces/IserviceRequestCardPayment';
+import { IserviceRequestPbaPayment } from '../../interfaces/IserviceRequestPbaPayment';
 
 
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
@@ -34,7 +36,7 @@ export class PbaPaymentComponent implements OnInit {
       error => {
         this.errorMsg = error;
       }
-    )
+    );
 
   }
   selectpbaaccount(args) {
@@ -51,6 +53,29 @@ export class PbaPaymentComponent implements OnInit {
     }
   }
   saveAndContinue() {
+    const requestBody = new IserviceRequestPbaPayment(
+      this.selectedPbaAccount, this.pbaPayOrderRef.orderTotalFees, this.pbaAccountRef);
+    this.paymentViewService.postPBAaccountPayment(this.pbaPayOrderRef.orderRefId, requestBody)
+    .subscribe(
+      result => {
+      },
+      error => {
+        this.errorMsg = error;
+      }
+    );
+
+  }
+  cardPayment() {
+    const requestBody = new IserviceRequestCardPayment (
+      this.pbaPayOrderRef.orderTotalFees);
+    this.paymentViewService.postWays2PayCardPayment(this.pbaPayOrderRef.orderRefId, requestBody)
+    .subscribe(
+      result => {
+      },
+      error => {
+        this.errorMsg = error;
+      }
+    );
 
   }
   gotoCasetransationPage() {
