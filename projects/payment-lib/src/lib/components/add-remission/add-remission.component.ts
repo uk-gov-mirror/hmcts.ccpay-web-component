@@ -103,9 +103,9 @@ export class AddRemissionComponent implements OnInit {
 
   ngOnInit() {
     this.default = 'Select a different reason';
-    // if(this.viewCompStatus !== ''){
-    //   this.viewStatus = '';
-    //   }
+    if(this.viewCompStatus !== ''){
+      this.viewStatus = '';
+      }
     if(this.remission) {
       // this.cd.detectChanges();
     }
