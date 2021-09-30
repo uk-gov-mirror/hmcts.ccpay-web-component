@@ -87,7 +87,7 @@ export class PaymentViewService {
   }
   
   postPBAaccountPayment(serviceRef: string, body: IserviceRequestPbaPayment): Observable<any> {
-    const url = `${this.paymentLibService.API_ROOT}/order/${serviceRef}/credit-account-payment`;
+    const url = `${this.paymentLibService.API_ROOT}/service-request/${serviceRef}/pba-payments`;
     return this.https.post(url, body);
   }
   postBSPayments(body: AllocatePaymentRequest): Observable<any> {
