@@ -515,10 +515,11 @@
 <!--Order Case Transactions Page-->
    <ng-container *ngIf="viewStatus === 'main' && !isTurnOff && takePayment">
       <div>
+       
           <div class="govuk-grid-row">
               <h1 class="govuk-grid-column-two-thirds govuk-heading-l govuk-!-margin-top-0">Case transactions</h1>
               <ng-container *ngIf='!isExceptionRecord' class=" govuk-!-margin-bottom-6" style="align-self: flex-end;">
-                <b> Case reference: </b>{{ ccdCaseNumber | ccdHyphens }}
+                 <b> Case reference: </b>{{ ccdCaseNumber | ccdHyphens }}
               </ng-container>
               <ng-container *ngIf='isExceptionRecord' class="col-61  govuk-!-margin-bottom-3 col-55" style="align-self: flex-end;">
                   <b> Exception reference:</b>{{ ccdCaseNumber | ccdHyphens }}
@@ -645,7 +646,7 @@
       </div>
    </ng-container>
 
-   <ng-container *ngIf="!takePayment && viewStatus !== 'issuerefund' && viewStatus !== 'addrefundforremission' && viewStatus !== 'order-full-view' && viewStatus !== 'addremission' && viewStatus !== 'feeRemovalConfirmation' ">
+   <ng-container *ngIf="!takePayment && viewStatus === 'main'">
       <div *ngIf="errorMessage">
           <div *ngIf="isCPODown && isAnyFeeGroupAvilable" class=" error govuk-inset-text govuk-!-margin-top-7">
               No party information currently available - try again later.
@@ -655,6 +656,7 @@
               <p>Payment requests and payments cannot currently be shown. Try again.</p>
         </div>
         </div>
+       
       <div  class="govuk-grid-row govuk-grid__surplus-payments">
           
         <div class="govuk-grid-column-full">

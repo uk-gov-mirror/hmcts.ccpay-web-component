@@ -78,7 +78,7 @@ export class RefundStatusComponent implements OnInit {
         }
       ),
         (error: any) => {
-          this.errorMessage = error;
+          this.errorMessage = error.replace(/"/g,"");
         };
     }
 
@@ -116,7 +116,7 @@ export class RefundStatusComponent implements OnInit {
       }
     ),
       (error: any) => {
-        this.errorMessage = error;
+        this.errorMessage = error.replace(/"/g,"");
       }; 
     }
   }
@@ -132,7 +132,7 @@ export class RefundStatusComponent implements OnInit {
 
   loadCaseTransactionPage() {
     this.paymentLibComponent.isRefundStatusView = false;
-    this.paymentLibComponent.TAKEPAYMENT = true;
+    //this.paymentLibComponent.TAKEPAYMENT = true;
     this.paymentLibComponent.viewName = 'case-transactions';
     this.paymentViewService.getBSfeature().subscribe(
       features => {
@@ -152,7 +152,7 @@ export class RefundStatusComponent implements OnInit {
     partUrl += `&caseType=${this.paymentLibComponent.CASETYPE}`;
     partUrl += this.isNewPcipalOff ? '&isNewPcipalOff=Enable' : '&isNewPcipalOff=Disable';
     partUrl += this.isOldPcipalOff ? '&isOldPcipalOff=Enable' : '&isOldPcipalOff=Disable';
-    let url = `/payment-history/${this.ccdCaseNumber}?view=case-transactions&takePayment=true&${partUrl}`;
+    let url = `/payment-history/${this.ccdCaseNumber}?view=case-transactions&takePayment=${this.paymentLibComponent.TAKEPAYMENT}&${partUrl}`;
     this.router.navigateByUrl(url);
   }
 
@@ -188,6 +188,7 @@ export class RefundStatusComponent implements OnInit {
   }
   gotoRefundReasonPage() {
     this.isRefundBtnDisabled = false;
+    this.paymentLibComponent.REFUNDLIST = "true";
     this.paymentLibComponent.isFromRefundStatusPage = true;
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
     this.errorMessage = false;
@@ -196,6 +197,7 @@ export class RefundStatusComponent implements OnInit {
 
   gotoAmountPage() {
     this.errorMessage = false;
+    this.paymentLibComponent.REFUNDLIST = "true";
     this.isRefundBtnDisabled = false;
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
     this.paymentLibComponent.isFromRefundStatusPage = true;
@@ -283,7 +285,7 @@ export class RefundStatusComponent implements OnInit {
         }
       },
       (error: any) => {
-        this.errorMessage = error;
+        this.errorMessage = error.replace(/"/g,"");
       }
     );
 

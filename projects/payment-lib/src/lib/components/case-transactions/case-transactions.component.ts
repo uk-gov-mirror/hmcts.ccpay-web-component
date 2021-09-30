@@ -160,14 +160,14 @@ export class CaseTransactionsComponent implements OnInit {
 
             },
             (error: any) => {
-              this.errorMessage = <any>error;
+              this.errorMessage = <any>error.replace(/"/g,"");
               this.isCPODown = true;
             }
           );
 
         },
         (error: any) => {
-          this.errorMessage = <any>error;
+          this.errorMessage = <any>error.replace(/"/g,"");
           this.isAnyFeeGroupAvilable = false;
           this.setDefaults();
         }
@@ -186,7 +186,7 @@ export class CaseTransactionsComponent implements OnInit {
 
             },
             (error: any) => {
-              this.errorMessage = <any>error;
+              this.errorMessage = <any>error.replace(/"/g,"");
               this.setDefaults();
               this.isCPODown = true;
             }
@@ -194,7 +194,7 @@ export class CaseTransactionsComponent implements OnInit {
 
         },
         (error: any) => {
-          this.errorMessage = <any>error;
+          this.errorMessage = <any>error.replace(/"/g,"");
           this.isAnyFeeGroupAvilable = false;
           this.setDefaults();
         }

@@ -67,7 +67,7 @@ export class RefundListComponent implements OnInit {
       }
     ),
     (error: any) => {
-      this.errorMessage = error;
+      this.errorMessage = error.replace(/"/g,"");
     };
   }
 
@@ -78,7 +78,7 @@ export class RefundListComponent implements OnInit {
       }
     ),
     (error: any) => {
-      this.errorMessage = error;
+      this.errorMessage = error.replace(/"/g,"");
     };
 
   }

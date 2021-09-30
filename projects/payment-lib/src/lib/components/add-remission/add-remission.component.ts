@@ -103,7 +103,7 @@ export class AddRemissionComponent implements OnInit {
 
   ngOnInit() {
     this.default = 'Select a different reason';
-    if(this.viewCompStatus !== ''){
+    if(this.viewCompStatus !== '' && this.viewCompStatus !== undefined){
       this.viewStatus = '';
       }
     if(this.remission) {
@@ -216,7 +216,7 @@ export class AddRemissionComponent implements OnInit {
         }
       },
       (error: any) => {
-        this.errorMessage = error;
+        this.errorMessage = error.replace(/"/g,"");
         this.isConfirmationBtnDisabled = false;
       }
     );
@@ -361,7 +361,7 @@ export class AddRemissionComponent implements OnInit {
         }
       },
       (error: any) => {
-        this.errorMessage = error;
+        this.errorMessage = error.replace(/"/g,"");
         this.isConfirmationBtnDisabled = false;
         this.cd.detectChanges();
       }
@@ -390,7 +390,7 @@ export class AddRemissionComponent implements OnInit {
         }
       },
       (error: any) => {
-        this.errorMessage = error;
+        this.errorMessage = error.replace(/"/g,"");
         this.isConfirmationBtnDisabled = false;
       })
   }
@@ -399,9 +399,12 @@ export class AddRemissionComponent implements OnInit {
 
   gotoIssueRefundConfirmation(payment: IPayment) {
     this.paymentLibComponent.iscancelClicked = false;
+    if(this.paymentLibComponent.REFUNDLIST === "true") {
+      this.isFromRefundListPage = true; 
+    }
     this.errorMessage = '';
     this.refundReason = this.remissionForm.controls['refundReason'].value === null ? this.remissionForm.controls['refundDDReason'].value : this.remissionForm.controls['refundReason'].value;
-    if(!this.refundReason) {
+    if(!this.refundReason || this.refundReason === 'Select a different reason') {
       this.refundHasError = true;
     } else if(this.selectedRefundReason.includes('Other') && (this.remissionForm.controls['reason'].value == '' || this.remissionForm.controls['reason'].value == null)) {
         this.resetRemissionForm([false, false, false, true, false, true], 'reason');
@@ -468,7 +471,7 @@ export class AddRemissionComponent implements OnInit {
           }
       },
       (error: any) => {
-        this.errorMessage = error;
+        this.errorMessage = error.replace(/"/g,"");
         this.isConfirmationBtnDisabled = false;
         this.cd.detectChanges();
       })
@@ -496,7 +499,7 @@ export class AddRemissionComponent implements OnInit {
           }
       },
       (error: any) => {
-        this.errorMessage = error;
+        this.errorMessage = error.replace(/"/g,"");
         this.isConfirmationBtnDisabled = false;
       });
   }
@@ -540,7 +543,13 @@ export class AddRemissionComponent implements OnInit {
 
   gotoServiceRequestPage(event: any) {
     event.preventDefault();
+    
+    if (this.paymentLibComponent.TAKEPAYMENT === undefined && this.paymentLibComponent.SERVICEREQUEST === undefined) {
+      this.paymentLibComponent.SERVICEREQUEST = 'false';
+      this.paymentLibComponent.TAKEPAYMENT = false;
+    }
     if (this.isFromServiceRequestPage) {
+      //this.paymentLibComponent.TAKEPAYMENT = false;
       this.paymentLibComponent.isFromRefundStatusPage = false;
       this.viewStatus = 'main'
       this.paymentLibComponent.viewName = 'case-transactions';
@@ -588,11 +597,21 @@ export class AddRemissionComponent implements OnInit {
         if(this.isFromPaymentDetailPage) {
           partUrl += this.paymentLibComponent.isFromPaymentDetailPage
         }
-
-        const url = `/payment-history/${this.ccdCaseNumber}?view=case-transactions&takePayment=true&selectedOption=${this.option}${partUrl}`;
-        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-        this.router.onSameUrlNavigation = 'reload';
-        this.router.navigateByUrl(url);
+        if(!this.paymentLibComponent.TAKEPAYMENT) {
+          this.paymentLibComponent.TAKEPAYMENT = undefined;
+        }
+        if ( this.paymentLibComponent.SERVICEREQUEST) {
+          const url = `/payment-history/${this.ccdCaseNumber}?view=case-transactions&selectedOption=${this.option}${partUrl}`;
+          this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+          this.router.onSameUrlNavigation = 'reload';
+          this.router.navigateByUrl(url);
+        } else {
+          const url = `/payment-history/${this.ccdCaseNumber}?view=case-transactions&takePayment=${this.paymentLibComponent.TAKEPAYMENT}&selectedOption=${this.option}${partUrl}`;
+          this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+          this.router.onSameUrlNavigation = 'reload';
+          this.router.navigateByUrl(url);
+        }
+       
     } else {
       this.paymentLibComponent.viewName === 'refundstatuslist';
       this.paymentLibComponent.isFromRefundStatusPage = true;
@@ -628,19 +647,26 @@ export class AddRemissionComponent implements OnInit {
        partUrl += this.paymentLibComponent.isFromPaymentDetailPage
      }
 
-    const url = `/payment-history/${this.ccdCaseNumber}?view=case-transactions&takePayment=true&selectedOption=${this.option}${partUrl}`;
+    const url = `/payment-history/${this.ccdCaseNumber}?view=case-transactions&takePayment=${this.paymentLibComponent.TAKEPAYMENT}&selectedOption=${this.option}${partUrl}`;
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.onSameUrlNavigation = 'reload';
     this.router.navigateByUrl(url);
   }
 
   gotoCasetransationPageCancelBtnClicked() {
+    if (this.paymentLibComponent.REFUNDLIST) {
+      this.paymentLibComponent.viewName = 'refund-list';
+      return;
+    }
+    if (this.paymentLibComponent.TAKEPAYMENT === undefined && this.paymentLibComponent.SERVICEREQUEST === undefined) {
+      this.paymentLibComponent.SERVICEREQUEST = 'false';
+    }
     this.OrderslistService.setisFromServiceRequestPage(false);
     this.OrderslistService.setpaymentPageView({method: '',payment_group_reference: '', reference:''});
     this.OrderslistService.setnavigationPage('casetransactions');
     this.errorMessage = '';
     this.paymentLibComponent.viewName = 'case-transactions';
-    this.paymentLibComponent.TAKEPAYMENT = true;
+    //this.paymentLibComponent.TAKEPAYMENT = true;
     this.paymentLibComponent.ISTURNOFF = this.isTurnOff;
     this.paymentLibComponent.ISNEWPCIPALOFF = this.isNewPcipalOff;
     this.paymentLibComponent.ISOLDPCIPALOFF = this.isOldPcipalOff;
@@ -667,7 +693,7 @@ export class AddRemissionComponent implements OnInit {
      }
 
      if(!this.paymentLibComponent.SERVICEREQUEST) {
-      const url = `/payment-history/${this.ccdCaseNumber}?view=case-transactions&takePayment=true&selectedOption=${this.option}${partUrl}`;
+      const url = `/payment-history/${this.ccdCaseNumber}?view=case-transactions&takePayment=${this.paymentLibComponent.TAKEPAYMENT}&selectedOption=${this.option}${partUrl}`;
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
       this.router.onSameUrlNavigation = 'reload';
       this.router.navigateByUrl(url);
