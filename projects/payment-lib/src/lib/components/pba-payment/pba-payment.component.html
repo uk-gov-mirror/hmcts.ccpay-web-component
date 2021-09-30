@@ -1,6 +1,6 @@
 <ng-container *ngIf="viewStatus === 'pba-payment'">
-  <div class="pba-payment" *ngIf="pbaAccountList?.length > 0 || errorMsg">
-    <div *ngIf="errorMsg" class="govuk-error-summary pba-payments-error-box--size" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="govuk-error-summary">
+  <div class="pba-payment" *ngIf="(pbaAccountList?.length > 0 || errorMsg) && !isInSufficiantFund && !isPBAAccountNotExist && !isPBAServerError && !isPBAAccountPaymentSuccess">
+    <div *ngIf="errorMsg" class="govuk-error-summary pba-payments-error-box--size" aria-labelledby="error-summary-title" >
       <h2 class="govuk-error-summary__title govuk-error-summary__title-custom pba-payments-24-font" id="error-summary-title">
         There is a problem
       </h2>
@@ -103,6 +103,113 @@
   </div>
 </ng-container>
 
+<ng-container *ngIf="isInSufficiantFund">
+  <div class="govuk-width-container">
+    <main class="govuk-main-wrapper govuk-main-wrapper--l" id="main-content" role="main">
+      <div class="govuk-grid-row">
+        <div class="govuk-error-summary pba-payments-error-box--size" aria-labelledby="error-summary-title">
+          <h2 class="govuk-error-summary__title govuk-error-summary__title-custom pba-payments-24-font" id="error-summary-title">
+            There is a problem
+          </h2>
+          <div class="govuk-error-summary__body">
+            <ul class="govuk-list govuk-error-summary__list">
+              <li class="pba-payments-error-16-font">
+                You don't have enough funds in your PBA account to pay for this fee or your PBA account has been put on hold.
+              </li>
+              <li class="pba-payments-error-16-font">
+                If you have already topped up your PBA account, wait up to 24 hours for the new balance to become available.
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="pba-payments-margin-top-10">
+          <h2 class="heading-medium">Should you need any further advice</h2>
+          <p class="govuk-body pba-payments-19-font">
+            Email <a href="mailto:MiddleOffice.DDservices@liberata.com">MiddleOffice.DDservices@liberata.com</a>or call <a href="tel:01633-652-125">01633 652 125</a> (option 3) to try to fix the issue.
+          </p>
+          <p class="govuk-body pba-payments-19-font">
+            you can also <a href="javascript:void(0)" (click)="cardPayment()" >pay by credit or debit card</a>.
+          </p>
+          <p class="govuk-body pba-payments-19-font">
+            <a href="javascript:void(0)" (click)="gotoCasetransationPage()" >View service requests</a>
+          </p>
+        </div>
+      </div>
+    </main>
+  </div>
+</ng-container>
+<ng-container *ngIf="isPBAAccountNotExist">
+  <div class="govuk-width-container">
+    <main class="govuk-main-wrapper govuk-main-wrapper--l" id="main-content" role="main">
+      <div class="govuk-grid-row">
+        <div class="govuk-error-summary pba-payments-error-box--size" aria-labelledby="error-summary-title">
+          <h2 class="govuk-error-summary__title govuk-error-summary__title-custom pba-payments-24-font" id="error-summary-title">
+            There is a problem
+          </h2>
+          <div class="govuk-error-summary__body">
+            <ul class="govuk-list govuk-error-summary__list">
+              <li class="pba-payments-error-16-font">
+                Your PBA account ({{selectedPbaAccount}}) no longer exists.
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="pba-payments-margin-top-10">
+          <h2 class="heading-medium">Should you need any further advice</h2>
+          <p class="govuk-body pba-payments-19-font">
+            Email <a href="mailto:MiddleOffice.DDservices@liberata.com">MiddleOffice.DDservices@liberata.com</a>or call <a href="tel:01633-652-125">01633 652 125</a> (option 3) to try to fix the issue.
+          </p>
+          <p class="govuk-body pba-payments-19-font">
+            you can also <a href="javascript:void(0)" (click)="cardPayment()" >pay by credit or debit card</a>.
+          </p>
+          <p class="govuk-body pba-payments-19-font">
+            <a href="javascript:void(0)" (click)="gotoCasetransationPage()">View service requests</a>
+          </p>
+        </div>
+      </div>
+    </main>
+  </div>
+</ng-container>
+<ng-container *ngIf="isPBAServerError">
+  <div class="govuk-width-container">
+    <main class="govuk-main-wrapper govuk-main-wrapper--l" id="main-content" role="main">
+      <div class="govuk-grid-row">
+        <div class="pba-payments-margin-top-10">
+          <h2 class="pba-payments-heading-lg">Sorry, there is a problem with the service</h2>
+          <p class="govuk-body pba-payments-19-font">
+            Try again later.
+          </p>
+          <p class="govuk-body pba-payments-19-font">
+            you can also <a href="javascript:void(0)" (click)="cardPayment()" >pay by credit or debit card</a>.
+          </p>
+          <p class="govuk-body pba-payments-19-font">
+            <a href="javascript:void(0)" (click)="gotoCasetransationPage()">View service requests</a>
+          </p>
+        </div>
+      </div>
+    </main>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="isPBAAccountPaymentSuccess">
+  <div class="govuk-width-container">
+    <main class="govuk-main-wrapper govuk-main-wrapper--l" id="main-content" role="main">
+      <div class="govuk-grid-row">
+        <div class="govuk-panel govuk-panel--confirmation pba-payments--confirmation">
+          <h1 class="govuk-panel__title pba-payments--title">
+              Payment successful
+          </h1>
+          <div class="govuk-panel__body pba-payments__body">
+              Your payment reference is <br><strong>{{pbaAccountrPaymentResult.payment_reference}}</strong>
+          </div>
+      </div>
+      <p class="govuk-body pba-payments-19-font">
+        <a href="javascript:void(0)" (click)="gotoCasetransationPage()">View service requests</a>
+      </p>
+      </div>
+    </main>
+  </div>
+</ng-container>
 </ng-container>
 
 

@@ -17,9 +17,14 @@ export class PbaPaymentComponent implements OnInit {
   viewStatus: string;
   pbaAccountList: string[];
   errorMsg: any;
+  isInSufficiantFund: boolean = false;
+  isPBAAccountNotExist: boolean = false;
+  isPBAServerError: boolean = false;
   selectedPbaAccount: string = '';
   pbaAccountRef: string = '';
   isContinueButtondisabled: boolean = true;
+  isPBAAccountPaymentSuccess: boolean = false;
+  pbaAccountrPaymentResult: any;
 
   constructor(private  paymentLibComponent: PaymentLibComponent,
     private paymentViewService: PaymentViewService) {}
@@ -53,14 +58,27 @@ export class PbaPaymentComponent implements OnInit {
     }
   }
   saveAndContinue() {
+    this.isInSufficiantFund = false;
+    this.isPBAAccountNotExist = false;
+    this.isPBAServerError = false;
+    this.isPBAAccountPaymentSuccess = false;
+
     const requestBody = new IserviceRequestPbaPayment(
       this.selectedPbaAccount, this.pbaPayOrderRef.orderTotalFees, this.pbaAccountRef);
     this.paymentViewService.postPBAaccountPayment(this.pbaPayOrderRef.orderRefId, requestBody)
     .subscribe(
-      result => {
+      r => {
+        this.pbaAccountrPaymentResult = JSON.parse(r).data;
+        this.isPBAAccountPaymentSuccess = true;
       },
-      error => {
-        this.errorMsg = error;
+      e => {
+        if(e.status == '403') {
+          this.isInSufficiantFund = true;
+        } else if(e.status == '404') {
+          this.isPBAAccountNotExist = true;
+        } else {
+          this.isPBAServerError = true;
+        }
       }
     );
 

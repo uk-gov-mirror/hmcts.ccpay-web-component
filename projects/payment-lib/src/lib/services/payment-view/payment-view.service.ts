@@ -24,6 +24,7 @@ import { IserviceRequestCardPayment } from '../../interfaces/IserviceRequestCard
 import { AddRetroRemissionRequest } from '../../interfaces/AddRetroRemissionRequest';
 import { PostRefundRetroRemission } from '../../interfaces/PostRefundRetroRemission';
 import { PostIssueRefundRetroRemission } from '../../interfaces/PostIssueRefundRetroRemission';
+import { error } from '@angular/compiler/src/util';
 
 @Injectable({
   providedIn: 'root'
@@ -80,17 +81,14 @@ export class PaymentViewService {
       );
   }
 
-  postPBAaccountPayment(serviceRef: string, body: IserviceRequestPbaPayment): Observable<any> {
-    const url = `${this.paymentLibService.API_ROOT}/service-request/${serviceRef}/card-payments`;
-    return this.https.post(url, body).pipe(
-      catchError(this.errorHandlerService.handleError)
-    );
-  }
   postWays2PayCardPayment(serviceRef: string, body: IserviceRequestCardPayment): Observable<any> {
+    const url = `${this.paymentLibService.API_ROOT}/service-request/${serviceRef}/card-payments`;
+    return this.https.post(url, body);
+  }
+  
+  postPBAaccountPayment(serviceRef: string, body: IserviceRequestPbaPayment): Observable<any> {
     const url = `${this.paymentLibService.API_ROOT}/order/${serviceRef}/credit-account-payment`;
-    return this.https.post(url, body).pipe(
-      catchError(this.errorHandlerService.handleError)
-    );
+    return this.https.post(url, body);
   }
   postBSPayments(body: AllocatePaymentRequest): Observable<any> {
     return this.https.post(`${this.paymentLibService.API_ROOT}/payment-groups/bulk-scan-payments`, body).pipe(
