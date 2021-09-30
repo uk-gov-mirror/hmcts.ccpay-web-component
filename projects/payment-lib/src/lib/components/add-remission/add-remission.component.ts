@@ -143,8 +143,10 @@ export class AddRemissionComponent implements OnInit {
       this.refundService.getRefundReasons().subscribe(
         refundReasons => { 
           this.refundReasons = refundReasons['data'].filter((data) => data.recently_used === false);
+          this.refundReasons = this.refundReasons.filter((data) => data.name !== 'Retrospective remission');
           this.cd.detectChanges();
           this.commonRefundReasons = refundReasons['data'].filter((data) => data.recently_used === true);
+          this.commonRefundReasons.sort((a, b) => a.toString().localeCompare(b));
           this.cd.detectChanges();
         } );
       }

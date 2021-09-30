@@ -7,7 +7,6 @@ import {MatPaginator } from '@angular/material/paginator';
 import { IRefundList } from '../../interfaces/IRefundList';
 import { OrderslistService } from '../../services/orderslist.service';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-
 @Component({
   selector: 'ccpay-table',
   templateUrl: './table.component.html',
@@ -18,25 +17,22 @@ export class TableComponent {
   @Input('STATUS') STATUS: string;
   @Input('errorMessage') errorMessage: string;
   isApprovalFlow: boolean;
-  
   // displayedColumns = ['ccdCaseNumber', 'refundReference', 'reason', 'createBy', 'updateDate', 'Action'];
   displayedColumns = ['ccd_case_number', 'refund_reference', 'reason', 'user_full_name', 'date_updated', 'Action'];
+  
   dataSource: MatTableDataSource<any>;
   userLst;
   actualcount: number;
   count: number;
   refundList: IRefundList[];
-
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-
   constructor(
     private paymentLibComponent: PaymentLibComponent,
     private cdRef: ChangeDetectorRef,
     private OrderslistService: OrderslistService
   ) {}
-
-  ngOnInit() { 
+  ngOnInit() {
     this.errorMessage = this.errorMessage;
     if(this.STATUS.toLowerCase() === 'sent for approval') {
       this.isApprovalFlow = true;
@@ -49,43 +45,40 @@ export class TableComponent {
     if( this.refundList !== undefined) {
     this.userLst = this.refundList.reduce((r,{user_full_name}) => (r[user_full_name]='', r) , {});
      this.userLst = Object.keys(this.userLst);
-     this.userLst.sort((a, b) =>
-   a.localeCompare(b)//using String.prototype.localCompare()
-);  }
+    }
+    this.userLst.sort((a, b) => a.toString().localeCompare(b));
   }
   /**
    * Set the paginator and sort after the view init since this component will
    * be able to query its view for the initialized paginator and sort.
    */
   ngAfterViewInit() {
-   
+    
     this.dataSource.sort = this.sort;
 
-    const sortState: Sort = {active: 'date_updated', direction: 'desc'};
-    this.sort.active = sortState.active;
-    this.sort.direction = sortState.direction;
-    this.sort.sortChange.emit(sortState);
+    //const sortState: Sort = {active: 'date_updated', direction: 'desc'};
+    // this.sort.active = sortState.active;
+    // this.sort.direction = sortState.direction;
+    // this.sort.sortChange.emit(sortState);
     this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
     this.cdRef.detectChanges();
   }
-
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = filterValue;
   }
-
-  selectchange(args){ 
+  selectchange(args){
     this.dataSource.filter = args.target.value;
     this.actualcount = this.dataSource.data.length;
     this.dataSource.paginator = this.paginator;
-  } 
+  }
   goToRefundProcessComponent(refundReference: string, refundDate: IRefundList ) {
     this.paymentLibComponent.refundlistsource = refundDate;
     this.paymentLibComponent.refundReference = refundReference;
     this.paymentLibComponent.viewName = 'process-refund';
   }
-
   goToRefundViewComponent(refundReference: string, refundData: IRefundList ) {
     this.OrderslistService.setRefundView(refundData);
     this.paymentLibComponent.viewName='refundstatuslist';

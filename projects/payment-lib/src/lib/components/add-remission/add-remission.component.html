@@ -292,6 +292,7 @@
                             <div class = "container-fluid">
                               <div class="row">
                               <div class="govuk-radios__item col-md-4" *ngFor="let refund of commonRefundReasons; let i = index;">
+                                <!-- <div *ngIf = "{{refund.name}} !== 'Retrospective remission'"> -->
                                   <input   class="govuk-radios__input" id="{{refund.name}}" name="refundReason" type="radio"
                                   formControlName="refundReason" value={{refund.code}}
                                     (change)="selectRadioButton(refund.name, refund.name)">
@@ -309,6 +310,7 @@
                                     <input class="govuk-input govuk-input--width-10" [ngClass]="{'inline-error-class': isReasonEmpty}" id="reason" aria-label="reason"  name="reason" type="text" aria-describedby="reason" maxlength="30" formControlName="reason">
                                   
                                   </div>
+                                <!-- </div> -->
                               </div>
                               </div>
                             </div>
