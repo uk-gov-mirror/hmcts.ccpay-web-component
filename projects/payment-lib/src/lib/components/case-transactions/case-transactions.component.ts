@@ -70,6 +70,7 @@ export class CaseTransactionsComponent implements OnInit {
   isAddRemissionEnable: boolean = false;
   orderRemissionDetails: any[] = [];
   orderLevelFees: IOrderReferenceFee[] = [];
+  ispaymentGroupApisuccess: boolean = false;
   cpoDetails: any = null;
   orderRef: string;
   orderStatus: string;
