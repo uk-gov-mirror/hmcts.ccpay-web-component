@@ -123,29 +123,6 @@
         <td class="no-border"></td>
         <td class="no-border"></td>
         <td class="no-border">
-          <!--<div class="govuk-form-group govuk-form-group&#45;&#45;mg">
-            <fieldset class="govuk-fieldset">
-              <legend class="govuk-fieldset__legend govuk-fieldset__legend&#45;&#45;m">
-                <span class="govuk-fieldset__heading govuk-fieldset__heading&#45;&#45;fz">
-                  Which system are you using to take the payment?
-                </span>
-              </legend>
-              <div class="govuk-radios govuk-radios&#45;&#45;small">
-                <div class="govuk-radios__item">
-                  <input id="changed-name" class="govuk-radios__input" [(ngModel)]="platForm" type="radio" aria-label="8x8" value="8x8">
-                  <label class="govuk-label govuk-radios__label" for="changed-name">
-                    8x8
-                  </label>
-                </div>
-                <div class="govuk-radios__item">
-                  <input id="changed-name-2" class="govuk-radios__input" [(ngModel)]="platForm" type="radio" aria-label="Antenna" value="Antenna">
-                  <label class="govuk-label govuk-radios__label" for="changed-name-2">
-                    Antenna
-                  </label>
-                </div>
-              </div>
-            </fieldset>
-          </div>-->
         </td>
       </tr>
     </tbody>
@@ -214,4 +191,3 @@
  [paymentGroupRef]="paymentGroupRef"
  (cancelRemission)="cancelRemission()"></ccpay-add-remission>
  <input *ngIf="viewStatus === 'payhub_view' && payhubHtml" #myInput type='hidden' id='iFrameDrivenImageValue' value='PCIPAL'>
-<!--<div *ngIf="viewStatus === 'payhub_view' && payhubHtml" [innerHTML]="payhubHtml | sanitizeHtml" id="payhub-html-id"></div>-->

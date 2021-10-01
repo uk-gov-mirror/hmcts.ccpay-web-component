@@ -67,14 +67,6 @@ export class FeeSummaryComponent implements OnInit {
       //8X8 Retirement code changes
      this.platForm = 'Antenna';
 
-    /* if ((!this.isOldPcipalOff && this.isNewPcipalOff)) {
-      this.platForm = '8x8';
-    } else if ((this.isOldPcipalOff && !this.isNewPcipalOff)) {
-      this.platForm = 'Antenna';
-    } else if ((this.isOldPcipalOff && this.isNewPcipalOff)){
-      this.platForm = '8x8';
-    } */
-
     this.paymentViewService.getBSfeature().subscribe(
       features => {
         let result = JSON.parse(features).filter(feature => feature.uid === BS_ENABLE_FLAG);
@@ -244,22 +236,6 @@ export class FeeSummaryComponent implements OnInit {
       const requestBody = new PaymentToPayhubRequest(this.ccdCaseNumber, this.outStandingAmount, this.caseType),
       antennaReqBody = new PayhubAntennaRequest(this.ccdCaseNumber, this.outStandingAmount, this.caseType);
 
-    //8X8 Retirement code changes
-    /* if(this.platForm === '8x8') {
-      this.paymentViewService.postPaymentToPayHub(requestBody, this.paymentGroupRef).subscribe(
-        response => {
-          this.location.go(`payment-history?view=fee-summary`);
-          this.payhubHtml = response;
-          this.viewStatus = 'payhub_view';
-          this.isBackButtonEnable=false;
-        },
-        (error: any) => {
-          this.errorMessage = error;
-          this.isConfirmationBtnDisabled = false;
-          this.router.navigateByUrl('/pci-pal-failure');
-        }
-      );
-    } else  */
     if(this.platForm === 'Antenna') {
 
       this.paymentViewService.postPaymentAntennaToPayHub(antennaReqBody, this.paymentGroupRef).subscribe(
