@@ -20,8 +20,10 @@ export class PbaPaymentComponent implements OnInit {
   isInSufficiantFund: boolean = false;
   isPBAAccountNotExist: boolean = false;
   isPBAServerError: boolean = false;
+  isGetPBAAccountSucceed: boolean = false;
   selectedPbaAccount: string = '';
   pbaAccountRef: string = '';
+
   isContinueButtondisabled: boolean = true;
   isPBAAccountPaymentSuccess: boolean = false;
   pbaAccountrPaymentResult: any;
@@ -36,6 +38,7 @@ export class PbaPaymentComponent implements OnInit {
     this.paymentViewService.getPBAaccountDetails()
     .subscribe(
       result => {
+        this.isGetPBAAccountSucceed = true;
         this.pbaAccountList = result.organisationEntityResponse.paymentAccount;
       },
       error => {

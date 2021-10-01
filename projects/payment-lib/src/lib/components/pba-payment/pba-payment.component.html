@@ -54,10 +54,17 @@
     </div>
 
   </div>
-<ng-container *ngIf="pbaAccountList?.length <= 0 && !errorMsg">
+<ng-container *ngIf="pbaAccountList?.length <= 0 && !errorMsg && isGetPBAAccountSucceed">
   <div class="govuk-width-container">
     <main class="govuk-main-wrapper govuk-main-wrapper--l" id="main-content" role="main">
       <div class="govuk-grid-row">
+        <div class="govuk-warning-text">
+          <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+          <strong class="govuk-warning-text__text">
+            <span class="govuk-warning-text__assistive">Warning</span>
+            <h2 class="warning-heading-m">You don’t have a registered PBA.</h2>
+          </strong>
+        </div>
         <div class="pba-payments-margin-top-10">
           <h2 class="heading-medium">Pay by credit or debit card</h2>
           <p class="govuk-body pba-payments-19-font">
