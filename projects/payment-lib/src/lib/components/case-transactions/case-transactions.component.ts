@@ -86,13 +86,14 @@ export class CaseTransactionsComponent implements OnInit {
   test: boolean;
   isPBA: boolean = false;
   isIssueRefunfBtnEnable: boolean = false;
-  isAddRemissionBtnEnabled: boolean = false;  
+  isAddRemissionBtnEnabled: boolean = false;
   isRefundRemissionBtnEnable: boolean = false;
   allowedRolesToAccessRefund = ['payments-refund-approver', 'payments-refund'];
   isEligible4PBAPayment = ['pui-finance-manager','caseworker', 'pui-user-manager', 'pui-organisation-manager', 'pui-case-manager'];
   currentDate = new Date();
   isFromServiceRequestPage: boolean;
   navigationpage: string;
+  remissionFeeAmt: number;
   constructor(private router: Router,
     private paymentViewService: PaymentViewService,
     private bulkScaningPaymentService: BulkScaningPaymentService,
@@ -102,10 +103,17 @@ export class CaseTransactionsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.OrderslistService.getpaymentPageView().subscribe((data)=> this.paymentView = data);
-    this.OrderslistService.getnavigationPageValue().subscribe((data) => this.navigationpage = data);
-    if (this.paymentView !== null && this.paymentView.payment_group_reference !== undefined && this.navigationpage ==='paymentdetailspage') {
-      this.goToPayementView(this.paymentView.payment_group_reference, this.paymentView.reference, this.paymentView.method) ;
+    this.navigationpage  = ''
+;    if(this.OrderslistService.getpaymentPageView() !== null) {
+      this.OrderslistService.getpaymentPageView().subscribe((data) => this.paymentView = data);
+    }
+    if(this.OrderslistService.getnavigationPageValue() !== null) {
+      this.OrderslistService.getnavigationPageValue().subscribe((data) => this.navigationpage = data);
+    }
+    
+    
+    if (this.paymentView !== undefined && this.paymentView !== null && this.paymentView.payment_group_reference !== undefined && this.navigationpage === 'paymentdetailspage') {
+      this.goToPayementView(this.paymentView.payment_group_reference, this.paymentView.reference, this.paymentView.method);
     }
     this.isGrpOutstandingAmtPositive = false;
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
@@ -132,6 +140,7 @@ export class CaseTransactionsComponent implements OnInit {
 
       this.caseTransactionsService.getPaymentGroups(this.ccdCaseNumber).subscribe(
         paymentGroups => {
+          this.isAnyFeeGroupAvilable =true;
           this.paymentGroups = paymentGroups['payment_groups'];
           this.calculateAmounts();
           this.calculateOrderFeesAmounts();
@@ -145,17 +154,17 @@ export class CaseTransactionsComponent implements OnInit {
           this.paymentViewService.getPartyDetails(this.ccdCaseNumber).subscribe(
             response => {
               this.cpoDetails = JSON.parse(response).data.content[0];
-              
+
             },
             (error: any) => {
-              this.errorMessage = <any>error;
+              this.errorMessage = <any>error.replace(/"/g,"");
               this.isCPODown = true;
             }
           );
 
         },
         (error: any) => {
-          this.errorMessage = <any>error;
+          this.errorMessage = <any>error.replace(/"/g,"");
           this.isAnyFeeGroupAvilable = false;
           this.setDefaults();
         }
@@ -163,6 +172,7 @@ export class CaseTransactionsComponent implements OnInit {
     } else {
       this.caseTransactionsService.getPaymentGroups(this.ccdCaseNumber).subscribe(
         paymentGroups => {
+          this.isAnyFeeGroupAvilable =true;
           this.paymentGroups = paymentGroups['payment_groups'];
           this.calculateAmounts();
           this.calculateOrderFeesAmounts();
@@ -173,7 +183,7 @@ export class CaseTransactionsComponent implements OnInit {
 
             },
             (error: any) => {
-              this.errorMessage = <any>error;
+              this.errorMessage = <any>error.replace(/"/g,"");
               this.setDefaults();
               this.isCPODown = true;
             }
@@ -181,15 +191,19 @@ export class CaseTransactionsComponent implements OnInit {
 
         },
         (error: any) => {
-          this.errorMessage = <any>error;
+          this.errorMessage = <any>error.replace(/"/g,"");
           this.isAnyFeeGroupAvilable = false;
           this.setDefaults();
         }
       );
     }
     this.checkForExceptionRecord();
-    this.OrderslistService.getisFromServiceRequestPages().subscribe((data) => this.isFromServiceRequestPage = data)
-   
+    
+    if(this.OrderslistService.getisFromServiceRequestPages() !== null) {
+      this.OrderslistService.getisFromServiceRequestPages().subscribe((data) => this.isFromServiceRequestPage = data);
+    }
+  
+
   }
 
   setDefaults(): void {
@@ -296,10 +310,10 @@ export class CaseTransactionsComponent implements OnInit {
 
       //this.orderLevelFees.push({orderRefId:paymentGroup['payment_group_reference'],orderTotalFees: this.orderFeesTotal,orderStatus: this.orderStatus,orderParty:'Santosh', orderCCDEvent:'Case Creation',orderCreated: new Date(), orderAddBtnEnable: this.orderAddBtnEnable}); this.cpoDetails['createdTimestamp']
       if (this.cpoDetails !== null) {
-        this.orderLevelFees.push({ orderRefId: paymentGroup['payment_group_reference'], orderTotalFees: this.orderFeesTotal, orderStatus: this.orderStatus, orderParty: this.cpoDetails['responsibleParty'], orderCCDEvent: this.cpoDetails['action'], orderCreated:  paymentGroup['date_created'], orderAddBtnEnable: this.orderAddBtnEnable });
+        this.orderLevelFees.push({ orderRefId: paymentGroup['payment_group_reference'], orderTotalFees: this.orderFeesTotal, orderStatus: this.orderStatus, orderParty: this.cpoDetails['responsibleParty'], orderCCDEvent: this.cpoDetails['action'], orderCreated: paymentGroup['date_created'], orderAddBtnEnable: this.orderAddBtnEnable });
 
       } else {
-        this.orderLevelFees.push({ orderRefId: paymentGroup['payment_group_reference'], orderTotalFees: this.orderFeesTotal, orderStatus: this.orderStatus, orderParty: '', orderCCDEvent: '', orderCreated:  paymentGroup['date_created'], orderAddBtnEnable: this.orderAddBtnEnable });
+        this.orderLevelFees.push({ orderRefId: paymentGroup['payment_group_reference'], orderTotalFees: this.orderFeesTotal, orderStatus: this.orderStatus, orderParty: '', orderCCDEvent: '', orderCreated: paymentGroup['date_created'], orderAddBtnEnable: this.orderAddBtnEnable });
       }
 
       if (this.orderStatus !== 'Paid') {
@@ -318,7 +332,7 @@ export class CaseTransactionsComponent implements OnInit {
   };
 
   goToOrderViewDetailSection(orderReferenceObj: any) {
-    if (this.isFromServiceRequestPage) { 
+    if (this.isFromServiceRequestPage) {
       this.OrderslistService.setOrderRefId(orderReferenceObj);
       this.orderRef = orderReferenceObj;
     } else {
@@ -331,7 +345,7 @@ export class CaseTransactionsComponent implements OnInit {
     this.orderTotalPayments = 0.00;
     this.orderPendingPayments = 0.00;
 
-    this.orderDetail = this.paymentGroups.filter(x => x.payment_group_reference ===  this.orderRef);
+    this.orderDetail = this.paymentGroups.filter(x => x.payment_group_reference === this.orderRef);
     this.orderDetail.forEach(orderDetail => {
       if (orderDetail.fees) {
         orderDetail.fees.forEach(fee => {
@@ -353,7 +367,7 @@ export class CaseTransactionsComponent implements OnInit {
       }
     });
     this.orderPendingPayments = (this.orderFeesTotal - this.orderRemissionTotal) - this.orderTotalPayments;
-   // this.orderRef = orderReferenceObj.orderRefId;
+    // this.orderRef = orderReferenceObj.orderRefId;
     if (this.orderPendingPayments <= 0.00) {
       this.orderStatus = 'Paid';
     } else if (this.orderFeesTotal > 0 && (this.orderTotalPayments > 0 || this.orderRemissionTotal > 0) && (this.orderTotalPayments < this.orderPendingPayments)) {
@@ -375,22 +389,13 @@ export class CaseTransactionsComponent implements OnInit {
   }
 
   redirectToOrderFeeSearchPage(event: any, orderef: any) {
+    if(orderef.orderAddBtnEnable) {
     event.preventDefault();
-    // if(!this.isAnyFeeGroupAvilable || this.isTurnOff) {
-    // let url = this.isBulkScanEnable ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
-    //   url += this.isTurnOff ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
-    //   url += this.isStrategicFixEnable ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
-    //   url +=`&caseType=${this.caseType}`
-    //   url += this.isNewPcipalOff ? '&isNewPcipalOff=Enable' : '&isNewPcipalOff=Disable';
-    //   url += this.isOldPcipalOff ? '&isOldPcipalOff=Enable' : '&isOldPcipalOff=Disable';
-
-    // this.router.navigateByUrl(`/fee-search?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}${url}`);
-    // } else {
     this.paymentLibComponent.bspaymentdcn = null;
     this.paymentLibComponent.paymentGroupReference = orderef;
     this.paymentLibComponent.isTurnOff = this.isTurnOff;
     this.paymentLibComponent.viewName = 'fee-summary';
-    //}
+    }
   }
 
   goToCaseTransationPage(event: any) {
@@ -398,16 +403,6 @@ export class CaseTransactionsComponent implements OnInit {
     this.isFromServiceRequestPage = false;
     this.viewStatus = 'main'
     this.paymentLibComponent.viewName = 'case-transactions';
-
-    //  this.paymentViewService.getBSfeature().subscribe(
-    //    features => {
-    //      let result = JSON.parse(features).filter(feature => feature.uid === BS_ENABLE_FLAG);
-    //      this.paymentLibComponent.ISBSENABLE = result[0] ? result[0].enable : false;
-    //    },
-    //    err => {
-    //      this.paymentLibComponent.ISBSENABLE = false;
-    //    }
-    //  );
   }
 
 
@@ -618,6 +613,7 @@ export class CaseTransactionsComponent implements OnInit {
   }
 
   addRemission(fee: IFee) {
+    if(this.chkForAddRemission(fee.code)) {
     this.feeId = fee;
     this.viewStatus = 'addremission';
     this.paymentViewService.getApportionPaymentDetails(this.payment.reference).subscribe(
@@ -632,10 +628,12 @@ export class CaseTransactionsComponent implements OnInit {
       },
       (error: any) => this.errorMessage = error
     );
+    }
   }
 
-  addRefundForRemission(payment: IPayment, remission: IRemission[]) {
+  addRefundForRemission(payment: IPayment, remission: IRemission[],fees:any) {
     this.viewStatus = 'addrefundforremission';
+ 
     this.payment = payment;
     this.paymentViewService.getApportionPaymentDetails(this.payment.reference).subscribe(
       paymentGroup => {
@@ -645,6 +643,7 @@ export class CaseTransactionsComponent implements OnInit {
           (paymentGroupObj => paymentGroupObj['reference'].includes(this.payment.reference));
         this.payment = this.paymentGroup.payments[0];
         this.remissions = remission;
+        this.remissionFeeAmt = fees.filter(data=>data.code === this.remissions['fee_code'])[0].net_amount;
         // const paymentAllocation = this.paymentGroup.payments[0].payment_allocation;
         // this.isStatusAllocated = paymentAllocation.length > 0 && paymentAllocation[0].allocation_status === 'Allocated' || paymentAllocation.length === 0;
       },
@@ -655,13 +654,6 @@ export class CaseTransactionsComponent implements OnInit {
   redirectToremissionPage(event: any) {
     event.preventDefault();
     this.paymentLibComponent.viewName = 'remission'
-    //   let url = this.isBulkScanEnable ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
-    //   url += this.isTurnOff ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
-    //   url += this.isStrategicFixEnable ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
-    //   url += this.isNewPcipalOff ? '&isNewPcipalOff=Enable' : '&isNewPcipalOff=Disable';
-    //   url += this.isOldPcipalOff ? '&isOldPcipalOff=Enable' : '&isOldPcipalOff=Disable';
-    //   url +=`&caseType=${this.caseType}`
-    // this.router.navigateByUrl(`/fee-search?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}${url}`);
   }
 
   redirectToReportsPage(event: any) {
@@ -742,9 +734,11 @@ export class CaseTransactionsComponent implements OnInit {
   }
 
   issueRefund(payment: IPayment) {
+    if(this.chkIssueRefundBtnEnable(payment)) {
     this.viewStatus = 'issuerefund';
     this.payment = payment;
     this.isRefundRemission = true;
+    }
   }
 
   chkForAddRemission(feeCode: string): boolean {
@@ -780,8 +774,8 @@ export class CaseTransactionsComponent implements OnInit {
   }
 
   chkIssueRefundBtnEnable(payment: IPayment): boolean {
-    if (this.check4AllowedRoles2AccessRefund() && this.allowFurtherAccessAfter4Days(payment) && 
-    payment.method === 'payment by account' && payment.status.toLocaleLowerCase() === 'success') {
+    if (this.check4AllowedRoles2AccessRefund() && this.allowFurtherAccessAfter4Days(payment) &&
+      payment.method === 'payment by account' && payment.status.toLocaleLowerCase() === 'success') {
       this.isIssueRefunfBtnEnable = true;
     }
     if (this.isIssueRefunfBtnEnable) {
@@ -795,7 +789,7 @@ export class CaseTransactionsComponent implements OnInit {
     this.orderDetail.forEach(orderDetail => {
       if (orderDetail.payments) {
         orderDetail.payments.forEach(payment => {
-          if (payment.method.toLocaleLowerCase() === 'payment by account' && payment.status.toLocaleLowerCase() === 'success') {
+          if (payment.method.toLocaleLowerCase() === 'payment by account' && payment.status.toLocaleLowerCase() === 'success' && this.allowFurtherAccessAfter4Days(payment)) {
             this.isRefundRemissionBtnEnable = true;
           }
         });
@@ -819,10 +813,9 @@ export class CaseTransactionsComponent implements OnInit {
     );
   }
   allowFurtherAccessAfter4Days = (payment: IPayment): boolean => {
-    let tmp4DayAgo = this.currentDate;
+    let tmp4DayAgo = new Date();
     tmp4DayAgo.setDate(tmp4DayAgo.getDate() - 4);
-    let paymentDate = new Date(payment.date_created);
-    return tmp4DayAgo >= paymentDate;
+    return tmp4DayAgo >= new Date(payment.date_created);
   }
   loadPBAAccountPage(orderRef: IPayment) {
     this.paymentLibComponent.pbaPayOrderRef = orderRef;

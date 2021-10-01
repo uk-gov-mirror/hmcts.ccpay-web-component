@@ -38,8 +38,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+// import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+// import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RefundStatusComponent } from './components/refund-status/refund-status.component';
 import { PbaPaymentComponent } from './components/pba-payment/pba-payment.component';
 
@@ -54,8 +54,8 @@ import { PbaPaymentComponent } from './components/pba-payment/pba-payment.compon
     MatSortModule,
     MatFormFieldModule,
     MatInputModule,
-    BrowserAnimationsModule,
-    NoopAnimationsModule
+    // BrowserAnimationsModule,
+    // NoopAnimationsModule
   ],
   declarations: [
     PaymentLibComponent,

@@ -60,7 +60,7 @@ export class OrderslistService {
   }
   getFeeExists(){
     return this.feeExists;
-  }
+  } 
 
   setisFromServiceRequestPage(isFromServiceRequestPage: boolean){
     this.isFromServiceRequestPage.next(isFromServiceRequestPage);

@@ -80,3 +80,46 @@
 .govuk-input--width-10 {
   max-width: 36ex;
 }
+
+.col-14 {
+  width: 14% !important;;
+}
+
+.col-10 {
+  width: 10% !important;;
+}
+.col-11 {
+  width: 11% !important;;
+}
+
+.col-18 {
+  width: 18% !important;;
+}
+
+.col-21 {
+  width: 21% !important;;
+}
+
+.col-9 {
+  width: 9% !important;;
+}
+
+.col-15 {
+  width: 15% !important;;
+}
+
+.col-16 {
+  width: 16% !important;;
+}
+.col-25 {
+  width: 25% !important;;
+}
+.col-24 {
+  width: 24% !important;;
+}
+.govuk-error-summary__title {
+  font-size: 24px !important;
+}
+.govuk-error-summary__body {
+  font-size: 19px !important;
+}

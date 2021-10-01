@@ -4,6 +4,8 @@ import {RefundsService} from '../../services/refunds/refunds.service';
 import { IRefundAction } from '../../interfaces/IRefundAction';
 import { IRefundList } from '../../interfaces/IRefundList';
 import { IRefundRejectReason } from '../../interfaces/IRefundRejectReason';
+import { OrderslistService } from '../../services/orderslist.service';
+import { PaymentLibComponent } from '../../payment-lib.component';
 
 @Component({
   selector: 'ccpay-process-refund',
@@ -35,10 +37,13 @@ export class ProcessRefundComponent implements OnInit {
   isReasonEmpty: boolean = false;
   isReasonInvalid: boolean = false;
   successMsg: string = null;
+  navigationpage: string;
 
   isConfirmButtondisabled: boolean = true;
   constructor(private RefundsService: RefundsService,
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder,
+              private OrderslistService: OrderslistService,
+              private paymentLibComponent: PaymentLibComponent,) {
   }
 
   ngOnInit() {
@@ -190,6 +195,43 @@ export class ProcessRefundComponent implements OnInit {
       showError: isErrorExist
     };
   }
+  loadRefundListPage() {
+    this.OrderslistService.getnavigationPageValue().subscribe((data) => this.navigationpage = data);
+    if (this.navigationpage === 'casetransactions') {
+      //this.loadCaseTransactionPage();
+    } else {
+      this.paymentLibComponent.viewName = 'refund-list';
+    }
+  }
+ redirecttoRefundListPage() {
+  window.location.href='/refund-list?takePayment=false&refundlist=true';
+ }
+  // loadCaseTransactionPage() {
+  //   this.paymentLibComponent.isRefundStatusView = false;
+  //   this.paymentLibComponent.TAKEPAYMENT = true;
+  //   this.paymentLibComponent.viewName = 'case-transactions';
+  //   this.paymentViewService.getBSfeature().subscribe(
+  //     features => {
+  //       let result = JSON.parse(features).filter(feature => feature.uid === BS_ENABLE_FLAG);
+  //       this.paymentLibComponent.ISBSENABLE = result[0] ? result[0].enable : false;
+  //     },
+  //     err => {
+  //       this.paymentLibComponent.ISBSENABLE = false;
+  //     }
+  //   );
+
+  //   let partUrl = `selectedOption=${this.paymentLibComponent.SELECTED_OPTION}`;
+  //   partUrl += this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
+  //   partUrl += this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
+  //   partUrl += this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
+  //   partUrl += this.paymentLibComponent.ISSFENABLE ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
+  //   partUrl += `&caseType=${this.paymentLibComponent.CASETYPE}`;
+  //   partUrl += this.isNewPcipalOff ? '&isNewPcipalOff=Enable' : '&isNewPcipalOff=Disable';
+  //   partUrl += this.isOldPcipalOff ? '&isOldPcipalOff=Enable' : '&isOldPcipalOff=Disable';
+  //   let url = `/payment-history/${this.ccdCaseNumber}?view=case-transactions&takePayment=true&${partUrl}`;
+  //   this.router.navigateByUrl(url);
+  // }
+
   resetForm(vals, field) {
     if(field==='action' || field==='all') {
       this.refundActionsHasError = vals[0];

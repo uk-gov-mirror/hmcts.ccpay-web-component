@@ -311,3 +311,10 @@ th, td {
 .of-visible {
     overflow: visible !important;
 }
+.col-25 {
+    width:25% !important;
+}
+
+.col-51 {
+    width:51% !important;
+}

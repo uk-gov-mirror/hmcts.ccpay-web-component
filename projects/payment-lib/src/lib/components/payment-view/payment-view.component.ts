@@ -40,6 +40,9 @@ export class PaymentViewComponent implements OnInit {
   isAddFeeBtnEnabled: boolean = false;
   isIssueRefunfBtnEnable: boolean = false;
   allowedRolesToAccessRefund = ['payments-refund-approver', 'payments-refund'];
+  remissions: IRemission[] = [];
+  remissionFeeAmt: number;
+  isRefundRemissionBtnEnable: boolean;
 
   constructor(private paymentViewService: PaymentViewService,
     private paymentLibComponent: PaymentLibComponent,
@@ -99,6 +102,7 @@ export class PaymentViewComponent implements OnInit {
   goToCaseTransationPage(event: any) {
     event.preventDefault();
     this.OrderslistService.setnavigationPage('casetransactions');
+    this.OrderslistService.setisFromServiceRequestPage(false);
     this.paymentLibComponent.viewName = 'case-transactions';
     this.paymentViewService.getBSfeature().subscribe(
       features => {
@@ -112,6 +116,7 @@ export class PaymentViewComponent implements OnInit {
   }
 
   addRemission(fee: IFee) {
+    if(this.chkForAddRemission(fee.code)) {
     this.feeId = fee;
     this.paymentViewService.getApportionPaymentDetails(this.paymentGroup.payments[0].reference).subscribe(
       paymentGroup => {
@@ -127,12 +132,49 @@ export class PaymentViewComponent implements OnInit {
       },
       (error: any) => this.errorMessage = error
     );
+    }
+  }
+
+  addRefundForRemission(payment: IPayment, remission: IRemission[],fees:any) {
+ if(this.chkIsRefundRemissionBtnEnable()) {
+    this.payment = payment;
+    this.paymentViewService.getApportionPaymentDetails(this.payment.reference).subscribe(
+      paymentGroup => {
+        this.paymentGroup = paymentGroup;
+
+        this.paymentGroup.payments = this.paymentGroup.payments.filter
+          (paymentGroupObj => paymentGroupObj['reference'].includes(this.payment.reference));
+        this.payment = this.paymentGroup.payments[0];
+        this.remissions = remission;
+        this.remissionFeeAmt = fees.filter(data=>data.code === this.remissions['fee_code'])[0].net_amount;
+        this.viewStatus = 'addrefundforremission';
+        // const paymentAllocation = this.paymentGroup.payments[0].payment_allocation;
+        // this.isStatusAllocated = paymentAllocation.length > 0 && paymentAllocation[0].allocation_status === 'Allocated' || paymentAllocation.length === 0;
+      },
+      (error: any) => this.errorMessage = error
+    );
+ }
+  }
+
+  chkIsRefundRemissionBtnEnable(): boolean {
+    this.paymentGroup.payments.forEach(payment => {
+          if (payment.method.toLocaleLowerCase() === 'payment by account' && payment.status.toLocaleLowerCase() === 'success' && this.allowFurtherAccessAfter4Days(payment)) {
+            this.isRefundRemissionBtnEnable = true;
+          }
+        });
+    if (this.isRefundRemissionBtnEnable) {
+      return true;
+    } else {
+      return false;
+    };
   }
 
   issueRefund(paymentgrp: IPaymentGroup) {
+    if(this.chkIssueRefundBtnEnable(paymentgrp.payments[0])) {
     this.paymentGroup = paymentgrp;
     this.viewStatus = 'issuerefund';
     this.isRefundRemission = true;
+    }
   }
 
   getRemissionByFeeCode(feeCode: string, remissions: IRemission[]): IRemission {

@@ -2,13 +2,13 @@
 <div class="govuk-width-container">
 
   <main class="govuk-main-wrapper govuk-!-padding-top-0" [ngClass]="{'govuk-radios__conditional--hidden': isSuccesspageEnable}" id="main-content" role="main">
-    <div class="govuk-breadcrumbs">
+    <!-- <div class="govuk-breadcrumbs">
       <ol class="govuk-breadcrumbs__list">
         <li class="govuk-breadcrumbs__list-item">
           <a href="/refund-list?takePayment=false&refundlist=true" class="govuk-back-link">Back</a>
         </li>
       </ol>
-    </div>
+    </div> -->
     <div *ngIf="errorMessage.showError">
       <div class="error-summary" role="group" aria-labelledby="failure-error-summary-heading" tabindex="-1">
         <h2 class="heading-medium error-summary-heading" id="failure-error-summary-heading">
@@ -32,24 +32,24 @@
 
         <tr class="section">
           <td class="bold tb-col-w">Payment to be refunded</td>
-          <td>	{{refundlistsource.refund_reference}} (£{{refundlistsource.amount}})</td>
+          <td>	{{refundlistsource?.refund_reference}} ({{refundlistsource.amount  | currency :'GBP':'symbol':'1.2-2'  }})</td>
         </tr>
         <tr class="section">
           <td class="bold tb-col-w">Reason for refund</td>
-          <td>	{{refundlistsource.reason}}</td>
+          <td>	{{refundlistsource?.reason}}</td>
         </tr>
         <tr class="section">
             <td class="bold tb-col-w">Amount to be refunded</td>
-            <td>{{refundlistsource.amount | currency :'GBP':'symbol':'1.2-2' }}</td>
+            <td>{{refundlistsource?.amount | currency :'GBP':'symbol':'1.2-2' }}</td>
         </tr>
         <tr class="section">
             <td class="bold tb-col-w">Submitted by</td>
-            <td>{{refundlistsource.user_full_name}}</td>
+            <td>{{refundlistsource?.user_full_name}}</td>
 
         </tr>
         <tr class="section">
             <td class="bold tb-col-w">Date submitted</td>
-            <td>	{{refundlistsource.date_created | date:'d MMMM yyyy' }}</td>
+            <td>	{{refundlistsource?.date_created | date:'d MMMM yyyy' }}</td>
         </tr>
 
         </tbody>
@@ -92,12 +92,6 @@
                 <label class="govuk-label process-refund-font" for="contact-by-text">
                   Add a reason
                 </label>
-                <textarea class="govuk-textarea govuk-!-width-one-third"
-                [ngClass]="{'inline-error-class': isReasonFieldEmpty || isReasonFieldInvalid || reasonFieldMinHasError || reasonFieldMaxHasError}"
-                  id="sendmeback"
-                  name="sendMeBackField" 
-                  formControlName="sendMeBackField"
-                rows="5"></textarea>
                 <p class="inline-error-message"
                 *ngIf="isReasonFieldEmpty || isReasonFieldInvalid || reasonFieldMinHasError || reasonFieldMaxHasError">
                 <span *ngIf="isReasonFieldEmpty">Add a reason</span>
@@ -105,6 +99,13 @@
                 <span *ngIf="reasonFieldMinHasError">Reason should be at least 3 characters.</span>
                 <span *ngIf="reasonFieldMaxHasError">Reason should be 255 characters or under.</span>
               </p>
+                <textarea class="govuk-textarea govuk-!-width-one-third"
+                [ngClass]="{'inline-error-class': isReasonFieldEmpty || isReasonFieldInvalid || reasonFieldMinHasError || reasonFieldMaxHasError}"
+                  id="sendmeback"
+                  name="sendMeBackField" 
+                  formControlName="sendMeBackField"
+                rows="5"></textarea>
+              
               </div>
 
             </div>
@@ -154,12 +155,39 @@
       
         </fieldset>
       </div>
+
+      <div class="govuk-button-group">
+        <button (click)="redirecttoRefundListPage()" class="govuk-button govuk-button--secondary marginright"> Previous</button>
+        <button (click)="processRefundSubmit()" class="govuk-button button"
+          data-module="govuk-button">
+          Submit 
+        </button>
+      <br/><br/>
+    </div>
+   
+  <div class="govuk-button-group margin">
+
+  <p><a (click)="loadRefundListPage()" class="govuk-link" data-module="govuk-button">Cancel</a></p>
+</div>
 </form>
   </div>
-  <button class="govuk-button button-margin--left25" data-module="govuk-button" (click)="processRefundSubmit()">
+ 
+<!--   
+  <div class="govuk-button-group">
+   
+    <button class="govuk-button govuk-button--secondary"  (click)="redirecttoRefundListPage()">Previous</button>
+    <button  (click)="processRefundSubmit()" class="govuk-button button"
+      data-module="govuk-button">
+      Submit
+    </button>
+  <div><a (click)="loadRefundListPage()" class="govuk-link" data-module="govuk-button">Cancel</a></div>
+  </div> -->
+
+  <!-- <button class="govuk-button button-margin--left25" data-module="govuk-button" (click)="processRefundSubmit()">
     Submit  
-  </button>
+  </button> -->
   </main>
+ 
   <main class="govuk-main-wrapper govuk-main-wrapper--l success-page-padding--top25" [ngClass]="{'govuk-radios__conditional--hidden': !isSuccesspageEnable}" id="main-content" role="main" >
     <div class="govuk-grid-row">
         <div class="govuk-panel govuk-panel-refund--confirmation">

@@ -20,7 +20,7 @@ export class StatusHistoryComponent implements OnInit {
   ngOnInit() {
     this.statusHistoryService.getPaymentStatusesByReference(this.paymentLibComponent.paymentReference, this.paymentLibComponent.paymentMethod).subscribe(
       statuses => this.statuses = statuses,
-      (error: any) => this.errorMessage = <any>error
+      (error: any) => this.errorMessage = <any>error.replace(/"/g,"")
     );
   }
 
