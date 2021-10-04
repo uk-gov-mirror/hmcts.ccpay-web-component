@@ -83,7 +83,9 @@ export class PaymentViewService {
 
   postWays2PayCardPayment(serviceRef: string, body: IserviceRequestCardPayment): Observable<any> {
     const url = `${this.paymentLibService.API_ROOT}/service-request/${serviceRef}/card-payments`;
-    return this.https.post(url, body);
+    return this.https.post(url, body).pipe(
+      catchError(this.errorHandlerService.handleError)
+    );
   }
   
   postPBAaccountPayment(serviceRef: string, body: IserviceRequestPbaPayment): Observable<any> {
