@@ -13,7 +13,7 @@
             If you know your organisation has a PBA, try again.
           </li>
           <li class="pba-payments-error-16-font">
-            You can also <a href="#">pay by credit or debit card</a>.
+            You can also <a href="javascript:void(0)" (click)="cardPayment()">pay by credit or debit card</a>.
           </li>
         </ul>
       </div>
@@ -74,7 +74,7 @@
             you can also pay by credit or debit card if you need to pay now
           </p>
           <p class="govuk-body">
-            <button type="submit" class="button pba-payments-19-font pba-payments-20-margin">
+            <button type="submit" (click)="cardPayment()" class="button pba-payments-19-font pba-payments-20-margin">
               Pay by card
             </button>
           </p>
