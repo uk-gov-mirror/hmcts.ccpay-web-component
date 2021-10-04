@@ -76,7 +76,7 @@ export class PbaPaymentComponent implements OnInit {
       },
       e => {
         const patt = new RegExp(/CA-E[0-9]{4}/gm);
-        const errorCode = patt.exec(e)[0];
+        const errorCode = patt.exec(e) ? patt.exec(e)[0] : 'serverError';
 
         if(e.status == '402' && errorCode === 'CA-E0001') {
           this.isInSufficiantFund = true;
