@@ -75,9 +75,12 @@ export class PbaPaymentComponent implements OnInit {
         this.isPBAAccountPaymentSuccess = true;
       },
       e => {
-        if(e.status == '403') {
+        const patt = new RegExp(/CA-E[0-9]{4}/gm);
+        const errorCode = patt.exec(e)[0];
+
+        if(e.status == '402' && errorCode === 'CA-E0001') {
           this.isInSufficiantFund = true;
-        } else if(e.status == '404') {
+        } else if(e.status == '402' && (errorCode === 'CA-E0004' ||  errorCode === 'CA-E0003')) {
           this.isPBAAccountNotExist = true;
         } else {
           this.isPBAServerError = true;
