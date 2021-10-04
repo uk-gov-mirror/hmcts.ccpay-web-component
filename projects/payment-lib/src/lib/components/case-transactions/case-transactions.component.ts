@@ -34,8 +34,6 @@ export class CaseTransactionsComponent implements OnInit {
   dcnNumber: string;
   paymentRef: string;
   isTurnOff: boolean;
-  isNewPcipalOff: boolean;
-  isOldPcipalOff: boolean;
   isStrategicFixEnable: boolean;
   isAddFeeBtnEnabled: boolean = true;
   isExceptionRecord: boolean = false;
@@ -74,8 +72,6 @@ export class CaseTransactionsComponent implements OnInit {
     this.dcnNumber = this.paymentLibComponent.DCN_NUMBER;
     this.selectedOption = this.paymentLibComponent.SELECTED_OPTION.toLocaleLowerCase();
     this.isTurnOff = this.paymentLibComponent.ISTURNOFF;
-    this.isNewPcipalOff = this.paymentLibComponent.ISNEWPCIPALOFF;
-    this.isOldPcipalOff = this.paymentLibComponent.ISOLDPCIPALOFF;
     this.isStrategicFixEnable = this.paymentLibComponent.ISSFENABLE;
     if(!this.isTurnOff) {
       if(this.lsCcdNumber !== this.ccdCaseNumber) {
@@ -181,7 +177,7 @@ checkForExceptionRecord(): void {
       paymentsTotal = 0.00,
       remissionsTotal = 0.00,
       nonOffLinePayment = 0.00;
-  
+
     this.paymentGroups.forEach(paymentGroup => {
       if (paymentGroup.fees) {
         paymentGroup.fees.forEach(fee => {
@@ -344,7 +340,7 @@ checkForExceptionRecord(): void {
             paymentGroup.remissions.forEach(remission => {
               remissionsTotal = remissionsTotal + remission.hwf_amount;
             });
-          }  
+          }
             grpOutstandingAmount = (feesTotal - remissionsTotal) - paymentsTotal;
             if (grpOutstandingAmount < 0) {
               if(totalRefundAmount === 0) {
@@ -371,9 +367,7 @@ checkForExceptionRecord(): void {
     let url = this.isBulkScanEnable ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
       url += this.isTurnOff ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
       url += this.isStrategicFixEnable ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
-      url +=`&caseType=${this.caseType}`
-      url += this.isNewPcipalOff ? '&isNewPcipalOff=Enable' : '&isNewPcipalOff=Disable';
-      url += this.isOldPcipalOff ? '&isOldPcipalOff=Enable' : '&isOldPcipalOff=Disable';
+      url +=`&caseType=${this.caseType}`;
 
     this.router.navigateByUrl(`/fee-search?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}${url}`);
     } else {
@@ -415,7 +409,7 @@ checkForExceptionRecord(): void {
     } else {
       if(this.isTurnOff) {
         this.isAddFeeBtnEnabled = true;
-      }      
+      }
       this.isUnprocessedRecordSelected = false;
     }
   }
