@@ -118,7 +118,7 @@
           </table>
         </td>
       </tr>
-      <tr class="govuk-table__row" *ngIf="!bsPaymentDcnNumber && isOldPcipalOff && isNewPcipalOff">
+      <tr class="govuk-table__row" *ngIf="!bsPaymentDcnNumber">
         <td class="no-border"></td>
         <td class="no-border"></td>
         <td class="no-border"></td>
@@ -183,8 +183,6 @@
 <ccpay-add-remission *ngIf="viewStatus === 'add_remission' && currentFee"
  [isTurnOff]="isTurnOff"
  [isStrategicFixEnable]="isStrategicFixEnable"
- [isOldPcipalOff]="isOldPcipalOff"
- [isNewPcipalOff]="isNewPcipalOff"
  [fee]="currentFee"
  [caseType]="caseType"
  [ccdCaseNumber]="ccdCaseNumber"

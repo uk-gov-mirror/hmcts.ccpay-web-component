@@ -19,8 +19,6 @@ export class AddRemissionComponent implements OnInit {
   @Input() caseType: string;
   @Input() paymentGroupRef: string;
   @Input() isTurnOff: boolean;
-  @Input() isOldPcipalOff: boolean;
-  @Input() isNewPcipalOff: boolean;
   @Input() isStrategicFixEnable: boolean;
   @Output() cancelRemission: EventEmitter<void> = new EventEmitter();
 
@@ -62,7 +60,7 @@ export class AddRemissionComponent implements OnInit {
   addRemission() {
     this.resetRemissionForm([false, false, false, false, false], 'All');
     const remissionctrls=this.remissionForm.controls,
-      isRemissionLessThanFee = this.fee.calculated_amount > remissionctrls.amount.value; 
+      isRemissionLessThanFee = this.fee.calculated_amount > remissionctrls.amount.value;
     if (this.remissionForm.dirty && this.remissionForm.valid && isRemissionLessThanFee) {
       this.viewStatus = 'confirmation';
     }else {
@@ -107,8 +105,6 @@ export class AddRemissionComponent implements OnInit {
         if (JSON.parse(response).success) {
           let LDUrl = this.isTurnOff ? '&isTurnOff=Enable' : '&isTurnOff=Disable'
             LDUrl += `&caseType=${this.caseType}`
-            LDUrl += this.isNewPcipalOff ? '&isNewPcipalOff=Enable' : '&isNewPcipalOff=Disable'
-            LDUrl += this.isOldPcipalOff ? '&isOldPcipalOff=Enable' : '&isOldPcipalOff=Disable'
           if (this.paymentLibComponent.bspaymentdcn) {
             this.router.routeReuseStrategy.shouldReuseRoute = () => false;
             this.router.onSameUrlNavigation = 'reload';
@@ -129,8 +125,6 @@ export class AddRemissionComponent implements OnInit {
     this.paymentLibComponent.viewName = 'case-transactions';
     this.paymentLibComponent.TAKEPAYMENT = true;
     this.paymentLibComponent.ISTURNOFF = this.isTurnOff;
-    this.paymentLibComponent.ISNEWPCIPALOFF = this.isNewPcipalOff;
-    this.paymentLibComponent.ISOLDPCIPALOFF = this.isOldPcipalOff;
 
     this.paymentViewService.getBSfeature().subscribe(
       features => {
@@ -147,8 +141,6 @@ export class AddRemissionComponent implements OnInit {
      partUrl += this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
      partUrl += this.isStrategicFixEnable ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
      partUrl += `&caseType=${this.caseType}`;
-     partUrl += this.paymentLibComponent.ISNEWPCIPALOFF ? '&isNewPcipalOff=Enable' : '&isNewPcipalOff=Disable';
-     partUrl += this.paymentLibComponent.ISOLDPCIPALOFF ? '&isOldPcipalOff=Enable' : '&isOldPcipalOff=Disable';
 
     const url = `/payment-history/${this.ccdCaseNumber}?view=case-transactions&takePayment=true&selectedOption=${this.option}${partUrl}`;
     this.router.navigateByUrl(url);
