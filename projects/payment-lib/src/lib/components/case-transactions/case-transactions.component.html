@@ -583,8 +583,8 @@
                       </button></td>
                     </tr>
                   </tbody>
-                  <tbody class="govuk-table__body" *ngIf="orderLevelFees?.length === 0">
-                    <td colspan="6"> <br/>No service requests on this case.</td>
+                  <tbody class="govuk-table__body alignleft" *ngIf="orderLevelFees?.length === 0">
+                    <td colspan="6">No service requests on this case.</td>
                   </tbody>
               </table>
             </ng-container>
@@ -630,7 +630,7 @@
                       </tr>
                   </tbody>
                         
-                  <tbody class="govuk-table__body" *ngIf="allPayments?.length === 0 && unprocessedRecordCount === 0 ">
+                  <tbody class="govuk-table__body" *ngIf="allPayments?.length === 0 && unprocessedRecordCount <= 0">
                     <td colspan="6">No payments recorded</td>
                   </tbody>
                 </table>
@@ -695,7 +695,7 @@
                       
                         <tbody class="govuk-table__body" *ngIf="orderLevelFees?.length === 0">
                           <tr class="govuk-table__row" >
-                            <td class="govuk-table__cell alignleft" colspan="7">No service requests on this case.</td>
+                            <td class="alignleft" colspan="7">No service requests on this case.</td>
                           </tr>
                         </tbody>
                     </table>
