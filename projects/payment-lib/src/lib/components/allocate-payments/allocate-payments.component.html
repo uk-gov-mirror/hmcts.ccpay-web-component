@@ -9,9 +9,9 @@
           </ol>
         </div>
   
-    <div style="display:flex; flex-direction:row; justify-content: space-between; width:960px;">
+    <div class="paymentrequest">
         <h1 class="govuk-heading-xl govuk-!-margin-top-3 govuk-!-margin-bottom-4">Select payment request</h1>
-        <p class="govuk-!-margin-top-5" style="align-self: flex-end;">Case reference: {{ccdReference}}</p>
+        <p class="govuk-!-margin-top-5 casererf">Case reference: {{ccdReference}}</p>
     </div>
  
     <div  *ngFor="let orderRef of orderLevelFees; let i of index;" class="multiple-choice unprocessed-payments--radio-button">
@@ -25,7 +25,7 @@
       <label for="radio-inline-1"> {{orderRef.orderTotalFees | currency :'GBP':'symbol':'1.2-2'}}({{orderRef.orderStatus}})</label>
     </div>
   
-    <div style="display:flex; flex-direction:row; justify-content: space-between; width:960px;">
+    <div class="paymentrequest">
         <button [disabled]="isContinueButtondisabled" type="submit" (click)="redirectToOrderFeeSearchPage()" class="button allbtb button--disabled govuk-!-margin-right-1">
           Continue
         </button>

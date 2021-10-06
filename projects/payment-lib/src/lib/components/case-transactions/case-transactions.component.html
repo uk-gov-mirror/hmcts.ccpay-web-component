@@ -456,7 +456,7 @@
                   
                     <tbody class="govuk-table__body" *ngIf="orderLevelFees?.length === 0">
                       <tr class="govuk-table__row" >
-                        <td class="govuk-table__cell" colspan="7" style="text-align:left;">No service requests on this case.</td>
+                        <td class="govuk-table__cell alignleft" colspan="7" >No service requests on this case.</td>
                       </tr>
                     </tbody>
                 </table>
@@ -518,10 +518,10 @@
        
           <div class="govuk-grid-row">
               <h1 class="govuk-grid-column-two-thirds govuk-heading-l govuk-!-margin-top-0">Case transactions</h1>
-              <ng-container *ngIf='!isExceptionRecord' class=" govuk-!-margin-bottom-6" style="align-self: flex-end;">
+              <ng-container *ngIf='!isExceptionRecord' class=" govuk-!-margin-bottom-6 alignself">
                  <b> Case reference: </b>{{ ccdCaseNumber | ccdHyphens }}
               </ng-container>
-              <ng-container *ngIf='isExceptionRecord' class="col-61  govuk-!-margin-bottom-3 col-55" style="align-self: flex-end;">
+              <ng-container *ngIf='isExceptionRecord' class="govuk-!-margin-bottom-3 col-55 alignself" >
                   <b> Exception reference:</b>{{ ccdCaseNumber | ccdHyphens }}
               </ng-container>
               <div class="govuk-grid-row">
@@ -552,8 +552,8 @@
             <!--Payment Request-->
           <div class="paymentrequest">
               <span class="heading-medium">Service requests</span>
-              <ng-container *ngIf="orderLevelFees?.length > 0">
-              <table class="govuk-table" *ngIf="orderLevelFees?.length > 0">
+              <ng-container>
+              <table class="govuk-table">
                   <thead class="govuk-table__head">
                   <tr class="govuk-table__row">
                     <td class="govuk-table__header  col-14" scope="col">Status</td>
@@ -564,7 +564,8 @@
                     <td class="govuk-table__header col" scope="col"></td>
                   </tr>
                   </thead>
-                  <tbody class="govuk-table__body" *ngFor="let orderRef of orderLevelFees;let i = index;">
+                  <tbody class="govuk-table__body"  *ngIf="orderLevelFees?.length > 0">
+                    <tr *ngFor="let orderRef of orderLevelFees;let i = index;">
                       <td class="govuk-table__cell whitespace-inherit">{{orderRef.orderStatus}}</td>
                       <td class="govuk-table__cell whitespace-inherit">{{ orderRef.orderTotalFees | currency :'GBP':'symbol':'1.2-2' }}</td>
                       <td *ngIf="cpoDetails !== null" class="govuk-table__cell whitespace-inherit">{{cpoDetails['responsibleParty']}}</td> 
@@ -573,19 +574,23 @@
                       <td class="govuk-table__cell">	
                               <a href="javascript:void(0)" (click)="goToOrderViewDetailSection(orderRef)">Review</a>
                       </td>
-                      <td  style="text-align: right;">
+                      <td  class="alignright">
                         
                         <button type="submit" (click)="redirectToOrderFeeSearchPage($event,orderRef)"
                         [disabled]="!orderRef.orderAddBtnEnable"
                         [ngClass]='!orderRef.orderAddBtnEnable ? "govuk-button govuk-button--secondary govuk-button--disabled govuk-!-margin-right-1" : "govuk-button govuk-button--secondary govuk-!-margin-right-1"'>
                         Take telephony payment
                       </button></td>
+                    </tr>
+                  </tbody>
+                  <tbody class="govuk-table__body" *ngIf="orderLevelFees?.length === 0">
+                    <td colspan="6"> <br/>No service requests on this case.</td>
                   </tbody>
               </table>
             </ng-container>
-              <ng-container *ngIf="orderLevelFees?.length === 0">
+              <!-- <ng-container *ngIf="orderLevelFees?.length === 0">
                   <br/>No service requests on this case.<br/>
-              </ng-container>
+              </ng-container> -->
               <span>
                   <br/>
                   <a (click)="redirectToFeeSearchPage($event)"
@@ -608,7 +613,7 @@
               (selectedUnprocessedFeeEvent) = "selectedUnprocessedFeeEvent($event)">
                </ccpay-app-unprocessed-payments>
 
-              <ng-container *ngIf="allPayments?.length > 0">
+              <ng-container>
               <table class="govuk-table">
                   <thead class="govuk-table__head">
                   </thead>
@@ -625,8 +630,8 @@
                       </tr>
                   </tbody>
                         
-                  <tbody class="govuk-table__body" *ngIf="allPayments?.length === 0">
-                    <td class="govuk-table__cell" colspan="8">No payments recorded</td>
+                  <tbody class="govuk-table__body" *ngIf="allPayments?.length === 0 && unprocessedRecordCount === 0 ">
+                    <td colspan="6">No payments recorded</td>
                   </tbody>
                 </table>
                
@@ -662,7 +667,7 @@
         <div class="govuk-grid-column-full">
               <!-- <div  *ngIf="serviveRequestValue === 'true'"> -->
                   <span class="heading-medium">Service requests</span>
-                  <ng-container *ngIf="orderLevelFees?.length > 0">
+                  <ng-container>
                     <table class="govuk-table">
                         <thead class="govuk-table__head">
                         <tr class="govuk-table__row">
@@ -674,8 +679,8 @@
                           <td class="govuk-table__header" scope="col"></td>
                         </tr>
                         </thead>
-                        <tbody class="govuk-table__body" *ngFor="let orderRef of orderLevelFees;let i = index;">
-                          <tr class="govuk-table__row">
+                        <tbody class="govuk-table__body" *ngIf="orderLevelFees?.length > 0">
+                          <tr class="govuk-table__row"  *ngFor="let orderRef of orderLevelFees;let i = index;">
                             <td class="govuk-table__cell whitespace-inherit">{{orderRef.orderStatus}}</td>
                             <td class="govuk-table__cell whitespace-inherit">{{orderRef.orderTotalFees | currency :'GBP':'symbol':'1.2-2'}}</td>
                             <td *ngIf="cpoDetails !== null" class="govuk-table__cell  whitespace-inherit">{{cpoDetails['responsibleParty']}}</td> 
@@ -690,14 +695,14 @@
                       
                         <tbody class="govuk-table__body" *ngIf="orderLevelFees?.length === 0">
                           <tr class="govuk-table__row" >
-                            <td class="govuk-table__cell" colspan="7" style="text-align:left;">No service requests on this case.</td>
+                            <td class="govuk-table__cell alignleft" colspan="7">No service requests on this case.</td>
                           </tr>
                         </tbody>
                     </table>
                   </ng-container>
-                  <ng-container *ngIf="orderLevelFees?.length === 0">
+                  <!-- <ng-container *ngIf="orderLevelFees?.length === 0">
                     <br/>No service requests on this case.<br/>
-                  </ng-container>
+                  </ng-container> -->
               
   
               <!-- </div> -->
@@ -706,7 +711,7 @@
         <div class="govuk-grid-column-full">
             <div  *ngIf="serviveRequestValue === 'false'">
             <span class="heading-medium"><br/>Payments</span>
-            <ng-container *ngIf="allPayments?.length > 0">
+            <ng-container >
               <table class="govuk-table">
               <thead class="govuk-table__head">
                 <tr class="govuk-table__row">
@@ -730,9 +735,9 @@
                       </td>
                   </tr>
               </tbody>
-                    
+
               <tbody class="govuk-table__body" *ngIf="allPayments?.length === 0">
-                <td class="govuk-table__cell" colspan="8">No payments recorded</td>
+                <td colspan="6">No payments recorded</td>
               </tbody>
               </table>
               <ccpay-app-unprocessed-payments class="govuk-table"
@@ -750,9 +755,9 @@
               </ccpay-app-unprocessed-payments>
             </ng-container>
 
-            <ng-container *ngIf="allPayments?.length  === 0">
+            <!-- <ng-container *ngIf="allPayments?.length  === 0">
                 <br/>No payments.
-            </ng-container>
+            </ng-container> -->
           </div>
         </div>
         <div class="govuk-grid-column-full">
@@ -826,7 +831,7 @@
                 <td class="govuk-table__cell col-60 whitespace-inherit">{{fee.description}}</td>
                 <td class="govuk-table__cell">{{fee.volume? fee.volume : '-'}} X {{ fee.calculated_amount/fee.volume| currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
                 <td class="govuk-table__cell">{{ fee.net_amount | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
-                <td class="govuk-table__cell" style="text-align: right;" >
+                <td class="govuk-table__cell alignright">
                     <button  [disabled]="!chkForAddRemission(fee.code)"  (click)="addRemission(fee)" class="govuk-button govuk-button--secondary"> Add remission</button>
                 </td>
             
@@ -834,13 +839,13 @@
             </tbody>
             <tbody class="govuk-table__body" *ngFor="let order of orderDetail;">
               <tr class="govuk-table__row" *ngIf="order.fees?.length === 0" >
-                <td class="govuk-table__cell" colspan="7" style="text-align:left;">No fees recorded</td>
+                <td class="govuk-table__cell alignleft" colspan="7">No fees recorded</td>
               </tr>
             </tbody>
           </table>
 
         </div>
-        <div style="width: 100%;">  
+        <div class="maxwidth">  
             <p class="totalfees">Total fees: {{orderFeesTotal | currency:'GBP':'symbol-narrow':'1.2-2' }}</p>
         </div>
     </div>
@@ -919,7 +924,7 @@
               </td>
               <td class="govuk-table__cell whitespace-inherit">{{ payment.date_created | date:'dd MMM yyyy' }}</td>
               <td class="govuk-table__cell whitespace-inherit">{{ payment.amount | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
-              <td class="govuk-table__cell" style="text-align: right;">
+              <td class="govuk-table__cell alignright">
                 <button [disabled] = "!chkIssueRefundBtnEnable(payment)" (click)="issueRefund(payment)" class="govuk-button govuk-button--secondary">Issue refund</button>
               </td>
               <!-- <td  *ngIf="!chkIssueRefundBtnEnable(payment)" class="govuk-table__cell" style="text-align: right;">
