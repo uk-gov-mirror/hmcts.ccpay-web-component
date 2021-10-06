@@ -691,7 +691,7 @@
                   <ng-container *ngIf="orderLevelFees?.length === 0 && serviceRequestValue === 'false'">
                     <br/>No service requests on this case.<br/>
                   </ng-container>
-                  <ng-container *ngIf="orderLevelFees?.length === 0 && serviceRequestValue !== 'false' && isAnyFeeGroupAvilable">
+                  <ng-container *ngIf="orderLevelFees?.length === 0 && serviceRequestValue !== 'false' && !isAnyFeeGroupAvilable">
                     <h1 class="govuk-heading-l govuk-heading-lw">If you are expecting to pay and are not able to see a service request,</h1>
                     <p>please refresh and try in some time.</p>
                   </ng-container>
