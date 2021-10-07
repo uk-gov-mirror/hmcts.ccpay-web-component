@@ -85,6 +85,8 @@ downloadReport(){
         response =>  {
           this.errorMessage = this.errorHandlerService.getServerErrorMessage(false);
           const result = JSON.parse(response);
+          console.log("im heree ");
+          console.log(result);
           let res= {data: this.applyDateFormat(result)};
           if(res['data'].length === 0 && selectedReportName === 'PROCESSED_UNALLOCATED' ){
             res.data= processedUnallocated;
