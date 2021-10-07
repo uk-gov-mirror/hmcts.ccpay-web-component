@@ -185,7 +185,7 @@ downloadReport(){
         break; 
       } 
       case 'SURPLUS_AND_SHORTFALL': { 
-        result = 'Surplus_Shortfall';
+        result = 'Over Payment_Under Payment';
         break; 
       } 
       default: { 
