@@ -105,6 +105,10 @@ downloadReport(){
               if(res['data'][i]["balance"] !== undefined) {
                 res['data'][i]['balance'] = this.convertToFloatValue(res['data'][i]["balance"]);
               }
+              let Op = res['data'][i]["surplus_shortfall"];
+              if(Op !== undefined) {
+                res['data'][i]['surplus_shortfall'] = Op =="Surplus" ? "Over Payment":"Under Payment";
+              }
               if(res['data'][i]["payment_amount"] !== undefined) {
                 res['data'][i]['payment_amount'] = this.convertToFloatValue(res['data'][i]['payment_amount']);
               }
