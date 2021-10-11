@@ -59,21 +59,21 @@ export class RefundListComponent implements OnInit {
     //   this.isAuthorized = true;
     // }
 
-   if(this.isAuthorized) {
-    this.refundService.getRefundList(this.approvalStatus,true).subscribe(
+   //if(this.isAuthorized) {
+    this.refundService.getRefundList(this.approvalStatus,false).subscribe(
       refundList => {
-        this.submittedRefundList = refundList['data']['refund_list'];
+        this.submittedRefundList = refundList['refund_list'];
         this.isApproveTableVisible = true;
       }
     ),
     (error: any) => {
       this.errorMessage = error.replace(/"/g,"");
     };
-  }
+  //}
 
     this.refundService.getRefundList(this.rejectStatus,false).subscribe(
       refundList => {
-        this.rejectedRefundList = refundList['data']['refund_list'];
+        this.rejectedRefundList = refundList['refund_list'];
         this.isRejectTableVisible = true;
       }
     ),

@@ -50,7 +50,7 @@ export class ProcessRefundComponent implements OnInit {
     this.viewStatus = 'RefundProcess';
     this.RefundsService.getRefundActions(this.refundReference).subscribe(
       refundActionList => {
-        this.refundActionList = <any>refundActionList.data;
+        this.refundActionList = <any>refundActionList;
       },
       err => {
         this.errorMessage = this.getErrorMessage(true, err.statusCode, err.err);
@@ -98,7 +98,7 @@ export class ProcessRefundComponent implements OnInit {
       this.isOtherClicked = false;
       this.RefundsService.getRefundRejectReasons().subscribe(
         refundRejectReasonList => {
-          this.refundRejectReasonList = <any>refundRejectReasonList.data;
+          this.refundRejectReasonList = <any>refundRejectReasonList;
         },
         err => {
           this.errorMessage = this.getErrorMessage(true, err.statusCode, err.err);

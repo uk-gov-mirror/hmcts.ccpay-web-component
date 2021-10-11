@@ -74,7 +74,7 @@ export class RefundStatusComponent implements OnInit {
       this.viewName = 'refundstatuslist';
       this.refundService.getRefundStatusList(this.ccdCaseNumber).subscribe(
         refundList => {
-          this.rejectedRefundList = refundList['data']['refund_list'];
+          this.rejectedRefundList = refundList['refund_list'];
         }
       ),
         (error: any) => {
@@ -111,8 +111,8 @@ export class RefundStatusComponent implements OnInit {
     if(this.refundlist !== undefined) {
     this.refundService.getRefundStatusHistory(this.refundlist.refund_reference).subscribe(
       statusHistoryList => {
-        this.refundStatusHistories = statusHistoryList['data'].status_history_dto_list;
-        this.isLastUpdatedByCurrentUser = statusHistoryList['data'].last_updated_by_current_user;
+        this.refundStatusHistories = statusHistoryList.status_history_dto_list;
+        this.isLastUpdatedByCurrentUser = statusHistoryList.last_updated_by_current_user;
       }
     ),
       (error: any) => {

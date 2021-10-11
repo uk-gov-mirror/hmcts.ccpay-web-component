@@ -80,7 +80,7 @@ getRefundStatusHistory(reference?: string) {
 }
 
 getRefundStatusList(ccdCaseNumber:string): Observable<IRefundList[]> {
-  return this.http.get<IRefundList[]>(`${this.paymentLibService.REFUNDS_API_ROOT}/get-refund-status-list?ccdCaseNumber=${ccdCaseNumber}`, {
+  return this.http.get<IRefundList[]>(`${this.paymentLibService.REFUNDS_API_ROOT}?ccdCaseNumber=${ccdCaseNumber}`, {
   withCredentials: true
 })
   .pipe(
