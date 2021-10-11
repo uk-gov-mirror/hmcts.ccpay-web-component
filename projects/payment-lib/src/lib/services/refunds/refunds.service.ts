@@ -50,6 +50,7 @@ export class RefundsService {
         catchError(this.errorHandlerService.handleError)
       );
   }
+
 patchRefundActions(body:IPatchRefundAction, refundReference: string, reviewerAction: string): Observable<any> {
   const opts = this.addHeaders({});
   return this.http.patch<any>(`${this.paymentLibService.REFUNDS_API_ROOT}/${refundReference}/action/${reviewerAction}`, body, opts)
@@ -57,8 +58,9 @@ patchRefundActions(body:IPatchRefundAction, refundReference: string, reviewerAct
     catchError(this.errorHandlerService.handleError)
   );
 }
-  getRefundList(refundstatus?: string, selfexclusive?:boolean): Observable<IRefundList[]> {
-    return this.http.get<IRefundList[]>(`${this.paymentLibService.REFUNDS_API_ROOT}/get-refund-list?status=${refundstatus}&selfExclusive=${selfexclusive}`, 
+
+getRefundList(refundstatus?: string, selfexclusive?:boolean): Observable<IRefundList[]> {
+    return this.http.get<IRefundList[]>(`${this.paymentLibService.REFUNDS_API_ROOT}?status=${refundstatus}&selfExclusive=${selfexclusive}`, 
     {
     withCredentials: true
 })
@@ -86,7 +88,7 @@ getRefundStatusList(ccdCaseNumber:string): Observable<IRefundList[]> {
   );
 }
 
-  getUserDetails(): Observable<any> {
+getUserDetails(): Observable<any> {
     return this.http.get<any>(`${this.paymentLibService.REFUNDS_API_ROOT}/get-user-details`, {
     withCredentials: true
   })
@@ -95,30 +97,31 @@ getRefundStatusList(ccdCaseNumber:string): Observable<IRefundList[]> {
     );
 }
  
-  postIssueRefund(body: IssueRefundRequest): Observable<any> {
-    return this.https.post(`${this.paymentLibService.REFUNDS_API_ROOT}/refund`, body).pipe(
-      catchError(this.errorHandlerService.handleError)
-    );
-  }
+postIssueRefund(body: IssueRefundRequest): Observable<any> {
+  return this.https.post(`${this.paymentLibService.REFUNDS_API_ROOT}/refund`, body).pipe(
+    catchError(this.errorHandlerService.handleError)
+  );
+}
 
-  patchResubmitRefund(body: IResubmitRefundRequest, refund_reference: string): Observable<any> {
-    const opts = this.addHeaders({});
-    return this.http.patch<any>(`${this.paymentLibService.REFUNDS_API_ROOT}/resubmit/${refund_reference}`, body,opts).pipe(
-      catchError(this.errorHandlerService.handleError)
-    );
+patchResubmitRefund(body: IResubmitRefundRequest, refund_reference: string): Observable<any> {
+  const opts = this.addHeaders({});
+  return this.http.patch<any>(`${this.paymentLibService.REFUNDS_API_ROOT}/resubmit/${refund_reference}`, body,opts).pipe(
+    catchError(this.errorHandlerService.handleError)
+  );
+}
+
+addHeaders(options: any): any {
+  const csrfToken = this.meta.getTag('name=csrf-token');
+  const headers = {};
+  if (options.headers) {
+    options.headers.forEach(element => {
+      headers[element] = options.headers.get(element);
+    });
   }
-  addHeaders(options: any): any {
-    const csrfToken = this.meta.getTag('name=csrf-token');
-    const headers = {};
-    if (options.headers) {
-      options.headers.forEach(element => {
-        headers[element] = options.headers.get(element);
-      });
-    }
-    headers['X-Requested-With'] = 'XMLHttpRequest';
-    headers['CSRF-Token'] = csrfToken.content;
-    options.headers = new HttpHeaders(headers);
-    options.responseType = 'text';
-    return options;
-  }
+  headers['X-Requested-With'] = 'XMLHttpRequest';
+  headers['CSRF-Token'] = csrfToken.content;
+  options.headers = new HttpHeaders(headers);
+  options.responseType = 'text';
+  return options;
+}
 }
