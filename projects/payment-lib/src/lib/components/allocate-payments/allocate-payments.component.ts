@@ -59,6 +59,10 @@ export class AllocatePaymentsComponent implements OnInit {
   paymentSectionLabel: any;
   paymentRef: string = null;
   isStrategicFixEnable: boolean = true;
+  cookieUserName: string[] = [];
+  UserName: string[] = [];
+  UserName1: any;
+  userNameField: string = null;
 
   reasonList: { [key: string]: { [key: string]: string } }= {
     overPayment: {
@@ -191,8 +195,14 @@ export class AllocatePaymentsComponent implements OnInit {
     }
   }
   confirmAllocatePayement(){
+    this.UserName1 = document.cookie.split(";").find(row => row.startsWith(" __user-info")).split("=")[1].split(";");
+    this.UserName = JSON.parse(decodeURIComponent(this.UserName1));
+
+    console.log("Username: " + JSON.stringify(this.UserName));
+
     const paymentDetailsField = this.overUnderPaymentForm.controls.moreDetails,
       paymentFormError = this.overUnderPaymentForm.controls.moreDetails.errors,
+      //userNameField = this.UserName.forename,
       userNameField = this.overUnderPaymentForm.controls.userName,
       isEmptyCondtion = this.paymentReason && this.paymentExplanation,
       isOtherOptionSelected = this.paymentExplanation === 'Other';
