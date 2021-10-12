@@ -198,12 +198,12 @@ export class AllocatePaymentsComponent implements OnInit {
     this.UserName1 = document.cookie.split(";").find(row => row.startsWith(" __user-info")).split("=")[1].split(";");
     this.UserName = JSON.parse(decodeURIComponent(this.UserName1));
 
-    const fullName = `${this.UserName.forename} ${this.UserName.surname}`;
+    // const fullName = `${this.UserName.forename} ${this.UserName.surname}`;
 
     console.log("Username: " + JSON.stringify(this.UserName));
     console.log("Forename: " + JSON.stringify(this.UserName.forename));
     console.log("Surname: " + JSON.stringify(this.UserName.surname));
-    console.log("fullName: " + JSON.stringify(fullName));
+    // console.log("fullName: " + JSON.stringify(fullName));
 
     const paymentDetailsField = this.overUnderPaymentForm.controls.moreDetails,
       paymentFormError = this.overUnderPaymentForm.controls.moreDetails.errors,
