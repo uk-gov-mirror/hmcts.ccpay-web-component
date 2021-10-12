@@ -197,26 +197,20 @@ export class AllocatePaymentsComponent implements OnInit {
   confirmAllocatePayement(){
     this.UserName1 = document.cookie.split(";").find(row => row.startsWith(" __user-info")).split("=")[1].split(";");
     this.UserName = JSON.parse(decodeURIComponent(this.UserName1));
-
-    // const fullName = `${this.UserName.forename} ${this.UserName.surname}`;
-
-    console.log("Username: " + JSON.stringify(this.UserName));
-    console.log("Forename: " + JSON.stringify(this.UserName.forename));
-    console.log("Surname: " + JSON.stringify(this.UserName.surname));
-    // console.log("fullName: " + JSON.stringify(fullName));
+    
+    const fullName = this.UserName['forename'] + ' ' + this.UserName['surname'];
 
     const paymentDetailsField = this.overUnderPaymentForm.controls.moreDetails,
       paymentFormError = this.overUnderPaymentForm.controls.moreDetails.errors,
-      //userNameField = this.UserName.forename,
-      userNameField = this.overUnderPaymentForm.controls.userName,
+      userNameField = fullName,
       isEmptyCondtion = this.paymentReason && this.paymentExplanation,
       isOtherOptionSelected = this.paymentExplanation === 'Other';
 
     this.resetForm([false, false, false, false, false, false, false, false], 'all');
-    if ( (!this.isRemainingAmountGtZero && !this.isRemainingAmountLtZero) || isEmptyCondtion && (!isOtherOptionSelected && userNameField.valid || isOtherOptionSelected && userNameField.valid && paymentDetailsField.valid)) {
+    if ( (!this.isRemainingAmountGtZero && !this.isRemainingAmountLtZero) || isEmptyCondtion && (!isOtherOptionSelected && userNameField.length > 0 || isOtherOptionSelected && userNameField.length > 0 && paymentDetailsField.valid)) {
       this.isConfirmButtondisabled = true;
       this.otherPaymentExplanation = this.paymentExplanation === 'Other' ? paymentDetailsField.value : this.paymentExplanation;
-      this.userName = userNameField.value;
+      this.userName = userNameField;
       this.finalServiceCall();
     }else {
       if(!this.paymentReason) {
@@ -239,11 +233,8 @@ export class AllocatePaymentsComponent implements OnInit {
           this.resetForm([false, false, false, false, false, true, false, false], 'other');
         }
       }
-      if(userNameField.value === "") {
+      if(userNameField.length === 0) {
         this.resetForm([false, false, false, false, false, false, true, false], 'username');
-      }
-      if(userNameField.value !== "" &&  userNameField.invalid) {
-        this.resetForm([false, false, false, false, false, false, false, true], 'username');
       }
     }
   }
