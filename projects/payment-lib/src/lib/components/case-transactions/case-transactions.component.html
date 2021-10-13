@@ -862,7 +862,7 @@
 
      <!-- remissions -->
   <ng-container *ngFor="let order of orderDetail;" >
-     <div *ngIf="order.remissions?.length > 0" class="govuk-grid-column-full order-class"> 
+     <div class="govuk-grid-column-full order-class"> 
      <table class="govuk-table">
        <thead class="govuk-table__head">
          <tr class="govuk-table__row">
@@ -873,7 +873,7 @@
              <td  class="govuk-table__header whitespace-inherit refundBtn" scope="col"></td>
            </tr>
        </thead>
-       <tbody class="govuk-table__body" >
+       <tbody  *ngIf="order.remissions?.length > 0"  class="govuk-table__body" >
          <tr class="govuk-table__row" *ngFor="let remission of order.remissions">
             <td class="govuk-table__cell whitespace-inherit">{{ remission.hwf_reference }}</td>
              <td class="govuk-table__cell whitespace-inherit">{{ remission.remission_reference }}</td>
@@ -890,6 +890,9 @@
        
 
      </table>
+     <div *ngIf="order.remissions?.length === 0">
+      <span >No help with fees or remissions.</span>
+   </div>
      <div class="summarypagealign">
         <p>Total reductions: {{orderRemissionTotal | currency:'GBP':'symbol-narrow':'1.2-2'  }}</p>
     </div>
@@ -897,16 +900,14 @@
           <p class="summarypage">Total fees to pay: {{(orderFeesTotal - orderRemissionTotal) | currency:'GBP':'symbol-narrow':'1.2-2'  }}</p>
       </div>
     </div>
-    <div *ngIf="order.remissions?.length === 0">
-       <span class="mar-17" >No help with fees or remissions.</span>
-    </div>
+    
     
   </ng-container>
     
    
      <!--Payments-->
     <ng-container *ngFor="let order of orderDetail;" >
-     <div *ngIf="order.payments?.length > 0" class="govuk-grid-column-full"> 
+     <div class="govuk-grid-column-full"> 
         <h3 class="heading-medium">Payments</h3>
      <table class="govuk-table ">
         <thead class="govuk-table__head">
@@ -917,7 +918,7 @@
               <td class="govuk-table__header" scope="col"></td>
             </tr>
         </thead>
-        <tbody class="govuk-table__body">
+        <tbody  *ngIf="order.payments?.length > 0" class="govuk-table__body">
           <tr class="govuk-table__row"  *ngFor="let payment of order.payments">
               <td class="govuk-table__cell whitespace-inherit">
                 <a href="javascript:void(0)" (click)="goToPayementView(payment.paymentGroupReference, payment.reference, payment.method)">Review</a>
@@ -934,8 +935,8 @@
       </table>
     </div>
     <div *ngIf="order.payments === undefined || order.payments === null">
-        <h3 class="heading-medium mar-17">Payments</h3>
-              <span class="mar-17" >No Payments</span>
+        <!-- <h3 class="heading-medium mar-17">Payments</h3> -->
+              <span class="mar-17" >No Payments recorded</span>
     </div>
     
   </ng-container>
