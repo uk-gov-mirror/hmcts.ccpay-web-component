@@ -10,7 +10,7 @@
   </div>
 </div>
 
-<ng-container>
+<ng-container *ngIf="isAuthorized">
 <div class="hmcts-page-heading">
     <div class="hmcts-page-heading__title">
       <h2 class="govuk-heading-l">{{tableApprovalHeader}}</h2>
