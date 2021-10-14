@@ -60,8 +60,7 @@ export class AllocatePaymentsComponent implements OnInit {
   paymentRef: string = null;
   isStrategicFixEnable: boolean = true;
   cookieUserName: string[] = [];
-  UserName: string[] = [];
-  UserName1: any;
+  enCookieUserName: any;
   userNameField: string = null;
 
   reasonList: { [key: string]: { [key: string]: string } }= {
@@ -195,10 +194,10 @@ export class AllocatePaymentsComponent implements OnInit {
     }
   }
   confirmAllocatePayement(){
-    this.UserName1 = document.cookie.split(";").find(row => row.startsWith(" __user-info")).split("=")[1].split(";");
-    this.UserName = JSON.parse(decodeURIComponent(this.UserName1));
+    this.enCookieUserName = document.cookie.split(";").find(row => row.includes("user-info")).split("=")[1].split(";");
+    this.cookieUserName = JSON.parse(decodeURIComponent(this.enCookieUserName));
     
-    const fullName = this.UserName['forename'] + ' ' + this.UserName['surname'];
+    const fullName = this.cookieUserName['forename'] + ' ' + this.cookieUserName['surname'];
 
     const paymentDetailsField = this.overUnderPaymentForm.controls.moreDetails,
       paymentFormError = this.overUnderPaymentForm.controls.moreDetails.errors,
@@ -236,6 +235,9 @@ export class AllocatePaymentsComponent implements OnInit {
       if(userNameField.length === 0) {
         this.resetForm([false, false, false, false, false, false, true, false], 'username');
       }
+      // if(userNameField.value !== "" &&  userNameField.invalid) {
+      //   this.resetForm([false, false, false, false, false, false, false, true], 'username');
+      // }
     }
   }
   resetForm(vals, field) {
