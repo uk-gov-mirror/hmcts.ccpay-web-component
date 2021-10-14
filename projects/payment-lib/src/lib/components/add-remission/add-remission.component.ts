@@ -85,13 +85,13 @@ export class AddRemissionComponent implements OnInit {
   isPaymentSuccess: boolean = false;
   isRemissionApplied: boolean = false;
   remissionamt:number;
-  refundReasons: any[] = [];
+  // refundReasons: any[] = [];
   commonRefundReasons: any[] = [];
   showReasonText: boolean;
   isRefundReasonsSelected: boolean;
   default: string;
   reasonLength: number;
-  // refundReasons:IRefundReasons[];
+  refundReasons:IRefundReasons[];
 
   constructor(private formBuilder: FormBuilder,
     private router: Router,
@@ -142,10 +142,10 @@ export class AddRemissionComponent implements OnInit {
     if(this.viewCompStatus === 'issuerefund'){
       this.refundService.getRefundReasons().subscribe(
         refundReasons => { 
-          this.refundReasons = refundReasons['data'].filter((data) => data.recently_used === false);
+          this.refundReasons = refundReasons.filter((data) => data.recently_used === false);
           this.refundReasons = this.refundReasons.filter((data) => data.name !== 'Retrospective remission');
           this.cd.detectChanges();
-          this.commonRefundReasons = refundReasons['data'].filter((data) => data.recently_used === true);
+          this.commonRefundReasons = refundReasons.filter((data) => data.recently_used === true);
           this.commonRefundReasons.sort((a, b) => a.toString().localeCompare(b));
           this.cd.detectChanges();
         } );

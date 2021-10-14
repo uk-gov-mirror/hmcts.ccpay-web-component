@@ -117,8 +117,8 @@
             <div class="govuk-button-group">
                 <button (click)="gotoServiceRequestPage($event)" class="govuk-button govuk-button--secondary"> Previous</button>
                 <button (click)="addRemissionCode()" class="govuk-button"> Continue</button>
-              <p><a (click)="gotoCasetransationPageCancelBtnClicked()" class="govuk-link" data-module="govuk-button">Cancel</a></p>
             </div>
+            <p><a (click)="gotoCasetransationPageCancelBtnClicked()" class="govuk-link" data-module="govuk-button">Cancel</a></p>
           </div>
       </form>
 
@@ -163,10 +163,11 @@
                   <div class="govuk-button-group">
                       <button (click)="gotoAddRetroRemissionCodePage()" class="govuk-button govuk-button--secondary"> Previous</button>
                       <button (click)="gotoCheckRetroRemissionPage(payment)" class="govuk-button"> Continue</button>
-                    <p>
-                        <a (click)="gotoCasetransationPageCancelBtnClicked()" class="govuk-link" data-module="govuk-button">Cancel</a>
-                    </p>
+                  
                   </div>
+                  <p>
+                    <a (click)="gotoCasetransationPageCancelBtnClicked()" class="govuk-link" data-module="govuk-button">Cancel</a>
+                </p>
               </div>
     
           </form>
@@ -351,12 +352,12 @@
         <div class="govuk-button-group">
             <button (click)="gotoServiceRequestPage($event)" class="govuk-button govuk-button--secondary"> Previous</button>
             <button (click)="gotoIssueRefundConfirmation(payment)" class="govuk-button"> Continue</button>
-          <p>
-              <a (click)="gotoCasetransationPageCancelBtnClicked()" class="govuk-link" data-module="govuk-button">
-                  Cancel
-              </a>
-          </p>
         </div>
+        <p>
+          <a (click)="gotoCasetransationPageCancelBtnClicked()" class="govuk-link" data-module="govuk-button">
+              Cancel
+          </a>
+      </p>
       
   </ng-container>
 
@@ -382,7 +383,7 @@
               <td class="govuk-table__cell">{{this.payment.amount | currency:'GBP':'symbol-narrow':'1.2-2'}}</td>
           </tr>
       </table>
-
+      <div class="govuk-button-group">
       <button type="submit" class="button govuk-button--secondary" (click)="gotoIssueRefundPage()"> Previous </button>
       <button type="submit"
       [disabled]="isConfirmationBtnDisabled"
@@ -390,6 +391,7 @@
     (click)="confirmIssueRefund()">
         Submit refund
       </button>
+      </div>
       <p>
           <a (click)="gotoCasetransationPageCancelBtnClicked()" class="govuk-link" data-module="govuk-button">
               Cancel
@@ -427,7 +429,7 @@
               <td class="govuk-table__cell">{{feeamount | currency:'GBP':'symbol-narrow':'1.2-2'}}</td>
           </tr>
       </table>
-
+      <div class="govuk-button-group">
       <button type="submit" class="button govuk-button--secondary" (click)="gotoServiceRequestPage($event)">Previous</button>
       <button type="submit"
       [disabled]="isConfirmationBtnDisabled"
@@ -435,6 +437,7 @@
       (click)="processRefund()">
         Submit refund
       </button>
+      </div>
       <p>
           <a (click)="gotoCasetransationPageCancelBtnClicked()" class="govuk-link" data-module="govuk-button">
               Cancel
