@@ -119,7 +119,11 @@ addHeaders(options: any): any {
     });
   }
   headers['X-Requested-With'] = 'XMLHttpRequest';
-  headers['CSRF-Token'] = csrfToken.content;
+  if (csrfToken.content === null) {
+    headers['CSRF-Token'] = document.cookie.split(';').find(row => row.startsWith(' XSRF-TOKEN')).split('=')[1];
+  } else {
+    headers['CSRF-Token'] = csrfToken.content;
+  }
   options.headers = new HttpHeaders(headers);
   options.responseType = 'text';
   return options;
