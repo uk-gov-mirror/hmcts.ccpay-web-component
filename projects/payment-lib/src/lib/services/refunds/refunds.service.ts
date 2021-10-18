@@ -53,7 +53,7 @@ export class RefundsService {
 
 patchRefundActions(body:IPatchRefundAction, refundReference: string, reviewerAction: string): Observable<any> {
   // const opts = this.addHeaders({});
-  return this.http.patch<any>(`${this.paymentLibService.REFUNDS_API_ROOT}/${refundReference}/action/${reviewerAction}`, body)
+  return this.https.patch(`${this.paymentLibService.REFUNDS_API_ROOT}/${refundReference}/action/${reviewerAction}`, body)
   .pipe(
     catchError(this.errorHandlerService.handleError)
   );
@@ -104,8 +104,8 @@ postIssueRefund(body: IssueRefundRequest): Observable<any> {
 }
 
 patchResubmitRefund(body: IResubmitRefundRequest, refund_reference: string): Observable<any> {
- // const opts = this.addHeaders({});
-  return this.http.patch<any>(`${this.paymentLibService.REFUNDS_API_ROOT}/resubmit/${refund_reference}`, body).pipe(
+  // const opts = this.addHeaders({});
+  return this.https.patch(`${this.paymentLibService.REFUNDS_API_ROOT}/resubmit/${refund_reference}`, body).pipe(
     catchError(this.errorHandlerService.handleError)
   );
 }
