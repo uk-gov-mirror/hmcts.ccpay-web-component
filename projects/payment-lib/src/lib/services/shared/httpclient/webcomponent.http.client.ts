@@ -38,13 +38,14 @@ export class WebComponentHttpClient {
   addHeaders(options: any): any {
     const csrfToken = this.meta.getTag('name=csrf-token');
     const headers = {};
+    
     if (options.headers) {
       options.headers.forEach(element => {
         headers[element] = options.headers.get(element);
       });
     }
     headers['X-Requested-With'] = 'XMLHttpRequest';
-    if (csrfToken.content === null) {
+    if (csrfToken === null) {
       headers['CSRF-Token'] = document.cookie.split(';').find(row => row.startsWith(' XSRF-TOKEN')).split('=')[1];
     } else {
       headers['CSRF-Token'] = csrfToken.content;
