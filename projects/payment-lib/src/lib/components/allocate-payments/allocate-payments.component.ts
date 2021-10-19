@@ -353,10 +353,10 @@ export class AllocatePaymentsComponent implements OnInit {
       this.isRemainingAmountGtZero = remainingToBeAssigned > 0;
       this.isRemainingAmountLtZero = remainingToBeAssigned < 0;
       this.paymentSectionLabel = this.isRemainingAmountGtZero ? { 
-          title: 'There is a surplus of',
+          title: 'There is a Over payment of',
           reason: 'Provide a reason. This will be used in the Refund process.',
         }: this.isRemainingAmountLtZero ? { 
-          title: 'There is a shortfall of',
+          title: 'There is a Under payment of',
           reason: 'Provide a reason',
         }: { 
           title:'Amount left to be allocated',
