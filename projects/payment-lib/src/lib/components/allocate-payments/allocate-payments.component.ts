@@ -235,9 +235,6 @@ export class AllocatePaymentsComponent implements OnInit {
       if(userNameField.length === 0) {
         this.resetForm([false, false, false, false, false, false, true, false], 'username');
       }
-      // if(userNameField.value !== "" &&  userNameField.invalid) {
-      //   this.resetForm([false, false, false, false, false, false, false, true], 'username');
-      // }
     }
   }
   resetForm(vals, field) {
