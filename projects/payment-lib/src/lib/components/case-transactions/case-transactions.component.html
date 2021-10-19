@@ -61,8 +61,6 @@
       [ISTURNOFF]="isTurnOff"
       [ISSFENABLE]="isStrategicFixEnable"
       [PAYMENTREF]="paymentRef"
-      [ISNEWPCIPALOFF]="isNewPcipalOff"
-      [ISOLDPCIPALOFF]="isOldPcipalOff"
       (getUnprocessedFeeCount) = "getUnprocessedFeeCount($event)"
       (selectedUnprocessedFeeEvent) = "selectedUnprocessedFeeEvent($event)">
       </ccpay-app-unprocessed-payments>
@@ -192,7 +190,7 @@
       <div  class="govuk-grid-column-one-third" align="right" >
         <a [ngClass]="{ 'disable': !isAddFeeBtnEnabled} " (click)="redirectToFeeSearchPage($event)" class="button">Add a new fee</a>
        </div>
-    </div> 
+    </div>
 
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds govuk-!-padding-bottom-6">
@@ -362,7 +360,7 @@
                 </table>
           </div>
     </details>
-  
+
 
         <div *ngIf="takePayment">
             <button type="submit" (click)="loadFeeSummaryPage(paymentGroup)"
@@ -377,11 +375,9 @@
       *ngIf="isBulkScanEnable"
       [IS_BUTTON_ENABLE]="takePayment"
       [ISTURNOFF]="isTurnOff"
-      [ISNEWPCIPALOFF]="isNewPcipalOff"
-      [ISOLDPCIPALOFF]="isOldPcipalOff"
       [ISSFENABLE]="isStrategicFixEnable"
-      [FEE_RECORDS_EXISTS]="isFeeRecordsExist" 
-      [IS_OS_AMT_AVAILABLE]="isGrpOutstandingAmtPositive" 
+      [FEE_RECORDS_EXISTS]="isFeeRecordsExist"
+      [IS_OS_AMT_AVAILABLE]="isGrpOutstandingAmtPositive"
       (selectedUnprocessedFeeEvent) = "selectedUnprocessedFeeEvent($event)">
     </ccpay-app-unprocessed-payments>
     <div class="govuk-grid-row govuk-grid__surplus-payments"  *ngIf="totalRefundAmount > 0 && takePayment">
@@ -398,8 +394,8 @@
   [IS_BUTTON_ENABLE]="takePayment"
   [ISTURNOFF]="isTurnOff"
   [ISSFENABLE]="isStrategicFixEnable"
-  [FEE_RECORDS_EXISTS]="isFeeRecordsExist" 
-  [IS_OS_AMT_AVAILABLE]="isGrpOutstandingAmtPositive" 
+  [FEE_RECORDS_EXISTS]="isFeeRecordsExist"
+  [IS_OS_AMT_AVAILABLE]="isGrpOutstandingAmtPositive"
   (selectedUnprocessedFeeEvent) = "selectedUnprocessedFeeEvent($event)">
 </ccpay-app-unprocessed-payments>
 
