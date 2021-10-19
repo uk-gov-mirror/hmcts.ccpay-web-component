@@ -248,12 +248,12 @@ export class AddRemissionComponent implements OnInit {
     this.viewStatus = '';
     this.isRefundRemission = false;
     this.resetRemissionForm([false, false, false, false, false, false], 'All');
-    const remissionctrls=this.remissionForm.controls,
-      isRemissionLessThanFee = this.fee.calculated_amount >= remissionctrls.amount.value; 
+    const remissionctrls=this.remissionForm.controls
+     // isRemissionLessThanFee = this.fee.calculated_amount >= remissionctrls.amount.value; 
       this.remissionForm.controls['refundReason'].setErrors(null);
       this.remissionForm.controls['refundDDReason'].setErrors(null);
       this.remissionForm.controls['amount'].setErrors(null);
-    if (this.remissionForm.dirty && this.remissionForm.valid && isRemissionLessThanFee) {
+    if (this.remissionForm.dirty && this.remissionForm.valid ) {
       this.viewCompStatus = '';
       this.viewStatus = "processretroremissonpage";
     }else {
@@ -273,7 +273,7 @@ export class AddRemissionComponent implements OnInit {
       if(remissionctrls['reason'].value == '') {
         this.resetRemissionForm([false, false, false, true, false, true], 'reason');
       }
-      if(remissionctrls.amount.valid && !isRemissionLessThanFee){
+      if(remissionctrls.amount.valid){
         this.resetRemissionForm([false, false, false, false, true], 'amount');
       }
     
