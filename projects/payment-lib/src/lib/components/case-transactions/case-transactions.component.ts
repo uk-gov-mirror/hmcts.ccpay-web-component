@@ -90,7 +90,7 @@ export class CaseTransactionsComponent implements OnInit {
   isAddRemissionBtnEnabled: boolean = false;
   isRefundRemissionBtnEnable: boolean = false;
   allowedRolesToAccessRefund = ['payments-refund-approver', 'payments-refund'];
-  isEligible4PBAPayment = ['pui-finance-manager', 'pui-user-manager','pui-organisation-manager', 'pui-case-manager'];
+  isEligible4PBAPayment = ['pui-finance-manager', 'pui-user-manager', 'pui-organisation-manager', 'pui-case-manager'];
   currentDate = new Date();
   isFromServiceRequestPage: boolean;
   navigationpage: string;

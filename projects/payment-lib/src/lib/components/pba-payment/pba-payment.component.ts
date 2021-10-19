@@ -4,7 +4,6 @@ import { PaymentLibComponent } from '../../payment-lib.component';
 import { IserviceRequestCardPayment } from '../../interfaces/IserviceRequestCardPayment';
 import { IserviceRequestPbaPayment } from '../../interfaces/IserviceRequestPbaPayment';
 
-
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 
 @Component({
@@ -17,6 +16,7 @@ export class PbaPaymentComponent implements OnInit {
   viewStatus: string;
   pbaAccountList: string[];
   errorMsg: any;
+  isCardPaymentSuccess: boolean = true;
   isInSufficiantFund: boolean = false;
   isPBAAccountNotExist: boolean = false;
   isPBAServerError: boolean = false;
@@ -75,12 +75,9 @@ export class PbaPaymentComponent implements OnInit {
         this.isPBAAccountPaymentSuccess = true;
       },
       e => {
-        const patt = new RegExp(/CA-E[0-9]{4}/gm);
-        const errorCode = patt.exec(e) ? patt.exec(e)[0] : 'serverError';
-
-        if(e.status == '402' && errorCode === 'CA-E0001') {
+        if(e.status == '402') {
           this.isInSufficiantFund = true;
-        } else if(e.status == '402' && (errorCode === 'CA-E0004' ||  errorCode === 'CA-E0003')) {
+        } else if(e.status == '410' || e.status == '412') {
           this.isPBAAccountNotExist = true;
         } else {
           this.isPBAServerError = true;
@@ -90,14 +87,17 @@ export class PbaPaymentComponent implements OnInit {
 
   }
   cardPayment() {
+    this.isCardPaymentSuccess = true;
     const requestBody = new IserviceRequestCardPayment (
       this.pbaPayOrderRef.orderTotalFees);
     this.paymentViewService.postWays2PayCardPayment(this.pbaPayOrderRef.orderRefId, requestBody)
     .subscribe(
       result => {
+        const paymentUrl = JSON.parse(result).next_url;
+        window.location.href = paymentUrl;
       },
       error => {
-        this.errorMsg = error;
+        this.isCardPaymentSuccess = false;
       }
     );
 

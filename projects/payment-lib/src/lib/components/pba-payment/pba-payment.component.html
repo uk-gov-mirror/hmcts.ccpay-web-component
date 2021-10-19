@@ -1,5 +1,5 @@
 <ng-container *ngIf="viewStatus === 'pba-payment'">
-  <div class="pba-payment" *ngIf="(pbaAccountList?.length > 0 || errorMsg) && !isInSufficiantFund && !isPBAAccountNotExist && !isPBAServerError && !isPBAAccountPaymentSuccess">
+  <div class="pba-payment" *ngIf="(pbaAccountList?.length > 0 || errorMsg) && !isInSufficiantFund && !isPBAAccountNotExist && !isPBAServerError && !isPBAAccountPaymentSuccess && isCardPaymentSuccess">
     <div *ngIf="errorMsg" class="govuk-error-summary pba-payments-error-box--size" aria-labelledby="error-summary-title" >
       <h2 class="govuk-error-summary__title govuk-error-summary__title-custom pba-payments-24-font" id="error-summary-title">
         There is a problem
@@ -54,7 +54,7 @@
     </div>
 
   </div>
-<ng-container *ngIf="pbaAccountList?.length <= 0 && !errorMsg && isGetPBAAccountSucceed">
+<ng-container *ngIf="pbaAccountList?.length <= 0 && !errorMsg && isGetPBAAccountSucceed && isCardPaymentSuccess">
   <div class="govuk-width-container">
     <main class="govuk-main-wrapper govuk-main-wrapper--l" id="main-content" role="main">
       <div class="govuk-grid-row">
@@ -110,7 +110,7 @@
   </div>
 </ng-container>
 
-<ng-container *ngIf="isInSufficiantFund">
+<ng-container *ngIf="isInSufficiantFund && isCardPaymentSuccess">
   <div class="govuk-width-container">
     <main class="govuk-main-wrapper govuk-main-wrapper--l" id="main-content" role="main">
       <div class="govuk-grid-row">
@@ -145,7 +145,7 @@
     </main>
   </div>
 </ng-container>
-<ng-container *ngIf="isPBAAccountNotExist">
+<ng-container *ngIf="isPBAAccountNotExist && isCardPaymentSuccess">
   <div class="govuk-width-container">
     <main class="govuk-main-wrapper govuk-main-wrapper--l" id="main-content" role="main">
       <div class="govuk-grid-row">
@@ -177,7 +177,7 @@
     </main>
   </div>
 </ng-container>
-<ng-container *ngIf="isPBAServerError">
+<ng-container *ngIf="isPBAServerError && isCardPaymentSuccess">
   <div class="govuk-width-container">
     <main class="govuk-main-wrapper govuk-main-wrapper--l" id="main-content" role="main">
       <div class="govuk-grid-row">
@@ -198,7 +198,7 @@
   </div>
 </ng-container>
 
-<ng-container *ngIf="isPBAAccountPaymentSuccess">
+<ng-container *ngIf="isPBAAccountPaymentSuccess && isCardPaymentSuccess">
   <div class="govuk-width-container">
     <main class="govuk-main-wrapper govuk-main-wrapper--l" id="main-content" role="main">
       <div class="govuk-grid-row">
@@ -213,6 +213,27 @@
       <p class="govuk-body pba-payments-19-font">
         <a href="javascript:void(0)" (click)="gotoCasetransationPage()">View service requests</a>
       </p>
+      </div>
+    </main>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="!isCardPaymentSuccess">
+  <div class="govuk-width-container">
+    <main class="govuk-main-wrapper govuk-main-wrapper--l" id="main-content" role="main">
+      <div class="govuk-grid-row">
+        <div class="pba-payments-margin-top-10">
+          <h2 class="pba-payments-heading-lg">Sorry, there is a problem with the service</h2>
+          <p class="govuk-body pba-payments-19-font">
+            Try again later.
+          </p>
+          <!-- <p class="govuk-body pba-payments-19-font">
+            you can also <a href="javascript:void(0)" (click)="cardPayment()" >pay by credit or debit card</a>.
+          </p> -->
+          <p class="govuk-body pba-payments-19-font">
+            <a href="javascript:void(0)" (click)="gotoCasetransationPage()">View service requests</a>
+          </p>
+        </div>
       </div>
     </main>
   </div>
