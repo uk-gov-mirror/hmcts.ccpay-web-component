@@ -12,9 +12,9 @@
 <div class="fee-summary" *ngIf="viewStatus === 'main'">
     <main class="govuk-main-wrapper">
       <input #myInput type='hidden' id='iFrameDrivenImageValue' value='FEESUMMARY'>
-      <div style="display:flex; flex-direction:row; justify-content: space-between; width:960px;">
+      <div class="summaryheader">
           <h1 class="heading-large govuk-!-margin-top-3 govuk-!-margin-bottom-4">Summary </h1>
-          <p class="govuk-!-margin-top-5" style="align-self: flex-end;">Case reference:{{ccdCaseNumber | ccdHyphens}}</p>
+          <p class="govuk-!-margin-top-5 caseref">Case reference:{{ccdCaseNumber | ccdHyphens}}</p>
         </div>
 
   <!-- <div class="govuk-grid-row">
@@ -187,10 +187,10 @@
       <table class="govuk-table  govuk-!-margin-bottom-2" *ngIf="!errorMessage && paymentGroup">
           <thead class="govuk-table__head">
               <tr class="govuk-table__row">
-                  <th class="govuk-table__header" scope="col" style="width: 600px;">Description</th>
-                  <th class="govuk-table__header" scope="col" style="width: 60px;">Quantity</th>
-                  <th class="govuk-table__header" scope="col" style="width: 80px; text-align: right;"></th>
-                  <th class="govuk-table__header" scope="col" style="width: 100px; text-align: right;">Amount</th>
+                  <th class="govuk-table__header" scope="col" class="class600">Description</th>
+                  <th class="govuk-table__header" scope="col" class="class60">Quantity</th>
+                  <th class="govuk-table__header" scope="col" class="class80"></th>
+                  <th class="govuk-table__header" scope="col" class="class100">Amount</th>
               </tr>
           </thead>
 
@@ -228,15 +228,15 @@
                           </span>
                       </td>
                       
-                      <td  class="govuk-table__cell" style="text-align: right;">
+                      <td  class="govuk-table__cell alignright">
                        <br>
                         <div *ngIf = "getRemissionByFeeCode(fee.code)?.hwf_amount > 0" class="govuk-table__cell_border"> <br><br></div>
                       </td>
-                      <td class="govuk-table__cell" style="text-align: right;">
+                      <td class="govuk-table__cell alignright" >
                         {{ fee.calculated_amount | currency:'GBP':'symbol-narrow':'1.2-2' }}
                         <span *ngIf = "getRemissionByFeeCode(fee.code)?.hwf_amount > 0">
                             <br>
-                            <div class="govuk-table__cell_rmborder" style="text-align: right;">
+                            <div class="govuk-table__cell_rmborder alignright">
                                 -{{ getRemissionByFeeCode(fee.code)?.hwf_amount? ( getRemissionByFeeCode(fee.code)?.hwf_amount  | currency:'GBP':'symbol-narrow':'1.2-2') : '-' }}
                               </div> 
                             </span>
@@ -266,7 +266,7 @@
           </tbody>
       </table>
   </div>
-  <div style="display:flex; flex-direction:row;">
+  <div class="addfee">
       <button  *ngIf="!isTurnOff" (click)="redirectToFeeSearchPage($event,'summary')"
               [disabled]="isPaymentExist"
               [ngClass]='isPaymentExist ? "govuk-button govuk-button--secondary button--disabled" : "govuk-button govuk-button--secondary"'>
@@ -330,8 +330,6 @@
     </button>
   </div>
 
-
-    
 </main>
 </div>
 

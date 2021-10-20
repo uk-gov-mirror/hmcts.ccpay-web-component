@@ -393,7 +393,7 @@ export class CaseTransactionsComponent implements OnInit {
     if(orderef.orderAddBtnEnable) {
     event.preventDefault();
     this.paymentLibComponent.bspaymentdcn = null;
-    this.paymentLibComponent.paymentGroupReference = orderef;
+    this.paymentLibComponent.paymentGroupReference = orderef.orderRefId;
     this.paymentLibComponent.isTurnOff = this.isTurnOff;
     this.paymentLibComponent.viewName = 'fee-summary';
     }
@@ -627,7 +627,7 @@ export class CaseTransactionsComponent implements OnInit {
         // const paymentAllocation = this.paymentGroup.payments[0].payment_allocation;
         // this.isStatusAllocated = paymentAllocation.length > 0 && paymentAllocation[0].allocation_status === 'Allocated' || paymentAllocation.length === 0;
       },
-      (error: any) => this.errorMessage = error
+      (error: any) => this.errorMessage = error.replace(/"/g,"")
     );
     }
   }

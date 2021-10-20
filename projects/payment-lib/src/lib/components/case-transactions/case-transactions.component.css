@@ -318,3 +318,19 @@ th, td {
 .col-51 {
     width:51% !important;
 }
+
+.alignright {
+    text-align: right;
+}
+
+.alignleft {
+    text-align: left;
+}
+
+.alignself {
+    align-self: flex-end;
+}
+
+.maxwidth {
+    width: 100%;
+}

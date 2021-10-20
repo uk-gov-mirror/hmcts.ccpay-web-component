@@ -62,7 +62,7 @@ export class RefundListComponent implements OnInit {
    if(this.isAuthorized) {
     this.refundService.getRefundList(this.approvalStatus,true).subscribe(
       refundList => {
-        this.submittedRefundList = refundList['data']['refund_list'];
+        this.submittedRefundList = refundList['refund_list'];
         this.isApproveTableVisible = true;
       }
     ),
@@ -73,7 +73,7 @@ export class RefundListComponent implements OnInit {
 
     this.refundService.getRefundList(this.rejectStatus,false).subscribe(
       refundList => {
-        this.rejectedRefundList = refundList['data']['refund_list'];
+        this.rejectedRefundList = refundList['refund_list'];
         this.isRejectTableVisible = true;
       }
     ),

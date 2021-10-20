@@ -35,7 +35,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
   isRecordExist: boolean = false;
   dcnNumber: string = null;
   selectedOption: string;
-  isUnprocessedRecordSelected: boolean = false;
+  isUnprocessedRecordSelected: boolean = true;
   isAllocateToExistingFeebtnEnabled: boolean = false;
   isMarkAsUnidentifiedbtnEnabled: boolean = false;
   isAllocatedToNewFeebtnEnabled: boolean = false;

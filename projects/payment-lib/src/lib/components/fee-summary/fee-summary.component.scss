@@ -114,3 +114,43 @@ table th {
   font-size: 1.5rem !important;
 }
 
+.govuk-warning-text__text  {
+  font-size: 19px;
+}
+
+.summaryheader {
+  display:flex; 
+  flex-direction:row; 
+  justify-content: space-between; 
+  width:960px;
+}
+
+.class600 {
+  width: 600px;
+}
+
+.class60 {
+  width: 60px;
+}
+
+.class80 {
+  width: 80px;
+  text-align: right;
+}
+
+.class100 {
+  width: 100px; text-align: right;
+}
+
+.alignright {
+  text-align: right;
+}
+
+.caseref {
+  align-self: flex-end;
+}
+
+.addfee {
+  display:flex;
+  flex-direction:row;
+}
