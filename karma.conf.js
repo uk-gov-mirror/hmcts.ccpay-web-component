@@ -36,7 +36,7 @@ module.exports = config => {
       }
     },
     coverageReporter: {
-      dir: '.coverage/',
+      dir: 'coverage/',
       type: 'lcov',
       fixWebpackSourcePaths: true
     },

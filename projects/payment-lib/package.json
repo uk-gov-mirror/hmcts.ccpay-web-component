@@ -14,6 +14,10 @@
   "author": "Mateusz Swirski <mateusz.swirski@hmcts.net>",
   "contributors": [
     {
+      "name": "Santosh Govindu",
+      "email": "santosh.govindu@hmcts.net"
+    },
+    {
       "name": "Tarun Palisetty",
       "email": "tarun.palisetty@hmcts.net"
     },
