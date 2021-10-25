@@ -548,7 +548,7 @@ export class AddRemissionComponent implements OnInit {
   }
 
   gotoServiceRequestPage(event: any) {
-    event.preventDefault();
+    // event.preventDefault();
     
     if (this.paymentLibComponent.TAKEPAYMENT === undefined && this.paymentLibComponent.SERVICEREQUEST === undefined) {
       this.paymentLibComponent.SERVICEREQUEST = 'false';

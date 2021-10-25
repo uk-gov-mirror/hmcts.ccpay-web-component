@@ -166,7 +166,7 @@ export class RefundStatusComponent implements OnInit {
   }
 
   gotoReviewDetailsPage(event:any) {
-    event.preventDefault();
+   // event.preventDefault();
     this.errorMessage = false;
     this.paymentLibComponent.isRefundStatusView = true;
     this.ngOnInit();
