@@ -216,7 +216,7 @@ export class AddRemissionComponent implements OnInit {
         }
       },
       (error: any) => {
-        this.errorMessage = error.replace(/"/g,"");
+        this.errorMessage = error;
         this.isConfirmationBtnDisabled = false;
       }
     );
@@ -303,6 +303,7 @@ export class AddRemissionComponent implements OnInit {
     if(this.isFromPaymentDetailPage) {
       this.paymentLibComponent.viewName = 'payment-view';
     }
+   window.location.reload();
   }
 
   gotoCheckRetroRemissionPage(payment: IPayment) {
@@ -322,6 +323,7 @@ export class AddRemissionComponent implements OnInit {
       } else {
           this.viewCompStatus = '';
           this.viewStatus = "checkretroremissionpage";
+          window.location.reload();
       }
     }
   } else {
@@ -344,6 +346,7 @@ export class AddRemissionComponent implements OnInit {
     this.viewCompStatus = 'addremission';
     this.isRefundRemission = true;
     this.errorMessage = '';
+    window.location.reload();
   }
 
   confirmRetroRemission() {
@@ -361,7 +364,7 @@ export class AddRemissionComponent implements OnInit {
         }
       },
       (error: any) => {
-        this.errorMessage = error.replace(/"/g,"");
+        this.errorMessage = error;
         this.isConfirmationBtnDisabled = false;
         this.cd.detectChanges();
       }
@@ -390,7 +393,7 @@ export class AddRemissionComponent implements OnInit {
         }
       },
       (error: any) => {
-        this.errorMessage = error.replace(/"/g,"");
+        this.errorMessage = error;
         this.isConfirmationBtnDisabled = false;
       })
   }
@@ -417,6 +420,7 @@ export class AddRemissionComponent implements OnInit {
       } else {
         this.viewCompStatus = '';
         this.viewStatus = 'checkissuerefundpage';
+        window.location.reload();
       }
       
     } else {
@@ -426,6 +430,7 @@ export class AddRemissionComponent implements OnInit {
       } else {
         this.viewCompStatus = '';
         this.viewStatus = 'checkissuerefundpage';
+        window.location.reload();
       }
    
     }
@@ -439,6 +444,7 @@ export class AddRemissionComponent implements OnInit {
     this.errorMessage = false;
     this.refundHasError = false;
     this.isReasonEmpty = false;
+    window.location.reload();
   }
 
   changeIssueRefundReason() {
@@ -471,7 +477,7 @@ export class AddRemissionComponent implements OnInit {
           }
       },
       (error: any) => {
-        this.errorMessage = error.replace(/"/g,"");
+        this.errorMessage = error;
         this.isConfirmationBtnDisabled = false;
         this.cd.detectChanges();
       })
@@ -499,7 +505,7 @@ export class AddRemissionComponent implements OnInit {
           }
       },
       (error: any) => {
-        this.errorMessage = error.replace(/"/g,"");
+        this.errorMessage = error;
         this.isConfirmationBtnDisabled = false;
       });
   }
@@ -555,6 +561,7 @@ export class AddRemissionComponent implements OnInit {
       this.paymentLibComponent.viewName = 'case-transactions';
       this.OrderslistService.setisFromServiceRequestPage(true);
       this.OrderslistService.setnavigationPage('servicerequestpage');
+      window.location.reload();
     }
     if ( this.isFromRefundListPage ) {
       this.paymentLibComponent.iscancelClicked = true;
@@ -615,6 +622,7 @@ export class AddRemissionComponent implements OnInit {
     } else {
       this.paymentLibComponent.viewName === 'refundstatuslist';
       this.paymentLibComponent.isFromRefundStatusPage = true;
+      window.location.reload();
     }
   }
 
@@ -656,6 +664,7 @@ export class AddRemissionComponent implements OnInit {
   gotoCasetransationPageCancelBtnClicked() {
     if (this.paymentLibComponent.REFUNDLIST) {
       this.paymentLibComponent.viewName = 'refund-list';
+      window.location.reload();
       return;
     }
     if (this.paymentLibComponent.TAKEPAYMENT === undefined && this.paymentLibComponent.SERVICEREQUEST === undefined) {
