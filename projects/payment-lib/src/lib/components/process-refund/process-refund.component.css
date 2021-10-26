@@ -29,6 +29,7 @@
     color: #c11717;
     font-weight: bold;
     margin-top: 10px;
+    border-color:#c11717;
   }
   .inline-error-class {
     outline: 3px solid #c11717;
