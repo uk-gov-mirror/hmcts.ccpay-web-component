@@ -13,7 +13,7 @@
             If you know your organisation has a PBA, try again.
           </li>
           <li class="pba-payments-error-16-font">
-            You can also <a href="javascript:void(0)" (click)="cardPayment()">pay by credit or debit card</a>.
+            You can also pay by credit or debit card.
           </li>
         </ul>
       </div>
@@ -44,15 +44,19 @@
     </div>
     <input class="govuk-input pba-payments-ref-box--size" id="pbaAccountRef" (change)="selectpbaaccount($event)" name="pbaAccountRef" type="text" aria-describedby="pbaAccountRef-hint">
     </div>
-    <div class="govuk-button--group">
-      <button type="button" *ngIf="errorMsg" class="button pba-payments-19-font govuk-button--secondary pba-payments-margin-10" (click)="gotoCasetransationPage()">
-        Return to Service Request
+    <div class="govuk-button--group"  *ngIf="errorMsg">
+      <button type="button" class="button pba-payments-19-font govuk-button--secondary pba-payments-margin-10" (click)="gotoCasetransationPage()">
+        View Service Request
       </button>
+      <button type="submit" class="button pba-payments-19-font pba-payments-20-margin" (click)="cardPayment()">
+        Pay by card
+      </button>
+    </div>
+    <div class="govuk-button--group"  *ngIf="!errorMsg">
       <button type="submit" [disabled]="isContinueButtondisabled" class="button pba-payments-19-font pba-payments-20-margin" (click)="saveAndContinue()">
         Continue
       </button>
     </div>
-
   </div>
 <ng-container *ngIf="pbaAccountList?.length <= 0 && !errorMsg && isGetPBAAccountSucceed && isCardPaymentSuccess">
   <div class="govuk-width-container">
@@ -135,11 +139,16 @@
             Email <a href="mailto:MiddleOffice.DDservices@liberata.com">MiddleOffice.DDservices@liberata.com</a>or call <a href="tel:01633-652-125">01633 652 125</a> (option 3) to try to fix the issue.
           </p>
           <p class="govuk-body pba-payments-19-font">
-            you can also <a href="javascript:void(0)" (click)="cardPayment()" >pay by credit or debit card</a>.
+            you can also pay by credit or debit card.
           </p>
-          <p class="govuk-body pba-payments-19-font">
-            <a href="javascript:void(0)" (click)="gotoCasetransationPage()" >View service requests</a>
-          </p>
+          <div class="govuk-button--group">
+            <button type="button" class="button pba-payments-19-font govuk-button--secondary pba-payments-margin-10" (click)="gotoCasetransationPage()">
+              View Service Request
+            </button>
+            <button type="submit" class="button pba-payments-19-font pba-payments-20-margin" (click)="cardPayment()">
+              Pay by card
+            </button>
+          </div>
         </div>
       </div>
     </main>
@@ -167,11 +176,16 @@
             Email <a href="mailto:MiddleOffice.DDservices@liberata.com">MiddleOffice.DDservices@liberata.com</a>or call <a href="tel:01633-652-125">01633 652 125</a> (option 3) to try to fix the issue.
           </p>
           <p class="govuk-body pba-payments-19-font">
-            you can also <a href="javascript:void(0)" (click)="cardPayment()" >pay by credit or debit card</a>.
+            you can also pay by credit or debit card.
           </p>
-          <p class="govuk-body pba-payments-19-font">
-            <a href="javascript:void(0)" (click)="gotoCasetransationPage()">View service requests</a>
-          </p>
+          <div class="govuk-button--group">
+            <button type="button" class="button pba-payments-19-font govuk-button--secondary pba-payments-margin-10" (click)="gotoCasetransationPage()">
+              View Service Request
+            </button>
+            <button type="submit" class="button pba-payments-19-font pba-payments-20-margin" (click)="cardPayment()">
+              Pay by card
+            </button>
+          </div>
         </div>
       </div>
     </main>
@@ -187,11 +201,16 @@
             Try again later.
           </p>
           <p class="govuk-body pba-payments-19-font">
-            you can also <a href="javascript:void(0)" (click)="cardPayment()" >pay by credit or debit card</a>.
+            you can also pay by credit or debit card.
           </p>
-          <p class="govuk-body pba-payments-19-font">
-            <a href="javascript:void(0)" (click)="gotoCasetransationPage()">View service requests</a>
-          </p>
+          <div class="govuk-button--group">
+            <button type="button" class="button pba-payments-19-font govuk-button--secondary pba-payments-margin-10" (click)="gotoCasetransationPage()">
+              View Service Request
+            </button>
+            <button type="submit" class="button pba-payments-19-font pba-payments-20-margin" (click)="cardPayment()">
+              Pay by card
+            </button>
+          </div>
         </div>
       </div>
     </main>
