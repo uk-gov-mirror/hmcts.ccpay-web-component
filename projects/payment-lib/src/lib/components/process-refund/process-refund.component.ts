@@ -209,11 +209,11 @@ export class ProcessRefundComponent implements OnInit {
     }
   }
  redirecttoRefundListPage() {
-  window.location.href='/refund-list?takePayment=false&refundlist=true';
- }
+   this.loadRefundListPage();
+  }
   // loadCaseTransactionPage() {
   //   this.paymentLibComponent.isRefundStatusView = false;
-  //   this.paymentLibComponent.TAKEPAYMENT = true;
+  //   this.paymentLibCo}mponent.TAKEPAYMENT = true;
   //   this.paymentLibComponent.viewName = 'case-transactions';
   //   this.paymentViewService.getBSfeature().subscribe(
   //     features => {
