@@ -203,13 +203,18 @@ export class ProcessRefundComponent implements OnInit {
   loadRefundListPage() {
     this.OrderslistService.getnavigationPageValue().subscribe((data) => this.navigationpage = data);
     if (this.navigationpage === 'casetransactions') {
-      //this.loadCaseTransactionPage();
+      window.location.href='/refund-list?takePayment=false&refundlist=true';
     } else {
       this.paymentLibComponent.viewName = 'refund-list';
     }
   }
  redirecttoRefundListPage() {
-   this.loadRefundListPage();
+   if(this.paymentLibComponent.API_ROOT === 'api/payment-history') {
+    window.location.href='/refund-list?takePayment=false&refundlist=true';
+   }
+   else {
+    this.loadRefundListPage();
+   }
   }
   // loadCaseTransactionPage() {
   //   this.paymentLibComponent.isRefundStatusView = false;
