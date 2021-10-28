@@ -303,7 +303,6 @@ export class AddRemissionComponent implements OnInit {
     if(this.isFromPaymentDetailPage) {
       this.paymentLibComponent.viewName = 'payment-view';
     }
-   
   }
 
   gotoCheckRetroRemissionPage(payment: IPayment) {
@@ -323,7 +322,6 @@ export class AddRemissionComponent implements OnInit {
       } else {
           this.viewCompStatus = '';
           this.viewStatus = "checkretroremissionpage";
-          
       }
     }
   } else {
@@ -346,7 +344,6 @@ export class AddRemissionComponent implements OnInit {
     this.viewCompStatus = 'addremission';
     this.isRefundRemission = true;
     this.errorMessage = '';
-    
   }
 
   confirmRetroRemission() {
@@ -420,7 +417,6 @@ export class AddRemissionComponent implements OnInit {
       } else {
         this.viewCompStatus = '';
         this.viewStatus = 'checkissuerefundpage';
-        
       }
       
     } else {
@@ -430,7 +426,6 @@ export class AddRemissionComponent implements OnInit {
       } else {
         this.viewCompStatus = '';
         this.viewStatus = 'checkissuerefundpage';
-        
       }
    
     }
@@ -444,7 +439,6 @@ export class AddRemissionComponent implements OnInit {
     this.errorMessage = false;
     this.refundHasError = false;
     this.isReasonEmpty = false;
-    
   }
 
   changeIssueRefundReason() {
@@ -548,7 +542,7 @@ export class AddRemissionComponent implements OnInit {
   }
 
   gotoServiceRequestPage(event: any) {
-    // event.preventDefault();
+    event.preventDefault();
     
     if (this.paymentLibComponent.TAKEPAYMENT === undefined && this.paymentLibComponent.SERVICEREQUEST === undefined) {
       this.paymentLibComponent.SERVICEREQUEST = 'false';
@@ -561,7 +555,6 @@ export class AddRemissionComponent implements OnInit {
       this.paymentLibComponent.viewName = 'case-transactions';
       this.OrderslistService.setisFromServiceRequestPage(true);
       this.OrderslistService.setnavigationPage('servicerequestpage');
-      
     }
     if ( this.isFromRefundListPage ) {
       this.paymentLibComponent.iscancelClicked = true;
@@ -622,7 +615,6 @@ export class AddRemissionComponent implements OnInit {
     } else {
       this.paymentLibComponent.viewName === 'refundstatuslist';
       this.paymentLibComponent.isFromRefundStatusPage = true;
-      
     }
   }
 
@@ -664,7 +656,6 @@ export class AddRemissionComponent implements OnInit {
   gotoCasetransationPageCancelBtnClicked() {
     if (this.paymentLibComponent.REFUNDLIST) {
       this.paymentLibComponent.viewName = 'refund-list';
-      
       return;
     }
     if (this.paymentLibComponent.TAKEPAYMENT === undefined && this.paymentLibComponent.SERVICEREQUEST === undefined) {
