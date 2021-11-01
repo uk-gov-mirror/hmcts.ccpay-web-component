@@ -200,11 +200,11 @@ export class CaseTransactionsComponent implements OnInit {
         }
       );
     }
-    this.checkForExceptionRecord();
+    this.checkForExceptionRecord(Event);
     
-    // if(this.OrderslistService.getisFromServiceRequestPages() !== null) {
-    //   this.OrderslistService.getisFromServiceRequestPages().subscribe((data) => this.isFromServiceRequestPage = data);
-    // }
+    if(this.OrderslistService.getisFromServiceRequestPages() !== null) {
+      this.OrderslistService.getisFromServiceRequestPages().subscribe((data) => this.isFromServiceRequestPage = data);
+    }
   
 
   }
@@ -225,7 +225,8 @@ export class CaseTransactionsComponent implements OnInit {
 
   }
 
-  checkForExceptionRecord(): void {
+  checkForExceptionRecord(event: any): void {
+    event.preventDefault();
     if (this.paymentGroups.length === 0 && (this.selectedOption.toLocaleLowerCase() === 'ccdorexception' || this.selectedOption.toLocaleLowerCase() === 'rc')) {
       this.bulkScaningPaymentService.getBSPaymentsByCCD(this.ccdCaseNumber).subscribe(
         recordData => {
