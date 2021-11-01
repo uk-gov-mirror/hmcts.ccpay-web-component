@@ -653,7 +653,8 @@ export class AddRemissionComponent implements OnInit {
     this.router.navigateByUrl(url);
   }
 
-  gotoCasetransationPageCancelBtnClicked() {
+  gotoCasetransationPageCancelBtnClicked(event: Event) {
+    event.preventDefault();
     if (this.paymentLibComponent.REFUNDLIST) {
       this.paymentLibComponent.viewName = 'refund-list';
       return;

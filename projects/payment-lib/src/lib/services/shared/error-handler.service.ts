@@ -28,9 +28,9 @@ export class ErrorHandlerService {
         }
       } else if (err.error) {
         if (typeof err.error === 'string') {
-          errorMessage = err.error.replace(/"/g,"");
+          errorMessage = err.error.toString().replace(/"/g,"");
         } else {
-          errorMessage = JSON.parse(err.error)["err"].split('-')[1];
+          errorMessage = Object.values(err.error)[0].toString().replace(/"/g,"");
         }
         
       }

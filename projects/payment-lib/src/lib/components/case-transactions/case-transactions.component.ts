@@ -145,9 +145,9 @@ export class CaseTransactionsComponent implements OnInit {
         paymentGroups => {
           this.isAnyFeeGroupAvilable =true;
           this.paymentGroups = paymentGroups['payment_groups'];
-          this.calculateAmounts(Event);
-          this.calculateOrderFeesAmounts(Event);
-          this.calculateRefundAmount(Event);
+          this.calculateAmounts();
+          this.calculateOrderFeesAmounts();
+          this.calculateRefundAmount();
           if (this.isFromServiceRequestPage) {
             this.OrderslistService.getSelectedOrderRefId().subscribe((data) => this.orderRef = data);
             this.goToOrderViewDetailSection(this.orderRef);
@@ -177,9 +177,9 @@ export class CaseTransactionsComponent implements OnInit {
         paymentGroups => {
           this.isAnyFeeGroupAvilable =true;
           this.paymentGroups = paymentGroups['payment_groups'];
-          this.calculateAmounts(Event);
-          this.calculateOrderFeesAmounts(Event);
-          this.totalRefundAmount = this.calculateRefundAmount(Event);
+          this.calculateAmounts();
+          this.calculateOrderFeesAmounts();
+          this.totalRefundAmount = this.calculateRefundAmount();
           this.paymentViewService.getPartyDetails(this.ccdCaseNumber).subscribe(
             response => {
               this.cpoDetails = JSON.parse(response).data.content[0];
@@ -200,7 +200,7 @@ export class CaseTransactionsComponent implements OnInit {
         }
       );
     }
-    this.checkForExceptionRecord(Event);
+    this.checkForExceptionRecord();
     
     if(this.OrderslistService.getisFromServiceRequestPages() !== null) {
       this.OrderslistService.getisFromServiceRequestPages().subscribe((data) => this.isFromServiceRequestPage = data);
@@ -225,8 +225,8 @@ export class CaseTransactionsComponent implements OnInit {
 
   }
 
-  checkForExceptionRecord(event: any): void {
-    event.preventDefault();
+  checkForExceptionRecord(): void {
+   
     if (this.paymentGroups.length === 0 && (this.selectedOption.toLocaleLowerCase() === 'ccdorexception' || this.selectedOption.toLocaleLowerCase() === 'rc')) {
       this.bulkScaningPaymentService.getBSPaymentsByCCD(this.ccdCaseNumber).subscribe(
         recordData => {
@@ -276,8 +276,7 @@ export class CaseTransactionsComponent implements OnInit {
       });
   }
 
-  calculateOrderFeesAmounts(event: any): void {
-    event.preventDefault();
+  calculateOrderFeesAmounts(): void {
     let feesTotal = 0.00;
     this.paymentGroups.forEach(paymentGroup => {
       this.resetOrderVariables();
@@ -411,8 +410,7 @@ export class CaseTransactionsComponent implements OnInit {
   }
 
 
-  calculateAmounts(event: any): void {
-    event.preventDefault();
+  calculateAmounts(): void {
     let feesTotal = 0.00,
       paymentsTotal = 0.00,
       remissionsTotal = 0.00,
@@ -488,8 +486,7 @@ export class CaseTransactionsComponent implements OnInit {
 
   }
 
-  calculateRefundAmount(event: any) {
-    event.preventDefault();
+  calculateRefundAmount() {
     if (!this.isTurnOff) {
       let isNewPaymentGroup = false;
 
