@@ -103,8 +103,8 @@ export class CaseTransactionsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.navigationpage  = ''
-;    if(this.OrderslistService.getpaymentPageView() !== null) {
+    this.navigationpage  = '';
+    if(this.OrderslistService.getpaymentPageView() !== null) {
       this.OrderslistService.getpaymentPageView().subscribe((data) => this.paymentView = data);
     }
     if(this.OrderslistService.getnavigationPageValue() !== null) {
@@ -202,9 +202,9 @@ export class CaseTransactionsComponent implements OnInit {
     }
     this.checkForExceptionRecord();
     
-    if(this.OrderslistService.getisFromServiceRequestPages() !== null) {
-      this.OrderslistService.getisFromServiceRequestPages().subscribe((data) => this.isFromServiceRequestPage = data);
-    }
+    // if(this.OrderslistService.getisFromServiceRequestPages() !== null) {
+    //   this.OrderslistService.getisFromServiceRequestPages().subscribe((data) => this.isFromServiceRequestPage = data);
+    // }
   
 
   }
