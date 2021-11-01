@@ -86,4 +86,7 @@ export class TableComponent {
     this.paymentLibComponent.isRefundStatusView = true;
     this.paymentLibComponent.isCallFromRefundList = true;
   }
+  goToCaseReview(ccdCaseNumber: string, refundData: IRefundList ) {
+    window.location.href =`/cases/case-details/:${ccdCaseNumber}`;
+  }
 }
