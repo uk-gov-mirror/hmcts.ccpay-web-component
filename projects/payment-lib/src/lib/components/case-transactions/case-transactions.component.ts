@@ -145,9 +145,9 @@ export class CaseTransactionsComponent implements OnInit {
         paymentGroups => {
           this.isAnyFeeGroupAvilable =true;
           this.paymentGroups = paymentGroups['payment_groups'];
-          this.calculateAmounts();
-          this.calculateOrderFeesAmounts();
-          this.calculateRefundAmount();
+          this.calculateAmounts(Event);
+          this.calculateOrderFeesAmounts(Event);
+          this.calculateRefundAmount(Event);
           if (this.isFromServiceRequestPage) {
             this.OrderslistService.getSelectedOrderRefId().subscribe((data) => this.orderRef = data);
             this.goToOrderViewDetailSection(this.orderRef);
@@ -177,9 +177,9 @@ export class CaseTransactionsComponent implements OnInit {
         paymentGroups => {
           this.isAnyFeeGroupAvilable =true;
           this.paymentGroups = paymentGroups['payment_groups'];
-          this.calculateAmounts();
-          this.calculateOrderFeesAmounts();
-          this.totalRefundAmount = this.calculateRefundAmount();
+          this.calculateAmounts(Event);
+          this.calculateOrderFeesAmounts(Event);
+          this.totalRefundAmount = this.calculateRefundAmount(Event);
           this.paymentViewService.getPartyDetails(this.ccdCaseNumber).subscribe(
             response => {
               this.cpoDetails = JSON.parse(response).data.content[0];
@@ -276,7 +276,8 @@ export class CaseTransactionsComponent implements OnInit {
       });
   }
 
-  calculateOrderFeesAmounts(): void {
+  calculateOrderFeesAmounts(event: any): void {
+    event.preventDefault();
     let feesTotal = 0.00;
     this.paymentGroups.forEach(paymentGroup => {
       this.resetOrderVariables();
@@ -410,7 +411,8 @@ export class CaseTransactionsComponent implements OnInit {
   }
 
 
-  calculateAmounts(): void {
+  calculateAmounts(event: any): void {
+    event.preventDefault();
     let feesTotal = 0.00,
       paymentsTotal = 0.00,
       remissionsTotal = 0.00,
@@ -486,7 +488,8 @@ export class CaseTransactionsComponent implements OnInit {
 
   }
 
-  calculateRefundAmount() {
+  calculateRefundAmount(event: any) {
+    event.preventDefault();
     if (!this.isTurnOff) {
       let isNewPaymentGroup = false;
 
