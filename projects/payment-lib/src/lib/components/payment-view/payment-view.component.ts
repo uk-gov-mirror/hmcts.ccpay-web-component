@@ -136,6 +136,17 @@ export class PaymentViewComponent implements OnInit {
     }
   }
 
+  checkForFees(paymentGroup: any) {
+    if(paymentGroup !== null && paymentGroup !== undefined)
+    {
+      if (paymentGroup.fees !== null && paymentGroup.fees !== undefined) {
+        return true;
+      }
+     
+    }
+    return false;
+  }
+
   addRefundForRemission(payment: IPayment, remission: IRemission[],fees:any) {
  if(this.chkIsRefundRemissionBtnEnable()) {
     this.payment = payment;
