@@ -83,14 +83,15 @@
         <button [disabled]="!chkIssueRefundBtnEnable(paymentGroup?.payments[0])" (click)="issueRefund(paymentGroup)" class="govuk-button govuk-button--secondary">Issue refund</button>
      </div>
       
-      <div class="govuk-grid-row" *ngIf="paymentGroup?.fees.length > 0">
+     <div *ngIf="paymentGroup !== undefined && paymentGroup !== null">
+      <div class="govuk-grid-row" *ngIf="paymentGroup.fees.length > 0">
         <div class="column">
         
           <h2 class="heading-large">Fee and remission details</h2>
         
         </div>
       </div>
-
+    </div>
       <div *ngFor="let fee of paymentGroup.fees">
         <table class="table">
           <tbody>

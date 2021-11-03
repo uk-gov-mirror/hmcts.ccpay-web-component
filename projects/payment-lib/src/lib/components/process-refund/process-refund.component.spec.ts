@@ -1,14 +1,25 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { RefundsService } from '../../services/refunds/refunds.service';
 import { OrderslistService } from '../../services/orderslist.service';
 import { PaymentLibComponent } from '../../payment-lib.component';
 import { ProcessRefundComponent } from './process-refund.component';
+import { of } from 'rxjs';
 
 describe('ProcessRefundComponent', () => {
   let component: ProcessRefundComponent;
   let fixture: ComponentFixture<ProcessRefundComponent>;
+
+  let form = new FormGroup({
+    refundActionField: new FormControl(),
+    refundRejectReasonField: new FormControl(),
+    sendMeBackField: new FormControl(),
+    enterReasonField: new FormControl()
+  });       
+  
+  form.setValue({refundActionField:"Approve",refundRejectReasonField:"",sendMeBackField:"Test Refund  Reason",enterReasonField:"Default Reason"});
+  
 
   beforeEach(() => {
     const formBuilderStub = () => ({ group: object => ({}) });
@@ -119,20 +130,24 @@ describe('ProcessRefundComponent', () => {
   //   });
   // });
 
-  // describe('processRefundSubmit', () => {
-  //   it('makes expected calls', () => {
-  //     const refundsServiceStub: RefundsService = fixture.debugElement.injector.get(
-  //       RefundsService
-  //     );
-  //     spyOn(component, 'resetForm').and.callThrough();
-  //     spyOn(component, 'getErrorMessage').and.callThrough();
-  //     spyOn(refundsServiceStub, 'patchRefundActions').and.callThrough();
-  //     component.processRefundSubmit();
-  //     expect(component.resetForm).toHaveBeenCalled();
-  //     expect(component.getErrorMessage).toHaveBeenCalled();
-  //     expect(refundsServiceStub.patchRefundActions).toHaveBeenCalled();
-  //   });
-  // });
+  describe('processRefundSubmit', () => {
+    it('makes expected calls', () => {
+      const refundsServiceStub: RefundsService = fixture.debugElement.injector.get(
+        RefundsService
+      );
+      spyOn(component, 'resetForm').and.callThrough();
+      spyOn(component, 'getErrorMessage').and.callThrough();
+      const mockResponse = "Refund Approved";
+      spyOn(refundsServiceStub, 'patchRefundActions').and.returnValue(of(mockResponse));
+      component.processRefundForm = form;
+      // component.processRefundForm.setValue({refundActionField : "Approve"});
+      // component.processRefundForm.setValue({refundRejectReasonField : ""});
+      component.processRefundSubmit();
+      expect(component.resetForm).toHaveBeenCalled();
+      expect(component.getErrorMessage).not.toHaveBeenCalled();
+      expect(refundsServiceStub.patchRefundActions).not.toHaveBeenCalled();
+    });
+  });
 
   describe('loadRefundListPage', () => {
     it('makes expected calls', () => {

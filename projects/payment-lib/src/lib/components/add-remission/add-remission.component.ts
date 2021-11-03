@@ -92,6 +92,7 @@ export class AddRemissionComponent implements OnInit {
   default: string;
   reasonLength: number;
   refundReasons:IRefundReasons[];
+  component: { account_number: string; amount: number; case_reference: string; ccd_case_number: string; channel: string; currency: string; customer_reference: string; date_created: string; date_updated: string; description: string; method: string; organisation_name: string; payment_allocation: any[]; reference: string; service_name: string; site_id: string; status: string; };
 
   constructor(private formBuilder: FormBuilder,
     private router: Router,
@@ -133,8 +134,9 @@ export class AddRemissionComponent implements OnInit {
       refundDDReason: new FormControl('', Validators.compose([Validators.required])),
       reason: new FormControl()
     });
-    const remissionctrls=this.remissionForm.controls;
-    remissionctrls['refundDDReason'].setValue('Select a different reason', {onlySelf: true});
+
+    // const remissionctrls=this.remissionForm.controls;
+    // remissionctrls['refundDDReason'].setValue('Select a different reason', {onlySelf: true});
     if(this.viewCompStatus === ''){
     this.viewStatus = 'main';
     }
@@ -200,16 +202,19 @@ export class AddRemissionComponent implements OnInit {
     (this.ccdCaseNumber, this.fee, remissionAmount, this.remissionForm.controls.remissionCode.value, this.caseType);
     this.paymentViewService.postPaymentGroupWithRemissions(decodeURIComponent(this.paymentGroupRef).trim(), this.fee.id, requestBody).subscribe(
       response => {
-        if (JSON.parse(response).success) {
+        if (response.success) {
+          console.log('kumar1');
           let LDUrl = this.isTurnOff ? '&isTurnOff=Enable' : '&isTurnOff=Disable'
             LDUrl += `&caseType=${this.caseType}`
             LDUrl += this.isNewPcipalOff ? '&isNewPcipalOff=Enable' : '&isNewPcipalOff=Disable'
             LDUrl += this.isOldPcipalOff ? '&isOldPcipalOff=Enable' : '&isOldPcipalOff=Disable'
           if (this.paymentLibComponent.bspaymentdcn) {
+            console.log('kumar2');
             this.router.routeReuseStrategy.shouldReuseRoute = () => false;
             this.router.onSameUrlNavigation = 'reload';
             this.router.navigateByUrl(`/payment-history/${this.ccdCaseNumber}?view=fee-summary&selectedOption=${this.option}&paymentGroupRef=${this.paymentGroupRef}&dcn=${this.paymentLibComponent.bspaymentdcn}${LDUrl}`);
           }else {
+            console.log('kumar3');
             this.gotoCasetransationPage();
           }
 
@@ -379,7 +384,6 @@ export class AddRemissionComponent implements OnInit {
       this.remissionReference = this.remission.remission_reference;
     }
     const requestBody = new PostIssueRefundRetroRemission(this.remissionReference);
-  
     this.paymentViewService.postRefundRetroRemission(requestBody).subscribe(
         response => {
       if (JSON.parse(response)) {
@@ -577,16 +581,16 @@ export class AddRemissionComponent implements OnInit {
         this.paymentLibComponent.ISNEWPCIPALOFF = this.isNewPcipalOff;
         this.paymentLibComponent.ISOLDPCIPALOFF = this.isOldPcipalOff;
         this.paymentLibComponent.isFromServiceRequestPage = true;  
-        this.paymentViewService.getBSfeature().subscribe(
-          features => {
-            let result = JSON.parse(features).filter(feature => feature.uid === BS_ENABLE_FLAG);
-            this.paymentLibComponent.ISBSENABLE = result[0] ? result[0].enable : false;
-          },
-          err => {
-            this.paymentLibComponent.ISBSENABLE = false;
-          }
-        );
-
+        // this.paymentViewService.getBSfeature().subscribe(
+        //   features => {
+        //     let result = JSON.parse(features).filter(feature => feature.uid === BS_ENABLE_FLAG);
+        //     this.paymentLibComponent.ISBSENABLE = result[0] ? result[0].enable : false;
+        //   },
+        //   err => {
+        //     this.paymentLibComponent.ISBSENABLE = false;
+        //   }
+        // );
+        this.paymentLibComponent.ISBSENABLE = true;
         let partUrl = this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
         partUrl += this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
         partUrl += this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
@@ -626,16 +630,16 @@ export class AddRemissionComponent implements OnInit {
     this.paymentLibComponent.ISNEWPCIPALOFF = this.isNewPcipalOff;
     this.paymentLibComponent.ISOLDPCIPALOFF = this.isOldPcipalOff;
     this.paymentLibComponent.isFromServiceRequestPage = true;  
-    this.paymentViewService.getBSfeature().subscribe(
-      features => {
-        let result = JSON.parse(features).filter(feature => feature.uid === BS_ENABLE_FLAG);
-        this.paymentLibComponent.ISBSENABLE = result[0] ? result[0].enable : false;
-      },
-      err => {
-        this.paymentLibComponent.ISBSENABLE = false;
-      }
-    );
-
+    // this.paymentViewService.getBSfeature().subscribe(
+    //   features => {
+    //     let result = JSON.parse(features).filter(feature => feature.uid === BS_ENABLE_FLAG);
+    //     this.paymentLibComponent.ISBSENABLE = result[0] ? result[0].enable : false;
+    //   },
+    //   err => {
+    //     this.paymentLibComponent.ISBSENABLE = false;
+    //   }
+    // );
+    this.paymentLibComponent.ISBSENABLE = true;
     let partUrl = this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
      partUrl += this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
      partUrl += this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';

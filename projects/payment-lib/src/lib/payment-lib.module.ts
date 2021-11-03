@@ -31,7 +31,6 @@ import { keyValuePipe } from './pipes/key-value.pipe';
 import { SanitizeHtmlPipe } from './pipes/sanitize-html.pipe';
 import { ReportsComponent } from './components/reports/reports.component';
 import { XlFileService } from './services/xl-file/xl-file.service';
-import { RefundsComponent } from './components/refunds/refunds.component';
 import { TableComponent } from './components/table/table.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -80,7 +79,6 @@ import { RefundStatusComponent } from './components/refund-status/refund-status.
     SanitizeHtmlPipe,
     ReportsComponent,
     ErrorBannerComponent,
-    RefundsComponent,
     TableComponent,
     RefundStatusComponent
   ],
