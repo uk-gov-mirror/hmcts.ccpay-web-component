@@ -103,6 +103,10 @@ downloadReport(){
               if(res['data'][i]["balance"] !== undefined) {
                 res['data'][i]['balance'] = this.convertToFloatValue(res['data'][i]["balance"]);
               }
+              let Op = res['data'][i]["surplus_shortfall"];
+              if(Op !== undefined) {
+                res['data'][i]['surplus_shortfall'] = Op =="Surplus" ? "Over payment":"Under payment";
+              }
               if(res['data'][i]["payment_amount"] !== undefined) {
                 res['data'][i]['payment_amount'] = this.convertToFloatValue(res['data'][i]['payment_amount']);
               }
@@ -185,7 +189,7 @@ downloadReport(){
         break; 
       } 
       case 'SURPLUS_AND_SHORTFALL': { 
-        result = 'Surplus_Shortfall';
+        result = 'Over Payment_Under Payment';
         break; 
       } 
       default: { 
