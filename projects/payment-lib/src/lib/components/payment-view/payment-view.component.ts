@@ -50,6 +50,10 @@ export class PaymentViewComponent implements OnInit {
     private OrderslistService: OrderslistService) {
   }
 
+  ngAfterContentChecked(): void {
+    this.cd.detectChanges();
+ }  
+
   ngOnInit() {
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
     this.selectedOption = this.paymentLibComponent.SELECTED_OPTION;

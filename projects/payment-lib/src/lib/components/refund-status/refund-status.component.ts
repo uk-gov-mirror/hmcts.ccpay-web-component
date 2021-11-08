@@ -92,19 +92,21 @@ export class RefundStatusComponent implements OnInit {
       reason: new FormControl()
     });
 
-    this.getRefundsStatusHistoryList();
+    if(this.refundlist !== undefined) {
+      this.getRefundsStatusHistoryList();
 
-    if (this.LOGGEDINUSERROLES.some(i => i.includes('payments-refund-approver'))) {
-      this.isProcessRefund = true;
-      this.refundButtonState = this.refundlist.refund_status.name;
-      return;
+      if (this.LOGGEDINUSERROLES.some(i => i.includes('payments-refund-approver'))) {
+        this.isProcessRefund = true;
+        this.refundButtonState = this.refundlist.refund_status.name;
+        return;
+      }
+  
+      if (this.LOGGEDINUSERROLES.some(i => i.includes('payments-refund'))) {
+        this.isProcessRefund = false;
+        this.refundButtonState = this.refundlist.refund_status.name;
+      }
     }
-
-    if (this.LOGGEDINUSERROLES.some(i => i.includes('payments-refund'))) {
-      this.isProcessRefund = false;
-      this.refundButtonState = this.refundlist.refund_status.name;
-    }
-
+  
   }
 
   getRefundsStatusHistoryList() {

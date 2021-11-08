@@ -198,13 +198,15 @@ export class CaseTransactionsComponent implements OnInit {
         }
       );
     }
-    this.checkForExceptionRecord();
-    
+
+    if( this.paymentGroups !== undefined) {
+      this.checkForExceptionRecord();
+    }
+   
     if(this.OrderslistService.getisFromServiceRequestPages() !== null) {
       this.OrderslistService.getisFromServiceRequestPages().subscribe((data) => this.isFromServiceRequestPage = data);
     }
   
-
   }
 
   setDefaults(): void {

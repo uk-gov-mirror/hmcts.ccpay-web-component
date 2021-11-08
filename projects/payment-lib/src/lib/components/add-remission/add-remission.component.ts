@@ -124,6 +124,7 @@ export class AddRemissionComponent implements OnInit {
     this.remissionForm = this.formBuilder.group({
       remissionCode: new FormControl('', Validators.compose([
         Validators.required,
+       // Validators.pattern('/(^[a-zA-Z0-9]{3})-([a-zA-Z0-9]{3})-([a-zA-Z0-9]{3})$/|/(^[A-Za-z]{2}[0-9]{2})-([0-9]{6})$/')
         Validators.pattern('^([a-zA-Z0-9]{3})-([a-zA-Z0-9]{3})-([a-zA-Z0-9]{3})$')
       ])),
       amount: new FormControl('', Validators.compose([
@@ -135,7 +136,8 @@ export class AddRemissionComponent implements OnInit {
       reason: new FormControl()
     });
 
-    // const remissionctrls=this.remissionForm.controls;
+    // const remissionctrls=this.remissionForm.controls; ,
+     //   Validators.pattern('^([A-Za-z]{2}[0-9]{2})-([0-9]{6})$')
     // remissionctrls['refundDDReason'].setValue('Select a different reason', {onlySelf: true});
     if(this.viewCompStatus === ''){
     this.viewStatus = 'main';
@@ -151,18 +153,18 @@ export class AddRemissionComponent implements OnInit {
           this.commonRefundReasons.sort((a, b) => a.toString().localeCompare(b));
           this.cd.detectChanges();
         } );
-      }
+    }
     
-      if(this.viewCompStatus === 'processretroremissonpage' && this.isFromRefundListPage){
-        this.viewStatus = 'processretroremissonpage';
-        }
+    if(this.viewCompStatus === 'processretroremissonpage' && this.isFromRefundListPage){
+      this.viewStatus = 'processretroremissonpage';
+    }
 
       // this.refundService.getUserDetails().subscribe(
       //   userdetail => { 
       //     console.log(userdetail);
       //     console.log(userdetail['data']);
       //   } );
-    this.paymentLibComponent.CCD_CASE_NUMBER
+    // this.paymentLibComponent.CCD_CASE_NUMBER
   }
 
   addRemission() {

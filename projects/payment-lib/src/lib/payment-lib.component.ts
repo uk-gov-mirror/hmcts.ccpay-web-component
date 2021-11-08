@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { PaymentLibService } from './payment-lib.service';
 import { IBSPayments } from './interfaces/IBSPayments';
 import { IPayment } from './interfaces/IPayment';
@@ -92,7 +92,12 @@ export class PaymentLibComponent implements OnInit {
   pbaPayOrderRef: IPayment;
   // isFromServiceRequestPage: boolean;
 
-  constructor(private paymentLibService: PaymentLibService) { }
+  constructor(private paymentLibService: PaymentLibService,
+    private cd: ChangeDetectorRef) { }
+  ngAfterContentChecked(): void {
+    this.cd.detectChanges();
+ }  
+
 
   ngOnInit() {
     this.paymentLibService.setApiRootUrl(this.API_ROOT);
