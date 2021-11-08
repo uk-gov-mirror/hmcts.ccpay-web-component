@@ -92,6 +92,8 @@ export class AddRemissionComponent implements OnInit {
   default: string;
   reasonLength: number;
   refundReasons:IRefundReasons[];
+  pattern1: string;
+  pattern2: string;
   component: { account_number: string; amount: number; case_reference: string; ccd_case_number: string; channel: string; currency: string; customer_reference: string; date_created: string; date_updated: string; description: string; method: string; organisation_name: string; payment_allocation: any[]; reference: string; service_name: string; site_id: string; status: string; };
 
   constructor(private formBuilder: FormBuilder,
@@ -104,6 +106,8 @@ export class AddRemissionComponent implements OnInit {
 
   ngOnInit() {
     this.default = 'Select a different reason';
+    this.pattern1 = '^([a-zA-Z0-9]{3})-([a-zA-Z0-9]{3})-([a-zA-Z0-9]{3})$';
+    this.pattern2 = '^([A-Za-z]{2}[0-9]{2})-([0-9]{6})$';
     if(this.viewCompStatus !== '' && this.viewCompStatus !== undefined){
       this.viewStatus = '';
       }
@@ -122,11 +126,18 @@ export class AddRemissionComponent implements OnInit {
     this.option = this.paymentLibComponent.SELECTED_OPTION;
     this.bsPaymentDcnNumber = this.paymentLibComponent.bspaymentdcn;
     this.remissionForm = this.formBuilder.group({
-      remissionCode: new FormControl('', Validators.compose([
+      remissionCode: new FormControl('', 
+        Validators.compose([
         Validators.required,
-       // Validators.pattern('/(^[a-zA-Z0-9]{3})-([a-zA-Z0-9]{3})-([a-zA-Z0-9]{3})$/|/(^[A-Za-z]{2}[0-9]{2})-([0-9]{6})$/')
-        Validators.pattern('^([a-zA-Z0-9]{3})-([a-zA-Z0-9]{3})-([a-zA-Z0-9]{3})$')
-      ])),
+        Validators.pattern(`(${this.pattern1})|(${this.pattern2})`)
+      ]) 
+      ),
+      // remissionCode: new FormControl('', Validators.compose([  [A-Za-z]{2}[0-9]{2} [0-9]{6}
+      //   Validators.required,
+      //  // Validators.pattern('/(^[a-zA-Z0-9]{3})-([a-zA-Z0-9]{3})-([a-zA-Z0-9]{3})$/|/^([A-Za-z]{2}[0-9]{2})-([0-9]{6})$/')
+      //  // Validators.pattern('^([a-zA-Z0-9]{3})-([a-zA-Z0-9]{3})-([a-zA-Z0-9]{3})$'),
+      //   Validators.pattern('/^(([A-Za-z]{2}[0-9]{2})-([0-9]{6}))|(([a-zA-Z0-9]{3})-([a-zA-Z0-9]{3})-([a-zA-Z0-9]{3}))$/')
+      // ])),
       amount: new FormControl('', Validators.compose([
         Validators.required,
         Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$')
@@ -136,9 +147,6 @@ export class AddRemissionComponent implements OnInit {
       reason: new FormControl()
     });
 
-    // const remissionctrls=this.remissionForm.controls; ,
-     //   Validators.pattern('^([A-Za-z]{2}[0-9]{2})-([0-9]{6})$')
-    // remissionctrls['refundDDReason'].setValue('Select a different reason', {onlySelf: true});
     if(this.viewCompStatus === ''){
     this.viewStatus = 'main';
     }
@@ -158,13 +166,6 @@ export class AddRemissionComponent implements OnInit {
     if(this.viewCompStatus === 'processretroremissonpage' && this.isFromRefundListPage){
       this.viewStatus = 'processretroremissonpage';
     }
-
-      // this.refundService.getUserDetails().subscribe(
-      //   userdetail => { 
-      //     console.log(userdetail);
-      //     console.log(userdetail['data']);
-      //   } );
-    // this.paymentLibComponent.CCD_CASE_NUMBER
   }
 
   addRemission() {
@@ -173,7 +174,7 @@ export class AddRemissionComponent implements OnInit {
       isRemissionLessThanFee = this.fee.calculated_amount > remissionctrls.amount.value; 
       this.remissionForm.controls['refundReason'].setErrors(null);
       this.remissionForm.controls['refundDDReason'].setErrors(null);
-      this.remissionForm.controls['amount'].setErrors(null);
+      //this.remissionForm.controls['amount'].setErrors(null);
     if (this.remissionForm.dirty && this.remissionForm.valid && isRemissionLessThanFee) {
       this.viewStatus = 'confirmation';
     }else {
