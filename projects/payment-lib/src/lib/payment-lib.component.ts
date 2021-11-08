@@ -40,7 +40,6 @@ import { IPayment } from './interfaces/IPayment';
       [isNewPcipalOff]="ISNEWPCIPALOFF"
       ></ccpay-fee-summary>
     <ccpay-reports *ngIf="viewName === 'reports'"></ccpay-reports>
-    <ccpay-refunds  *ngIf="viewName === 'remission'"></ccpay-refunds>
     `
 })
 

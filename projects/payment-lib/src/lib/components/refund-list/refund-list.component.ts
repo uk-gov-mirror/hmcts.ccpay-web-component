@@ -29,15 +29,6 @@ export class RefundListComponent implements OnInit {
   userLst
   ngOnInit() {
     
-    // this.refundService.getUserDetails().subsc
-    //   userdetail => { 
-    //     console.log('govindu');
-    //     console.log(userdetail.headers);
-    //     console.log('govindu1');
-    //     console.log(userdetail.headers.get('Set-Cookie'));
-    //     console.log(userdetail);
-    //     console.log(userdetail['data']);
-    //   } );
     this.userLst = this.LOGGEDINUSERROLES;
 
     

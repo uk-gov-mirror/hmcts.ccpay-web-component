@@ -5,7 +5,7 @@
   <div class="govuk-breadcrumbs">
     <ol class="govuk-breadcrumbs__list">
       <li class="govuk-breadcrumbs__list-item">
-        <a href="#" (click)="goToCaseTransationPage($event)" class="govuk-back-link">Back</a>
+        <a href="javascript:void(0)" (click)="goToCaseTransationPage($event)" class="govuk-back-link">Back</a>
       </li>
     </ol>
   </div>
@@ -56,11 +56,11 @@
         </tr>
         <tr class="section">
             <td class="bold tb-col-w">Channel</td>
-            <td>{{ paymentGroup.payments[0].channel  }}</td>
+            <td>{{ paymentGroup?.payments[0]?.channel  }}</td>
         </tr>
         <tr class="section">
             <td class="bold tb-col-w">Method</td>
-            <td *ngIf="paymentGroup?.payments[0]?.method !== 'card'">{{ paymentGroup.payments[0].method }}</td>
+            <td *ngIf="paymentGroup?.payments[0]?.method !== 'card'">{{ paymentGroup?.payments[0]?.method }}</td>
             <td *ngIf="paymentGroup?.payments[0]?.method === 'card'">CARD</td>
         </tr>
         <tr class="section">
@@ -83,14 +83,15 @@
         <button [disabled]="!chkIssueRefundBtnEnable(paymentGroup?.payments[0])" (click)="issueRefund(paymentGroup)" class="govuk-button govuk-button--secondary">Issue refund</button>
      </div>
       
-      <div class="govuk-grid-row" *ngIf="paymentGroup?.fees.length > 0">
+     <div  *ngIf="checkForFees(paymentGroup)">
+      <div class="govuk-grid-row" *ngIf="paymentGroup.fees.length > 0">
         <div class="column">
         
           <h2 class="heading-large">Fee and remission details</h2>
         
         </div>
       </div>
-
+    
       <div *ngFor="let fee of paymentGroup.fees">
         <table class="table">
           <tbody>
@@ -159,7 +160,7 @@
       <span class="mar-17" >No help with fees or remissions.</span>
    </div>
    
-   
+  </div>
 
 
 

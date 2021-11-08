@@ -173,7 +173,7 @@ export class PaymentViewService {
   }
 
   postRefundRetroRemission(body:PostIssueRefundRetroRemission) {
-    return this.https.post(`${this.paymentLibService.API_ROOT}/refund-retro-remisstion`, body).pipe(
+    return this.https.post(`${this.paymentLibService.API_ROOT}/refund-retro-remission`, body).pipe(
       catchError(this.errorHandlerService.handleError)
     );
   }

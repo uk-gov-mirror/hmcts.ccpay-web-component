@@ -18,7 +18,7 @@ export class ProcessRefundComponent implements OnInit {
 
   processRefundForm: FormGroup;
 
-  errorMessage =  this.getErrorMessage(false, '', '');
+  errorMessage =  this.getErrorMessage(false, '', '', '');
   sendmeback: string = null;
   viewStatus: string;
   refundActionList: IRefundAction[] = []; 
@@ -53,7 +53,7 @@ export class ProcessRefundComponent implements OnInit {
         this.refundActionList = <any>refundActionList;
       },
       err => {
-        this.errorMessage = this.getErrorMessage(true, err.statusCode, err.err);
+        this.errorMessage = this.getErrorMessage(true, err.statusCode, err.err, err);
       }
     );
     this.processRefundForm = this.formBuilder.group({
@@ -101,7 +101,7 @@ export class ProcessRefundComponent implements OnInit {
           this.refundRejectReasonList = <any>refundRejectReasonList;
         },
         err => {
-          this.errorMessage = this.getErrorMessage(true, err.statusCode, err.err);
+          this.errorMessage = this.getErrorMessage(true, err.statusCode, err.err, err);
         }
       );
     } else if (code === 'RE005') {
@@ -146,10 +146,10 @@ export class ProcessRefundComponent implements OnInit {
       this.RefundsService.patchRefundActions(processRefundRequest, this.refundReference, status).subscribe(
         response => {
           this.isSuccesspageEnable = true;
-          this.successMsg = JSON.parse(response);
+          this.successMsg = JSON.stringify(response).replace("\"","").replace("\"","").replace("","")
         },
         err => {
-          this.errorMessage = this.getErrorMessage(true, err.statusCode, err.err);
+          this.errorMessage = this.getErrorMessage(true, err.statusCode, err.err, err);
         }
       );
     } else {
@@ -184,10 +184,15 @@ export class ProcessRefundComponent implements OnInit {
     }
 
   }
-  getErrorMessage(isErrorExist, status, errorMsg) {
+  getErrorMessage(isErrorExist, status, errorMsg, err) {
     let bodyTxt = 'Please try again later';
     if (status !== 500) {
-      bodyTxt = errorMsg;
+      if (errorMsg !== undefined) {
+        bodyTxt = errorMsg;
+      } else {
+        bodyTxt = err;
+      }
+      
     }
     return {
       title: 'Something went wrong',
@@ -198,17 +203,22 @@ export class ProcessRefundComponent implements OnInit {
   loadRefundListPage() {
     this.OrderslistService.getnavigationPageValue().subscribe((data) => this.navigationpage = data);
     if (this.navigationpage === 'casetransactions') {
-      //this.loadCaseTransactionPage();
+      window.location.href='/refund-list?takePayment=false&refundlist=true';
     } else {
       this.paymentLibComponent.viewName = 'refund-list';
     }
   }
  redirecttoRefundListPage() {
-  window.location.href='/refund-list?takePayment=false&refundlist=true';
- }
+   if(this.paymentLibComponent.API_ROOT === 'api/payment-history') {
+    window.location.href='/refund-list?takePayment=false&refundlist=true';
+   }
+   else {
+    this.loadRefundListPage();
+   }
+  }
   // loadCaseTransactionPage() {
   //   this.paymentLibComponent.isRefundStatusView = false;
-  //   this.paymentLibComponent.TAKEPAYMENT = true;
+  //   this.paymentLibCo}mponent.TAKEPAYMENT = true;
   //   this.paymentLibComponent.viewName = 'case-transactions';
   //   this.paymentViewService.getBSfeature().subscribe(
   //     features => {

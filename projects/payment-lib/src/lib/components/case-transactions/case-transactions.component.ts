@@ -104,8 +104,8 @@ export class CaseTransactionsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.navigationpage  = ''
-;    if(this.OrderslistService.getpaymentPageView() !== null) {
+    this.navigationpage  = '';
+    if(this.OrderslistService.getpaymentPageView() !== null) {
       this.OrderslistService.getpaymentPageView().subscribe((data) => this.paymentView = data);
     }
     if(this.OrderslistService.getnavigationPageValue() !== null) {
@@ -224,6 +224,7 @@ export class CaseTransactionsComponent implements OnInit {
   }
 
   checkForExceptionRecord(): void {
+   
     if (this.paymentGroups.length === 0 && (this.selectedOption.toLocaleLowerCase() === 'ccdorexception' || this.selectedOption.toLocaleLowerCase() === 'rc')) {
       this.bulkScaningPaymentService.getBSPaymentsByCCD(this.ccdCaseNumber).subscribe(
         recordData => {

@@ -27,7 +27,12 @@ export class ErrorHandlerService {
           errorMessage = err.error;
         }
       } else if (err.error) {
-        errorMessage = JSON.parse(err.error)["err"].split('-')[1];
+        if (typeof err.error === 'string') {
+          errorMessage = err.error.toString().replace(/"/g,"");
+        } else {
+          errorMessage = Object.values(err.error)[0].toString().replace(/"/g,"");
+        }
+        
       }
        else if (err.error.messsage === undefined) {
         errorMessage = 'Server error';
