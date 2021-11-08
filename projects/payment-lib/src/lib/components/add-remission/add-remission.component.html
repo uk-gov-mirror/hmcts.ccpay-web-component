@@ -96,7 +96,7 @@
   <ng-container *ngIf="viewCompStatus === 'addremission'">
       <input #myInput type='hidden' id='iFrameDrivenImageValue' value='PROCESSADDRETROREMISSIONPAGE'> 
       <h1 class="heading-large">Process remission</h1>
-      <h1 class="heading-medium">#{{ccdCaseNumber}}</h1>
+      <h1 class="heading-medium">#{{ccdCaseNumber | ccdHyphens}}</h1>
       <h1 class="heading-large">Enter help with fees or remission reference</h1>
       <form novalidate>
           <div class="govuk-form-group">
@@ -127,7 +127,7 @@
   <ng-container *ngIf="viewStatus === 'processretroremissonpage'" >
       <input #myInput type='hidden' id='iFrameDrivenImageValue' value='PROCESSRETROREMISSIONPAGE'> 
       <h1 class="heading-large">Process remission</h1>
-      <h1 class="heading-medium">#{{ccdCaseNumber }}</h1>
+      <h1 class="heading-medium">#{{ccdCaseNumber | ccdHyphens }}</h1>
       <div class="govuk-form-group">
           <form novalidate>
               <div class="govuk-form-group">
@@ -273,7 +273,7 @@
   <ng-container *ngIf="viewCompStatus === 'issuerefund' && isRefundRemission">
       <input #myInput type='hidden' id='iFrameDrivenImageValue' value='ISSUEREFUNDPAGE'> 
       <h1 class="heading-large">Process refund</h1>
-      <h1 class="heading-medium">#{{ccdCaseNumber }}</h1>
+      <h1 class="heading-medium">#{{ccdCaseNumber | ccdHyphens }}</h1>
       <h1 class="heading-large">Why are you making this refund?
         </h1>
        
