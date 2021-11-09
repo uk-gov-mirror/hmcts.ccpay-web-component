@@ -695,13 +695,13 @@
 
 <!-- Order Full View Details-->
 <ng-container *ngIf="viewStatus === 'order-full-view'">
-    <!-- <div class="govuk-breadcrumbs">
+    <div *ngIf="takePayment" class="govuk-breadcrumbs">
         <ol class="govuk-breadcrumbs__list">
           <li class="govuk-breadcrumbs__list-item">
             <a href="javascript:void(0)" (click)="goToCaseTransationPage($event)" class="govuk-back-link">Back</a>
           </li>
         </ol>
-      </div> -->
+      </div>
     <div class="govuk-grid-column-full">
         <div class="column">
           <h1 class="heading-large govuk-!-margin-top-0">Service request</h1>
