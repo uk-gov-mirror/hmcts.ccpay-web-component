@@ -13,6 +13,7 @@ const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
   templateUrl: './add-remission.component.html',
   styleUrls: ['./add-remission.component.scss']
 })
+
 export class AddRemissionComponent implements OnInit {
   @Input() fee: IFee;
   @Input() ccdCaseNumber: string;
@@ -62,7 +63,7 @@ export class AddRemissionComponent implements OnInit {
   addRemission() {
     this.resetRemissionForm([false, false, false, false, false], 'All');
     const remissionctrls=this.remissionForm.controls,
-      isRemissionLessThanFee = this.fee.calculated_amount > remissionctrls.amount.value; 
+      isRemissionLessThanFee = this.fee.calculated_amount > remissionctrls.amount.value;
     if (this.remissionForm.dirty && this.remissionForm.valid && isRemissionLessThanFee) {
       this.viewStatus = 'confirmation';
     }else {
