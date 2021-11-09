@@ -146,7 +146,7 @@ export class ProcessRefundComponent implements OnInit {
       this.RefundsService.patchRefundActions(processRefundRequest, this.refundReference, status).subscribe(
         response => {
           this.isSuccesspageEnable = true;
-          this.successMsg = JSON.stringify(response).replace("\"","").replace("\"","").replace("","")
+          this.successMsg = JSON.parse(response).replace(/['"]+/g, '');
         },
         err => {
           this.errorMessage = this.getErrorMessage(true, err.statusCode, err.err, err);
