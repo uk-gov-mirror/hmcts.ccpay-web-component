@@ -205,7 +205,7 @@ export class AddRemissionComponent implements OnInit {
     (this.ccdCaseNumber, this.fee, remissionAmount, this.remissionForm.controls.remissionCode.value, this.caseType);
     this.paymentViewService.postPaymentGroupWithRemissions(decodeURIComponent(this.paymentGroupRef).trim(), this.fee.id, requestBody).subscribe(
       response => {
-        if (response.success) {
+        if (JSON.parse(response).success) {
           let LDUrl = this.isTurnOff ? '&isTurnOff=Enable' : '&isTurnOff=Disable'
             LDUrl += `&caseType=${this.caseType}`
             LDUrl += this.isNewPcipalOff ? '&isNewPcipalOff=Enable' : '&isNewPcipalOff=Disable'
@@ -461,7 +461,7 @@ export class AddRemissionComponent implements OnInit {
     if( this.isRefundRemission) {
       this.retroRemission = true;
     }
-   
+  
     const requestBody = new PostRefundRetroRemission(this.payment.reference,this.refundReason);
     this.paymentViewService.postRefundsReason(requestBody).subscribe(
       response => {
