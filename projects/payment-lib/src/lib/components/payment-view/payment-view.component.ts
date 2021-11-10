@@ -152,7 +152,7 @@ export class PaymentViewComponent implements OnInit {
   }
 
   addRefundForRemission(payment: IPayment, remission: IRemission[],fees:any) {
- if(this.chkIsRefundRemissionBtnEnable() && this.payment !== undefined) {
+ if(this.chkIsRefundRemissionBtnEnable()) {
     this.payment = payment;
     this.paymentViewService.getApportionPaymentDetails(this.payment.reference).subscribe(
       paymentGroup => {
