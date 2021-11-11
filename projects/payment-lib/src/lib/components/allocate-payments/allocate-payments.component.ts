@@ -9,6 +9,10 @@ import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
 import {IBSPayments} from '../../interfaces/IBSPayments';
 import {AllocatePaymentRequest} from '../../interfaces/AllocatePaymentRequest';
 import {IAllocationPaymentsRequest} from '../../interfaces/IAllocationPaymentsRequest';
+import { IOrderReferenceFee } from '../../interfaces/IOrderReferenceFee';
+import { OrderslistService } from '../../services/orderslist.service';
+
+
 
 @Component({
   selector: 'app-allocate-payments',
@@ -23,6 +27,7 @@ export class AllocatePaymentsComponent implements OnInit {
   viewStatus: string;
   ccdCaseNumber: string;
   bspaymentdcn: string;
+  recordId:string;
   feedbackUrlLabel:string;
   unAllocatedPayment: IBSPayments = {
     amount: 0
@@ -59,6 +64,7 @@ export class AllocatePaymentsComponent implements OnInit {
   paymentSectionLabel: any;
   paymentRef: string = null;
   isStrategicFixEnable: boolean = true;
+  orderLevelFees: IOrderReferenceFee[] = [];
   cookieUserName: string[] = [];
   enCookieUserName: any;
   userNameField: string = null;
@@ -90,6 +96,15 @@ export class AllocatePaymentsComponent implements OnInit {
     }
   }
 
+  refund = {
+    reason: {
+      duplicate: 'Duplicate payment',
+      humanerror: 'Human error',
+      caseWithdrawn: 'Case withdrawn',
+      other: 'Other'
+    }
+  }
+
 
   constructor(
   private errorHandlerService: ErrorHandlerService,
@@ -97,10 +112,15 @@ export class AllocatePaymentsComponent implements OnInit {
   private formBuilder: FormBuilder,
   private paymentViewService: PaymentViewService,
   private paymentLibComponent: PaymentLibComponent,
-  private bulkScaningPaymentService: BulkScaningPaymentService) { }
+  private bulkScaningPaymentService: BulkScaningPaymentService,
+  private OrderslistService: OrderslistService) { }
 
   ngOnInit() {
     this.viewStatus = 'mainForm';
+    if (this.paymentLibComponent.paymentGroupReference !== null) {
+      this.viewStatus = 'allocatePaymentConfirmation';
+    }
+    
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
     this.bspaymentdcn = this.paymentLibComponent.bspaymentdcn;
     this.paymentRef = this.paymentLibComponent.paymentGroupReference;
@@ -119,6 +139,9 @@ export class AllocatePaymentsComponent implements OnInit {
         Validators.pattern('^([a-zA-Z0-9\\s]*)$')
       ])),
     });
+    this.OrderslistService.getOrdersList().subscribe( (data) =>
+    this.orderLevelFees = data.filter(data => data.orderStatus !== 'Paid'));
+    this.OrderslistService.getCaseType().subscribe( (data) => this.caseType = data);
     this.getUnassignedPayment();
   }
   getGroupOutstandingAmount(paymentGroup: IPaymentGroup): number {
@@ -398,4 +421,15 @@ export class AllocatePaymentsComponent implements OnInit {
       this.isMoreDetailsBoxHide = false;
     }
   }
+  OrderListSelectEvent(orderef: any){
+    this.isContinueButtondisabled = false;
+    this.recordId= orderef;
+  }
+
+  redirectToOrderFeeSearchPage() {
+    // this.paymentLibComponent.bspaymentdcn = null;
+    this.paymentLibComponent.paymentGroupReference = this.recordId;
+    this.paymentLibComponent.isTurnOff = this.isTurnOff;
+    this.paymentLibComponent.viewName = 'fee-summary';
+}
 }

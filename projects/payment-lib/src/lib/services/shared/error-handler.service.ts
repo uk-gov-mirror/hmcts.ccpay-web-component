@@ -26,7 +26,23 @@ export class ErrorHandlerService {
         } else {
           errorMessage = err.error;
         }
-      } else if (err.error.messsage === undefined) {
+      } else if (err.status === 400) {
+        if (typeof err !== 'string') {
+          errorMessage = JSON.parse(err.error)["error"];   
+        } 
+        if (errorMessage === '') {
+            errorMessage = err.error.toString().replace(/"/g,"");
+        }
+      }
+      else if (err.error) {
+        if (typeof err.error === 'string') {
+          errorMessage = err.error.toString().replace(/"/g,"");
+        } else {
+          errorMessage = Object.values(err.error)[0].toString().replace(/"/g,"");
+        }
+        
+      }
+       else if (err.error.messsage === undefined) {
         errorMessage = 'Server error';
       } else {
         errorMessage = `${err.error.message}`;

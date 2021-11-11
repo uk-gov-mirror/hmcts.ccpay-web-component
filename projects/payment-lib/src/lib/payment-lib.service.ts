@@ -7,6 +7,7 @@ import { Injectable } from '@angular/core';
 export class PaymentLibService {
   API_ROOT: string;
   BULKSCAN_API_ROOT: string;
+  REFUNDS_API_ROOT: string;
 
   constructor() { }
 
@@ -24,5 +25,13 @@ export class PaymentLibService {
 
   getBulkScanApiRootUrl(): string {
     return this.BULKSCAN_API_ROOT;
+  }
+
+  setRefundndsApiRootUrl(refundsapiRoot: string): void {
+    this.REFUNDS_API_ROOT = refundsapiRoot;
+  }
+
+  getRefundsApiRootUrl(): string {
+    return this.REFUNDS_API_ROOT;
   }
 }

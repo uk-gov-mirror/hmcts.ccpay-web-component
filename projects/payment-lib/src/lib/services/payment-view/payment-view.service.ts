@@ -17,12 +17,18 @@ import { UnsolicitedPaymentsRequest } from '../../interfaces/UnsolicitedPayments
 import { Meta } from '@angular/platform-browser';
 import { AllocatePaymentRequest } from '../../interfaces/AllocatePaymentRequest';
 import { IAllocationPaymentsRequest } from '../../interfaces/IAllocationPaymentsRequest';
-
+import {IOrderReferenceFee} from '../../interfaces/IOrderReferenceFee';
+import { BehaviorSubject } from 'rxjs';
+import { RefundsRequest } from '../../interfaces/RefundsRequest';
+import { AddRetroRemissionRequest } from '../../interfaces/AddRetroRemissionRequest';
+import { PostRefundRetroRemission } from '../../interfaces/PostRefundRetroRemission';
+import { PostIssueRefundRetroRemission } from '../../interfaces/PostIssueRefundRetroRemission';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PaymentViewService {
+  private ordersList  = <BehaviorSubject<IOrderReferenceFee[]>>new BehaviorSubject([]);
 
   private meta: Meta;
 
@@ -91,6 +97,7 @@ export class PaymentViewService {
       catchError(this.errorHandlerService.handleError)
     );
   }
+
   deleteFeeFromPaymentGroup(feeId: number): Observable<any> {
         this.logger.info('Payment-view-service deleteFeeFromPaymentGroup for: ', feeId);
     return this.https.delete(`${this.paymentLibService.API_ROOT}/fees/${feeId}`).pipe(
@@ -117,5 +124,36 @@ export class PaymentViewService {
   }
   getSiteID(): Observable<any> {
     return this.https.get('api/payment-history/refdata/legacy-sites', { withCredentials: true }).pipe( catchError(this.errorHandlerService.handleError));
+  }
+  getPartyDetails(caseNumber: string): Observable<any> {
+    const url = `${this.paymentLibService.API_ROOT}/case-payment-orders?case-ids=${caseNumber}`;
+    return this.https.get(url, { withCredentials: true }).pipe( catchError(this.errorHandlerService.handleError));
+  }
+  
+  setOrdersList(orderLevelFees: IOrderReferenceFee[]): void {
+    this.ordersList.next(Object.assign([], orderLevelFees));
+}
+  getOrdersList() {
+    return this.ordersList;
+  }
+
+  //issue refund
+  postRefundsReason(body: PostRefundRetroRemission): Observable<any> {
+    return this.https.post(`${this.paymentLibService.API_ROOT}/refund-for-payment`, body).pipe(
+      catchError(this.errorHandlerService.handleError)
+    );
+  }
+
+  // retro remissions
+  postPaymentGroupWithRetroRemissions(paymentGroupReference: string, feeId: number, body: AddRetroRemissionRequest): Observable<any> {
+    return this.https.post(`${this.paymentLibService.API_ROOT}/payment-groups/${paymentGroupReference}/fees/${feeId}/retro-remission`, body).pipe(
+      catchError(this.errorHandlerService.handleError)
+    );
+  }
+
+  postRefundRetroRemission(body:PostIssueRefundRetroRemission) {
+    return this.https.post(`${this.paymentLibService.API_ROOT}/refund-retro-remission`, body).pipe(
+      catchError(this.errorHandlerService.handleError)
+    );
   }
 }

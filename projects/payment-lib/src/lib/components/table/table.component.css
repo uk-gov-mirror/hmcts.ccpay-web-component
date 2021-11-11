@@ -1,0 +1,84 @@
+/* .example-container {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+} */
+
+/* .example-header {
+  min-height: 64px;
+  padding: 8px 24px 0;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+} */
+
+.mat-header-row {
+  min-height: 27px;
+}
+.mat-cell {
+    padding: 0px 10px 0px 0;
+    text-align: left;
+    word-wrap: break-word;
+    white-space: inherit!important;
+    font-size: 19px;
+    line-height: 25px;
+    font-family: "nta",Arial,sans-serif;
+    font-weight: 400;
+  }
+  
+  .mat-table {
+    color: #0b0c0c;
+    display: table;
+    font-family: nta,Arial,sans-serif;
+    -webkit-font-smoothing: antialiased;
+    margin-bottom: 1px;
+    box-sizing: border-box;
+    text-indent: initial;
+    border-spacing: 0;
+    border-collapse: collapse;
+    font-size: 1.1875rem;
+    line-height: 1.31578947;
+    table-layout: fixed;
+    width: 102%;
+  }
+  
+  .mat-header-cell {
+    text-align: left;
+    font-weight: 700;
+    padding: 10px 10px 10px 0;
+    word-wrap: break-word;
+    font-size: 19px;
+    line-height: 25px;
+    color: #005ea5;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  
+  .dropdpwn {
+    display: inline-block; 
+    margin-right: 10px;
+    font-size: 19px;
+  }
+
+ .mat-column-ccdCaseNumber {
+    flex :3em;
+  }
+
+  .mat-column-refundReference  {
+    flex :6em;
+  }
+
+  .mat-column-reason {
+    flex :2em;
+  }
+
+  .govuk-select{
+   font-size: 19px;
+   font-weight: 400;
+  }
+
+  .govuk-error-summary__title {
+    font-size: 24px !important;
+  }

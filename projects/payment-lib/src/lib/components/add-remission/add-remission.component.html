@@ -9,16 +9,17 @@
         </div>
       </div>
     </div>
-  <ng-container *ngIf="viewStatus === 'main'">
+
+  <ng-container *ngIf="viewStatus === 'main' && !isRefundRemission ">
       <input #myInput type='hidden' id='iFrameDrivenImageValue' value='ADDREMISSION'>
-      <h1 class="heading-large">Add remission</h1>
+      <h1 class="heading-large">Add remission </h1>
       <form novalidate>
         <div class="govuk-form-group">
           <form [formGroup]="remissionForm" novalidate>
             <div class="govuk-form-group">
               <label class="govuk-label govuk-label--s" for="remission-code">
-                  Add remission to {{ fee.code }}:{{ fee.description }}
-                <span class="form-hint">Enter remission for reference. For example: HWF-A1B-23C</span>
+                  Add remission to {{ fee?.code }}: {{ fee?.description }}
+                <span class="form-hint">Enter remission for reference. For example: HWF-A1B-23C OR PA21-123456</span>
               </label>
               <input [ngClass]="{'inline-error-class': isRemissionCodeEmpty || remissionCodeHasError}" class="govuk-input govuk-input--width-20 govuk-!-margin-right-1" id="remissionCode" aria-label="remissionCode"  name="remissionCode" type="text" formControlName="remissionCode">
               <p class="inline-error-message" *ngIf="isRemissionCodeEmpty || remissionCodeHasError">
@@ -49,6 +50,7 @@
         </div>
       </form>
   </ng-container>
+
   <ng-container *ngIf="viewStatus === 'confirmation'">
       <input #myInput type='hidden' id='iFrameDrivenImageValue' value='ADDREMISSIONCONFIRMATION'> 
       <div class="govuk-warning-text">
@@ -87,7 +89,390 @@
         Confirm
       </button>
 
-    </ng-container>
+  </ng-container>
+
+  <!-- Add retro remission changes-->
+
+  <ng-container *ngIf="viewCompStatus === 'addremission'">
+      <input #myInput type='hidden' id='iFrameDrivenImageValue' value='PROCESSADDRETROREMISSIONPAGE'> 
+      <h1 class="heading-large">Process remission</h1>
+      <h1 class="heading-medium">#{{ccdCaseNumber | ccdHyphens}}</h1>
+      <h1 class="heading-large">Enter help with fees or remission reference</h1>
+      <form novalidate>
+          <div class="govuk-form-group">
+            <form [formGroup]="remissionForm" novalidate>
+              <div class="govuk-form-group">
+                <label class="govuk-label govuk-label--s" for="remission-code">
+                  <span class="form-hint">For example: HWF-A1B-23C OR PA21-123456</span>
+                </label>
+                <p class="inline-error-message" *ngIf="isRemissionCodeEmpty || remissionCodeHasError">
+                  <span *ngIf="isRemissionCodeEmpty">Enter a remission code</span>
+                  <span *ngIf="remissionCodeHasError">Enter a vaild remission code</span>
+                </p>
+                <input [ngClass]="{'inline-error-class': isRemissionCodeEmpty || remissionCodeHasError}" class="govuk-input govuk-input--width-20 govuk-!-margin-right-1" id="remissionCode" aria-label="remissionCode"  name="remissionCode" type="text" formControlName="remissionCode">
+             
+              </div>
+            
+            </form>
+            <div class="govuk-button-group">
+                <button (click)="gotoServiceRequestPage($event)" class="govuk-button govuk-button--secondary"> Previous</button>
+                <button (click)="addRemissionCode()" class="govuk-button"> Continue</button>
+            </div>
+            <p><a href="javascript:void(0)" (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link" data-module="govuk-button">Cancel</a></p>
+          </div>
+      </form>
+
+  </ng-container>
+
+  <ng-container *ngIf="viewStatus === 'processretroremissonpage'" >
+      <input #myInput type='hidden' id='iFrameDrivenImageValue' value='PROCESSRETROREMISSIONPAGE'> 
+      <h1 class="heading-large">Process remission</h1>
+      <h1 class="heading-medium">#{{ccdCaseNumber | ccdHyphens }}</h1>
+      <div class="govuk-form-group">
+          <form novalidate>
+              <div class="govuk-form-group">
+                  <form [formGroup]="remissionForm" novalidate>
+                      <fieldset class="govuk-fieldset">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m"> 
+                            <h1 *ngIf="remessionPayment?.status === 'Success' ||   isFromRefundListPage" class="heading-medium">
+                                Enter the amount to be refunded
+                            </h1> 
+                            <h1 *ngIf="remessionPayment?.status !== 'Success' && !isFromRefundListPage" class="heading-medium">
+                                Enter the remission amount
+                            </h1> 
+                            <h1 *ngIf="remessionPayment?.status === 'undefined'" class="heading-medium">
+                                Enter the  amount
+                            </h1> 
+                          </legend>
+                       <div id="amount-currency" class="govuk-visually-hidden">in pounds</div>
+                       <p class="inline-error-message" *ngIf="isAmountEmpty || amountHasError || isRemissionLessThanFeeError">
+                        <span *ngIf="isAmountEmpty">Enter a amount</span>
+                        <span *ngIf="amountHasError">Enter a vaild amount</span>
+                        <span *ngIf="isRemissionLessThanFeeError">You cannot add a remission that's more than the fee amount.</span>
+                      </p>
+                          <div class="hmcts-currency-input">
+                           
+                              <div class="hmcts-currency-input__symbol" aria-hidden="true">£</div>
+                              <input class="govuk-input govuk-input--width-10" [ngClass]="{'inline-error-class': isAmountEmpty || amountHasError || isRemissionLessThanFeeError}" id="amount" aria-label="amount"  name="amount"  type="number" aria-describedby="amount-currency" formControlName="amount">
+                              
+              
+                        </div>
+                      </fieldset>
+                  </form>
+            
+                  <div class="govuk-button-group">
+                      <button (click)="gotoAddRetroRemissionCodePage()" class="govuk-button govuk-button--secondary"> Previous</button>
+                      <button (click)="gotoCheckRetroRemissionPage(payment)" class="govuk-button"> Continue</button>
+                  
+                  </div>
+                  <p>
+                    <a href="javascript:void(0)" (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link" data-module="govuk-button">Cancel</a>
+                </p>
+              </div>
+    
+          </form>
+      </div>
+  </ng-container>
+
+  <ng-container *ngIf="viewStatus === 'checkretroremissionpage'">
+      <input #myInput type='hidden' id='iFrameDrivenImageValue' value='CHECKRETROREMISSIONCONFIRMATION'> 
+      <div class="govuk-warning-text">
+          <h1 class="heading-large"> Check your answers</h1>
+      </div>
+      <table class="govuk-table">
+          <tr class="govuk-table__row">
+              <td class="govuk-table__cell govuk-!-font-weight-bold">Payment reference</td>
+              <td class="govuk-table__cell">{{remessionPayment ? remessionPayment.reference: ' '}}</td>
+          </tr>
+          <tr class="govuk-table__row">
+              <td class="govuk-table__cell govuk-!-font-weight-bold">Payment amount</td>
+              <td class="govuk-table__cell">£{{ remessionPayment ? getFormattedCurrency(remessionPayment.amount): ' ' | currency :'GBP':'symbol':'1.2-2'}} </td>
+          </tr>
+          <tr class="govuk-table__row">
+              <td class="govuk-table__cell govuk-!-font-weight-bold">Payment status</td>
+              <td class="govuk-table__cell">{{remessionPayment ? remessionPayment.status: ''}}</td>
+          </tr>
+          <tr class="govuk-table__row">
+              <td class="govuk-table__cell govuk-!-font-weight-bold">Fee</td>
+              <td class="govuk-table__cell">{{ fee.code }} - {{ fee.description }} </td>
+          </tr>
+          <tr class="govuk-table__row">
+              <td class="govuk-table__cell govuk-!-font-weight-bold">Help with fees or remission reference</td>
+              <td class="govuk-table__cell"> {{ remissionForm.controls.remissionCode.value }}
+               <a (click)="gotoProcessRetroRemissionPage()" class="govuk-link right" >Change</a>
+              </td>
+          </tr>
+          <tr class="govuk-table__row">
+              <td *ngIf="remessionPayment.status === 'Success'" class="govuk-table__cell govuk-!-font-weight-bold">Refund amount</td>
+              <td *ngIf="remessionPayment.status !== 'Success'" class="govuk-table__cell govuk-!-font-weight-bold">Remission amount</td>
+              <td class="govuk-table__cell">{{remissionForm.controls.amount.value  | currency:'GBP':'symbol-narrow':'1.2-2' }}
+                  <a (click)="addRemissionCode()" class="govuk-link right" >Change</a>
+              </td>
+          </tr>
+      </table>
+
+      <button type="submit" class="button govuk-button--secondary" (click)="addRemissionCode()">Previous</button>
+      <button type="submit" [disabled]="isConfirmationBtnDisabled" [ngClass]='isConfirmationBtnDisabled ? "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"' (click)="confirmRetroRemission()"> Add remission </button>
+      <p> <a href="javascript:void(0)" (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link" data-module="govuk-button"> Cancel</a> </p>
+
+  </ng-container>
+
+  <ng-container *ngIf="viewStatus === 'retroremissionconfirmationpage'">
+      <input #myInput type='hidden' id='iFrameDrivenImageValue' value='RETROREMISSIONCONFIRMATIONPAGE'> 
+    <div class="govuk-grid-row">
+      <div >
+        <div class="govuk-panel govuk-panel--confirmation">
+          <h1 class="govuk-panel__title">
+            Remission added
+          </h1>
+          <div *ngIf="remessionPayment.status === 'Success'" class="govuk-panel__body">
+              <p class="govuk-body white"><strong>The amount to be refunded should be {{remissionForm.controls.amount.value | currency:'GBP':'symbol-narrow':'1.2-2' }}</strong></p>
+             
+            </div>
+          </div>
+          <div *ngIf="remessionPayment.status === 'Success'" >
+              <button type="submit" [disabled]="!isRemissionApplied" [ngClass]='isConfirmationBtnDisabled ? "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"' (click)="processRefund()">Submit refund </button>
+            </div>
+        <p class="govuk-body">
+          <a href="javascript:void(0)" (click)="gotoCasetransationPage()"  class="govuk-link">Return to case</a>
+       </p>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="viewStatus === 'refundconfirmationpage'">
+      <input #myInput type='hidden' id='iFrameDrivenImageValue' value='RETROREMISSIONREFUNDCONFIRMATIONPAGE'> 
+      <div class="govuk-grid-row">
+        <div >
+          <div class="govuk-panel govuk-panel--confirmation">
+            <h1 class="govuk-panel__title">
+              Refund submitted
+            </h1>
+            
+            <div class="govuk-panel__body">
+              <p class="govuk-body white"><strong>Refund reference: {{refundReference}}</strong></p>
+            </div>
+      
+          </div>
+          <div *ngIf="isPaymentSuccess">
+          <h2 class="govuk-heading-l">What happens next</h2>
+          <p class="govuk-body">
+            A refund request for {{refundAmount  | currency:'GBP':'symbol-narrow':'1.2-2' }} has been created and will be passed to a team leader to approve.
+          </p>
+        </div>
+          <p class="govuk-body">
+            <a href="javascript:void(0)" (click)="gotoCasetransationPage()"  class="govuk-link">Return to case</a>
+         </p>
+        </div>
+      </div>
+    
+  </ng-container>
+
+  <!-- Issue Refund Section -->
+
+  <ng-container *ngIf="viewCompStatus === 'issuerefund' && isRefundRemission">
+      <input #myInput type='hidden' id='iFrameDrivenImageValue' value='ISSUEREFUNDPAGE'> 
+      <h1 class="heading-large">Process refund</h1>
+      <h1 class="heading-medium">#{{ccdCaseNumber | ccdHyphens }}</h1>
+      <h1 class="heading-large">Why are you making this refund?
+        </h1>
+       
+
+        <div class="govuk-form-group">
+            <form novalidate>
+                <div class="govuk-form-group">
+                  <form [formGroup]="remissionForm" novalidate>
+                    <fieldset class="govuk-fieldset" aria-describedby="how-contacted-conditional-hint">
+                       
+                          <div
+                            [ngClass]="refundHasError ? 'govuk-radios govuk-radios--conditional form-group-error' : 'govuk-radios govuk-radios--conditional'"
+                            data-module="govuk-radios" >
+                            <p class="inline-error-message" *ngIf="refundHasError">
+                              <span *ngIf="refundHasError">Select a reason why you’re making this refund</span>
+                            </p>
+
+                           
+
+                            <div class = "container-fluid">
+                              <div class="row">
+                              <div class="govuk-radios__item col-md-4" *ngFor="let refund of commonRefundReasons; let i = index;">
+                                <!-- <div *ngIf = "{{refund.name}} !== 'Retrospective remission'"> -->
+                                  <input   class="govuk-radios__input" id="{{refund.name}}" name="refundReason" type="radio"
+                                  formControlName="refundReason" value={{refund.code}}
+                                    (change)="selectRadioButton(refund.name, refund.name)">
+                                  <label class="govuk-label--s govuk-radios__label govuk-font__custom" for="how-contacted-conditional">
+                                    {{refund.name}}
+                                  </label>
+
+                                  <div class="govuk-radios__conditional" *ngIf="isRefundReasonsSelected && showReasonText && selectedRefundReason === refund.name " >
+                                      <label class="govuk-label govuk-label--m" for="{{refund.name}}">
+                                          Enter reason
+                                      </label>
+                                      <div [ngClass]="{'form-group-error': isReasonEmpty}">
+                                      <p  class="inline-error-message" *ngIf="isReasonEmpty">
+                                          <span *ngIf="isReasonEmpty">Enter a reason why you’re making this refund</span>
+                                        </p>
+                                       
+                                    <input class="govuk-input govuk-input--width-10" [ngClass]="{'inline-error-class': isReasonEmpty}" id="reason" aria-label="reason"  name="reason" type="text" aria-describedby="reason" maxlength="30" formControlName="reason">
+                                  </div>
+                                  </div>
+                                <!-- </div> -->
+                              </div>
+                              </div>
+                            </div>
+                            <br/>
+                            <div>
+                                <select formControlName="refundDDReason" class="govuk-select" id="sort"  (change)="selectchange($event)">
+                                  <option selected='selected' [defaultSelected]=true [value]="default" >{{default}}</option>  
+                                  <!-- <option value="" selected='selected'>Select a different reason</option> -->
+                                    <option  *ngFor="let refund of refundReasons;" id="{{refund.name}}"  value="{{refund.code}}">{{refund.name}}</option>
+                                  </select>
+                              
+                            </div>
+                                <br/>
+                                <div class="govuk-radios__conditional" *ngIf="showReasonText &&  !isRefundReasonsSelected" >
+                                  <div [ngClass]="{'form-group-error': isReasonEmpty}">
+                                    <label class="govuk-label govuk-label--m" for="amount">
+                                        Enter reason
+                                    </label>
+                                    <p class="inline-error-message" *ngIf="isReasonEmpty">
+                                        <span *ngIf="isReasonEmpty">Enter a reason why you’re making this refund</span>
+                                      </p>
+                                  <input class="govuk-input govuk-input--width-10" [ngClass]="{'inline-error-class': isReasonEmpty}" id="reason" aria-label="reason"  name="reason" type="text" aria-describedby="reason" maxlength="{{reasonLength}}"  formControlName="reason">
+                                  </div>
+                                </div>
+
+                           
+                          </div>
+                    </fieldset>
+                  </form>
+               </div>
+               </form>
+        </div>
+        <div class="govuk-button-group">
+            <button  (click)="gotoServiceRequestPage($event)" class="govuk-button govuk-button--secondary"> Previous</button>
+            <button (click)="gotoIssueRefundConfirmation(payment)" class="govuk-button"> Continue</button>
+        </div>
+        <p>
+          <a href="javascript:void(0)" (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link" data-module="govuk-button">
+              Cancel
+          </a>
+      </p>
+      
+  </ng-container>
+
+  <ng-container *ngIf="viewStatus === 'checkissuerefundpage'">
+      <input #myInput type='hidden' id='iFrameDrivenImageValue' value='CHECKISSUEREFUNDPAGE'> 
+      <div class="govuk-warning-text">
+       
+          <h1 class="heading-large"> Check your answers</h1>
+      </div>
+      <table class="govuk-table">
+          <tr class="govuk-table__row">
+              <td class="govuk-table__cell govuk-!-font-weight-bold">Reason for refund</td>
+              <td class="govuk-table__cell"> {{ selectedRefundReason }}
+               <a (click)="changeIssueRefundReason()" class="govuk-link right" >Change</a>
+              </td>
+          </tr>
+          <tr class="govuk-table__row">
+              <td class="govuk-table__cell govuk-!-font-weight-bold">Payment reference</td>
+              <td class="govuk-table__cell">{{this.payment.reference}}</td>
+          </tr>
+          <tr class="govuk-table__row">
+              <td class="govuk-table__cell govuk-!-font-weight-bold">Payment amount</td>
+              <td class="govuk-table__cell">{{this.payment.amount | currency:'GBP':'symbol-narrow':'1.2-2'}}</td>
+          </tr>
+      </table>
+      <div class="govuk-button-group">
+      <button type="submit" class="button govuk-button--secondary" (click)="gotoIssueRefundPage()"> Previous </button>
+      <button type="submit"
+      [disabled]="isConfirmationBtnDisabled"
+      [ngClass]='isConfirmationBtnDisabled ? "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"'
+    (click)="confirmIssueRefund()">
+        Submit refund
+      </button>
+      </div>
+      <p>
+          <a (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link" data-module="govuk-button">
+              Cancel
+          </a>
+      </p>
+
+  </ng-container>
+
+  <!--Retro Refund-->
+  <ng-container *ngIf="viewCompStatus === 'addrefundforremission'">
+      <input #myInput type='hidden' id='iFrameDrivenImageValue' value='ADDREFUNDFORREMISSION'> 
+      <div class="govuk-warning-text">
+       
+          <h1 class="heading-large"> Check your answers</h1>
+      </div>
+      <table class="govuk-table">
+          <tr class="govuk-table__row">
+              <td class="govuk-table__cell govuk-!-font-weight-bold">Reason for refund</td>
+              <td class="govuk-table__cell"> Retrospective remission </td>
+          </tr>
+          <tr class="govuk-table__row">
+              <td class="govuk-table__cell govuk-!-font-weight-bold">Payment reference</td>
+              <td class="govuk-table__cell">{{this.payment.reference}}</td>
+          </tr>
+          <tr class="govuk-table__row">
+              <td class="govuk-table__cell govuk-!-font-weight-bold">Refund amount</td>
+              <td class="govuk-table__cell">{{this.remission.hwf_amount | currency:'GBP':'symbol-narrow':'1.2-2'}}</td>
+          </tr>
+          <tr class="govuk-table__row">
+              <td class="govuk-table__cell govuk-!-font-weight-bold">Fee code</td>
+              <td class="govuk-table__cell">{{this.remission.fee_code}}</td>
+          </tr>
+          <tr class="govuk-table__row">
+              <td class="govuk-table__cell govuk-!-font-weight-bold">Fee amount</td>
+              <td class="govuk-table__cell">{{feeamount | currency:'GBP':'symbol-narrow':'1.2-2'}}</td>
+          </tr>
+      </table>
+      <div class="govuk-button-group">
+      <button type="submit" class="button govuk-button--secondary" (click)="gotoServiceRequestPage($event)">Previous</button>
+      <button type="submit"
+      [disabled]="isConfirmationBtnDisabled"
+      [ngClass]='isConfirmationBtnDisabled ? "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"'
+      (click)="processRefund()">
+        Submit refund
+      </button>
+      </div>
+      <p>
+          <a href="javascript:void(0)"  (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link" data-module="govuk-button">
+              Cancel
+          </a>
+      </p>
+
+  </ng-container>
+
+  <ng-container *ngIf="viewStatus === 'retrorefundconfirmationpage'">
+    <div class="govuk-grid-row">
+      <div >
+        <div class="govuk-panel govuk-panel--confirmation">
+          <h1 class="govuk-panel__title">
+            Refund submitted
+          </h1>
+          
+          <div class="govuk-panel__body">
+            <p class="govuk-body white"><strong>Refund reference: {{refundReference}}</strong></p>
+          </div>
+    
+        </div>
+        <div *ngIf="isPaymentSuccess">
+        <h2 class="govuk-heading-l">What happens next</h2>
+        <p class="govuk-body">
+          A refund request for {{ refundAmount| currency:'GBP':'symbol-narrow':'1.2-2'}} has been passed to a team leader to approve.
+        </p>
+      </div>
+        <p class="govuk-body">
+          <a (click)="gotoCasetransationPage()"  class="govuk-link">Return to case</a>
+       </p>
+      </div>
+    </div>
+  </ng-container>
 
 </div>
+
+
 
