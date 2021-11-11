@@ -2,13 +2,6 @@
 <div class="govuk-width-container">
 
   <main class="govuk-main-wrapper govuk-!-padding-top-0" [ngClass]="{'govuk-radios__conditional--hidden': isSuccesspageEnable}" id="main-content" role="main">
-    <!-- <div class="govuk-breadcrumbs">
-      <ol class="govuk-breadcrumbs__list">
-        <li class="govuk-breadcrumbs__list-item">
-          <a href="/refund-list?takePayment=false&refundlist=true" class="govuk-back-link">Back</a>
-        </li>
-      </ol>
-    </div> -->
     <div *ngIf="errorMessage.showError">
       <div class="error-summary" role="group" aria-labelledby="failure-error-summary-heading" tabindex="-1">
         <h2 class="heading-medium error-summary-heading" id="failure-error-summary-heading">
@@ -172,20 +165,7 @@
 </form>
   </div>
  
-<!--   
-  <div class="govuk-button-group">
-   
-    <button class="govuk-button govuk-button--secondary"  (click)="redirecttoRefundListPage()">Previous</button>
-    <button  (click)="processRefundSubmit()" class="govuk-button button"
-      data-module="govuk-button">
-      Submit
-    </button>
-  <div><a (click)="loadRefundListPage()" class="govuk-link" data-module="govuk-button">Cancel</a></div>
-  </div> -->
 
-  <!-- <button class="govuk-button button-margin--left25" data-module="govuk-button" (click)="processRefundSubmit()">
-    Submit  
-  </button> -->
   </main>
  
   <main class="govuk-main-wrapper govuk-main-wrapper--l success-page-padding--top25" [ngClass]="{'govuk-radios__conditional--hidden': !isSuccesspageEnable}" id="main-content" role="main" >

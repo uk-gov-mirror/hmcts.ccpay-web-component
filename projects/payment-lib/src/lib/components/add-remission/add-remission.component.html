@@ -19,7 +19,7 @@
             <div class="govuk-form-group">
               <label class="govuk-label govuk-label--s" for="remission-code">
                   Add remission to {{ fee?.code }}: {{ fee?.description }}
-                <span class="form-hint">Enter remission for reference. For example: HWF-A1B-23C</span>
+                <span class="form-hint">Enter remission for reference. For example: HWF-A1B-23C OR PA21-123456</span>
               </label>
               <input [ngClass]="{'inline-error-class': isRemissionCodeEmpty || remissionCodeHasError}" class="govuk-input govuk-input--width-20 govuk-!-margin-right-1" id="remissionCode" aria-label="remissionCode"  name="remissionCode" type="text" formControlName="remissionCode">
               <p class="inline-error-message" *ngIf="isRemissionCodeEmpty || remissionCodeHasError">
@@ -103,7 +103,7 @@
             <form [formGroup]="remissionForm" novalidate>
               <div class="govuk-form-group">
                 <label class="govuk-label govuk-label--s" for="remission-code">
-                  <span class="form-hint">For example: HWF-A1B-23C</span>
+                  <span class="form-hint">For example: HWF-A1B-23C OR PA21-123456</span>
                 </label>
                 <p class="inline-error-message" *ngIf="isRemissionCodeEmpty || remissionCodeHasError">
                   <span *ngIf="isRemissionCodeEmpty">Enter a remission code</span>

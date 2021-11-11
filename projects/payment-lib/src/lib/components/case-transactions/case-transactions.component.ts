@@ -738,11 +738,13 @@ export class CaseTransactionsComponent implements OnInit {
   }
 
   issueRefund(payment: IPayment) {
+    if (payment !== null && payment !== undefined) {
     if(this.chkIssueRefundBtnEnable(payment)) {
     this.viewStatus = 'issuerefund';
     this.payment = payment;
     this.isRefundRemission = true;
     }
+  }
   }
 
   chkForAddRemission(feeCode: string): boolean {
@@ -761,6 +763,7 @@ export class CaseTransactionsComponent implements OnInit {
   }
 
   chkForPBAPayment(): boolean {
+    if (this.orderDetail !== null &&  this.orderDetail !== undefined) {
     this.orderDetail.forEach(orderDetail => {
       if (orderDetail.payments) {
         orderDetail.payments.forEach(payment => {
@@ -776,6 +779,7 @@ export class CaseTransactionsComponent implements OnInit {
       return false;
     };
   }
+  }
 
   chkIssueRefundBtnEnable(payment: IPayment): boolean {
     if (this.check4AllowedRoles2AccessRefund() && this.allowFurtherAccessAfter4Days(payment) &&
@@ -790,6 +794,7 @@ export class CaseTransactionsComponent implements OnInit {
   }
 
   chkIsRefundRemissionBtnEnable(): boolean {
+    if (this.orderDetail !== null &&  this.orderDetail !== undefined) {
     this.orderDetail.forEach(orderDetail => {
       if (orderDetail.payments) {
         orderDetail.payments.forEach(payment => {
@@ -805,6 +810,7 @@ export class CaseTransactionsComponent implements OnInit {
       return false;
     };
   }
+  }
 
   check4AllowedRoles2AccessRefund = (): boolean => {
     return this.allowedRolesToAccessRefund.some(role =>
@@ -817,9 +823,11 @@ export class CaseTransactionsComponent implements OnInit {
     );
   }
   allowFurtherAccessAfter4Days = (payment: IPayment): boolean => {
+    if (payment !== null && payment !== undefined) {
     let tmp4DayAgo = new Date();
     tmp4DayAgo.setDate(tmp4DayAgo.getDate() - 4);
     return tmp4DayAgo >= new Date(payment.date_created);
+    }
   }
   loadPBAAccountPage(orderRef: IPayment) {
     this.paymentLibComponent.pbaPayOrderRef = orderRef;

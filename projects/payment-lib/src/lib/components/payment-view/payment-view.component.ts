@@ -173,6 +173,7 @@ export class PaymentViewComponent implements OnInit {
   }
 
   chkIsRefundRemissionBtnEnable(): boolean {
+    if (this.paymentGroup !== null &&  this.paymentGroup !== undefined) {
     this.paymentGroup.payments.forEach(payment => {
           if (payment.method.toLocaleLowerCase() === 'payment by account' && payment.status.toLocaleLowerCase() === 'success' && this.allowFurtherAccessAfter4Days(payment)) {
             this.isRefundRemissionBtnEnable = true;
@@ -184,13 +185,16 @@ export class PaymentViewComponent implements OnInit {
       return false;
     };
   }
+  }
 
   issueRefund(paymentgrp: IPaymentGroup) {
+    if (paymentgrp !== null &&  paymentgrp !== undefined) {
     if(this.chkIssueRefundBtnEnable(paymentgrp.payments[0])) {
     this.paymentGroup = paymentgrp;
     this.viewStatus = 'issuerefund';
     this.isRefundRemission = true;
     }
+  }
   }
 
   getRemissionByFeeCode(feeCode: string, remissions: IRemission[]): IRemission {
@@ -218,11 +222,13 @@ export class PaymentViewComponent implements OnInit {
   }
 
   chkForPBAPayment(): boolean {
+    if (this.paymentGroup !== null &&  this.paymentGroup !== undefined) {
     let payment = this.paymentGroup.payments[0];
     if (payment.method.toLocaleLowerCase() === 'payment by account' && this.allowFurtherAccessAfter4Days(payment)) {
       return true;
     }
     return false;
+  }
   }
 
   chkForAddRemission(feeCode: string): boolean {
@@ -249,8 +255,10 @@ export class PaymentViewComponent implements OnInit {
   }
 
   allowFurtherAccessAfter4Days = (payment: IPayment): boolean => {
+    if(payment !== null && payment !== undefined) {
     let tmp4DayAgo = new Date();
     tmp4DayAgo.setDate(tmp4DayAgo.getDate() - 4);
     return tmp4DayAgo >= new Date(payment.date_created);
+    }
   }
 }

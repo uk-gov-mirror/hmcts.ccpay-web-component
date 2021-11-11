@@ -2,7 +2,7 @@
 <ng-container *ngIf="viewStatus === 'paymentview'">
 <div class="govuk-width-container">
 
-  <div class="govuk-breadcrumbs">
+  <div *ngIf="isTakePayment" class="govuk-breadcrumbs">
     <ol class="govuk-breadcrumbs__list">
       <li class="govuk-breadcrumbs__list-item">
         <a href="javascript:void(0)" (click)="goToCaseTransationPage($event)" class="govuk-back-link">Back</a>
@@ -44,6 +44,10 @@
         <tr class="section">
           <td class="bold tb-col-w">Payment amount</td>
           <td>£{{ paymentGroup?.payments[0]?.amount | number:'.2' }}</td>
+        </tr>
+        <tr class="section" *ngIf="paymentGroup?.payments[0] && paymentGroup?.payments[0]?.external_reference">
+          <td class="bold tb-col-w">GovPay Transaction ID</td>
+          <td>{{ paymentGroup?.payments[0]?.external_reference }}</td>
         </tr>
         <tr class="section">
             <td class="bold tb-col-w">Payment method</td>
