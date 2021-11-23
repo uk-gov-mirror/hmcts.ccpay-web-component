@@ -65,26 +65,28 @@ export class PbaPaymentComponent implements OnInit {
     this.isPBAAccountNotExist = false;
     this.isPBAServerError = false;
     this.isPBAAccountPaymentSuccess = false;
-
-    const requestBody = new IserviceRequestPbaPayment(
-      this.selectedPbaAccount, this.pbaPayOrderRef.orderTotalFees, this.pbaAccountRef);
-    this.paymentViewService.postPBAaccountPayment(this.pbaPayOrderRef.orderRefId, requestBody)
-    .subscribe(
-      r => {
-        this.pbaAccountrPaymentResult = JSON.parse(r).data;
-        this.isPBAAccountPaymentSuccess = true;
-      },
-      e => {
-        if(e.status == '402') {
-          this.isInSufficiantFund = true;
-        } else if(e.status == '410' || e.status == '412') {
-          this.isPBAAccountNotExist = true;
-        } else {
-          this.isPBAServerError = true;
+    if ( this.pbaAccountList.indexOf(this.selectedPbaAccount) !== -1 ) {
+      const requestBody = new IserviceRequestPbaPayment(
+        this.selectedPbaAccount, this.pbaPayOrderRef.orderTotalFees, this.pbaAccountRef);
+      this.paymentViewService.postPBAaccountPayment(this.pbaPayOrderRef.orderRefId, requestBody)
+      .subscribe(
+        r => {
+          this.pbaAccountrPaymentResult = JSON.parse(r).data;
+          this.isPBAAccountPaymentSuccess = true;
+        },
+        e => {
+          if(e.status == '402') {
+            this.isInSufficiantFund = true;
+          } else if(e.status == '410' || e.status == '412') {
+            this.isPBAAccountNotExist = true;
+          } else {
+            this.isPBAServerError = true;
+          }
         }
-      }
-    );
-
+      );
+    } else {
+      this.isPBAServerError = true;
+    }
   }
   cardPayment() {
     this.isCardPaymentSuccess = true;
