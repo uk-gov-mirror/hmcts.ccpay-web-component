@@ -34,14 +34,14 @@
       <mat-cell  *matCellDef="let row" class="whitespace-inherit"> {{row.refund_reference}} </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="reason">
-      <mat-header-cell *matHeaderCellDef> Reason </mat-header-cell>
-      <mat-cell *matCellDef="let row" class="whitespace-inherit"> {{row.reason}} </mat-cell>
-    </ng-container>
-
     <ng-container matColumnDef="user_full_name">
       <mat-header-cell *matHeaderCellDef > Submitted by </mat-header-cell>
       <mat-cell *matCellDef="let row" [style.color]="row.color" class="whitespace-inherit"> {{row.user_full_name }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="date_created">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Date created </mat-header-cell>
+      <mat-cell *matCellDef="let row" class="whitespace-inherit"> {{row.date_created | date:'d MMMM yyyy'}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="date_updated">

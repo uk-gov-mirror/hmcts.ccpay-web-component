@@ -28,7 +28,12 @@ export class ErrorHandlerService {
         }
       } else if (err.status === 400) {
         if (typeof err !== 'string') {
-          errorMessage = JSON.parse(err.error)["error"];   
+          if(JSON.parse(err.error)["error"] !== undefined) {
+            errorMessage = JSON.parse(err.error)["error"];  
+          } else {
+            JSON.parse(err.error)["err"].split('-')[1];
+          }
+            
         } 
         if (errorMessage === '') {
             errorMessage = err.error.toString().replace(/"/g,"");

@@ -25,8 +25,8 @@ export class RefundStatusComponent implements OnInit {
   refundStatusForm: FormGroup;
   selectedRefundReason: string;
   rejectedRefundList: IRefundList[] = [];
-  approvalStatus = 'sent for approval';
-  rejectStatus = 'sent back';
+  approvalStatus = 'Sent for approval';
+  rejectStatus = 'Update required';
   errorMessage = null;
   viewName: string;
   refundReason: string;
@@ -182,7 +182,7 @@ export class RefundStatusComponent implements OnInit {
     this.viewName = 'reviewandsubmitview';
     this.oldRefundReason = this.refundlist.reason;
     this.changedAmount = this.refundlist.amount;
-    this.refundreason = this.refundStatusHistories.filter(data => data.status === 'sentback')[0].notes;
+    this.refundreason = this.refundStatusHistories.filter(data => data.status.toLowerCase() === 'update required')[0].notes;
     this.refundService.getRefundReasons().subscribe(
       refundReasons => {
         this.refundReasons = refundReasons;

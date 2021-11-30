@@ -19,8 +19,8 @@ export class RefundListComponent implements OnInit {
   tableRejectedHeader: string;
   submittedRefundList: IRefundList[] = [];
   rejectedRefundList: IRefundList[] = [];
-  approvalStatus = 'sent for approval';
-  rejectStatus = 'sent back';
+  approvalStatus = 'Sent for approval';
+  rejectStatus = 'Update required';
   errorMessage = null;
   isApproveTableVisible:boolean;
   isRejectTableVisible:boolean;
@@ -51,7 +51,7 @@ export class RefundListComponent implements OnInit {
     // }
 
    if(this.isAuthorized) {
-    this.refundService.getRefundList(this.approvalStatus,true).subscribe(
+    this.refundService.getRefundList(this.approvalStatus,false).subscribe(
       refundList => {
         this.submittedRefundList = refundList['refund_list'];
         this.isApproveTableVisible = true;

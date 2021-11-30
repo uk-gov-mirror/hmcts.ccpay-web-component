@@ -18,7 +18,7 @@ export class TableComponent {
   @Input('errorMessage') errorMessage: string;
   isApprovalFlow: boolean;
   // displayedColumns = ['ccdCaseNumber', 'refundReference', 'reason', 'createBy', 'updateDate', 'Action'];
-  displayedColumns = ['ccd_case_number', 'refund_reference', 'reason', 'user_full_name', 'date_updated', 'Action'];
+  displayedColumns = ['ccd_case_number', 'refund_reference', 'user_full_name','date_created', 'date_updated', 'Action'];
   
   dataSource: MatTableDataSource<any>;
   userLst;
