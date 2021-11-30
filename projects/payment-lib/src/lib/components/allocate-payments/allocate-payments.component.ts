@@ -65,6 +65,9 @@ export class AllocatePaymentsComponent implements OnInit {
   paymentRef: string = null;
   isStrategicFixEnable: boolean = true;
   orderLevelFees: IOrderReferenceFee[] = [];
+  cookieUserName: string[] = [];
+  enCookieUserName: any;
+  userNameField: string = null;
 
   reasonList: { [key: string]: { [key: string]: string } }= {
     overPayment: {
@@ -214,17 +217,22 @@ export class AllocatePaymentsComponent implements OnInit {
     }
   }
   confirmAllocatePayement(){
+    this.enCookieUserName = document.cookie.split(";").find(row => row.includes("user-info")).split("=")[1].split(";");
+    this.cookieUserName = JSON.parse(decodeURIComponent(this.enCookieUserName));
+    
+    const fullName = this.cookieUserName['forename'] + ' ' + this.cookieUserName['surname'];
+
     const paymentDetailsField = this.overUnderPaymentForm.controls.moreDetails,
       paymentFormError = this.overUnderPaymentForm.controls.moreDetails.errors,
-      userNameField = this.overUnderPaymentForm.controls.userName,
+      userNameField = fullName,
       isEmptyCondtion = this.paymentReason && this.paymentExplanation,
       isOtherOptionSelected = this.paymentExplanation === 'Other';
 
     this.resetForm([false, false, false, false, false, false, false, false], 'all');
-    if ( (!this.isRemainingAmountGtZero && !this.isRemainingAmountLtZero) || isEmptyCondtion && (!isOtherOptionSelected && userNameField.valid || isOtherOptionSelected && userNameField.valid && paymentDetailsField.valid)) {
+    if ( (!this.isRemainingAmountGtZero && !this.isRemainingAmountLtZero) || isEmptyCondtion && (!isOtherOptionSelected && userNameField.length > 0 || isOtherOptionSelected && userNameField.length > 0 && paymentDetailsField.valid)) {
       this.isConfirmButtondisabled = true;
       this.otherPaymentExplanation = this.paymentExplanation === 'Other' ? paymentDetailsField.value : this.paymentExplanation;
-      this.userName = userNameField.value;
+      this.userName = userNameField;
       this.finalServiceCall();
     }else {
       if(!this.paymentReason) {
@@ -247,11 +255,8 @@ export class AllocatePaymentsComponent implements OnInit {
           this.resetForm([false, false, false, false, false, true, false, false], 'other');
         }
       }
-      if(userNameField.value === "") {
+      if(userNameField.length === 0) {
         this.resetForm([false, false, false, false, false, false, true, false], 'username');
-      }
-      if(userNameField.value !== "" &&  userNameField.invalid) {
-        this.resetForm([false, false, false, false, false, false, false, true], 'username');
       }
     }
   }
@@ -368,10 +373,10 @@ export class AllocatePaymentsComponent implements OnInit {
       this.isRemainingAmountGtZero = remainingToBeAssigned > 0;
       this.isRemainingAmountLtZero = remainingToBeAssigned < 0;
       this.paymentSectionLabel = this.isRemainingAmountGtZero ? { 
-          title: 'There is a surplus of',
+          title: 'There is an Over payment of',
           reason: 'Provide a reason. This will be used in the Refund process.',
         }: this.isRemainingAmountLtZero ? { 
-          title: 'There is a shortfall of',
+          title: 'There is an Under payment of',
           reason: 'Provide a reason',
         }: { 
           title:'Amount left to be allocated',

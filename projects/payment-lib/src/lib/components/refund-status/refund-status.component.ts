@@ -74,11 +74,11 @@ export class RefundStatusComponent implements OnInit {
       this.viewName = 'refundstatuslist';
       this.refundService.getRefundStatusList(this.ccdCaseNumber).subscribe(
         refundList => {
-          this.rejectedRefundList = refundList['data']['refund_list'];
+          this.rejectedRefundList = refundList['refund_list'];
         }
       ),
         (error: any) => {
-          this.errorMessage = error;
+          this.errorMessage = error.replace(/"/g,"");
         };
     }
 
@@ -92,31 +92,33 @@ export class RefundStatusComponent implements OnInit {
       reason: new FormControl()
     });
 
-    this.getRefundsStatusHistoryList();
+    if(this.refundlist !== undefined) {
+      this.getRefundsStatusHistoryList();
 
-    if (this.LOGGEDINUSERROLES.some(i => i.includes('payments-refund-approver'))) {
-      this.isProcessRefund = true;
-      this.refundButtonState = this.refundlist.refund_status.name;
-      return;
+      if (this.LOGGEDINUSERROLES.some(i => i.includes('payments-refund-approver'))) {
+        this.isProcessRefund = true;
+        this.refundButtonState = this.refundlist.refund_status.name;
+        return;
+      }
+  
+      if (this.LOGGEDINUSERROLES.some(i => i.includes('payments-refund'))) {
+        this.isProcessRefund = false;
+        this.refundButtonState = this.refundlist.refund_status.name;
+      }
     }
-
-    if (this.LOGGEDINUSERROLES.some(i => i.includes('payments-refund'))) {
-      this.isProcessRefund = false;
-      this.refundButtonState = this.refundlist.refund_status.name;
-    }
-
+  
   }
 
   getRefundsStatusHistoryList() {
     if(this.refundlist !== undefined) {
     this.refundService.getRefundStatusHistory(this.refundlist.refund_reference).subscribe(
       statusHistoryList => {
-        this.refundStatusHistories = statusHistoryList['data'].status_history_dto_list;
-        this.isLastUpdatedByCurrentUser = statusHistoryList['data'].last_updated_by_current_user;
+        this.refundStatusHistories = statusHistoryList.status_history_dto_list;
+        this.isLastUpdatedByCurrentUser = statusHistoryList.last_updated_by_current_user;
       }
     ),
       (error: any) => {
-        this.errorMessage = error;
+        this.errorMessage = error.replace(/"/g,"");
       }; 
     }
   }
@@ -132,7 +134,7 @@ export class RefundStatusComponent implements OnInit {
 
   loadCaseTransactionPage() {
     this.paymentLibComponent.isRefundStatusView = false;
-    this.paymentLibComponent.TAKEPAYMENT = true;
+    //this.paymentLibComponent.TAKEPAYMENT = true;
     this.paymentLibComponent.viewName = 'case-transactions';
     this.paymentViewService.getBSfeature().subscribe(
       features => {
@@ -152,7 +154,7 @@ export class RefundStatusComponent implements OnInit {
     partUrl += `&caseType=${this.paymentLibComponent.CASETYPE}`;
     partUrl += this.isNewPcipalOff ? '&isNewPcipalOff=Enable' : '&isNewPcipalOff=Disable';
     partUrl += this.isOldPcipalOff ? '&isOldPcipalOff=Enable' : '&isOldPcipalOff=Disable';
-    let url = `/payment-history/${this.ccdCaseNumber}?view=case-transactions&takePayment=true&${partUrl}`;
+    let url = `/payment-history/${this.ccdCaseNumber}?view=case-transactions&takePayment=${this.paymentLibComponent.TAKEPAYMENT}&${partUrl}`;
     this.router.navigateByUrl(url);
   }
 
@@ -166,7 +168,7 @@ export class RefundStatusComponent implements OnInit {
   }
 
   gotoReviewDetailsPage(event:any) {
-    event.preventDefault();
+   // event.preventDefault();
     this.errorMessage = false;
     this.paymentLibComponent.isRefundStatusView = true;
     this.ngOnInit();
@@ -183,11 +185,12 @@ export class RefundStatusComponent implements OnInit {
     this.refundreason = this.refundStatusHistories.filter(data => data.status === 'sentback')[0].notes;
     this.refundService.getRefundReasons().subscribe(
       refundReasons => {
-        this.refundReasons = refundReasons['data'];
+        this.refundReasons = refundReasons;
       });
   }
   gotoRefundReasonPage() {
     this.isRefundBtnDisabled = false;
+    this.paymentLibComponent.REFUNDLIST = "true";
     this.paymentLibComponent.isFromRefundStatusPage = true;
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
     this.errorMessage = false;
@@ -196,6 +199,7 @@ export class RefundStatusComponent implements OnInit {
 
   gotoAmountPage() {
     this.errorMessage = false;
+    this.paymentLibComponent.REFUNDLIST = "true";
     this.isRefundBtnDisabled = false;
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
     this.paymentLibComponent.isFromRefundStatusPage = true;
@@ -277,13 +281,13 @@ export class RefundStatusComponent implements OnInit {
     this.refundService.patchResubmitRefund(resubmitRequest, this.refundlist.refund_reference).subscribe(
       response => {
         if (JSON.parse(response)) {
-          this.refundReference = JSON.parse(response).data.refund_reference;
-          this.refundAmount = JSON.parse(response).data.refund_amount;
+          this.refundReference = JSON.parse(response).refund_reference;
+          this.refundAmount = JSON.parse(response).refund_amount;
           this.viewName = 'reviewrefundconfirmationpage';
         }
       },
       (error: any) => {
-        this.errorMessage = error;
+        this.errorMessage = error.replace(/"/g,"");
       }
     );
 

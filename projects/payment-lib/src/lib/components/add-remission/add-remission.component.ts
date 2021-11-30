@@ -85,13 +85,16 @@ export class AddRemissionComponent implements OnInit {
   isPaymentSuccess: boolean = false;
   isRemissionApplied: boolean = false;
   remissionamt:number;
-  refundReasons: any[] = [];
+  // refundReasons: any[] = [];
   commonRefundReasons: any[] = [];
   showReasonText: boolean;
   isRefundReasonsSelected: boolean;
   default: string;
   reasonLength: number;
-  // refundReasons:IRefundReasons[];
+  refundReasons:IRefundReasons[];
+  pattern1: string;
+  pattern2: string;
+  component: { account_number: string; amount: number; case_reference: string; ccd_case_number: string; channel: string; currency: string; customer_reference: string; date_created: string; date_updated: string; description: string; method: string; organisation_name: string; payment_allocation: any[]; reference: string; service_name: string; site_id: string; status: string; };
 
   constructor(private formBuilder: FormBuilder,
     private router: Router,
@@ -103,7 +106,9 @@ export class AddRemissionComponent implements OnInit {
 
   ngOnInit() {
     this.default = 'Select a different reason';
-    if(this.viewCompStatus !== ''){
+    this.pattern1 = '^([a-zA-Z0-9]{3})-([a-zA-Z0-9]{3})-([a-zA-Z0-9]{3})$';
+    this.pattern2 = '^([A-Za-z]{2}[0-9]{2})-([0-9]{6})$';
+    if(this.viewCompStatus !== '' && this.viewCompStatus !== undefined){
       this.viewStatus = '';
       }
     if(this.remission) {
@@ -121,10 +126,18 @@ export class AddRemissionComponent implements OnInit {
     this.option = this.paymentLibComponent.SELECTED_OPTION;
     this.bsPaymentDcnNumber = this.paymentLibComponent.bspaymentdcn;
     this.remissionForm = this.formBuilder.group({
-      remissionCode: new FormControl('', Validators.compose([
+      remissionCode: new FormControl('', 
+        Validators.compose([
         Validators.required,
-        Validators.pattern('^([a-zA-Z0-9]{3})-([a-zA-Z0-9]{3})-([a-zA-Z0-9]{3})$')
-      ])),
+        Validators.pattern(`(${this.pattern1})|(${this.pattern2})`)
+      ]) 
+      ),
+      // remissionCode: new FormControl('', Validators.compose([  [A-Za-z]{2}[0-9]{2} [0-9]{6}
+      //   Validators.required,
+      //  // Validators.pattern('/(^[a-zA-Z0-9]{3})-([a-zA-Z0-9]{3})-([a-zA-Z0-9]{3})$/|/^([A-Za-z]{2}[0-9]{2})-([0-9]{6})$/')
+      //  // Validators.pattern('^([a-zA-Z0-9]{3})-([a-zA-Z0-9]{3})-([a-zA-Z0-9]{3})$'),
+      //   Validators.pattern('/^(([A-Za-z]{2}[0-9]{2})-([0-9]{6}))|(([a-zA-Z0-9]{3})-([a-zA-Z0-9]{3})-([a-zA-Z0-9]{3}))$/')
+      // ])),
       amount: new FormControl('', Validators.compose([
         Validators.required,
         Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$')
@@ -133,8 +146,7 @@ export class AddRemissionComponent implements OnInit {
       refundDDReason: new FormControl('', Validators.compose([Validators.required])),
       reason: new FormControl()
     });
-    const remissionctrls=this.remissionForm.controls;
-    remissionctrls['refundDDReason'].setValue('Select a different reason', {onlySelf: true});
+
     if(this.viewCompStatus === ''){
     this.viewStatus = 'main';
     }
@@ -142,23 +154,18 @@ export class AddRemissionComponent implements OnInit {
     if(this.viewCompStatus === 'issuerefund'){
       this.refundService.getRefundReasons().subscribe(
         refundReasons => { 
-          this.refundReasons = refundReasons['data'].filter((data) => data.recently_used === false);
+          this.refundReasons = refundReasons.filter((data) => data.recently_used === false);
+          this.refundReasons = this.refundReasons.filter((data) => data.name !== 'Retrospective remission');
           this.cd.detectChanges();
-          this.commonRefundReasons = refundReasons['data'].filter((data) => data.recently_used === true);
+          this.commonRefundReasons = refundReasons.filter((data) => data.recently_used === true);
+          this.commonRefundReasons.sort((a, b) => a.toString().localeCompare(b));
           this.cd.detectChanges();
         } );
-      }
+    }
     
-      if(this.viewCompStatus === 'processretroremissonpage' && this.isFromRefundListPage){
-        this.viewStatus = 'processretroremissonpage';
-        }
-
-      // this.refundService.getUserDetails().subscribe(
-      //   userdetail => { 
-      //     console.log(userdetail);
-      //     console.log(userdetail['data']);
-      //   } );
-    this.paymentLibComponent.CCD_CASE_NUMBER
+    if(this.viewCompStatus === 'processretroremissonpage' && this.isFromRefundListPage){
+      this.viewStatus = 'processretroremissonpage';
+    }
   }
 
   addRemission() {
@@ -167,7 +174,7 @@ export class AddRemissionComponent implements OnInit {
       isRemissionLessThanFee = this.fee.calculated_amount > remissionctrls.amount.value; 
       this.remissionForm.controls['refundReason'].setErrors(null);
       this.remissionForm.controls['refundDDReason'].setErrors(null);
-      this.remissionForm.controls['amount'].setErrors(null);
+      //this.remissionForm.controls['amount'].setErrors(null);
     if (this.remissionForm.dirty && this.remissionForm.valid && isRemissionLessThanFee) {
       this.viewStatus = 'confirmation';
     }else {
@@ -242,15 +249,16 @@ export class AddRemissionComponent implements OnInit {
 
   // Add retro remission changes
   addRemissionCode() {
+    this.errorMessage = false;
     this.viewStatus = '';
     this.isRefundRemission = false;
     this.resetRemissionForm([false, false, false, false, false, false], 'All');
-    const remissionctrls=this.remissionForm.controls,
-      isRemissionLessThanFee = this.fee.calculated_amount >= remissionctrls.amount.value; 
+    const remissionctrls=this.remissionForm.controls
+     // isRemissionLessThanFee = this.fee.calculated_amount >= remissionctrls.amount.value; 
       this.remissionForm.controls['refundReason'].setErrors(null);
       this.remissionForm.controls['refundDDReason'].setErrors(null);
       this.remissionForm.controls['amount'].setErrors(null);
-    if (this.remissionForm.dirty && this.remissionForm.valid && isRemissionLessThanFee) {
+    if (this.remissionForm.dirty && this.remissionForm.valid ) {
       this.viewCompStatus = '';
       this.viewStatus = "processretroremissonpage";
     }else {
@@ -270,7 +278,7 @@ export class AddRemissionComponent implements OnInit {
       if(remissionctrls['reason'].value == '') {
         this.resetRemissionForm([false, false, false, true, false, true], 'reason');
       }
-      if(remissionctrls.amount.valid && !isRemissionLessThanFee){
+      if(remissionctrls.amount.valid){
         this.resetRemissionForm([false, false, false, false, true], 'amount');
       }
     
@@ -279,7 +287,7 @@ export class AddRemissionComponent implements OnInit {
 
 
   gotoAddRetroRemissionCodePage() {
-
+    this.errorMessage = false;
     if(this.isRefundRemission) {
       this.paymentLibComponent.iscancelClicked = true;
       this.refundListAmount.emit();
@@ -344,7 +352,7 @@ export class AddRemissionComponent implements OnInit {
   }
 
   confirmRetroRemission() {
-    this.isConfirmationBtnDisabled = true;
+    if(!this.isConfirmationBtnDisabled) {
     this.retroRemission = true;
     this.remissionamt = this.remissionForm.controls.amount.value;
     const requestBody = new AddRetroRemissionRequest(this.remissionamt,this.remissionForm.controls.remissionCode.value )
@@ -363,6 +371,7 @@ export class AddRemissionComponent implements OnInit {
         this.cd.detectChanges();
       }
     );
+    }
   }
 
   processRefund() {
@@ -375,7 +384,6 @@ export class AddRemissionComponent implements OnInit {
       this.remissionReference = this.remission.remission_reference;
     }
     const requestBody = new PostIssueRefundRetroRemission(this.remissionReference);
-  
     this.paymentViewService.postRefundRetroRemission(requestBody).subscribe(
         response => {
       if (JSON.parse(response)) {
@@ -395,9 +403,12 @@ export class AddRemissionComponent implements OnInit {
 
   gotoIssueRefundConfirmation(payment: IPayment) {
     this.paymentLibComponent.iscancelClicked = false;
+    if(this.paymentLibComponent.REFUNDLIST === "true") {
+      this.isFromRefundListPage = true; 
+    }
     this.errorMessage = '';
     this.refundReason = this.remissionForm.controls['refundReason'].value === null ? this.remissionForm.controls['refundDDReason'].value : this.remissionForm.controls['refundReason'].value;
-    if(!this.refundReason) {
+    if(!this.refundReason || this.refundReason === 'Select a different reason') {
       this.refundHasError = true;
     } else if(this.selectedRefundReason.includes('Other') && (this.remissionForm.controls['reason'].value == '' || this.remissionForm.controls['reason'].value == null)) {
         this.resetRemissionForm([false, false, false, true, false, true], 'reason');
@@ -450,7 +461,7 @@ export class AddRemissionComponent implements OnInit {
     if( this.isRefundRemission) {
       this.retroRemission = true;
     }
-   
+  
     const requestBody = new PostRefundRetroRemission(this.payment.reference,this.refundReason);
     this.paymentViewService.postRefundsReason(requestBody).subscribe(
       response => {
@@ -536,7 +547,13 @@ export class AddRemissionComponent implements OnInit {
 
   gotoServiceRequestPage(event: any) {
     event.preventDefault();
+    
+    if (this.paymentLibComponent.TAKEPAYMENT === undefined && this.paymentLibComponent.SERVICEREQUEST === undefined) {
+      this.paymentLibComponent.SERVICEREQUEST = 'false';
+      this.paymentLibComponent.TAKEPAYMENT = false;
+    }
     if (this.isFromServiceRequestPage) {
+      //this.paymentLibComponent.TAKEPAYMENT = false;
       this.paymentLibComponent.isFromRefundStatusPage = false;
       this.viewStatus = 'main'
       this.paymentLibComponent.viewName = 'case-transactions';
@@ -564,16 +581,16 @@ export class AddRemissionComponent implements OnInit {
         this.paymentLibComponent.ISNEWPCIPALOFF = this.isNewPcipalOff;
         this.paymentLibComponent.ISOLDPCIPALOFF = this.isOldPcipalOff;
         this.paymentLibComponent.isFromServiceRequestPage = true;  
-        this.paymentViewService.getBSfeature().subscribe(
-          features => {
-            let result = JSON.parse(features).filter(feature => feature.uid === BS_ENABLE_FLAG);
-            this.paymentLibComponent.ISBSENABLE = result[0] ? result[0].enable : false;
-          },
-          err => {
-            this.paymentLibComponent.ISBSENABLE = false;
-          }
-        );
-
+        // this.paymentViewService.getBSfeature().subscribe(
+        //   features => {
+        //     let result = JSON.parse(features).filter(feature => feature.uid === BS_ENABLE_FLAG);
+        //     this.paymentLibComponent.ISBSENABLE = result[0] ? result[0].enable : false;
+        //   },
+        //   err => {
+        //     this.paymentLibComponent.ISBSENABLE = false;
+        //   }
+        // );
+        this.paymentLibComponent.ISBSENABLE = true;
         let partUrl = this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
         partUrl += this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
         partUrl += this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
@@ -584,11 +601,21 @@ export class AddRemissionComponent implements OnInit {
         if(this.isFromPaymentDetailPage) {
           partUrl += this.paymentLibComponent.isFromPaymentDetailPage
         }
-
-        const url = `/payment-history/${this.ccdCaseNumber}?view=case-transactions&takePayment=true&selectedOption=${this.option}${partUrl}`;
-        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-        this.router.onSameUrlNavigation = 'reload';
-        this.router.navigateByUrl(url);
+        if(!this.paymentLibComponent.TAKEPAYMENT) {
+          this.paymentLibComponent.TAKEPAYMENT = undefined;
+        }
+        if ( this.paymentLibComponent.SERVICEREQUEST) {
+          const url = `/payment-history/${this.ccdCaseNumber}?view=case-transactions&selectedOption=${this.option}${partUrl}`;
+          this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+          this.router.onSameUrlNavigation = 'reload';
+          this.router.navigateByUrl(url);
+        } else {
+          const url = `/payment-history/${this.ccdCaseNumber}?view=case-transactions&takePayment=${this.paymentLibComponent.TAKEPAYMENT}&selectedOption=${this.option}${partUrl}`;
+          this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+          this.router.onSameUrlNavigation = 'reload';
+          this.router.navigateByUrl(url);
+        }
+       
     } else {
       this.paymentLibComponent.viewName === 'refundstatuslist';
       this.paymentLibComponent.isFromRefundStatusPage = true;
@@ -603,16 +630,16 @@ export class AddRemissionComponent implements OnInit {
     this.paymentLibComponent.ISNEWPCIPALOFF = this.isNewPcipalOff;
     this.paymentLibComponent.ISOLDPCIPALOFF = this.isOldPcipalOff;
     this.paymentLibComponent.isFromServiceRequestPage = true;  
-    this.paymentViewService.getBSfeature().subscribe(
-      features => {
-        let result = JSON.parse(features).filter(feature => feature.uid === BS_ENABLE_FLAG);
-        this.paymentLibComponent.ISBSENABLE = result[0] ? result[0].enable : false;
-      },
-      err => {
-        this.paymentLibComponent.ISBSENABLE = false;
-      }
-    );
-
+    // this.paymentViewService.getBSfeature().subscribe(
+    //   features => {
+    //     let result = JSON.parse(features).filter(feature => feature.uid === BS_ENABLE_FLAG);
+    //     this.paymentLibComponent.ISBSENABLE = result[0] ? result[0].enable : false;
+    //   },
+    //   err => {
+    //     this.paymentLibComponent.ISBSENABLE = false;
+    //   }
+    // );
+    this.paymentLibComponent.ISBSENABLE = true;
     let partUrl = this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
      partUrl += this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
      partUrl += this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
@@ -624,19 +651,27 @@ export class AddRemissionComponent implements OnInit {
        partUrl += this.paymentLibComponent.isFromPaymentDetailPage
      }
 
-    const url = `/payment-history/${this.ccdCaseNumber}?view=case-transactions&takePayment=true&selectedOption=${this.option}${partUrl}`;
+    const url = `/payment-history/${this.ccdCaseNumber}?view=case-transactions&takePayment=${this.paymentLibComponent.TAKEPAYMENT}&selectedOption=${this.option}${partUrl}`;
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.onSameUrlNavigation = 'reload';
     this.router.navigateByUrl(url);
   }
 
-  gotoCasetransationPageCancelBtnClicked() {
+  gotoCasetransationPageCancelBtnClicked(event: Event) {
+    event.preventDefault();
+    if (this.paymentLibComponent.REFUNDLIST) {
+      this.paymentLibComponent.viewName = 'refund-list';
+      return;
+    }
+    if (this.paymentLibComponent.TAKEPAYMENT === undefined && this.paymentLibComponent.SERVICEREQUEST === undefined) {
+      this.paymentLibComponent.SERVICEREQUEST = 'false';
+    }
     this.OrderslistService.setisFromServiceRequestPage(false);
     this.OrderslistService.setpaymentPageView({method: '',payment_group_reference: '', reference:''});
     this.OrderslistService.setnavigationPage('casetransactions');
     this.errorMessage = '';
     this.paymentLibComponent.viewName = 'case-transactions';
-    this.paymentLibComponent.TAKEPAYMENT = true;
+    //this.paymentLibComponent.TAKEPAYMENT = true;
     this.paymentLibComponent.ISTURNOFF = this.isTurnOff;
     this.paymentLibComponent.ISNEWPCIPALOFF = this.isNewPcipalOff;
     this.paymentLibComponent.ISOLDPCIPALOFF = this.isOldPcipalOff;
@@ -663,7 +698,7 @@ export class AddRemissionComponent implements OnInit {
      }
 
      if(!this.paymentLibComponent.SERVICEREQUEST) {
-      const url = `/payment-history/${this.ccdCaseNumber}?view=case-transactions&takePayment=true&selectedOption=${this.option}${partUrl}`;
+      const url = `/payment-history/${this.ccdCaseNumber}?view=case-transactions&takePayment=${this.paymentLibComponent.TAKEPAYMENT}&selectedOption=${this.option}${partUrl}`;
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
       this.router.onSameUrlNavigation = 'reload';
       this.router.navigateByUrl(url);

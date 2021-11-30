@@ -18,8 +18,8 @@
           <form [formGroup]="remissionForm" novalidate>
             <div class="govuk-form-group">
               <label class="govuk-label govuk-label--s" for="remission-code">
-                  Add remission to {{ fee.code }}: {{ fee.description }}
-                <span class="form-hint">Enter remission for reference. For example: HWF-A1B-23C</span>
+                  Add remission to {{ fee?.code }}: {{ fee?.description }}
+                <span class="form-hint">Enter remission for reference. For example: HWF-A1B-23C OR PA21-123456</span>
               </label>
               <input [ngClass]="{'inline-error-class': isRemissionCodeEmpty || remissionCodeHasError}" class="govuk-input govuk-input--width-20 govuk-!-margin-right-1" id="remissionCode" aria-label="remissionCode"  name="remissionCode" type="text" formControlName="remissionCode">
               <p class="inline-error-message" *ngIf="isRemissionCodeEmpty || remissionCodeHasError">
@@ -96,28 +96,29 @@
   <ng-container *ngIf="viewCompStatus === 'addremission'">
       <input #myInput type='hidden' id='iFrameDrivenImageValue' value='PROCESSADDRETROREMISSIONPAGE'> 
       <h1 class="heading-large">Process remission</h1>
-      <h1 class="heading-medium">#{{ccdCaseNumber | ccdHyphens }}</h1>
+      <h1 class="heading-medium">#{{ccdCaseNumber | ccdHyphens}}</h1>
       <h1 class="heading-large">Enter help with fees or remission reference</h1>
       <form novalidate>
           <div class="govuk-form-group">
             <form [formGroup]="remissionForm" novalidate>
               <div class="govuk-form-group">
                 <label class="govuk-label govuk-label--s" for="remission-code">
-                  <span class="form-hint">For example: HWF-A1B-23C</span>
+                  <span class="form-hint">For example: HWF-A1B-23C OR PA21-123456</span>
                 </label>
-                <input [ngClass]="{'inline-error-class': isRemissionCodeEmpty || remissionCodeHasError}" class="govuk-input govuk-input--width-20 govuk-!-margin-right-1" id="remissionCode" aria-label="remissionCode"  name="remissionCode" type="text" formControlName="remissionCode">
                 <p class="inline-error-message" *ngIf="isRemissionCodeEmpty || remissionCodeHasError">
                   <span *ngIf="isRemissionCodeEmpty">Enter a remission code</span>
                   <span *ngIf="remissionCodeHasError">Enter a vaild remission code</span>
                 </p>
+                <input [ngClass]="{'inline-error-class': isRemissionCodeEmpty || remissionCodeHasError}" class="govuk-input govuk-input--width-20 govuk-!-margin-right-1" id="remissionCode" aria-label="remissionCode"  name="remissionCode" type="text" formControlName="remissionCode">
+             
               </div>
             
             </form>
             <div class="govuk-button-group">
                 <button (click)="gotoServiceRequestPage($event)" class="govuk-button govuk-button--secondary"> Previous</button>
                 <button (click)="addRemissionCode()" class="govuk-button"> Continue</button>
-              <p><a (click)="gotoCasetransationPageCancelBtnClicked()" class="govuk-link" data-module="govuk-button">Cancel</a></p>
             </div>
+            <p><a href="javascript:void(0)" (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link" data-module="govuk-button">Cancel</a></p>
           </div>
       </form>
 
@@ -144,14 +145,16 @@
                             </h1> 
                           </legend>
                        <div id="amount-currency" class="govuk-visually-hidden">in pounds</div>
+                       <p class="inline-error-message" *ngIf="isAmountEmpty || amountHasError || isRemissionLessThanFeeError">
+                        <span *ngIf="isAmountEmpty">Enter a amount</span>
+                        <span *ngIf="amountHasError">Enter a vaild amount</span>
+                        <span *ngIf="isRemissionLessThanFeeError">You cannot add a remission that's more than the fee amount.</span>
+                      </p>
                           <div class="hmcts-currency-input">
+                           
                               <div class="hmcts-currency-input__symbol" aria-hidden="true">£</div>
                               <input class="govuk-input govuk-input--width-10" [ngClass]="{'inline-error-class': isAmountEmpty || amountHasError || isRemissionLessThanFeeError}" id="amount" aria-label="amount"  name="amount"  type="number" aria-describedby="amount-currency" formControlName="amount">
-                              <p class="inline-error-message" *ngIf="isAmountEmpty || amountHasError || isRemissionLessThanFeeError">
-                                <span *ngIf="isAmountEmpty">Enter a amount</span>
-                                <span *ngIf="amountHasError">Enter a vaild amount</span>
-                                <span *ngIf="isRemissionLessThanFeeError">You cannot add a remission that's more than the fee amount.</span>
-                              </p>
+                              
               
                         </div>
                       </fieldset>
@@ -160,10 +163,11 @@
                   <div class="govuk-button-group">
                       <button (click)="gotoAddRetroRemissionCodePage()" class="govuk-button govuk-button--secondary"> Previous</button>
                       <button (click)="gotoCheckRetroRemissionPage(payment)" class="govuk-button"> Continue</button>
-                    <p>
-                        <a (click)="gotoCasetransationPageCancelBtnClicked()" class="govuk-link" data-module="govuk-button">Cancel</a>
-                    </p>
+                  
                   </div>
+                  <p>
+                    <a href="javascript:void(0)" (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link" data-module="govuk-button">Cancel</a>
+                </p>
               </div>
     
           </form>
@@ -209,7 +213,7 @@
 
       <button type="submit" class="button govuk-button--secondary" (click)="addRemissionCode()">Previous</button>
       <button type="submit" [disabled]="isConfirmationBtnDisabled" [ngClass]='isConfirmationBtnDisabled ? "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"' (click)="confirmRetroRemission()"> Add remission </button>
-      <p> <a (click)="gotoCasetransationPageCancelBtnClicked()" class="govuk-link" data-module="govuk-button"> Cancel</a> </p>
+      <p> <a href="javascript:void(0)" (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link" data-module="govuk-button"> Cancel</a> </p>
 
   </ng-container>
 
@@ -222,7 +226,7 @@
             Remission added
           </h1>
           <div *ngIf="remessionPayment.status === 'Success'" class="govuk-panel__body">
-              <p class="govuk-body" style="color: white"><strong>The amount to be refunded should be {{remissionForm.controls.amount.value | currency:'GBP':'symbol-narrow':'1.2-2' }}</strong></p>
+              <p class="govuk-body white"><strong>The amount to be refunded should be {{remissionForm.controls.amount.value | currency:'GBP':'symbol-narrow':'1.2-2' }}</strong></p>
              
             </div>
           </div>
@@ -230,7 +234,7 @@
               <button type="submit" [disabled]="!isRemissionApplied" [ngClass]='isConfirmationBtnDisabled ? "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"' (click)="processRefund()">Submit refund </button>
             </div>
         <p class="govuk-body">
-          <a (click)="gotoCasetransationPage()"  class="govuk-link">Return to case</a>
+          <a href="javascript:void(0)" (click)="gotoCasetransationPage()"  class="govuk-link">Return to case</a>
        </p>
       </div>
     </div>
@@ -246,7 +250,7 @@
             </h1>
             
             <div class="govuk-panel__body">
-              <p class="govuk-body" style="color: white"><strong>Refund reference: {{refundReference}}</strong></p>
+              <p class="govuk-body white"><strong>Refund reference: {{refundReference}}</strong></p>
             </div>
       
           </div>
@@ -257,7 +261,7 @@
           </p>
         </div>
           <p class="govuk-body">
-            <a (click)="gotoCasetransationPage()"  class="govuk-link">Return to case</a>
+            <a href="javascript:void(0)" (click)="gotoCasetransationPage()"  class="govuk-link">Return to case</a>
          </p>
         </div>
       </div>
@@ -292,6 +296,7 @@
                             <div class = "container-fluid">
                               <div class="row">
                               <div class="govuk-radios__item col-md-4" *ngFor="let refund of commonRefundReasons; let i = index;">
+                                <!-- <div *ngIf = "{{refund.name}} !== 'Retrospective remission'"> -->
                                   <input   class="govuk-radios__input" id="{{refund.name}}" name="refundReason" type="radio"
                                   formControlName="refundReason" value={{refund.code}}
                                     (change)="selectRadioButton(refund.name, refund.name)">
@@ -303,12 +308,15 @@
                                       <label class="govuk-label govuk-label--m" for="{{refund.name}}">
                                           Enter reason
                                       </label>
+                                      <div [ngClass]="{'form-group-error': isReasonEmpty}">
                                       <p  class="inline-error-message" *ngIf="isReasonEmpty">
                                           <span *ngIf="isReasonEmpty">Enter a reason why you’re making this refund</span>
                                         </p>
+                                       
                                     <input class="govuk-input govuk-input--width-10" [ngClass]="{'inline-error-class': isReasonEmpty}" id="reason" aria-label="reason"  name="reason" type="text" aria-describedby="reason" maxlength="30" formControlName="reason">
-                                  
                                   </div>
+                                  </div>
+                                <!-- </div> -->
                               </div>
                               </div>
                             </div>
@@ -323,6 +331,7 @@
                             </div>
                                 <br/>
                                 <div class="govuk-radios__conditional" *ngIf="showReasonText &&  !isRefundReasonsSelected" >
+                                  <div [ngClass]="{'form-group-error': isReasonEmpty}">
                                     <label class="govuk-label govuk-label--m" for="amount">
                                         Enter reason
                                     </label>
@@ -330,7 +339,7 @@
                                         <span *ngIf="isReasonEmpty">Enter a reason why you’re making this refund</span>
                                       </p>
                                   <input class="govuk-input govuk-input--width-10" [ngClass]="{'inline-error-class': isReasonEmpty}" id="reason" aria-label="reason"  name="reason" type="text" aria-describedby="reason" maxlength="{{reasonLength}}"  formControlName="reason">
-                                
+                                  </div>
                                 </div>
 
                            
@@ -341,14 +350,14 @@
                </form>
         </div>
         <div class="govuk-button-group">
-            <button (click)="gotoServiceRequestPage($event)" class="govuk-button govuk-button--secondary"> Previous</button>
+            <button  (click)="gotoServiceRequestPage($event)" class="govuk-button govuk-button--secondary"> Previous</button>
             <button (click)="gotoIssueRefundConfirmation(payment)" class="govuk-button"> Continue</button>
-          <p>
-              <a (click)="gotoCasetransationPageCancelBtnClicked()" class="govuk-link" data-module="govuk-button">
-                  Cancel
-              </a>
-          </p>
         </div>
+        <p>
+          <a href="javascript:void(0)" (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link" data-module="govuk-button">
+              Cancel
+          </a>
+      </p>
       
   </ng-container>
 
@@ -374,7 +383,7 @@
               <td class="govuk-table__cell">{{this.payment.amount | currency:'GBP':'symbol-narrow':'1.2-2'}}</td>
           </tr>
       </table>
-
+      <div class="govuk-button-group">
       <button type="submit" class="button govuk-button--secondary" (click)="gotoIssueRefundPage()"> Previous </button>
       <button type="submit"
       [disabled]="isConfirmationBtnDisabled"
@@ -382,8 +391,9 @@
     (click)="confirmIssueRefund()">
         Submit refund
       </button>
+      </div>
       <p>
-          <a (click)="gotoCasetransationPageCancelBtnClicked()" class="govuk-link" data-module="govuk-button">
+          <a (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link" data-module="govuk-button">
               Cancel
           </a>
       </p>
@@ -419,7 +429,7 @@
               <td class="govuk-table__cell">{{feeamount | currency:'GBP':'symbol-narrow':'1.2-2'}}</td>
           </tr>
       </table>
-
+      <div class="govuk-button-group">
       <button type="submit" class="button govuk-button--secondary" (click)="gotoServiceRequestPage($event)">Previous</button>
       <button type="submit"
       [disabled]="isConfirmationBtnDisabled"
@@ -427,8 +437,9 @@
       (click)="processRefund()">
         Submit refund
       </button>
+      </div>
       <p>
-          <a (click)="gotoCasetransationPageCancelBtnClicked()" class="govuk-link" data-module="govuk-button">
+          <a href="javascript:void(0)"  (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link" data-module="govuk-button">
               Cancel
           </a>
       </p>
@@ -444,7 +455,7 @@
           </h1>
           
           <div class="govuk-panel__body">
-            <p class="govuk-body" style="color: white"><strong>Refund reference: {{refundReference}}</strong></p>
+            <p class="govuk-body white"><strong>Refund reference: {{refundReference}}</strong></p>
           </div>
     
         </div>

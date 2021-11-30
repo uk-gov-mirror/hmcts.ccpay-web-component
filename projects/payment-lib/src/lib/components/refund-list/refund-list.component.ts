@@ -29,15 +29,6 @@ export class RefundListComponent implements OnInit {
   userLst
   ngOnInit() {
     
-    // this.refundService.getUserDetails().subsc
-    //   userdetail => { 
-    //     console.log('govindu');
-    //     console.log(userdetail.headers);
-    //     console.log('govindu1');
-    //     console.log(userdetail.headers.get('Set-Cookie'));
-    //     console.log(userdetail);
-    //     console.log(userdetail['data']);
-    //   } );
     this.userLst = this.LOGGEDINUSERROLES;
 
     
@@ -62,23 +53,23 @@ export class RefundListComponent implements OnInit {
    if(this.isAuthorized) {
     this.refundService.getRefundList(this.approvalStatus,true).subscribe(
       refundList => {
-        this.submittedRefundList = refundList['data']['refund_list'];
+        this.submittedRefundList = refundList['refund_list'];
         this.isApproveTableVisible = true;
       }
     ),
     (error: any) => {
-      this.errorMessage = error;
+      this.errorMessage = error.replace(/"/g,"");
     };
   }
 
     this.refundService.getRefundList(this.rejectStatus,false).subscribe(
       refundList => {
-        this.rejectedRefundList = refundList['data']['refund_list'];
+        this.rejectedRefundList = refundList['refund_list'];
         this.isRejectTableVisible = true;
       }
     ),
     (error: any) => {
-      this.errorMessage = error;
+      this.errorMessage = error.replace(/"/g,"");
     };
 
   }

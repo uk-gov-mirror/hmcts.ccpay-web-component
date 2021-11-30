@@ -50,6 +50,10 @@ export class PaymentViewComponent implements OnInit {
     private OrderslistService: OrderslistService) {
   }
 
+  ngAfterContentChecked(): void {
+    this.cd.detectChanges();
+ }  
+
   ngOnInit() {
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
     this.selectedOption = this.paymentLibComponent.SELECTED_OPTION;
@@ -104,18 +108,20 @@ export class PaymentViewComponent implements OnInit {
     this.OrderslistService.setnavigationPage('casetransactions');
     this.OrderslistService.setisFromServiceRequestPage(false);
     this.paymentLibComponent.viewName = 'case-transactions';
-    this.paymentViewService.getBSfeature().subscribe(
-      features => {
-        let result = JSON.parse(features).filter(feature => feature.uid === BS_ENABLE_FLAG);
-        this.paymentLibComponent.ISBSENABLE = result[0] ? result[0].enable : false;
-      },
-      err => {
-        this.paymentLibComponent.ISBSENABLE = false;
-      }
-    );
+    this.paymentLibComponent.ISBSENABLE = true;
+    // this.paymentViewService.getBSfeature().subscribe(
+    //   features => {
+    //     let result = JSON.parse(features).filter(feature => feature.uid === BS_ENABLE_FLAG);
+    //     this.paymentLibComponent.ISBSENABLE = result[0] ? result[0].enable : false;
+    //   },
+    //   err => {
+    //     this.paymentLibComponent.ISBSENABLE = false;
+    //   }
+    // );
   }
 
   addRemission(fee: IFee) {
+    if(this.chkForAddRemission(fee.code)) {
     this.feeId = fee;
     this.paymentViewService.getApportionPaymentDetails(this.paymentGroup.payments[0].reference).subscribe(
       paymentGroup => {
@@ -131,11 +137,22 @@ export class PaymentViewComponent implements OnInit {
       },
       (error: any) => this.errorMessage = error
     );
+    }
+  }
+
+  checkForFees(paymentGroup: any) {
+    if(paymentGroup !== null && paymentGroup !== undefined)
+    {
+      if (paymentGroup.fees !== null && paymentGroup.fees !== undefined) {
+        return true;
+      }
+     
+    }
+    return false;
   }
 
   addRefundForRemission(payment: IPayment, remission: IRemission[],fees:any) {
-  
- 
+ if(this.chkIsRefundRemissionBtnEnable()) {
     this.payment = payment;
     this.paymentViewService.getApportionPaymentDetails(this.payment.reference).subscribe(
       paymentGroup => {
@@ -152,9 +169,11 @@ export class PaymentViewComponent implements OnInit {
       },
       (error: any) => this.errorMessage = error
     );
+ }
   }
 
   chkIsRefundRemissionBtnEnable(): boolean {
+    if (this.paymentGroup !== null &&  this.paymentGroup !== undefined) {
     this.paymentGroup.payments.forEach(payment => {
           if (payment.method.toLocaleLowerCase() === 'payment by account' && payment.status.toLocaleLowerCase() === 'success' && this.allowFurtherAccessAfter4Days(payment)) {
             this.isRefundRemissionBtnEnable = true;
@@ -166,11 +185,16 @@ export class PaymentViewComponent implements OnInit {
       return false;
     };
   }
+  }
 
   issueRefund(paymentgrp: IPaymentGroup) {
+    if (paymentgrp !== null &&  paymentgrp !== undefined) {
+    if(this.chkIssueRefundBtnEnable(paymentgrp.payments[0])) {
     this.paymentGroup = paymentgrp;
     this.viewStatus = 'issuerefund';
     this.isRefundRemission = true;
+    }
+  }
   }
 
   getRemissionByFeeCode(feeCode: string, remissions: IRemission[]): IRemission {
@@ -198,11 +222,13 @@ export class PaymentViewComponent implements OnInit {
   }
 
   chkForPBAPayment(): boolean {
+    if (this.paymentGroup !== null &&  this.paymentGroup !== undefined) {
     let payment = this.paymentGroup.payments[0];
     if (payment.method.toLocaleLowerCase() === 'payment by account' && this.allowFurtherAccessAfter4Days(payment)) {
       return true;
     }
     return false;
+  }
   }
 
   chkForAddRemission(feeCode: string): boolean {
@@ -229,8 +255,10 @@ export class PaymentViewComponent implements OnInit {
   }
 
   allowFurtherAccessAfter4Days = (payment: IPayment): boolean => {
+    if(payment !== null && payment !== undefined) {
     let tmp4DayAgo = new Date();
     tmp4DayAgo.setDate(tmp4DayAgo.getDate() - 4);
     return tmp4DayAgo >= new Date(payment.date_created);
+    }
   }
 }

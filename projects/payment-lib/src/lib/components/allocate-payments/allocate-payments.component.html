@@ -9,9 +9,9 @@
           </ol>
         </div>
   
-    <div style="display:flex; flex-direction:row; justify-content: space-between; width:960px;">
+    <div class="paymentrequest">
         <h1 class="govuk-heading-xl govuk-!-margin-top-3 govuk-!-margin-bottom-4">Select payment request</h1>
-        <p class="govuk-!-margin-top-5" style="align-self: flex-end;">Case reference: {{ccdReference}}</p>
+        <p class="govuk-!-margin-top-5 casererf">Case reference: {{ccdReference}}</p>
     </div>
  
     <div  *ngFor="let orderRef of orderLevelFees; let i of index;" class="multiple-choice unprocessed-payments--radio-button">
@@ -25,7 +25,7 @@
       <label for="radio-inline-1"> {{orderRef.orderTotalFees | currency :'GBP':'symbol':'1.2-2'}}({{orderRef.orderStatus}})</label>
     </div>
   
-    <div style="display:flex; flex-direction:row; justify-content: space-between; width:960px;">
+    <div class="paymentrequest">
         <button [disabled]="isContinueButtondisabled" type="submit" (click)="redirectToOrderFeeSearchPage()" class="button allbtb button--disabled govuk-!-margin-right-1">
           Continue
         </button>
@@ -232,17 +232,6 @@
             <span *ngIf="paymentDetailsMaxHasError">Explanation should be 255 characters or under.</span>
           </p>
         </div>
-      </div>
-      <div class="govuk-form-group" *ngIf="isRemainingAmountGtZero || isRemainingAmountLtZero">
-        <label class="govuk-label govuk-font__custom" for="userName">
-          Enter your name
-        </label>
-        <input class="govuk-input" id="userName" name="userName" type="text"
-          [ngClass]="{'inline-error-class': isUserNameEmpty || isUserNameInvalid}" formControlName="userName">
-        <p class="inline-error-message" *ngIf="isUserNameEmpty || isUserNameInvalid">
-          <span *ngIf="isUserNameEmpty">Enter your name.</span>
-          <span *ngIf="isUserNameInvalid">Enter a valid name</span>
-        </p>
       </div>
       <div class="govuk-button--group">
         <button type="submit" [disabled]="isConfirmButtondisabled"

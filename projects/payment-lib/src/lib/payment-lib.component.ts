@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { PaymentLibService } from './payment-lib.service';
 import { IBSPayments } from './interfaces/IBSPayments';
 
@@ -36,7 +36,6 @@ import { IBSPayments } from './interfaces/IBSPayments';
       [isNewPcipalOff]="ISNEWPCIPALOFF"
       ></ccpay-fee-summary>
     <ccpay-reports *ngIf="viewName === 'reports'"></ccpay-reports>
-    <ccpay-refunds  *ngIf="viewName === 'remission'"></ccpay-refunds>
     `
 })
 
@@ -88,7 +87,12 @@ export class PaymentLibComponent implements OnInit {
   isFromPaymentDetailPage: boolean;
   // isFromServiceRequestPage: boolean;
 
-  constructor(private paymentLibService: PaymentLibService) { }
+  constructor(private paymentLibService: PaymentLibService,
+    private cd: ChangeDetectorRef) { }
+  ngAfterContentChecked(): void {
+    this.cd.detectChanges();
+ }  
+
 
   ngOnInit() {
     this.paymentLibService.setApiRootUrl(this.API_ROOT);

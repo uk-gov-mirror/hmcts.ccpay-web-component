@@ -165,7 +165,7 @@ export class FeeSummaryComponent implements OnInit {
 
         this.outStandingAmount = this.bulkScaningPaymentService.calculateOutStandingAmount(paymentGroup);
       },
-      (error: any) => this.errorMessage = error
+      (error: any) => this.errorMessage = error.replace(/"/g,"")
     );
   }
 

@@ -30,10 +30,12 @@
   .inline-error-class {
     outline: 3px solid #a71414;
     outline-offset: 0;
+    border-color: #a71414;
   }
 
   .inline-error-message {
     color: #a71414;
+    border-color: #a71414;
     font-weight: bold;
     margin-top: 10px;
     font-size: 20px;
@@ -94,7 +96,7 @@
  }
 
  .govuk-input--width-10 {
-  max-width: 36ex;
+  max-width: 50ex;
 }
 
 .govuk-label--m {
@@ -107,4 +109,8 @@
 
 .govuk-error-summary__title {
   font-size: 24px !important;
+}
+
+.white {
+  color: white;
 }
