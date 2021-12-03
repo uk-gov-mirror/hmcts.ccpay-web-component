@@ -146,7 +146,9 @@ export class AddRemissionComponent implements OnInit {
       refundDDReason: new FormControl('', Validators.compose([Validators.required])),
       reason: new FormControl()
     });
-
+    const remissionctrls=this.remissionForm.controls;
+    remissionctrls['refundDDReason'].setValue('Select a different reason', {onlySelf: true});
+    
     if(this.viewCompStatus === ''){
     this.viewStatus = 'main';
     }
