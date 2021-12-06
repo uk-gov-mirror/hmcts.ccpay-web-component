@@ -1,5 +1,14 @@
 <ng-container *ngIf="viewStatus === 'pba-payment'">
+
+  <div class="govuk-breadcrumbs">
+    <ol class="govuk-breadcrumbs__list">
+      <li class="govuk-breadcrumbs__list-item">
+        <a href="javascript:void(0)" (click)="gotoCasetransationPage()" class="govuk-back-link pba-payments-19-font">Back</a>
+      </li>
+    </ol>
+  </div>
   <div class="pba-payment" *ngIf="(pbaAccountList?.length > 0 || errorMsg) && !isInSufficiantFund && !isPBAAccountNotExist && !isPBAServerError && !isPBAAccountPaymentSuccess && isCardPaymentSuccess">
+    
     <div *ngIf="errorMsg" class="govuk-error-summary pba-payments-error-box--size" aria-labelledby="error-summary-title" >
       <h2 class="govuk-error-summary__title govuk-error-summary__title-custom pba-payments-24-font" id="error-summary-title">
         There is a problem
@@ -18,12 +27,12 @@
         </ul>
       </div>
     </div>
-    <h1 class="heading-medium">Pay fee using Payment by Account (PBA)</h1>
+    <h1 class="heading-medium margin-top-10-px">Pay fee using Payment by Account (PBA)</h1>
     <div class="govuk-form-group">
       <label class="govuk-label pba-payments-govuk__label pba-payments-19-font">
         Amount to pay 
       </label>
-      <span class="pba-payments-19-font">£{{pbaPayOrderRef.orderTotalFees}}</span>
+      <span class="pba-payments-19-font">{{pbaPayOrderRef.orderTotalFees | currency :'GBP':'symbol':'1.2-2'}}</span>
     </div>
 
     <div class="govuk-form-group pba-payments-select-box--size" *ngIf="!errorMsg">
@@ -39,10 +48,10 @@
       <label class="govuk-label pba-payments-govuk__label pba-payments-24-font" for="pbaAccountNumber">
         Enter a reference for your PBA account statements 
       </label>
-      <div id="event-name-hint" class="govuk-hint pba-payments-19-font">
+      <div id="event-name-hint" class="govuk-hint pba-payments-19-font pba-payment-width">
         This should be your own unique reference to identify the case. It will appear on your statements.
     </div>
-    <input class="govuk-input pba-payments-ref-box--size" id="pbaAccountRef" (change)="selectpbaaccount($event)" name="pbaAccountRef" type="text" aria-describedby="pbaAccountRef-hint">
+    <input class="govuk-input pba-payments-ref-box--size pba-payments-19-font" id="pbaAccountRef" (change)="selectpbaaccount($event)" name="pbaAccountRef" type="text" aria-describedby="pbaAccountRef-hint">
     </div>
     <div class="govuk-button--group"  *ngIf="errorMsg">
       <button type="button" class="button pba-payments-19-font govuk-button--secondary pba-payments-margin-10" (click)="gotoCasetransationPage()">
