@@ -244,6 +244,9 @@ text-align: right;
     margin-bottom: 10px;
 }
 
+.govuk-heading-lw {
+    width:70%;
+}
 .paymentrequest {
     margin-top: 1em;
 }
@@ -304,6 +307,9 @@ th, td {
 .refundBtn {
     text-align: right;
     width: 18%;
+}
+.of-visible {
+    overflow: visible !important;
 }
 .col-25 {
     width:25% !important;
