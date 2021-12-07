@@ -33,19 +33,16 @@ export class ErrorHandlerService {
           } else {
             JSON.parse(err.error)["err"].split('-')[1];
           }
-            
         } 
         if (errorMessage === '') {
             errorMessage = err.error.toString().replace(/"/g,"");
         }
-      }
-      else if (err.error) {
+      } else if (err.error) {
         if (typeof err.error === 'string') {
           errorMessage = err.error.toString().replace(/"/g,"");
         } else {
           errorMessage = Object.values(err.error)[0].toString().replace(/"/g,"");
         }
-        
       }
        else if (err.error.messsage === undefined) {
         errorMessage = 'Server error';

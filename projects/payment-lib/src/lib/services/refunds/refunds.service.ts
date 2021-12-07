@@ -60,7 +60,7 @@ patchRefundActions(body:IPatchRefundAction, refundReference: string, reviewerAct
 }
 
 getRefundList(refundstatus?: string, selfexclusive?:boolean): Observable<IRefundList[]> {
-    return this.http.get<IRefundList[]>(`${this.paymentLibService.REFUNDS_API_ROOT}?status=${refundstatus}&selfExclusive=${selfexclusive}`, 
+    return this.http.get<IRefundList[]>(`${this.paymentLibService.REFUNDS_API_ROOT}?status=${refundstatus}&excludeCurrentUser=${selfexclusive}`, 
     {
     withCredentials: true
 })
