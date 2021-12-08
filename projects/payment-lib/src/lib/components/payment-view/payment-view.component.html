@@ -75,6 +75,21 @@
             <td class="bold tb-col-w">Allocaton Status</td>
             <td>{{ paymentGroup?.payments[0]?.payment_allocation[0]?.allocation_status }}</td>
           </tr>
+
+          <tr *ngIf="paymentGroup?.payments[0].organisation_name">
+            <td class="bold tb-col-w">PBA account name</td>
+            <td>{{ paymentGroup?.payments[0]?.organisation_name }}</td>
+          </tr>
+
+          <tr *ngIf="paymentGroup?.payments[0].account_number">
+            <td class="bold tb-col-w">PBA number</td>
+            <td>{{ paymentGroup?.payments[0]?.account_number }}</td>
+          </tr>
+
+          <tr *ngIf="paymentGroup?.payments[0].customer_reference">
+            <td class="bold tb-col-w">Customer internal reference</td>
+            <td>{{ paymentGroup?.payments[0]?.customer_reference }}</td>
+          </tr>
       
         </tbody>
       </table>
