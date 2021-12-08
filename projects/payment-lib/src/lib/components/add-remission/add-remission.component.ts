@@ -73,6 +73,7 @@ export class AddRemissionComponent implements OnInit {
   paymentExplanationHasError: boolean = false;
   refundReason:string;
   selectedRefundReason: string;
+  displayRefundReason: string;
   refundCode:string;
   remessionPayment:IPayment;
   isRemissionCodeEmpty: boolean = false;
@@ -146,7 +147,9 @@ export class AddRemissionComponent implements OnInit {
       refundDDReason: new FormControl('', Validators.compose([Validators.required])),
       reason: new FormControl()
     });
-
+    const remissionctrls=this.remissionForm.controls;
+    remissionctrls['refundDDReason'].setValue('Select a different reason', {onlySelf: true});
+    
     if(this.viewCompStatus === ''){
     this.viewStatus = 'main';
     }
@@ -415,7 +418,7 @@ export class AddRemissionComponent implements OnInit {
     } else if (this.selectedRefundReason.includes('Other') && this.remissionForm.controls['reason'].value !== '') {
       this.refundHasError = false;
       this.refundReason +=  '-' + this.remissionForm.controls['reason'].value;
-      this.selectedRefundReason = this.remissionForm.controls['reason'].value;
+      this.displayRefundReason = this.remissionForm.controls['reason'].value;
       if ( this.isFromRefundListPage ) {
         this.refundListReason.emit({reason: this.selectedRefundReason, code: this.refundReason});
       } else {
@@ -424,6 +427,7 @@ export class AddRemissionComponent implements OnInit {
       }
       
     } else {
+      this.displayRefundReason = this.selectedRefundReason;
       if ( this.isFromRefundListPage ) {
         this.paymentLibComponent.isFromRefundStatusPage = true;
         this.refundListReason.emit({reason: this.selectedRefundReason, code: this.refundReason});
