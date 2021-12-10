@@ -51,6 +51,7 @@ export class RefundStatusComponent implements OnInit {
   isLastUpdatedByCurrentUser: boolean = true;
   isProcessRefund: boolean = false;
   changedAmount: number;
+  allowedRolesToAccessRefund = ['payments-refund-approver', 'payments-refund'];
 
   constructor(private formBuilder: FormBuilder,
     private refundService: RefundsService,
@@ -60,53 +61,61 @@ export class RefundStatusComponent implements OnInit {
     private OrderslistService: OrderslistService) { }
 
   ngOnInit() {
-    this.resetRemissionForm([false, false, false, false], 'All');
-    this.bsPaymentDcnNumber = this.paymentLibComponent.bspaymentdcn;
-    this.isCallFromRefundList = this.paymentLibComponent.isCallFromRefundList;
-    // if(this.paymentLibComponent.isFromRefundStatusPage) {
-    //   this.viewName = 'reviewandsubmitview';
-    // }
-    if (this.paymentLibComponent.isRefundStatusView) {
-      this.viewName = 'refundview';
-      this.OrderslistService.getRefundView().subscribe((data) => this.refundlist = data);
-      this.OrderslistService.getCCDCaseNumberforRefund.subscribe((data) => this.ccdCaseNumber = data);
-    } else {
-      this.viewName = 'refundstatuslist';
-      this.refundService.getRefundStatusList(this.ccdCaseNumber).subscribe(
-        refundList => {
-          this.rejectedRefundList = refundList['refund_list'];
+    if (this.check4AllowedRoles2AccessRefund()) {
+      this.resetRemissionForm([false, false, false, false], 'All');
+      this.bsPaymentDcnNumber = this.paymentLibComponent.bspaymentdcn;
+      this.isCallFromRefundList = this.paymentLibComponent.isCallFromRefundList;
+      // if(this.paymentLibComponent.isFromRefundStatusPage) {
+      //   this.viewName = 'reviewandsubmitview';
+      // }
+      if (this.paymentLibComponent.isRefundStatusView) {
+        this.viewName = 'refundview';
+        this.OrderslistService.getRefundView().subscribe((data) => this.refundlist = data);
+        this.OrderslistService.getCCDCaseNumberforRefund.subscribe((data) => this.ccdCaseNumber = data);
+      } else {
+        this.viewName = 'refundstatuslist';
+        this.refundService.getRefundStatusList(this.ccdCaseNumber).subscribe(
+          refundList => {
+            this.rejectedRefundList = refundList['refund_list'];
+          }
+        ),
+          (error: any) => {
+            this.errorMessage = error.replace(/"/g,"");
+          };
+      }
+
+
+      this.refundStatusForm = this.formBuilder.group({
+        amount: new FormControl('', Validators.compose([
+          Validators.required,
+          Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$')
+        ])),
+        refundReason: new FormControl('', Validators.compose([Validators.required])),
+        reason: new FormControl()
+      });
+
+      if(this.refundlist !== undefined) {
+        this.getRefundsStatusHistoryList();
+
+        if (this.LOGGEDINUSERROLES.some(i => i.includes('payments-refund-approver'))) {
+          this.isProcessRefund = true;
+          this.refundButtonState = this.refundlist.refund_status.name;
+          return;
         }
-      ),
-        (error: any) => {
-          this.errorMessage = error.replace(/"/g,"");
-        };
-    }
-
-
-    this.refundStatusForm = this.formBuilder.group({
-      amount: new FormControl('', Validators.compose([
-        Validators.required,
-        Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$')
-      ])),
-      refundReason: new FormControl('', Validators.compose([Validators.required])),
-      reason: new FormControl()
-    });
-
-    if(this.refundlist !== undefined) {
-      this.getRefundsStatusHistoryList();
-
-      if (this.LOGGEDINUSERROLES.some(i => i.includes('payments-refund-approver'))) {
-        this.isProcessRefund = true;
-        this.refundButtonState = this.refundlist.refund_status.name;
-        return;
+    
+        if (this.LOGGEDINUSERROLES.some(i => i.includes('payments-refund'))) {
+          this.isProcessRefund = false;
+          this.refundButtonState = this.refundlist.refund_status.name;
+        }
       }
+  }
   
-      if (this.LOGGEDINUSERROLES.some(i => i.includes('payments-refund'))) {
-        this.isProcessRefund = false;
-        this.refundButtonState = this.refundlist.refund_status.name;
-      }
-    }
-  
+  }
+
+  check4AllowedRoles2AccessRefund = (): boolean => {
+    return this.allowedRolesToAccessRefund.some(role =>
+      this.LOGGEDINUSERROLES.indexOf(role) !== -1
+    );
   }
 
   getRefundsStatusHistoryList() {
