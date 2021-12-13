@@ -25,8 +25,8 @@ export class RefundStatusComponent implements OnInit {
   refundStatusForm: FormGroup;
   selectedRefundReason: string;
   rejectedRefundList: IRefundList[] = [];
-  approvalStatus = 'sent for approval';
-  rejectStatus = 'sent back';
+  approvalStatus = 'Sent for approval';
+  rejectStatus = 'Update required';
   errorMessage = null;
   viewName: string;
   refundReason: string;
@@ -86,39 +86,38 @@ export class RefundStatusComponent implements OnInit {
     }
 
 
-    this.refundStatusForm = this.formBuilder.group({
-      amount: new FormControl('', Validators.compose([
-        Validators.required,
-        Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$')
-      ])),
-      refundReason: new FormControl('', Validators.compose([Validators.required])),
-      reason: new FormControl()
-    });
+      this.refundStatusForm = this.formBuilder.group({
+        amount: new FormControl('', Validators.compose([
+          Validators.required,
+          Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$')
+        ])),
+        refundReason: new FormControl('', Validators.compose([Validators.required])),
+        reason: new FormControl()
+      });
 
-    if(this.refundlist !== undefined) {
-      this.getRefundsStatusHistoryList();
+      if(this.refundlist !== undefined) {
+        this.getRefundsStatusHistoryList();
 
-      if (this.LOGGEDINUSERROLES.some(i => i.includes('payments-refund-approver'))) {
-        this.isProcessRefund = true;
-        this.refundButtonState = this.refundlist.refund_status.name;
-        return;
-      }
-  
-      if (this.LOGGEDINUSERROLES.some(i => i.includes('payments-refund'))) {
-        this.isProcessRefund = false;
-        this.refundButtonState = this.refundlist.refund_status.name;
+        if (this.LOGGEDINUSERROLES.some(i => i.includes('payments-refund-approver'))) {
+          this.isProcessRefund = true;
+          this.refundButtonState = this.refundlist.refund_status.name;
+          return;
+        }
+    
+        if (this.LOGGEDINUSERROLES.some(i => i.includes('payments-refund'))) {
+          this.isProcessRefund = false;
+          this.refundButtonState = this.refundlist.refund_status.name;
+        }
       }
     }
   }
   
-  }
 
   check4AllowedRoles2AccessRefund = (): boolean => {
     return this.allowedRolesToAccessRefund.some(role =>
       this.LOGGEDINUSERROLES.indexOf(role) !== -1
     );
   }
-
 
   getRefundsStatusHistoryList() {
     if(this.refundlist !== undefined) {
@@ -193,7 +192,7 @@ export class RefundStatusComponent implements OnInit {
     this.viewName = 'reviewandsubmitview';
     this.oldRefundReason = this.refundlist.reason;
     this.changedAmount = this.refundlist.amount;
-    this.refundreason = this.refundStatusHistories.filter(data => data.status === 'sentback')[0].notes;
+    this.refundreason = this.refundStatusHistories.filter(data => data.status.toLowerCase() === 'update required')[0].notes;
     this.refundService.getRefundReasons().subscribe(
       refundReasons => {
         this.refundReasons = refundReasons;

@@ -19,10 +19,12 @@ import { AllocatePaymentRequest } from '../../interfaces/AllocatePaymentRequest'
 import { IAllocationPaymentsRequest } from '../../interfaces/IAllocationPaymentsRequest';
 import {IOrderReferenceFee} from '../../interfaces/IOrderReferenceFee';
 import { BehaviorSubject } from 'rxjs';
-import { RefundsRequest } from '../../interfaces/RefundsRequest';
+import { IserviceRequestPbaPayment } from '../../interfaces/IserviceRequestPbaPayment';
+import { IserviceRequestCardPayment } from '../../interfaces/IserviceRequestCardPayment';
 import { AddRetroRemissionRequest } from '../../interfaces/AddRetroRemissionRequest';
 import { PostRefundRetroRemission } from '../../interfaces/PostRefundRetroRemission';
 import { PostIssueRefundRetroRemission } from '../../interfaces/PostIssueRefundRetroRemission';
+import { error } from '@angular/compiler/src/util';
 
 @Injectable({
   providedIn: 'root'
@@ -70,6 +72,25 @@ export class PaymentViewService {
       .pipe(
         catchError(this.errorHandlerService.handleError)
       );
+  }
+
+  getPBAaccountDetails(): Observable<any> {
+    const url = `${this.paymentLibService.API_ROOT}/pba-accounts`;
+    return this.http.get(url, { withCredentials: true }).pipe(
+        catchError(this.errorHandlerService.handleError)
+      );
+  }
+
+  postWays2PayCardPayment(serviceRef: string, body: IserviceRequestCardPayment): Observable<any> {
+    const url = `${this.paymentLibService.API_ROOT}/service-request/${serviceRef}/card-payments`;
+    return this.https.post(url, body).pipe(
+      catchError(this.errorHandlerService.handleError)
+    );
+  }
+  
+  postPBAaccountPayment(serviceRef: string, body: IserviceRequestPbaPayment): Observable<any> {
+    const url = `${this.paymentLibService.API_ROOT}/service-request/${serviceRef}/pba-payments`;
+    return this.https.post(url, body);
   }
   postBSPayments(body: AllocatePaymentRequest): Observable<any> {
     return this.https.post(`${this.paymentLibService.API_ROOT}/payment-groups/bulk-scan-payments`, body).pipe(
