@@ -27,7 +27,7 @@ export class ErrorHandlerService {
           errorMessage = err.error;
         }
       } else if (err.error.messsage === undefined) {
-        errorMessage = `${err.error}`;
+        errorMessage =  JSON.parse(err.error).error;
       } else {
         if (err.error.message !== undefined) {
           errorMessage = `${err.error.message}`;
