@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { PaymentLibService } from './payment-lib.service';
 import { IBSPayments } from './interfaces/IBSPayments';
-import { IPayment } from './interfaces/IPayment';
+// import { IPayment } from './interfaces/IPayment';
 
 @Component({
   selector: 'ccpay-payment-lib',
@@ -18,9 +18,7 @@ import { IPayment } from './interfaces/IPayment';
     [refundReference]="refundReference"
     [refundlistsource]="refundlistsource"
     ></ccpay-process-refund>
-    <ccpay-pba-payment *ngIf="viewName === 'pba-payment'"
-    [pbaPayOrderRef]="pbaPayOrderRef"
-    ></ccpay-pba-payment>
+
 
     <ccpay-case-transactions [LOGGEDINUSERROLES]="LOGGEDINUSERROLES" *ngIf="viewName === 'case-transactions'"></ccpay-case-transactions>
     <app-mark-unidentified-payment *ngIf="viewName === 'unidentifiedPage'"
@@ -89,7 +87,7 @@ export class PaymentLibComponent implements OnInit {
   isFromRefundStatusPage: boolean;
   iscancelClicked : boolean;
   isFromPaymentDetailPage: boolean;
-  pbaPayOrderRef: IPayment;
+  // pbaPayOrderRef: IPayment;
   // isFromServiceRequestPage: boolean;
 
   constructor(private paymentLibService: PaymentLibService,
