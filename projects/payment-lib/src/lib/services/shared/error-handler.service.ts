@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { _throw } from 'rxjs/observable/throw';
 import { Observable } from 'rxjs/internal/Observable';
 import { HttpErrorResponse } from '@angular/common/http';
+import { stringify } from '@angular/core/src/util';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,12 @@ export class ErrorHandlerService {
           errorMessage = err.error;
         }
       } else if (err.error.messsage === undefined) {
-        errorMessage =  JSON.parse(err.error).error;
+        if( typeof err.error === 'object') {
+          errorMessage =  JSON.parse(JSON.stringify(err.error)).error;
+        } else {
+          errorMessage =  JSON.parse(err.error).error;
+        }
+       
       } else {
         if (err.error.message !== undefined) {
           errorMessage = `${err.error.message}`;
