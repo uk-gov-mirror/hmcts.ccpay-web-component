@@ -7,6 +7,7 @@ import {MatPaginator } from '@angular/material/paginator';
 import { IRefundList } from '../../interfaces/IRefundList';
 import { OrderslistService } from '../../services/orderslist.service';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { Router } from '@angular/router';
 @Component({
   selector: 'ccpay-table',
   templateUrl: './table.component.html',
@@ -30,7 +31,8 @@ export class TableComponent {
   constructor(
     private paymentLibComponent: PaymentLibComponent,
     private cdRef: ChangeDetectorRef,
-    private OrderslistService: OrderslistService
+    private OrderslistService: OrderslistService,
+    private _router: Router
   ) {}
   ngOnInit() {
     this.errorMessage = this.errorMessage;
@@ -87,6 +89,6 @@ export class TableComponent {
     this.paymentLibComponent.isCallFromRefundList = true;
   }
   goToCaseReview(ccdCaseNumber: string, refundData: IRefundList ) {
-    window.location.href =`/cases/case-details/:${ccdCaseNumber}`;
+    this._router.navigateByUrl(`/cases/case-details/:${ccdCaseNumber}`);
   }
 }

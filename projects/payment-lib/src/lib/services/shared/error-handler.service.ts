@@ -31,7 +31,12 @@ export class ErrorHandlerService {
         if( typeof err.error === 'object') {
           errorMessage =  JSON.parse(JSON.stringify(err.error)).error;
         } else {
-          errorMessage =  JSON.parse(err.error).error;
+          if (typeof err.error === 'string' && err.error !== undefined) {
+            errorMessage =  err.error;
+          } else {
+            errorMessage =  JSON.parse(err.error).error;
+          }
+          
         }
        
       } else {
