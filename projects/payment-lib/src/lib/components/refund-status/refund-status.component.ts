@@ -148,16 +148,7 @@ export class RefundStatusComponent implements OnInit {
     this.paymentLibComponent.isRefundStatusView = false;
     //this.paymentLibComponent.TAKEPAYMENT = true;
     this.paymentLibComponent.viewName = 'case-transactions';
-    this.paymentViewService.getBSfeature().subscribe(
-      features => {
-        let result = JSON.parse(features).filter(feature => feature.uid === BS_ENABLE_FLAG);
-        this.paymentLibComponent.ISBSENABLE = result[0] ? result[0].enable : false;
-      },
-      err => {
-        this.paymentLibComponent.ISBSENABLE = false;
-      }
-    );
-
+    this.paymentLibComponent.ISBSENABLE = true;
     let partUrl = `selectedOption=${this.paymentLibComponent.SELECTED_OPTION}`;
     partUrl += this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
     partUrl += this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
