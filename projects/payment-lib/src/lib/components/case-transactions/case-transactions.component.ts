@@ -156,7 +156,7 @@ export class CaseTransactionsComponent implements OnInit {
 
           this.paymentViewService.getPartyDetails(this.ccdCaseNumber).subscribe(
             response => {
-              this.cpoDetails = JSON.parse(response).data.content[0];
+              this.cpoDetails = JSON.parse(response).content[0];
 
             },
             (error: any) => {
@@ -182,7 +182,7 @@ export class CaseTransactionsComponent implements OnInit {
           this.totalRefundAmount = this.calculateRefundAmount();
           this.paymentViewService.getPartyDetails(this.ccdCaseNumber).subscribe(
             response => {
-              this.cpoDetails = JSON.parse(response).data.content[0];
+              this.cpoDetails = JSON.parse(response).content[0];
 
             },
             (error: any) => {
