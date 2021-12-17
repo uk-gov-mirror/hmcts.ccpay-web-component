@@ -514,7 +514,7 @@
             <!--Payment Request-->
           <div class="paymentrequest">
               <span class="heading-medium">Service requests</span>
-              <ng-container>
+              <ng-container *ngIf="!(orderLevelFees?.length === 0 && serviceRequestValue !== 'false' && !isAnyFeeGroupAvilable)">
               <table class="govuk-table">
                   <thead class="govuk-table__head">
                   <tr class="govuk-table__row">
