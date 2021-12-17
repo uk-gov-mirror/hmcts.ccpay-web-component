@@ -27,6 +27,9 @@ export class ErrorHandlerService {
         } else {
           errorMessage = err.error;
         }
+      }
+      else if (err.status === 500) {
+        errorMessage = 'Internal server error';
       } else if (err.error.messsage === undefined) {
         if( typeof err.error === 'object') {
           errorMessage =  JSON.parse(JSON.stringify(err.error)).error;
