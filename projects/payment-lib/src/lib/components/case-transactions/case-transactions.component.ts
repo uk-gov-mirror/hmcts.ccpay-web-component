@@ -107,6 +107,9 @@ export class CaseTransactionsComponent implements OnInit {
     if(this.OrderslistService.getpaymentPageView() !== null) {
       this.OrderslistService.getpaymentPageView().subscribe((data) => this.paymentView = data);
     }
+    if((this.LOGGEDINUSERROLES === undefined || this.LOGGEDINUSERROLES.length === 0 )&&this.OrderslistService.getUserRolesList() !== null) {
+      this.OrderslistService.getUserRolesList().subscribe((data) => this.LOGGEDINUSERROLES = data);
+    }
     if(this.OrderslistService.getnavigationPageValue() !== null) {
       this.OrderslistService.getnavigationPageValue().subscribe((data) => this.navigationpage = data);
     }

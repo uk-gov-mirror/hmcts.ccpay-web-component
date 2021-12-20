@@ -22,6 +22,7 @@ export class OrderslistService {
   getOrderRefId = this.OrderRefId.asObservable();
   private navigationPage = new BehaviorSubject("");
   getnavigationPage = this.navigationPage.asObservable();
+  private rolesList: BehaviorSubject<any[]> = new BehaviorSubject<any[]>(null);
 
   private paymentPageView: BehaviorSubject<IPaymentView> = new BehaviorSubject<IPaymentView>(null);
 
@@ -88,5 +89,12 @@ export class OrderslistService {
   }
   getpaymentPageView() {
     return this.paymentPageView;
+  }
+
+  setUserRolesList(rolesList:any[]): void {
+    this.rolesList.next(Object.assign([], rolesList));
+  }
+  getUserRolesList() {
+    return this.rolesList;
   }
 }

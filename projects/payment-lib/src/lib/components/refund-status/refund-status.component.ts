@@ -64,7 +64,7 @@ export class RefundStatusComponent implements OnInit {
 
   ngOnInit() {
 
-   if (this.check4AllowedRoles2AccessRefund()) {
+   // if (this.check4AllowedRoles2AccessRefund()) {
     this.resetRemissionForm([false, false, false, false], 'All');
     this.bsPaymentDcnNumber = this.paymentLibComponent.bspaymentdcn;
     this.isCallFromRefundList = this.paymentLibComponent.isCallFromRefundList;
@@ -111,7 +111,7 @@ export class RefundStatusComponent implements OnInit {
           this.refundButtonState = this.refundlist.refund_status.name;
         }
       }
-   }
+   //}
   }
   
 

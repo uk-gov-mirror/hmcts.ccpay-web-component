@@ -35,13 +35,22 @@ export class ErrorHandlerService {
           errorMessage =  JSON.parse(JSON.stringify(err.error)).error;
         } else {
           if (typeof err.error === 'string' && err.error !== undefined) {
-            if (JSON.parse(err.error).statusCode !== undefined && JSON.parse(err.error).statusCode === 500)
-            {
-              errorMessage = 'Internal server error';
+            // if (JSON.parse(err.error).statusCode !== undefined && JSON.parse(err.error).statusCode === 500)
+            // {
+            //   errorMessage = 'Internal server error';
+            // } else {
+            //   errorMessage =  err.error;
+            // }
+            if(err.error.length > 60) {
+              if (JSON.parse(err.error).statusCode !== undefined && JSON.parse(err.error).statusCode === 500)
+              {
+                errorMessage = 'Internal server error';
+              } else {
+              errorMessage =  err.error;
+              }
             } else {
               errorMessage =  err.error;
             }
-            
           } else {
             errorMessage =  JSON.parse(err.error).error;
           }
