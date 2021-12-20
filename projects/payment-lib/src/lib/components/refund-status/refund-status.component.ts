@@ -145,20 +145,26 @@ export class RefundStatusComponent implements OnInit {
   }
 
   loadCaseTransactionPage() {
-    this.paymentLibComponent.isRefundStatusView = false;
-    //this.paymentLibComponent.TAKEPAYMENT = true;
+   //event.preventDefault();
+    this.OrderslistService.setnavigationPage('casetransactions');
+    this.OrderslistService.setisFromServiceRequestPage(false);
     this.paymentLibComponent.viewName = 'case-transactions';
     this.paymentLibComponent.ISBSENABLE = true;
-    let partUrl = `selectedOption=${this.paymentLibComponent.SELECTED_OPTION}`;
-    partUrl += this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
-    partUrl += this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
-    partUrl += this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
-    partUrl += this.paymentLibComponent.ISSFENABLE ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
-    partUrl += `&caseType=${this.paymentLibComponent.CASETYPE}`;
-    partUrl += this.isNewPcipalOff ? '&isNewPcipalOff=Enable' : '&isNewPcipalOff=Disable';
-    partUrl += this.isOldPcipalOff ? '&isOldPcipalOff=Enable' : '&isOldPcipalOff=Disable';
-    let url = `/payment-history/${this.ccdCaseNumber}?view=case-transactions&takePayment=${this.paymentLibComponent.TAKEPAYMENT}&${partUrl}`;
-    this.router.navigateByUrl(url);
+
+    // this.paymentLibComponent.isRefundStatusView = false;
+    // //this.paymentLibComponent.TAKEPAYMENT = true;
+    // this.paymentLibComponent.viewName = 'case-transactions';
+    // this.paymentLibComponent.ISBSENABLE = true;
+    // let partUrl = `selectedOption=${this.paymentLibComponent.SELECTED_OPTION}`;
+    // partUrl += this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
+    // partUrl += this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
+    // partUrl += this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
+    // partUrl += this.paymentLibComponent.ISSFENABLE ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
+    // partUrl += `&caseType=${this.paymentLibComponent.CASETYPE}`;
+    // partUrl += this.isNewPcipalOff ? '&isNewPcipalOff=Enable' : '&isNewPcipalOff=Disable';
+    // partUrl += this.isOldPcipalOff ? '&isOldPcipalOff=Enable' : '&isOldPcipalOff=Disable';
+    // let url = `/payment-history/${this.ccdCaseNumber}?view=case-transactions&takePayment=${this.paymentLibComponent.TAKEPAYMENT}&${partUrl}`;
+    // this.router.navigateByUrl(url);
   }
 
   loadRefundListPage() {
