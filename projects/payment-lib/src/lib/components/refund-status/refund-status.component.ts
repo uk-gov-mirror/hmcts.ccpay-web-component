@@ -51,6 +51,7 @@ export class RefundStatusComponent implements OnInit {
   isLastUpdatedByCurrentUser: boolean = true;
   isProcessRefund: boolean = false;
   changedAmount: number;
+  allowedRolesToAccessRefund = ['payments-refund-approver', 'payments-refund'];
 
   constructor(private formBuilder: FormBuilder,
     private refundService: RefundsService,
@@ -60,6 +61,8 @@ export class RefundStatusComponent implements OnInit {
     private OrderslistService: OrderslistService) { }
 
   ngOnInit() {
+
+    if (this.check4AllowedRoles2AccessRefund()) {
     this.resetRemissionForm([false, false, false, false], 'All');
     this.bsPaymentDcnNumber = this.paymentLibComponent.bspaymentdcn;
     this.isCallFromRefundList = this.paymentLibComponent.isCallFromRefundList;
@@ -106,8 +109,16 @@ export class RefundStatusComponent implements OnInit {
         this.refundButtonState = this.refundlist.refund_status.name;
       }
     }
+  }
   
   }
+
+  check4AllowedRoles2AccessRefund = (): boolean => {
+    return this.allowedRolesToAccessRefund.some(role =>
+      this.LOGGEDINUSERROLES.indexOf(role) !== -1
+    );
+  }
+
 
   getRefundsStatusHistoryList() {
     if(this.refundlist !== undefined) {
