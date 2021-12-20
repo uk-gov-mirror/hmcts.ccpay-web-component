@@ -795,7 +795,7 @@
                 <td class="govuk-table__cell">{{fee.volume? fee.volume : '-'}} X {{ fee.calculated_amount/fee.volume| currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
                 <td class="govuk-table__cell">{{ fee.net_amount | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
                 <td class="govuk-table__cell alignright">
-                    <button  [disabled]="!chkForAddRemission(fee.code)"  (click)="addRemission(fee)" class="govuk-button govuk-button--secondary"> Add remission</button>
+                    <button  [disabled]="!fee.remission_enable"  (click)="addRemission(fee)" class="govuk-button govuk-button--secondary"> Add remission</button>
                 </td>
             
               </tr>
@@ -843,7 +843,7 @@
              <td class="govuk-table__cell whitespace-inherit">{{ remission.fee_code }}</td>
              <td class="govuk-table__cell whitespace-inherit">{{ remission.hwf_amount | currency:'GBP':'symbol-narrow':'1.2-2'}}</td>
              <td class="govuk-table__cell refundBtn whitespace-inherit"  >
-                <button [disabled]="!chkIsRefundRemissionBtnEnable()" (click)="addRefundForRemission(order.payments[0],remission,order.fees)" class="govuk-button govuk-button--secondary"> Add refund</button>
+                <button [disabled]="!order.payments[0].refund_enable" (click)="addRefundForRemission(order.payments[0],remission,order.fees)" class="govuk-button govuk-button--secondary"> Add refund</button>
              </td>
              <!-- <td  class="govuk-table__cell refundBtn whitespace-inherit"  >
               
