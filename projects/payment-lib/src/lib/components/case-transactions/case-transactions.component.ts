@@ -11,7 +11,7 @@ import { IRemission } from '../../interfaces/IRemission';
 import { IPaymentView } from '../../interfaces/IPaymentView';
 import { IOrderReferenceFee } from '../../interfaces/IOrderReferenceFee';
 import { Router } from '@angular/router';
-import * as ls from "local-storage";
+// import * as ls from "local-storage";
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 
 @Component({
@@ -61,7 +61,7 @@ export class CaseTransactionsComponent implements OnInit {
   isGrpOutstandingAmtPositive: boolean = false;
   totalRefundAmount: Number;
   caseType: String;
-  lsCcdNumber: any = ls.get<any>('ccdNumber');
+  // lsCcdNumber: any = ls.get<any>('ccdNumber');
   payment: IPayment;
   paymentGroup: IPaymentGroup;
   paymentView: IPaymentView;
@@ -137,9 +137,9 @@ export class CaseTransactionsComponent implements OnInit {
     this.isOldPcipalOff = this.paymentLibComponent.ISOLDPCIPALOFF;
     this.isStrategicFixEnable = this.paymentLibComponent.ISSFENABLE;
     if (!this.isTurnOff) {
-      if (this.lsCcdNumber !== this.ccdCaseNumber) {
-        this.router.navigateByUrl(`/ccd-search?takePayment=true`);
-      }
+      // if (this.lsCcdNumber !== this.ccdCaseNumber) {
+      //   this.router.navigateByUrl(`/ccd-search?takePayment=true`);
+      // }
 
       this.caseTransactionsService.getPaymentGroups(this.ccdCaseNumber).subscribe(
         paymentGroups => {
