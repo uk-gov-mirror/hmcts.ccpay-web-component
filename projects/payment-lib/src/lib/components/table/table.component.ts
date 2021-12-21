@@ -90,8 +90,11 @@ export class TableComponent {
   }
   goToCaseReview(ccdCaseNumber: string, refundData: IRefundList ) {
     const url = `/cases/case-details/:${ccdCaseNumber}`;
+    console.log(url);
+    console.log(this.router.getCurrentNavigation());
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.onSameUrlNavigation = 'reload';
     this.router.navigateByUrl(url);
+    console.log(this.router.getCurrentNavigation());
   }
 }
