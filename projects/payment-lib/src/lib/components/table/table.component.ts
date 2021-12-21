@@ -32,7 +32,7 @@ export class TableComponent {
     private paymentLibComponent: PaymentLibComponent,
     private cdRef: ChangeDetectorRef,
     private OrderslistService: OrderslistService,
-    private _router: Router
+    private router: Router
   ) {}
   ngOnInit() {
     this.errorMessage = this.errorMessage;
@@ -89,6 +89,9 @@ export class TableComponent {
     this.paymentLibComponent.isCallFromRefundList = true;
   }
   goToCaseReview(ccdCaseNumber: string, refundData: IRefundList ) {
-    this._router.navigateByUrl(`/cases/case-details/:${ccdCaseNumber}`);
+    const url = `/cases/case-details/:${ccdCaseNumber}`;
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigateByUrl(url);
   }
 }

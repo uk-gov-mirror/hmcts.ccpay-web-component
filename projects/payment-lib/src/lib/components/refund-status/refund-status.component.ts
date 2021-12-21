@@ -150,8 +150,7 @@ export class RefundStatusComponent implements OnInit {
     this.OrderslistService.setisFromServiceRequestPage(false);
     this.paymentLibComponent.viewName = 'case-transactions';
     this.paymentLibComponent.ISBSENABLE = true;
-
-    // this.paymentLibComponent.isRefundStatusView = false;
+    this.paymentLibComponent.isRefundStatusView = false;
     // //this.paymentLibComponent.TAKEPAYMENT = true;
     // this.paymentLibComponent.viewName = 'case-transactions';
     // this.paymentLibComponent.ISBSENABLE = true;

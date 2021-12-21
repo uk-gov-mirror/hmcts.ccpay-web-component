@@ -46,7 +46,12 @@ export class ErrorHandlerService {
               {
                 errorMessage = 'Internal server error';
               } else {
-              errorMessage =  err.error;
+                if(err.error.length > 60) {
+                  errorMessage =  JSON.parse(err.error).error;
+                } else {
+                  errorMessage =  err.error;
+                }
+             
               }
             } else {
               errorMessage =  err.error;
