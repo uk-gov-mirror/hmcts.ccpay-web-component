@@ -801,6 +801,7 @@ export class CaseTransactionsComponent implements OnInit {
 
   chkIsRefundRemissionBtnEnable(): boolean {
     if (this.orderDetail !== null &&  this.orderDetail !== undefined) {
+      this.paymentLibComponent.isFromServiceRequestPage = true;
     this.orderDetail.forEach(orderDetail => {
       if (orderDetail.payments) {
         orderDetail.payments.forEach(payment => {

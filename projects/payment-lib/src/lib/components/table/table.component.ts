@@ -90,7 +90,7 @@ export class TableComponent {
     this.paymentLibComponent.isCallFromRefundList = true;
   }
   goToCaseReview(ccdCaseNumber: string, refundData: IRefundList ) {
-    const url = `/cases/case-details/:${ccdCaseNumber}`;
-    this.router.navigate([`/cases/case-details/:${ccdCaseNumber}`], {relativeTo: this.activeRoute});
+    const url = `/cases/case-details/${ccdCaseNumber}`;
+    this.router.navigate([`/cases/case-details/${ccdCaseNumber}`], {relativeTo: this.activeRoute});
   }
 }
