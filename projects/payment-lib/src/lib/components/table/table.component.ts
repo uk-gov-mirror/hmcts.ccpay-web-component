@@ -7,7 +7,7 @@ import {MatPaginator } from '@angular/material/paginator';
 import { IRefundList } from '../../interfaces/IRefundList';
 import { OrderslistService } from '../../services/orderslist.service';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { Router } from '@angular/router';
+import { ActivatedRoute,Router } from '@angular/router';
 @Component({
   selector: 'ccpay-table',
   templateUrl: './table.component.html',
@@ -32,7 +32,8 @@ export class TableComponent {
     private paymentLibComponent: PaymentLibComponent,
     private cdRef: ChangeDetectorRef,
     private OrderslistService: OrderslistService,
-    private router: Router
+    private router: Router,
+    private activeRoute: ActivatedRoute
   ) {}
   ngOnInit() {
     this.errorMessage = this.errorMessage;
@@ -90,11 +91,6 @@ export class TableComponent {
   }
   goToCaseReview(ccdCaseNumber: string, refundData: IRefundList ) {
     const url = `/cases/case-details/:${ccdCaseNumber}`;
-    console.log(url);
-    console.log(this.router.getCurrentNavigation());
-    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    this.router.onSameUrlNavigation = 'reload';
-    this.router.navigateByUrl(url);
-    console.log(this.router.getCurrentNavigation());
+    this.router.navigate([`/cases/case-details/:${ccdCaseNumber}`], {relativeTo: this.activeRoute});
   }
 }

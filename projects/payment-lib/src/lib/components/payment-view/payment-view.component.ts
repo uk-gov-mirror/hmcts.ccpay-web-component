@@ -195,6 +195,7 @@ export class PaymentViewComponent implements OnInit {
     this.paymentGroup = paymentgrp;
     this.viewStatus = 'issuerefund';
     this.isRefundRemission = true;
+    this.paymentLibComponent.isFromServiceRequestPage = false;
     }
   }
   }

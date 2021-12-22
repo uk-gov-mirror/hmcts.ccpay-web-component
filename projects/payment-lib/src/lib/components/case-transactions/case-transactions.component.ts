@@ -747,6 +747,7 @@ export class CaseTransactionsComponent implements OnInit {
     if(this.chkIssueRefundBtnEnable(payment)) {
     this.viewStatus = 'issuerefund';
     this.payment = payment;
+    this.paymentLibComponent.isFromServiceRequestPage = true;
     this.isRefundRemission = true;
     }
   }
