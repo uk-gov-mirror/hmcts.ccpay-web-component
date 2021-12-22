@@ -40,7 +40,6 @@ import { MatInputModule } from '@angular/material/input';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RefundStatusComponent } from './components/refund-status/refund-status.component';
-import { ServiceRequestComponent } from './components/service-request/service-request.component';
 // import { PbaPaymentComponent } from './components/pba-payment/pba-payment.component';
 
 @NgModule({
@@ -83,8 +82,7 @@ import { ServiceRequestComponent } from './components/service-request/service-re
     ReportsComponent,
     ErrorBannerComponent,
     TableComponent,
-    RefundStatusComponent,
-    ServiceRequestComponent
+    RefundStatusComponent
   ],
   exports: [PaymentLibComponent],
   providers: [
