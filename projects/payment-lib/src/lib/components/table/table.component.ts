@@ -77,8 +77,8 @@ export class TableComponent {
     this.actualcount = this.dataSource.data.length;
     this.dataSource.paginator = this.paginator;
   }
-  goToRefundProcessComponent(refundReference: string, refundDate: IRefundList ) {
-    this.paymentLibComponent.refundlistsource = refundDate;
+  goToRefundProcessComponent(refundReference: string, refundData: IRefundList ) {
+    this.paymentLibComponent.refundlistsource = refundData;
     this.paymentLibComponent.refundReference = refundReference;
     this.paymentLibComponent.viewName = 'process-refund';
   }
@@ -90,7 +90,6 @@ export class TableComponent {
     this.paymentLibComponent.isCallFromRefundList = true;
   }
   goToCaseReview(ccdCaseNumber: string, refundData: IRefundList ) {
-    const url = `/cases/case-details/${ccdCaseNumber}`;
     this.router.navigate([`/cases/case-details/${ccdCaseNumber}`], {relativeTo: this.activeRoute});
   }
 }
