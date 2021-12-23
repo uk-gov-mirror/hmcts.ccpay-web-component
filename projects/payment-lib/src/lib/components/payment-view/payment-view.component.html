@@ -36,27 +36,27 @@
      
         <tr class="section">
           <td class="bold tb-col-w">Service reference</td>
-          <td>{{ serviceReference  }}</td> 
+          <td class="tb-col-w">{{ serviceReference  }}</td> 
         </tr>
         <tr class="section">
           <td class="bold tb-col-w">Payment reference</td>
-          <td>{{  paymentGroup.payments[0].reference }}</td>
+          <td class="tb-col-w">{{  paymentGroup?.payments[0].reference }}</td>
         </tr>
         <tr class="section">
           <td class="bold tb-col-w">Payment amount</td>
-          <td>£{{ paymentGroup?.payments[0]?.amount | number:'.2' }}</td>
+          <td class="tb-col-w">£{{ paymentGroup?.payments[0]?.amount | number:'.2' }}</td>
         </tr>
         <tr class="section" *ngIf="paymentGroup?.payments[0] && paymentGroup?.payments[0]?.document_control_number && !paymentGroup?.payments[0]?.external_reference">
           <td class="bold tb-col-w">Payment asset number(DCN)</td>
-          <td>{{ paymentGroup.payments[0].document_control_number }}</td>
+          <td class="tb-col-w">{{ paymentGroup.payments[0].document_control_number }}</td>
         </tr>
         <tr class="section" *ngIf="paymentGroup?.payments[0] && paymentGroup?.payments[0]?.document_control_number && !paymentGroup?.payments[0]?.external_reference">
           <td class="bold tb-col-w">Banked date</td>
-          <td>{{ paymentGroup.payments[0].banked_date | date:'dd MMM yyyy' }}</td>
+          <td class="tb-col-w">{{ paymentGroup.payments[0].banked_date | date:'dd MMM yyyy' }}</td>
         </tr>
         <tr class="section" *ngIf="paymentGroup?.payments[0] && paymentGroup?.payments[0]?.external_reference">
           <td class="bold tb-col-w">GovPay Transaction ID</td>
-          <td>{{ paymentGroup?.payments[0]?.external_reference }}</td>
+          <td class="tb-col-w">{{ paymentGroup?.payments[0]?.external_reference }}</td>
         </tr>
         <tr class="section" >
             <td class="bold tb-col-w">Payment method</td>
@@ -64,8 +64,8 @@
         </tr>
         <tr class="section" *ngIf="paymentGroup?.payments[0]?.method === 'payment by account'" >
             <td class="bold tb-col-w">Type</td>
-            <td *ngIf="paymentGroup?.payments[0]?.method !== 'card'">Credit</td>
-            <td *ngIf="paymentGroup?.payments[0]?.method === 'card'">Card</td>
+            <td class="tb-col-w" *ngIf="paymentGroup?.payments[0]?.method !== 'card'">Credit</td>
+            <td class="tb-col-w" *ngIf="paymentGroup?.payments[0]?.method === 'card'">Card</td>
         </tr>
         <tr class="section">
             <td class="bold tb-col-w">Channel</td>
@@ -82,22 +82,22 @@
          </tr> -->
         <tr class="section" *ngIf="paymentGroup?.payments[0]?.payment_allocation[0] !== undefined">
             <td class="bold tb-col-w">Allocaton status</td>
-            <td>{{ paymentGroup?.payments[0]?.payment_allocation[0]?.allocation_status }}</td>
+            <td class="tb-col-w">{{ paymentGroup?.payments[0]?.payment_allocation[0]?.allocation_status }}</td>
           </tr>
           
           <tr *ngIf="paymentGroup?.payments[0].organisation_name">
             <td class="bold tb-col-w">PBA account name</td>
-            <td>{{ paymentGroup?.payments[0]?.organisation_name }}</td>
+            <td class="tb-col-w">{{ paymentGroup?.payments[0]?.organisation_name }}</td>
           </tr>
 
           <tr *ngIf="paymentGroup?.payments[0].account_number">
             <td class="bold tb-col-w">PBA number</td>
-            <td>{{ paymentGroup?.payments[0]?.account_number }}</td>
+            <td class="tb-col-w">{{ paymentGroup?.payments[0]?.account_number }}</td>
           </tr>
 
           <tr *ngIf="paymentGroup?.payments[0].customer_reference">
             <td class="bold tb-col-w">Customer internal reference</td>
-            <td>{{ paymentGroup?.payments[0]?.customer_reference }}</td>
+            <td class="tb-col-w">{{ paymentGroup?.payments[0]?.customer_reference }}</td>
           </tr>
       
         </tbody>
@@ -125,15 +125,15 @@
           <tbody>
           <tr class="section">
             <td class="bold tb-col-w">Description</td>
-            <td>Application for {{ fee.description }}</td>
+            <td class="tb-col-w">Application for {{ fee.description }}</td>
           </tr>
           <tr class="section">
             <td class="bold tb-col-w">Fee code</td>
-            <td>{{ fee.code }}</td>
+            <td class="tb-col-w">{{ fee.code }}</td>
           </tr>
           <tr class="section">
             <td class="bold tb-col-w" [ngClass]="{'tr-border': !fee.apportion_amount && !fee.remissions && !isTurnOff }">Fee amount</td>
-            <td [ngClass]="{'tr-border': !fee.apportion_amount && !fee.remissions && !isTurnOff }">£{{ fee.calculated_amount | number:'.2' }}</td>
+            <td [ngClass]="{'tr-border': !fee.apportion_amount && !fee.remissions && !isTurnOff}">£{{ fee.calculated_amount | number:'.2' }}</td>
           </tr>
         
           <tr *ngIf="fee.apportion_amount">
