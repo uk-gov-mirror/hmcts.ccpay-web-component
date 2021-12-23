@@ -137,13 +137,14 @@
           <label class="govuk-label process-refund-font " for="contact-by-text">
             Enter reason
           </label>
-          <input class="govuk-input govuk-!-width-one-third" id="otherReason" 
-          [ngClass]="{'inline-error-class': isReasonEmpty || isReasonInvalid}"
-          formControlName="enterReasonField" name="enterReasonField" type="text"></div>
           <p class="inline-error-message" *ngIf="isReasonEmpty || isReasonInvalid">
             <span *ngIf="isReasonEmpty">Enter reason.</span>
             <span *ngIf="isReasonInvalid">Enter a valid reason</span>
           </p>
+          <input class="govuk-input govuk-!-width-one-third reason-font" id="otherReason" 
+          [ngClass]="{'inline-error-class': isReasonEmpty || isReasonInvalid}"
+          formControlName="enterReasonField" name="enterReasonField" type="text"></div>
+        
       </div>
       
         </fieldset>

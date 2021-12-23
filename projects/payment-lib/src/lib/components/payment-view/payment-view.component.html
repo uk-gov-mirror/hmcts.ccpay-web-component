@@ -33,10 +33,10 @@
       </div>
       <table>
         <tbody>
-      <!-- <tr class="section" *ngIf="isTurnOff">
+      <tr class="section" *ngIf="isTurnOff">
           <td class="bold tb-col-w">Payment group reference</td>
           <td>{{ paymentGroup.payment_group_reference }}</td>
-        </tr> -->
+        </tr>
         <tr class="section">
           <td class="bold tb-col-w">Service reference</td>
           <td>{{ serviceReference  }}</td> 
@@ -58,7 +58,7 @@
           <td>{{ paymentGroup?.payments[0]?.external_reference }}</td>
         </tr>
         <tr class="section" >
-            <td class="bold tb-col-w">Payment method</td>
+            <td class="bold tb-col-w text-transform">Payment method</td>
             <td>{{ paymentGroup?.payments[0]?.method  }}</td>
         </tr>
         <tr class="section" *ngIf="paymentGroup?.payments[0]?.method === 'payment by account'" >
@@ -111,7 +111,7 @@
      </div>
       
      <div  *ngIf="checkForFees(paymentGroup)">
-      <div class="govuk-grid-row" *ngIf="paymentGroup.fees.length > 0">
+      <div  *ngIf="paymentGroup.fees.length > 0">
         <div class="column">
         
           <h2 class="heading-large">Fee and remission details</h2>
