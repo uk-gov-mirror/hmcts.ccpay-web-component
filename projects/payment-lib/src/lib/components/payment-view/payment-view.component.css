@@ -33,6 +33,6 @@
     text-align: right;
 }
 
-.text-transform {
+.text-transform::first-letter {
     text-transform: capitalize;
 }

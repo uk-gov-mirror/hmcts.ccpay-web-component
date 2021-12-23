@@ -60,16 +60,16 @@
         </tr>
         <tr class="section" >
             <td class="bold tb-col-w">Payment method</td>
-            <td class="bold tb-col-w text-transform">{{ paymentGroup?.payments[0]?.method  }}</td>
+            <td class="tb-col-w text-transform">{{ paymentGroup?.payments[0]?.method  }}</td>
         </tr>
         <tr class="section" *ngIf="paymentGroup?.payments[0]?.method === 'payment by account'" >
             <td class="bold tb-col-w">Type</td>
             <td *ngIf="paymentGroup?.payments[0]?.method !== 'card'">Credit</td>
-            <td *ngIf="paymentGroup?.payments[0]?.method === 'card'">CARD</td>
+            <td *ngIf="paymentGroup?.payments[0]?.method === 'card'">Card</td>
         </tr>
         <tr class="section">
             <td class="bold tb-col-w">Channel</td>
-            <td>{{ paymentGroup?.payments[0]?.channel  }}</td>
+            <td class="tb-col-w text-transform">{{ paymentGroup?.payments[0]?.channel  }}</td>
         </tr>
         <!-- <tr class="section">
             <td class="bold tb-col-w">Method</td>
