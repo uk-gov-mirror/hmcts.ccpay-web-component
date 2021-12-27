@@ -11,6 +11,7 @@ import { IRemission } from '../../interfaces/IRemission';
 import { IPaymentView } from '../../interfaces/IPaymentView';
 import { IOrderReferenceFee } from '../../interfaces/IOrderReferenceFee';
 import { Router } from '@angular/router';
+// import * as ls from "local-storage";
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 
 @Component({
@@ -60,6 +61,7 @@ export class CaseTransactionsComponent implements OnInit {
   isGrpOutstandingAmtPositive: boolean = false;
   totalRefundAmount: Number;
   caseType: String;
+  // lsCcdNumber: any = ls.get<any>('ccdNumber');
   payment: IPayment;
   paymentGroup: IPaymentGroup;
   paymentView: IPaymentView;
@@ -70,7 +72,6 @@ export class CaseTransactionsComponent implements OnInit {
   isAddRemissionEnable: boolean = false;
   orderRemissionDetails: any[] = [];
   orderLevelFees: IOrderReferenceFee[] = [];
-  ispaymentGroupApisuccess: boolean = false;
   cpoDetails: any = null;
   orderRef: string;
   orderStatus: string;
@@ -90,8 +91,6 @@ export class CaseTransactionsComponent implements OnInit {
   isAddRemissionBtnEnabled: boolean = false;
   isRefundRemissionBtnEnable: boolean = false;
   allowedRolesToAccessRefund = ['payments-refund-approver', 'payments-refund'];
-  isEligible4PBAPayment = ['pui-finance-manager', 'pui-user-manager', 'pui-organisation-manager', 'pui-case-manager'];
-  currentDate = new Date();
   isFromServiceRequestPage: boolean;
   navigationpage: string;
   remissionFeeAmt: number;
@@ -107,6 +106,9 @@ export class CaseTransactionsComponent implements OnInit {
     this.navigationpage  = '';
     if(this.OrderslistService.getpaymentPageView() !== null) {
       this.OrderslistService.getpaymentPageView().subscribe((data) => this.paymentView = data);
+    }
+    if((this.LOGGEDINUSERROLES === undefined || this.LOGGEDINUSERROLES.length === 0 )&&this.OrderslistService.getUserRolesList() !== null) {
+      this.OrderslistService.getUserRolesList().subscribe((data) => this.LOGGEDINUSERROLES = data);
     }
     if(this.OrderslistService.getnavigationPageValue() !== null) {
       this.OrderslistService.getnavigationPageValue().subscribe((data) => this.navigationpage = data);
@@ -138,6 +140,9 @@ export class CaseTransactionsComponent implements OnInit {
     this.isOldPcipalOff = this.paymentLibComponent.ISOLDPCIPALOFF;
     this.isStrategicFixEnable = this.paymentLibComponent.ISSFENABLE;
     if (!this.isTurnOff) {
+      // if (this.lsCcdNumber !== this.ccdCaseNumber) {
+      //   this.router.navigateByUrl(`/ccd-search?takePayment=true`);
+      // }
 
       this.caseTransactionsService.getPaymentGroups(this.ccdCaseNumber).subscribe(
         paymentGroups => {
@@ -154,7 +159,7 @@ export class CaseTransactionsComponent implements OnInit {
 
           this.paymentViewService.getPartyDetails(this.ccdCaseNumber).subscribe(
             response => {
-              this.cpoDetails = JSON.parse(response).data.content[0];
+              this.cpoDetails = JSON.parse(response).content[0];
 
             },
             (error: any) => {
@@ -180,7 +185,7 @@ export class CaseTransactionsComponent implements OnInit {
           this.totalRefundAmount = this.calculateRefundAmount();
           this.paymentViewService.getPartyDetails(this.ccdCaseNumber).subscribe(
             response => {
-              this.cpoDetails = JSON.parse(response).data.content[0];
+              this.cpoDetails = JSON.parse(response).content[0];
 
             },
             (error: any) => {
@@ -742,6 +747,7 @@ export class CaseTransactionsComponent implements OnInit {
     if(this.chkIssueRefundBtnEnable(payment)) {
     this.viewStatus = 'issuerefund';
     this.payment = payment;
+    this.paymentLibComponent.isFromServiceRequestPage = true;
     this.isRefundRemission = true;
     }
   }
@@ -795,6 +801,7 @@ export class CaseTransactionsComponent implements OnInit {
 
   chkIsRefundRemissionBtnEnable(): boolean {
     if (this.orderDetail !== null &&  this.orderDetail !== undefined) {
+      this.paymentLibComponent.isFromServiceRequestPage = true;
     this.orderDetail.forEach(orderDetail => {
       if (orderDetail.payments) {
         orderDetail.payments.forEach(payment => {
@@ -817,11 +824,7 @@ export class CaseTransactionsComponent implements OnInit {
       this.LOGGEDINUSERROLES.indexOf(role) !== -1
     );
   }
-  check4AllowedRoles2AccessPBApayment = (): boolean => {
-    return this.isEligible4PBAPayment.some(role =>
-      this.LOGGEDINUSERROLES.indexOf(role) !== -1
-    );
-  }
+
   allowFurtherAccessAfter4Days = (payment: IPayment): boolean => {
     if (payment !== null && payment !== undefined) {
     let tmp4DayAgo = new Date();
@@ -829,9 +832,4 @@ export class CaseTransactionsComponent implements OnInit {
     return tmp4DayAgo >= new Date(payment.date_created);
     }
   }
-  loadPBAAccountPage(orderRef: IPayment) {
-    this.paymentLibComponent.pbaPayOrderRef = orderRef;
-    this.paymentLibComponent.viewName = 'pba-payment';
-  }
 }
-

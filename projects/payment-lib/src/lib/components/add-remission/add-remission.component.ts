@@ -418,9 +418,9 @@ export class AddRemissionComponent implements OnInit {
     } else if (this.selectedRefundReason.includes('Other') && this.remissionForm.controls['reason'].value !== '') {
       this.refundHasError = false;
       this.refundReason +=  '-' + this.remissionForm.controls['reason'].value;
-      this.displayRefundReason = this.remissionForm.controls['reason'].value;
+      this.displayRefundReason = this.selectedRefundReason + '-' + this.remissionForm.controls['reason'].value;
       if ( this.isFromRefundListPage ) {
-        this.refundListReason.emit({reason: this.selectedRefundReason, code: this.refundReason});
+        this.refundListReason.emit({reason: this.displayRefundReason, code: this.refundReason});
       } else {
         this.viewCompStatus = '';
         this.viewStatus = 'checkissuerefundpage';
@@ -585,15 +585,6 @@ export class AddRemissionComponent implements OnInit {
         this.paymentLibComponent.ISNEWPCIPALOFF = this.isNewPcipalOff;
         this.paymentLibComponent.ISOLDPCIPALOFF = this.isOldPcipalOff;
         this.paymentLibComponent.isFromServiceRequestPage = true;  
-        // this.paymentViewService.getBSfeature().subscribe(
-        //   features => {
-        //     let result = JSON.parse(features).filter(feature => feature.uid === BS_ENABLE_FLAG);
-        //     this.paymentLibComponent.ISBSENABLE = result[0] ? result[0].enable : false;
-        //   },
-        //   err => {
-        //     this.paymentLibComponent.ISBSENABLE = false;
-        //   }
-        // );
         this.paymentLibComponent.ISBSENABLE = true;
         let partUrl = this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
         partUrl += this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
@@ -663,6 +654,13 @@ export class AddRemissionComponent implements OnInit {
 
   gotoCasetransationPageCancelBtnClicked(event: Event) {
     event.preventDefault();
+    if( !this.paymentLibComponent.isFromServiceRequestPage) {
+    this.OrderslistService.setnavigationPage('casetransactions');
+    this.OrderslistService.setisFromServiceRequestPage(false);
+    this.paymentLibComponent.viewName = 'case-transactions';
+    this.paymentLibComponent.ISBSENABLE = true;
+    } else {  
+
     if (this.paymentLibComponent.REFUNDLIST) {
       this.paymentLibComponent.viewName = 'refund-list';
       return;
@@ -680,16 +678,7 @@ export class AddRemissionComponent implements OnInit {
     this.paymentLibComponent.ISNEWPCIPALOFF = this.isNewPcipalOff;
     this.paymentLibComponent.ISOLDPCIPALOFF = this.isOldPcipalOff;
     this.paymentLibComponent.isFromServiceRequestPage = true;  
-    this.paymentViewService.getBSfeature().subscribe(
-      features => {
-        let result = JSON.parse(features).filter(feature => feature.uid === BS_ENABLE_FLAG);
-        this.paymentLibComponent.ISBSENABLE = result[0] ? result[0].enable : false;
-      },
-      err => {
-        this.paymentLibComponent.ISBSENABLE = false;
-      }
-    );
-
+    this.paymentLibComponent.ISBSENABLE = true;
     let partUrl = this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
      partUrl += this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
      partUrl += this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
@@ -712,7 +701,7 @@ export class AddRemissionComponent implements OnInit {
       this.router.onSameUrlNavigation = 'reload';
       this.router.navigateByUrl(url);
      }
-    
+    }
     
   }
 

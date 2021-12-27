@@ -1,4 +1,4 @@
-<div class="add-remission">
+<div class="add-remission pagesize">
     <div *ngIf="errorMessage">
       <div class="error-summary" role="group" aria-labelledby="failure-error-summary-heading" tabindex="-1">
         <h2 class="heading-medium error-summary-heading" id="failure-error-summary-heading">
@@ -194,7 +194,7 @@
           </tr>
           <tr class="govuk-table__row">
               <td class="govuk-table__cell govuk-!-font-weight-bold">Fee</td>
-              <td class="govuk-table__cell">{{ fee.code }} - {{ fee.description }} </td>
+              <td class="govuk-table__cell">{{ fee.code }} - {{ fee.description }} ({{ fee.calculated_amount/fee.volume| currency:'GBP':'symbol-narrow':'1.2-2' }}) </td>
           </tr>
           <tr class="govuk-table__row">
               <td class="govuk-table__cell govuk-!-font-weight-bold">Help with fees or remission reference</td>
@@ -466,7 +466,7 @@
         </p>
       </div>
         <p class="govuk-body">
-          <a (click)="gotoCasetransationPage()"  class="govuk-link">Return to case</a>
+          <a (click)="gotoCasetransationPageCancelBtnClicked($event)"  class="govuk-link">Return to case</a>
        </p>
       </div>
     </div>

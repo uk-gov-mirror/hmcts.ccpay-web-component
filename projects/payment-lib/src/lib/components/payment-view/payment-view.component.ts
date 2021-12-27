@@ -43,6 +43,7 @@ export class PaymentViewComponent implements OnInit {
   remissions: IRemission[] = [];
   remissionFeeAmt: number;
   isRefundRemissionBtnEnable: boolean;
+  serviceReference: string;
 
   constructor(private paymentViewService: PaymentViewService,
     private paymentLibComponent: PaymentLibComponent,
@@ -59,6 +60,7 @@ export class PaymentViewComponent implements OnInit {
     this.selectedOption = this.paymentLibComponent.SELECTED_OPTION;
     this.dcnNumber = this.paymentLibComponent.DCN_NUMBER;
     this.isTurnOff = this.paymentLibComponent.ISTURNOFF;
+    this.serviceReference = this.paymentLibComponent.paymentGroupReference;
     this.viewStatus = 'paymentview';
     this.paymentViewService.getApportionPaymentDetails(this.paymentLibComponent.paymentReference).subscribe(
       paymentGroup => {
@@ -193,6 +195,7 @@ export class PaymentViewComponent implements OnInit {
     this.paymentGroup = paymentgrp;
     this.viewStatus = 'issuerefund';
     this.isRefundRemission = true;
+    this.paymentLibComponent.isFromServiceRequestPage = false;
     }
   }
   }

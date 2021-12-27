@@ -32,3 +32,7 @@
 .govuk-table__cell:last-child {
     text-align: right;
 }
+
+.text-transform::first-letter {
+    text-transform: capitalize;
+}

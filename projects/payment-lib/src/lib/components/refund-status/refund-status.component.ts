@@ -25,8 +25,10 @@ export class RefundStatusComponent implements OnInit {
   refundStatusForm: FormGroup;
   selectedRefundReason: string;
   rejectedRefundList: IRefundList[] = [];
-  approvalStatus = 'sent for approval';
-  rejectStatus = 'sent back';
+  approvalStatus = 'Sent for approval';
+  rejectStatus = 'Update required';
+  // approvalStatus = 'sent for approval';
+  // rejectStatus = 'sent back';
   errorMessage = null;
   viewName: string;
   refundReason: string;
@@ -62,7 +64,7 @@ export class RefundStatusComponent implements OnInit {
 
   ngOnInit() {
 
-    if (this.check4AllowedRoles2AccessRefund()) {
+   // if (this.check4AllowedRoles2AccessRefund()) {
     this.resetRemissionForm([false, false, false, false], 'All');
     this.bsPaymentDcnNumber = this.paymentLibComponent.bspaymentdcn;
     this.isCallFromRefundList = this.paymentLibComponent.isCallFromRefundList;
@@ -86,39 +88,38 @@ export class RefundStatusComponent implements OnInit {
     }
 
 
-    this.refundStatusForm = this.formBuilder.group({
-      amount: new FormControl('', Validators.compose([
-        Validators.required,
-        Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$')
-      ])),
-      refundReason: new FormControl('', Validators.compose([Validators.required])),
-      reason: new FormControl()
-    });
+      this.refundStatusForm = this.formBuilder.group({
+        amount: new FormControl('', Validators.compose([
+          Validators.required,
+          Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$')
+        ])),
+        refundReason: new FormControl('', Validators.compose([Validators.required])),
+        reason: new FormControl()
+      });
 
-    if(this.refundlist !== undefined) {
-      this.getRefundsStatusHistoryList();
+      if(this.refundlist !== undefined) {
+        this.getRefundsStatusHistoryList();
 
-      if (this.LOGGEDINUSERROLES.some(i => i.includes('payments-refund-approver'))) {
-        this.isProcessRefund = true;
-        this.refundButtonState = this.refundlist.refund_status.name;
-        return;
+        if (this.LOGGEDINUSERROLES.some(i => i.includes('payments-refund-approver'))) {
+          this.isProcessRefund = true;
+          this.refundButtonState = this.refundlist.refund_status.name;
+          return;
+        }
+    
+        if (this.LOGGEDINUSERROLES.some(i => i.includes('payments-refund'))) {
+          this.isProcessRefund = false;
+          this.refundButtonState = this.refundlist.refund_status.name;
+        }
       }
-  
-      if (this.LOGGEDINUSERROLES.some(i => i.includes('payments-refund'))) {
-        this.isProcessRefund = false;
-        this.refundButtonState = this.refundlist.refund_status.name;
-      }
-    }
+   //}
   }
   
-  }
 
   check4AllowedRoles2AccessRefund = (): boolean => {
     return this.allowedRolesToAccessRefund.some(role =>
       this.LOGGEDINUSERROLES.indexOf(role) !== -1
     );
   }
-
 
   getRefundsStatusHistoryList() {
     if(this.refundlist !== undefined) {
@@ -144,29 +145,25 @@ export class RefundStatusComponent implements OnInit {
   }
 
   loadCaseTransactionPage() {
-    this.paymentLibComponent.isRefundStatusView = false;
-    //this.paymentLibComponent.TAKEPAYMENT = true;
+   //event.preventDefault();
+    this.OrderslistService.setnavigationPage('casetransactions');
+    this.OrderslistService.setisFromServiceRequestPage(false);
     this.paymentLibComponent.viewName = 'case-transactions';
-    this.paymentViewService.getBSfeature().subscribe(
-      features => {
-        let result = JSON.parse(features).filter(feature => feature.uid === BS_ENABLE_FLAG);
-        this.paymentLibComponent.ISBSENABLE = result[0] ? result[0].enable : false;
-      },
-      err => {
-        this.paymentLibComponent.ISBSENABLE = false;
-      }
-    );
-
-    let partUrl = `selectedOption=${this.paymentLibComponent.SELECTED_OPTION}`;
-    partUrl += this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
-    partUrl += this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
-    partUrl += this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
-    partUrl += this.paymentLibComponent.ISSFENABLE ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
-    partUrl += `&caseType=${this.paymentLibComponent.CASETYPE}`;
-    partUrl += this.isNewPcipalOff ? '&isNewPcipalOff=Enable' : '&isNewPcipalOff=Disable';
-    partUrl += this.isOldPcipalOff ? '&isOldPcipalOff=Enable' : '&isOldPcipalOff=Disable';
-    let url = `/payment-history/${this.ccdCaseNumber}?view=case-transactions&takePayment=${this.paymentLibComponent.TAKEPAYMENT}&${partUrl}`;
-    this.router.navigateByUrl(url);
+    this.paymentLibComponent.ISBSENABLE = true;
+    this.paymentLibComponent.isRefundStatusView = false;
+    // //this.paymentLibComponent.TAKEPAYMENT = true;
+    // this.paymentLibComponent.viewName = 'case-transactions';
+    // this.paymentLibComponent.ISBSENABLE = true;
+    // let partUrl = `selectedOption=${this.paymentLibComponent.SELECTED_OPTION}`;
+    // partUrl += this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
+    // partUrl += this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
+    // partUrl += this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
+    // partUrl += this.paymentLibComponent.ISSFENABLE ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
+    // partUrl += `&caseType=${this.paymentLibComponent.CASETYPE}`;
+    // partUrl += this.isNewPcipalOff ? '&isNewPcipalOff=Enable' : '&isNewPcipalOff=Disable';
+    // partUrl += this.isOldPcipalOff ? '&isOldPcipalOff=Enable' : '&isOldPcipalOff=Disable';
+    // let url = `/payment-history/${this.ccdCaseNumber}?view=case-transactions&takePayment=${this.paymentLibComponent.TAKEPAYMENT}&${partUrl}`;
+    // this.router.navigateByUrl(url);
   }
 
   loadRefundListPage() {
@@ -193,7 +190,7 @@ export class RefundStatusComponent implements OnInit {
     this.viewName = 'reviewandsubmitview';
     this.oldRefundReason = this.refundlist.reason;
     this.changedAmount = this.refundlist.amount;
-    this.refundreason = this.refundStatusHistories.filter(data => data.status === 'sentback')[0].notes;
+    this.refundreason = this.refundStatusHistories.filter(data => data.status.toLowerCase() === 'update required')[0].notes;
     this.refundService.getRefundReasons().subscribe(
       refundReasons => {
         this.refundReasons = refundReasons;

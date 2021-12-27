@@ -6,6 +6,7 @@ import { IRefundList } from '../../interfaces/IRefundList';
 import { IRefundRejectReason } from '../../interfaces/IRefundRejectReason';
 import { OrderslistService } from '../../services/orderslist.service';
 import { PaymentLibComponent } from '../../payment-lib.component';
+import { ActivatedRoute,Router } from '@angular/router';
 
 @Component({
   selector: 'ccpay-process-refund',
@@ -38,12 +39,15 @@ export class ProcessRefundComponent implements OnInit {
   isReasonInvalid: boolean = false;
   successMsg: string = null;
   navigationpage: string;
+  ccdCaseNumber: string;
 
   isConfirmButtondisabled: boolean = true;
   constructor(private RefundsService: RefundsService,
               private formBuilder: FormBuilder,
               private OrderslistService: OrderslistService,
-              private paymentLibComponent: PaymentLibComponent,) {
+              private paymentLibComponent: PaymentLibComponent,
+              private router: Router,
+              private activeRoute: ActivatedRoute) {
   }
 
   ngOnInit() {
@@ -73,10 +77,10 @@ export class ProcessRefundComponent implements OnInit {
       enterReasonField: new FormControl('', Validators.compose([
         Validators.required,
         Validators.maxLength(30),
-        Validators.pattern('^([a-zA-Z0-9\\s]*)$'),
+        Validators.pattern('^([a-zA-Z0-9.\\s]*)$'),
       ])),
     });
-   
+   this.ccdCaseNumber = this.refundlistsource.ccd_case_number;
   }
   checkRefundActions(code: string) {
 
@@ -260,5 +264,9 @@ export class ProcessRefundComponent implements OnInit {
       this.isReasonEmpty = vals[6];
       this.isReasonInvalid = vals[7];
     }
+  }
+
+  goToCaseReview() {
+    this.router.navigate([`/cases/case-details/${this.ccdCaseNumber}`], {relativeTo: this.activeRoute});
   }
 }

@@ -2,7 +2,7 @@
 <ng-container *ngIf="viewStatus === 'paymentview'">
 <div class="govuk-width-container">
 
-  <div *ngIf="isTakePayment" class="govuk-breadcrumbs">
+  <div  class="govuk-breadcrumbs">
     <ol class="govuk-breadcrumbs__list">
       <li class="govuk-breadcrumbs__list-item">
         <a href="javascript:void(0)" (click)="goToCaseTransationPage($event)" class="govuk-back-link">Back</a>
@@ -33,42 +33,43 @@
       </div>
       <table>
         <tbody>
-      <!-- <tr class="section" *ngIf="isTurnOff">
-          <td class="bold tb-col-w">Payment group reference</td>
-          <td>{{ paymentGroup.payment_group_reference }}</td>
-        </tr> -->
+     
+        <tr class="section">
+          <td class="bold tb-col-w">Service reference</td>
+          <td class="tb-col-w">{{ serviceReference  }}</td> 
+        </tr>
         <tr class="section">
           <td class="bold tb-col-w">Payment reference</td>
-          <td>{{ paymentGroup?.payments[0]?.reference }}</td>
+          <td class="tb-col-w">{{  paymentGroup?.payments[0].reference }}</td>
         </tr>
         <tr class="section">
           <td class="bold tb-col-w">Payment amount</td>
-          <td>£{{ paymentGroup?.payments[0]?.amount | number:'.2' }}</td>
+          <td class="tb-col-w">£{{ paymentGroup?.payments[0]?.amount | number:'.2' }}</td>
         </tr>
         <tr class="section" *ngIf="paymentGroup?.payments[0] && paymentGroup?.payments[0]?.document_control_number && !paymentGroup?.payments[0]?.external_reference">
           <td class="bold tb-col-w">Payment asset number(DCN)</td>
-          <td>{{ paymentGroup.payments[0].document_control_number }}</td>
+          <td class="tb-col-w">{{ paymentGroup.payments[0].document_control_number }}</td>
         </tr>
         <tr class="section" *ngIf="paymentGroup?.payments[0] && paymentGroup?.payments[0]?.document_control_number && !paymentGroup?.payments[0]?.external_reference">
           <td class="bold tb-col-w">Banked date</td>
-          <td>{{ paymentGroup.payments[0].banked_date | date:'dd MMM yyyy' }}</td>
+          <td class="tb-col-w">{{ paymentGroup.payments[0].banked_date | date:'dd MMM yyyy' }}</td>
         </tr>
         <tr class="section" *ngIf="paymentGroup?.payments[0] && paymentGroup?.payments[0]?.external_reference">
           <td class="bold tb-col-w">GovPay Transaction ID</td>
-          <td>{{ paymentGroup?.payments[0]?.external_reference }}</td>
+          <td class="tb-col-w">{{ paymentGroup?.payments[0]?.external_reference }}</td>
         </tr>
         <tr class="section" >
             <td class="bold tb-col-w">Payment method</td>
-            <td>{{ paymentGroup?.payments[0]?.method  }}</td>
+            <td class="tb-col-w text-transform">{{ paymentGroup?.payments[0]?.method  }}</td>
         </tr>
         <tr class="section" *ngIf="paymentGroup?.payments[0]?.method === 'payment by account'" >
             <td class="bold tb-col-w">Type</td>
-            <td *ngIf="paymentGroup?.payments[0]?.method !== 'card'">Credit</td>
-            <td *ngIf="paymentGroup?.payments[0]?.method === 'card'">CARD</td>
+            <td class="tb-col-w" *ngIf="paymentGroup?.payments[0]?.method !== 'card'">Credit</td>
+            <td class="tb-col-w" *ngIf="paymentGroup?.payments[0]?.method === 'card'">Card</td>
         </tr>
         <tr class="section">
             <td class="bold tb-col-w">Channel</td>
-            <td>{{ paymentGroup?.payments[0]?.channel  }}</td>
+            <td class="tb-col-w text-transform">{{ paymentGroup?.payments[0]?.channel  }}</td>
         </tr>
         <!-- <tr class="section">
             <td class="bold tb-col-w">Method</td>
@@ -81,22 +82,22 @@
          </tr> -->
         <tr class="section" *ngIf="paymentGroup?.payments[0]?.payment_allocation[0] !== undefined">
             <td class="bold tb-col-w">Allocaton status</td>
-            <td>{{ paymentGroup?.payments[0]?.payment_allocation[0]?.allocation_status }}</td>
+            <td class="tb-col-w">{{ paymentGroup?.payments[0]?.payment_allocation[0]?.allocation_status }}</td>
           </tr>
           
           <tr *ngIf="paymentGroup?.payments[0].organisation_name">
             <td class="bold tb-col-w">PBA account name</td>
-            <td>{{ paymentGroup?.payments[0]?.organisation_name }}</td>
+            <td class="tb-col-w">{{ paymentGroup?.payments[0]?.organisation_name }}</td>
           </tr>
 
           <tr *ngIf="paymentGroup?.payments[0].account_number">
             <td class="bold tb-col-w">PBA number</td>
-            <td>{{ paymentGroup?.payments[0]?.account_number }}</td>
+            <td class="tb-col-w">{{ paymentGroup?.payments[0]?.account_number }}</td>
           </tr>
 
           <tr *ngIf="paymentGroup?.payments[0].customer_reference">
             <td class="bold tb-col-w">Customer internal reference</td>
-            <td>{{ paymentGroup?.payments[0]?.customer_reference }}</td>
+            <td class="tb-col-w">{{ paymentGroup?.payments[0]?.customer_reference }}</td>
           </tr>
       
         </tbody>
@@ -111,7 +112,7 @@
      </div>
       
      <div  *ngIf="checkForFees(paymentGroup)">
-      <div class="govuk-grid-row" *ngIf="paymentGroup.fees.length > 0">
+      <div  *ngIf="paymentGroup.fees.length > 0">
         <div class="column">
         
           <h2 class="heading-large">Fee and remission details</h2>
@@ -124,15 +125,15 @@
           <tbody>
           <tr class="section">
             <td class="bold tb-col-w">Description</td>
-            <td>Application for {{ fee.description }}</td>
+            <td class="tb-col-w">Application for {{ fee.description }}</td>
           </tr>
           <tr class="section">
             <td class="bold tb-col-w">Fee code</td>
-            <td>{{ fee.code }}</td>
+            <td class="tb-col-w">{{ fee.code }}</td>
           </tr>
           <tr class="section">
             <td class="bold tb-col-w" [ngClass]="{'tr-border': !fee.apportion_amount && !fee.remissions && !isTurnOff }">Fee amount</td>
-            <td [ngClass]="{'tr-border': !fee.apportion_amount && !fee.remissions && !isTurnOff }">£{{ fee.calculated_amount | number:'.2' }}</td>
+            <td [ngClass]="{'tr-border': !fee.apportion_amount && !fee.remissions && !isTurnOff}">£{{ fee.calculated_amount | number:'.2' }}</td>
           </tr>
         
           <tr *ngIf="fee.apportion_amount">
@@ -171,7 +172,7 @@
             <td class="govuk-table__cell whitespace-inherit">{{ remission.fee_code }}</td>
             <td class="govuk-table__cell whitespace-inherit">{{ remission.hwf_amount | currency:'GBP':'symbol-narrow':'1.2-2'}}</td>
             <td class="govuk-table__cell refundBtn whitespace-inherit"  >
-               <button [disabled]="!chkIsRefundRemissionBtnEnable()"  (click)="addRefundForRemission(paymentGroup.payments[0],remission,paymentGroup.fees)" class="govuk-button govuk-button--secondary"> Add refund</button>
+               <button  [disabled]="!chkIsRefundRemissionBtnEnable()" (click)="addRefundForRemission(paymentGroup.payments[0],remission,paymentGroup.fees)" class="govuk-button govuk-button--secondary"> Add refund</button>
             </td>
             <!-- <td *ngIf="!chkIsRefundRemissionBtnEnable()" class="govuk-table__cell refundBtn whitespace-inherit"  >
              

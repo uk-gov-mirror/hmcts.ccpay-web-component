@@ -10,7 +10,7 @@
 }
 
 .govuk-button {
-    font-size: 2.1875rem;
+    font-size: 1.875rem; 
     float: left;
     margin-top:2em
 }
@@ -68,3 +68,8 @@
 .govuk-textarea {
     line-height: 2.25;
 }
+
+.reason-font {
+    font-size: 19px!important;
+}
+
