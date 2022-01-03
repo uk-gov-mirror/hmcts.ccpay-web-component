@@ -223,7 +223,7 @@ export class ProcessRefundComponent implements OnInit {
     }
   }
   loadRefundsHomePage() {
-    if(!this.paymentLibComponent.TAKEPAYMENT) {
+    if(typeof this.paymentLibComponent.TAKEPAYMENT === 'string' && this.paymentLibComponent.TAKEPAYMENT === 'false') {
       window.location.href='/refund-list?takePayment=false&refundlist=true';
      }
      else {
@@ -236,7 +236,7 @@ export class ProcessRefundComponent implements OnInit {
      }
   }
  redirecttoRefundListPage() {
-   if(!this.paymentLibComponent.TAKEPAYMENT) {
+   if(typeof this.paymentLibComponent.TAKEPAYMENT === 'string' && this.paymentLibComponent.TAKEPAYMENT === 'false') {
     window.location.href='/refund-list?takePayment=false&refundlist=true';
    }
    else {
