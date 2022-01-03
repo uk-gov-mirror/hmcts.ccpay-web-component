@@ -472,6 +472,32 @@
     </div>
   </ng-container>
 
+  <ng-container *ngIf="viewStatus === 'order-full-view'">
+    <ccpay-service-request
+    [viewStatus] = "viewStatus"
+    [orderRef] = "orderRef"
+    [orderStatus] = "orderStatus"
+    [orderCreated] = "orderCreated"
+    [orderParty] = "orderParty"
+    [orderCCDEvent] = "orderCCDEvent"
+    [orderDetail] = "orderDetail"
+    [LOGGEDINUSERROLES] = "LOGGEDINUSERROLES"
+    [takePayment] = "takePayment"
+    [ccdCaseNumber] = "ccdCaseNumber">
+  </ccpay-service-request>
+  </ng-container>
+
+  <ng-container *ngIf="viewStatus === 'payment-view'">
+    <ccpay-payment-view 
+    [LOGGEDINUSERROLES] = "LOGGEDINUSERROLES"
+    [isTurnOff] = "isTurnOff" 
+    [isTakePayment] = "takePayment"  
+    [caseType] = "caseType"
+    [isOldPcipalOff] = "isOldPcipalOff"
+    [isNewPcipalOff] = "isNewPcipalOff">
+  </ccpay-payment-view>
+  </ng-container>
+
 </div>
 
 

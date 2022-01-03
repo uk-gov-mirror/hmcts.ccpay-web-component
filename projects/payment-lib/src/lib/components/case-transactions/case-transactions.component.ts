@@ -11,6 +11,7 @@ import { IRemission } from '../../interfaces/IRemission';
 import { IPaymentView } from '../../interfaces/IPaymentView';
 import { IOrderReferenceFee } from '../../interfaces/IOrderReferenceFee';
 import { Router } from '@angular/router';
+import { ServiceRequestComponent } from '../../components/service-request/service-request.component';
 // import * as ls from "local-storage";
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 
@@ -21,6 +22,7 @@ const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 })
 export class CaseTransactionsComponent implements OnInit {
   @Input('LOGGEDINUSERROLES') LOGGEDINUSERROLES: string[];
+  @Input() isTakePayment: boolean;
   takePayment: boolean;
   servicerequest: string;
   ccdCaseNumber: string;
@@ -126,6 +128,9 @@ export class CaseTransactionsComponent implements OnInit {
     }
     this.excReference = this.paymentLibComponent.EXC_REFERENCE;
     this.takePayment = this.paymentLibComponent.TAKEPAYMENT;
+    // if(this.isTakePayment) {
+    //   this.takePayment = this.isTakePayment;
+    // }
     this.servicerequest = this.paymentLibComponent.SERVICEREQUEST;
     if (this.paymentLibComponent.SERVICEREQUEST === 'true') {
       this.serviceRequestValue = 'true';
@@ -155,19 +160,21 @@ export class CaseTransactionsComponent implements OnInit {
             this.OrderslistService.getSelectedOrderRefId().subscribe((data) => this.orderRef = data);
             this.goToOrderViewDetailSection(this.orderRef);
             // this.viewStatus = 'order-full-view';
+          } else {
+            this.paymentViewService.getPartyDetails(this.ccdCaseNumber).subscribe(
+              response => {
+                this.cpoDetails = JSON.parse(response).content[0];
+  
+              },
+              (error: any) => {
+                this.errorMessage = <any>error.replace(/"/g,"");
+                this.isCPODown = true;
+              }
+            );
+  
           }
 
-          this.paymentViewService.getPartyDetails(this.ccdCaseNumber).subscribe(
-            response => {
-              this.cpoDetails = JSON.parse(response).content[0];
-
-            },
-            (error: any) => {
-              this.errorMessage = <any>error.replace(/"/g,"");
-              this.isCPODown = true;
-            }
-          );
-
+        
         },
         (error: any) => {
           this.errorMessage = <any>error.replace(/"/g,"");
@@ -407,12 +414,7 @@ export class CaseTransactionsComponent implements OnInit {
     }
   }
 
-  goToCaseTransationPage(event: any) {
-    event.preventDefault();
-    this.isFromServiceRequestPage = false;
-    this.viewStatus = 'main'
-    this.paymentLibComponent.viewName = 'case-transactions';
-  }
+ 
 
 
   calculateAmounts(): void {

@@ -83,7 +83,7 @@ export class ProcessRefundComponent implements OnInit {
    this.ccdCaseNumber = this.refundlistsource.ccd_case_number;
   }
   checkRefundActions(code: string) {
-
+    this.refundActionsHasError = false;
     if(code === 'Return to caseworker') {
       this.isConfirmButtondisabled = true;
       this.isSendMeBackClicked = true;
@@ -208,13 +208,35 @@ export class ProcessRefundComponent implements OnInit {
   loadRefundListPage() {
     this.OrderslistService.getnavigationPageValue().subscribe((data) => this.navigationpage = data);
     if (this.navigationpage === 'casetransactions') {
-      window.location.href='/refund-list?takePayment=false&refundlist=true';
+      // window.location.href='/refund-list?takePayment=false&refundlist=true';
+      // // this.OrderslistService.setnavigationPage('casetransactions');
+      // // this.OrderslistService.setisFromServiceRequestPage(false);
+      // // this.paymentLibComponent.VIEW ='case-transactions';
+      // // this.paymentLibComponent.viewName = 'case-transactions';
+      // // this.paymentLibComponent.ISBSENABLE = true;
+      // // this.paymentLibComponent.isRefundStatusView = false;
+      this.paymentLibComponent.viewName = 'refundstatuslist';
+      this.paymentLibComponent.isRefundStatusView = true;
     } else {
-      this.paymentLibComponent.viewName = 'refund-list';
+      this.paymentLibComponent.viewName = 'refundstatuslist';
+      this.paymentLibComponent.isRefundStatusView = true;
     }
   }
+  loadRefundsHomePage() {
+    if(!this.paymentLibComponent.TAKEPAYMENT) {
+      window.location.href='/refund-list?takePayment=false&refundlist=true';
+     }
+     else {
+      this.OrderslistService.setnavigationPage('casetransactions');
+      this.OrderslistService.setisFromServiceRequestPage(false);
+      this.paymentLibComponent.VIEW ='case-transactions';
+      this.paymentLibComponent.viewName = 'case-transactions';
+      this.paymentLibComponent.ISBSENABLE = true;
+      this.paymentLibComponent.isRefundStatusView = false;
+     }
+  }
  redirecttoRefundListPage() {
-   if(this.paymentLibComponent.API_ROOT === 'api/payment-history') {
+   if(!this.paymentLibComponent.TAKEPAYMENT) {
     window.location.href='/refund-list?takePayment=false&refundlist=true';
    }
    else {

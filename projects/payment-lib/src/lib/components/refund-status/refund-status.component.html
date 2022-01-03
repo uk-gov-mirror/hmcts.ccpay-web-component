@@ -109,7 +109,7 @@
         (click)="gotoReviewAndReSubmitPage()">Resubmit
         refund</button>
     </div>
-    <div *ngIf="isProcessRefund && !isLastUpdatedByCurrentUser && refundButtonState==='Sent for approval'">
+    <div *ngIf="isProcessRefund && !isLastUpdatedByCurrentUser && refundButtonState==='Sent for approval'" >
       <!-- <div *ngIf="isProcessRefund && !isLastUpdatedByCurrentUser && refundButtonState==='sent for approval'"> -->
       <br />
       <button type="submit" class="button govuk-button--secondary"

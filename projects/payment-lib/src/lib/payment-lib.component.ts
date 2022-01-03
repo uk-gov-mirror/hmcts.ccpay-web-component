@@ -21,7 +21,7 @@ import { OrderslistService } from './services/orderslist.service';
     ></ccpay-process-refund>
 
 
-    <ccpay-case-transactions [LOGGEDINUSERROLES]="LOGGEDINUSERROLES" *ngIf="viewName === 'case-transactions'"></ccpay-case-transactions>
+    <ccpay-case-transactions [isTakePayment]="isTakePayment" [LOGGEDINUSERROLES]="LOGGEDINUSERROLES" *ngIf="viewName === 'case-transactions'"></ccpay-case-transactions>
     <app-mark-unidentified-payment *ngIf="viewName === 'unidentifiedPage'"
     [caseType]="CASETYPE"></app-mark-unidentified-payment>
     <app-mark-unsolicited-payment *ngIf="viewName === 'unsolicitedPage'"
@@ -88,6 +88,7 @@ export class PaymentLibComponent implements OnInit {
   isFromRefundStatusPage: boolean;
   iscancelClicked : boolean;
   isFromPaymentDetailPage: boolean;
+  isTakePayment: boolean;
   // pbaPayOrderRef: IPayment;
   // isFromServiceRequestPage: boolean;
 
@@ -122,6 +123,10 @@ export class PaymentLibComponent implements OnInit {
       this.viewName = 'case-transactions';
     } else {
       this.viewName = this.VIEW;
+    }
+
+    if (this.isTakePayment) {
+      this.TAKEPAYMENT = true;
     }
   }
 }

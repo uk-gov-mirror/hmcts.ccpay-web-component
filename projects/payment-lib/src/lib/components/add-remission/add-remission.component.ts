@@ -37,12 +37,19 @@ export class AddRemissionComponent implements OnInit {
   @Input() isOldPcipalOff: boolean;
   @Input() isNewPcipalOff: boolean;
   @Input() isStrategicFixEnable: boolean;
-  @Input() orderStatus: string;
   @Input() paidAmount: any;
   @Input() isFromRefundListPage: boolean;
   @Input() isFromPaymentDetailPage: boolean;
   @Input() isFromServiceRequestPage: boolean;
   @Input() feeamount: number;
+  @Input('LOGGEDINUSERROLES') LOGGEDINUSERROLES: string[];
+  @Input('orderDetail') orderDetail: any[];
+  @Input('orderRef') orderRef: string;
+  @Input('orderStatus') orderStatus: string;
+  @Input('orderParty') orderParty: string;
+  @Input('orderCreated') orderCreated: Date;
+  @Input('orderCCDEvent') orderCCDEvent: string;
+  @Input('takepayment') takePayment: boolean;
   @Output() cancelRemission: EventEmitter<void> = new EventEmitter();
   //@Output() refundListReason: EventEmitter<any> = new EventEmitter({reason:string, code:string});
   @Output() refundListReason = new EventEmitter<{reason: string, code: string}>();
@@ -551,70 +558,87 @@ export class AddRemissionComponent implements OnInit {
 
   gotoServiceRequestPage(event: any) {
     event.preventDefault();
-    
-    if (this.paymentLibComponent.TAKEPAYMENT === undefined && this.paymentLibComponent.SERVICEREQUEST === undefined) {
-      this.paymentLibComponent.SERVICEREQUEST = 'false';
-      this.paymentLibComponent.TAKEPAYMENT = false;
-    }
     if (this.isFromServiceRequestPage) {
-      //this.paymentLibComponent.TAKEPAYMENT = false;
-      this.paymentLibComponent.isFromRefundStatusPage = false;
-      this.viewStatus = 'main'
-      this.paymentLibComponent.viewName = 'case-transactions';
-      this.OrderslistService.setisFromServiceRequestPage(true);
-      this.OrderslistService.setnavigationPage('servicerequestpage');
-    }
-    if ( this.isFromRefundListPage ) {
-      this.paymentLibComponent.iscancelClicked = true;
-      this.refundListReason.emit({reason: this.selectedRefundReason, code: this.refundReason});
-      this.paymentLibComponent.isFromRefundStatusPage = true;
-    } 
-    if(!this.paymentLibComponent.isFromRefundStatusPage)  {
-        if(this.payment) {
-          this.OrderslistService.setpaymentPageView({method: this.payment.method,payment_group_reference: this.paymentGroupRef, reference:this.payment.reference});
-        }
-        if (this.isFromServiceRequestPage) { 
-          this.OrderslistService.setnavigationPage('servicerequestpage');
-        } else {
-          this.OrderslistService.setnavigationPage('paymentdetailspage');
-        }
-        this.errorMessage = '';
-        this.paymentLibComponent.viewName = 'case-transactions';
-        // this.paymentLibComponent.TAKEPAYMENT = true;
-        this.paymentLibComponent.ISTURNOFF = this.isTurnOff;
-        this.paymentLibComponent.ISNEWPCIPALOFF = this.isNewPcipalOff;
-        this.paymentLibComponent.ISOLDPCIPALOFF = this.isOldPcipalOff;
-        this.paymentLibComponent.isFromServiceRequestPage = true;  
-        this.paymentLibComponent.ISBSENABLE = true;
-        let partUrl = this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
-        partUrl += this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
-        partUrl += this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
-        partUrl += this.isStrategicFixEnable ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
-        partUrl += `&caseType=${this.caseType}`;
-        partUrl += this.paymentLibComponent.ISNEWPCIPALOFF ? '&isNewPcipalOff=Enable' : '&isNewPcipalOff=Disable';
-        partUrl += this.paymentLibComponent.ISOLDPCIPALOFF ? '&isOldPcipalOff=Enable' : '&isOldPcipalOff=Disable';
-        if(this.isFromPaymentDetailPage) {
-          partUrl += this.paymentLibComponent.isFromPaymentDetailPage
-        }
-        if(!this.paymentLibComponent.TAKEPAYMENT) {
-          this.paymentLibComponent.TAKEPAYMENT = undefined;
-        }
-        if ( this.paymentLibComponent.SERVICEREQUEST) {
-          const url = `/payment-history/${this.ccdCaseNumber}?view=case-transactions&selectedOption=${this.option}${partUrl}`;
-          this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-          this.router.onSameUrlNavigation = 'reload';
-          this.router.navigateByUrl(url);
-        } else {
-          const url = `/payment-history/${this.ccdCaseNumber}?view=case-transactions&takePayment=${this.paymentLibComponent.TAKEPAYMENT}&selectedOption=${this.option}${partUrl}`;
-          this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-          this.router.onSameUrlNavigation = 'reload';
-          this.router.navigateByUrl(url);
-        }
-       
+    this.viewStatus = 'order-full-view';
+    this.viewCompStatus = '';
+    } else if ( this.isFromRefundListPage ) {
+        this.paymentLibComponent.iscancelClicked = true;
+        this.refundListReason.emit({reason: this.selectedRefundReason, code: this.refundReason});
+        this.paymentLibComponent.isFromRefundStatusPage = true;
     } else {
-      this.paymentLibComponent.viewName === 'refundstatuslist';
-      this.paymentLibComponent.isFromRefundStatusPage = true;
+      this.paymentLibComponent.paymentMethod = this.payment.method;
+      this.paymentLibComponent.paymentGroupReference = this.paymentLibComponent.paymentGroupReference
+      this.paymentLibComponent.paymentReference = this.payment.reference;
+      this.paymentLibComponent.viewName = 'payment-view';
+      this.viewStatus = 'payment-view';
+      if(this.LOGGEDINUSERROLES === undefined) {
+        this.OrderslistService.getUserRolesList().subscribe((data) => this.LOGGEDINUSERROLES = data);
+      }
+      this.viewCompStatus = '';
     }
+    // if (this.paymentLibComponent.TAKEPAYMENT === undefined && this.paymentLibComponent.SERVICEREQUEST === undefined) {
+    //   this.paymentLibComponent.SERVICEREQUEST = 'false';
+    //   this.paymentLibComponent.TAKEPAYMENT = false;
+    // }
+    // if (this.isFromServiceRequestPage) {
+    //   //this.paymentLibComponent.TAKEPAYMENT = false;
+    //   this.paymentLibComponent.isFromRefundStatusPage = false;
+    //   this.viewStatus = 'main'
+    //   this.paymentLibComponent.viewName = 'case-transactions';
+    //   this.OrderslistService.setisFromServiceRequestPage(true);
+    //   this.OrderslistService.setnavigationPage('servicerequestpage');
+    // }
+    // if ( this.isFromRefundListPage ) {
+    //   this.paymentLibComponent.iscancelClicked = true;
+    //   this.refundListReason.emit({reason: this.selectedRefundReason, code: this.refundReason});
+    //   this.paymentLibComponent.isFromRefundStatusPage = true;
+    // } 
+    // if(!this.paymentLibComponent.isFromRefundStatusPage)  {
+    //     if(this.payment) {
+    //       this.OrderslistService.setpaymentPageView({method: this.payment.method,payment_group_reference: this.paymentGroupRef, reference:this.payment.reference});
+    //     }
+    //     if (this.isFromServiceRequestPage) { 
+    //       this.OrderslistService.setnavigationPage('servicerequestpage');
+    //     } else {
+    //       this.OrderslistService.setnavigationPage('paymentdetailspage');
+    //     }
+    //     this.errorMessage = '';
+    //     this.paymentLibComponent.viewName = 'case-transactions';
+    //     // this.paymentLibComponent.TAKEPAYMENT = true;
+    //     this.paymentLibComponent.ISTURNOFF = this.isTurnOff;
+    //     this.paymentLibComponent.ISNEWPCIPALOFF = this.isNewPcipalOff;
+    //     this.paymentLibComponent.ISOLDPCIPALOFF = this.isOldPcipalOff;
+    //     this.paymentLibComponent.isFromServiceRequestPage = true;  
+    //     this.paymentLibComponent.ISBSENABLE = true;
+    //     let partUrl = this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
+    //     partUrl += this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
+    //     partUrl += this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
+    //     partUrl += this.isStrategicFixEnable ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
+    //     partUrl += `&caseType=${this.caseType}`;
+    //     partUrl += this.paymentLibComponent.ISNEWPCIPALOFF ? '&isNewPcipalOff=Enable' : '&isNewPcipalOff=Disable';
+    //     partUrl += this.paymentLibComponent.ISOLDPCIPALOFF ? '&isOldPcipalOff=Enable' : '&isOldPcipalOff=Disable';
+    //     if(this.isFromPaymentDetailPage) {
+    //       partUrl += this.paymentLibComponent.isFromPaymentDetailPage
+    //     }
+    //     if(!this.paymentLibComponent.TAKEPAYMENT) {
+    //       this.paymentLibComponent.TAKEPAYMENT = undefined;
+    //     }
+    //     if ( this.paymentLibComponent.SERVICEREQUEST) {
+    //       const url = `/payment-history/${this.ccdCaseNumber}?view=case-transactions&selectedOption=${this.option}${partUrl}`;
+    //       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    //       this.router.onSameUrlNavigation = 'reload';
+    //       this.router.navigateByUrl(url);
+    //     } else {
+    //       const url = `/payment-history/${this.ccdCaseNumber}?view=case-transactions&takePayment=${this.paymentLibComponent.TAKEPAYMENT}&selectedOption=${this.option}${partUrl}`;
+    //       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    //       this.router.onSameUrlNavigation = 'reload';
+    //       this.router.navigateByUrl(url);
+    //     }
+       
+    // } else {
+    //   this.paymentLibComponent.viewName === 'refundstatuslist';
+    //   this.paymentLibComponent.isFromRefundStatusPage = true;
+    // }
   }
 
   gotoCasetransationPage() {
