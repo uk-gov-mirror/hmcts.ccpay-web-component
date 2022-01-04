@@ -224,7 +224,8 @@ export class ProcessRefundComponent implements OnInit {
   }
   loadRefundsHomePage() {
     if(typeof this.paymentLibComponent.TAKEPAYMENT === 'string' && this.paymentLibComponent.TAKEPAYMENT === 'false') {
-      window.location.href='/refund-list?takePayment=false&refundlist=true';
+      //window.location.href='/refund-list?takePayment=false&refundlist=true';
+      this.paymentLibComponent.viewName = 'refund-list';
      }
      else {
       this.OrderslistService.setnavigationPage('casetransactions');
@@ -237,7 +238,8 @@ export class ProcessRefundComponent implements OnInit {
   }
  redirecttoRefundListPage() {
    if((typeof this.paymentLibComponent.TAKEPAYMENT === 'string' && this.paymentLibComponent.TAKEPAYMENT === 'false') || (typeof this.paymentLibComponent.TAKEPAYMENT === 'boolean' && !this.paymentLibComponent.TAKEPAYMENT) ) {
-    window.location.href='/refund-list?takePayment=false&refundlist=true';
+   // window.location.href='/refund-list?takePayment=false&refundlist=true';
+   this.paymentLibComponent.viewName = 'refund-list';
    }
    else {
     this.loadRefundListPage();
