@@ -161,6 +161,7 @@ export class ServiceRequestComponent implements OnInit {
       if (orderDetail.payments) {
         orderDetail.payments.forEach(payment => {
           if (payment.method.toLocaleLowerCase() === 'payment by account' && this.allowFurtherAccessAfter4Days(payment)) {
+            this.paymentLibComponent.paymentReference = payment.reference;
             this.isPBA = true;
           }
         });
@@ -175,10 +176,11 @@ export class ServiceRequestComponent implements OnInit {
   }
 
   addRemission(fee: IFee) {
-    if(this.chkForAddRemission(fee.code)) {
+   if(this.chkForAddRemission(fee.code)) {
     this.feeId = fee;
     this.viewStatus = 'addremission';
-    this.paymentViewService.getApportionPaymentDetails(this.payment.reference).subscribe(
+    this.payment = this.orderDetail[0].payments[0];
+    this.paymentViewService.getApportionPaymentDetails(this.orderDetail[0].payments[0].reference).subscribe(
       paymentGroup => {
         this.paymentGroup = paymentGroup;
 
@@ -190,7 +192,7 @@ export class ServiceRequestComponent implements OnInit {
       },
       (error: any) => this.errorMessage = error.replace(/"/g,"")
     );
-    }
+   }
   }
 
   addRefundForRemission(payment: IPayment, remission: IRemission[],fees:any) {
