@@ -475,7 +475,6 @@
     </ng-container>
 
 <!--Order Case Transactions Page-->
-
    <ng-container *ngIf="viewStatus === 'main' && !isTurnOff && takePayment">
       <div>
        
@@ -742,9 +741,13 @@
   [orderDetail] = "orderDetail"
   [LOGGEDINUSERROLES] = "LOGGEDINUSERROLES"
   [ccdCaseNumber] = "ccdCaseNumber"
+  [orderFeesTotal] = "orderFeesTotal"
+  [orderTotalPayments] = "orderTotalPayments"
+  [orderRemissionTotal] = "orderRemissionTotal"
   ></ccpay-service-request>
+   
 </ng-container>
-<!-- <ccpay-add-remission *ngIf="viewStatus === 'addremission' && feeId"
+<ccpay-add-remission *ngIf="viewStatus === 'addremission' && feeId"
 [isTurnOff]="isTurnOff"
 [isStrategicFixEnable]="isStrategicFixEnable" 
 [isOldPcipalOff]="isOldPcipalOff" 
@@ -789,7 +792,7 @@
 [feeamount]="remissionFeeAmt"
 [remission] = "remissions"
 [isFromServiceRequestPage]="true" 
-[ccdCaseNumber]="ccdCaseNumber"></ccpay-add-remission> -->
+[ccdCaseNumber]="ccdCaseNumber"></ccpay-add-remission>
 
 <ng-container *ngIf="viewStatus === 'feeRemovalConfirmation'">
   <div class="govuk-warning-text">
@@ -816,3 +819,5 @@
 
 </main>
 </div>
+
+

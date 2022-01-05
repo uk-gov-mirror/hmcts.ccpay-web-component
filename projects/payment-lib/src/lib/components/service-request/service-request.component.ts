@@ -24,7 +24,10 @@ export class ServiceRequestComponent implements OnInit {
   @Input('orderStatus') orderStatus: string;
   @Input('orderParty') orderParty: string;
   @Input('orderCreated') orderCreated: Date;
-  @Input('orderCCDEvent') orderCCDEvent: string;
+  @Input('orderCCDEvent') orderCCDEvent: number;
+  @Input('orderFeesTotal') orderFeesTotal: number;
+  @Input('orderTotalPayments') orderTotalPayments: number;
+  @Input('orderRemissionTotal') orderRemissionTotal: number;
   @Input() takePayment: boolean;
   @Input('ccdCaseNumber') ccdCaseNumber: boolean;
 
@@ -78,10 +81,10 @@ export class ServiceRequestComponent implements OnInit {
   cpoDetails: any = null;
   serviceRequestValue: string;
   orderAddBtnEnable: boolean;
-  orderFeesTotal: number = 0.00;
-  orderRemissionTotal: number = 0.00;
-  orderTotalPayments: number = 0.00;
-  orderPendingPayments: number = 0.00;
+  // this.orderFeesTotal: number = 0.00;
+  // orderRemissionTotal: number = 0.00;
+  // orderTotalPayments: number = 0.00;
+  // orderPendingPayments: number = 0.00;
   isCPODown: boolean;
   test: boolean;
   isPBA: boolean = false;
@@ -124,9 +127,9 @@ export class ServiceRequestComponent implements OnInit {
     this.paymentLibComponent.viewName = 'case-transactions';
     // this.OrderslistService.setisFromServiceRequestPage(false);
     // this.OrderslistService.setnavigationPage('servicerequestpage');
-//  this.OrderslistService.setpaymentPageView({ method: this.payment.method, payment_group_reference: this.paymentGroupRef, reference: this.payment.reference });
+    //  this.OrderslistService.setpaymentPageView({ method: this.payment.method, payment_group_reference: this.paymentGroupRef, reference: this.payment.reference });
     // this.OrderslistService.setnavigationPage('servicerequestpage');
-   // let partUrl = this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
+    // let partUrl = this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
    let  partUrl = this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
     partUrl += this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
     partUrl += this.paymentLibComponent.TAKEPAYMENT ? '&takePayment=true' : '&takePayment=false';
