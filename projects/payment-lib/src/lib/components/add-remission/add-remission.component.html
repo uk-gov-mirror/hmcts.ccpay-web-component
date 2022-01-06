@@ -118,7 +118,7 @@
                 <button (click)="gotoServiceRequestPage($event)" class="govuk-button govuk-button--secondary"> Previous</button>
                 <button (click)="addRemissionCode()" class="govuk-button"> Continue</button>
             </div>
-            <p><a href="javascript:void(0)" (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link" data-module="govuk-button">Cancel</a></p>
+            <p><a href="javascript:void(0)" (click)="gotoCasetransationPage()" class="govuk-link" data-module="govuk-button">Cancel</a></p>
           </div>
       </form>
 
@@ -483,7 +483,10 @@
     [orderDetail] = "orderDetail"
     [LOGGEDINUSERROLES] = "LOGGEDINUSERROLES"
     [takePayment] = "takePayment"
-    [ccdCaseNumber] = "ccdCaseNumber">
+    [ccdCaseNumber] = "ccdCaseNumber"
+    [orderFeesTotal] = "orderFeesTotal"
+    [orderTotalPayments] = "orderTotalPayments"
+    [orderRemissionTotal] = "orderRemissionTotal">
   </ccpay-service-request>
   </ng-container>
 
@@ -494,7 +497,17 @@
     [isTakePayment] = "takePayment"  
     [caseType] = "caseType"
     [isOldPcipalOff] = "isOldPcipalOff"
-    [isNewPcipalOff] = "isNewPcipalOff">
+    [isNewPcipalOff] = "isNewPcipalOff"
+    [orderRef] = "orderRef"
+    [orderStatus] = "orderStatus"
+    [orderCreated] = "orderCreated"
+    [orderParty] = "orderParty"
+    [orderCCDEvent] = "orderCCDEvent"
+    [orderDetail] = "orderDetail"
+    [orderFeesTotal] = "orderFeesTotal"
+    [orderTotalPayments] = "orderTotalPayments"
+    [orderRemissionTotal] = "orderRemissionTotal"
+    >
   </ccpay-payment-view>
   </ng-container>
 

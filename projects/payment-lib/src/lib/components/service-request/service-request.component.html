@@ -195,7 +195,11 @@
 [orderCCDEvent] = "orderCCDEvent"
 [orderDetail] = "orderDetail"
 [LOGGEDINUSERROLES] = "LOGGEDINUSERROLES"
-[takepayment] = "takePayment"></ccpay-add-remission>
+[takepayment] = "takePayment"
+[orderFeesTotal] = "orderFeesTotal"
+[orderTotalPayments] = "orderTotalPayments"
+[orderRemissionTotal] = "orderRemissionTotal"
+></ccpay-add-remission>
 
 <ccpay-add-remission *ngIf="viewStatus === 'issuerefund' && payment"
 [isTurnOff]="isTurnOff"
@@ -218,7 +222,10 @@
 [orderCCDEvent] = "orderCCDEvent"
 [orderDetail] = "orderDetail"
 [LOGGEDINUSERROLES] = "LOGGEDINUSERROLES"
-[takepayment] = "takePayment"></ccpay-add-remission>
+[takepayment] = "takePayment"
+[orderFeesTotal] = "orderFeesTotal"
+[orderTotalPayments] = "orderTotalPayments"
+[orderRemissionTotal] = "orderRemissionTotal"></ccpay-add-remission>
 
 <ccpay-add-remission *ngIf="viewStatus === 'addrefundforremission' && payment"
 [isTurnOff]="isTurnOff"
@@ -242,7 +249,28 @@
 [orderCCDEvent] = "orderCCDEvent"
 [orderDetail] = "orderDetail"
 [LOGGEDINUSERROLES] = "LOGGEDINUSERROLES"
-[takepayment] = "takePayment"></ccpay-add-remission>
+[takepayment] = "takePayment"
+[orderFeesTotal] = "orderFeesTotal"
+[orderTotalPayments] = "orderTotalPayments"
+[orderRemissionTotal] = "orderRemissionTotal"></ccpay-add-remission>
+
+<ccpay-payment-view *ngIf="viewStatus === 'payment-view'"
+[LOGGEDINUSERROLES] = "LOGGEDINUSERROLES"
+[isTurnOff] = "isTurnOff" 
+[isTakePayment] = "takePayment"  
+[caseType] = "caseType"
+[orderRef] = "orderRef"
+[orderStatus] = "orderStatus"
+[orderCreated] = "orderCreated"
+[orderParty] = "orderParty"
+[orderCCDEvent] = "orderCCDEvent"
+[orderDetail] = "orderDetail"
+[isOldPcipalOff] = "isOldPcipalOff"
+[isNewPcipalOff] = "isNewPcipalOff"
+[orderFeesTotal] = "orderFeesTotal"
+[orderTotalPayments] = "orderTotalPayments"
+[orderRemissionTotal] = "orderRemissionTotal">
+</ccpay-payment-view>
 
 <ng-container *ngIf="viewStatus === 'feeRemovalConfirmation'">
 <div class="govuk-warning-text">

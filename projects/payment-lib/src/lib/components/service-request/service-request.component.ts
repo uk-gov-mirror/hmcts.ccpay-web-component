@@ -24,11 +24,11 @@ export class ServiceRequestComponent implements OnInit {
   @Input('orderStatus') orderStatus: string;
   @Input('orderParty') orderParty: string;
   @Input('orderCreated') orderCreated: Date;
-  @Input('orderCCDEvent') orderCCDEvent: number;
+  @Input('orderCCDEvent') orderCCDEvent: string;
   @Input('orderFeesTotal') orderFeesTotal: number;
   @Input('orderTotalPayments') orderTotalPayments: number;
   @Input('orderRemissionTotal') orderRemissionTotal: number;
-  @Input() takePayment: boolean;
+  @Input('takePayment') takePayment: boolean;
   @Input('ccdCaseNumber') ccdCaseNumber: boolean;
 
   servicerequest: string;
@@ -106,6 +106,18 @@ export class ServiceRequestComponent implements OnInit {
     if (this.viewStatus === undefined) {
       this.viewStatus = this.paymentLibComponent.viewName;
     }
+    if(this.paymentLibComponent.isFromServiceRequestPage && this.paymentLibComponent.isFromPaymentDetailPage) {
+      if(this.paymentLibComponent.isFromPaymentDetailPage && this.paymentLibComponent.isFromServiceRequestPage) {
+      this.OrderslistService.getorderRefs().subscribe((data) => this.orderRef = data);
+      this.OrderslistService.getorderCCDEvents().subscribe((data) => this.orderCCDEvent = data);
+      this.OrderslistService.getorderCreateds().subscribe((data) => this.orderCreated = data);
+      this.OrderslistService.getorderDetail().subscribe((data) => this.orderDetail = data);
+      this.OrderslistService.getorderPartys().subscribe((data) => this.orderParty = data);
+      this.OrderslistService.getorderRemissionTotals().subscribe((data) => this.orderRemissionTotal = data);
+      this.OrderslistService.getorderFeesTotals().subscribe((data) => this.orderFeesTotal = data);
+      this.OrderslistService.getoorderTotalPaymentss().subscribe((data) => this.orderTotalPayments = data);
+    }
+    }
     // if (this.takePayment) {
     //   this.paymentLibComponent.TAKEPAYMENT = this.takePayment;
     // }
@@ -123,8 +135,17 @@ export class ServiceRequestComponent implements OnInit {
     // }
     this.paymentLibComponent.SERVICEREQUEST = "true";
     this.paymentLibComponent.isFromServiceRequestPage = false;
+    this.paymentLibComponent.isFromPaymentDetailPage = false;
     this.paymentLibComponent.isFromRefundStatusPage = false;
     this.paymentLibComponent.viewName = 'case-transactions';
+    this.OrderslistService.setOrderRef(null);
+    this.OrderslistService.setorderCCDEvent(null);
+    this.OrderslistService.setorderCreated(null);
+    this.OrderslistService.setorderDetail(null);
+    this.OrderslistService.setorderParty(null);
+    this.OrderslistService.setorderTotalPayments(null);
+    this.OrderslistService.setorderRemissionTotal(null);
+    this.OrderslistService.setorderFeesTotal(null);
     // this.OrderslistService.setisFromServiceRequestPage(false);
     // this.OrderslistService.setnavigationPage('servicerequestpage');
     //  this.OrderslistService.setpaymentPageView({ method: this.payment.method, payment_group_reference: this.paymentGroupRef, reference: this.payment.reference });
@@ -298,8 +319,17 @@ export class ServiceRequestComponent implements OnInit {
 
   goToPaymentViewComponent(paymentGroup: any) {
     this.paymentLibComponent.paymentMethod = paymentGroup.paymentMethod;
+    this.paymentLibComponent.isFromServiceRequestPage = true;
     this.paymentLibComponent.paymentGroupReference = paymentGroup.paymentGroupReference;
     this.paymentLibComponent.paymentReference = paymentGroup.paymentReference;
-    this.paymentLibComponent.viewName = 'payment-view';
+    this.OrderslistService.setOrderRef(this.orderRef);
+    this.OrderslistService.setorderCCDEvent(this.orderCCDEvent);
+    this.OrderslistService.setorderCreated(this.orderCreated);
+    this.OrderslistService.setorderDetail(this.orderDetail);
+    this.OrderslistService.setorderParty(this.orderParty);
+    this.OrderslistService.setorderTotalPayments(this.orderTotalPayments);
+    this.OrderslistService.setorderRemissionTotal(this.orderRemissionTotal);
+    this.OrderslistService.setorderFeesTotal(this.orderFeesTotal);
+    this.viewStatus = 'payment-view';
   }
 }

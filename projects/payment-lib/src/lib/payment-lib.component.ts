@@ -91,6 +91,18 @@ export class PaymentLibComponent implements OnInit {
   isTakePayment: boolean;
   // pbaPayOrderRef: IPayment;
   // isFromServiceRequestPage: boolean;
+  orderDetail: any[];
+  orderRef: string;
+  orderStatus: string;
+  orderParty: string;
+  orderCreated: Date;
+  orderCCDEvent: string;
+  serviceRequestValue: string;
+  orderAddBtnEnable: boolean;
+  orderFeesTotal: number = 0.00;
+  orderRemissionTotal: number = 0.00;
+  orderTotalPayments: number = 0.00;
+  orderPendingPayments: number = 0.00;
 
   constructor(private paymentLibService: PaymentLibService,
     private cd: ChangeDetectorRef,

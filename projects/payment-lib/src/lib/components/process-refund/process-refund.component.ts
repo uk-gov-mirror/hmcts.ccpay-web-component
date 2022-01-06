@@ -84,6 +84,10 @@ export class ProcessRefundComponent implements OnInit {
   }
   checkRefundActions(code: string) {
     this.refundActionsHasError = false;
+    this.isReasonFieldEmpty = false;
+    this.isReasonEmpty = false;
+    this.isReasonInvalid = false;
+    this.refundRejectReasonHasError = false;
     if(code === 'Return to caseworker') {
       this.isConfirmButtondisabled = true;
       this.isSendMeBackClicked = true;

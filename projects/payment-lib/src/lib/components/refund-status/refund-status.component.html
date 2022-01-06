@@ -102,14 +102,14 @@
   </div>
 
   <ng-container *ngIf="viewName==='refundview'">
-    <div *ngIf="refundButtonState==='Update required'">
+    <div >
       <!-- <div *ngIf="refundButtonState==='sent back'"> -->
       <br />
       <button type="submit" class="button govuk-button--secondary btnmargin"
         (click)="gotoReviewAndReSubmitPage()">Resubmit
         refund</button>
     </div>
-    <div *ngIf="isProcessRefund && !isLastUpdatedByCurrentUser && refundButtonState==='Sent for approval'" >
+    <div >
       <!-- <div *ngIf="isProcessRefund && !isLastUpdatedByCurrentUser && refundButtonState==='sent for approval'"> -->
       <br />
       <button type="submit" class="button govuk-button--secondary"
