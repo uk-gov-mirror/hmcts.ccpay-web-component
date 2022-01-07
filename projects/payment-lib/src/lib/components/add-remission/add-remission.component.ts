@@ -125,7 +125,6 @@ export class AddRemissionComponent implements OnInit {
       this.viewStatus = '';
       }
     if(this.remission) {
-      // this.cd.detectChanges();
     }
     if(this.fee) {
     this.amount = (this.fee.volume * this.fee.calculated_amount);
@@ -145,12 +144,6 @@ export class AddRemissionComponent implements OnInit {
         Validators.pattern(`(${this.pattern1})|(${this.pattern2})`)
       ]) 
       ),
-      // remissionCode: new FormControl('', Validators.compose([  [A-Za-z]{2}[0-9]{2} [0-9]{6}
-      //   Validators.required,
-      //  // Validators.pattern('/(^[a-zA-Z0-9]{3})-([a-zA-Z0-9]{3})-([a-zA-Z0-9]{3})$/|/^([A-Za-z]{2}[0-9]{2})-([0-9]{6})$/')
-      //  // Validators.pattern('^([a-zA-Z0-9]{3})-([a-zA-Z0-9]{3})-([a-zA-Z0-9]{3})$'),
-      //   Validators.pattern('/^(([A-Za-z]{2}[0-9]{2})-([0-9]{6}))|(([a-zA-Z0-9]{3})-([a-zA-Z0-9]{3})-([a-zA-Z0-9]{3}))$/')
-      // ])),
       amount: new FormControl('', Validators.compose([
         Validators.required,
         Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$')
@@ -190,7 +183,6 @@ export class AddRemissionComponent implements OnInit {
       isRemissionLessThanFee = this.fee.calculated_amount > remissionctrls.amount.value; 
       this.remissionForm.controls['refundReason'].setErrors(null);
       this.remissionForm.controls['refundDDReason'].setErrors(null);
-      //this.remissionForm.controls['amount'].setErrors(null);
     if (this.remissionForm.dirty && this.remissionForm.valid && isRemissionLessThanFee) {
       this.viewStatus = 'confirmation';
     }else {
@@ -584,14 +576,6 @@ export class AddRemissionComponent implements OnInit {
       this.OrderslistService.setorderTotalPayments(this.orderTotalPayments);
       this.OrderslistService.setorderRemissionTotal(this.orderRemissionTotal);
       this.OrderslistService.setorderFeesTotal(this.orderFeesTotal);
-      // this.paymentLibComponent.orderRef = this.orderRef;
-      // this.paymentLibComponent.orderCCDEvent = this.orderCCDEvent;
-      // this.paymentLibComponent.orderCreated = this.orderCreated;
-      // this.paymentLibComponent.orderDetail  = this.orderDetail;
-      // this.paymentLibComponent.orderParty = this.orderParty;
-      // this.paymentLibComponent.orderRemissionTotal = this.orderRemissionTotal;
-      // this.paymentLibComponent.orderFeesTotal = this.orderFeesTotal;
-      // this.paymentLibComponent.orderTotalPayments = this.orderTotalPayments;
       this.viewStatus = 'payment-view';
       this.sendOrderDetail = this.orderDetail;
       this.sendOrderRef = this.orderRef;
@@ -673,39 +657,7 @@ export class AddRemissionComponent implements OnInit {
     this.paymentLibComponent.ISNEWPCIPALOFF = this.isNewPcipalOff;
     this.paymentLibComponent.ISOLDPCIPALOFF = this.isOldPcipalOff;
     this.paymentLibComponent.isFromServiceRequestPage = true;  
-    this.OrderslistService.setOrderRef(null);
-    this.OrderslistService.setorderCCDEvent(null);
-    this.OrderslistService.setorderCreated(null);
-    this.OrderslistService.setorderDetail(null);
-    this.OrderslistService.setorderParty(null);
-    this.OrderslistService.setorderTotalPayments(null);
-    this.OrderslistService.setorderRemissionTotal(null);
-    this.OrderslistService.setorderFeesTotal(null);
-    // this.paymentViewService.getBSfeature().subscribe(
-    //   features => {
-    //     let result = JSON.parse(features).filter(feature => feature.uid === BS_ENABLE_FLAG);
-    //     this.paymentLibComponent.ISBSENABLE = result[0] ? result[0].enable : false;
-    //   },
-    //   err => {
-    //     this.paymentLibComponent.ISBSENABLE = false;
-    //   }
-    // );
-    // this.paymentLibComponent.ISBSENABLE = true;
-    // let partUrl = this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
-    //  partUrl += this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
-    //  partUrl += this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
-    //  partUrl += this.isStrategicFixEnable ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
-    //  partUrl += `&caseType=${this.caseType}`;
-    //  partUrl += this.paymentLibComponent.ISNEWPCIPALOFF ? '&isNewPcipalOff=Enable' : '&isNewPcipalOff=Disable';
-    //  partUrl += this.paymentLibComponent.ISOLDPCIPALOFF ? '&isOldPcipalOff=Enable' : '&isOldPcipalOff=Disable';
-    //  if(this.isFromPaymentDetailPage) {
-    //    partUrl += this.paymentLibComponent.isFromPaymentDetailPage
-    //  }
-
-    // const url = `/payment-history/${this.ccdCaseNumber}?view=case-transactions&takePayment=${this.paymentLibComponent.TAKEPAYMENT}&selectedOption=${this.option}${partUrl}`;
-    // this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    // this.router.onSameUrlNavigation = 'reload';
-    // this.router.navigateByUrl(url);
+    this.resetOrderData();
   }
 
   gotoCasetransationPageCancelBtnClicked(event: Event) {
@@ -717,14 +669,7 @@ export class AddRemissionComponent implements OnInit {
     this.paymentLibComponent.viewName = 'case-transactions';
     this.paymentLibComponent.ISBSENABLE = true;
     this.paymentLibComponent.isRefundStatusView = false;
-    this.OrderslistService.setOrderRef(null);
-    this.OrderslistService.setorderCCDEvent(null);
-    this.OrderslistService.setorderCreated(null);
-    this.OrderslistService.setorderDetail(null);
-    this.OrderslistService.setorderParty(null);
-    this.OrderslistService.setorderTotalPayments(null);
-    this.OrderslistService.setorderRemissionTotal(null);
-    this.OrderslistService.setorderFeesTotal(null);
+    this.resetOrderData();
     } else {  
 
     if (this.paymentLibComponent.REFUNDLIST) {
@@ -739,7 +684,6 @@ export class AddRemissionComponent implements OnInit {
     this.OrderslistService.setnavigationPage('casetransactions');
     this.errorMessage = '';
     this.paymentLibComponent.viewName = 'case-transactions';
-    //this.paymentLibComponent.TAKEPAYMENT = true;
     this.paymentLibComponent.ISTURNOFF = this.isTurnOff;
     this.paymentLibComponent.ISNEWPCIPALOFF = this.isNewPcipalOff;
     this.paymentLibComponent.ISOLDPCIPALOFF = this.isOldPcipalOff;
@@ -769,6 +713,17 @@ export class AddRemissionComponent implements OnInit {
      }
     }
     
+  }
+
+  resetOrderData() {
+    this.OrderslistService.setOrderRef(null);
+    this.OrderslistService.setorderCCDEvent(null);
+    this.OrderslistService.setorderCreated(null);
+    this.OrderslistService.setorderDetail(null);
+    this.OrderslistService.setorderParty(null);
+    this.OrderslistService.setorderTotalPayments(null);
+    this.OrderslistService.setorderRemissionTotal(null);
+    this.OrderslistService.setorderFeesTotal(null);
   }
 
 

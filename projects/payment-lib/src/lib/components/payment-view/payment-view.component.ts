@@ -28,19 +28,9 @@ export class PaymentViewComponent implements OnInit {
   @Input() orderParty: string;
   @Input() orderCreated: Date;
   @Input() orderCCDEvent: string;
-  // @Input() takePayment: boolean;
   @Input() orderFeesTotal: number;
   @Input() orderRemissionTotal: number;
   @Input() orderDetail: any[];
-  // @Input('orderDetail') orderDetail: any[];
-  // @Input('orderRef') orderRef: string;
-  // @Input('orderStatus') orderStatus: string;
-  // @Input('orderParty') orderParty: string;
-  // @Input('orderCreated') orderCreated: Date;
-  // @Input('orderCCDEvent') orderCCDEvent: number;
-  // @Input('orderFeesTotal') orderFeesTotal: number;
-  // @Input('orderTotalPayments') orderTotalPayments: number;
-  // @Input('orderRemissionTotal') orderRemissionTotal: number;
 
   paymentGroup: IPaymentGroup;
   errorMessage: string;
@@ -62,17 +52,6 @@ export class PaymentViewComponent implements OnInit {
   serviceReference: string;
   isFromServiceRequestPage: boolean;
   isFromPaymentDetailPage: boolean;
-
-  // data
-  sendOrderDetail: any[];
-  sendOrderRef: string;
-  // @Input('orderStatus') orderStatus: string;
-  // @Input('orderParty') orderParty: string;
-  // @Input('orderCreated') orderCreated: Date;
-  // @Input('orderCCDEvent') orderCCDEvent: number;
-  // @Input('orderFeesTotal') orderFeesTotal: number;
-  // @Input('orderTotalPayments') orderTotalPayments: number;
-  // @Input('orderRemissionTotal') orderRemissionTotal: number;
 
   constructor(private paymentViewService: PaymentViewService,
     private paymentLibComponent: PaymentLibComponent,
@@ -142,14 +121,7 @@ export class PaymentViewComponent implements OnInit {
         this.OrderslistService.setisFromServiceRequestPage(false);
         this.paymentLibComponent.viewName = 'case-transactions';
         this.paymentLibComponent.ISBSENABLE = true;
-        this.OrderslistService.setOrderRef(null);
-        this.OrderslistService.setorderCCDEvent(null);
-        this.OrderslistService.setorderCreated(null);
-        this.OrderslistService.setorderDetail(null);
-        this.OrderslistService.setorderParty(null);
-        this.OrderslistService.setorderTotalPayments(null);
-        this.OrderslistService.setorderRemissionTotal(null);
-        this.OrderslistService.setorderFeesTotal(null);
+        this.resetOrderData();
     } else {
       this.OrderslistService.getorderRefs().subscribe((data) => this.orderRef = data);
       this.OrderslistService.getorderCCDEvents().subscribe((data) => this.orderCCDEvent = data);
@@ -159,29 +131,9 @@ export class PaymentViewComponent implements OnInit {
       this.OrderslistService.getorderRemissionTotals().subscribe((data) => this.orderRemissionTotal = data);
       this.OrderslistService.getorderFeesTotals().subscribe((data) => this.orderFeesTotal = data);
       this.OrderslistService.getoorderTotalPaymentss().subscribe((data) => this.orderTotalPayments = data);
-      // this.paymentLibComponent.orderRef = this.orderRef;
-      // this.paymentLibComponent.orderCCDEvent = this.orderCCDEvent;
-      // this.paymentLibComponent.orderCreated = this.orderCreated;
-      // this.paymentLibComponent.orderDetail  = this.orderDetail;
-      // this.paymentLibComponent.orderParty = this.orderParty;
-      // this.paymentLibComponent.orderRemissionTotal = this.orderRemissionTotal;
-      // this.paymentLibComponent.orderFeesTotal = this.orderFeesTotal;
-      // this.paymentLibComponent.orderTotalPayments = this.orderTotalPayments;
-
-      this.sendOrderDetail = this.orderDetail;
-      this.sendOrderRef = this.orderRef;
       this.viewStatus = 'order-full-view';
     }
     
-    // this.paymentViewService.getBSfeature().subscribe(
-    //   features => {
-    //     let result = JSON.parse(features).filter(feature => feature.uid === BS_ENABLE_FLAG);
-    //     this.paymentLibComponent.ISBSENABLE = result[0] ? result[0].enable : false;
-    //   },
-    //   err => {
-    //     this.paymentLibComponent.ISBSENABLE = false;
-    //   }
-    // );
   }
 
   addRemission(fee: IFee) {
@@ -260,7 +212,6 @@ export class PaymentViewComponent implements OnInit {
     this.paymentLibComponent.isFromPaymentDetailPage = true;
     this.isFromPaymentDetailPage = true;
     this.isFromServiceRequestPage = this.paymentLibComponent.isFromServiceRequestPage;
-    //this.paymentLibComponent.isFromServiceRequestPage = false;
     }
   }
   }
@@ -270,7 +221,6 @@ export class PaymentViewComponent implements OnInit {
       for (const remission of remissions) {
         if (remission.fee_code === feeCode) {
           return remission;
-          // this.isAddFeeBtnEnabled = true;
         }
       }
     }
@@ -328,5 +278,16 @@ export class PaymentViewComponent implements OnInit {
     tmp4DayAgo.setDate(tmp4DayAgo.getDate() - 4);
     return tmp4DayAgo >= new Date(payment.date_created);
     }
+  }
+
+  resetOrderData() {
+    this.OrderslistService.setOrderRef(null);
+    this.OrderslistService.setorderCCDEvent(null);
+    this.OrderslistService.setorderCreated(null);
+    this.OrderslistService.setorderDetail(null);
+    this.OrderslistService.setorderParty(null);
+    this.OrderslistService.setorderTotalPayments(null);
+    this.OrderslistService.setorderRemissionTotal(null);
+    this.OrderslistService.setorderFeesTotal(null);
   }
 }

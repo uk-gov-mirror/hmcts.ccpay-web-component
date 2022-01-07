@@ -128,9 +128,7 @@ export class CaseTransactionsComponent implements OnInit {
     }
     this.excReference = this.paymentLibComponent.EXC_REFERENCE;
     this.takePayment = this.paymentLibComponent.TAKEPAYMENT;
-    // if(this.isTakePayment) {
-    //   this.takePayment = this.isTakePayment;
-    // }
+
     this.servicerequest = this.paymentLibComponent.SERVICEREQUEST;
     if (this.paymentLibComponent.SERVICEREQUEST === 'true') {
       this.serviceRequestValue = 'true';
@@ -159,7 +157,6 @@ export class CaseTransactionsComponent implements OnInit {
           if (this.isFromServiceRequestPage) {
             this.OrderslistService.getSelectedOrderRefId().subscribe((data) => this.orderRef = data);
             this.goToOrderViewDetailSection(this.orderRef);
-            // this.viewStatus = 'order-full-view';
           } else {
             this.paymentViewService.getPartyDetails(this.ccdCaseNumber).subscribe(
               response => {

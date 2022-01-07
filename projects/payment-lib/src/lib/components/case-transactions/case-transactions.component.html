@@ -53,18 +53,7 @@
 
           </div>
           <div class="govuk-grid-row">
-            <!-- <ccpay-app-unprocessed-payments
-            *ngIf="isBulkScanEnable"
-            [IS_BUTTON_ENABLE]="takePayment"
-            [FEE_RECORDS_EXISTS]="isAnyFeeGroupAvilable"
-            [ISTURNOFF]="isTurnOff"
-            [ISSFENABLE]="isStrategicFixEnable"
-            [PAYMENTREF]="paymentRef"
-            [ISNEWPCIPALOFF]="isNewPcipalOff"
-            [ISOLDPCIPALOFF]="isOldPcipalOff"
-            (getUnprocessedFeeCount) = "getUnprocessedFeeCount($event)"
-            (selectedUnprocessedFeeEvent) = "selectedUnprocessedFeeEvent($event)">
-            </ccpay-app-unprocessed-payments> -->
+            
           </div>
           <div  *ngIf="takePayment" class=" govuk-!-margin-top-9">
 
@@ -415,17 +404,7 @@
       </div>
 
       <div *ngIf="!takePayment" class="govuk-grid-row govuk-grid__surplus-payments">
-          <!-- <div *ngIf="errorMessage">
-              <div class="error-summary" role="group" aria-labelledby="failure-error-summary-heading" tabindex="-1">
-                <h2 class="heading-medium error-summary-heading" id="failure-error-summary-heading">
-                    Sorry, there is a problem with the service
-                </h2>
-                <p>Payment requests and payments cannot currently be shown. Try again.</p>
-                <div class="govuk-error-summary__body">
-                  {{ errorMessage }}
-                </div>
-              </div>
-          </div> -->
+          
         <div class="govuk-grid-column-full">
           
           <span class="heading-medium">Payments</span>
@@ -452,10 +431,7 @@
                       </td>
                   </tr>
               </tbody>
-                    
-              <!-- <tbody class="govuk-table__body" *ngIf="allPayments?.length === 0">
-                <td class="govuk-table__cell" colspan="8">No payments recorded</td>
-              </tbody> -->
+          
             </table>
             <ccpay-app-unprocessed-payments class="govuk-table"
             *ngIf="isBulkScanEnable && !takePayment"
@@ -613,17 +589,7 @@
       </div>
    </ng-container>
 
-   <ng-container *ngIf="!takePayment && viewStatus === 'main'">
-      <!-- <div *ngIf="errorMessage">
-          <div *ngIf="isCPODown && isAnyFeeGroupAvilable" class=" error govuk-inset-text govuk-!-margin-top-7">
-              No party information currently available - try again later.
-          </div>
-          <div *ngIf="!isAnyFeeGroupAvilable" class="error">
-              <h3 class="govuk-heading-m govuk-!-margin-top-7 govuk-!-margin-bottom-1">Sorry, there is a problem with the service</h3>
-              <p>Payment requests and payments cannot currently be shown. Try again.</p>
-        </div>
-        </div> -->
-       
+   <ng-container *ngIf="!takePayment && viewStatus === 'main'">       
       <div  class="govuk-grid-column-full">
         <span *ngIf="serviceRequestValue === 'false'" class="heading-medium">Service requests</span>
         <ng-container *ngIf="!(orderLevelFees?.length === 0 && serviceRequestValue !== 'false' && !isAnyFeeGroupAvilable)">
@@ -714,9 +680,6 @@
               </ccpay-app-unprocessed-payments>
             </ng-container>
 
-            <!-- <ng-container *ngIf="allPayments?.length  === 0">
-                <br/>No payments.
-            </ng-container> -->
           </div>
         </div>
         <div class="govuk-grid-column-full" *ngIf="serviceRequestValue === 'false'">

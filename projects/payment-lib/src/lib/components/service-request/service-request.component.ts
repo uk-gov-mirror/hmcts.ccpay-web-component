@@ -81,10 +81,7 @@ export class ServiceRequestComponent implements OnInit {
   cpoDetails: any = null;
   serviceRequestValue: string;
   orderAddBtnEnable: boolean;
-  // this.orderFeesTotal: number = 0.00;
-  // orderRemissionTotal: number = 0.00;
-  // orderTotalPayments: number = 0.00;
-  // orderPendingPayments: number = 0.00;
+
   isCPODown: boolean;
   test: boolean;
   isPBA: boolean = false;
@@ -129,23 +126,15 @@ export class ServiceRequestComponent implements OnInit {
     this.OrderslistService.setisFromServiceRequestPage(false);
     this.paymentLibComponent.viewName = 'case-transactions';
     this.paymentLibComponent.ISBSENABLE = true;
-    // this.paymentLibComponent.isTakePayment = this.paymentLibComponent.TAKEPAYMENT;
-    // if (this.takePayment) {
-    //   this.paymentLibComponent.isTakePayment = this.takePayment;
-    // }
+    this.paymentLibComponent.isTakePayment = this.paymentLibComponent.TAKEPAYMENT;
+    if (this.takePayment) {
+      this.paymentLibComponent.isTakePayment = this.takePayment;
+    }
     this.paymentLibComponent.SERVICEREQUEST = "true";
     this.paymentLibComponent.isFromServiceRequestPage = false;
-    this.paymentLibComponent.isFromPaymentDetailPage = false;
     this.paymentLibComponent.isFromRefundStatusPage = false;
     this.paymentLibComponent.viewName = 'case-transactions';
-    this.OrderslistService.setOrderRef(null);
-    this.OrderslistService.setorderCCDEvent(null);
-    this.OrderslistService.setorderCreated(null);
-    this.OrderslistService.setorderDetail(null);
-    this.OrderslistService.setorderParty(null);
-    this.OrderslistService.setorderTotalPayments(null);
-    this.OrderslistService.setorderRemissionTotal(null);
-    this.OrderslistService.setorderFeesTotal(null);
+    this.resetOrderData();
     // this.OrderslistService.setisFromServiceRequestPage(false);
     // this.OrderslistService.setnavigationPage('servicerequestpage');
     //  this.OrderslistService.setpaymentPageView({ method: this.payment.method, payment_group_reference: this.paymentGroupRef, reference: this.payment.reference });
@@ -331,5 +320,16 @@ export class ServiceRequestComponent implements OnInit {
     this.OrderslistService.setorderRemissionTotal(this.orderRemissionTotal);
     this.OrderslistService.setorderFeesTotal(this.orderFeesTotal);
     this.viewStatus = 'payment-view';
+  }
+
+  resetOrderData() {
+    this.OrderslistService.setOrderRef(null);
+    this.OrderslistService.setorderCCDEvent(null);
+    this.OrderslistService.setorderCreated(null);
+    this.OrderslistService.setorderDetail(null);
+    this.OrderslistService.setorderParty(null);
+    this.OrderslistService.setorderTotalPayments(null);
+    this.OrderslistService.setorderRemissionTotal(null);
+    this.OrderslistService.setorderFeesTotal(null);
   }
 }
