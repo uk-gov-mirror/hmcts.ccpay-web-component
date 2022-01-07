@@ -555,6 +555,7 @@ export class AddRemissionComponent implements OnInit {
   }
 
   gotoServiceRequestPage(event: any) {
+    this.errorMessage ='';
     event.preventDefault();
     if (this.isFromServiceRequestPage && !this.isFromPaymentDetailPage) {
     this.viewStatus = 'order-full-view';
