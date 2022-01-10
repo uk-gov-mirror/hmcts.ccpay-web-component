@@ -302,6 +302,12 @@ export class ServiceRequestComponent implements OnInit {
     }
   }
   }
+  goToServiceRequestPage(event: any) {
+    event.preventDefault();
+    this.isFromServiceRequestPage = true;
+    this.viewStatus = 'main'
+    this.paymentLibComponent.viewName = 'case-transactions';
+  }
 
   goToPayementView(paymentGroupReference: string, paymentReference: string, paymentMethod: string) {
     this.goToPaymentViewComponent({ paymentGroupReference, paymentReference, paymentMethod });

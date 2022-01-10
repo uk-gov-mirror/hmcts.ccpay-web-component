@@ -2,8 +2,11 @@
 <ng-container *ngIf="viewStatus === 'order-full-view'">
   <div class="govuk-breadcrumbs">
       <ol class="govuk-breadcrumbs__list">
-        <li class="govuk-breadcrumbs__list-item">
+        <li class="govuk-breadcrumbs__list-item" *ngIf="serviceRequestValue === 'false'">
           <a href="javascript:void(0)" (click)="goToCaseTransationPage($event)" class="govuk-back-link">Back</a>
+        </li>
+        <li class="govuk-breadcrumbs__list-item" *ngIf="serviceRequestValue !== 'false'">
+          <a href="javascript:void(0)" (click)="goToServiceRequestPage($event)" class="govuk-back-link">Back</a>
         </li>
       </ol>
     </div>
@@ -13,28 +16,26 @@
       </div>
       <table >
           <tbody>
-          <tr class="section">
+            <tr class="section">
+              <td class="bold tb-col-w">Status</td>
+              <td>{{orderStatus}}</td>
+            </tr>
+            <tr class="section">
+              <td class="bold tb-col-w">Party</td>
+              <td>{{orderParty}}</td>
+            </tr>
+            <tr class="section">
               <td class="bold tb-col-w">Service request reference</td>
               <td>{{orderRef}}</td>
             </tr>
-           <tr class="section">
-            <td class="bold tb-col-w">Status</td>
-            <td>{{orderStatus}}</td>
-          </tr>
-          <tr class="section">
+            <tr class="section">
               <td class="bold tb-col-w">Date created</td>
               <td>{{orderCreated | date:'dd MMMM yyyy'}}</td>
             </tr>
-          <tr class="section">
-            <td class="bold tb-col-w">Party</td>
-            <td>{{orderParty}}</td>
-          </tr>
-
-
-          <tr class="section">
-            <td class="bold tb-col-w">CCD event</td>
-            <td>{{orderCCDEvent}}</td>
-          </tr>
+            <tr class="section">
+              <td class="bold tb-col-w">CCD event</td>
+              <td>{{orderCCDEvent}}</td>
+            </tr>
           </tbody>
         </table>
   </div>
