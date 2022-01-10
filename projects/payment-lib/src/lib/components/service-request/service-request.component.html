@@ -2,11 +2,8 @@
 <ng-container *ngIf="viewStatus === 'order-full-view'">
   <div class="govuk-breadcrumbs">
       <ol class="govuk-breadcrumbs__list">
-        <li class="govuk-breadcrumbs__list-item" *ngIf="serviceRequestValue === 'false'">
+        <li class="govuk-breadcrumbs__list-item">
           <a href="javascript:void(0)" (click)="goToCaseTransationPage($event)" class="govuk-back-link">Back</a>
-        </li>
-        <li class="govuk-breadcrumbs__list-item" *ngIf="serviceRequestValue !== 'false'">
-          <a href="javascript:void(0)" (click)="goToServiceRequestPage($event)" class="govuk-back-link">Back</a>
         </li>
       </ol>
     </div>
@@ -45,20 +42,20 @@
         <table class="govuk-table ">
           <thead class="govuk-table__head">
           <tr class="govuk-table__row">
-            <td class="govuk-table__header col-51" scope="col" *ngIf="serviceRequestValue === 'false'">Fee</td>
-            <td class="govuk-table__header col-51" scope="col" colspan="2" *ngIf="serviceRequestValue !== 'false'">Fee</td>
+            <td class="govuk-table__header col-51" scope="col" *ngIf="isServiceRequest === 'false'">Fee</td>
+            <td class="govuk-table__header col-51" scope="col" colspan="2" *ngIf="isServiceRequest !== 'false'">Fee</td>
             <td class="govuk-table__header" scope="col">Amount</td>
             <td class="govuk-table__header" scope="col">Total</td>
-            <td  class="govuk-table__header" scope="col" *ngIf="serviceRequestValue === 'false'"></td>
+            <td  class="govuk-table__header" scope="col" *ngIf="isServiceRequest === 'false'"></td>
           </tr>
           </thead>
           <tbody class="govuk-table__body" *ngFor="let order of orderDetail;">
             <tr class="govuk-table__row" *ngFor="let fee of order.fees; let i = index;">
-              <td class="govuk-table__cell col-60 whitespace-inherit" *ngIf="serviceRequestValue === 'false'">{{fee.description}}</td>
-              <td class="govuk-table__cell col-60 whitespace-inherit" colspan="2" *ngIf="serviceRequestValue !== 'false'">{{fee.description}}</td>
+              <td class="govuk-table__cell col-60 whitespace-inherit" *ngIf="isServiceRequest === 'false'">{{fee.description}}</td>
+              <td class="govuk-table__cell col-60 whitespace-inherit" colspan="2" *ngIf="isServiceRequest !== 'false'">{{fee.description}}</td>
               <td class="govuk-table__cell">{{fee.volume? fee.volume : '-'}} X {{ fee.calculated_amount/fee.volume| currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
               <td class="govuk-table__cell">{{ fee?.net_amount | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
-              <td class="govuk-table__cell alignright" *ngIf="serviceRequestValue === 'false'">
+              <td class="govuk-table__cell alignright" *ngIf="isServiceRequest === 'false'">
                   <button   [disabled]="!chkForAddRemission(fee.code)" (click)="addRemission(fee)" class="govuk-button govuk-button--secondary"> Add remission</button>
               </td>
           
@@ -167,7 +164,7 @@
   </div>
 </div>
 </ng-container>
-<div *ngIf="serviceRequestValue === 'false'">
+<div *ngIf="isServiceRequest === 'false'">
   <div *ngIf="((orderFeesTotal - orderRemissionTotal)- orderTotalPayments) > 0" >
       <p class="totalPay">Total left to pay: <b>{{((orderFeesTotal - orderRemissionTotal)- orderTotalPayments )| currency:'GBP':'symbol-narrow':'1.2-2' }}</b> </p>
   </div>

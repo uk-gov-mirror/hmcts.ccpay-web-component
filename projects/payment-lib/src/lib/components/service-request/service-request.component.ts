@@ -133,6 +133,9 @@ export class ServiceRequestComponent implements OnInit {
     }
     this.paymentLibComponent.SERVICEREQUEST = "true";
     this.paymentLibComponent.isFromServiceRequestPage = false;
+    if(this.isServiceRequest !== 'false') {
+      this.paymentLibComponent.isFromServiceRequestPage = true;
+    }
     this.paymentLibComponent.isFromRefundStatusPage = false;
     this.paymentLibComponent.viewName = 'case-transactions';
     this.resetOrderData();
@@ -307,6 +310,8 @@ export class ServiceRequestComponent implements OnInit {
     this.isFromServiceRequestPage = true;
     this.viewStatus = 'main'
     this.paymentLibComponent.viewName = 'case-transactions';
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
   }
 
   goToPayementView(paymentGroupReference: string, paymentReference: string, paymentMethod: string) {

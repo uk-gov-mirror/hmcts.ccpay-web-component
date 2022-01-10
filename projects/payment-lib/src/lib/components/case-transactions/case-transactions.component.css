@@ -332,3 +332,6 @@ th, td {
 .maxwidth {
     width: 100%;
 }
+.govuk-padding-btm {
+    padding-bottom: 50px;
+}
