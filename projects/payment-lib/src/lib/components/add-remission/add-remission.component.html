@@ -233,9 +233,11 @@
           <div *ngIf="remessionPayment.status === 'Success'" >
               <button type="submit" [disabled]="!isRemissionApplied" [ngClass]='isConfirmationBtnDisabled ? "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"' (click)="processRefund()">Submit refund </button>
             </div>
-        <p class="govuk-body">
-          <a href="javascript:void(0)" (click)="gotoCasetransationPage()"  class="govuk-link">Return to case</a>
-       </p>
+            <p class="govuk-body">
+            <a href="javascript:void(0)" (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link" data-module="govuk-button">
+              Return to case
+          </a>
+            </p>
       </div>
     </div>
   </ng-container>
@@ -260,9 +262,11 @@
             A refund request for {{refundAmount  | currency:'GBP':'symbol-narrow':'1.2-2' }} has been created and will be passed to a team leader to approve.
           </p>
         </div>
-          <p class="govuk-body">
-            <a href="javascript:void(0)" (click)="gotoCasetransationPage()"  class="govuk-link">Return to case</a>
-         </p>
+        <p class="govuk-body">
+        <a href="javascript:void(0)" (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link" data-module="govuk-button">
+          Return to case
+      </a>
+        </p>
         </div>
       </div>
     
@@ -465,9 +469,11 @@
           A refund request for {{ refundAmount| currency:'GBP':'symbol-narrow':'1.2-2'}} has been passed to a team leader to approve.
         </p>
       </div>
-        <p class="govuk-body">
-          <a (click)="gotoCasetransationPageCancelBtnClicked($event)"  class="govuk-link">Return to case</a>
-       </p>
+      <p class="govuk-body">
+      <a href="javascript:void(0)" (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link" data-module="govuk-button">
+        Return to case
+    </a>
+      </p>
       </div>
     </div>
   </ng-container>
