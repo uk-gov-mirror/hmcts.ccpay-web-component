@@ -30,6 +30,7 @@ export class ServiceRequestComponent implements OnInit {
   @Input('orderRemissionTotal') orderRemissionTotal: number;
   @Input('takePayment') takePayment: boolean;
   @Input('ccdCaseNumber') ccdCaseNumber: boolean;
+  @Input("isServiceRequest") isServiceRequest: string;
 
   servicerequest: string;
   // ccdCaseNumber: string;

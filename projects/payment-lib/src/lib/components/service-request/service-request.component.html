@@ -44,18 +44,20 @@
         <table class="govuk-table ">
           <thead class="govuk-table__head">
           <tr class="govuk-table__row">
-            <td class="govuk-table__header col-51" scope="col">Fee</td>
+            <td class="govuk-table__header col-51" scope="col" *ngIf="serviceRequestValue === 'false'"">Fee</td>
+            <td class="govuk-table__header col-51" scope="col" colspan="2" *ngIf="serviceRequestValue !== 'false'"">Fee</td>
             <td class="govuk-table__header" scope="col">Amount</td>
             <td class="govuk-table__header" scope="col">Total</td>
-            <td  class="govuk-table__header" scope="col"></td>
+            <td  class="govuk-table__header" scope="col" *ngIf="serviceRequestValue === 'false'"></td>
           </tr>
           </thead>
           <tbody class="govuk-table__body" *ngFor="let order of orderDetail;">
             <tr class="govuk-table__row" *ngFor="let fee of order.fees; let i = index;">
-              <td class="govuk-table__cell col-60 whitespace-inherit">{{fee.description}}</td>
+              <td class="govuk-table__cell col-60 whitespace-inherit" *ngIf="serviceRequestValue === 'false'">{{fee.description}}</td>
+              <td class="govuk-table__cell col-60 whitespace-inherit" colspan="2" *ngIf="serviceRequestValue !== 'false'">{{fee.description}}</td>
               <td class="govuk-table__cell">{{fee.volume? fee.volume : '-'}} X {{ fee.calculated_amount/fee.volume| currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
               <td class="govuk-table__cell">{{ fee?.net_amount | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
-              <td class="govuk-table__cell alignright">
+              <td class="govuk-table__cell alignright" *ngIf="serviceRequestValue === 'false'">
                   <button   [disabled]="!chkForAddRemission(fee.code)" (click)="addRemission(fee)" class="govuk-button govuk-button--secondary"> Add remission</button>
               </td>
           
@@ -164,13 +166,14 @@
   </div>
 </div>
 </ng-container>
+<div *ngIf="serviceRequestValue === 'false'">
   <div *ngIf="((orderFeesTotal - orderRemissionTotal)- orderTotalPayments) > 0" >
       <p class="totalPay">Total left to pay: <b>{{((orderFeesTotal - orderRemissionTotal)- orderTotalPayments )| currency:'GBP':'symbol-narrow':'1.2-2' }}</b> </p>
   </div>
   <div *ngIf="((orderFeesTotal - orderRemissionTotal)- orderTotalPayments) < 0" >
       <p class="totalPay">Total left to pay: <b>0</b> </p>
   </div>
-
+</div>
  
 </ng-container>
 <ccpay-add-remission *ngIf="viewStatus === 'addremission' && feeId"
