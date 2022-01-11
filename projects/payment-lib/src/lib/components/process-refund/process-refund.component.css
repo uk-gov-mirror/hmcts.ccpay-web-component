@@ -10,11 +10,17 @@
 }
 
 .govuk-button {
-    font-size: 1.875rem; 
-    float: left;
-    margin-top:2em
+    font-size: 1.875rem !important; 
+    float: left !important;
+    margin-top:2em !important;
 }
 
+@media (min-width: 40.0625em) {
+    .govuk-button {
+        font-size: 1.875rem !important; 
+        float: left !important;
+        margin-top:2em !important;
+    } }
 .remission {
     margin-bottom: 7em;
 }
