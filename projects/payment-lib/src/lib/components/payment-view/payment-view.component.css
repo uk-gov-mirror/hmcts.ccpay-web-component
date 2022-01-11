@@ -37,3 +37,6 @@
 .text-transform::first-letter {
     text-transform: capitalize;
 }
+.govuk-link {
+    cursor: pointer;
+  }
