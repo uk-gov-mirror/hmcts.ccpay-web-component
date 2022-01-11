@@ -11,6 +11,7 @@ import { CardDetailsComponent } from './components/card-details/card-details.com
 import { PageNotFoundComponent } from './components/page-not-found.component';
 import { PaymentLibComponent } from './payment-lib.component';
 import { StatusHistoryComponent } from './components/status-history/status-history.component';
+import { ContactDetailsComponent } from './components/contact-details/contact-details.component';
 import { PbaDetailsComponent } from './components/pba-details/pba-details.component';
 import { LoggerService } from './services/shared/logger/logger.service';
 import { ConsoleLoggerService } from './services/shared/logger/console-logger.service';
@@ -62,6 +63,7 @@ import { ServiceRequestComponent } from './components/service-request/service-re
     PaymentListComponent,
     PaymentViewComponent,
     // PbaPaymentComponent,
+    ContactDetailsComponent,
     ProcessRefundComponent,
     RefundListComponent,
     CardDetailsComponent,

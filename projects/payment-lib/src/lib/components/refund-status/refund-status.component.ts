@@ -43,6 +43,8 @@ export class RefundStatusComponent implements OnInit {
   refundHasError: boolean = false;
   refundReasons: any[] = [];
   refundStatusHistories: IRefundStatus[];
+  refundNotifications: IRefundStatus[];
+
   refundReference: string;
   refundAmount: string;
   refundCode: string;

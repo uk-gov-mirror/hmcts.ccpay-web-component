@@ -73,6 +73,34 @@
     </tbody>
   </table>
 
+
+    <!-- Notification sent details -->
+    <div>
+      <br />
+      <h2 class="govuk-heading-m">Notifications sent</h2>
+      <div *ngIf="refundStatusHistories">
+      <table class="govuk-table">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <td class="govuk-table__header col-24 whitespace-inherit" scope="col">Date and time</td>
+            <td class="govuk-table__header col-27 whitespace-inherit" scope="col">Sent to</td>
+            <td class="govuk-table__header whitespace-inherit" scope="col">Sent via</td>
+            <td class="govuk-table__header whitespace-inherit" scope="col">Actions</td>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body" *ngFor="let refundStatusHistory of refundStatusHistories;">
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell whitespace-inherit">{{refundStatusHistory.status}}</td>
+            <td class="govuk-table__cell whitespace-inherit">{{refundStatusHistory.date_created | date:'d MMMM yyyy
+              hh:mm:ss'}}</td>
+            <td class="govuk-table__cell whitespace-inherit">{{refundStatusHistory.created_by}}</td>
+            <td class="govuk-table__cell whitespace-inherit"><a href="#">Resend</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">Edit details</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    </div>
   <!-- Status history -->
   <div>
     <br />
