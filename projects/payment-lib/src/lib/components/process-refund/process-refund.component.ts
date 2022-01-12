@@ -40,6 +40,7 @@ export class ProcessRefundComponent implements OnInit {
   successMsg: string = null;
   navigationpage: string;
   ccdCaseNumber: string;
+  isFromRefundListPage: boolean;
 
   isConfirmButtondisabled: boolean = true;
   constructor(private RefundsService: RefundsService,
@@ -81,6 +82,10 @@ export class ProcessRefundComponent implements OnInit {
       ])),
     });
    this.ccdCaseNumber = this.refundlistsource.ccd_case_number;
+
+   if((typeof this.paymentLibComponent.TAKEPAYMENT === 'string' && this.paymentLibComponent.TAKEPAYMENT === 'false') || (typeof this.paymentLibComponent.TAKEPAYMENT === 'boolean' && !this.paymentLibComponent.TAKEPAYMENT) ) {
+    this.isFromRefundListPage = true;
+   }
   }
   checkRefundActions(code: string) {
     this.refundActionsHasError = false;
