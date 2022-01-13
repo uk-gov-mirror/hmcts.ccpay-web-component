@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { PaymentLibComponent } from '../../payment-lib.component';
 
@@ -8,6 +8,7 @@ import { PaymentLibComponent } from '../../payment-lib.component';
   styleUrls: ['./contact-details.component.css']
 })
 export class ContactDetailsComponent implements OnInit {
+  @Output() assignContactDetails: EventEmitter<any> = new EventEmitter();
   pageTitle: string = 'Payment status history';
   errorMessage: string;
   isEmailSAddressClicked: boolean = true;
@@ -99,7 +100,7 @@ export class ContactDetailsComponent implements OnInit {
     if( this.isEmailSAddressClicked ){
       const emailField = this.emailAddressForm.controls.email;
       if (this.emailAddressForm.dirty && this.emailAddressForm.valid) {
-
+        this.assignContactDetails.emit( {email: emailField.value, notificationType: 'EMAIL'} );
       } else {
         if( emailField.value == '' ) {
           this.resetForm([true,false,false,false,false,false,false,false,false,false,false,false,false,false], 'email');
@@ -113,7 +114,13 @@ export class ContactDetailsComponent implements OnInit {
     } else if(this.isPostcodeClicked && this.isManualAddressClicked) {
       const fieldCtrls = this.manualAddressForm.controls;
       if (this.manualAddressForm.dirty && this.manualAddressForm.valid) {
-
+        this.assignContactDetails.emit({address: {
+          address1: fieldCtrls.addressl1.value+''+fieldCtrls.addressl2.value,
+          town: fieldCtrls.townorcity.value,
+          county: fieldCtrls.county.value,
+          mpostcode: fieldCtrls.mpostcode.value,
+          country: fieldCtrls.country.value,
+        }, notificationType: 'LETTER'});
       } else {
         if( fieldCtrls.addressl1.value == '' ) {
           this.resetForm([false,false,false,false,true,false,false,false,false,false,false,false,false,false], 'address1');
@@ -153,7 +160,7 @@ export class ContactDetailsComponent implements OnInit {
   postcodeValidation() {
     const postcodeField = this.postCodeForm.controls.postcode;
     if (this.postCodeForm.dirty && this.postCodeForm.valid) {
-
+      this.assignContactDetails.emit({});
     } else {
       if( postcodeField.value == '' ) {
         this.resetForm([false,false,true,false,false,false,false,false,false,false,false,false,false], 'postcode');

@@ -365,14 +365,14 @@
       
   </ng-container>
 
-  <ng-container>
+  <ng-container *ngIf="viewCompStatus === 'contactDetailsPage'">
     <input #myInput type='hidden' id='iFrameDrivenImageValue' value='CAPTUREADDRESSDETAILSPAGE'> 
     <div class="govuk-warning-text">
      
       <h1 class="govuk-heading-l">Process refund</h1>
       <h2 class="govuk-heading-m">Case reference: {{ccdCaseNumber | ccdHyphens }}</h2>
     </div>
-    <ccpay-contact-details></ccpay-contact-details>
+    <ccpay-contact-details (assignContactDetails)="getContactDetails($event)"></ccpay-contact-details>
     <p>
         <a (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link" data-module="govuk-button">
             Cancel

@@ -66,7 +66,7 @@ export class AddRemissionComponent implements OnInit {
       other: 'Other'
     }
   }
-
+  contactDetailsObj: any[] = [];
   remissionForm: FormGroup;
   hasErrors = false;
   viewStatus = 'main';
@@ -428,7 +428,7 @@ export class AddRemissionComponent implements OnInit {
         this.refundListReason.emit({reason: this.displayRefundReason, code: this.refundReason});
       } else {
         this.viewCompStatus = '';
-        this.viewStatus = 'checkissuerefundpage';
+        this.viewStatus = 'contactDetailsPage';
       }
       
     } else {
@@ -438,7 +438,7 @@ export class AddRemissionComponent implements OnInit {
         this.refundListReason.emit({reason: this.selectedRefundReason, code: this.refundReason});
       } else {
         this.viewCompStatus = '';
-        this.viewStatus = 'checkissuerefundpage';
+        this.viewStatus = 'contactDetailsPage';
       }
    
     }
@@ -552,6 +552,11 @@ export class AddRemissionComponent implements OnInit {
     }
 
 
+  }
+  getContactDetails(obj:any) {
+    this.contactDetailsObj = obj;
+    this.viewCompStatus = '';
+    this.viewStatus = 'checkissuerefundpage';
   }
 
   gotoServiceRequestPage(event: any) {
