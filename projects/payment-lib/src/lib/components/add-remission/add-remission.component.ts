@@ -471,7 +471,7 @@ export class AddRemissionComponent implements OnInit {
       this.retroRemission = true;
     }
   
-    const requestBody = new PostRefundRetroRemission(this.payment.reference,this.refundReason);
+    const requestBody = new PostRefundRetroRemission(this.payment.reference,this.refundReason, this.contactDetailsObj);
     this.paymentViewService.postRefundsReason(requestBody).subscribe(
       response => {
           if (JSON.parse(response)) {
@@ -499,7 +499,7 @@ export class AddRemissionComponent implements OnInit {
       this.retroRemission = true;
     }
 
-    const requestBody = new PostRefundRetroRemission(this.payment.reference,'RR004-Retrospective remission');
+    const requestBody = new PostRefundRetroRemission(this.payment.reference,'RR004-Retrospective remission', this.contactDetailsObj);
     this.paymentViewService.postRefundsReason(requestBody).subscribe(
       response => {
           if (JSON.parse(response)) {
