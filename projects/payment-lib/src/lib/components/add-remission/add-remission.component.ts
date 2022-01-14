@@ -8,9 +8,8 @@ import { PaymentLibComponent } from '../../payment-lib.component';
 import { IPayment } from '../../interfaces/IPayment';
 import { RefundsService } from '../../services/refunds/refunds.service';
 import { IRefundReasons } from '../../interfaces/IRefundReasons';
-import { RefundsRequest } from '../../interfaces/RefundsRequest';
 import { AddRetroRemissionRequest } from '../../interfaces/AddRetroRemissionRequest';
-import { IssueRefundRequest } from '../../interfaces/IssueRefundRequest';
+import { IRefundContactDetails } from '../../interfaces/IRefundContactDetails';
 import { PostRefundRetroRemission } from '../../interfaces/PostRefundRetroRemission';
 import { PostIssueRefundRetroRemission } from '../../interfaces/PostIssueRefundRetroRemission';
 import {ChangeDetectorRef} from '@angular/core';
@@ -66,7 +65,7 @@ export class AddRemissionComponent implements OnInit {
       other: 'Other'
     }
   }
-  contactDetailsObj: any[] = [];
+  contactDetailsObj: IRefundContactDetails;
   remissionForm: FormGroup;
   hasErrors = false;
   viewStatus = 'main';
@@ -553,7 +552,7 @@ export class AddRemissionComponent implements OnInit {
 
 
   }
-  getContactDetails(obj:any) {
+  getContactDetails(obj:IRefundContactDetails) {
     this.contactDetailsObj = obj;
     this.viewCompStatus = '';
     this.viewStatus = 'checkissuerefundpage';
