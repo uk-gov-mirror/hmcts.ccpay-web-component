@@ -371,7 +371,7 @@
       <h2 class="govuk-heading-m govuk-font19px">Case reference: {{ccdCaseNumber | ccdHyphens }}</h2>
     <ccpay-contact-details 
     (assignContactDetails)="getContactDetails($event)"
-    (redirectToIssueRefund)="gotoIssueRefundPage($event)" ></ccpay-contact-details>
+    (redirectToIssueRefund)="gotoIssueRefundPage()" ></ccpay-contact-details>
     <p>
         <a (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link" data-module="govuk-button">
             Cancel
