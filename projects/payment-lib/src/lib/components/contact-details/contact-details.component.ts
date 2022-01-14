@@ -100,7 +100,10 @@ export class ContactDetailsComponent implements OnInit {
     if( this.isEmailSAddressClicked ){
       const emailField = this.emailAddressForm.controls.email;
       if (this.emailAddressForm.dirty && this.emailAddressForm.valid) {
-        this.assignContactDetails.emit( {email: emailField.value, notificationType: 'EMAIL'} );
+        this.assignContactDetails.emit( {
+          email: emailField.value,
+          notification_type: 'EMAIL'
+        } );
       } else {
         if( emailField.value == '' ) {
           this.resetForm([true,false,false,false,false,false,false,false,false,false,false,false,false,false], 'email');
@@ -114,13 +117,14 @@ export class ContactDetailsComponent implements OnInit {
     } else if(this.isPostcodeClicked && this.isManualAddressClicked) {
       const fieldCtrls = this.manualAddressForm.controls;
       if (this.manualAddressForm.dirty && this.manualAddressForm.valid) {
-        this.assignContactDetails.emit({address: {
-          address1: fieldCtrls.addressl1.value+''+fieldCtrls.addressl2.value,
-          town: fieldCtrls.townorcity.value,
+        this.assignContactDetails.emit({
+          address_line: fieldCtrls.addressl1.value+''+fieldCtrls.addressl2.value,
+          city: fieldCtrls.townorcity.value,
           county: fieldCtrls.county.value,
-          mpostcode: fieldCtrls.mpostcode.value,
+          postal_code: fieldCtrls.mpostcode.value,
           country: fieldCtrls.country.value,
-        }, notificationType: 'LETTER'});
+          notification_type: 'LETTER'
+        });
       } else {
         if( fieldCtrls.addressl1.value == '' ) {
           this.resetForm([false,false,false,false,true,false,false,false,false,false,false,false,false,false], 'address1');

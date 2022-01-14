@@ -366,12 +366,9 @@
   </ng-container>
 
   <ng-container *ngIf="viewStatus === 'contactDetailsPage'">
-    <input #myInput type='hidden' id='iFrameDrivenImageValue' value='CAPTUREADDRESSDETAILSPAGE'> 
-    <div class="govuk-warning-text">
-     
+    <input #myInput type='hidden' id='iFrameDrivenImageValue' value='CAPTUREADDRESSDETAILSPAGE'>      
       <h1 class="govuk-heading-l">Process refund</h1>
-      <h2 class="govuk-heading-m">Case reference: {{ccdCaseNumber | ccdHyphens }}</h2>
-    </div>
+      <h2 class="govuk-heading-m govuk-font19px">Case reference: {{ccdCaseNumber | ccdHyphens }}</h2>
     <ccpay-contact-details (assignContactDetails)="getContactDetails($event)"></ccpay-contact-details>
     <p>
         <a (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link" data-module="govuk-button">
@@ -402,6 +399,29 @@
               <td class="govuk-table__cell govuk-!-font-weight-bold">Payment amount</td>
               <td class="govuk-table__cell">{{this.payment.amount | currency:'GBP':'symbol-narrow':'1.2-2'}}</td>
           </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell govuk-!-font-weight-bold">Refund amount</td>
+            <td class="govuk-table__cell">{{this.payment.amount | currency:'GBP':'symbol-narrow':'1.2-2'}}</td>
+        </tr>
+        <tr class="govuk-table__row">
+            <td class="govuk-table__cell govuk-!-font-weight-bold">Send to</td>
+            <td class="govuk-table__cell">{{this.payment.amount | currency:'GBP':'symbol-narrow':'1.2-2'}}</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell govuk-!-font-weight-bold">Send via</td>
+          <td class="govuk-table__cell">
+            <div *ngIf="contactDetailsObj.notification_type === 'EMAIL">
+              <strong>Email</strong>
+              <br/>
+              {{contactDetailsObj.email}}
+            </div>
+            <div *ngIf="contactDetailsObj.notification_type === 'LETTER'">
+              <strong>Post</strong>
+              <br/>
+              {{contactDetailsObj.address_line}} {{contactDetailsObj.city}} {{contactDetailsObj.county}} {{contactDetailsObj.country}} {{contactDetailsObj.postal_code}}
+            </div>
+        </td>
+      </tr>
       </table>
       <div class="govuk-button-group">
       <button type="submit" class="button govuk-button--secondary" (click)="gotoIssueRefundPage()"> Previous </button>
