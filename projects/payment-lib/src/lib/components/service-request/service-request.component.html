@@ -3,7 +3,7 @@
   <div class="govuk-breadcrumbs">
       <ol class="govuk-breadcrumbs__list">
         <li class="govuk-breadcrumbs__list-item">
-          <a href="javascript:void(0)" (click)="goToCaseTransationPage($event)" class="govuk-back-link">Back</a>
+          <a  (click)="goToCaseTransationPage($event)" class="govuk-back-link">Back</a>
         </li>
       </ol>
     </div>
@@ -145,7 +145,7 @@
       <tbody  *ngIf="order.payments?.length > 0" class="govuk-table__body">
         <tr class="govuk-table__row"  *ngFor="let payment of order.payments">
             <td class="govuk-table__cell whitespace-inherit">
-              <a href="javascript:void(0)" (click)="goToPayementView(payment.paymentGroupReference, payment.reference, payment.method)">Review</a>
+              <a  (click)="goToPayementView(payment.paymentGroupReference, payment.reference, payment.method)">Review</a>
             </td>
             <td class="govuk-table__cell whitespace-inherit">{{ payment?.date_created | date:'dd MMM yyyy' }}</td>
             <td class="govuk-table__cell whitespace-inherit">{{ payment?.amount | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>

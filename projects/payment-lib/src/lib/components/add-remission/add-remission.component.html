@@ -118,7 +118,8 @@
                 <button (click)="gotoServiceRequestPage($event)" class="govuk-button govuk-button--secondary"> Previous</button>
                 <button (click)="addRemissionCode()" class="govuk-button"> Continue</button>
             </div>
-            <p><a href="javascript:void(0)" (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link" data-module="govuk-button">Cancel</a></p>
+            <p><a 
+               (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link" data-module="govuk-button">Cancel</a></p>
           </div>
       </form>
 
@@ -166,7 +167,7 @@
                   
                   </div>
                   <p>
-                    <a href="javascript:void(0)" (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link" data-module="govuk-button">Cancel</a>
+                    <a  (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link" data-module="govuk-button">Cancel</a>
                 </p>
               </div>
     
@@ -213,7 +214,7 @@
 
       <button type="submit" class="button govuk-button--secondary" (click)="addRemissionCode()">Previous</button>
       <button type="submit" [disabled]="isConfirmationBtnDisabled" [ngClass]='isConfirmationBtnDisabled ? "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"' (click)="confirmRetroRemission()"> Add remission </button>
-      <p> <a href="javascript:void(0)" (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link" data-module="govuk-button"> Cancel</a> </p>
+      <p> <a (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link" data-module="govuk-button"> Cancel</a> </p>
 
   </ng-container>
 
@@ -234,7 +235,7 @@
               <button type="submit" [disabled]="!isRemissionApplied" [ngClass]='isConfirmationBtnDisabled ? "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"' (click)="processRefund()">Submit refund </button>
             </div>
             <p class="govuk-body">
-            <a href="javascript:void(0)" (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link pointer" data-module="govuk-button">
+            <a id="returntocase" (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link pointer" data-module="govuk-button">
               Return to case
           </a>
             </p>
@@ -263,7 +264,7 @@
           </p>
         </div>
         <p class="govuk-body">
-        <a href="javascript:void(0)" (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link pointer" data-module="govuk-button">
+        <a id="returntocase" (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link pointer" data-module="govuk-button">
           Return to case
       </a>
         </p>
@@ -358,7 +359,7 @@
             <button (click)="gotoIssueRefundConfirmation(payment)" class="govuk-button"> Continue</button>
         </div>
         <p>
-          <a href="javascript:void(0)" (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link" data-module="govuk-button">
+          <a  (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link" data-module="govuk-button">
               Cancel
           </a>
       </p>
@@ -443,7 +444,7 @@
       </button>
       </div>
       <p>
-          <a href="javascript:void(0)"  (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link" data-module="govuk-button">
+          <a  (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link" data-module="govuk-button">
               Cancel
           </a>
       </p>
@@ -470,7 +471,7 @@
         </p>
       </div>
       <p class="govuk-body">
-      <a href="javascript:void(0)" (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link pointer" data-module="govuk-button">
+      <a id="returntocase" (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link pointer" data-module="govuk-button">
         Return to case
     </a>
       </p>
