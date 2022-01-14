@@ -55,18 +55,18 @@ export class ContactDetailsComponent implements OnInit {
     this.manualAddressForm = this.formBuilder.group({
       addressl1: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('^[a-zA-Z0-9\s,\'-]*$')
+        Validators.pattern('^[a-zA-Z0-9\\s,\'-]*$')
       ])),
       addressl2: new FormControl('', Validators.compose([
-        Validators.pattern('^[a-zA-Z0-9\s,\'-]*$')
+        Validators.pattern('^[a-zA-Z0-9\\s,\'-]*$')
       ])),
       townorcity: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('^[a-zA-Z0-9\s,\'-]*$')
+        Validators.pattern('^[a-zA-Z0-9\\s,\'-]*$')
       ])),
       county: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('^[a-zA-Z0-9\s,\'-]*$')
+        Validators.pattern('^[a-zA-Z0-9\\s,\'-]*$')
       ])),
       mpostcode: new FormControl('', Validators.compose([
         Validators.required,
