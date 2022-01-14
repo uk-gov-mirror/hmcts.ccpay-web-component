@@ -9,6 +9,7 @@ import { PaymentLibComponent } from '../../payment-lib.component';
 })
 export class ContactDetailsComponent implements OnInit {
   @Output() assignContactDetails: EventEmitter<any> = new EventEmitter();
+  @Output() redirectToIssueRefund: EventEmitter<any> = new EventEmitter();
   pageTitle: string = 'Payment status history';
   errorMessage: string;
   isEmailSAddressClicked: boolean = true;
@@ -173,6 +174,9 @@ export class ContactDetailsComponent implements OnInit {
         this.resetForm([false,false,false,true,false,false,false,false,false,false,false,false,false], 'postcode');
       }
     }
+  }
+  redirection() {
+    this.redirectToIssueRefund.emit();
   }
   resetForm(val, field) {
     if(field==='email' || field==='all') {

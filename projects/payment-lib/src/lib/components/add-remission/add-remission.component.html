@@ -369,7 +369,9 @@
     <input #myInput type='hidden' id='iFrameDrivenImageValue' value='CAPTUREADDRESSDETAILSPAGE'>      
       <h1 class="govuk-heading-l">Process refund</h1>
       <h2 class="govuk-heading-m govuk-font19px">Case reference: {{ccdCaseNumber | ccdHyphens }}</h2>
-    <ccpay-contact-details (assignContactDetails)="getContactDetails($event)"></ccpay-contact-details>
+    <ccpay-contact-details 
+    (assignContactDetails)="getContactDetails($event)"
+    (redirectToIssueRefund)="gotoIssueRefundPage($event)" ></ccpay-contact-details>
     <p>
         <a (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link" data-module="govuk-button">
             Cancel
@@ -424,7 +426,7 @@
       </tr>
       </table>
       <div class="govuk-button-group">
-      <button type="submit" class="button govuk-button--secondary" (click)="gotoIssueRefundPage()"> Previous </button>
+      <button type="submit" class="button govuk-button--secondary" (click)="gotoContactDetailsPage()"> Previous </button>
       <button type="submit"
       [disabled]="isConfirmationBtnDisabled"
       [ngClass]='isConfirmationBtnDisabled ? "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"'

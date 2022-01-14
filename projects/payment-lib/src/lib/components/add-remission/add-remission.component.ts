@@ -453,6 +453,16 @@ export class AddRemissionComponent implements OnInit {
     this.isReasonEmpty = false;
   }
 
+  gotoContactDetailsPage() {
+    this.errorMessage = '';
+    this.viewCompStatus = '';
+    this.viewStatus = 'contactDetailsPage';
+    this.isRefundRemission = true;
+    this.errorMessage = false;
+    this.refundHasError = false;
+    this.isReasonEmpty = false;
+  }
+
   changeIssueRefundReason() {
    // this.remissionForm.controls['refundReason'].setValue('Duplicate payment');
    this.errorMessage = '';
