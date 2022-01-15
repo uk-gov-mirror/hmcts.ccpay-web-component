@@ -1,6 +1,6 @@
 <ng-container *ngIf="viewStatus === 'pba-payment'">
 
-  <div class="govuk-breadcrumbs" *ngIf="!errorMsg">
+  <div class="govuk-breadcrumbs" *ngIf="!errorMsg && !isPBAAccountPaymentSuccess && !isCardPaymentSuccess">
     <ol class="govuk-breadcrumbs__list">
       <li class="govuk-breadcrumbs__list-item">
         <a href="javascript:void(0)" (click)="gotoCasetransationPage()" class="govuk-back-link pba-payments-16-font">Back</a>
@@ -174,14 +174,14 @@
           <div class="govuk-error-summary__body">
             <ul class="govuk-list govuk-error-summary__list">
               <li class="pba-payments-error-16-font">
-                Your PBA account ({{selectedPbaAccount}}) has been put on hold or no longer exists.
+                Your PBA account ({{selectedPbaAccount}}) no longer exists.
               </li>
             </ul>
           </div>
         </div>
         <div class="pba-payments-margin-top-10">
           <h2 class="heading-medium">Should you need any further advice</h2>
-          <p class="govuk-body pba-payments-19-font">
+          <p class="govuk-body pba-payments-19-font govuk-body-width">
             Email <a href="mailto:MiddleOffice.DDservices@liberata.com">MiddleOffice.DDservices@liberata.com</a>or call <a href="tel:01633-652-125">01633 652 125</a> (option 3) to try to fix the issue.
           </p>
           <p class="govuk-body pba-payments-19-font">
