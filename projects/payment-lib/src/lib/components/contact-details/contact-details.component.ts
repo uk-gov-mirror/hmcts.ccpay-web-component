@@ -175,8 +175,8 @@ export class ContactDetailsComponent implements OnInit {
       }
     }
   }
-  redirection() {
-    this.redirectToIssueRefund.emit();
+  redirection(event:any) {
+    this.redirectToIssueRefund.emit(event);
   }
   resetForm(val, field) {
     if(field==='email' || field==='all') {
