@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl, RequiredValidator } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl, RequiredValidator, FormArray } from '@angular/forms';
 import { IFee } from '../../interfaces/IFee';
 import {Router} from '@angular/router';
 import { AddRemissionRequest } from '../../interfaces/AddRemissionRequest';
@@ -26,6 +26,7 @@ const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 })
 export class AddRemissionComponent implements OnInit {
   @Input() fee: IFee;
+  @Input() fees: any [];
   @Input() payment: IPayment;
   @Input() remission: IRemission;
   @Input() ccdCaseNumber: string;
@@ -118,6 +119,8 @@ export class AddRemissionComponent implements OnInit {
     private OrderslistService: OrderslistService) { }
 
   ngOnInit() {
+
+      
     this.default = 'Select a different reason';
     this.pattern1 = '^([a-zA-Z0-9]{3})-([a-zA-Z0-9]{3})-([a-zA-Z0-9]{3})$';
     this.pattern2 = '^([A-Za-z]{2}[0-9]{2})-([0-9]{6})$';
@@ -150,7 +153,8 @@ export class AddRemissionComponent implements OnInit {
       ])),
       refundReason: new FormControl('', Validators.compose([Validators.required])),
       refundDDReason: new FormControl('', Validators.compose([Validators.required])),
-      reason: new FormControl()
+      reason: new FormControl(),
+      feeAmount: new FormControl(),
     });
     const remissionctrls=this.remissionForm.controls;
     remissionctrls['refundDDReason'].setValue('Select a different reason', {onlySelf: true});
@@ -176,6 +180,7 @@ export class AddRemissionComponent implements OnInit {
     }
 
   }
+
 
   addRemission() {
     this.resetRemissionForm([false, false, false, false, false, false], 'All');
@@ -452,6 +457,10 @@ export class AddRemissionComponent implements OnInit {
     this.errorMessage = false;
     this.refundHasError = false;
     this.isReasonEmpty = false;
+  }
+
+  gotoIssuePage(){
+      this.viewCompStatus = 'issuerefundpage1';
   }
 
   changeIssueRefundReason() {
