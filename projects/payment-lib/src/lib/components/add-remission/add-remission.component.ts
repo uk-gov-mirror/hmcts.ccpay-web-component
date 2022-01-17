@@ -333,7 +333,7 @@ export class AddRemissionComponent implements OnInit {
         this.resetRemissionForm([false, false, false, false, true], 'amount');
       } else {
           this.viewCompStatus = '';
-          this.viewStatus = "checkretroremissionpage";
+          this.viewStatus = "remissionAddressPage";
       }
     }
   } else {
@@ -343,7 +343,7 @@ export class AddRemissionComponent implements OnInit {
         this.resetRemissionForm([false, false, true, false, false], 'amount');
       } else {
           this.viewCompStatus = '';
-          this.viewStatus = "checkretroremissionpage";
+          this.viewStatus = "remissionAddressPage";
           this.refundListAmount.emit(remissionctrls['amount'].value);
       }
     //}
@@ -354,6 +354,13 @@ export class AddRemissionComponent implements OnInit {
   gotoProcessRetroRemissionPage() {
     this.viewStatus = '';
     this.viewCompStatus = 'addremission';
+    this.isRefundRemission = true;
+    this.errorMessage = '';
+  }
+
+  gotoProcessRetroRemission() {
+    this.viewStatus = 'remissionAddressPage';
+    this.viewCompStatus = '';
     this.isRefundRemission = true;
     this.errorMessage = '';
   }
@@ -562,10 +569,10 @@ export class AddRemissionComponent implements OnInit {
 
 
   }
-  getContactDetails(obj:IRefundContactDetails) {
+  getContactDetails(obj:IRefundContactDetails, type) {
     this.contactDetailsObj = obj;
     this.viewCompStatus = '';
-    this.viewStatus = 'checkissuerefundpage';
+    this.viewStatus = type;
   }
 
   gotoServiceRequestPage(event: any) {
