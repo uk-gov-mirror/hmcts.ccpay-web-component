@@ -67,7 +67,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
     this.isNewpcipaloff = this.paymentLibComponent.ISNEWPCIPALOFF;
     this.isOldpcipaloff = this.paymentLibComponent.ISOLDPCIPALOFF;
     this.isStFixEnable = this.paymentLibComponent.ISSFENABLE;
-    this.OrderslistService.getFeeExists().subscribe( (data) => this.FEE_RECORDS_EXISTS = data);;
+    this.OrderslistService.getFeeExists().subscribe( (data) => this.FEE_RECORDS_EXISTS = data);
     this.getUnassignedPaymentlist();
 
   }

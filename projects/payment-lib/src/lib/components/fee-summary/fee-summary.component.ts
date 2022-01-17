@@ -42,7 +42,7 @@ export class FeeSummaryComponent implements OnInit {
   selectedOption:string;
   isBackButtonEnable: boolean = true;
   outStandingAmount: number;
-  isFeeAmountZero: boolean = false;;
+  isFeeAmountZero: boolean = false;
   totalAfterRemission: number = 0;
   isConfirmationBtnDisabled: boolean = false;
   isRemoveBtnDisabled: boolean = false;
