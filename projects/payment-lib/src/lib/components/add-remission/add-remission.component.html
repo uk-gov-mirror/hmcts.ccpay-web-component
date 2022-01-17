@@ -224,6 +224,25 @@
                   <a (click)="addRemissionCode()" class="govuk-link right" >Change</a>
               </td>
           </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell govuk-!-font-weight-bold">Send to</td>
+            <td class="govuk-table__cell">{{orderParty}}</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell govuk-!-font-weight-bold">Send via</td>
+          <td class="govuk-table__cell">
+            <div *ngIf="contactDetailsObj?.notification_type === 'EMAIL'" class="contactDetails-width">
+              <strong>Email</strong>
+              <br/>
+              {{contactDetailsObj?.email}}
+            </div>
+            <div *ngIf="contactDetailsObj?.notification_type === 'LETTER'" class="contactDetails-width">
+              <strong>Post</strong>
+              <br/>
+              {{contactDetailsObj?.address_line}} {{contactDetailsObj?.city}} {{contactDetailsObj?.county}} {{contactDetailsObj?.country}} {{contactDetailsObj?.postal_code}}
+            </div>
+            <a (click)="gotoContactDetailsPage()" class="govuk-link right margin-top--size" >Change</a>
+        </td>
       </table>
 
       <button type="submit" class="button govuk-button--secondary" (click)="gotoProcessRetroRemission()">Previous</button>
@@ -499,6 +518,25 @@
               <td class="govuk-table__cell govuk-!-font-weight-bold">Fee amount</td>
               <td class="govuk-table__cell">{{feeamount | currency:'GBP':'symbol-narrow':'1.2-2'}}</td>
           </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell govuk-!-font-weight-bold">Send to</td>
+            <td class="govuk-table__cell">{{orderParty}}</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell govuk-!-font-weight-bold">Send via</td>
+          <td class="govuk-table__cell">
+            <div *ngIf="contactDetailsObj?.notification_type === 'EMAIL'" class="contactDetails-width">
+              <strong>Email</strong>
+              <br/>
+              {{contactDetailsObj?.email}}
+            </div>
+            <div *ngIf="contactDetailsObj?.notification_type === 'LETTER'" class="contactDetails-width">
+              <strong>Post</strong>
+              <br/>
+              {{contactDetailsObj?.address_line}} {{contactDetailsObj?.city}} {{contactDetailsObj?.county}} {{contactDetailsObj?.country}} {{contactDetailsObj?.postal_code}}
+            </div>
+            <a (click)="gotoContactDetailsPage()" class="govuk-link right margin-top--size" >Change</a>
+        </td>
       </table>
       <div class="govuk-button-group">
       <button type="submit" class="button govuk-button--secondary" (click)="gotoServiceRequestPage($event)">Previous</button>

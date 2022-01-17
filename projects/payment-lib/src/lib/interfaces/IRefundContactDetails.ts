@@ -6,5 +6,4 @@ export interface IRefundContactDetails {
   email?: string;
   notification_type: string;
   postal_code?: string;
-  template_id: string;
 }

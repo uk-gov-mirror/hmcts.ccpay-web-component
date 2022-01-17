@@ -397,7 +397,7 @@ export class AddRemissionComponent implements OnInit {
     if (this.remissionReference === undefined || this.remissionReference === '') {
       this.remissionReference = this.remission.remission_reference;
     }
-    const requestBody = new PostIssueRefundRetroRemission(this.remissionReference);
+    const requestBody = new PostIssueRefundRetroRemission(this.remissionReference, this.contactDetailsObj);
     this.paymentViewService.postRefundRetroRemission(requestBody).subscribe(
         response => {
       if (JSON.parse(response)) {
