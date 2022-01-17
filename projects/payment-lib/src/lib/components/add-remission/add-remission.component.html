@@ -412,18 +412,18 @@
         <tr class="govuk-table__row">
           <td class="govuk-table__cell govuk-!-font-weight-bold">Send via</td>
           <td class="govuk-table__cell">
-            <div *ngIf="contactDetailsObj?.notification_type === 'EMAIL'">
+            <div *ngIf="contactDetailsObj?.notification_type === 'EMAIL'" class="contactDetails-width">
               <strong>Email</strong>
               <br/>
               {{contactDetailsObj?.email}}
             </div>
-            <div *ngIf="contactDetailsObj?.notification_type === 'LETTER'">
+            <div *ngIf="contactDetailsObj?.notification_type === 'LETTER'" class="contactDetails-width">
               <strong>Post</strong>
               <br/>
               {{contactDetailsObj?.address_line}} {{contactDetailsObj?.city}} {{contactDetailsObj?.county}} {{contactDetailsObj?.country}} {{contactDetailsObj?.postal_code}}
             </div>
+            <a (click)="gotoContactDetailsPage()" class="govuk-link right margin-top--size" >Change</a>
         </td>
-        <a (click)="gotoContactDetailsPage()" class="govuk-link right" >Change</a>
       </tr>
       </table>
       <div class="govuk-button-group">
