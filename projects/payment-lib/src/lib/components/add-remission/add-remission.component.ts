@@ -466,8 +466,6 @@ export class AddRemissionComponent implements OnInit {
     this.viewStatus = 'contactDetailsPage';
     this.isRefundRemission = true;
     this.errorMessage = false;
-    this.refundHasError = false;
-    this.isReasonEmpty = false;
   }
 
   changeIssueRefundReason() {
@@ -669,6 +667,13 @@ export class AddRemissionComponent implements OnInit {
     //   this.paymentLibComponent.viewName === 'refundstatuslist';
     //   this.paymentLibComponent.isFromRefundStatusPage = true;
     // }
+  }
+  gotoAddressPage() {
+    this.errorMessage = '';
+    this.viewCompStatus = 'addrefundforremission';
+    this.viewStatus = '';
+    this.isRefundRemission = true;
+    this.errorMessage = false;
   }
 
   gotoCasetransationPage() {
