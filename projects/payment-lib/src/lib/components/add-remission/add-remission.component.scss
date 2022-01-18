@@ -20,6 +20,10 @@
     margin-right:0.5em;
   }
 
+   .right {
+    cursor: pointer;
+  }
+
   .govuk-warning-text__text,
   .govuk-label--s,
   .hmcts-currency-input__symbol {
@@ -113,4 +117,16 @@
 
 .white {
   color: white;
+}
+
+.pagesize {
+  margin: 2em;
+  width: 97%;
+}
+
+.right {
+  cursor: pointer;
+}
+.form-hint {
+  font-size: 19px !important;
 }
