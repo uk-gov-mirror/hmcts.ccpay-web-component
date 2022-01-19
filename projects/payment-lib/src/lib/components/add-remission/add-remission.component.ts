@@ -351,8 +351,8 @@ export class AddRemissionComponent implements OnInit {
   }
   }
   gotoAmountRetroRemission() {
-    this.viewStatus = '';
-    this.viewCompStatus = 'processretroremissonpage';
+    this.viewStatus = 'processretroremissonpage';
+    this.viewCompStatus = '';
     this.isRefundRemission = true;
     this.errorMessage = '';
   }

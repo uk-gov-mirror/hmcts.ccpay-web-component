@@ -230,7 +230,7 @@
             </div>
           </div>
           <div *ngIf="remessionPayment.status === 'Success'" >
-              <button type="submit" [disabled]="!isRemissionApplied" [ngClass]='isConfirmationBtnDisabled ? "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"' (click)="processRefund()">Submit refund </button>
+              <button type="submit" [disabled]="!isRemissionApplied" [ngClass]='isConfirmationBtnDisabled ? "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"' (click)="gotoProcessRetroRemission()">Continue </button>
             </div>
             <p class="govuk-body">
             <a href="javascript:void(0)" (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link" data-module="govuk-button">
@@ -313,7 +313,7 @@
       </table>
 
       <button type="submit" class="button govuk-button--secondary" (click)="gotoProcessRetroRemission()">Previous</button>
-      <button type="submit" [disabled]="isConfirmationBtnDisabled" [ngClass]='isConfirmationBtnDisabled ? "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"' (click)="confirmRetroRemission()"> Add remission </button>
+      <button type="submit" [disabled]="isConfirmationBtnDisabled" [ngClass]='isConfirmationBtnDisabled ? "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"' (click)="processRefund()"> Submit refund </button>
       <p> <a href="javascript:void(0)" (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link" data-module="govuk-button"> Cancel</a> </p>
 
   </ng-container>
