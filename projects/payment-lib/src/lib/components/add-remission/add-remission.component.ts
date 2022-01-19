@@ -407,7 +407,7 @@ export class AddRemissionComponent implements OnInit {
         response => {
       if (JSON.parse(response)) {
             this.viewCompStatus  = '';
-            this.viewStatus = 'remissionAddressPage';
+            this.viewStatus = 'refundconfirmationpage';
             this.refundReference = JSON.parse(response).refund_reference;
             this.refundAmount = JSON.parse(response).refund_amount;
         }
