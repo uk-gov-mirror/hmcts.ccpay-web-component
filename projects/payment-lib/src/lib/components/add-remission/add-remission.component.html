@@ -210,7 +210,7 @@
           </tr>
       </table>
 
-      <button type="submit" class="button govuk-button--secondary" (click)="gotoProcessRetroRemission()">Previous</button>
+      <button type="submit" class="button govuk-button--secondary" (click)="gotoAmountRetroRemission()">Previous</button>
       <button type="submit" [disabled]="isConfirmationBtnDisabled" [ngClass]='isConfirmationBtnDisabled ? "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"' (click)="confirmRetroRemission()"> Add remission </button>
       <p> <a href="javascript:void(0)" (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link" data-module="govuk-button"> Cancel</a> </p>
 
@@ -244,7 +244,7 @@
 
   <ng-container *ngIf="viewStatus === 'remissionAddressPage'">
     <input #myInput type='hidden' id='iFrameDrivenImageValue' value='ADDRESSDETAILSRETROREMISSIONPAGE'>      
-      <h1 class="govuk-heading-l">Process remission</h1>
+      <h1 class="govuk-heading-l">Process refund</h1>
       <h2 class="govuk-heading-m govuk-font19px">Case reference: {{ccdCaseNumber | ccdHyphens }}</h2>
     <ccpay-contact-details 
     (assignContactDetails)="getContactDetails($event, 'checkaddRefundpage')"
@@ -307,7 +307,7 @@
               <br/>
               {{contactDetailsObj?.address_line}} {{contactDetailsObj?.city}} {{contactDetailsObj?.county}} {{contactDetailsObj?.country}} {{contactDetailsObj?.postal_code}}
             </div>
-            <a (click)="gotoContactDetailsPage()" class="govuk-link right margin-top--size" >Change</a>
+            <a (click)="gotoProcessRetroRemission()" class="govuk-link right margin-top--size" >Change</a>
         </td>
         </tr>
       </table>
