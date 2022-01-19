@@ -5,7 +5,7 @@ import { IRefundList } from '../../interfaces/IRefundList';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import { Router } from '@angular/router';
 import { OrderslistService } from '../../services/orderslist.service';
-import { IRefundReasons } from '../../interfaces/IRefundReasons';
+import { IPutNotificationRequest } from '../../interfaces/IPutNotificationRequest';
 import { IRefundStatus } from '../../interfaces/IRefundStatus';
 import { IResubmitRefundRequest } from '../../interfaces/IResubmitRefundRequest';
 import { PaymentLibComponent } from '../../payment-lib.component';
@@ -283,6 +283,37 @@ export class RefundStatusComponent implements OnInit {
       }
     );
 
+  }
+
+  putResend(notificationType) {
+    const resendRequest = new IPutNotificationRequest('',  {});
+
+    this.refundService.putResendOrEdit(resendRequest, this.refundlist.refund_reference, notificationType).subscribe(
+      response => {
+        if (JSON.parse(response)) {
+
+        }
+      },
+      (error: any) => {
+        this.errorMessage = error.replace(/"/g,"");
+      }
+    );
+
+  }
+  putEditDetails() {
+    const notificationType='';
+    const resendRequest = new IPutNotificationRequest('',  {});
+
+    this.refundService.putResendOrEdit(resendRequest, this.refundlist.refund_reference, notificationType).subscribe(
+      response => {
+        if (JSON.parse(response)) {
+
+        }
+      },
+      (error: any) => {
+        this.errorMessage = error.replace(/"/g,"");
+      }
+    );
   }
 
   goToRefundProcessComponent(refundReference: string, refundList: IRefundList) {

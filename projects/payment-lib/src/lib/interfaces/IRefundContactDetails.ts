@@ -4,6 +4,6 @@ export interface IRefundContactDetails {
   country?: string;
   county?: string;
   email?: string;
-  notification_type: string;
+  notification_type?: string;
   postal_code?: string;
 }

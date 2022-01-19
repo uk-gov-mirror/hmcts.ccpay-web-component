@@ -173,22 +173,6 @@
           </form>
       </div>
   </ng-container>
-
-  <ng-container *ngIf="viewStatus === 'remissionAddressPage'">
-    <input #myInput type='hidden' id='iFrameDrivenImageValue' value='ADDRESSDETAILSRETROREMISSIONPAGE'>      
-      <h1 class="govuk-heading-l">Process remission</h1>
-      <h2 class="govuk-heading-m govuk-font19px">Case reference: {{ccdCaseNumber | ccdHyphens }}</h2>
-    <ccpay-contact-details 
-    (assignContactDetails)="getContactDetails($event, 'checkretroremissionpage')"
-    (redirectToIssueRefund)="addRemissionCode()" ></ccpay-contact-details>
-    <p>
-        <a (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link" data-module="govuk-button">
-            Cancel
-        </a>
-    </p>
-
-</ng-container>
-
   <ng-container *ngIf="viewStatus === 'checkretroremissionpage'">
       <input #myInput type='hidden' id='iFrameDrivenImageValue' value='CHECKRETROREMISSIONCONFIRMATION'> 
       <div class="govuk-warning-text">
@@ -224,25 +208,6 @@
                   <a (click)="addRemissionCode()" class="govuk-link right" >Change</a>
               </td>
           </tr>
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell govuk-!-font-weight-bold">Send to</td>
-            <td class="govuk-table__cell">{{orderParty}}</td>
-        </tr>
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell govuk-!-font-weight-bold">Send via</td>
-          <td class="govuk-table__cell">
-            <div *ngIf="contactDetailsObj?.notification_type === 'EMAIL'" class="contactDetails-width">
-              <strong>Email</strong>
-              <br/>
-              {{contactDetailsObj?.email}}
-            </div>
-            <div *ngIf="contactDetailsObj?.notification_type === 'LETTER'" class="contactDetails-width">
-              <strong>Post</strong>
-              <br/>
-              {{contactDetailsObj?.address_line}} {{contactDetailsObj?.city}} {{contactDetailsObj?.county}} {{contactDetailsObj?.country}} {{contactDetailsObj?.postal_code}}
-            </div>
-            <a (click)="gotoContactDetailsPage()" class="govuk-link right margin-top--size" >Change</a>
-        </td>
       </table>
 
       <button type="submit" class="button govuk-button--secondary" (click)="gotoProcessRetroRemission()">Previous</button>
@@ -274,6 +239,83 @@
             </p>
       </div>
     </div>
+  </ng-container>
+
+
+  <ng-container *ngIf="viewStatus === 'remissionAddressPage'">
+    <input #myInput type='hidden' id='iFrameDrivenImageValue' value='ADDRESSDETAILSRETROREMISSIONPAGE'>      
+      <h1 class="govuk-heading-l">Process remission</h1>
+      <h2 class="govuk-heading-m govuk-font19px">Case reference: {{ccdCaseNumber | ccdHyphens }}</h2>
+    <ccpay-contact-details 
+    (assignContactDetails)="getContactDetails($event, 'checkaddRefundpage')"
+    (redirectToIssueRefund)="gotoCasetransationPageCancelBtnClicked($event)" ></ccpay-contact-details>
+    <p>
+        <a (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link" data-module="govuk-button">
+            Cancel
+        </a>
+    </p>
+
+</ng-container>
+
+  <ng-container *ngIf="viewStatus === 'checkaddRefundpage'">
+      <input #myInput type='hidden' id='iFrameDrivenImageValue' value='CHECKRETROREMISSIONCONFIRMATION'> 
+      <div class="govuk-warning-text">
+          <h1 class="heading-large"> Check your answers</h1>
+      </div>
+      <table class="govuk-table">
+          <tr class="govuk-table__row">
+              <td class="govuk-table__cell govuk-!-font-weight-bold">Payment reference</td>
+              <td class="govuk-table__cell">{{remessionPayment ? remessionPayment.reference: ' '}}</td>
+          </tr>
+          <tr class="govuk-table__row">
+              <td class="govuk-table__cell govuk-!-font-weight-bold">Payment amount</td>
+              <td class="govuk-table__cell">£{{ remessionPayment ? getFormattedCurrency(remessionPayment.amount): ' ' | currency :'GBP':'symbol':'1.2-2'}} </td>
+          </tr>
+          <tr class="govuk-table__row">
+              <td class="govuk-table__cell govuk-!-font-weight-bold">Payment status</td>
+              <td class="govuk-table__cell">{{remessionPayment ? remessionPayment.status: ''}}</td>
+          </tr>
+          <tr class="govuk-table__row">
+              <td class="govuk-table__cell govuk-!-font-weight-bold">Fee</td>
+              <td class="govuk-table__cell">{{ fee.code }} - {{ fee.description }} ({{ fee.calculated_amount/fee.volume| currency:'GBP':'symbol-narrow':'1.2-2' }}) </td>
+          </tr>
+          <tr class="govuk-table__row">
+              <td class="govuk-table__cell govuk-!-font-weight-bold">Help with fees or remission reference</td>
+              <td class="govuk-table__cell"> {{ remissionForm.controls.remissionCode.value }}
+              </td>
+          </tr>
+          <tr class="govuk-table__row">
+              <td *ngIf="remessionPayment.status === 'Success'" class="govuk-table__cell govuk-!-font-weight-bold">Refund amount</td>
+              <td *ngIf="remessionPayment.status !== 'Success'" class="govuk-table__cell govuk-!-font-weight-bold">Remission amount</td>
+              <td class="govuk-table__cell">{{remissionForm.controls.amount.value  | currency:'GBP':'symbol-narrow':'1.2-2' }}
+              </td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell govuk-!-font-weight-bold">Send to</td>
+            <td class="govuk-table__cell">{{orderParty}}</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell govuk-!-font-weight-bold">Send via</td>
+          <td class="govuk-table__cell">
+            <div *ngIf="contactDetailsObj?.notification_type === 'EMAIL'" class="contactDetails-width">
+              <strong>Email</strong>
+              <br/>
+              {{contactDetailsObj?.email}}
+            </div>
+            <div *ngIf="contactDetailsObj?.notification_type === 'LETTER'" class="contactDetails-width">
+              <strong>Post</strong>
+              <br/>
+              {{contactDetailsObj?.address_line}} {{contactDetailsObj?.city}} {{contactDetailsObj?.county}} {{contactDetailsObj?.country}} {{contactDetailsObj?.postal_code}}
+            </div>
+            <a (click)="gotoContactDetailsPage()" class="govuk-link right margin-top--size" >Change</a>
+        </td>
+        </tr>
+      </table>
+
+      <button type="submit" class="button govuk-button--secondary" (click)="gotoProcessRetroRemission()">Previous</button>
+      <button type="submit" [disabled]="isConfirmationBtnDisabled" [ngClass]='isConfirmationBtnDisabled ? "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"' (click)="confirmRetroRemission()"> Add remission </button>
+      <p> <a href="javascript:void(0)" (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link" data-module="govuk-button"> Cancel</a> </p>
+
   </ng-container>
 
   <ng-container *ngIf="viewStatus === 'refundconfirmationpage'">
