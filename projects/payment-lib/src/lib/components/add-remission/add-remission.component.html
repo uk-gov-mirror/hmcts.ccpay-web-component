@@ -279,7 +279,7 @@
       <h1 class="heading-large">Issue refund</h1>
       <h2 class="heading-medium">Case reference:#{{ccdCaseNumber | ccdHyphens }}</h2>
       <span id="how-contacted-conditional-hint" class="form-hint">
-        Payment reference: RC-8368-2367-1858-4562
+        Payment reference: {{paymentReference}}
       </span>
       <h3 class="heading-small">Select fees to be refunded</h3>
       <!---TABLE--->
@@ -301,7 +301,7 @@
               <td class="govuk-table__cell">
                 <div class="govuk-checkboxes govuk-checkboxes--large" data-module="govuk-checkboxes">
                   <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="{{fee.id}}" name="organisation" type="checkbox" value="{{fee.id}}" >
+                    <input  class="govuk-checkboxes__input" id="{{fee.id}}" name="organisation" type="checkbox" value="{{fee.id}}" >
                     <label class="govuk-label govuk-checkboxes__label" for="{{fee.id}}">
                       <span style="display:none">Select</span>
                     </label>
@@ -315,13 +315,13 @@
                 {{fee.volume}}
               </td>
               <td class="govuk-table__cell  whitespace-inherit left"  *ngIf="fee.volume >1">
-                <input class="govuk-input govuk-input--width-4 center"  id="event-name" name="event-name" type="text"  value="fee.volume">
+                <input  class="govuk-input govuk-input--width-4 center"  id="event-name" name="event-name" type="text"  value="fee.volume">
               </td>
               <td class="govuk-table__cell  whitespace-inherit center" scope="row">
               
                   <div class="hmcts-currency-input">
                     <div class="hmcts-currency-input__symbol" aria-hidden="true">£</div>
-                    <input class="govuk-input govuk-input--width-10" id="{{fee.id}}" name="{{fee.calculated_amount}}" value= {{fee.calculated_amoun}} type="text" aria-describedby="amount-currency " pattern="[0-9]*" formControlName="feeAmount">
+                    <input  class="govuk-input govuk-input--width-10" id="{{fee.id}}" name="{{fee.calculated_amount}}" value= {{fee.calculated_amoun}} type="text" aria-describedby="amount-currency " pattern="[0-9]*" formControlName="feeAmount">
                   </div>
    
               </td>

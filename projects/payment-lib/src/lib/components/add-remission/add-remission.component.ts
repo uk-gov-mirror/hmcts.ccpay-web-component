@@ -108,6 +108,7 @@ export class AddRemissionComponent implements OnInit {
   pattern2: string;
   sendOrderDetail: any[];
   sendOrderRef: string;
+  paymentReference : string;
   component: { account_number: string; amount: number; case_reference: string; ccd_case_number: string; channel: string; currency: string; customer_reference: string; date_created: string; date_updated: string; description: string; method: string; organisation_name: string; payment_allocation: any[]; reference: string; service_name: string; site_id: string; status: string; };
 
   constructor(private formBuilder: FormBuilder,
@@ -132,7 +133,12 @@ export class AddRemissionComponent implements OnInit {
     if(this.fee) {
     this.amount = (this.fee.volume * this.fee.calculated_amount);
     }
+    if(this.orderDetail !== undefined){
+      this.fees = this.orderDetail[0].fees;
+      this.paymentReference = this.orderDetail[0].payments[0].reference;
+    }
     if (this.payment){
+      this.paymentReference = this.payment.reference;
       this.remessionPayment = this.payment;
       if(this.payment.status === 'Success') {
         this.isPaymentSuccess = true;
