@@ -54,7 +54,7 @@
     margin-left: 25px;
 }
 .success-page-padding--top25 {
-    padding-top: 25px;;
+    padding-top: 25px;
 }
 
 .margin {
@@ -73,6 +73,6 @@
     font-size: 19px!important;
 }
 
-.right {
+.pointer{
     cursor: pointer;
 }

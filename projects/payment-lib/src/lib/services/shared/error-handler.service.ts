@@ -22,11 +22,28 @@ export class ErrorHandlerService {
     } else {
       // The backend returned an unsuccessful response code.
       if (err.status === 404) {
-        if (!err.error) {
-          errorMessage = 'Not found';
+
+        if (typeof err.error === 'string' && err.error !== undefined) {
+    
+          if(err.error.length > 60) {
+            if (JSON.parse(err.error).statusCode !== undefined && JSON.parse(err.error).statusCode === 500)
+            {
+              errorMessage = 'Internal server error';
+            } else {
+              if(err.error.length > 60) {
+                errorMessage =  JSON.parse(err.error).error;
+              } else {
+                errorMessage =  err.error;
+              }
+           
+            }
+          } else {
+            errorMessage =  err.error;
+          }
         } else {
-          errorMessage = err.error;
+          errorMessage =  JSON.parse(err.error).error;
         }
+        
       }
       else if (err.status === 500) {
         errorMessage = 'Internal server error';
@@ -35,12 +52,7 @@ export class ErrorHandlerService {
           errorMessage =  JSON.parse(JSON.stringify(err.error)).error;
         } else {
           if (typeof err.error === 'string' && err.error !== undefined) {
-            // if (JSON.parse(err.error).statusCode !== undefined && JSON.parse(err.error).statusCode === 500)
-            // {
-            //   errorMessage = 'Internal server error';
-            // } else {
-            //   errorMessage =  err.error;
-            // }
+    
             if(err.error.length > 60) {
               if (JSON.parse(err.error).statusCode !== undefined && JSON.parse(err.error).statusCode === 500)
               {

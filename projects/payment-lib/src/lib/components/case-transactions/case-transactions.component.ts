@@ -609,7 +609,7 @@ export class CaseTransactionsComponent implements OnInit {
   }
 
   getGroupOutstandingAmount(paymentGroup: IPaymentGroup): number {
-    return this.bulkScaningPaymentService.calculateOutStandingAmount(paymentGroup);;
+    return this.bulkScaningPaymentService.calculateOutStandingAmount(paymentGroup);
   }
 
   redirectToFeeSearchPage(event: any) {
