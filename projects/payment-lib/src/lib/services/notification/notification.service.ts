@@ -5,10 +5,7 @@ import { WebComponentHttpClient } from '../shared/httpclient/webcomponent.http.c
 import {PaymentLibService} from '../../payment-lib.service';
 import {Observable} from 'rxjs/Observable';
 import {catchError} from 'rxjs/operators';
-import { IBSPayments } from '../../interfaces/IBSPayments';
-import { AllocatePaymentRequest } from '../../interfaces/AllocatePaymentRequest';
-import { IPaymentGroup } from '../../interfaces/IPaymentGroup';
-
+import { IRefundsNotifications } from '../../interfaces/IRefundsNotifications';
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +18,8 @@ export class NotificationService {
               private paymentLibService: PaymentLibService
               ) { }
 
-  getRefundNotification(dcn: string): Observable<IBSPayments> {
-    return this.http.get<IBSPayments>(`${this.paymentLibService.BULKSCAN_API_ROOT}/cases?document_control_number=${dcn}`, {
+  getRefundNotification(reference: string): Observable<IRefundsNotifications> {
+    return this.http.get<IRefundsNotifications>(`${this.paymentLibService.NOTIFICATION_API_ROOT}/notifications/${reference}`, {
       withCredentials: true
     })
       .pipe(

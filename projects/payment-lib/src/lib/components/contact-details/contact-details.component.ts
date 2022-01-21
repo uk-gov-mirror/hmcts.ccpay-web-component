@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { PaymentLibComponent } from '../../payment-lib.component';
 
@@ -8,6 +8,8 @@ import { PaymentLibComponent } from '../../payment-lib.component';
   styleUrls: ['./contact-details.component.css']
 })
 export class ContactDetailsComponent implements OnInit {
+  @Input('isEditOperation') isEditOperation: boolean;
+  @Input('addressObj') addressObj: any;
   @Output() assignContactDetails: EventEmitter<any> = new EventEmitter();
   @Output() redirectToIssueRefund: EventEmitter<any> = new EventEmitter();
   pageTitle: string = 'Payment status history';
@@ -76,6 +78,28 @@ export class ContactDetailsComponent implements OnInit {
         Validators.required
       ]))
     });
+    if(this.addressObj !== undefined && this.addressObj !== '') {
+      this.setEditDetails();
+    }
+  }
+  setEditDetails() {
+    if(this.addressObj.notification_type === 'EMAIL') {
+      this.isEmailSAddressClicked = true;
+      this.isPostcodeClicked = false;
+      this.isManualAddressClicked = false;
+      this.emailAddressForm.setValue({ email: this.addressObj.contact_details.email });
+    } else if(this.addressObj.notification_type === 'LETTER') {
+      this.isEmailSAddressClicked = false;
+      this.isPostcodeClicked = true;
+      this.isManualAddressClicked = true;
+      this.manualAddressForm.patchValue({ 
+        addressl1: this.addressObj.contact_details.address_line,
+        townorcity: this.addressObj.contact_details.city,
+        county: this.addressObj.contact_details.county,
+        country: this.addressObj.contact_details.country,
+        mpostcode: this.addressObj.contact_details.postal_code
+      });
+    }
   }
 
   selectContactOption(type, isLinkedClied) {

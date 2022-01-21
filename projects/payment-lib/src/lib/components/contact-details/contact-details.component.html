@@ -2,7 +2,7 @@
   <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
   <div class="govuk-form-group">
     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s govuk-font19px">
-      Contact information
+      {{ isEditOperation ? 'Edit contact information' : 'Contact information' }}
     </legend>
     <div id="contact-hint" class="govuk-hint govuk-font19px">
       Notifications will be sent via email or post when this refund is issued or rejected. You can only choose one option.
@@ -11,7 +11,7 @@
       <fieldset class="govuk-fieldset">
         <div class="govuk-radios govuk-radios--conditional" data-module="govuk-radios">
           <div class="govuk-radios__item">
-            <input class="govuk-radios__input" id="contact" name="contact" (click)="selectContactOption('Email', 'false')" type="radio" value="email" checked="" aria-controls="conditional-contact" aria-expanded="true">
+            <input class="govuk-radios__input" id="contact" name="contact" (click)="selectContactOption('Email', 'false')" type="radio" value="email" [checked]="isEmailSAddressClicked"  aria-controls="conditional-contact" aria-expanded="true">
             <label class="govuk-label govuk-radios__label govuk-font19px" for="contact">
               Email
             </label>
@@ -25,7 +25,7 @@
 
               <div id="email-hint" class="govuk-hint">
               </div>
-              <input class="govuk-input" id="email" name="" type="email" [ngClass]="{ 'inline-error-class': isEmailEmpty || emailHasError }" formControlName="email" aria-describedby="email-hint">
+              <input class="govuk-input" id="email" name="" type="email" [ngClass]="{ 'inline-error-class': isEmailEmpty || emailHasError }" value="{{addressObj?.contact_details?.email}}" formControlName="email" aria-describedby="email-hint">
               <p class="inline-error-message" *ngIf="isEmailEmpty || emailHasError">
                 <span *ngIf="isEmailEmpty">Enter a email address.</span>
                 <span *ngIf="emailHasError">Enter a valid email address.</span>
@@ -34,7 +34,7 @@
             </form>
           </div>
           <div class="govuk-radios__item">
-            <input class="govuk-radios__input" id="contact-2" name="contact" (click)="selectContactOption('Postcode', 'false')" type="radio" value="post" aria-controls="conditional-contact-2" aria-expanded="false">
+            <input class="govuk-radios__input" id="contact-2" name="contact" (click)="selectContactOption('Postcode', 'false')" type="radio" [checked]="isPostcodeClicked" value="post" aria-controls="conditional-contact-2" aria-expanded="false">
             <label class="govuk-label govuk-radios__label govuk-font19px" for="contact-2">
               Post
             </label>
@@ -71,7 +71,7 @@
               <label class="govuk-label govuk-font19px" for="address-line-1">
                 <span class="govuk-hint govuk-font19px">Information about this refund will be sent to this address.</span>Building and street <span class="govuk-visually-hidden">line 1 of 2</span>
               </label>
-              <input class="govuk-input govuk-font19px" id="address-line-1" name="address-line-1" [ngClass]="{ 'inline-error-class': isaddressLine1Empty || addressLine1HasError }" formControlName="addressl1" type="text" autocomplete="address-line1">
+              <input class="govuk-input govuk-font19px" id="address-line-1" name="address-line-1" [ngClass]="{ 'inline-error-class': isaddressLine1Empty || addressLine1HasError }" value="{{addressObj?.contact_details?.address_line}}" formControlName="addressl1" type="text" autocomplete="address-line1">
               <p class="inline-error-message" *ngIf="isaddressLine1Empty || addressLine1HasError">
                 <span *ngIf="isaddressLine1Empty">Enter a Building and street.</span>
                 <span *ngIf="addressLine1HasError">Enter a valid Building and street.</span>
@@ -90,7 +90,7 @@
               <label class="govuk-label govuk-font19px" for="address-town">
                 Town or city
               </label>
-              <input class="govuk-input govuk-!-width-two-thirds govuk-font19px" id="address-town" name="address-town" [ngClass]="{ 'inline-error-class': isTownOrCityEmpty || townOrCityHasError}" formControlName="townorcity" type="text" autocomplete="address-level2">
+              <input class="govuk-input govuk-!-width-two-thirds govuk-font19px" id="address-town" name="address-town" [ngClass]="{ 'inline-error-class': isTownOrCityEmpty || townOrCityHasError}" value="{{addressObj?.contact_details?.city}}" formControlName="townorcity" type="text" autocomplete="address-level2">
               <p class="inline-error-message" *ngIf="isTownOrCityEmpty || townOrCityHasError">
                 <span *ngIf="isTownOrCityEmpty">Enter a town or city.</span>
                 <span *ngIf="townOrCityHasError">Enter a town or city.</span>
@@ -100,7 +100,7 @@
               <label class="govuk-label govuk-font19px" for="address-county">
                 County
               </label>
-              <input class="govuk-input govuk-!-width-two-thirds govuk-font19px" id="address-county" [ngClass]="{ 'inline-error-class': isCountyEmpty || countyHasError}" formControlName="county" name="address-county" type="text">
+              <input class="govuk-input govuk-!-width-two-thirds govuk-font19px" id="address-county" [ngClass]="{ 'inline-error-class': isCountyEmpty || countyHasError}" value="{{addressObj?.contact_details?.county}}" formControlName="county" name="address-county" type="text">
               <p class="inline-error-message" *ngIf="isCountyEmpty || countyHasError">
                 <span *ngIf="isCountyEmpty">Enter a County.</span>
                 <span *ngIf="countyHasError">Enter a valid County.</span>
@@ -110,7 +110,7 @@
               <label class="govuk-label govuk-font19px" for="address-postcode">
                 Postcode
               </label>
-              <input class="govuk-input govuk-input--width-10 govuk-font19px" id="address-postcode" formControlName="mpostcode" name="address-postcode" [ngClass]="{ 'inline-error-class': isMPostcodeEmpty || mpostcodeHasError}" type="text" autocomplete="postal-code">
+              <input class="govuk-input govuk-input--width-10 govuk-font19px" id="address-postcode" formControlName="mpostcode" name="address-postcode" [ngClass]="{ 'inline-error-class': isMPostcodeEmpty || mpostcodeHasError}" value="{{addressObj?.contact_details?.postal_code}}" type="text" autocomplete="postal-code">
               <p class="inline-error-message" *ngIf="isMPostcodeEmpty || mpostcodeHasError">
                 <span *ngIf="isMPostcodeEmpty">Enter a postcode.</span>
                 <span *ngIf="mpostcodeHasError">Enter a valid postcode.</span>
@@ -122,7 +122,7 @@
               </label>
               <select class="govuk-select govuk-font19px" id="country" name="country" [ngClass]="{ 'inline-error-class': isCountryEmpty}" formControlName="country">
                 <option value="" selected="selected">Please select</option>
-                <option value="United Kingdom" selected="">United Kingdom</option>
+                <option value="United Kingdom" selected="{{ addressObj?.contact_details?.country ? 'selected' : '' }}">United Kingdom</option>
               </select>
               <p class="inline-error-message" *ngIf="isCountryEmpty">
                 <span *ngIf="isCountryEmpty">Select a Country.</span>
