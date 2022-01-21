@@ -680,6 +680,14 @@ export class AddRemissionComponent implements OnInit {
     this.isRefundRemission = true;
     this.errorMessage = false;
   }
+  gotoRemissionSuccess(event: Event) {
+    event.preventDefault();
+    this.errorMessage = '';
+    this.viewCompStatus = '';
+    this.viewStatus = 'retroremissionconfirmationpage';
+    this.isRefundRemission = true;
+    this.errorMessage = false;
+  }
 
   gotoCasetransationPage() {
     this.OrderslistService.setnavigationPage('casetransactions');
