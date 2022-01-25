@@ -1,15 +1,15 @@
-import { TestBed, inject } from '@angular/core/testing';
-
+import { TestBed } from '@angular/core/testing';
 import { PaymentLibService } from './payment-lib.service';
 
 describe('PaymentLibService', () => {
+  let service: PaymentLibService;
+
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [PaymentLibService]
-    });
+    TestBed.configureTestingModule({ providers: [PaymentLibService] });
+    service = TestBed.get(PaymentLibService);
   });
 
-  it('should be created', inject([PaymentLibService], (service: PaymentLibService) => {
+  it('can load instance', () => {
     expect(service).toBeTruthy();
-  }));
+  });
 });

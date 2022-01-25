@@ -3,6 +3,8 @@ import { BulkScaningPaymentService } from '../../services/bulk-scaning-payment/b
 import { PaymentLibComponent } from '../../payment-lib.component';
 import { IBSPayments } from '../../interfaces/IBSPayments';
 import {Router} from '@angular/router';
+import { PaymentViewService } from '../../services/payment-view/payment-view.service';
+import { OrderslistService } from '../../services/orderslist.service';
 
 @Component({
   selector: 'ccpay-app-unprocessed-payments',
@@ -17,6 +19,8 @@ export class UnprocessedPaymentsComponent implements OnInit {
   @Input('IS_BUTTON_ENABLE') IS_BUTTON_ENABLE: boolean;
   @Input('IS_OS_AMT_AVAILABLE') IS_OS_AMT_AVAILABLE: boolean;
   @Input('ISSFENABLE') ISSFENABLE: boolean;
+  @Input('PAYMENTSLENGTH') PAYMENTSLENGTH:Number;
+  @Input('LEVEL')LEVEL:Number;
 
   @Output() selectedUnprocessedFeeEvent: EventEmitter<string> = new EventEmitter();
   @Output() getUnprocessedFeeCount: EventEmitter<string> = new EventEmitter();
@@ -29,7 +33,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
   isRecordExist: boolean = false;
   dcnNumber: string = null;
   selectedOption: string;
-  isUnprocessedRecordSelected: boolean = false;
+  isUnprocessedRecordSelected: boolean = true;
   isAllocateToExistingFeebtnEnabled: boolean = false;
   isMarkAsUnidentifiedbtnEnabled: boolean = false;
   isAllocatedToNewFeebtnEnabled: boolean = false;
@@ -38,10 +42,16 @@ export class UnprocessedPaymentsComponent implements OnInit {
   isBulkScanEnable;
   isTurnOff: boolean = true;
   isStFixEnable;
+  unassignedRecordSelectedList: IBSPayments;
+  unassignedRecordListLength: number = 0;
+  showContent: boolean;
 
   constructor(private router: Router,
     private bulkScaningPaymentService: BulkScaningPaymentService,
-    private paymentLibComponent: PaymentLibComponent) { }
+    private paymentLibComponent: PaymentLibComponent,
+    private paymentViewService: PaymentViewService,
+    private OrderslistService: OrderslistService
+    ) { }
 
   ngOnInit() {
     // Todo ...
@@ -51,15 +61,17 @@ export class UnprocessedPaymentsComponent implements OnInit {
     this.isBulkScanEnable = this.paymentLibComponent.ISBSENABLE;
     this.isTurnOff = this.paymentLibComponent.ISTURNOFF;
     this.isStFixEnable = this.paymentLibComponent.ISSFENABLE;
-
+    this.OrderslistService.getFeeExists().subscribe( (data) => this.FEE_RECORDS_EXISTS = data);
     this.getUnassignedPaymentlist();
+
   }
 
   getUnassignedPaymentlist() {
      if (this.selectedOption === 'dcn') {
         this.bulkScaningPaymentService.getBSPaymentsByDCN(this.dcnNumber).subscribe(
         unassignedPayments => {
-          if(unassignedPayments['data'] && unassignedPayments['data'].payments) {
+         //  unassignedPayments['data'].map(data => data.expandable=false);
+        if(unassignedPayments['data'] && unassignedPayments['data'].payments) {
             this.setValuesForUnassignedRecord(unassignedPayments['data']);
           } else if(unassignedPayments['payments']) {
             this.setValuesForUnassignedRecord(unassignedPayments);
@@ -76,6 +88,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
     } else {
         this.bulkScaningPaymentService.getBSPaymentsByCCD(this.ccdCaseNumber).subscribe(
         unassignedPayments => {
+         //  unassignedPayments['data'].map(data => data.expandable=false);
           if(unassignedPayments['data'] && unassignedPayments['data'].payments) {
             this.setValuesForUnassignedRecord(unassignedPayments['data']);
           } else if(unassignedPayments['payments']) {
@@ -93,23 +106,33 @@ export class UnprocessedPaymentsComponent implements OnInit {
     }
 
   }
+
   setValuesForUnassignedRecord(unassignedPayments) {
+   
     this.unassignedRecordList = unassignedPayments.payments;
+    if(this.unassignedRecordList){
+          this.unassignedRecordListLength = unassignedPayments.payments.length
+    }
     this.serviceId = unassignedPayments.responsible_service_id;
     if (unassignedPayments['ccd_reference'] === undefined) {
       this.isExceptionCase = true;
     }
-    this.isRecordExist =  this.unassignedRecordList.length === 0;
+    // this.isRecordExist =  this.unassignedRecordList.length === 0;
     this.getUnprocessedFeeCount.emit(<any>this.unassignedRecordList.length);
+    this.unprocessedPaymentSelectEvent(this.unassignedRecordList);
   }
+
   formatUnassignedRecordId(ID: Number) {
     return `unassignrecord-${ID}`;
   }
+
   trimUnderscore(method: string){
     return this.bulkScaningPaymentService.removeUnwantedString(method,' ');
   }
-  redirectToFeeSearchPage(event: any) {
+
+  redirectToFeeSearchPage(event: any, dcn_reference:any) {
     event.preventDefault();
+    this.recordId = dcn_reference;
     let url = this.isBulkScanEnable ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
     url += this.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
     url += this.isStFixEnable ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
@@ -117,22 +140,33 @@ export class UnprocessedPaymentsComponent implements OnInit {
 
     this.router.navigateByUrl(`/fee-search?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}&dcn=${this.recordId}${url}`);
   }
-  loadUnsolicitedPage(viewName: string) {
+
+  loadUnsolicitedPage(viewName: string, dcn_reference:any) {
+    this.recordId = dcn_reference;
     this.paymentLibComponent.bspaymentdcn = this.recordId;
     this.paymentLibComponent.viewName = viewName;
   }
+
   unprocessedPaymentSelectEvent(selectedRecordReference: any) {
    this.isUnprocessedRecordSelected = true;
    this.validateButtons();
    this.selectedUnprocessedFeeEvent.emit(selectedRecordReference);
   }
-  goToAllocatePage() {
-    this.paymentLibComponent.bspaymentdcn = this.recordId;
+
+  resetButtons() {
+    this.isUnprocessedRecordSelected = false;
+    this.isAllocateToExistingFeebtnEnabled  = false;
+    this.isMarkAsUnidentifiedbtnEnabled  = false;
+    this.isAllocatedToNewFeebtnEnabled = false;
+  }
+
+  goToAllocatePage(dcn_reference:any) {
+    this.paymentLibComponent.bspaymentdcn = dcn_reference;
     this.paymentLibComponent.unProcessedPaymentServiceId = this.serviceId
     this.paymentLibComponent.isTurnOff = this.ISTURNOFF;
     this.paymentLibComponent.ISSFENABLE = this.isStFixEnable;
 
-    if(!this.ISTURNOFF) {
+    if(this.ISTURNOFF) {
       this.paymentLibComponent.paymentGroupReference = this.PAYMENTREF;
       this.paymentLibComponent.viewName = 'fee-summary';
     }else {
@@ -158,6 +192,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
       }
     }
   }
+
   unprocessedPaymentUnSelectEvent(event: any) {
     event.preventDefault();
     this.recordId = null;
@@ -169,4 +204,10 @@ export class UnprocessedPaymentsComponent implements OnInit {
     this.selectedUnprocessedFeeEvent.emit('');
   }
 
+  showDetailRow(event: any,obj: any, i: any) {
+    event.preventDefault();
+    
+    this.unassignedRecordSelectedList = obj;
+    
+  }
 }

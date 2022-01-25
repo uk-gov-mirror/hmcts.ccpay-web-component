@@ -71,3 +71,26 @@
         border-color: #a71414;
     }
 }
+
+.allbtb {
+    margin-top: 2em;
+}
+
+.govuk-back-link {
+    font-size: 1.5rem !important;
+}
+
+.multiple-choice {
+    font-size: 19px;
+}
+.casererf {
+    align-self: flex-end;
+    font-size: 19px;
+}
+
+.paymentrequest {
+    display:flex;
+    flex-direction:row;
+    justify-content: space-between;
+    width:960px;
+}
