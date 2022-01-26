@@ -282,7 +282,7 @@
         Payment reference: {{paymentReference}}
       </span>
       <h3 class="heading-small">Select fees to be refunded</h3>
-      <!---TABLE--->
+      <!--TABLE-->
       <div>
         <table class="govuk-table">
           <thead class="govuk-table__head">
@@ -315,13 +315,16 @@
                 {{fee.volume}}
               </td>
               <td class="govuk-table__cell  whitespace-inherit left"  *ngIf="fee.volume >1">
-                <input  class="govuk-input govuk-input--width-4 center"  id="event-name" name="event-name" type="text"  value="fee.volume">
+                <input  class="govuk-input govuk-input--width-4 center"  id="feeVolumeUpdated_{{fee.id}}" name="feeVolumeUpdated_{{fee.id}}" type="text"  value="{{fee.volume}}" formControlName="feeVolumeUpdated_{{fee.id}}">
               </td>
               <td class="govuk-table__cell  whitespace-inherit center" scope="row">
               
                   <div class="hmcts-currency-input">
                     <div class="hmcts-currency-input__symbol" aria-hidden="true">£</div>
-                    <input  class="govuk-input govuk-input--width-10" id="{{fee.id}}" name="{{fee.calculated_amount}}" value= {{fee.calculated_amoun}} type="text" aria-describedby="amount-currency " pattern="[0-9]*" formControlName="feeAmount">
+                    <input  class="govuk-input govuk-input--width-10" id="feeAmount_{{fee.id}}" name="feeAmount_{{fee.id}}" value= {{fee.calculated_amoun}} type="text" aria-describedby="amount-currency " pattern="[0-9]*" formControlName="feeAmount_{{fee.id}}">
+					<input id="feeVolume_{{fee.id}}" name="feeVolume_{{fee.id}}" value= "{{fee.volume}}" type="hidden" formControlName="feeVolume_{{fee.id}}">
+					<input id="feeApportionAmount_{{fee.id}}" name="feeApportionAmount_{{fee.id}}" value= {{fee.apportion_amount}} type="hidden" formControlName="feeApportionAmount_{{fee.id}}">
+					<input id="calculatedAmount_{{fee.id}}" name="calculatedAmount_{{fee.id}}" value= {{fee.calculated_amount}} type="hidden" formControlName="calculatedAmount_{{fee.id}}">
                   </div>
    
               </td>

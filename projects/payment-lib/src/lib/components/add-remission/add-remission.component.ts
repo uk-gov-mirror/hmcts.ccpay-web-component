@@ -466,6 +466,54 @@ export class AddRemissionComponent implements OnInit {
   }
 
   gotoIssuePage(){
+	  var rows = document.getElementsByTagName('tr');
+	  var quantityUpdated = '';
+	  this.errorMessage = '';
+		for(var i=0;i<rows.length;i++) {
+			var checkboxs=rows[i].getElementsByTagName("input");                                           
+			for(var j=0;j<checkboxs.length;j++)
+			{
+				if(checkboxs[j].checked)
+				{
+					
+					let quantity: number = +(<HTMLInputElement>document.getElementById('feeVolume_'+checkboxs[j].value)).value;
+
+					if(quantity>1){
+						quantityUpdated = (<HTMLInputElement>document.getElementById('feeVolumeUpdated_'+checkboxs[j].value)).value;
+					}
+					
+					var refundAmount = (<HTMLInputElement>document.getElementById('feeAmount_'+checkboxs[j].value)).value;
+					let apportionAmount: number = +(<HTMLInputElement>document.getElementById('feeApportionAmount_'+checkboxs[j].value)).value;
+					let calculatedAmount: number = +(<HTMLInputElement>document.getElementById('calculatedAmount_'+checkboxs[j].value)).value; 
+
+					if(refundAmount!='' && +refundAmount===0){
+						this.errorMessage = 'You need to enter a refund amount';
+						return false;
+					}
+					if(quantity===0){
+						this.errorMessage = 'You need to enter a refund amount';	
+						return false;
+					}
+					if(refundAmount!='' && +refundAmount>apportionAmount){
+						this.errorMessage = 'The amount you want to refund is more than the amount paid';
+						return false;	
+					}
+					if(quantityUpdated!='' && +quantityUpdated>quantity){
+						this.errorMessage = 'The quantity you want to refund is more than the available quantity';	
+						return false;
+					}
+					if((refundAmount!='' && quantity>1 && +refundAmount!= quantity*calculatedAmount) 
+						|| (refundAmount!='' && quantity>1 && quantityUpdated!='' && +refundAmount!= +quantityUpdated*calculatedAmount)){
+						this.errorMessage = 'The Amount to Refund should be equal to the product of Fee Amount and quantity';
+						return false;	
+					}
+					if(refundAmount!='' && !/^\d+(\.\d{1,2})?$/.test(refundAmount)){
+						this.errorMessage = 'Please check the amount you want to refund';
+						return false;
+					}
+				}
+			}
+		}
       this.viewCompStatus = 'issuerefundpage1';
   }
 
@@ -486,7 +534,8 @@ export class AddRemissionComponent implements OnInit {
       this.retroRemission = true;
     }
   
-    const requestBody = new PostRefundRetroRemission(this.payment.reference,this.refundReason);
+    const requestBody = new PostRefundRetroRemission(this.ccdCaseNumber, this.payment.reference, this.refundReason, '', '', 
+							this.remissionForm.controls[''], this.fees);
     this.paymentViewService.postRefundsReason(requestBody).subscribe(
       response => {
           if (JSON.parse(response)) {
@@ -514,7 +563,9 @@ export class AddRemissionComponent implements OnInit {
       this.retroRemission = true;
     }
 
-    const requestBody = new PostRefundRetroRemission(this.payment.reference,'RR004-Retrospective remission');
+    const requestBody = new PostRefundRetroRemission(this.ccdCaseNumber, this.payment.reference, this.refundReason, '', '', 
+							this.refundAmount, this.fees);
+
     this.paymentViewService.postRefundsReason(requestBody).subscribe(
       response => {
           if (JSON.parse(response)) {
