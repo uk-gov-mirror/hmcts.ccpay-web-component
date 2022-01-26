@@ -181,7 +181,6 @@ export class AddRemissionComponent implements OnInit {
       isRemissionLessThanFee = this.fee.calculated_amount > remissionctrls.amount.value;
       this.remissionForm.controls['refundReason'].setErrors(null);
       this.remissionForm.controls['refundDDReason'].setErrors(null);
-      isRemissionLessThanFee = this.fee.calculated_amount > remissionctrls.amount.value;
     if (this.remissionForm.dirty && this.remissionForm.valid && isRemissionLessThanFee) {
       this.viewStatus = 'confirmation';
     }else {
