@@ -18,6 +18,7 @@ import { IRemission } from '../../interfaces/IRemission';
 import { OrderslistService } from '../../services/orderslist.service';
 
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
+const resolvedPromise = Promise.resolve(null);
 
 @Component({
   selector: 'ccpay-add-remission',
@@ -97,6 +98,7 @@ export class AddRemissionComponent implements OnInit {
   isPaymentSuccess: boolean = false;
   isRemissionApplied: boolean = false;
   remissionamt:number;
+  elementId:any;
   // refundReasons: any[] = [];
   commonRefundReasons: any[] = [];
   showReasonText: boolean;
@@ -109,6 +111,9 @@ export class AddRemissionComponent implements OnInit {
   sendOrderDetail: any[];
   sendOrderRef: string;
   paymentReference : string;
+  class='';
+  errorMsg = new Array();
+  totalRefundAmount: number;
   component: { account_number: string; amount: number; case_reference: string; ccd_case_number: string; channel: string; currency: string; customer_reference: string; date_created: string; date_updated: string; description: string; method: string; organisation_name: string; payment_allocation: any[]; reference: string; service_name: string; site_id: string; status: string; };
 
   constructor(private formBuilder: FormBuilder,
@@ -120,8 +125,7 @@ export class AddRemissionComponent implements OnInit {
     private OrderslistService: OrderslistService) { }
 
   ngOnInit() {
-
-      
+    this.errorMessage = '';
     this.default = 'Select a different reason';
     this.pattern1 = '^([a-zA-Z0-9]{3})-([a-zA-Z0-9]{3})-([a-zA-Z0-9]{3})$';
     this.pattern2 = '^([A-Za-z]{2}[0-9]{2})-([0-9]{6})$';
@@ -161,15 +165,34 @@ export class AddRemissionComponent implements OnInit {
       refundDDReason: new FormControl('', Validators.compose([Validators.required])),
       reason: new FormControl(),
       feeAmount: new FormControl(),
+      feesList: this.formBuilder.array([])
     });
     const remissionctrls=this.remissionForm.controls;
     remissionctrls['refundDDReason'].setValue('Select a different reason', {onlySelf: true});
     
+    if (this.fees) {
+      const creds = this.remissionForm.controls.feesList as FormArray;
+     for(var i=0;i<this.fees.length;i++) {
+      creds.push(this.formBuilder.group({
+       id: this.fees[i].id,
+       code: this.fees[i].code,
+       volume: this.fees[i].volume,
+       calculated_amount: this.fees[i].calculated_amount,
+       apportion_amount: this.fees[i].apportion_amount,
+       ccd_case_number: this.fees[i].ccd_case_number,
+       description: this.fees[i].description,
+       net_amount: this.fees[i].net_amount, 
+       amounttorefund : [''],
+       selected:[''] 
+      }));
+    }
+    }
+
     if(this.viewCompStatus === ''){
     this.viewStatus = 'main';
     }
  
-    if(this.viewCompStatus === 'issuerefund'){
+    if(this.viewCompStatus === 'issuerefundpage1'){
       this.refundService.getRefundReasons().subscribe(
         refundReasons => { 
           this.refundReasons = refundReasons.filter((data) => data.recently_used === false);
@@ -187,6 +210,37 @@ export class AddRemissionComponent implements OnInit {
 
   }
 
+  get feesList()
+  {
+    const dd =this.remissionForm.get('feesList') as FormArray ;
+    console.log(this.remissionForm.get('feesList') );
+    return this.remissionForm.get('feesList') as FormArray;
+  }
+
+  noneSelected(){
+    if(!this.feesList.controls.some(item => item.get('selected').value === true)) {
+      this.errorMsg = [];
+      [].forEach.call(document.querySelectorAll('input'), function (el) {
+        el.classList.remove('inline-error-class');
+      });
+    }
+       return  !this.feesList.controls.some(item => item.get('selected').value === true);
+  }
+    
+  validateRow(i){
+      return this.remissionForm.get('feesList').parent.controls['feesList'].controls[1].value['selected']
+  }
+    
+  check_en (v1: any) {
+    const ele = document.getElementById(v1) as HTMLInputElement;
+    if(ele.checked){
+      document.getElementById('feeAmount_'+v1).removeAttribute("disabled"); 
+      document.getElementById('feeVolumeUpdated_'+v1).removeAttribute("disabled");                   
+    } else {
+      document.getElementById('feeAmount_'+v1).setAttribute("disabled", "true"); 
+      document.getElementById('feeVolumeUpdated_'+v1).removeAttribute("disabled");  
+    }  
+  }
 
   addRemission() {
     this.resetRemissionForm([false, false, false, false, false, false], 'All');
@@ -425,6 +479,14 @@ export class AddRemissionComponent implements OnInit {
     if(this.paymentLibComponent.REFUNDLIST === "true") {
       this.isFromRefundListPage = true; 
     }
+
+    this.totalRefundAmount = this.remissionForm.value.feesList.reduce((a, c) => a + c.amounttorefund * c.selected, 0);
+    // this.remissionForm.get('feesList').valueChanges.subscribe(values => {
+    //   resolvedPromise.then(() => {
+    //     this.totalRefundAmount = valuesreduce((a, c) => a + c.amounttorefund * c.selected, 0)
+    //   });
+    // });
+
     this.errorMessage = '';
     this.refundReason = this.remissionForm.controls['refundReason'].value === null ? this.remissionForm.controls['refundDDReason'].value : this.remissionForm.controls['refundReason'].value;
     if(!this.refundReason || this.refundReason === 'Select a different reason') {
@@ -466,60 +528,110 @@ export class AddRemissionComponent implements OnInit {
   }
 
   gotoIssuePage(){
-	  var rows = document.getElementsByTagName('tr');
+    [].forEach.call(document.querySelectorAll('input'), function (el) {
+      el.classList.remove('inline-error-class');
+    });
+	  var checkboxs = document.getElementsByTagName('input');
 	  var quantityUpdated = '';
 	  this.errorMessage = '';
-		for(var i=0;i<rows.length;i++) {
-			var checkboxs=rows[i].getElementsByTagName("input");                                           
-			for(var j=0;j<checkboxs.length;j++)
+    this.errorMsg = [];
+    //	for(var i=0;i<rows.length;i++) {
+		//	var checkboxs=rows[i].getElementsByTagName("input");                                           
+			for (var j=0;j<checkboxs.length;j++)
 			{
 				if(checkboxs[j].checked)
 				{
 					
 					let quantity: number = +(<HTMLInputElement>document.getElementById('feeVolume_'+checkboxs[j].value)).value;
 
-					if(quantity>1){
+					if(quantity>=1){
 						quantityUpdated = (<HTMLInputElement>document.getElementById('feeVolumeUpdated_'+checkboxs[j].value)).value;
 					}
 					
 					var refundAmount = (<HTMLInputElement>document.getElementById('feeAmount_'+checkboxs[j].value)).value;
 					let apportionAmount: number = +(<HTMLInputElement>document.getElementById('feeApportionAmount_'+checkboxs[j].value)).value;
 					let calculatedAmount: number = +(<HTMLInputElement>document.getElementById('calculatedAmount_'+checkboxs[j].value)).value; 
+          let ele = (<HTMLInputElement>document.getElementById('feeAmount_'+checkboxs[j].value)).value;
 
-					if(refundAmount!='' && +refundAmount===0){
-						this.errorMessage = 'You need to enter a refund amount';
-						return false;
+					if(+quantityUpdated < quantity){
+            this.elementId = 'feeVolumeUpdated_'+checkboxs[j].value;
+            this.errorMsg.push('You need to enter quantity')
+            this.getErrorClass(this.elementId);
+					//	return false;
 					}
-					if(quantity===0){
-						this.errorMessage = 'You need to enter a refund amount';	
-						return false;
-					}
-					if(refundAmount!='' && +refundAmount>apportionAmount){
-						this.errorMessage = 'The amount you want to refund is more than the amount paid';
-						return false;	
-					}
-					if(quantityUpdated!='' && +quantityUpdated>quantity){
-						this.errorMessage = 'The quantity you want to refund is more than the available quantity';	
-						return false;
+          if(quantityUpdated!='' && +quantityUpdated>quantity){
+            this.elementId = 'feeVolumeUpdated_'+checkboxs[j].value;
+            this.errorMsg.push('The quantity you want to refund is more than the available quantity');
+            this.getErrorClass(this.elementId);
+					//	return false;
 					}
 					if((refundAmount!='' && quantity>1 && +refundAmount!= quantity*calculatedAmount) 
 						|| (refundAmount!='' && quantity>1 && quantityUpdated!='' && +refundAmount!= +quantityUpdated*calculatedAmount)){
-						this.errorMessage = 'The Amount to Refund should be equal to the product of Fee Amount and quantity';
-						return false;	
+              this.elementId = 'feeAmount_'+checkboxs[j].value;
+              this.errorMsg.push('The Amount to Refund should be equal to the product of Fee Amount and quantity');
+            this.getErrorClass(this.elementId);
+					//	return false;	
 					}
+					if(refundAmount!='' && +refundAmount>calculatedAmount){
+            this.elementId = 'feeAmount_'+checkboxs[j].value;
+            this.errorMsg.push('The amount you want to refund is more than the amount paid');
+            this.getErrorClass(this.elementId);
+					//	return false;	
+					}
+
+					if(refundAmount!='' && +refundAmount===0 || refundAmount === ''){
+            this.elementId = 'feeAmount_'+checkboxs[j].value;
+            this.errorMsg.push('You need to enter a refund amount');
+            this.getErrorClass(this.elementId);
+					//	return false;
+					}
+				
 					if(refundAmount!='' && !/^\d+(\.\d{1,2})?$/.test(refundAmount)){
+            this.elementId = 'feeAmount_'+checkboxs[j].value;
+            this.errorMsg.push('Please check the amount you want to refund');
 						this.errorMessage = 'Please check the amount you want to refund';
-						return false;
+            this.getErrorClass(this.elementId);
+					//	return false;
 					}
 				}
 			}
-		}
-      this.viewCompStatus = 'issuerefundpage1';
+	//	}
+
+//   var messageHtml = "";
+//   this.errorMsg.forEach(function (message) {
+//     messageHtml += "<li>" + message + "</li>";
+//  });
+//  document.getElementById('showerrors').innerHTML = messageHtml;
+  if(this.errorMsg.length === 0) {
+    this.viewCompStatus = 'issuerefundpage1';
+    this.getRefundReasons();
+  }
+  }
+
+  getRefundReasons(){
+  if(this.viewCompStatus === 'issuerefundpage1'){
+    this.refundService.getRefundReasons().subscribe(
+      refundReasons => { 
+        this.refundReasons = refundReasons.filter((data) => data.recently_used === false);
+        this.refundReasons = this.refundReasons.filter((data) => data.name !== 'Retrospective remission');
+        this.cd.detectChanges();
+        this.commonRefundReasons = refundReasons.filter((data) => data.recently_used === true);
+        this.commonRefundReasons.sort((a, b) => a.toString().localeCompare(b));
+        this.cd.detectChanges();
+      } );
+  }
+}
+   getErrorClass(elementId) {
+     if(this.errorMsg.length > 0) {
+       const ele = document.getElementById(elementId);
+       ele.classList.add('inline-error-class');
+     }
+      
   }
 
   changeIssueRefundReason() {
    // this.remissionForm.controls['refundReason'].setValue('Duplicate payment');
-   this.errorMessage = '';
+    this.errorMessage = '';
     this.refundHasError = false;
     this.isReasonEmpty = false;
     this.viewCompStatus = 'issuerefund';
@@ -533,9 +645,10 @@ export class AddRemissionComponent implements OnInit {
     if( this.isRefundRemission) {
       this.retroRemission = true;
     }
+    this.fees = this.remissionForm.value.feesList.filter(value => value.selected===true);
   
     const requestBody = new PostRefundRetroRemission(this.ccdCaseNumber, this.payment.reference, this.refundReason, '', '', 
-							this.remissionForm.controls[''], this.fees);
+							this.totalRefundAmount, this.fees);
     this.paymentViewService.postRefundsReason(requestBody).subscribe(
       response => {
           if (JSON.parse(response)) {

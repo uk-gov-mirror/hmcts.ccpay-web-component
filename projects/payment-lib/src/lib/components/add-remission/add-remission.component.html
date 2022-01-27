@@ -4,8 +4,19 @@
         <h2 class="heading-medium error-summary-heading" id="failure-error-summary-heading">
           Error in processing the request
         </h2>
-        <div class="govuk-error-summary__body">
+        <div  class="govuk-error-summary__body">
           {{ errorMessage }}
+        </div>
+      </div>
+    </div>
+    <div *ngIf="errorMsg.length > 0">
+      <div class="error-summary" role="group" aria-labelledby="failure-error-summary-heading" tabindex="-1">
+        <h2 class="heading-medium error-summary-heading" id="failure-error-summary-heading">
+          Error in processing the request
+        </h2>
+        <div *ngFor="let err of errorMsg; let i = index" class="govuk-error-summary__body">
+         
+          <li>{{err}}</li>
         </div>
       </div>
     </div>
@@ -297,39 +308,51 @@
             </tr>
           </thead>
           <tbody class="govuk-table__body">
-            <tr class="govuk-table__row" *ngFor="let fee of fees; let i = index;">
+            <tr class="govuk-table__row" formArrayName="feesList" *ngFor="let fee of feesList?.controls; let i = index">
               <td class="govuk-table__cell">
-                <div class="govuk-checkboxes govuk-checkboxes--large" data-module="govuk-checkboxes">
+                <div  [formGroupName]="i" class="govuk-checkboxes govuk-checkboxes--large" data-module="govuk-checkboxes">
                   <div class="govuk-checkboxes__item">
-                    <input  class="govuk-checkboxes__input" id="{{fee.id}}" name="organisation" type="checkbox" value="{{fee.id}}" >
-                    <label class="govuk-label govuk-checkboxes__label" for="{{fee.id}}">
+                    <input  class="govuk-checkboxes__input" (click)="check_en(fee.controls['id'].value)" id="{{fee.controls['id'].value}}" name="organisation" type="checkbox" value="{{fee.controls['id'].value}}" formControlName="selected" >
+                    <label class="govuk-label govuk-checkboxes__label" for="{{fee.controls['id'].value}}">
                       <span style="display:none">Select</span>
                     </label>
                   </div>
                 </div>
               </td>
-              <td class="govuk-table__cell  whitespace-inherit">{{fee.description}}</td>
-              <td class="govuk-table__cell  whitespace-inherit left" >{{fee.calculated_amount}}</td>
-              <td class="govuk-table__cell  whitespace-inherit left" >{{fee.volume}} * {{fee.net_amount}}</td>
-              <td class="govuk-table__cell  whitespace-inherit left"  *ngIf="fee.volume === 1">
-                {{fee.volume}}
+              <td class="govuk-table__cell  whitespace-inherit">{{fee.controls['description'].value}} </td>
+              <td class="govuk-table__cell  whitespace-inherit left" >{{fee.controls['calculated_amount'].value}}</td>
+              <td class="govuk-table__cell  whitespace-inherit left" >{{fee.controls['volume'].value}} * {{fee.controls['net_amount'].value}}</td>
+              <td class="govuk-table__cell  whitespace-inherit left"  *ngIf="fee.controls['volume'].value >1">
+                {{fee.controls['volume'].value}}
               </td>
-              <td class="govuk-table__cell  whitespace-inherit left"  *ngIf="fee.volume >1">
-                <input  class="govuk-input govuk-input--width-4 center"  id="feeVolumeUpdated_{{fee.id}}" name="feeVolumeUpdated_{{fee.id}}" type="text"  value="{{fee.volume}}" formControlName="feeVolumeUpdated_{{fee.id}}">
+              <td class="govuk-table__cell  whitespace-inherit left"  *ngIf="fee.controls['volume'].value ===1">
+                <input disabled="disabled"  class="govuk-input govuk-input--width-4 center"  id="feeVolumeUpdated_{{fee.controls['id'].value}}" name="feeVolumeUpdated_{{fee.controls['id'].value}}" type="text"  value="{{fee.controls['volume'].value}}" >
               </td>
               <td class="govuk-table__cell  whitespace-inherit center" scope="row">
               
-                  <div class="hmcts-currency-input">
+                  <div  [formGroupName]="i"  class="hmcts-currency-input">
                     <div class="hmcts-currency-input__symbol" aria-hidden="true">£</div>
-                    <input  class="govuk-input govuk-input--width-10" id="feeAmount_{{fee.id}}" name="feeAmount_{{fee.id}}" value= {{fee.calculated_amoun}} type="text" aria-describedby="amount-currency " pattern="[0-9]*" formControlName="feeAmount_{{fee.id}}">
-					<input id="feeVolume_{{fee.id}}" name="feeVolume_{{fee.id}}" value= "{{fee.volume}}" type="hidden" formControlName="feeVolume_{{fee.id}}">
-					<input id="feeApportionAmount_{{fee.id}}" name="feeApportionAmount_{{fee.id}}" value= {{fee.apportion_amount}} type="hidden" formControlName="feeApportionAmount_{{fee.id}}">
-					<input id="calculatedAmount_{{fee.id}}" name="calculatedAmount_{{fee.id}}" value= {{fee.calculated_amount}} type="hidden" formControlName="calculatedAmount_{{fee.id}}">
-                  </div>
+                    <input disabled="disabled" class="govuk-input govuk-input--width-10" id="feeAmount_{{fee.controls['id'].value}}" name="feeAmount_{{fee.controls['id'].value}}" type="text" aria-describedby="amount-currency " pattern="[0-9]*" formControlName="amounttorefund">
+                    <input  id="feeVolume_{{fee.controls['id'].value}}" name="feeVolume_{{fee.controls['id'].value}}" value= "{{fee.controls['volume'].value}}" type="hidden" formControlName="volume">
+					          <input id="feeApportionAmount_{{fee.controls['id'].value}}" name="feeApportionAmount_{{fee.controls['id'].value}}" value= "{{fee.controls['apportion_amount'].value}}" type="hidden" formControlName="apportion_amount">
+					          <input id="calculatedAmount_{{fee.controls['id'].value}}" name="calculatedAmount_{{fee.controls['id'].value}}" value= "{{fee.controls['calculated_amount'].value}}" type="hidden" formControlName="calculated_amount">
+                 </div> 
    
               </td>
             </tr>
           </tbody>
+
+          <!-- <div formArrayName="feesList" *ngFor="let item of feesList?.controls; let i = index">
+            <div [formGroupName]="i">
+                <label for="">Your row</label>
+                
+                <input type="checkbox" formControlName="selected">
+                <input formControlName="amouttorefund"> -->
+                <!-- <button (click)="removeProduct(group.value,i)">remove</button> -->
+            <!-- </div>
+          </div> -->
+
+          <!-- {{remissionForm?.value|json}} -->
           <tbody class="govuk-table__body" *ngIf="fees?.length === 0">
             <td class="govuk-table__cell" colspan="6">No fees recorded</td>
           </tbody>
@@ -343,7 +366,7 @@
     </a>
     
       
-    <button (click)="gotoIssuePage()" class="govuk-button">
+    <button [disabled] = "noneSelected()" (click)="gotoIssuePage()" class="govuk-button">
       Continue
     </button>
     
@@ -454,12 +477,7 @@
           <h1 class="heading-large"> Check your answers</h1>
       </div>
       <table class="govuk-table">
-          <tr class="govuk-table__row">
-              <td class="govuk-table__cell govuk-!-font-weight-bold">Reason for refund</td>
-              <td class="govuk-table__cell"> {{ displayRefundReason  }} 
-               <a (click)="changeIssueRefundReason()" class="govuk-link right" >Change</a>
-              </td>
-          </tr>
+          
           <tr class="govuk-table__row">
               <td class="govuk-table__cell govuk-!-font-weight-bold">Payment reference</td>
               <td class="govuk-table__cell">{{this.payment.reference}}</td>
@@ -468,6 +486,18 @@
               <td class="govuk-table__cell govuk-!-font-weight-bold">Payment amount</td>
               <td class="govuk-table__cell">{{this.payment.amount | currency:'GBP':'symbol-narrow':'1.2-2'}}</td>
           </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell govuk-!-font-weight-bold">Reason for refund</td>
+            <td class="govuk-table__cell"> {{ displayRefundReason  }} 
+             <a (click)="changeIssueRefundReason()" class="govuk-link right" >Change</a>
+            </td>
+        </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell govuk-!-font-weight-bold">Refund amount</td>
+            <td class="govuk-table__cell">{{this.totalRefundAmount | currency:'GBP':'symbol-narrow':'1.2-2'}}
+            <a (click)="gotoIssueRefundPage()" class="govuk-link right" >Change</a>
+          </td>
+        </tr>
       </table>
       <div class="govuk-button-group">
       <button type="submit" class="button govuk-button--secondary" (click)="gotoIssueRefundPage()"> Previous </button>
