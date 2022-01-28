@@ -114,6 +114,9 @@ export class AddRemissionComponent implements OnInit {
   class='';
   errorMsg = new Array();
   totalRefundAmount: number;
+  quantityUpdated: number;
+  fullRefund: boolean;
+  allowedRefundAmount: number;
   component: { account_number: string; amount: number; case_reference: string; ccd_case_number: string; channel: string; currency: string; customer_reference: string; date_created: string; date_updated: string; description: string; method: string; organisation_name: string; payment_allocation: any[]; reference: string; service_name: string; site_id: string; status: string; };
 
   constructor(private formBuilder: FormBuilder,
@@ -126,6 +129,7 @@ export class AddRemissionComponent implements OnInit {
 
   ngOnInit() {
     this.errorMessage = '';
+    this.errorMsg = [];
     this.default = 'Select a different reason';
     this.pattern1 = '^([a-zA-Z0-9]{3})-([a-zA-Z0-9]{3})-([a-zA-Z0-9]{3})$';
     this.pattern2 = '^([A-Za-z]{2}[0-9]{2})-([0-9]{6})$';
@@ -227,9 +231,9 @@ export class AddRemissionComponent implements OnInit {
        return  !this.feesList.controls.some(item => item.get('selected').value === true);
   }
     
-  validateRow(i){
-      return this.remissionForm.get('feesList').parent.controls['feesList'].controls[1].value['selected']
-  }
+  // validateRow(i){
+  //     return this.remissionForm.get('feesList').parent.controls['feesList'].controls[1].value['selected']
+  // }
     
   check_en (v1: any) {
     const ele = document.getElementById(v1) as HTMLInputElement;
@@ -323,6 +327,7 @@ export class AddRemissionComponent implements OnInit {
   // Add retro remission changes
   addRemissionCode() {
     this.errorMessage = false;
+    this.errorMsg = [];
     this.viewStatus = '';
     this.isRefundRemission = false;
     this.resetRemissionForm([false, false, false, false, false, false], 'All');
@@ -361,6 +366,7 @@ export class AddRemissionComponent implements OnInit {
 
   gotoAddRetroRemissionCodePage() {
     this.errorMessage = false;
+    this.errorMsg = [];
     if(this.isRefundRemission) {
       this.paymentLibComponent.iscancelClicked = true;
       this.refundListAmount.emit();
@@ -378,6 +384,7 @@ export class AddRemissionComponent implements OnInit {
     this.viewCompStatus = "addremission";
     this.isRefundRemission = true;
     this.errorMessage = '';
+    this.errorMsg = [];
     if(this.isFromPaymentDetailPage) {
       this.paymentLibComponent.viewName = 'payment-view';
     }
@@ -422,6 +429,7 @@ export class AddRemissionComponent implements OnInit {
     this.viewCompStatus = 'addremission';
     this.isRefundRemission = true;
     this.errorMessage = '';
+    this.errorMsg = [];
   }
 
   confirmRetroRemission() {
@@ -449,6 +457,7 @@ export class AddRemissionComponent implements OnInit {
 
   processRefund() {
     this.errorMessage = '';
+    this.errorMsg = [];
     this.isConfirmationBtnDisabled = true;
     if( this.isRefundRemission) {
       this.retroRemission = true;
@@ -488,6 +497,7 @@ export class AddRemissionComponent implements OnInit {
     // });
 
     this.errorMessage = '';
+    this.errorMsg = [];
     this.refundReason = this.remissionForm.controls['refundReason'].value === null ? this.remissionForm.controls['refundDDReason'].value : this.remissionForm.controls['refundReason'].value;
     if(!this.refundReason || this.refundReason === 'Select a different reason') {
       this.refundHasError = true;
@@ -523,6 +533,7 @@ export class AddRemissionComponent implements OnInit {
     this.viewStatus = '';
     this.isRefundRemission = true;
     this.errorMessage = false;
+    this.errorMsg = [];
     this.refundHasError = false;
     this.isReasonEmpty = false;
   }
@@ -531,77 +542,82 @@ export class AddRemissionComponent implements OnInit {
     [].forEach.call(document.querySelectorAll('input'), function (el) {
       el.classList.remove('inline-error-class');
     });
+
 	  var checkboxs = document.getElementsByTagName('input');
-	  var quantityUpdated = '';
 	  this.errorMessage = '';
-    this.errorMsg = [];
-    //	for(var i=0;i<rows.length;i++) {
-		//	var checkboxs=rows[i].getElementsByTagName("input");                                           
+    this.errorMsg = [];                                    
 			for (var j=0;j<checkboxs.length;j++)
 			{
 				if(checkboxs[j].checked)
 				{
 					
 					let quantity: number = +(<HTMLInputElement>document.getElementById('feeVolume_'+checkboxs[j].value)).value;
-
-					if(quantity>=1){
-						quantityUpdated = (<HTMLInputElement>document.getElementById('feeVolumeUpdated_'+checkboxs[j].value)).value;
-					}
-					
-					var refundAmount = (<HTMLInputElement>document.getElementById('feeAmount_'+checkboxs[j].value)).value;
+          let amountToRefund: number = +(<HTMLInputElement>document.getElementById('feeAmount_'+checkboxs[j].value)).value;
 					let apportionAmount: number = +(<HTMLInputElement>document.getElementById('feeApportionAmount_'+checkboxs[j].value)).value;
 					let calculatedAmount: number = +(<HTMLInputElement>document.getElementById('calculatedAmount_'+checkboxs[j].value)).value; 
-          let ele = (<HTMLInputElement>document.getElementById('feeAmount_'+checkboxs[j].value)).value;
 
-					if(+quantityUpdated < quantity){
-            this.elementId = 'feeVolumeUpdated_'+checkboxs[j].value;
-            this.errorMsg.push('You need to enter quantity')
-            this.getErrorClass(this.elementId);
-					//	return false;
-					}
-          if(quantityUpdated!='' && +quantityUpdated>quantity){
-            this.elementId = 'feeVolumeUpdated_'+checkboxs[j].value;
-            this.errorMsg.push('The quantity you want to refund is more than the available quantity');
-            this.getErrorClass(this.elementId);
-					//	return false;
-					}
-					if((refundAmount!='' && quantity>1 && +refundAmount!= quantity*calculatedAmount) 
-						|| (refundAmount!='' && quantity>1 && quantityUpdated!='' && +refundAmount!= +quantityUpdated*calculatedAmount)){
-              this.elementId = 'feeAmount_'+checkboxs[j].value;
-              this.errorMsg.push('The Amount to Refund should be equal to the product of Fee Amount and quantity');
-            this.getErrorClass(this.elementId);
-					//	return false;	
-					}
-					if(refundAmount!='' && +refundAmount>calculatedAmount){
-            this.elementId = 'feeAmount_'+checkboxs[j].value;
-            this.errorMsg.push('The amount you want to refund is more than the amount paid');
-            this.getErrorClass(this.elementId);
-					//	return false;	
-					}
+          if( amountToRefund === apportionAmount) {
+            this.fullRefund = true;
+          }
 
-					if(refundAmount!='' && +refundAmount===0 || refundAmount === ''){
+          if(amountToRefund === 0){
             this.elementId = 'feeAmount_'+checkboxs[j].value;
             this.errorMsg.push('You need to enter a refund amount');
             this.getErrorClass(this.elementId);
-					//	return false;
 					}
-				
-					if(refundAmount!='' && !/^\d+(\.\d{1,2})?$/.test(refundAmount)){
-            this.elementId = 'feeAmount_'+checkboxs[j].value;
-            this.errorMsg.push('Please check the amount you want to refund');
-						this.errorMessage = 'Please check the amount you want to refund';
+
+          if(this.quantityUpdated === 0){
+            this.elementId = 'feeVolumeUpdated_'+checkboxs[j].value;
+            this.errorMsg.push('You need to enter quantity')
             this.getErrorClass(this.elementId);
-					//	return false;
 					}
+
+          if (quantity === 1)
+          {
+            if(amountToRefund > 0 && amountToRefund > apportionAmount){
+              this.elementId = 'feeAmount_'+checkboxs[j].value;
+              this.errorMsg.push('The amount you want to refund is more than the amount paid');
+              this.getErrorClass(this.elementId);
+            }
+          } 
+
+					if(quantity > 1) {
+
+						this.quantityUpdated = +(<HTMLInputElement>document.getElementById('feeVolumeUpdated_'+checkboxs[j].value)).value;
+
+            if (this.fullRefund && quantity !== this.quantityUpdated) {
+              this.elementId = 'feeVolumeUpdated_'+checkboxs[j].value;
+              this.errorMsg.push('The quantity you want to refund should be maximun available quantity');
+              this.getErrorClass(this.elementId);
+            }
+
+            if (!this.fullRefund && this.quantityUpdated > 0 && amountToRefund > 0) {
+              this.allowedRefundAmount = this.quantityUpdated * calculatedAmount;
+              if( this.allowedRefundAmount !== amountToRefund) 
+              {
+                this.elementId = 'feeAmount_'+checkboxs[j].value;
+                this.errorMsg.push('The Amount to Refund should be equal to the product of Fee Amount and quantity');
+                this.getErrorClass(this.elementId);
+              }
+            }
+
+            if(!this.fullRefund && amountToRefund > apportionAmount)
+            {
+              this.elementId = 'feeAmount_'+checkboxs[j].value;
+              this.errorMsg.push('The amount you want to refund is more than the amount paid');
+              this.getErrorClass(this.elementId);
+            }
+	
+            if( !this.fullRefund && this.quantityUpdated >0 && this.quantityUpdated > quantity){
+              this.elementId = 'feeVolumeUpdated_'+checkboxs[j].value;
+              this.errorMsg.push('The quantity you want to refund is more than the available quantity');
+              this.getErrorClass(this.elementId);
+            }
+        }
+
 				}
 			}
-	//	}
 
-//   var messageHtml = "";
-//   this.errorMsg.forEach(function (message) {
-//     messageHtml += "<li>" + message + "</li>";
-//  });
-//  document.getElementById('showerrors').innerHTML = messageHtml;
   if(this.errorMsg.length === 0) {
     this.viewCompStatus = 'issuerefundpage1';
     this.getRefundReasons();
@@ -632,6 +648,7 @@ export class AddRemissionComponent implements OnInit {
   changeIssueRefundReason() {
    // this.remissionForm.controls['refundReason'].setValue('Duplicate payment');
     this.errorMessage = '';
+    this.errorMsg = [];
     this.refundHasError = false;
     this.isReasonEmpty = false;
     this.viewCompStatus = 'issuerefund';
@@ -642,6 +659,7 @@ export class AddRemissionComponent implements OnInit {
   confirmIssueRefund() {
     this.isConfirmationBtnDisabled = true;
     this.errorMessage = '';
+    this.errorMsg = [];
     if( this.isRefundRemission) {
       this.retroRemission = true;
     }
@@ -672,6 +690,7 @@ export class AddRemissionComponent implements OnInit {
   confirmRetroRefund() {
     this.isConfirmationBtnDisabled = true;
     this.errorMessage = '';
+    this.errorMsg = [];
     if( this.isRefundRemission) {
       this.retroRemission = true;
     }
@@ -703,6 +722,7 @@ export class AddRemissionComponent implements OnInit {
     remissionctrls['reason'].reset();
     this.isRefundReasonsSelected = true;
     this.errorMessage = false;
+    this.errorMsg = [];
     this.isReasonEmpty = false;
     this.showReasonText = false;
     this.refundHasError = false;
@@ -735,6 +755,7 @@ export class AddRemissionComponent implements OnInit {
 
   gotoServiceRequestPage(event: any) {
     this.errorMessage ='';
+    this.errorMsg = [];
     event.preventDefault();
     if (this.isFromServiceRequestPage && !this.isFromPaymentDetailPage) {
     this.viewStatus = 'order-full-view';
@@ -832,6 +853,7 @@ export class AddRemissionComponent implements OnInit {
   gotoCasetransationPage() {
     this.OrderslistService.setnavigationPage('casetransactions');
     this.errorMessage = '';
+    this.errorMsg = [];
     this.paymentLibComponent.viewName = 'case-transactions';
     this.paymentLibComponent.VIEW = 'case-transactions';
     this.paymentLibComponent.ISTURNOFF = this.isTurnOff;
@@ -854,6 +876,7 @@ export class AddRemissionComponent implements OnInit {
 
   gotoCasetransationPageCancelBtnClicked(event: Event) {
     event.preventDefault();
+    this.errorMsg = [];
     if( !this.paymentLibComponent.isFromServiceRequestPage) {
       this.OrderslistService.setnavigationPage('casetransactions');
       this.OrderslistService.setisFromServiceRequestPage(false);

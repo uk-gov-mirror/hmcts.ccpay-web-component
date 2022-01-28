@@ -323,10 +323,11 @@
               <td class="govuk-table__cell  whitespace-inherit left" >{{fee.controls['calculated_amount'].value}}</td>
               <td class="govuk-table__cell  whitespace-inherit left" >{{fee.controls['volume'].value}} * {{fee.controls['net_amount'].value}}</td>
               <td class="govuk-table__cell  whitespace-inherit left"  *ngIf="fee.controls['volume'].value >1">
-                {{fee.controls['volume'].value}}
+                <input disabled="disabled"  class="govuk-input govuk-input--width-4 center"  id="feeVolumeUpdated_{{fee.controls['id'].value}}" name="feeVolumeUpdated_{{fee.controls['id'].value}}" type="text"  value="{{fee.controls['volume'].value}}" >
+             
               </td>
               <td class="govuk-table__cell  whitespace-inherit left"  *ngIf="fee.controls['volume'].value ===1">
-                <input disabled="disabled"  class="govuk-input govuk-input--width-4 center"  id="feeVolumeUpdated_{{fee.controls['id'].value}}" name="feeVolumeUpdated_{{fee.controls['id'].value}}" type="text"  value="{{fee.controls['volume'].value}}" >
+                <input disabled="disabled"  class="govuk-input govuk-input--width-4 center"  id="VolumeUpdated_{{fee.controls['id'].value}}" name="VolumeUpdated_{{fee.controls['id'].value}}" type="text"  value="{{fee.controls['volume'].value}}" >
               </td>
               <td class="govuk-table__cell  whitespace-inherit center" scope="row">
               
@@ -504,7 +505,7 @@
       <button type="submit"
       [disabled]="isConfirmationBtnDisabled"
       [ngClass]='isConfirmationBtnDisabled ? "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"'
-    (click)="confirmIssueRefund()">
+      (click)="confirmIssueRefund()">
         Submit refund
       </button>
       </div>
