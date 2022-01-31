@@ -294,12 +294,12 @@ export class RefundStatusComponent implements OnInit {
         this.errorMessage = error.replace(/"/g,"");
       }
     );
-
   }
 
   gotoEditAddressDetails(note: IRefundsNotifications) {
     this.notification = note;
     this.isEditDetailsClicked = true;
+    this.viewName = 'refundEditView'
   }
   getContactDetails(obj:IRefundContactDetails) {
     this.addressDetails = obj;
@@ -307,6 +307,7 @@ export class RefundStatusComponent implements OnInit {
   }
   gotoEditDetailsPage() {
     this.isEditDetailsClicked = true;
+    this.viewName = 'refundEditView'
   }
   submitEditDetail() {
     this.isResendOperationSuccess = false;

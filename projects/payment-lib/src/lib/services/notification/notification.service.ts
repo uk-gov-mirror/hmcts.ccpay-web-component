@@ -26,4 +26,13 @@ export class NotificationService {
         catchError(this.errorHandlerService.handleError)
       );
   }
+
+  getAddressByPostcode(postcode: string): Observable<any> {
+    return this.http.get<any>(`${this.paymentLibService.NOTIFICATION_API_ROOT}/search/places/v1?postcode=${postcode}`, {
+      withCredentials: true
+    })
+      .pipe(
+        catchError(this.errorHandlerService.handleError)
+      );
+  }
 }

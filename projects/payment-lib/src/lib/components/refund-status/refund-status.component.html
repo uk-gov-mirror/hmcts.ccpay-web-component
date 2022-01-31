@@ -78,7 +78,6 @@
     <div>
       <br />
       <h2 class="govuk-heading-m">Notifications sent</h2>
-      <div *ngIf="refundStatusHistories">
       <table class="govuk-table">
         <thead class="govuk-table__head">
           <tr class="govuk-table__row">
@@ -88,11 +87,11 @@
             <td class="govuk-table__header whitespace-inherit" scope="col">Actions</td>
           </tr>
         </thead>
-        <tbody class="govuk-table__body">
+        <tbody class="govuk-table__body" *ngIf="notificationList">
           <tr class="govuk-table__row" *ngFor="let notification of notificationList">
-            <td class="govuk-table__cell whitespace-inherit">{{notification.date_created}}</td>
+            <td class="govuk-table__cell whitespace-inherit">{{notification.date_created | date:'dd MMM yyyy HH:MM:SS'}}</td>
             <td class="govuk-table__cell whitespace-inherit">Williams</td>
-            <td class="govuk-table__cell whitespace-inherit">
+            <td class="govuk-table__cell whitespace-inherit col-40">
               <div *ngIf="notification?.notification_type === 'EMAIL'">
                 <strong>Email</strong><br>
                 {{notification?.contact_details?.email}}
@@ -105,9 +104,12 @@
             <td class="govuk-table__cell whitespace-inherit"><a href="Javascript:void(0);" (click)="putResend(notification)">Resend</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="Javascript:void(0);" (click)="gotoEditAddressDetails(notification)">Edit details</a></td>
           </tr>
         </tbody>
-      </table>
-    </div>
-  
+        <tbody class="govuk-table__body" *ngIf="!notificationList">
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell whitespace-inherit" colspan="4">No record found ... </td>
+          </tr>
+        </tbody>
+      </table>  
     </div>
   <!-- Status history -->
   <div>
@@ -264,7 +266,7 @@
         </h1>
 
         <div class="govuk-panel__body">
-          <p class="govuk-body white"><strong>Refund reference:{{refundReference}} </strong></p>
+          <p class="govuk-body white"><strong>Refund reference: {{ refundlist?.refund_reference}} </strong></p>
         </div>
 
       </div>
@@ -274,12 +276,12 @@
     </div>
   </div>
 </ng-container>
-<ng-container *ngIf="isEditDetailsClicked">
+<ng-container *ngIf="viewName === 'refundEditView' && isEditDetailsClicked">
   <input #myInput type='hidden' id='iFrameDrivenImageValue' value='EDITDETAILSPAGE'>      
     <h1 class="govuk-heading-l">Edit contact details</h1>
     <h2 class="govuk-heading-m govuk-font19px">Case reference: {{ccdCaseNumber | ccdHyphens }}</h2>
-    <span class="govuk-hint">
-      Refund reference: {{refundReference}}
+    <span class="govuk-hint font-size-19px">
+      Refund reference: {{ refundlist?.refund_reference}}
     </span>
     <ccpay-contact-details
     [isEditOperation] = isEditDetailsClicked
@@ -293,31 +295,30 @@
   </p>
 
 </ng-container>
-
-<ng-container *ngIf="viewName === 'revieweditdetailsconfirmationpage' && !isResendOperationSuccess && !isEditDetailsClicked">
+<ng-container *ngIf="viewName === 'revieweditdetailsconfirmationpage' && !isResendOperationSuccess && isEditDetailsClicked">
   <input #myInput type='hidden' id='iFrameDrivenImageValue' value='EDITDETAILSCHECKANDANSWERPAGE'>      
     <h1 class="govuk-heading-l">Check your answers</h1>
-    <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-      <div class="govuk-summary-list__row">
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row font-size-19px">
         <dt class="govuk-summary-list__key">
           Refund reference
         </dt>
         <dd class="govuk-summary-list__value">
-          {{refundReference}}
+          {{ refundlist?.refund_reference}}
         </dd>
         <span class="govuk-summary-list__actions"></span> 
       </div>
-      <div class="govuk-summary-list__row">
+      <div class="govuk-summary-list__row font-size-19px">
         <dt class="govuk-summary-list__key">
           Send via
         </dt>
         <dd class="govuk-summary-list__value">
-          <div *ngIf="addressDetails?.notification_type === 'EMAIL'" class="contactDetails-width">
+          <div *ngIf="addressDetails?.notification_type === 'EMAIL'" class="contactDetails-width font-size-19px">
             <strong>Email</strong>
             <br/>
             {{addressDetails?.email}}
           </div>
-          <div *ngIf="addressDetails?.notification_type === 'LETTER'" class="contactDetails-width">
+          <div *ngIf="addressDetails?.notification_type === 'LETTER'" class="contactDetails-width font-size-19px">
             <strong>Post</strong>
             <br/>
             {{addressDetails?.address_line}} {{addressDetails?.city}} {{addressDetails?.county}} {{addressDetails?.country}} {{addressDetails?.postal_code}}
@@ -332,7 +333,7 @@
     </dl>
     <div class="govuk-button-group">
       <button (click)="gotoEditDetailsPage()" class="govuk-button govuk-button--secondary"> Previous</button>
-      <button [disabled]="isRefundBtnDisabled" (click)="submitEditDetail()" class="govuk-button button"
+      <button (click)="submitEditDetail()" class="govuk-button button"
         data-module="govuk-button">
           Send notification
       </button>
