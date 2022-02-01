@@ -99,6 +99,7 @@ export class RefundStatusComponent implements OnInit {
       });
 
       if(this.refundlist !== undefined) {
+        this.getRefundsNotification();
         this.getRefundsStatusHistoryList();
 
         if (this.LOGGEDINUSERROLES.some(i => i.includes('payments-refund-approver'))) {
@@ -112,9 +113,7 @@ export class RefundStatusComponent implements OnInit {
           this.refundButtonState = this.refundlist.refund_status.name;
         }
       }
-      if(this.refundlist !== undefined) {
-        this.getRefundsNotification();
-      }
+
   }
   
 
