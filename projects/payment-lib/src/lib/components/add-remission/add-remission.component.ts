@@ -141,10 +141,7 @@ export class AddRemissionComponent implements OnInit {
     if(this.fee) {
     this.amount = (this.fee.volume * this.fee.calculated_amount);
     }
-    if(this.orderDetail !== undefined){
-      this.fees = this.orderDetail[0].fees;
-      this.paymentReference = this.orderDetail[0].payments[0].reference;
-    }
+    
     if (this.payment){
       this.paymentReference = this.payment.reference;
       this.remessionPayment = this.payment;
@@ -174,7 +171,7 @@ export class AddRemissionComponent implements OnInit {
     const remissionctrls=this.remissionForm.controls;
     remissionctrls['refundDDReason'].setValue('Select a different reason', {onlySelf: true});
     
-    if (this.fees) {
+    if (this.fees && this.viewCompStatus === 'issuerefund') {
       const creds = this.remissionForm.controls.feesList as FormArray;
      for(var i=0;i<this.fees.length;i++) {
       creds.push(this.formBuilder.group({
@@ -185,11 +182,13 @@ export class AddRemissionComponent implements OnInit {
        apportion_amount: this.fees[i].apportion_amount,
        ccd_case_number: this.fees[i].ccd_case_number,
        description: this.fees[i].description,
-       net_amount: this.fees[i].net_amount, 
+       net_amount: this.fees[i].net_amount,
+       version: this.fees[i].version,
        amounttorefund : [''],
        selected:[''] 
       }));
     }
+    this.cd.detectChanges();
     }
 
     if(this.viewCompStatus === ''){
@@ -210,6 +209,10 @@ export class AddRemissionComponent implements OnInit {
     
     if(this.viewCompStatus === 'processretroremissonpage' && this.isFromRefundListPage){
       this.viewStatus = 'processretroremissonpage';
+    }
+    if(this.orderDetail !== undefined){
+      this.fees = this.orderDetail[0].fees;
+      this.paymentReference = this.orderDetail[0].payments[0].reference;
     }
 
   }
