@@ -90,7 +90,7 @@
         <tbody class="govuk-table__body" *ngIf="notificationList">
           <tr class="govuk-table__row" *ngFor="let notification of notificationList">
             <td class="govuk-table__cell whitespace-inherit">{{notification.date_created | date:'dd MMM yyyy HH:MM:SS'}}</td>
-            <td class="govuk-table__cell whitespace-inherit">Williams</td>
+            <td class="govuk-table__cell whitespace-inherit">{{orderParty}}</td>
             <td class="govuk-table__cell whitespace-inherit col-40">
               <div *ngIf="notification?.notification_type === 'EMAIL'">
                 <strong>Email</strong><br>
@@ -311,6 +311,8 @@
       <div class="govuk-summary-list__row font-size-19px">
         <dt class="govuk-summary-list__key">
           Send via
+          <br/>
+          {{orderParty}}
         </dt>
         <dd class="govuk-summary-list__value">
           <div *ngIf="addressDetails?.notification_type === 'EMAIL'" class="contactDetails-width font-size-19px">

@@ -581,6 +581,7 @@
               <ccpay-refund-status
               [ccdCaseNumber]="ccdCaseNumber" 
               [isTurnOff]="isTurnOff"
+              [orderParty]="orderParty"
               [LOGGEDINUSERROLES]="LOGGEDINUSERROLES" 
               [isNewPcipalOff]="isNewPcipalOff"
               [isOldPcipalOff]="isOldPcipalOff"
@@ -684,7 +685,10 @@
         </div>
         <div class="govuk-grid-column-full" *ngIf="serviceRequestValue === 'false'">
             <span class="heading-medium"><br/>Refunds</span>
-            <ccpay-refund-status [ccdCaseNumber]="ccdCaseNumber" ></ccpay-refund-status>
+            <ccpay-refund-status 
+            [ccdCaseNumber]="ccdCaseNumber"
+            [orderParty] ="orderParty"
+             ></ccpay-refund-status>
         </div>
 
    </ng-container>

@@ -23,6 +23,7 @@ export class RefundStatusComponent implements OnInit {
   @Input() isNewPcipalOff: boolean;
   @Input() ccdCaseNumber: string;
   @Input() isTurnOff: boolean;
+  @Input() orderParty: string;
   refundStatusForm: FormGroup;
   selectedRefundReason: string;
   rejectedRefundList: IRefundList[] = [];
@@ -113,7 +114,6 @@ export class RefundStatusComponent implements OnInit {
           this.refundButtonState = this.refundlist.refund_status.name;
         }
       }
-
   }
   
 
