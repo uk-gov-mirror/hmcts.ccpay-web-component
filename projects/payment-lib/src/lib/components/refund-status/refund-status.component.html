@@ -201,6 +201,25 @@
       </td>
 
     </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell govuk-!-font-weight-bold">Send to</td>
+      <td class="govuk-table__cell">{{orderParty}} </td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell govuk-!-font-weight-bold">Send via</td>
+      <td class="govuk-table__cell">
+        <div *ngIf="refundlist?.contact_details?.notification_type === 'EMAIL'" class="contactDetails-width font-size-19px">
+          <strong>Email</strong>
+          <br/>
+          {{refundlist?.contact_details?.email}}
+        </div>
+        <div *ngIf="refundlist?.contact_details?.notification_type === 'LETTER'" class="contactDetails-width font-size-19px">
+          <strong>Post</strong>
+          <br/>
+          {{refundlist?.contact_details?.address_line}} {{refundlist?.contact_details?.city}} {{refundlist?.contact_details?.county}} {{refundlist?.contact_details?.country}} {{refundlist?.contact_details?.postal_code}}
+        </div> 
+      </td>
+    </tr>
   </table>
   <div class="govuk-button-group">
     <button (click)="gotoReviewDetailsPage($event)" class="govuk-button govuk-button--secondary"> Previous</button>
@@ -312,7 +331,6 @@
         <dt class="govuk-summary-list__key">
           Send via
           <br/>
-          {{orderParty}}
         </dt>
         <dd class="govuk-summary-list__value">
           <div *ngIf="addressDetails?.notification_type === 'EMAIL'" class="contactDetails-width font-size-19px">
