@@ -16,6 +16,7 @@ import { PostIssueRefundRetroRemission } from '../../interfaces/PostIssueRefundR
 import {ChangeDetectorRef} from '@angular/core';
 import { IRemission } from '../../interfaces/IRemission';
 import { OrderslistService } from '../../services/orderslist.service';
+import { IPaymentGroup } from '../../interfaces/IPaymentGroup';
 
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 const resolvedPromise = Promise.resolve(null);
@@ -117,6 +118,11 @@ export class AddRemissionComponent implements OnInit {
   quantityUpdated: number;
   fullRefund: boolean;
   allowedRefundAmount: number;
+  isRemissionsMatch: boolean;
+  paymentFees: IFee[];
+  paymentGroup: IPaymentGroup;
+  isStatusAllocated: boolean;
+  
   component: { account_number: string; amount: number; case_reference: string; ccd_case_number: string; channel: string; currency: string; customer_reference: string; date_created: string; date_updated: string; description: string; method: string; organisation_name: string; payment_allocation: any[]; reference: string; service_name: string; site_id: string; status: string; };
 
   constructor(private formBuilder: FormBuilder,
@@ -170,25 +176,43 @@ export class AddRemissionComponent implements OnInit {
     });
     const remissionctrls=this.remissionForm.controls;
     remissionctrls['refundDDReason'].setValue('Select a different reason', {onlySelf: true});
+
+    if(this.isFromServiceRequestPage) {
+      this.paymentViewService.getApportionPaymentDetails(this.paymentLibComponent.paymentReference).subscribe(
+        paymentGroup => {
+          let fees = [];
+          paymentGroup.fees.forEach(fee => {
+            this.isRemissionsMatch = false;
+  
+            paymentGroup.remissions.forEach(rem => {
+              if (rem.fee_code === fee.code) {
+                this.isRemissionsMatch = true;
+                fee['remissions'] = rem;
+                fees.push(fee);
+              }
+            });
+            if (!this.isRemissionsMatch) {
+              fees.push(fee);
+            }
+          });
+          paymentGroup.fees = fees
+          this.paymentFees =fees;
+          this.fees = fees;
+          this.paymentGroup = paymentGroup;
+          
+          this.paymentGroup.payments = this.paymentGroup.payments.filter
+            (paymentGroupObj => paymentGroupObj['reference'].includes(this.paymentLibComponent.paymentReference));
+          const paymentAllocation = this.paymentGroup.payments[0].payment_allocation;
+          this.isStatusAllocated = paymentAllocation.length > 0 && paymentAllocation[0].allocation_status === 'Allocated' || paymentAllocation.length === 0;
+          this.refundFeesList();
+        },
+        (error: any) => this.errorMessage = error
+      );
+    }
+
     
     if (this.fees && this.viewCompStatus === 'issuerefund') {
-      const creds = this.remissionForm.controls.feesList as FormArray;
-     for(var i=0;i<this.fees.length;i++) {
-      creds.push(this.formBuilder.group({
-       id: this.fees[i].id,
-       code: this.fees[i].code,
-       volume: this.fees[i].volume,
-       calculated_amount: this.fees[i].calculated_amount,
-       apportion_amount: this.fees[i].apportion_amount,
-       ccd_case_number: this.fees[i].ccd_case_number,
-       description: this.fees[i].description,
-       net_amount: this.fees[i].net_amount,
-       version: this.fees[i].version,
-       amounttorefund : [''],
-       selected:[''] 
-      }));
-    }
-    this.cd.detectChanges();
+      this.refundFeesList();
     }
 
     if(this.viewCompStatus === ''){
@@ -217,10 +241,29 @@ export class AddRemissionComponent implements OnInit {
 
   }
 
+  refundFeesList() {
+    const creds = this.remissionForm.controls.feesList as FormArray;
+    for(var i=0;i<this.fees.length;i++) {
+     creds.push(this.formBuilder.group({
+      id: this.fees[i].id,
+      code: this.fees[i].code,
+      volume: this.fees[i].volume,
+      calculated_amount: this.fees[i].calculated_amount,
+      apportion_amount: this.fees[i].apportion_amount,
+      ccd_case_number: this.fees[i].ccd_case_number,
+      description: this.fees[i].description,
+      net_amount: this.fees[i].net_amount,
+      version: this.fees[i].version,
+      amounttorefund : [''],
+      selected:[''] 
+     }));
+   }
+   this.cd.detectChanges();
+  }
+
   get feesList()
   {
     const dd =this.remissionForm.get('feesList') as FormArray ;
-    console.log(this.remissionForm.get('feesList') );
     return this.remissionForm.get('feesList') as FormArray;
   }
 
@@ -234,18 +277,18 @@ export class AddRemissionComponent implements OnInit {
        return  !this.feesList.controls.some(item => item.get('selected').value === true);
   }
     
-  // validateRow(i){
-  //     return this.remissionForm.get('feesList').parent.controls['feesList'].controls[1].value['selected']
-  // }
-    
   check_en (v1: any) {
     const ele = document.getElementById(v1) as HTMLInputElement;
     if(ele.checked){
       document.getElementById('feeAmount_'+v1).removeAttribute("disabled"); 
-      document.getElementById('feeVolumeUpdated_'+v1).removeAttribute("disabled");                   
+      if (document.getElementById('feeVolumeUpdated_'+v1) !== null) {
+      document.getElementById('feeVolumeUpdated_'+v1).removeAttribute("disabled");   
+      }                
     } else {
       document.getElementById('feeAmount_'+v1).setAttribute("disabled", "true"); 
+      if (document.getElementById('feeVolumeUpdated_'+v1) !== null) {
       document.getElementById('feeVolumeUpdated_'+v1).removeAttribute("disabled");  
+      }
     }  
   }
 
