@@ -25,7 +25,7 @@
 
               <div id="email-hint" class="govuk-hint">
               </div>
-              <input class="govuk-input" id="email" name="" type="email" [ngClass]="{ 'inline-error-class': isEmailEmpty || emailHasError }" value="{{addressObj?.contact_details?.email}}" formControlName="email" aria-describedby="email-hint">
+              <input class="govuk-input govuk-font19px" id="email" name="" type="email" [ngClass]="{ 'inline-error-class': isEmailEmpty || emailHasError }" value="{{addressObj?.contact_details?.email}}" formControlName="email" aria-describedby="email-hint">
               <p class="inline-error-message" *ngIf="isEmailEmpty || emailHasError">
                 <span *ngIf="isEmailEmpty">Enter a email address.</span>
                 <span *ngIf="emailHasError">Enter a valid email address.</span>

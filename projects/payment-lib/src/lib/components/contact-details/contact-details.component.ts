@@ -45,7 +45,7 @@ export class ContactDetailsComponent implements OnInit {
     this.emailAddressForm = this.formBuilder.group({
       email: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('^[a-zA-Z0-9.!#$%&\'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.(?:[a-zA-Z0-9](?:\.[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$')
+        Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9-]+\\.[a-z]{2,4}$')
       ]))
     });
     this.postCodeForm = this.formBuilder.group({
@@ -143,7 +143,7 @@ export class ContactDetailsComponent implements OnInit {
       const fieldCtrls = this.manualAddressForm.controls;
       if (this.manualAddressForm.dirty && this.manualAddressForm.valid) {
         this.assignContactDetails.emit({
-          address_line: fieldCtrls.addressl1.value+''+fieldCtrls.addressl2.value,
+          address_line: fieldCtrls.addressl1.value+' '+fieldCtrls.addressl2.value,
           city: fieldCtrls.townorcity.value,
           county: fieldCtrls.county.value,
           postal_code: fieldCtrls.mpostcode.value,
