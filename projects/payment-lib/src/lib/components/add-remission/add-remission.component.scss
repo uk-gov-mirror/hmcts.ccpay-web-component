@@ -90,7 +90,7 @@
   float: right; }
 }
 
-.govuk-input{
+.govuk-input, .govuk-font19px {
   font-size: 19px;
 }
 
@@ -161,4 +161,11 @@
 .col-60 {
   width: 60%;
   text-align: left;
+}
+
+.margin-top--size {
+  margin-top: -30px;
+}
+.contactDetails-width {
+  width: 70%;
 }

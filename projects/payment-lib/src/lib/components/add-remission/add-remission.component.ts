@@ -8,9 +8,8 @@ import { PaymentLibComponent } from '../../payment-lib.component';
 import { IPayment } from '../../interfaces/IPayment';
 import { RefundsService } from '../../services/refunds/refunds.service';
 import { IRefundReasons } from '../../interfaces/IRefundReasons';
-import { RefundsRequest } from '../../interfaces/RefundsRequest';
 import { AddRetroRemissionRequest } from '../../interfaces/AddRetroRemissionRequest';
-import { IssueRefundRequest } from '../../interfaces/IssueRefundRequest';
+import { IRefundContactDetails } from '../../interfaces/IRefundContactDetails';
 import { PostRefundRetroRemission } from '../../interfaces/PostRefundRetroRemission';
 import { PostIssueRefundRetroRemission } from '../../interfaces/PostIssueRefundRetroRemission';
 import {ChangeDetectorRef} from '@angular/core';
@@ -69,7 +68,7 @@ export class AddRemissionComponent implements OnInit {
       other: 'Other'
     }
   }
-
+  contactDetailsObj: IRefundContactDetails;
   remissionForm: FormGroup;
   hasErrors = false;
   viewStatus = 'main';
@@ -469,13 +468,25 @@ export class AddRemissionComponent implements OnInit {
    
   }
   }
-
+  gotoAmountRetroRemission() {
+    this.viewStatus = 'processretroremissonpage';
+    this.viewCompStatus = '';
+    this.isRefundRemission = true;
+    this.errorMessage = '';
+  }
   gotoProcessRetroRemissionPage() {
     this.viewStatus = '';
     this.viewCompStatus = 'addremission';
     this.isRefundRemission = true;
     this.errorMessage = '';
     this.errorMsg = [];
+  }
+
+  gotoProcessRetroRemission() {
+    this.viewStatus = 'remissionAddressPage';
+    this.viewCompStatus = '';
+    this.isRefundRemission = true;
+    this.errorMessage = '';
   }
 
   confirmRetroRemission() {
@@ -511,7 +522,8 @@ export class AddRemissionComponent implements OnInit {
     if (this.remissionReference === undefined || this.remissionReference === '') {
       this.remissionReference = this.remission.remission_reference;
     }
-    const requestBody = new PostIssueRefundRetroRemission(this.remissionReference);
+    const requestBody = new PostRefundRetroRemission(this.ccdCaseNumber, this.payment.reference, this.refundReason, 
+    this.totalRefundAmount, this.fees, this.contactDetailsObj);
     this.paymentViewService.postRefundRetroRemission(requestBody).subscribe(
         response => {
       if (JSON.parse(response)) {
@@ -557,7 +569,7 @@ export class AddRemissionComponent implements OnInit {
         this.refundListReason.emit({reason: this.displayRefundReason, code: this.refundReason});
       } else {
         this.viewCompStatus = '';
-        this.viewStatus = 'checkissuerefundpage';
+        this.viewStatus = 'contactDetailsPage';
       }
       
     } else {
@@ -567,7 +579,7 @@ export class AddRemissionComponent implements OnInit {
         this.refundListReason.emit({reason: this.selectedRefundReason, code: this.refundReason});
       } else {
         this.viewCompStatus = '';
-        this.viewStatus = 'checkissuerefundpage';
+        this.viewStatus = 'contactDetailsPage';
       }
    
     }
@@ -670,6 +682,15 @@ export class AddRemissionComponent implements OnInit {
   }
   }
 
+
+  gotoContactDetailsPage() {
+    this.errorMessage = '';
+    this.viewCompStatus = '';
+    this.viewStatus = 'contactDetailsPage';
+    this.isRefundRemission = true;
+    this.errorMessage = false;
+  }
+  
   getRefundReasons(){
   if(this.viewCompStatus === 'issuerefundpage1'){
     this.refundService.getRefundReasons().subscribe(
@@ -711,8 +732,8 @@ export class AddRemissionComponent implements OnInit {
     }
     this.fees = this.remissionForm.value.feesList.filter(value => value.selected===true);
   
-    const requestBody = new PostRefundRetroRemission(this.ccdCaseNumber, this.payment.reference, this.refundReason, '', '', 
-							this.totalRefundAmount, this.fees);
+    const requestBody = new PostRefundRetroRemission(this.ccdCaseNumber, this.payment.reference, this.refundReason, 
+    this.totalRefundAmount, this.fees, this.contactDetailsObj);
     this.paymentViewService.postRefundsReason(requestBody).subscribe(
       response => {
           if (JSON.parse(response)) {
@@ -733,33 +754,31 @@ export class AddRemissionComponent implements OnInit {
 
 // Retro Refund
 
-  confirmRetroRefund() {
-    this.isConfirmationBtnDisabled = true;
-    this.errorMessage = '';
-    this.errorMsg = [];
-    if( this.isRefundRemission) {
-      this.retroRemission = true;
-    }
+  // confirmRetroRefund() {
+  //   this.isConfirmationBtnDisabled = true;
+  //   this.errorMessage = '';
+  //   this.errorMsg = [];
+  //   if( this.isRefundRemission) {
+  //     this.retroRemission = true;
+  //   }
 
-    const requestBody = new PostRefundRetroRemission(this.ccdCaseNumber, this.payment.reference, this.refundReason, '', '', 
-							this.refundAmount, this.fees);
-
-    this.paymentViewService.postRefundsReason(requestBody).subscribe(
-      response => {
-          if (JSON.parse(response)) {
-            this.viewCompStatus  = '';
-            this.viewStatus = 'retrorefundconfirmationpage';
-            this.refundReference =JSON.parse(response).refund_reference;
-            if(JSON.parse(response).refund_amount) {
-              this.refundAmount = JSON.parse(response).refund_amount;
-              }
-          }
-      },
-      (error: any) => {
-        this.errorMessage = error;
-        this.isConfirmationBtnDisabled = false;
-      });
-  }
+  //   const requestBody = new PostRefundRetroRemission(this.payment.reference,'RR004-Retrospective remission', this.contactDetailsObj);
+  //   this.paymentViewService.postRefundsReason(requestBody).subscribe(
+  //     response => {
+  //         if (JSON.parse(response)) {
+  //           this.viewCompStatus  = '';
+  //           this.viewStatus = 'retrorefundconfirmationpage';
+  //           this.refundReference =JSON.parse(response).refund_reference;
+  //           if(JSON.parse(response).refund_amount) {
+  //             this.refundAmount = JSON.parse(response).refund_amount;
+  //             }
+  //         }
+  //     },
+  //     (error: any) => {
+  //       this.errorMessage = error;
+  //       this.isConfirmationBtnDisabled = false;
+  //     });
+  // }
 
   selectRadioButton(key, value) {
     localStorage.setItem("myradio", key);
@@ -797,6 +816,11 @@ export class AddRemissionComponent implements OnInit {
     }
 
 
+  }
+  getContactDetails(obj:IRefundContactDetails, type) {
+    this.contactDetailsObj = obj;
+    this.viewCompStatus = '';
+    this.viewStatus = type;
   }
 
   gotoServiceRequestPage(event: any) {
@@ -894,6 +918,21 @@ export class AddRemissionComponent implements OnInit {
     //   this.paymentLibComponent.viewName === 'refundstatuslist';
     //   this.paymentLibComponent.isFromRefundStatusPage = true;
     // }
+  }
+  gotoAddressPage() {
+    this.errorMessage = '';
+    this.viewCompStatus = 'addrefundforremission';
+    this.viewStatus = '';
+    this.isRefundRemission = true;
+    this.errorMessage = false;
+  }
+  gotoRemissionSuccess(event: Event) {
+    event.preventDefault();
+    this.errorMessage = '';
+    this.viewCompStatus = '';
+    this.viewStatus = 'retroremissionconfirmationpage';
+    this.isRefundRemission = true;
+    this.errorMessage = false;
   }
 
   gotoCasetransationPage() {
