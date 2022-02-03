@@ -15,6 +15,7 @@ export class PbaPaymentComponent implements OnInit {
   @Input() pbaPayOrderRef: any;
   viewStatus: string;
   pbaAccountList: string[];
+  isPBAAccountHold: boolean = false;
   errorMsg: any;
   isCardPaymentSuccess: boolean = true;
   isInSufficiantFund: boolean = false;
@@ -76,9 +77,11 @@ export class PbaPaymentComponent implements OnInit {
         },
         e => {
           if(e.status == '402') {
-            this.isInSufficiantFund = true;
-          } else if(e.status == '410' || e.status == '412') {
+            this.isInSufficiantFund = true; 
+          } else if(e.status == '410') {
             this.isPBAAccountNotExist = true;
+          } else if(e.status == '412') {
+            this.isPBAAccountHold = true;
           } else {
             this.isPBAServerError = true;
           }

@@ -182,7 +182,44 @@
         <div class="pba-payments-margin-top-10">
           <h2 class="heading-medium">Should you need any further advice</h2>
           <p class="govuk-body pba-payments-19-font govuk-body-width">
-            Email <a href="mailto:MiddleOffice.DDservices@liberata.com">MiddleOffice.DDservices@liberata.com</a>or call <a href="tel:01633-652-125">01633 652 125</a> (option 3) to try to fix the issue.
+            Email <a href="mailto:MiddleOffice.DDservices@liberata.com">MiddleOffice.DDservices@liberata.com</a> or call <a href="tel:01633-652-125">01633 652 125</a> (option 3) to try to fix the issue.
+          </p>
+          <p class="govuk-body pba-payments-19-font">
+            you can also pay by credit or debit card.
+          </p>
+          <div class="govuk-button--group">
+            <button type="button" class="button pba-payments-19-font govuk-button--secondary pba-payments-margin-10" (click)="gotoCasetransationPage()">
+              View Service Request
+            </button>
+            <button type="submit" class="button pba-payments-19-font pba-payments-20-margin" (click)="cardPayment()">
+              Pay by card
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</ng-container>
+<ng-container *ngIf="isPBAAccountHold && isCardPaymentSuccess">
+  <div class="govuk-width-container">
+    <main class="govuk-main-wrapper govuk-main-wrapper--l" id="main-content" role="main">
+      <div class="govuk-grid-row">
+        <div class="govuk-error-summary pba-payments-error-box--size" aria-labelledby="error-summary-title">
+          <h2 class="govuk-error-summary__title govuk-error-summary__title-custom pba-payments-24-font" id="error-summary-title">
+            There is a problem
+          </h2>
+          <div class="govuk-error-summary__body">
+            <ul class="govuk-list govuk-error-summary__list">
+              <li class="pba-payments-error-16-font">
+                Your PBA account ({{selectedPbaAccount}}) has been put on hold.
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="pba-payments-margin-top-10">
+          <h2 class="heading-medium">Should you need any further advice</h2>
+          <p class="govuk-body pba-payments-19-font govuk-body-width">
+            Email <a href="mailto:MiddleOffice.DDservices@liberata.com">MiddleOffice.DDservices@liberata.com</a> or call <a href="tel:01633-652-125">01633 652 125</a> (option 3) to try to fix the issue.
           </p>
           <p class="govuk-body pba-payments-19-font">
             you can also pay by credit or debit card.
