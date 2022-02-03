@@ -5,6 +5,7 @@ import { IRefundAction } from '../../interfaces/IRefundAction';
 import { IRefundList } from '../../interfaces/IRefundList';
 import { IRefundRejectReason } from '../../interfaces/IRefundRejectReason';
 import { OrderslistService } from '../../services/orderslist.service';
+import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import { PaymentLibComponent } from '../../payment-lib.component';
 import { ActivatedRoute,Router } from '@angular/router';
 
@@ -42,8 +43,11 @@ export class ProcessRefundComponent implements OnInit {
   ccdCaseNumber: string;
   isFromRefundListPage: boolean;
 
+  cpoDetails:any = null;
+  isCPODown: boolean;
   isConfirmButtondisabled: boolean = true;
   constructor(private RefundsService: RefundsService,
+              private paymentViewService: PaymentViewService,
               private formBuilder: FormBuilder,
               private OrderslistService: OrderslistService,
               private paymentLibComponent: PaymentLibComponent,
@@ -86,7 +90,18 @@ export class ProcessRefundComponent implements OnInit {
    if((typeof this.paymentLibComponent.TAKEPAYMENT === 'string' && this.paymentLibComponent.TAKEPAYMENT === 'false') || (typeof this.paymentLibComponent.TAKEPAYMENT === 'boolean' && !this.paymentLibComponent.TAKEPAYMENT) ) {
     this.isFromRefundListPage = true;
    }
+   this.paymentViewService.getPartyDetails(this.ccdCaseNumber).subscribe(
+    response => {
+      this.cpoDetails = JSON.parse(response).content[0];
+
+    },
+    (error: any) => {
+      this.errorMessage = <any>error.replace(/"/g,"");
+      this.isCPODown = true;
+    }
+  );
   }
+  
   checkRefundActions(code: string) {
     this.refundActionsHasError = false;
     this.isReasonFieldEmpty = false;
