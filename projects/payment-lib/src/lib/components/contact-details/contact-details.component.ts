@@ -67,7 +67,6 @@ export class ContactDetailsComponent implements OnInit {
         Validators.pattern('^[a-zA-Z0-9\\s,\'-]*$')
       ])),
       county: new FormControl('', Validators.compose([
-        Validators.required,
         Validators.pattern('^[a-zA-Z0-9\\s,\'-]*$')
       ])),
       mpostcode: new FormControl('', Validators.compose([
