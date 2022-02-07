@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { PaymentLibComponent } from '../../payment-lib.component';
+import { NotificationService } from '../../services/notification/notification.service';
 
 @Component({
   selector: 'ccpay-contact-details',
@@ -20,6 +21,7 @@ export class ContactDetailsComponent implements OnInit {
   emailAddressForm: FormGroup;
   postCodeForm: FormGroup;
   manualAddressForm: FormGroup;
+  addressPostcodeList:any[] = [];
 
   isEmailEmpty: boolean = false;
   emailHasError: boolean = false;
@@ -37,6 +39,7 @@ export class ContactDetailsComponent implements OnInit {
   isCountryEmpty: boolean = false;
 
   constructor(private formBuilder: FormBuilder,
+              private notificationService: NotificationService,
               private paymentLibComponent: PaymentLibComponent) { }
 
   ngOnInit() {
@@ -188,6 +191,14 @@ export class ContactDetailsComponent implements OnInit {
   postcodeValidation() {
     const postcodeField = this.postCodeForm.controls.postcode;
     if (this.postCodeForm.dirty && this.postCodeForm.valid) {
+      this.notificationService.getAddressByPostcode(postcodeField.value).subscribe(
+        refundsNotification => {
+          console.log(refundsNotification);
+        }
+      ),
+      (error: any) => {
+        this.errorMessage = error.replace(/"/g,"");
+      }; 
       this.assignContactDetails.emit({});
     } else {
       if( postcodeField.value == '' ) {

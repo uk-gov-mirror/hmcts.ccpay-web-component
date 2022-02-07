@@ -28,7 +28,7 @@ export class NotificationService {
   }
 
   getAddressByPostcode(postcode: string): Observable<any> {
-    return this.http.get<any>(`${this.paymentLibService.NOTIFICATION_API_ROOT}/search/places/v1?postcode=${postcode}`, {
+    return this.http.get<any>(`${this.paymentLibService.NOTIFICATION_API_ROOT}/search/places/v1/postcode?postcode=${postcode}`, {
       withCredentials: true
     })
       .pipe(
