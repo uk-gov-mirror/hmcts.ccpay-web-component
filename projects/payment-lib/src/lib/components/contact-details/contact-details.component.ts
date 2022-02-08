@@ -22,6 +22,7 @@ export class ContactDetailsComponent implements OnInit {
   postCodeForm: FormGroup;
   manualAddressForm: FormGroup;
   addressPostcodeList:any[] = [];
+  postcodeAddress:any;
 
   isEmailEmpty: boolean = false;
   emailHasError: boolean = false;
@@ -188,12 +189,16 @@ export class ContactDetailsComponent implements OnInit {
     }
 
   }
+  addressChanged() {
+    this.postcodeAddress;
+  }
   postcodeValidation() {
     const postcodeField = this.postCodeForm.controls.postcode;
     if (this.postCodeForm.dirty && this.postCodeForm.valid) {
+      this.postcodeAddress;
       this.notificationService.getAddressByPostcode(postcodeField.value).subscribe(
         refundsNotification => {
-          console.log(refundsNotification);
+          this.addressPostcodeList = refundsNotification['data']['results'];
         }
       ),
       (error: any) => {
