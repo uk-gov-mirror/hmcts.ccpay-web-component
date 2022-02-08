@@ -52,6 +52,7 @@ export class PaymentViewComponent implements OnInit {
   serviceReference: string;
   isFromServiceRequestPage: boolean;
   isFromPaymentDetailPage: boolean;
+  paymentFees: IFee[];
 
   constructor(private paymentViewService: PaymentViewService,
     private paymentLibComponent: PaymentLibComponent,
@@ -88,6 +89,7 @@ export class PaymentViewComponent implements OnInit {
           }
         });
         paymentGroup.fees = fees
+        this.paymentFees =fees;
         this.paymentGroup = paymentGroup;
 
         this.paymentGroup.payments = this.paymentGroup.payments.filter
