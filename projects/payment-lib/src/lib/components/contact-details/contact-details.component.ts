@@ -141,7 +141,7 @@ export class ContactDetailsComponent implements OnInit {
         }
       }
     } else if( this.isPostcodeClicked && !this.isManualAddressClicked ) {
-      this.postcodeValidation();
+      this.postcodeValidation('FS');
     } else if(this.isPostcodeClicked && this.isManualAddressClicked) {
       const fieldCtrls = this.manualAddressForm.controls;
       if (this.manualAddressForm.dirty && this.manualAddressForm.valid) {
@@ -189,22 +189,37 @@ export class ContactDetailsComponent implements OnInit {
     }
 
   }
-  addressChanged() {
-    this.postcodeAddress;
-  }
-  postcodeValidation() {
+
+  postcodeValidation(str) {
     const postcodeField = this.postCodeForm.controls.postcode;
     if (this.postCodeForm.dirty && this.postCodeForm.valid) {
-      this.postcodeAddress;
-      this.notificationService.getAddressByPostcode(postcodeField.value).subscribe(
-        refundsNotification => {
-          this.addressPostcodeList = refundsNotification['data']['results'];
+      if(str === 'FA') {
+        this.notificationService.getAddressByPostcode(postcodeField.value).subscribe(
+          refundsNotification => {
+            this.addressPostcodeList = refundsNotification['data']['results'];
+          }
+        ),
+        (error: any) => {
+          this.errorMessage = error.replace(/"/g,"");
+        }; 
+      } else if (str === 'FS') {
+        if(this.postcodeAddress !== undefined && this.postcodeAddress) {
+          let addressLine="";
+          let addressArray = this.postcodeAddress.ADDRESS.split(",");
+          for( let i=0; i<addressArray.length-2; i++ ) {
+            addressLine +=addressArray[i]; 
+          }
+
+          this.assignContactDetails.emit({
+            address_line: addressLine,
+            city: this.postcodeAddress.POST_TOWN,
+            county: this.postcodeAddress.LOCAL_CUSTODIAN_CODE_DESCRIPTION,
+            postal_code: this.postcodeAddress.POSTCODE,
+            country: 'United Kingdom',
+            notification_type: 'LETTER'
+          });
         }
-      ),
-      (error: any) => {
-        this.errorMessage = error.replace(/"/g,"");
-      }; 
-      this.assignContactDetails.emit({});
+      }
     } else {
       if( postcodeField.value == '' ) {
         this.resetForm([false,false,true,false,false,false,false,false,false,false,false,false,false], 'postcode');
