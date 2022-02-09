@@ -69,6 +69,7 @@ export class AddRemissionComponent implements OnInit {
     }
   }
   contactDetailsObj: IRefundContactDetails;
+  notification: any;
   remissionForm: FormGroup;
   hasErrors = false;
   viewStatus = 'main';
@@ -483,7 +484,10 @@ export class AddRemissionComponent implements OnInit {
     this.errorMsg = [];
   }
 
-  gotoProcessRetroRemission() {
+  gotoProcessRetroRemission(note?: IRefundContactDetails) {
+    if(note) {
+      this.notification = { contact_details: note, notification_type: note.notification_type };
+    }
     this.viewStatus = 'remissionAddressPage';
     this.viewCompStatus = '';
     this.isRefundRemission = true;
@@ -689,7 +693,10 @@ export class AddRemissionComponent implements OnInit {
      // formControl.setValue(amtToRefund);
 
   }
-  gotoContactDetailsPage() {
+  gotoContactDetailsPage(note?: IRefundContactDetails) {
+    if (note) {
+      this.notification = { contact_details: note, notification_type: note.notification_type };
+    }
     this.errorMessage = '';
     this.viewCompStatus = '';
     this.viewStatus = 'contactDetailsPage';

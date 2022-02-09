@@ -28,7 +28,7 @@ export class RefundStatusComponent implements OnInit {
   selectedRefundReason: string;
   rejectedRefundList: IRefundList[] = [];
   notificationList: IRefundsNotifications;
-  notification:IRefundsNotifications;
+  notification:any;
   approvalStatus = 'Sent for approval';
   rejectStatus = 'Update required';
   errorMessage = null;
@@ -304,7 +304,10 @@ export class RefundStatusComponent implements OnInit {
     this.addressDetails = obj;
     this.viewName = 'revieweditdetailsconfirmationpage';
   }
-  gotoEditDetailsPage() {
+  gotoEditDetailsPage(note?: any) {
+    if(note) {
+      this.notification = { contact_details: note, notification_type: note.notification_type };
+    }
     this.isEditDetailsClicked = true;
     this.viewName = 'refundEditView'
   }
@@ -353,10 +356,10 @@ export class RefundStatusComponent implements OnInit {
     );
 
   }
-
-  gotoCasetransationPageCancelBtnClicked(obj) {
+  gotoCasetransationPageCancelBtnClicked(Event: Event) {
 
   }
+
   goToRefundProcessComponent(refundReference: string, refundList: IRefundList) {
     this.paymentLibComponent.refundlistsource = refundList;
     this.paymentLibComponent.refundReference = refundReference;
