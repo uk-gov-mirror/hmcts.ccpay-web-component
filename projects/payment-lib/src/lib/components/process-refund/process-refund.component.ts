@@ -41,17 +41,9 @@ export class ProcessRefundComponent implements OnInit {
   successMsg: string = null;
   navigationpage: string;
   ccdCaseNumber: string;
-<<<<<<< HEAD
   isFromRefundListPage: boolean;
-
   cpoDetails:any = null;
   isCPODown: boolean;
-=======
-  cpoDetails:any = null;
-  isCPODown: boolean;
-  isFromRefundListPage: boolean;
-
->>>>>>> b04e004782e087323b465d2fae9eaf90a1673f35
   isConfirmButtondisabled: boolean = true;
   constructor(private RefundsService: RefundsService,
               private paymentViewService: PaymentViewService,
