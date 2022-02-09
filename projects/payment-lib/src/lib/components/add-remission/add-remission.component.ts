@@ -279,6 +279,7 @@ export class AddRemissionComponent implements OnInit {
   check_en (v1: any) {
     const ele = document.getElementById(v1) as HTMLInputElement;
     if(ele.checked){
+      this.cd.detectChanges();
       document.getElementById('feeAmount_'+v1).removeAttribute("disabled"); 
       if (document.getElementById('feeVolumeUpdated_'+v1) !== null) {
       document.getElementById('feeVolumeUpdated_'+v1).removeAttribute("disabled");   
@@ -522,8 +523,7 @@ export class AddRemissionComponent implements OnInit {
     if (this.remissionReference === undefined || this.remissionReference === '') {
       this.remissionReference = this.remission.remission_reference;
     }
-    const requestBody = new PostRefundRetroRemission(this.ccdCaseNumber, this.payment.reference, this.refundReason, 
-    this.totalRefundAmount, this.fees, this.contactDetailsObj);
+    const requestBody = new PostIssueRefundRetroRemission(this.remissionReference, this.contactDetailsObj);
     this.paymentViewService.postRefundRetroRemission(requestBody).subscribe(
         response => {
       if (JSON.parse(response)) {
@@ -682,7 +682,13 @@ export class AddRemissionComponent implements OnInit {
   }
   }
 
+  calAmtToRefund(event,amount, index: number) {
+     const amtToRefund = event.value * amount;
+     const creds = this.remissionForm.controls.feesList as FormArray;
+     const formControl = this.remissionForm.controls.feesList['amounttorefund'].at(index);
+     formControl.setValue(amtToRefund);
 
+  }
   gotoContactDetailsPage() {
     this.errorMessage = '';
     this.viewCompStatus = '';
