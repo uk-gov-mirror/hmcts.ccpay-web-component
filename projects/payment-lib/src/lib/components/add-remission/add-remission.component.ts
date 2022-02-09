@@ -1043,7 +1043,8 @@ export class AddRemissionComponent implements OnInit {
   }
 
   changeRefundAmount() {
-    this.viewCompStatus === 'issuerefund';
+    this.viewCompStatus = 'issuerefund';
+    this.viewStatus = '';
   }
 
   getFormattedCurrency(currency:number){
