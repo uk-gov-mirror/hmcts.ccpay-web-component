@@ -28,7 +28,7 @@ export class RefundStatusComponent implements OnInit {
   selectedRefundReason: string;
   rejectedRefundList: IRefundList[] = [];
   notificationList: IRefundsNotifications;
-  notification:IRefundsNotifications;
+  notification:any;
   approvalStatus = 'Sent for approval';
   rejectStatus = 'Update required';
   errorMessage = null;
@@ -304,9 +304,9 @@ export class RefundStatusComponent implements OnInit {
     this.addressDetails = obj;
     this.viewName = 'revieweditdetailsconfirmationpage';
   }
-  gotoEditDetailsPage(note?: IRefundsNotifications) {
+  gotoEditDetailsPage(note?: any) {
     if(note) {
-      this.notification = note;
+      this.notification = { contact_details: note };
     }
     this.isEditDetailsClicked = true;
     this.viewName = 'refundEditView'
