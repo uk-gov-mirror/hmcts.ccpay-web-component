@@ -356,6 +356,9 @@ export class RefundStatusComponent implements OnInit {
     );
 
   }
+  gotoCasetransationPageCancelBtnClicked(Event: Event) {
+
+  }
 
   goToRefundProcessComponent(refundReference: string, refundList: IRefundList) {
     this.paymentLibComponent.refundlistsource = refundList;
