@@ -306,7 +306,7 @@ export class RefundStatusComponent implements OnInit {
   }
   gotoEditDetailsPage(note?: any) {
     if(note) {
-      this.notification = { contact_details: note };
+      this.notification = { contact_details: note, notification_type: note.notification_type };
     }
     this.isEditDetailsClicked = true;
     this.viewName = 'refundEditView'
@@ -357,9 +357,6 @@ export class RefundStatusComponent implements OnInit {
 
   }
 
-  gotoCasetransationPageCancelBtnClicked(obj) {
-
-  }
   goToRefundProcessComponent(refundReference: string, refundList: IRefundList) {
     this.paymentLibComponent.refundlistsource = refundList;
     this.paymentLibComponent.refundReference = refundReference;

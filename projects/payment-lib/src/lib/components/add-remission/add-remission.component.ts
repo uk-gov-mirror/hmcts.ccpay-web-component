@@ -366,7 +366,7 @@ export class AddRemissionComponent implements OnInit {
 
   gotoProcessRetroRemission(note?: IRefundContactDetails) {
     if(note) {
-      this.notification = { contact_details: note };
+      this.notification = { contact_details: note, notification_type: note.notification_type };
     }
     this.viewStatus = 'remissionAddressPage';
     this.viewCompStatus = '';
@@ -471,7 +471,7 @@ export class AddRemissionComponent implements OnInit {
 
   gotoContactDetailsPage(note?: IRefundContactDetails) {
     if (note) {
-      this.notification = { contact_details: note };
+      this.notification = { contact_details: note, notification_type: note.notification_type };
     }
     this.errorMessage = '';
     this.viewCompStatus = '';
