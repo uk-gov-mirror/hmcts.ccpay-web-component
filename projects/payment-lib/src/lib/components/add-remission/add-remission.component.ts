@@ -1042,6 +1042,9 @@ export class AddRemissionComponent implements OnInit {
     this.OrderslistService.setorderFeesTotal(null);
   }
 
+  changeRefundAmount() {
+    this.viewCompStatus === 'issuerefund';
+  }
 
   getFormattedCurrency(currency:number){
     if(currency.toString().includes(".")){
