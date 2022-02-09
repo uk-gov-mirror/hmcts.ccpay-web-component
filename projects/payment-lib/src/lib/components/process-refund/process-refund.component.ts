@@ -43,6 +43,8 @@ export class ProcessRefundComponent implements OnInit {
   ccdCaseNumber: string;
   cpoDetails:any = null;
   isCPODown: boolean;
+  isFromRefundListPage: boolean;
+
   isConfirmButtondisabled: boolean = true;
   constructor(private RefundsService: RefundsService,
               private paymentViewService: PaymentViewService,
@@ -94,6 +96,10 @@ export class ProcessRefundComponent implements OnInit {
       this.isCPODown = true;
     }
   );
+
+   if((typeof this.paymentLibComponent.TAKEPAYMENT === 'string' && this.paymentLibComponent.TAKEPAYMENT === 'false') || (typeof this.paymentLibComponent.TAKEPAYMENT === 'boolean' && !this.paymentLibComponent.TAKEPAYMENT) ) {
+    this.isFromRefundListPage = true;
+   }
   }
   
   checkRefundActions(code: string) {

@@ -94,7 +94,7 @@ export class PaymentViewComponent implements OnInit {
           (paymentGroupObj => paymentGroupObj['reference'].includes(this.paymentLibComponent.paymentReference));
         const paymentAllocation = this.paymentGroup.payments[0].payment_allocation;
         this.isStatusAllocated = paymentAllocation.length > 0 && paymentAllocation[0].allocation_status === 'Allocated' || paymentAllocation.length === 0;
-        console.log(this.paymentGroup.payments[0] + '1');
+       
       },
       (error: any) => this.errorMessage = error
     );
