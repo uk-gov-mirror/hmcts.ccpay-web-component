@@ -304,7 +304,10 @@ export class RefundStatusComponent implements OnInit {
     this.addressDetails = obj;
     this.viewName = 'revieweditdetailsconfirmationpage';
   }
-  gotoEditDetailsPage() {
+  gotoEditDetailsPage(note?: IRefundsNotifications) {
+    if(note) {
+      this.notification = note;
+    }
     this.isEditDetailsClicked = true;
     this.viewName = 'refundEditView'
   }
