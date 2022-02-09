@@ -16,6 +16,7 @@ export class ContactDetailsComponent implements OnInit {
   pageTitle: string = 'Payment status history';
   errorMessage: string;
   isEmailSAddressClicked: boolean = true;
+  isShowPickAddress:  boolean = false;
   isPostcodeClicked: boolean = false;
   isManualAddressClicked: boolean = false;
   emailAddressForm: FormGroup;
@@ -197,9 +198,11 @@ export class ContactDetailsComponent implements OnInit {
         this.notificationService.getAddressByPostcode(postcodeField.value).subscribe(
           refundsNotification => {
             this.addressPostcodeList = refundsNotification['data']['results'];
+            this.isShowPickAddress = true;
           }
         ),
         (error: any) => {
+          this.isShowPickAddress = false;
           this.errorMessage = error.replace(/"/g,"");
         }; 
       } else if (str === 'FS') {
