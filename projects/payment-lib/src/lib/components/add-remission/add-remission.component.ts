@@ -685,8 +685,8 @@ export class AddRemissionComponent implements OnInit {
   calAmtToRefund(event,amount, index: number) {
      const amtToRefund = event.value * amount;
      const creds = this.remissionForm.controls.feesList as FormArray;
-     const formControl = this.remissionForm.controls.feesList['amounttorefund'].at(index);
-     formControl.setValue(amtToRefund);
+    // const formControl = this.remissionForm.controls.feesList['amounttorefund'].at(index);
+     // formControl.setValue(amtToRefund);
 
   }
   gotoContactDetailsPage() {
