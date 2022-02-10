@@ -586,6 +586,8 @@ export class AddRemissionComponent implements OnInit {
 
   gotoIssueRefundConfirmation(payment: IPayment) {
     if(this.isFromCheckAnsPage) {
+      this.totalRefundAmount = this.remissionForm.value.feesList.reduce((a, c) => a + c.amounttorefund * c.selected, 0);
+      this.isFromCheckAnsPage = false;
       this.viewStatus = 'checkissuerefundpage';
       this.viewCompStatus = '';
       return;
@@ -643,6 +645,8 @@ export class AddRemissionComponent implements OnInit {
   gotoIssuePage(){
 
     if (this.isFromCheckAnsPage) {
+      this.isFromCheckAnsPage = false;
+      this.totalRefundAmount = this.remissionForm.value.feesList.reduce((a, c) => a + c.amounttorefund * c.selected, 0);
       this.viewStatus = 'checkissuerefundpage'
       this.viewCompStatus = '';
       return;
@@ -663,7 +667,7 @@ export class AddRemissionComponent implements OnInit {
           let amountToRefund: number = +(<HTMLInputElement>document.getElementById('feeAmount_'+checkboxs[j].value)).value;
 					let apportionAmount: number = +(<HTMLInputElement>document.getElementById('feeApportionAmount_'+checkboxs[j].value)).value;
 					let calculatedAmount: number = +(<HTMLInputElement>document.getElementById('calculatedAmount_'+checkboxs[j].value)).value; 
-          this.remissionForm.value.feesList.find(x=>x.id=j)['amounttorefund'] = apportionAmount;
+          this.remissionForm.value.feesList.find(id=>id=checkboxs[j].value)['amounttorefund'] = apportionAmount;
           if( amountToRefund === apportionAmount) {
             this.fullRefund = true;
           }
