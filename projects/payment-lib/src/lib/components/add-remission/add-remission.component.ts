@@ -522,7 +522,10 @@ export class AddRemissionComponent implements OnInit {
     this.errorMsg = [];
   }
 
-  gotoProcessRetroRemission() {
+  gotoProcessRetroRemission(note?: IRefundContactDetails) {
+    if(note) {
+      this.notification = { contact_details: note, notification_type: note.notification_type };
+    }
     this.isFromCheckAnsPage = true;
     this.viewStatus = 'remissionAddressPage';
     this.viewCompStatus = '';
