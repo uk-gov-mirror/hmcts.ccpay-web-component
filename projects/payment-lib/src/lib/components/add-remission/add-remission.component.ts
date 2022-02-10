@@ -122,6 +122,7 @@ export class AddRemissionComponent implements OnInit {
   paymentFees: IFee[];
   paymentGroup: IPaymentGroup;
   isStatusAllocated: boolean;
+  isFromCheckAnsPage: boolean;
   
   component: { account_number: string; amount: number; case_reference: string; ccd_case_number: string; channel: string; currency: string; customer_reference: string; date_created: string; date_updated: string; description: string; method: string; organisation_name: string; payment_allocation: any[]; reference: string; service_name: string; site_id: string; status: string; };
 
@@ -277,20 +278,53 @@ export class AddRemissionComponent implements OnInit {
        return  !this.feesList.controls.some(item => item.get('selected').value === true);
   }
     
-  check_en (v1: any) {
+  check_en (i,v1: any, AppAmt,Volume) {
     const ele = document.getElementById(v1) as HTMLInputElement;
+    const formArray = this.remissionForm.controls.feesList as FormArray;
+  
     if(ele.checked){
-      this.cd.detectChanges();
+      formArray.at(i).get('amounttorefund').setValue(AppAmt);
+      formArray.at(i).get('volume').setValue(Volume);
+      formArray.at(i).get('selected').setValue(true);
+     // this.remissionForm.value.feesList.find(id=>id=v1)["selected"] = true; 
+      (<HTMLInputElement>document.getElementById('feeAmount_'+v1)).value = AppAmt;
       document.getElementById('feeAmount_'+v1).removeAttribute("disabled"); 
+      if(Volume === 1) {
+           (<HTMLInputElement>document.getElementById('VolumeUpdated_'+v1)).value = Volume;
+      } else {
+           document.getElementById('feeAmount_'+v1).focus();
+           (<HTMLInputElement>document.getElementById('feeVolumeUpdated_'+v1)).value = Volume;
+      }
+    
       if (document.getElementById('feeVolumeUpdated_'+v1) !== null) {
-      document.getElementById('feeVolumeUpdated_'+v1).removeAttribute("disabled");   
-      }                
+           document.getElementById('feeAmount_'+v1).removeAttribute("disabled"); 
+           document.getElementById('feeVolumeUpdated_'+v1).removeAttribute("disabled");   
+      }   
+      this.remissionForm.value.feesList.find(x=>x.id=v1)['amounttorefund'] = AppAmt;
+      this.cd.detectChanges(); 
     } else {
       document.getElementById('feeAmount_'+v1).setAttribute("disabled", "true"); 
+      // formArray.at(i).get('amounttorefund').setValue('');
+      // formArray.at(i).get('volume').setValue('');
+      // formArray.at(i).get('selected').setValue(false);
+      this.remissionForm.value.feesList[0]["amounttorefund"] = ''; 
+      (<HTMLInputElement>document.getElementById('feeAmount_'+v1)).value = '';
+      if(Volume>1) {
+       (<HTMLInputElement>document.getElementById('feeVolumeUpdated_'+v1)).value = '';
+      }
+      
       if (document.getElementById('feeVolumeUpdated_'+v1) !== null) {
       document.getElementById('feeVolumeUpdated_'+v1).removeAttribute("disabled");  
       }
+      this.cd.detectChanges();
     }  
+  }
+
+   onTextInputBlurHandler(event,v1:any) {
+    // if textinput value is empty then
+    //  set disabled for checkbox to false
+    // else 
+    //   set disabled for chexbox to true
   }
 
   addRemission() {
@@ -374,6 +408,7 @@ export class AddRemissionComponent implements OnInit {
   // Add retro remission changes
   addRemissionCode() {
     this.errorMessage = false;
+    this.isFromCheckAnsPage = true;
     this.errorMsg = [];
     this.viewStatus = '';
     this.isRefundRemission = false;
@@ -413,6 +448,7 @@ export class AddRemissionComponent implements OnInit {
 
   gotoAddRetroRemissionCodePage() {
     this.errorMessage = false;
+    this.isFromCheckAnsPage = false;
     this.errorMsg = [];
     if(this.isRefundRemission) {
       this.paymentLibComponent.iscancelClicked = true;
@@ -471,12 +507,14 @@ export class AddRemissionComponent implements OnInit {
   }
   }
   gotoAmountRetroRemission() {
+    this.isFromCheckAnsPage = false;
     this.viewStatus = 'processretroremissonpage';
     this.viewCompStatus = '';
     this.isRefundRemission = true;
     this.errorMessage = '';
   }
   gotoProcessRetroRemissionPage() {
+    this.isFromCheckAnsPage = true;
     this.viewStatus = '';
     this.viewCompStatus = 'addremission';
     this.isRefundRemission = true;
@@ -484,10 +522,8 @@ export class AddRemissionComponent implements OnInit {
     this.errorMsg = [];
   }
 
-  gotoProcessRetroRemission(note?: IRefundContactDetails) {
-    if(note) {
-      this.notification = { contact_details: note, notification_type: note.notification_type };
-    }
+  gotoProcessRetroRemission() {
+    this.isFromCheckAnsPage = true;
     this.viewStatus = 'remissionAddressPage';
     this.viewCompStatus = '';
     this.isRefundRemission = true;
@@ -546,17 +582,18 @@ export class AddRemissionComponent implements OnInit {
   // Issue Refund changes
 
   gotoIssueRefundConfirmation(payment: IPayment) {
+    if(this.isFromCheckAnsPage) {
+      this.viewStatus = 'checkissuerefundpage';
+      this.viewCompStatus = '';
+      return;
+    }
     this.paymentLibComponent.iscancelClicked = false;
     if(this.paymentLibComponent.REFUNDLIST === "true") {
       this.isFromRefundListPage = true; 
     }
 
     this.totalRefundAmount = this.remissionForm.value.feesList.reduce((a, c) => a + c.amounttorefund * c.selected, 0);
-    // this.remissionForm.get('feesList').valueChanges.subscribe(values => {
-    //   resolvedPromise.then(() => {
-    //     this.totalRefundAmount = valuesreduce((a, c) => a + c.amounttorefund * c.selected, 0)
-    //   });
-    // });
+
 
     this.errorMessage = '';
     this.errorMsg = [];
@@ -601,6 +638,12 @@ export class AddRemissionComponent implements OnInit {
   }
 
   gotoIssuePage(){
+
+    if (this.isFromCheckAnsPage) {
+      this.viewStatus = 'checkissuerefundpage'
+      this.viewCompStatus = '';
+      return;
+    }
     [].forEach.call(document.querySelectorAll('input'), function (el) {
       el.classList.remove('inline-error-class');
     });
@@ -617,7 +660,7 @@ export class AddRemissionComponent implements OnInit {
           let amountToRefund: number = +(<HTMLInputElement>document.getElementById('feeAmount_'+checkboxs[j].value)).value;
 					let apportionAmount: number = +(<HTMLInputElement>document.getElementById('feeApportionAmount_'+checkboxs[j].value)).value;
 					let calculatedAmount: number = +(<HTMLInputElement>document.getElementById('calculatedAmount_'+checkboxs[j].value)).value; 
-
+          this.remissionForm.value.feesList.find(x=>x.id=j)['amounttorefund'] = apportionAmount;
           if( amountToRefund === apportionAmount) {
             this.fullRefund = true;
           }
@@ -726,12 +769,12 @@ export class AddRemissionComponent implements OnInit {
   }
 
   changeIssueRefundReason() {
-   // this.remissionForm.controls['refundReason'].setValue('Duplicate payment');
+    this.isFromCheckAnsPage = true;
     this.errorMessage = '';
     this.errorMsg = [];
     this.refundHasError = false;
     this.isReasonEmpty = false;
-    this.viewCompStatus = 'issuerefund';
+    this.viewCompStatus = 'issuerefundpage1';
     this.viewStatus = '';
     this.isRefundRemission = true;
   }
@@ -839,6 +882,7 @@ export class AddRemissionComponent implements OnInit {
   gotoServiceRequestPage(event: any) {
     this.errorMessage ='';
     this.errorMsg = [];
+    this.isFromCheckAnsPage = false;
     event.preventDefault();
     if (this.isFromServiceRequestPage && !this.isFromPaymentDetailPage) {
     this.viewStatus = 'order-full-view';
@@ -1055,7 +1099,8 @@ export class AddRemissionComponent implements OnInit {
     this.OrderslistService.setorderFeesTotal(null);
   }
 
-  changeRefundAmount() {
+  changeRefundAmount() {  
+    this.isFromCheckAnsPage = true;
     this.viewCompStatus = 'issuerefund';
     this.viewStatus = '';
   }
