@@ -313,7 +313,7 @@
         </tr>
       </table>
 
-      <button type="submit" class="button govuk-button--secondary" (click)="gotoProcessRetroRemission()">Previous</button>
+      <button type="submit" class="button govuk-button--secondary" (click)="gotoProcessRetroRemission(contactDetailsObj)">Previous</button>
       <button type="submit" [disabled]="isConfirmationBtnDisabled" [ngClass]='isConfirmationBtnDisabled ? "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"' (click)="processRefund()"> Submit refund </button>
       <p> <a href="javascript:void(0)" (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link" data-module="govuk-button"> Cancel</a> </p>
 
@@ -511,7 +511,7 @@
       </tr>
       </table>
       <div class="govuk-button-group">
-      <button type="submit" class="button govuk-button--secondary" (click)="gotoContactDetailsPage()"> Previous </button>
+      <button type="submit" class="button govuk-button--secondary" (click)="gotoContactDetailsPage(contactDetailsObj)"> Previous </button>
       <button type="submit"
       [disabled]="isConfirmationBtnDisabled"
       [ngClass]='isConfirmationBtnDisabled ? "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"'
@@ -593,7 +593,7 @@
         </td>
       </table>
       <div class="govuk-button-group">
-      <button type="submit" class="button govuk-button--secondary" (click)="gotoAddressPage()">Previous</button>
+      <button type="submit" class="button govuk-button--secondary" (click)="gotoContactDetailsPage(contactDetailsObj)">Previous</button>
       <button type="submit"
       [disabled]="isConfirmationBtnDisabled"
       [ngClass]='isConfirmationBtnDisabled ? "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"'
