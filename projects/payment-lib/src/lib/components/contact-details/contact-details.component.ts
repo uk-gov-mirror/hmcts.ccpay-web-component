@@ -128,7 +128,7 @@ export class ContactDetailsComponent implements OnInit {
     this.resetForm([false,false,false,false,false,false,false,false,false,false,false,false,false,false,false], 'all');
     if( this.isEmailSAddressClicked ){
       const emailField = this.emailAddressForm.controls.email;
-      if (this.emailAddressForm.dirty && this.emailAddressForm.valid) {
+      if (this.emailAddressForm.valid) {
         this.assignContactDetails.emit( {
           email: emailField.value,
           notification_type: 'EMAIL'
@@ -145,7 +145,7 @@ export class ContactDetailsComponent implements OnInit {
       this.postcodeValidation('FS');
     } else if(this.isPostcodeClicked && this.isManualAddressClicked) {
       const fieldCtrls = this.manualAddressForm.controls;
-      if (this.manualAddressForm.dirty && this.manualAddressForm.valid) {
+      if (this.manualAddressForm.valid) {
         this.assignContactDetails.emit({
           address_line: fieldCtrls.addressl1.value+' '+fieldCtrls.addressl2.value,
           city: fieldCtrls.townorcity.value,
@@ -193,7 +193,7 @@ export class ContactDetailsComponent implements OnInit {
 
   postcodeValidation(str) {
     const postcodeField = this.postCodeForm.controls.postcode;
-    if (this.postCodeForm.dirty && this.postCodeForm.valid) {
+    if (this.postCodeForm.valid) {
       if(str === 'FA') {
         this.notificationService.getAddressByPostcode(postcodeField.value).subscribe(
           refundsNotification => {
