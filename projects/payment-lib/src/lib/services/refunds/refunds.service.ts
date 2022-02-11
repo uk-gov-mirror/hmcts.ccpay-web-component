@@ -120,7 +120,13 @@ addHeaders(options: any): any {
   }
   headers['X-Requested-With'] = 'XMLHttpRequest';
   if (csrfToken.content === null) {
-    headers['CSRF-Token'] = document.cookie.split(';').find(row => row.startsWith(' XSRF-TOKEN')).split('=')[1];
+    if( document.cookie.split(';').find(row => row.startsWith('XSRF-TOKEN')).split('=')[1] !== undefined) {
+      headers['CSRF-Token'] = document.cookie.split(';').find(row => row.startsWith('XSRF-TOKEN')).split('=')[1];
+      
+    } else {
+      headers['CSRF-Token'] = document.cookie.split(';').find(row => row.startsWith(' XSRF-TOKEN')).split('=')[1];
+    }
+    
   } else {
     headers['CSRF-Token'] = csrfToken.content;
   }
