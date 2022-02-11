@@ -397,11 +397,15 @@
                 </div>
               </td>
               <td class="govuk-table__cell  whitespace-inherit">{{fee.controls['description'].value}} </td>
-              <td class="govuk-table__cell  whitespace-inherit left" >{{ fee.controls['calculated_amount'].value / fee.controls['volume'].value | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
+              <td class="govuk-table__cell  whitespace-inherit left" >
+                <div type="hidden" style="display:none;background-color:white;" id="feeVOl_{{fee.controls['id'].value}}">{{ fee.controls['calculated_amount'].value / fee.controls['volume'].value }}</div>
+                {{ fee.controls['calculated_amount'].value / fee.controls['volume'].value | currency:'GBP':'symbol-narrow':'1.2-2' }}
+              </td>
               <td class="govuk-table__cell  whitespace-inherit left" >{{ fee.controls['apportion_amount'].value | currency:'GBP':'symbol-narrow':'1.2-2'}} </td>
               <td class="govuk-table__cell  whitespace-inherit left"  *ngIf="fee.controls['volume'].value >1">
-                <input disabled="disabled"  class="govuk-input govuk-input--width-4 center"  id="feeVolumeUpdated_{{fee.controls['id'].value}}" (keyup)="calAmtToRefund($event,fee.controls['calculated_amount'].value,i)"  name="feeVolumeUpdated_{{fee.controls['id'].value}}" type="text" >
-             
+                <div [formGroupName]="i">
+                <input disabled="disabled"  class="govuk-input govuk-input--width-4 center"  id="feeVolumeUpdated_{{fee.controls['id'].value}}" (keyup)="calAmtToRefund($event.target.value,fee.controls['calculated_amount'].value,fee.controls['volume'].value,i)"  name="feeVolumeUpdated_{{fee.controls['id'].value}}" formControlName="updatedVolume" type="text" >
+              </div>
               </td>
               <td class="govuk-table__cell  whitespace-inherit left"  *ngIf="fee.controls['volume'].value ===1">
                 <input disabled="disabled"  class="govuk-input govuk-input--width-4 center"  id="VolumeUpdated_{{fee.controls['id'].value}}" name="VolumeUpdated_{{fee.controls['id'].value}}" type="text"   value="{{fee.controls['volume'].value}}">
@@ -411,13 +415,13 @@
                   <div  [formGroupName]="i"  class="hmcts-currency-input">
                     
                     <div class="hmcts-currency-input__symbol" aria-hidden="true">£</div>
-                    <div *ngIf="fee.controls['volume'].value >1">
+                    <!-- <div *ngIf="fee.controls['volume'].value >1"> -->
                       <input   disabled="disabled" class="govuk-input govuk-input--width-10" id="feeAmount_{{fee.controls['id'].value}}" name="feeAmount_{{fee.controls['id'].value}}" type="text" aria-describedby="amount-currency "  pattern="[0-9]*" formControlName="amounttorefund">
-                    </div>
-                    <div *ngIf="fee.controls['volume'].value ===1">
+                    <!-- </div> -->
+                    <!-- <div *ngIf="fee.controls['volume'].value ===1">
                       <input   disabled="disabled" class="govuk-input govuk-input--width-10" id="feeAmount_{{fee.controls['id'].value}}" name="feeAmount_{{fee.controls['id'].value}}" type="text" aria-describedby="amount-currency "  pattern="[0-9]*" formControlName="amounttorefund">
                     
-                    </div>
+                    </div> -->
                     <input  id="feeVolume_{{fee.controls['id'].value}}" name="feeVolume_{{fee.controls['id'].value}}" value= "{{fee.controls['volume'].value}}" type="hidden" formControlName="volume">
 					          <input id="feeApportionAmount_{{fee.controls['id'].value}}" name="feeApportionAmount_{{fee.controls['id'].value}}" value= "{{fee.controls['apportion_amount'].value}}" type="hidden" formControlName="apportion_amount">
 					          <input id="calculatedAmount_{{fee.controls['id'].value}}" name="calculatedAmount_{{fee.controls['id'].value}}" value= "{{fee.controls['calculated_amount'].value}}" type="hidden" formControlName="calculated_amount">

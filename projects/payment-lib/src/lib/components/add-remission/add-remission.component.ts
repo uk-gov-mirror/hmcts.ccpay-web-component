@@ -123,6 +123,7 @@ export class AddRemissionComponent implements OnInit {
   paymentGroup: IPaymentGroup;
   isStatusAllocated: boolean;
   isFromCheckAnsPage: boolean;
+  refundAmtForFeeVolumes: number;
   
   component: { account_number: string; amount: number; case_reference: string; ccd_case_number: string; channel: string; currency: string; customer_reference: string; date_created: string; date_updated: string; description: string; method: string; organisation_name: string; payment_allocation: any[]; reference: string; service_name: string; site_id: string; status: string; };
 
@@ -256,7 +257,8 @@ export class AddRemissionComponent implements OnInit {
       net_amount: this.fees[i].net_amount,
       version: this.fees[i].version,
       amounttorefund : [''],
-      selected:[''] 
+      selected:[''] ,
+      updatedVolume: ''
      }));
    }
    this.cd.detectChanges();
@@ -286,12 +288,12 @@ export class AddRemissionComponent implements OnInit {
       formArray.at(i).get('amounttorefund').setValue(AppAmt);
       formArray.at(i).get('volume').setValue(Volume);
       formArray.at(i).get('selected').setValue(true);
+      formArray.at(i).get('updatedVolume').setValue(Volume);
       (<HTMLInputElement>document.getElementById('feeAmount_'+v1)).value = AppAmt;
       document.getElementById('feeAmount_'+v1).removeAttribute("disabled"); 
       if(Volume === 1) {
            (<HTMLInputElement>document.getElementById('VolumeUpdated_'+v1)).value = Volume;
       } else {
-           document.getElementById('feeAmount_'+v1).focus();
            (<HTMLInputElement>document.getElementById('feeVolumeUpdated_'+v1)).value = Volume;
       }
     
@@ -299,16 +301,17 @@ export class AddRemissionComponent implements OnInit {
            document.getElementById('feeAmount_'+v1).removeAttribute("disabled"); 
            document.getElementById('feeVolumeUpdated_'+v1).removeAttribute("disabled");   
       }   
-      this.remissionForm.value.feesList.find(x=>x.id=v1)['amounttorefund'] = AppAmt;
+     // this.remissionForm.value.feesList.find(x=>x=v1)['amounttorefund'] = AppAmt;
       this.cd.detectChanges(); 
     } else {
+      this.errorMsg = [];  
       document.getElementById('feeAmount_'+v1).setAttribute("disabled", "true"); 
-      // formArray.at(i).get('amounttorefund').setValue('');
-      // formArray.at(i).get('volume').setValue('');
-      // formArray.at(i).get('selected').setValue(false);
-      this.remissionForm.value.feesList[0]["amounttorefund"] = ''; 
+      this.remissionForm.value.feesList[i]["amounttorefund"] = ''; 
+      this.remissionForm.value.feesList[i]["volume"] = ''; 
+      this.remissionForm.value.feesList[i]["selected"] = false; 
       (<HTMLInputElement>document.getElementById('feeAmount_'+v1)).value = '';
       if(Volume>1) {
+        this.remissionForm.value.feesList[i]["volume"] = ''; 
        (<HTMLInputElement>document.getElementById('feeVolumeUpdated_'+v1)).value = '';
       }
       
@@ -319,12 +322,6 @@ export class AddRemissionComponent implements OnInit {
     }  
   }
 
-   onTextInputBlurHandler(event,v1:any) {
-    // if textinput value is empty then
-    //  set disabled for checkbox to false
-    // else 
-    //   set disabled for chexbox to true
-  }
 
   addRemission() {
     this.resetRemissionForm([false, false, false, false, false, false], 'All');
@@ -643,19 +640,13 @@ export class AddRemissionComponent implements OnInit {
 
   gotoIssuePage(){
 
-    if (this.isFromCheckAnsPage) {
-      this.isFromCheckAnsPage = false;
-      this.totalRefundAmount = this.remissionForm.value.feesList.reduce((a, c) => a + c.amounttorefund * c.selected, 0);
-      this.viewStatus = 'checkissuerefundpage'
-      this.viewCompStatus = '';
-      return;
-    }
     [].forEach.call(document.querySelectorAll('input'), function (el) {
       el.classList.remove('inline-error-class');
     });
 
 	  var checkboxs = document.getElementsByTagName('input');
 	  this.errorMessage = '';
+    this.totalRefundAmount = 0;
     this.errorMsg = [];                                    
 			for (var j=0;j<checkboxs.length;j++)
 			{
@@ -677,11 +668,7 @@ export class AddRemissionComponent implements OnInit {
             this.getErrorClass(this.elementId);
 					}
 
-          if(this.quantityUpdated === 0){
-            this.elementId = 'feeVolumeUpdated_'+checkboxs[j].value;
-            this.errorMsg.push('You need to enter quantity')
-            this.getErrorClass(this.elementId);
-					}
+         
 
           if (quantity === 1)
           {
@@ -696,6 +683,12 @@ export class AddRemissionComponent implements OnInit {
 
 						this.quantityUpdated = +(<HTMLInputElement>document.getElementById('feeVolumeUpdated_'+checkboxs[j].value)).value;
 
+            if(this.quantityUpdated === 0){
+              this.elementId = 'feeVolumeUpdated_'+checkboxs[j].value;
+              this.errorMsg.push('You need to enter quantity')
+              this.getErrorClass(this.elementId);
+            }
+
             if (this.fullRefund && quantity !== this.quantityUpdated) {
               this.elementId = 'feeVolumeUpdated_'+checkboxs[j].value;
               this.errorMsg.push('The quantity you want to refund should be maximun available quantity');
@@ -703,7 +696,8 @@ export class AddRemissionComponent implements OnInit {
             }
 
             if (!this.fullRefund && this.quantityUpdated > 0 && amountToRefund > 0) {
-              this.allowedRefundAmount = this.quantityUpdated * calculatedAmount;
+              this.refundAmtForFeeVolumes = +(<HTMLInputElement>document.getElementById('feeVOl_'+checkboxs[j].value)).innerText;
+              this.allowedRefundAmount = this.quantityUpdated * this.refundAmtForFeeVolumes;
               if( this.allowedRefundAmount !== amountToRefund) 
               {
                 this.elementId = 'feeAmount_'+checkboxs[j].value;
@@ -730,13 +724,21 @@ export class AddRemissionComponent implements OnInit {
 			}
 
   if(this.errorMsg.length === 0) {
+    if (this.isFromCheckAnsPage) {
+      this.isFromCheckAnsPage = false;
+      this.totalRefundAmount = this.remissionForm.value.feesList.reduce((a, c) => a + c.amounttorefund * c.selected, 0);
+      this.viewStatus = 'checkissuerefundpage'
+      this.viewCompStatus = '';
+      return;
+    }
     this.viewCompStatus = 'issuerefundpage1';
     this.getRefundReasons();
   }
   }
 
-  calAmtToRefund(event,amount, i: any) {
-     const amtToRefund = +event.key * amount;
+  calAmtToRefund(value,amount,volume, i: any) {
+     const volumeFee = amount/volume;
+     const amtToRefund = value * volumeFee;
      const formArray = this.remissionForm.controls.feesList as FormArray;
      formArray.at(i).get('amounttorefund').setValue(amtToRefund);
    //  (<HTMLInputElement>document.getElementById('feeAmount_'+i)).value = +amtToRefund;
