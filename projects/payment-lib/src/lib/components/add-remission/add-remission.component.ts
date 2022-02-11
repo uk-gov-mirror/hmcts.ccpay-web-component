@@ -286,7 +286,6 @@ export class AddRemissionComponent implements OnInit {
       formArray.at(i).get('amounttorefund').setValue(AppAmt);
       formArray.at(i).get('volume').setValue(Volume);
       formArray.at(i).get('selected').setValue(true);
-     // this.remissionForm.value.feesList.find(id=>id=v1)["selected"] = true; 
       (<HTMLInputElement>document.getElementById('feeAmount_'+v1)).value = AppAmt;
       document.getElementById('feeAmount_'+v1).removeAttribute("disabled"); 
       if(Volume === 1) {
@@ -662,12 +661,12 @@ export class AddRemissionComponent implements OnInit {
 			{
 				if(checkboxs[j].checked)
 				{
-					
+					this.fullRefund = false;
 					let quantity: number = +(<HTMLInputElement>document.getElementById('feeVolume_'+checkboxs[j].value)).value;
           let amountToRefund: number = +(<HTMLInputElement>document.getElementById('feeAmount_'+checkboxs[j].value)).value;
 					let apportionAmount: number = +(<HTMLInputElement>document.getElementById('feeApportionAmount_'+checkboxs[j].value)).value;
 					let calculatedAmount: number = +(<HTMLInputElement>document.getElementById('calculatedAmount_'+checkboxs[j].value)).value; 
-          this.remissionForm.value.feesList.find(id=>id=checkboxs[j].value)['amounttorefund'] = apportionAmount;
+         
           if( amountToRefund === apportionAmount) {
             this.fullRefund = true;
           }
@@ -726,7 +725,7 @@ export class AddRemissionComponent implements OnInit {
               this.getErrorClass(this.elementId);
             }
         }
-
+        //this.remissionForm.value.feesList.find(id=>id=checkboxs[j].value)['amounttorefund'] = apportionAmount;
 				}
 			}
 
@@ -736,9 +735,11 @@ export class AddRemissionComponent implements OnInit {
   }
   }
 
-  calAmtToRefund(event,amount, index: number) {
-     const amtToRefund = event.value * amount;
-     const creds = this.remissionForm.controls.feesList as FormArray;
+  calAmtToRefund(event,amount, i: any) {
+     const amtToRefund = +event.key * amount;
+     const formArray = this.remissionForm.controls.feesList as FormArray;
+     formArray.at(i).get('amounttorefund').setValue(amtToRefund);
+   //  (<HTMLInputElement>document.getElementById('feeAmount_'+i)).value = +amtToRefund;
     // const formControl = this.remissionForm.controls.feesList['amounttorefund'].at(index);
      // formControl.setValue(amtToRefund);
 
