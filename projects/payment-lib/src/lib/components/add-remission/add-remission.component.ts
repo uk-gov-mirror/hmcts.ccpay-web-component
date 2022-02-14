@@ -986,7 +986,10 @@ export class AddRemissionComponent implements OnInit {
     //   this.paymentLibComponent.isFromRefundStatusPage = true;
     // }
   }
-  gotoAddressPage() {
+  gotoAddressPage(note?: IRefundContactDetails) {
+    if (note) {
+      this.notification = { contact_details: note, notification_type: note.notification_type };
+    }
     this.errorMessage = '';
     this.viewCompStatus = 'addrefundforremission';
     this.viewStatus = '';

@@ -63,9 +63,12 @@
               <label class="govuk-label govuk-font19px" for="country">
                 Pick an address
               </label>
-              <select class="govuk-select govuk-font19px" [(ngModel)]="postcodeAddress" id="postcodeAddress" name="postcodeAddress">
-                <option *ngFor="let address of addressPostcodeList" [ngValue]="address.DPA" > {{address.DPA.ADDRESS}} </option>
+              <select class="govuk-select govuk-font19px" [(ngModel)]="postcodeAddress" id="postcodeAddress" [ngClass]="{ 'inline-error-class': isAddressBoxEmpty }" name="postcodeAddress">
+                <option *ngFor="let address of addressPostcodeList;" [ngValue]="address.DPA" > {{address.DPA.ADDRESS}}</option>
               </select> 
+              <p class="inline-error-message" *ngIf="isAddressBoxEmpty">
+                <span *ngIf="isAddressBoxEmpty">Please select an address.</span>
+              </p>
             </div>
             <details class="govuk-details" data-module="govuk-details">
               <summary class="govuk-details__summary">
