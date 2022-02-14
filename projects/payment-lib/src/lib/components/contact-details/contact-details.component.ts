@@ -24,6 +24,7 @@ export class ContactDetailsComponent implements OnInit {
   manualAddressForm: FormGroup;
   addressPostcodeList:any[] = [];
   postcodeAddress:any;
+  isAddressBoxEmpty: boolean = false;
 
   isEmailEmpty: boolean = false;
   emailHasError: boolean = false;
@@ -207,6 +208,7 @@ export class ContactDetailsComponent implements OnInit {
         }; 
       } else if (str === 'FS') {
         if(this.postcodeAddress !== undefined && this.postcodeAddress) {
+          this.isAddressBoxEmpty = false;
           let addressLine="";
           let addressArray = this.postcodeAddress.ADDRESS.split(",");
           for( let i=0; i<addressArray.length-2; i++ ) {
@@ -221,6 +223,8 @@ export class ContactDetailsComponent implements OnInit {
             country: 'United Kingdom',
             notification_type: 'LETTER'
           });
+        } else {
+          this.isAddressBoxEmpty = true;
         }
       }
     } else {
