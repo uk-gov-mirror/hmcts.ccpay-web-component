@@ -64,7 +64,7 @@
                 Pick an address
               </label>
               <select class="govuk-select govuk-font19px" [(ngModel)]="postcodeAddress" id="postcodeAddress" name="postcodeAddress">
-                <option *ngFor="let address of addressPostcodeList; let i = index" [selected]="i===1" [ngValue]="address.DPA" > {{address.DPA.ADDRESS}} </option>
+                <option *ngFor="let address of addressPostcodeList; let i = index" selected="{{ i === 1 ? 'selected' : '' }}" [ngValue]="address.DPA" > {{address.DPA.ADDRESS}} </option>
               </select> 
             </div>
             <details class="govuk-details" data-module="govuk-details">
