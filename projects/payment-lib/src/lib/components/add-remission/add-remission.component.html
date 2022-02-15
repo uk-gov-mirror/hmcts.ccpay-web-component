@@ -408,7 +408,7 @@
               <td class="govuk-table__cell  whitespace-inherit left" >{{ fee.controls['apportion_amount'].value | currency:'GBP':'symbol-narrow':'1.2-2'}} </td>
               <td class="govuk-table__cell  whitespace-inherit left"  *ngIf="fee.controls['volume'].value >1">
                 <div [formGroupName]="i">
-                <input disabled="disabled"  class="govuk-input govuk-input--width-4 center"  id="feeVolumeUpdated_{{fee.controls['id'].value}}" (keyup)="calAmtToRefund($event.target.value,fee.controls['calculated_amount'].value,fee.controls['volume'].value,i)"  name="feeVolumeUpdated_{{fee.controls['id'].value}}" formControlName="updatedVolume" type="text" >
+                <input disabled="disabled"  class="govuk-input govuk-input--width-4 center"  id="feeVolumeUpdated_{{fee.controls['id'].value}}" (keyup)="calAmtToRefund($event.target.value,fee.controls['calculated_amount'].value,fee.controls['volume'].value,i)" value="{{fee.controls['volume'].value}}"  name="feeVolumeUpdated_{{fee.controls['id'].value}}" formControlName="updatedVolume" type="text" >
               </div>
               </td>
               <td class="govuk-table__cell  whitespace-inherit left"  *ngIf="fee.controls['volume'].value ===1">

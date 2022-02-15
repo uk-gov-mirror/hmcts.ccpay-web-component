@@ -156,11 +156,11 @@ export class ServiceRequestComponent implements OnInit {
       this.router.navigateByUrl(url);
   }
 
-  chkForAddRemission(feeCode: string): boolean {
+  chkForAddRemission(feeCode: string, feeId: number): boolean {
     if (this.chkForPBAPayment() && this.check4AllowedRoles2AccessRefund()) {
       if (this.orderDetail[0]['remissions'].length > 0) {
         for (const remission of this.orderDetail[0]['remissions']) {
-          if (remission.fee_code === feeCode) {
+          if (remission.fee_code === feeCode && remission.fee_id === feeId) {
             return false;
           }
         }
@@ -192,7 +192,7 @@ export class ServiceRequestComponent implements OnInit {
   }
 
   addRemission(fee: IFee) {
-   if(this.chkForAddRemission(fee.code)) {
+   if(this.chkForAddRemission(fee.code, fee.id)) {
     this.feeId = fee;
     this.viewStatus = 'addremission';
     this.payment = this.orderDetail[0].payments[0];
