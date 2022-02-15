@@ -139,7 +139,7 @@ export class PaymentViewComponent implements OnInit {
   }
 
   addRemission(fee: IFee) {
-    if(this.chkForAddRemission(fee.code)) {
+    if(this.chkForAddRemission(fee.code,fee.id)) {
     this.feeId = fee;
     this.paymentViewService.getApportionPaymentDetails(this.paymentGroup.payments[0].reference).subscribe(
       paymentGroup => {
@@ -251,11 +251,11 @@ export class PaymentViewComponent implements OnInit {
   }
   }
 
-  chkForAddRemission(feeCode: string): boolean {
+  chkForAddRemission(feeCode: string, feeId: number): boolean {
     if (this.chkForPBAPayment() && this.check4AllowedRoles2AccessRefund() && this.allowFurtherAccessAfter4Days(this.paymentGroup.payments[0])) {
       if (this.paymentGroup.remissions && this.paymentGroup.remissions.length > 0) {
         for (const remission of this.paymentGroup.remissions) {
-          if (remission.fee_code === feeCode) {
+          if (remission.fee_code === feeCode && remission.fee_id === feeId)  {
             return false;
           }
         }

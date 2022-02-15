@@ -506,7 +506,7 @@ export class AddRemissionComponent implements OnInit {
     this.isFromCheckAnsPage = false;
     this.viewStatus = 'processretroremissonpage';
     this.viewCompStatus = '';
-    this.isRefundRemission = true;
+    // this.isRefundRemission = true;
     this.errorMessage = '';
   }
   gotoProcessRetroRemissionPage() {
@@ -581,13 +581,7 @@ export class AddRemissionComponent implements OnInit {
   // Issue Refund changes
 
   gotoIssueRefundConfirmation(payment: IPayment) {
-    if(this.isFromCheckAnsPage) {
-      this.totalRefundAmount = this.remissionForm.value.feesList.reduce((a, c) => a + c.amounttorefund * c.selected, 0);
-      this.isFromCheckAnsPage = false;
-      this.viewStatus = 'checkissuerefundpage';
-      this.viewCompStatus = '';
-      return;
-    }
+   
     this.paymentLibComponent.iscancelClicked = false;
     if(this.paymentLibComponent.REFUNDLIST === "true") {
       this.isFromRefundListPage = true; 
@@ -610,12 +604,26 @@ export class AddRemissionComponent implements OnInit {
       if ( this.isFromRefundListPage ) {
         this.refundListReason.emit({reason: this.displayRefundReason, code: this.refundReason});
       } else {
+        if(this.isFromCheckAnsPage) {
+          this.totalRefundAmount = this.remissionForm.value.feesList.reduce((a, c) => a + c.amounttorefund * c.selected, 0);
+          this.isFromCheckAnsPage = false;
+          this.viewStatus = 'checkissuerefundpage';
+          this.viewCompStatus = '';
+          return;
+        }
         this.viewCompStatus = '';
         this.viewStatus = 'contactDetailsPage';
       }
       
     } else {
       this.displayRefundReason = this.selectedRefundReason;
+      if(this.isFromCheckAnsPage) {
+        this.totalRefundAmount = this.remissionForm.value.feesList.reduce((a, c) => a + c.amounttorefund * c.selected, 0);
+        this.isFromCheckAnsPage = false;
+        this.viewStatus = 'checkissuerefundpage';
+        this.viewCompStatus = '';
+        return;
+      }
       if ( this.isFromRefundListPage ) {
         this.paymentLibComponent.isFromRefundStatusPage = true;
         this.refundListReason.emit({reason: this.selectedRefundReason, code: this.refundReason});
@@ -818,6 +826,12 @@ export class AddRemissionComponent implements OnInit {
       })
   }
 
+  gotoRefundReasonPage () {
+    this.viewStatus = '';
+    this.viewCompStatus = 'issuerefundpage1';
+    
+  }
+
 // Retro Refund
 
   // confirmRetroRefund() {
@@ -888,6 +902,14 @@ export class AddRemissionComponent implements OnInit {
     this.viewCompStatus = '';
     this.viewStatus = type;
   }
+
+  gotoPartialFeeRefundScreen() {
+    this.refundHasError = false;
+    this.viewCompStatus  = 'issuerefund';
+    this.viewStatus = '';
+  }
+
+  
 
   gotoServiceRequestPage(event: any) {
     this.errorMessage ='';
