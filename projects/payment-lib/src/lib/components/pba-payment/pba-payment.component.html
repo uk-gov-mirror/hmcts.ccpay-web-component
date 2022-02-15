@@ -7,7 +7,7 @@
       </li>
     </ol>
   </div>
-  <div class="pba-payment" *ngIf="(pbaAccountList?.length > 0 || errorMsg) && !isInSufficiantFund && !isPBAAccountNotExist && !isPBAServerError && !isPBAAccountPaymentSuccess && isCardPaymentSuccess">
+  <div class="pba-payment" *ngIf="(pbaAccountList?.length > 0 || errorMsg) && !isInSufficiantFund && !isPBAAccountNotExist && !isPBAServerError && !isPBAAccountHold && !isPBAAccountPaymentSuccess && isCardPaymentSuccess">
     
     <div *ngIf="errorMsg" class="govuk-error-summary pba-payments-error-box--size" aria-labelledby="error-summary-title" >
       <h2 class="govuk-error-summary__title govuk-error-summary__title-custom pba-payments-24-font" id="error-summary-title">
