@@ -54,7 +54,7 @@ export class PaymentLibComponent implements OnInit {
   @Input('VIEWSERVICE') VIEWSERVICE: string;
   @Input('PAYMENT_GROUP_REF') PAYMENT_GROUP_REF?: string;
   @Input('TAKEPAYMENT') TAKEPAYMENT: boolean;
-  @Input('SERVICEREQUEST') SERVICEREQUEST: string;
+  @Input('SERVICEREQUEST') SERVICEREQUEST: boolean;
   @Input('DCN_NUMBER') DCN_NUMBER: string;
   @Input('SELECTED_OPTION') SELECTED_OPTION: string;
   @Input('ISBSENABLE') ISBSENABLE: Boolean;
