@@ -47,6 +47,7 @@ export class PaymentLibComponent implements OnInit {
   @Input('API_ROOT') API_ROOT: string;
   @Input('BULKSCAN_API_ROOT') BULKSCAN_API_ROOT: string;
   @Input('REFUNDS_API_ROOT') REFUNDS_API_ROOT: string;
+  @Input('CURRENTENV') CURRENTENV: string;
   @Input('CCD_CASE_NUMBER') CCD_CASE_NUMBER: string;
   @Input('EXC_REFERENCE') EXC_REFERENCE: string;
   @Input('PAYMENT_METHOD') PAYMENT_METHOD: string;
@@ -117,6 +118,8 @@ export class PaymentLibComponent implements OnInit {
     this.paymentLibService.setApiRootUrl(this.API_ROOT);
     this.paymentLibService.setBulkScanApiRootUrl(this.BULKSCAN_API_ROOT);
     this.paymentLibService.setRefundndsApiRootUrl(this.REFUNDS_API_ROOT);
+    this.paymentLibService.setCurrentEnv(this.CURRENTENV);
+
     if(this.LOGGEDINUSERROLES.length > 0) {
       this.OrderslistService.setUserRolesList(this.LOGGEDINUSERROLES);
     }
