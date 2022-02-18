@@ -9,6 +9,7 @@ export class PaymentLibService {
   BULKSCAN_API_ROOT: string;
   REFUNDS_API_ROOT: string;
   NOTIFICATION_API_ROOT: string;
+  CURRENTENV: string;
 
   constructor() { }
 
@@ -41,5 +42,12 @@ export class PaymentLibService {
 
   getNoticationApiRootUrl(): string {
     return this.NOTIFICATION_API_ROOT;
+  }
+  
+  setCurrentEnv(currentEnvironment: string):void {
+    this.CURRENTENV = currentEnvironment;
+  }
+  getCurrentEnv(): string {
+    return this.CURRENTENV;
   }
 }

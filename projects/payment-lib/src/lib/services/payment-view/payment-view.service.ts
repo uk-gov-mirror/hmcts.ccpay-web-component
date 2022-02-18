@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
-
+import { v4 as uuidv4 } from 'uuid';
 import {IPayment} from '../../interfaces/IPayment';
 import {PaymentLibService} from '../../payment-lib.service';
 import { WebComponentHttpClient } from '../shared/httpclient/webcomponent.http.client';
@@ -83,12 +83,14 @@ export class PaymentViewService {
 
   postWays2PayCardPayment(serviceRef: string, body: IserviceRequestCardPayment): Observable<any> {
     const url = `${this.paymentLibService.API_ROOT}/service-request/${serviceRef}/card-payments`;
+    body['return-url'] = `https://paymentoutcome-web.${this.paymentLibService.CURRENTENV}.platform.hmcts.net/payment`;
     return this.https.post(url, body).pipe(
       catchError(this.errorHandlerService.handleError)
     );
   }
   
   postPBAaccountPayment(serviceRef: string, body: IserviceRequestPbaPayment): Observable<any> {
+    body['idempotency_key'] = uuidv4(); 
     const url = `${this.paymentLibService.API_ROOT}/service-request/${serviceRef}/pba-payments`;
     return this.https.post(url, body);
   }
