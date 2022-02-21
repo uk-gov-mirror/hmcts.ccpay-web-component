@@ -27,32 +27,54 @@
         </ul>
       </div>
     </div>
-    <h1 class="heading-medium margin-top-10-px">Pay fee using Payment by Account (PBA)</h1>
-    <div class="govuk-form-group">
+    <!-- <h1 class="heading-medium margin-top-10-px">Pay fee using Payment by Account (PBA)</h1> -->
+    <div class="govuk-form-group margin-top-10-px">
       <label class="govuk-label pba-payments-govuk__label pba-payments-19-font">
         Amount to pay 
       </label>
       <span class="pba-payments-19-font">{{pbaPayOrderRef.orderTotalFees | currency :'GBP':'symbol':'1.2-2'}}</span>
     </div>
 
-    <div class="govuk-form-group pba-payments-select-box--size" *ngIf="!errorMsg">
-      <label class="govuk-label pba-payments-govuk__label pba-payments-19-font" for="pbaAccountNumber">
-        Select a PBA  
-      </label>
-      <select class="form-control short-input" id="pbaAccountNumber" (change)="selectpbaaccount($event)">
-        <option value="" selected='selected'>Select option</option>
-        <option  *ngFor="let pbaAccount of pbaAccountList;" value="{{pbaAccount}}">{{pbaAccount}}</option>
-      </select>
+    <div class="govuk-form-group" *ngIf="!errorMsg">
+      <fieldset class="govuk-fieldset" aria-describedby="contact-hint">
+        <div class="govuk-radios" data-module="govuk-radios">
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="pbaAccount" name="paymentSelection" type="radio" value="PBA" (click)="selectPaymentMethod('PBA')" data-aria-controls="pba-account">
+            <label class="govuk-label govuk-radios__label pba-payments-19-font pba-payments-font-bld" for="pbaAccount">
+              Pay fee using Payment by Account (PBA)
+            </label>
+          </div>
+          <div class="govuk-radios__conditional" id="conditional-contact" *ngIf="isPbaAccountSelected">
+            <div class="govuk-form-group pba-payments-select-box--size">
+              <label class="govuk-label pba-payments-govuk__label pba-payments-19-font" for="pbaAccountNumber">
+                Select a PBA  
+              </label>
+              <select class="form-control short-input" id="pbaAccountNumber" (change)="selectpbaaccount($event)">
+                <option value="" selected='selected'>Select option</option>
+                <option  *ngFor="let pbaAccount of pbaAccountList;" value="{{pbaAccount}}">{{pbaAccount}}</option>
+              </select>
+            </div>
+            <div class="govuk-form-group" *ngIf="!errorMsg && selectedPbaAccount">
+              <label class="govuk-label pba-payments-govuk__label pba-payments-24-font" for="pbaAccountNumber">
+                Enter a reference for your PBA account statements 
+              </label>
+              <div id="event-name-hint" class="govuk-hint pba-payments-19-font pba-payment-width">
+                This should be your own unique reference to identify the case. It will appear on your statements.
+            </div>
+            <input class="govuk-input pba-payments-ref-box--size pba-payments-19-font" id="pbaAccountRef" (change)="selectpbaaccount($event)" name="pbaAccountRef" type="text" aria-describedby="pbaAccountRef-hint">
+            </div>
+    
+          </div>
+          <div class="govuk-radios__item">
+            <input class="govuk-radios__input" id="cardPayment" name="paymentSelection" type="radio" value="card" (click)="selectPaymentMethod('CARD')" data-aria-controls="card-payment">
+            <label class="govuk-label govuk-radios__label pba-payments-19-font pba-payments-font-bld" for="cardPayment">
+              Pay by credit or debit card
+            </label>
+          </div>
+        </div>
+      </fieldset>
     </div>
-    <div class="govuk-form-group" *ngIf="!errorMsg && selectedPbaAccount">
-      <label class="govuk-label pba-payments-govuk__label pba-payments-24-font" for="pbaAccountNumber">
-        Enter a reference for your PBA account statements 
-      </label>
-      <div id="event-name-hint" class="govuk-hint pba-payments-19-font pba-payment-width">
-        This should be your own unique reference to identify the case. It will appear on your statements.
-    </div>
-    <input class="govuk-input pba-payments-ref-box--size pba-payments-19-font" id="pbaAccountRef" (change)="selectpbaaccount($event)" name="pbaAccountRef" type="text" aria-describedby="pbaAccountRef-hint">
-    </div>
+
     <div class="govuk-button--group"  *ngIf="errorMsg">
       <button type="button" class="button pba-payments-19-font govuk-button--secondary pba-payments-margin-10" (click)="gotoCasetransationPage()">
         View Service Request
@@ -63,7 +85,8 @@
     </div>
     <div class="govuk-button--group"  *ngIf="!errorMsg">
       <button type="submit" [disabled]="isContinueButtondisabled" class="button pba-payments-19-font pba-payments-20-margin" (click)="saveAndContinue()">
-        Continue
+        <span *ngIf="!isPBADropdownSelected">Continue</span>
+        <span *ngIf="isPBADropdownSelected">Confirm payment</span>
       </button>
     </div>
   </div>

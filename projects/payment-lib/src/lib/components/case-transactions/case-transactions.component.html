@@ -590,7 +590,7 @@
 
    <ng-container *ngIf="!takePayment && viewStatus === 'main'">       
       <div  class="govuk-grid-column-full">
-        <!-- <span *ngIf="serviceRequestValue !== 'false'" class="heading-medium">Service requests</span> -->
+        <!-- <span *ngIf="serviceRequestValue === 'false'" class="heading-medium">Service requests</span> -->
         <ng-container *ngIf="!(orderLevelFees?.length === 0 && !isAnyFeeGroupAvilable) && serviceRequestValue !== 'false' ">
           <table class="govuk-table">
               <thead class="govuk-table__head">

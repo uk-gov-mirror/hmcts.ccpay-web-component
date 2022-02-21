@@ -83,7 +83,7 @@ export class PaymentViewService {
 
   postWays2PayCardPayment(serviceRef: string, body: IserviceRequestCardPayment): Observable<any> {
     const url = `${this.paymentLibService.API_ROOT}/service-request/${serviceRef}/card-payments`;
-    body['return-url'] = `https://paymentoutcome-web.${this.paymentLibService.CURRENTENV}.platform.hmcts.net/payment`;
+    body['return-url'] = `${this.paymentLibService.CARDPAYMENTRETURNURL}/payment`;
     return this.https.post(url, body).pipe(
       catchError(this.errorHandlerService.handleError)
     );

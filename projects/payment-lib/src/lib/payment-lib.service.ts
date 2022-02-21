@@ -9,7 +9,7 @@ export class PaymentLibService {
   BULKSCAN_API_ROOT: string;
   REFUNDS_API_ROOT: string;
   NOTIFICATION_API_ROOT: string;
-  CURRENTENV: string;
+  CARDPAYMENTRETURNURL: string;
 
   constructor() { }
 
@@ -43,11 +43,10 @@ export class PaymentLibService {
   getNoticationApiRootUrl(): string {
     return this.NOTIFICATION_API_ROOT;
   }
-  
-  setCurrentEnv(currentEnvironment: string):void {
-    this.CURRENTENV = currentEnvironment;
+  setCardPaymentReturnUrl(cardPaymentReturnUrl: string):void {
+    this.CARDPAYMENTRETURNURL = cardPaymentReturnUrl;
   }
-  getCurrentEnv(): string {
-    return this.CURRENTENV;
+  getCardPaymentReturnUrl(): string {
+    return this.CARDPAYMENTRETURNURL;
   }
 }

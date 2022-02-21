@@ -1,6 +1,6 @@
 {
   "name": "ccpay-web-component",
-  "version": "5.0.1-beta147",
+  "version": "5.0.1-beta148",
   "scripts": {
     "ng": "ng",
     "build:library": "ng build payment-lib",
@@ -39,7 +39,7 @@
     "rxjs-compat": "^6.5.2",
     "xlsx-style": "^0.8.13",
     "zone.js": "~0.8.29",
-    "uuid": "3.3.2"
+    "uuid": "7.0.3"
 
   },
   "devDependencies": {
