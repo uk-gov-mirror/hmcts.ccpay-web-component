@@ -119,6 +119,7 @@ export class PaymentLibComponent implements OnInit {
     this.paymentLibService.setApiRootUrl(this.API_ROOT);
     this.paymentLibService.setBulkScanApiRootUrl(this.BULKSCAN_API_ROOT);
     this.paymentLibService.setRefundndsApiRootUrl(this.REFUNDS_API_ROOT);
+    this.paymentLibService.setNoticationApiRootUrl(this.NOTIFICATION_API_ROOT);
     this.paymentLibService.setCardPaymentReturnUrl(this.CARDPAYMENTRETURNURL);
 
     if(this.LOGGEDINUSERROLES.length > 0) {
