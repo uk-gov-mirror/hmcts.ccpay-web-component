@@ -83,14 +83,16 @@ export class PaymentViewService {
 
   postWays2PayCardPayment(serviceRef: string, body: IserviceRequestCardPayment): Observable<any> {
     const url = `${this.paymentLibService.API_ROOT}/service-request/${serviceRef}/card-payments`;
-    body['return-url'] = `${this.paymentLibService.CARDPAYMENTRETURNURL}/payment`;
+    const rurl = this.paymentLibService.CARDPAYMENTRETURNURL.replace('.prod', '');
+    body['return-url'] = `${rurl}/payment`;
     return this.https.post(url, body).pipe(
       catchError(this.errorHandlerService.handleError)
     );
   }
   
   postPBAaccountPayment(serviceRef: string, body: IserviceRequestPbaPayment): Observable<any> {
-    body['idempotency_key'] = uuidv4(); 
+    let randomKey = 'idam-key-' + Math.random().toString().split('.').join('-');
+    body['idempotency_key'] = randomKey; 
     const url = `${this.paymentLibService.API_ROOT}/service-request/${serviceRef}/pba-payments`;
     return this.https.post(url, body);
   }
