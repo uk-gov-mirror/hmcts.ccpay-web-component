@@ -1,6 +1,6 @@
 {
   "name": "ccpay-web-component",
-  "version": "5.0.1-beta149",
+  "version": "5.0.1-beta150",
   "scripts": {
     "ng": "ng",
     "build:library": "ng build payment-lib",
@@ -128,7 +128,8 @@
     "set-value": "^4.0.1",
     "ansi-regex": "^5.0.1",
     "jszip": ">=3.7.0",
-    "postcss": "^7.0.36"
+    "postcss": "^7.0.36",
+    "uuid": "7.0.3"
   },
   "license": "MIT"
 }
