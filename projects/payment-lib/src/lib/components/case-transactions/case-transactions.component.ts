@@ -316,7 +316,7 @@ export class CaseTransactionsComponent implements OnInit {
       if (paymentGroup.service_request_status === 'Paid') {
         this.orderStatus = paymentGroup.service_request_status;
         this.orderAddBtnEnable = false;
-      } else if (paymentGroup.service_request_status === '' || paymentGroup.service_request_status === '') {
+      } else if (paymentGroup.service_request_status === 'Partially paid' || paymentGroup.service_request_status === 'Not paid') {
         this.orderStatus = paymentGroup.service_request_status;
         this.orderAddBtnEnable = true;
       } 

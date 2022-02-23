@@ -78,7 +78,11 @@ export class PbaPaymentComponent implements OnInit {
         this.paymentViewService.postPBAaccountPayment(this.pbaPayOrderRef.orderRefId, requestBody)
         .subscribe(
           r => {
-            this.pbaAccountrPaymentResult = JSON.parse(r).data;
+            try {
+              this.pbaAccountrPaymentResult = JSON.parse(r);
+            } catch(e) {
+              this.pbaAccountrPaymentResult = r;
+            }
             this.isPBAAccountPaymentSuccess = true;
           },
           e => {
