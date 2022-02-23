@@ -312,17 +312,14 @@ export class CaseTransactionsComponent implements OnInit {
         });
       }
 
-      this.orderPendingPayments = (this.orderFeesTotal - this.orderRemissionTotal) - this.orderTotalPayments;
-      if (this.orderPendingPayments <= 0.00) {
-        this.orderStatus = 'Paid';
+      // this.orderPendingPayments = (this.orderFeesTotal - this.orderRemissionTotal) - this.orderTotalPayments;
+      if (paymentGroup.service_request_status === 'Paid') {
+        this.orderStatus = paymentGroup.service_request_status;
         this.orderAddBtnEnable = false;
-      } else if (this.orderFeesTotal > 0 && (this.orderTotalPayments > 0 || this.orderRemissionTotal > 0) && (this.orderTotalPayments < this.orderPendingPayments)) {
-        this.orderStatus = 'Partially paid'
+      } else if (paymentGroup.service_request_status === '' || paymentGroup.service_request_status === '') {
+        this.orderStatus = paymentGroup.service_request_status;
         this.orderAddBtnEnable = true;
-      } else {
-        this.orderStatus = 'Not paid'
-        this.orderAddBtnEnable = true;
-      }
+      } 
 
       //this.orderLevelFees.push({orderRefId:paymentGroup['payment_group_reference'],orderTotalFees: this.orderFeesTotal,orderStatus: this.orderStatus,orderParty:'Santosh', orderCCDEvent:'Case Creation',orderCreated: new Date(), orderAddBtnEnable: this.orderAddBtnEnable}); this.cpoDetails['createdTimestamp']
       if (this.cpoDetails !== null) {
@@ -381,16 +378,18 @@ export class CaseTransactionsComponent implements OnInit {
           });
         }
       }
+      this.orderStatus = orderDetail.service_request_status;
     });
-    this.orderPendingPayments = (this.orderFeesTotal - this.orderRemissionTotal) - this.orderTotalPayments;
+    //this.orderPendingPayments = (this.orderFeesTotal - this.orderRemissionTotal) - this.orderTotalPayments;
     // this.orderRef = orderReferenceObj.orderRefId;
-    if (this.orderPendingPayments <= 0.00) {
-      this.orderStatus = 'Paid';
-    } else if (this.orderFeesTotal > 0 && (this.orderTotalPayments > 0 || this.orderRemissionTotal > 0) && (this.orderTotalPayments < this.orderPendingPayments)) {
-      this.orderStatus = 'Partially paid'
-    } else {
-      this.orderStatus = 'Not paid'
-    }
+    // if (this.orderPendingPayments <= 0.00) {
+    //   this.orderStatus = 'Paid';
+    // } else if (this.orderFeesTotal > 0 && (this.orderTotalPayments > 0 || this.orderRemissionTotal > 0) && (this.orderTotalPayments < this.orderPendingPayments)) {
+    //   this.orderStatus = 'Partially paid'
+    // } else {
+    //   this.orderStatus = 'Not paid'
+    // }
+
 
     if (this.cpoDetails !== null) {
       this.orderParty = this.cpoDetails['responsibleParty'];
