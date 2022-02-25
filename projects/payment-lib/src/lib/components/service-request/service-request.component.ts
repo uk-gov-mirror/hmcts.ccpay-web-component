@@ -303,13 +303,11 @@ export class ServiceRequestComponent implements OnInit {
     }
   }
   }
-  goToServiceRequestPage(event: any) {
-    event.preventDefault();
-    this.isFromServiceRequestPage = true;
-    this.viewStatus = 'main'
+  goToServiceRequestPage() {
     this.paymentLibComponent.viewName = 'case-transactions';
-    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    this.router.onSameUrlNavigation = 'reload';
+    this.paymentLibComponent.TAKEPAYMENT = false;
+    this.paymentLibComponent.ISBSENABLE = true;
+    this.paymentLibComponent.isFromServiceRequestPage = true;
   }
 
   goToPayementView(paymentGroupReference: string, paymentReference: string, paymentMethod: string) {
