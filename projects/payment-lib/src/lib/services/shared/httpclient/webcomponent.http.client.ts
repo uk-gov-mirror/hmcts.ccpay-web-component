@@ -46,12 +46,12 @@ export class WebComponentHttpClient {
     }
     headers['X-Requested-With'] = 'XMLHttpRequest';
     if (csrfToken === null) {
-      if( document.cookie.split(';').find(row => row.startsWith('XSRF-TOKEN')).split('=')[1] !== undefined) {
+      if( document.cookie.split(';').find(row => row.startsWith('XSRF-TOKEN') !== undefined )) {
         headers['CSRF-Token'] = document.cookie.split(';').find(row => row.startsWith('XSRF-TOKEN')).split('=')[1];
-        
       } else {
         headers['CSRF-Token'] = document.cookie.split(';').find(row => row.startsWith(' XSRF-TOKEN')).split('=')[1];
       }
+      
     } else {
       headers['CSRF-Token'] = csrfToken.content;
     }
