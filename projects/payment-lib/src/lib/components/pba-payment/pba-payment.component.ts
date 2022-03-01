@@ -30,6 +30,7 @@ export class PbaPaymentComponent implements OnInit {
   isContinueButtondisabled: boolean = true;
   isPBAAccountPaymentSuccess: boolean = false;
   pbaAccountrPaymentResult: any;
+  orgName: string = '';
 
   constructor(private  paymentLibComponent: PaymentLibComponent,
     private paymentViewService: PaymentViewService) {}
@@ -42,6 +43,7 @@ export class PbaPaymentComponent implements OnInit {
     .subscribe(
       result => {
         this.isGetPBAAccountSucceed = true;
+        this.orgName = result.organisationEntityResponse.name;
         this.pbaAccountList = result.organisationEntityResponse.paymentAccount;
       },
       error => {
@@ -74,7 +76,7 @@ export class PbaPaymentComponent implements OnInit {
       this.isPBAAccountPaymentSuccess = false;
       if ( this.pbaAccountList.indexOf(this.selectedPbaAccount) !== -1 ) {
         const requestBody = new IserviceRequestPbaPayment(
-          this.selectedPbaAccount, this.pbaPayOrderRef.orderTotalFees, this.pbaAccountRef);
+          this.selectedPbaAccount, this.pbaPayOrderRef.orderTotalFees, this.pbaAccountRef, this.orgName);
         this.paymentViewService.postPBAaccountPayment(this.pbaPayOrderRef.orderRefId, requestBody)
         .subscribe(
           r => {
