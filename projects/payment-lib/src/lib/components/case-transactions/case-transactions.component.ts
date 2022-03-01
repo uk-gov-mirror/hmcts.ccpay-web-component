@@ -509,17 +509,18 @@ export class CaseTransactionsComponent implements OnInit {
             feesTotal = feesTotal + fee.calculated_amount;
 
             this.isRemissionsMatch = false;
-            paymentGroup.remissions.forEach(rem => {
-              if (rem.fee_code === fee.code) {
-                this.isRemissionsMatch = true;
-                fee['remissions'] = rem;
-                // if(!fees.find(k => k.code=fee.code))
-                // {
-                fees.push(fee);
-                //}
-              }
-            });
-
+            if (paymentGroup.remissions) {
+              paymentGroup.remissions.forEach(rem => {
+                if (rem.fee_code === fee.code) {
+                  this.isRemissionsMatch = true;
+                  fee['remissions'] = rem;
+                  // if(!fees.find(k => k.code=fee.code))
+                  // {
+                  fees.push(fee);
+                  //}
+                }
+              });
+            }
             if (!this.isRemissionsMatch) {
               fees.push(fee);
             }
@@ -665,7 +666,13 @@ export class CaseTransactionsComponent implements OnInit {
     event.preventDefault();
     this.paymentLibComponent.viewName = 'remission'
   }
-
+  goToServiceRequestPage() {
+    this.paymentLibComponent.viewName = 'case-transactions';
+    this.paymentLibComponent.TAKEPAYMENT = false;
+    this.paymentLibComponent.SERVICEREQUEST = 'true';
+    this.paymentLibComponent.isFromServiceRequestPage = true;
+    window.location.reload();
+  }
   redirectToReportsPage(event: any) {
     event.preventDefault();
     this.router.navigateByUrl(`/reports?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}`);

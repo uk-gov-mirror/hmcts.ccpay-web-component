@@ -589,7 +589,7 @@
    </ng-container>
 
    <ng-container *ngIf="!takePayment && viewStatus === 'main'">       
-      <div  class="govuk-grid-column-full">
+      <div  class="govuk-grid-column-full" [ngClass]='serviceRequestValue!== "false" ? "govuk-margin-btm-20px" : ""'>
         <!-- <span *ngIf="serviceRequestValue === 'false'" class="heading-medium">Service requests</span> -->
         <ng-container *ngIf="!(orderLevelFees?.length === 0 && !isAnyFeeGroupAvilable) && serviceRequestValue !== 'false' ">
           <table class="govuk-table">
@@ -710,6 +710,7 @@
   [orderTotalPayments] = "orderTotalPayments"
   [orderRemissionTotal] = "orderRemissionTotal"
   [isServiceRequest] = "serviceRequestValue"
+  (goToServiceRquestComponent) = "goToServiceRequestPage()"
   ></ccpay-service-request>
    
 </ng-container>
