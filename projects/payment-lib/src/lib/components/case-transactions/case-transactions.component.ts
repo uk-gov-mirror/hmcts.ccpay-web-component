@@ -58,6 +58,7 @@ export class CaseTransactionsComponent implements OnInit {
   isRemoveBtnDisabled: boolean = false;
   feeId: IFee;
   clAmountDue: number = 0;
+  overPaymentAmount: number = 0;
   unprocessedRecordCount: number;
   isFeeRecordsExist: boolean = false;
   isGrpOutstandingAmtPositive: boolean = false;
@@ -295,6 +296,7 @@ export class CaseTransactionsComponent implements OnInit {
       if (paymentGroup.fees) {
         paymentGroup.fees.forEach(fee => {
           this.orderFeesTotal = this.orderFeesTotal + fee.calculated_amount
+          this.overPaymentAmount = this.overPaymentAmount + fee.over_payment
         }
         )
       }

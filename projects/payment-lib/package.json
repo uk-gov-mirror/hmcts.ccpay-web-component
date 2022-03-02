@@ -1,6 +1,6 @@
 {
   "name": "@hmcts/ccpay-web-component",
-  "version": "5.0.1-beta155",
+  "version": "5.0.2-beta1",
   "publishConfig": {
     "access": "public"
   },
@@ -16,6 +16,10 @@
     {
       "name": "Santosh Govindu",
       "email": "santosh.govindu@hmcts.net"
+    },
+    {
+      "name": "Kumar dhanasamy",
+      "email": "kumar.dhanasamy@hmcts.net"
     },
     {
       "name": "Tarun Palisetty",
