@@ -119,8 +119,8 @@ addHeaders(options: any): any {
     });
   }
   headers['X-Requested-With'] = 'XMLHttpRequest';
-  if (csrfToken.content === null) {
-    headers['CSRF-Token'] = document.cookie.split(';').find(row => row.startsWith(' XSRF-TOKEN')).split('=')[1];
+  if (csrfToken.content === null && document.cookie.split(';').find(row => row.startsWith('XSRF-TOKEN')) !== undefined) {
+      headers['CSRF-Token'] = document.cookie.split(';').find(row => row.startsWith(' XSRF-TOKEN')).split('=')[1];
   } else {
     headers['CSRF-Token'] = csrfToken.content;
   }
