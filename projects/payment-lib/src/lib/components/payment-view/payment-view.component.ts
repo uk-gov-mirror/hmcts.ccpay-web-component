@@ -122,10 +122,6 @@ export class PaymentViewComponent implements OnInit {
   }
   goToCaseTransationPage(event: any) {
     event.preventDefault();
-    if(this.isServiceRequest !== 'false') {
-      this.paymentLibComponent.isFromServiceRequestPage = true;
-    }
-
     if (!this.paymentLibComponent.isFromServiceRequestPage) {
         this.OrderslistService.setnavigationPage('casetransactions');
         this.OrderslistService.setisFromServiceRequestPage(false);
