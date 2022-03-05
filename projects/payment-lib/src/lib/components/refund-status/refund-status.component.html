@@ -145,8 +145,7 @@
       <!-- <div *ngIf="refundButtonState==='sent back'"> -->
       <br />
       <button type="submit" class="button govuk-button--secondary btnmargin"
-        (click)="gotoReviewAndReSubmitPage()">Resubmit
-        refund</button>
+        (click)="gotoReviewAndReSubmitPage()">Change refund details</button>
     </div>
     <div *ngIf="isProcessRefund && !isLastUpdatedByCurrentUser && refundButtonState==='Sent for approval'" >
       <!-- <div *ngIf="isProcessRefund && !isLastUpdatedByCurrentUser && refundButtonState==='sent for approval'"> -->
@@ -182,7 +181,7 @@
     <tr class="govuk-table__row">
       <td class="govuk-table__cell govuk-!-font-weight-bold">Reason for refund</td>
       <td class="govuk-table__cell"> {{ refundlist?.reason}}
-        <a (click)="gotoRefundReasonPage()" *ngIf="refundlist?.reason !== 'Retrospective remission'"
+        <a (click)="gotoRefundReasonPage()" *ngIf="refundlist?.reason !== 'Retrospective remission' && refundlist?.reason !== 'Over payment'"
           class="govuk-link right">Change</a>
       </td>
 
@@ -197,7 +196,7 @@
       <td *ngIf="refundlist?.reason === 'Retrospective remission'" class="govuk-table__cell govuk-!-font-weight-bold">Refund amount</td>
       <td *ngIf="refundlist?.reason !== 'Retrospective remission'" class="govuk-table__cell govuk-!-font-weight-bold">Payment amount</td>
       <td class="govuk-table__cell"> £{{ changedAmount | number:'.2' }}
-        <a (click)="gotoAmountPage()" *ngIf="refundlist?.reason === 'Retrospective remission'"
+        <a (click)="gotoAmountPage()" *ngIf="refundlist?.reason !== 'Retrospective remission' && refundlist?.reason !== 'Over payment'"
           class="govuk-link right">Change</a>
       </td>
 
@@ -219,8 +218,11 @@
           <br/>
           {{refundlist?.contact_details?.address_line}} {{refundlist?.contact_details?.city}} {{refundlist?.contact_details?.county}} {{refundlist?.contact_details?.country}} {{refundlist?.contact_details?.postal_code}}
         </div> 
+        <a class="govuk-link" href="Javascript:void(0)" *ngIf="refundlist?.contact_details !=null"  class="govuk-link right" (click)="gotoEditDetailsPage(refundlist?.contact_details)">
+          Change
+        </a>
       </td>
-    </tr>
+    </tr> 
   </table>
   <div class="govuk-button-group">
     <button (click)="gotoReviewDetailsPage($event)" class="govuk-button govuk-button--secondary"> Previous</button>
@@ -304,9 +306,9 @@
       Refund reference: {{ refundlist?.refund_reference}}
     </span>
     <ccpay-contact-details
-    [isEditOperation] = isEditDetailsClicked
+    [isEditOperationInRefundList] = isEditDetailsClicked
     [addressObj] = notification
-    (assignContactDetails)="getContactDetails($event)"
+    (assignContactDetailsInFefundsList)="getContactDetailsForRefundList($event)"
     (redirectToIssueRefund)="gotoCasetransationPageCancelBtnClicked($event)" ></ccpay-contact-details>
   <p>
       <a (click)="loadRefundListPage()" class="govuk-link" data-module="govuk-button">

@@ -10,8 +10,10 @@ import { NotificationService } from '../../services/notification/notification.se
 })
 export class ContactDetailsComponent implements OnInit {
   @Input('isEditOperation') isEditOperation: boolean;
+  @Input('isEditOperationInRefundList') isEditOperationInRefundList: boolean;
   @Input('addressObj') addressObj: any;
   @Output() assignContactDetails: EventEmitter<any> = new EventEmitter();
+  @Output() assignContactDetailsInFefundsList: EventEmitter<any> = new EventEmitter();
   @Output() redirectToIssueRefund: EventEmitter<any> = new EventEmitter();
   pageTitle: string = 'Payment status history';
   errorMessage: string;
@@ -86,6 +88,9 @@ export class ContactDetailsComponent implements OnInit {
     if(this.addressObj !== undefined && this.addressObj !== '') {
       this.setEditDetails();
     }
+    if(this.isEditOperationInRefundList === undefined) {
+      this.isEditOperationInRefundList = false;
+    }
   }
   setEditDetails() {
     if(this.addressObj.notification_type === 'EMAIL') {
@@ -147,6 +152,7 @@ export class ContactDetailsComponent implements OnInit {
     } else if(this.isPostcodeClicked && this.isManualAddressClicked) {
       const fieldCtrls = this.manualAddressForm.controls;
       if (this.manualAddressForm.valid) {
+        if(!this.isEditOperationInRefundList) {
         this.assignContactDetails.emit({
           address_line: fieldCtrls.addressl1.value+' '+fieldCtrls.addressl2.value,
           city: fieldCtrls.townorcity.value,
@@ -155,6 +161,16 @@ export class ContactDetailsComponent implements OnInit {
           country: fieldCtrls.country.value,
           notification_type: 'LETTER'
         });
+      } else {
+        this.assignContactDetailsInFefundsList.emit({
+          address_line: fieldCtrls.addressl1.value+' '+fieldCtrls.addressl2.value,
+          city: fieldCtrls.townorcity.value,
+          county: fieldCtrls.county.value,
+          postal_code: fieldCtrls.mpostcode.value,
+          country: fieldCtrls.country.value,
+          notification_type: 'LETTER'
+        });
+      }
       } else {
         if( fieldCtrls.addressl1.value == '' ) {
           this.resetForm([false,false,false,false,true,false,false,false,false,false,false,false,false,false], 'address1');

@@ -12,7 +12,7 @@ import { IPaymentView } from '../../interfaces/IPaymentView';
 import { IOrderReferenceFee } from '../../interfaces/IOrderReferenceFee';
 import { Router } from '@angular/router';
 import { ServiceRequestComponent } from '../../components/service-request/service-request.component';
-// import * as ls from "local-storage";
+
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 
 @Component({
@@ -74,6 +74,7 @@ export class CaseTransactionsComponent implements OnInit {
   isAddRemissionEnable: boolean = false;
   orderRemissionDetails: any[] = [];
   orderLevelFees: IOrderReferenceFee[] = [];
+  ispaymentGroupApisuccess: boolean = false;
   cpoDetails: any = null;
   orderRef: string;
   orderStatus: string;
@@ -93,6 +94,8 @@ export class CaseTransactionsComponent implements OnInit {
   isAddRemissionBtnEnabled: boolean = false;
   isRefundRemissionBtnEnable: boolean = false;
   allowedRolesToAccessRefund = ['payments-refund-approver', 'payments-refund'];
+  isEligible4PBAPayment = ['pui-finance-manager', 'pui-user-manager', 'pui-organisation-manager', 'pui-case-manager'];
+  currentDate = new Date();
   isFromServiceRequestPage: boolean;
   navigationpage: string;
   remissionFeeAmt: number;
@@ -823,6 +826,11 @@ export class CaseTransactionsComponent implements OnInit {
       this.LOGGEDINUSERROLES.indexOf(role) !== -1
     );
   }
+  check4AllowedRoles2AccessPBApayment = (): boolean => {
+    return this.isEligible4PBAPayment.some(role =>
+      this.LOGGEDINUSERROLES.indexOf(role) !== -1
+    );
+  }
 
   allowFurtherAccessAfter4Days = (payment: IPayment): boolean => {
     if (payment !== null && payment !== undefined) {
@@ -830,5 +838,10 @@ export class CaseTransactionsComponent implements OnInit {
     tmp4DayAgo.setDate(tmp4DayAgo.getDate() - 4);
     return tmp4DayAgo >= new Date(payment.date_created);
     }
+  }
+
+  loadPBAAccountPage(orderRef: IPayment) {
+    this.paymentLibComponent.pbaPayOrderRef = orderRef;
+    this.paymentLibComponent.viewName = 'pba-payment';
   }
 }

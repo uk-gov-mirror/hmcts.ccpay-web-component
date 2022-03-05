@@ -304,6 +304,11 @@ export class RefundStatusComponent implements OnInit {
     this.addressDetails = obj;
     this.viewName = 'revieweditdetailsconfirmationpage';
   }
+  getContactDetailsForRefundList(obj:IRefundContactDetails) {
+    this.refundlist.contact_details = obj;
+    this.isEditDetailsClicked = false;
+    this.viewName = 'reviewandsubmitview';
+  }
   gotoEditDetailsPage(note?: any) {
     if(note) {
       this.notification = { contact_details: note, notification_type: note.notification_type };
