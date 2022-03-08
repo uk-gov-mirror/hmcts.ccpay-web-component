@@ -108,7 +108,7 @@
       <ccpay-payment-statuses *ngIf="isStatusAllocated" [isTakePayment]="isTakePayment"></ccpay-payment-statuses>
       </div>
      <div class="remission">
-        <button [disabled]="!chkIssueRefundBtnEnable(paymentGroup?.payments[0])" (click)="issueRefund(paymentGroup)" class="govuk-button govuk-button--secondary">Issue refund</button>
+        <button  [disabled]="!chkIssueRefundBtnEnable(paymentGroup?.payments[0])"  (click)="issueRefund(paymentGroup)" class="govuk-button govuk-button--secondary">Issue refund</button>
      </div>
       
      <div  *ngIf="checkForFees(paymentGroup)">
@@ -304,8 +304,15 @@
   [ccdCaseNumber] = "ccdCaseNumber"
   [orderFeesTotal] = "orderFeesTotal"
   [orderTotalPayments] = "orderTotalPayments"
-  [orderRemissionTotal] = "orderRemissionTotal">
+  [orderRemissionTotal] = "orderRemissionTotal"
+  [isServiceRequest] = "isServiceRequest"
+  (goToServiceRquestComponent) = "goToServiceRequestPage()"
+>
 </ccpay-service-request>
+
+
+
+
 </ng-container>
 <!-- <ng-container *ngIf="isTakePayment">
     <div class="govuk-width-container">
