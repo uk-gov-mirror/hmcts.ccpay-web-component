@@ -46,7 +46,7 @@ export class RefundListComponent implements OnInit {
     this.tableRejectedHeader = 'Refunds returned to caseworker';
 
    if(this.isAuthorized) {
-    this.refundService.getRefundList(this.approvalStatus,false).subscribe(
+    this.refundService.getRefundList(this.approvalStatus,true).subscribe(
       refundList => {
         this.submittedRefundList = refundList['refund_list'];
         this.isApproveTableVisible = true;

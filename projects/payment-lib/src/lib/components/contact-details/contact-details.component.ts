@@ -135,10 +135,17 @@ export class ContactDetailsComponent implements OnInit {
     if( this.isEmailSAddressClicked ){
       const emailField = this.emailAddressForm.controls.email;
       if (this.emailAddressForm.valid) {
+        if(!this.isEditOperationInRefundList) {
         this.assignContactDetails.emit( {
           email: emailField.value,
           notification_type: 'EMAIL'
         } );
+      } else {
+        this.assignContactDetailsInFefundsList.emit({
+          email: emailField.value,
+          notification_type: 'EMAIL'
+        } );
+      }
       } else {
         if( emailField.value == '' ) {
           this.resetForm([true,false,false,false,false,false,false,false,false,false,false,false,false,false], 'email');

@@ -307,6 +307,7 @@ export class RefundStatusComponent implements OnInit {
   getContactDetailsForRefundList(obj:IRefundContactDetails) {
     this.refundlist.contact_details = obj;
     this.isEditDetailsClicked = false;
+    this.isRefundBtnDisabled = false;
     this.viewName = 'reviewandsubmitview';
   }
   gotoEditDetailsPage(note?: any) {
