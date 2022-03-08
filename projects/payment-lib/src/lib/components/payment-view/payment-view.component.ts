@@ -8,6 +8,7 @@ import { IRemission } from '../../interfaces/IRemission';
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 import { ChangeDetectorRef } from '@angular/core';
 import { OrderslistService } from '../../services/orderslist.service';
+import { IRefundContactDetails } from '../../interfaces/IRefundContactDetails';
 
 @Component({
   selector: 'ccpay-payment-view',
@@ -53,6 +54,10 @@ export class PaymentViewComponent implements OnInit {
   isFromServiceRequestPage: boolean;
   isFromPaymentDetailPage: boolean;
   paymentFees: IFee[];
+  paymentType: string;
+  isContinueBtnDisabled: boolean = true;
+  viewCompStatus: string;
+  contactDetailsObj: IRefundContactDetails
 
   constructor(private paymentViewService: PaymentViewService,
     private paymentLibComponent: PaymentLibComponent,
@@ -280,6 +285,25 @@ export class PaymentViewComponent implements OnInit {
     tmp4DayAgo.setDate(tmp4DayAgo.getDate() - 4);
     return tmp4DayAgo >= new Date(payment.date_created);
     }
+  }
+  selectPymentOption(paymentType: string) {
+    this.paymentType = paymentType;
+    this.isContinueBtnDisabled = false;
+  }
+  continuePayment() {
+    if (this.paymentType === 'op') {
+
+    } else if(this.paymentType === 'fp') {
+
+    }
+  }
+  gotoPaymentSelectPage(event: Event) {
+    event.preventDefault();
+    this.viewCompStatus  = 'overpayment';
+  }
+  getContactDetails(obj:IRefundContactDetails) {
+    this.contactDetailsObj = obj;
+    this.viewCompStatus = 'overpaymentcheckandanswer';
   }
 
   resetOrderData() {
