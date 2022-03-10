@@ -132,12 +132,18 @@ export class CaseTransactionsComponent implements OnInit {
     this.excReference = this.paymentLibComponent.EXC_REFERENCE;
     this.takePayment = this.paymentLibComponent.TAKEPAYMENT;
 
-    this.servicerequest = this.paymentLibComponent.SERVICEREQUEST.toString();
-    if (this.paymentLibComponent.SERVICEREQUEST.toString() === 'true') {
-      this.serviceRequestValue = 'true';
+    
+    if(this.paymentLibComponent.SERVICEREQUEST !== undefined) {
+      this.servicerequest = this.paymentLibComponent.SERVICEREQUEST.toString();
+      if (this.paymentLibComponent.SERVICEREQUEST.toString() === 'true') {
+        this.serviceRequestValue = 'true';
+      } else {
+        this.serviceRequestValue = 'false';
+      }
     } else {
       this.serviceRequestValue = 'false';
     }
+   
     this.isBulkScanEnable = this.paymentLibComponent.ISBSENABLE;
     this.dcnNumber = this.paymentLibComponent.DCN_NUMBER;
     this.selectedOption = this.paymentLibComponent.SELECTED_OPTION.toLocaleLowerCase();
