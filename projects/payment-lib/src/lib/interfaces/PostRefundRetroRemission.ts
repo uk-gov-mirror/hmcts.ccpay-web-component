@@ -1,4 +1,5 @@
-import { IRefundContactDetails } from './IRefundContactDetails';
+import { IFee } from "./IFee";
+import { IRefundContactDetails } from "./IRefundContactDetails";
 
 export class PostRefundRetroRemission {
   payment_reference: string;
