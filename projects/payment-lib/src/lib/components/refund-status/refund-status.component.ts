@@ -197,7 +197,7 @@ export class RefundStatusComponent implements OnInit {
     this.paymentLibComponent.isFromRefundStatusPage = true;
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
     this.errorMessage = false;
-    this.viewName = 'issuerefund';
+    this.viewName = 'issuerefundpage1';
   }
 
   gotoAmountPage() {
@@ -277,10 +277,10 @@ export class RefundStatusComponent implements OnInit {
   }
 
   gotoReviewRefundConfirmationPage() {
-    // if (this.oldRefundReason === this.refundlist.reason) {
-    //   this.refundCode = '';
-    // }
-    this.refundCode = this.refundlist.reason;
+    if (this.oldRefundReason === this.refundlist.reason) {
+      this.refundCode = '';
+    }
+    // this.refundCode = this.refundlist.reason;
     const resubmitRequest = new IResubmitRefundRequest(this.refundCode,  this.changedAmount, this.refundlist.contact_details);
     this.refundService.patchResubmitRefund(resubmitRequest, this.refundlist.refund_reference).subscribe(
       response => {

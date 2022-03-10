@@ -243,7 +243,7 @@
   </p> -->
 </ng-container>
 
-<ng-container *ngIf="viewName === 'issuerefund' && !isResendOperationSuccess && !isEditDetailsClicked">
+<ng-container *ngIf="viewName === 'issuerefundpage1' && !isResendOperationSuccess && !isEditDetailsClicked">
   <ccpay-add-remission [isFromRefundListPage]="true" [viewCompStatus]="viewName" [isRefundRemission]="true"
     [ccdCaseNumber]="ccdCaseNumber" (refundListReason)="getRefundListReason($event)"></ccpay-add-remission>
 </ng-container>
