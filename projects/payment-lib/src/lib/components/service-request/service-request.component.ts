@@ -1,5 +1,5 @@
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { PaymentLibComponent } from '../../payment-lib.component';
 import { IPayment } from '../../interfaces/IPayment';
 import { IRemission } from '../../interfaces/IRemission';
@@ -31,6 +31,8 @@ export class ServiceRequestComponent implements OnInit {
   @Input('takePayment') takePayment: boolean;
   @Input('ccdCaseNumber') ccdCaseNumber: boolean;
   @Input("isServiceRequest") isServiceRequest: string;
+  @Output() goToServiceRquestComponent: EventEmitter<any> = new EventEmitter();
+
 
   servicerequest: string;
   // ccdCaseNumber: string;
@@ -119,6 +121,9 @@ export class ServiceRequestComponent implements OnInit {
     // if (this.takePayment) {
     //   this.paymentLibComponent.TAKEPAYMENT = this.takePayment;
     // }
+  }
+  goToServiceRequestPage() {
+    this.goToServiceRquestComponent.emit();
   }
 
   goToCaseTransationPage(event: any) {
@@ -303,14 +308,14 @@ export class ServiceRequestComponent implements OnInit {
     }
   }
   }
-  goToServiceRequestPage(event: any) {
-    event.preventDefault();
-    this.isFromServiceRequestPage = true;
-    this.viewStatus = 'main'
-    this.paymentLibComponent.viewName = 'case-transactions';
-    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    this.router.onSameUrlNavigation = 'reload';
-  }
+  // goToServiceRequestPage(event: any) {
+  //   event.preventDefault();
+  //   this.isFromServiceRequestPage = true;
+  //   this.viewStatus = 'main'
+  //   this.paymentLibComponent.viewName = 'case-transactions';
+  //   this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+  //   this.router.onSameUrlNavigation = 'reload';
+  // }
 
   goToPayementView(paymentGroupReference: string, paymentReference: string, paymentMethod: string) {
     this.goToPaymentViewComponent({ paymentGroupReference, paymentReference, paymentMethod });

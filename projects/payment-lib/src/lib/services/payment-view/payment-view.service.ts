@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
-
+import { v4 as uuidv4 } from 'uuid';
 import {IPayment} from '../../interfaces/IPayment';
 import {PaymentLibService} from '../../payment-lib.service';
 import { WebComponentHttpClient } from '../shared/httpclient/webcomponent.http.client';
@@ -83,12 +83,16 @@ export class PaymentViewService {
 
   postWays2PayCardPayment(serviceRef: string, body: IserviceRequestCardPayment): Observable<any> {
     const url = `${this.paymentLibService.API_ROOT}/service-request/${serviceRef}/card-payments`;
+    const rurl = this.paymentLibService.CARDPAYMENTRETURNURL.replace('.prod', '');
+    body['return-url'] = `${rurl}/payment`;
     return this.https.post(url, body).pipe(
       catchError(this.errorHandlerService.handleError)
     );
   }
   
   postPBAaccountPayment(serviceRef: string, body: IserviceRequestPbaPayment): Observable<any> {
+    let randomKey = 'idam-key-' + Math.random().toString().split('.').join('-');
+    body['idempotency_key'] = randomKey; 
     const url = `${this.paymentLibService.API_ROOT}/service-request/${serviceRef}/pba-payments`;
     return this.https.post(url, body);
   }

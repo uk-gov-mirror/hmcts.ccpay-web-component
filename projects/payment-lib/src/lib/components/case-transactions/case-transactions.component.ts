@@ -132,8 +132,8 @@ export class CaseTransactionsComponent implements OnInit {
     this.excReference = this.paymentLibComponent.EXC_REFERENCE;
     this.takePayment = this.paymentLibComponent.TAKEPAYMENT;
 
-    this.servicerequest = this.paymentLibComponent.SERVICEREQUEST;
-    if (this.paymentLibComponent.SERVICEREQUEST === 'true') {
+    this.servicerequest = this.paymentLibComponent.SERVICEREQUEST.toString();
+    if (this.paymentLibComponent.SERVICEREQUEST.toString() === 'true') {
       this.serviceRequestValue = 'true';
     } else {
       this.serviceRequestValue = 'false';
@@ -167,7 +167,7 @@ export class CaseTransactionsComponent implements OnInit {
   
               },
               (error: any) => {
-                this.errorMessage = <any>error.replace(/"/g,"");
+                this.errorMessage = <any>error ? error.replace(/"/g,"") : "";
                 this.isCPODown = true;
               }
             );
@@ -177,7 +177,7 @@ export class CaseTransactionsComponent implements OnInit {
         
         },
         (error: any) => {
-          this.errorMessage = <any>error.replace(/"/g,"");
+          this.errorMessage = <any>error ? error.replace(/"/g,"") : "";
           this.isAnyFeeGroupAvilable = false;
           this.setDefaults();
         }
@@ -196,7 +196,7 @@ export class CaseTransactionsComponent implements OnInit {
 
             },
             (error: any) => {
-              this.errorMessage = <any>error.replace(/"/g,"");
+              this.errorMessage = <any>error ? error.replace(/"/g,"") : "";
               this.setDefaults();
               this.isCPODown = true;
             }
@@ -204,7 +204,7 @@ export class CaseTransactionsComponent implements OnInit {
 
         },
         (error: any) => {
-          this.errorMessage = <any>error.replace(/"/g,"");
+          this.errorMessage = <any>error ? error.replace(/"/g,"") : "";
           this.isAnyFeeGroupAvilable = false;
           this.setDefaults();
         }
@@ -312,17 +312,14 @@ export class CaseTransactionsComponent implements OnInit {
         });
       }
 
-      this.orderPendingPayments = (this.orderFeesTotal - this.orderRemissionTotal) - this.orderTotalPayments;
-      if (this.orderPendingPayments <= 0.00) {
-        this.orderStatus = 'Paid';
+      // this.orderPendingPayments = (this.orderFeesTotal - this.orderRemissionTotal) - this.orderTotalPayments;
+      if (paymentGroup.service_request_status === 'Paid') {
+        this.orderStatus = paymentGroup.service_request_status;
         this.orderAddBtnEnable = false;
-      } else if (this.orderFeesTotal > 0 && (this.orderTotalPayments > 0 || this.orderRemissionTotal > 0) && (this.orderTotalPayments < this.orderPendingPayments)) {
-        this.orderStatus = 'Partially paid'
+      } else if (paymentGroup.service_request_status === 'Partially paid' || paymentGroup.service_request_status === 'Not paid') {
+        this.orderStatus = paymentGroup.service_request_status;
         this.orderAddBtnEnable = true;
-      } else {
-        this.orderStatus = 'Not paid'
-        this.orderAddBtnEnable = true;
-      }
+      } 
 
       //this.orderLevelFees.push({orderRefId:paymentGroup['payment_group_reference'],orderTotalFees: this.orderFeesTotal,orderStatus: this.orderStatus,orderParty:'Santosh', orderCCDEvent:'Case Creation',orderCreated: new Date(), orderAddBtnEnable: this.orderAddBtnEnable}); this.cpoDetails['createdTimestamp']
       if (this.cpoDetails !== null) {
@@ -381,16 +378,18 @@ export class CaseTransactionsComponent implements OnInit {
           });
         }
       }
+      this.orderStatus = orderDetail.service_request_status;
     });
-    this.orderPendingPayments = (this.orderFeesTotal - this.orderRemissionTotal) - this.orderTotalPayments;
+    //this.orderPendingPayments = (this.orderFeesTotal - this.orderRemissionTotal) - this.orderTotalPayments;
     // this.orderRef = orderReferenceObj.orderRefId;
-    if (this.orderPendingPayments <= 0.00) {
-      this.orderStatus = 'Paid';
-    } else if (this.orderFeesTotal > 0 && (this.orderTotalPayments > 0 || this.orderRemissionTotal > 0) && (this.orderTotalPayments < this.orderPendingPayments)) {
-      this.orderStatus = 'Partially paid'
-    } else {
-      this.orderStatus = 'Not paid'
-    }
+    // if (this.orderPendingPayments <= 0.00) {
+    //   this.orderStatus = 'Paid';
+    // } else if (this.orderFeesTotal > 0 && (this.orderTotalPayments > 0 || this.orderRemissionTotal > 0) && (this.orderTotalPayments < this.orderPendingPayments)) {
+    //   this.orderStatus = 'Partially paid'
+    // } else {
+    //   this.orderStatus = 'Not paid'
+    // }
+
 
     if (this.cpoDetails !== null) {
       this.orderParty = this.cpoDetails['responsibleParty'];
@@ -510,17 +509,18 @@ export class CaseTransactionsComponent implements OnInit {
             feesTotal = feesTotal + fee.calculated_amount;
 
             this.isRemissionsMatch = false;
-            paymentGroup.remissions.forEach(rem => {
-              if (rem.fee_code === fee.code) {
-                this.isRemissionsMatch = true;
-                fee['remissions'] = rem;
-                // if(!fees.find(k => k.code=fee.code))
-                // {
-                fees.push(fee);
-                //}
-              }
-            });
-
+            if (paymentGroup.remissions) {
+              paymentGroup.remissions.forEach(rem => {
+                if (rem.fee_code === fee.code) {
+                  this.isRemissionsMatch = true;
+                  fee['remissions'] = rem;
+                  // if(!fees.find(k => k.code=fee.code))
+                  // {
+                  fees.push(fee);
+                  //}
+                }
+              });
+            }
             if (!this.isRemissionsMatch) {
               fees.push(fee);
             }
@@ -637,8 +637,8 @@ export class CaseTransactionsComponent implements OnInit {
         // const paymentAllocation = this.paymentGroup.payments[0].payment_allocation;
         // this.isStatusAllocated = paymentAllocation.length > 0 && paymentAllocation[0].allocation_status === 'Allocated' || paymentAllocation.length === 0;
       },
-      (error: any) => this.errorMessage = error.replace(/"/g,"")
-    );
+      (error: any) => this.errorMessage = error? error.replace(/"/g,"") : ""
+      );
     }
   }
 
@@ -666,7 +666,13 @@ export class CaseTransactionsComponent implements OnInit {
     event.preventDefault();
     this.paymentLibComponent.viewName = 'remission'
   }
-
+  goToServiceRequestPage() {
+    this.paymentLibComponent.viewName = 'case-transactions';
+    this.paymentLibComponent.TAKEPAYMENT = false;
+    this.paymentLibComponent.SERVICEREQUEST = 'true';
+    this.paymentLibComponent.isFromServiceRequestPage = true;
+    window.location.reload();
+  }
   redirectToReportsPage(event: any) {
     event.preventDefault();
     this.router.navigateByUrl(`/reports?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}`);

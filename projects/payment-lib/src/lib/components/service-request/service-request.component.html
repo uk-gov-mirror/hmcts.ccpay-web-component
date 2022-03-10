@@ -2,8 +2,11 @@
 <ng-container *ngIf="viewStatus === 'order-full-view'">
   <div class="govuk-breadcrumbs">
       <ol class="govuk-breadcrumbs__list">
-        <li class="govuk-breadcrumbs__list-item">
+        <li class="govuk-breadcrumbs__list-item" *ngIf="isServiceRequest === 'false'">
           <a href="javascript:void(0)" (click)="goToCaseTransationPage($event)" class="govuk-back-link">Back</a>
+        </li>
+        <li class="govuk-breadcrumbs__list-item" *ngIf="isServiceRequest !== 'false'">
+          <a href="javascript:void(0)" (click)="goToServiceRequestPage()" id="bckLnksize" class="govuk-back-link">Back</a>
         </li>
       </ol>
     </div>
@@ -14,20 +17,20 @@
       <table >
           <tbody>
             <tr class="section">
-              <td class="bold tb-col-w">Status</td>
-              <td>{{orderStatus}}</td>
-            </tr>
-            <tr class="section">
-              <td class="bold tb-col-w">Party</td>
-              <td>{{orderParty}}</td>
-            </tr>
-            <tr class="section">
               <td class="bold tb-col-w">Service request reference</td>
               <td>{{orderRef}}</td>
             </tr>
             <tr class="section">
+              <td class="bold tb-col-w">Status</td>
+              <td>{{orderStatus}}</td>
+            </tr>
+            <tr class="section">
               <td class="bold tb-col-w">Date created</td>
               <td>{{orderCreated | date:'dd MMMM yyyy'}}</td>
+            </tr>
+            <tr class="section">
+              <td class="bold tb-col-w">Party</td>
+              <td>{{orderParty}}</td>
             </tr>
             <tr class="section">
               <td class="bold tb-col-w">CCD event</td>
@@ -56,7 +59,7 @@
               <td class="govuk-table__cell">{{fee.volume? fee.volume : '-'}} X {{ fee.calculated_amount/fee.volume| currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
               <td class="govuk-table__cell">{{ fee?.net_amount | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
               <td class="govuk-table__cell alignright" *ngIf="isServiceRequest === 'false'">
-                  <button   [disabled]="!fee.remission_enable" (click)="addRemission(fee)" class="govuk-button govuk-button--secondary"> Add remission</button>
+                  <button [disabled]="!chkForAddRemission(fee.code)" (click)="addRemission(fee)" class="govuk-button govuk-button--secondary"> Add remission</button>
               </td>
           
             </tr>
@@ -259,7 +262,8 @@
 [isNewPcipalOff] = "isNewPcipalOff"
 [orderFeesTotal] = "orderFeesTotal"
 [orderTotalPayments] = "orderTotalPayments"
-[orderRemissionTotal] = "orderRemissionTotal">
+[orderRemissionTotal] = "orderRemissionTotal"
+[isServiceRequest] = "isServiceRequest">
 </ccpay-payment-view>
 
 <ng-container *ngIf="viewStatus === 'feeRemovalConfirmation'">

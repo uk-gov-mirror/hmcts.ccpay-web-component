@@ -15,6 +15,7 @@ export class PbaPaymentComponent implements OnInit {
   @Input() pbaPayOrderRef: any;
   viewStatus: string;
   pbaAccountList: string[];
+  isPBAAccountHold: boolean = false;
   errorMsg: any;
   isCardPaymentSuccess: boolean = true;
   isInSufficiantFund: boolean = false;
@@ -23,10 +24,13 @@ export class PbaPaymentComponent implements OnInit {
   isGetPBAAccountSucceed: boolean = false;
   selectedPbaAccount: string = '';
   pbaAccountRef: string = '';
-
+  isPbaAccountSelected: boolean = false;
+  isCardPaymentSelected: boolean = false;
+  isPBADropdownSelected: boolean = false;
   isContinueButtondisabled: boolean = true;
   isPBAAccountPaymentSuccess: boolean = false;
   pbaAccountrPaymentResult: any;
+  orgName: string = '';
 
   constructor(private  paymentLibComponent: PaymentLibComponent,
     private paymentViewService: PaymentViewService) {}
@@ -39,6 +43,7 @@ export class PbaPaymentComponent implements OnInit {
     .subscribe(
       result => {
         this.isGetPBAAccountSucceed = true;
+        this.orgName = result.organisationEntityResponse.name;
         this.pbaAccountList = result.organisationEntityResponse.paymentAccount;
       },
       error => {
@@ -49,6 +54,7 @@ export class PbaPaymentComponent implements OnInit {
   }
   selectpbaaccount(args) {
     if(args.currentTarget.id === 'pbaAccountNumber') {
+      this.isPBADropdownSelected = true;
       this.selectedPbaAccount = args.target.value; 
     }
     if(args.currentTarget.id === 'pbaAccountRef') {
@@ -60,33 +66,46 @@ export class PbaPaymentComponent implements OnInit {
       this.isContinueButtondisabled = true;
     }
   }
+
   saveAndContinue() {
-    this.isInSufficiantFund = false;
-    this.isPBAAccountNotExist = false;
-    this.isPBAServerError = false;
-    this.isPBAAccountPaymentSuccess = false;
-    if ( this.pbaAccountList.indexOf(this.selectedPbaAccount) !== -1 ) {
-      const requestBody = new IserviceRequestPbaPayment(
-        this.selectedPbaAccount, this.pbaPayOrderRef.orderTotalFees, this.pbaAccountRef);
-      this.paymentViewService.postPBAaccountPayment(this.pbaPayOrderRef.orderRefId, requestBody)
-      .subscribe(
-        r => {
-          this.pbaAccountrPaymentResult = JSON.parse(r).data;
-          this.isPBAAccountPaymentSuccess = true;
-        },
-        e => {
-          if(e.status == '402') {
-            this.isInSufficiantFund = true;
-          } else if(e.status == '410' || e.status == '412') {
-            this.isPBAAccountNotExist = true;
-          } else {
-            this.isPBAServerError = true;
+
+    if(this.isPbaAccountSelected) {
+      this.isInSufficiantFund = false;
+      this.isPBAAccountNotExist = false;
+      this.isPBAServerError = false;
+      this.isPBAAccountPaymentSuccess = false;
+      if ( this.pbaAccountList.indexOf(this.selectedPbaAccount) !== -1 ) {
+        const requestBody = new IserviceRequestPbaPayment(
+          this.selectedPbaAccount, this.pbaPayOrderRef.orderTotalFees, this.pbaAccountRef, this.orgName);
+        this.paymentViewService.postPBAaccountPayment(this.pbaPayOrderRef.orderRefId, requestBody)
+        .subscribe(
+          r => {
+            try {
+              this.pbaAccountrPaymentResult = JSON.parse(r);
+            } catch(e) {
+              this.pbaAccountrPaymentResult = r;
+            }
+            this.isPBAAccountPaymentSuccess = true;
+          },
+          e => {
+            if(e.status == '402') {
+              this.isInSufficiantFund = true; 
+            } else if(e.status == '410') {
+              this.isPBAAccountNotExist = true;
+            } else if(e.status == '412') {
+              this.isPBAAccountHold = true;
+            } else {
+              this.isPBAServerError = true;
+            }
           }
-        }
-      );
-    } else {
-      this.isPBAServerError = true;
+        );
+      } else {
+        this.isPBAServerError = true;
+      }
+    } else if (this.isCardPaymentSelected) {
+      this.cardPayment();
     }
+
   }
   cardPayment() {
     this.isCardPaymentSuccess = true;
@@ -103,6 +122,20 @@ export class PbaPaymentComponent implements OnInit {
       }
     );
 
+  }
+  selectPaymentMethod(type: string) {
+    if(type === 'PBA') {
+      this.isPbaAccountSelected = true;
+      this.isCardPaymentSelected = false;
+      this.isPBADropdownSelected = false
+      this.isContinueButtondisabled = true;
+      this.selectedPbaAccount = null;
+    } else if (type === 'CARD') {
+      this.isPbaAccountSelected = false;
+      this.isCardPaymentSelected = true;
+      this.isPBADropdownSelected = false
+      this.isContinueButtondisabled = false;
+    }
   }
   gotoCasetransationPage() {
     this.paymentLibComponent.viewName = 'case-transactions';

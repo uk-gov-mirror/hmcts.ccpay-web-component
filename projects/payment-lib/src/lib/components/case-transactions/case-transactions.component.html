@@ -20,7 +20,6 @@
               <h3 class="heading-medium">Exception reference:</h3>
               <span> {{ ccdCaseNumber | ccdHyphens }}</span>
             </div>
-
             <div class="govuk-grid-column-full govuk-!-padding-bottom-3">
               <hr class="govuk-section-break govuk-section-break--visible">
               <table class="govuk-table">
@@ -453,8 +452,7 @@
 <!--Order Case Transactions Page-->
    <ng-container *ngIf="viewStatus === 'main' && !isTurnOff && takePayment">
       <div>
-       
-          <div class="govuk-grid-row">
+          <div>
               <h1 class="govuk-grid-column-two-thirds govuk-heading-l govuk-!-margin-top-0">Case transactions</h1>
               <ng-container *ngIf='!isExceptionRecord' class=" govuk-!-margin-bottom-6 alignself">
                  <b> Case reference: </b>{{ ccdCaseNumber | ccdHyphens }}
@@ -462,7 +460,7 @@
               <ng-container *ngIf='isExceptionRecord' class="govuk-!-margin-bottom-3 col-55 alignself" >
                   <b> Exception reference:</b>{{ ccdCaseNumber | ccdHyphens }}
               </ng-container>
-              <div class="govuk-grid-row">
+              <div>
               <table class="govuk-table">
                 <thead class="govuk-table__head">
                   <tr class="govuk-table__row">
@@ -591,16 +589,16 @@
    </ng-container>
 
    <ng-container *ngIf="!takePayment && viewStatus === 'main'">       
-      <div  class="govuk-grid-column-full">
-        <span *ngIf="serviceRequestValue !== 'false'" class="heading-medium">Service requests</span>
+      <div  class="govuk-grid-column-full" [ngClass]='serviceRequestValue!== "false" ? "govuk-margin-btm-20px" : ""'>
+        <!-- <span *ngIf="serviceRequestValue === 'false'" class="heading-medium">Service requests</span> -->
         <ng-container *ngIf="!(orderLevelFees?.length === 0 && !isAnyFeeGroupAvilable) && serviceRequestValue !== 'false' ">
           <table class="govuk-table">
               <thead class="govuk-table__head">
               <tr class="govuk-table__row">
                 <td class="govuk-table__header col-14" scope="col">Status</td>
-                <td class="govuk-table__header col-10" scope="col">Amount</td>
+                <td class="govuk-table__header col-18" scope="col">Amount</td>
                 <td class="govuk-table__header col-18" scope="col">Party</td>
-                <td class="govuk-table__header col-21" scope="col">Request reference	</td>
+                <td class="govuk-table__header col-24" scope="col">Request reference	</td>
                 <td class="govuk-table__header col-9" scope="col"></td>
                 <td class="govuk-table__header" scope="col"></td>
               </tr>
@@ -712,6 +710,7 @@
   [orderTotalPayments] = "orderTotalPayments"
   [orderRemissionTotal] = "orderRemissionTotal"
   [isServiceRequest] = "serviceRequestValue"
+  (goToServiceRquestComponent) = "goToServiceRequestPage()"
   ></ccpay-service-request>
    
 </ng-container>
