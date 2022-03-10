@@ -1,6 +1,6 @@
 {
   "name": "ccpay-web-component",
-  "version": "5.0.1-beta163",
+  "version": "5.0.1-beta164",
   "scripts": {
     "ng": "ng",
     "build:library": "ng build payment-lib",
@@ -13,7 +13,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
-  },
+  },  
   "private": true,
   "dependencies": {
     "@angular/animations": "~7.2.4",

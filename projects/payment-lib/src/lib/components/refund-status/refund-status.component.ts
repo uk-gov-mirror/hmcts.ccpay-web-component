@@ -277,10 +277,11 @@ export class RefundStatusComponent implements OnInit {
   }
 
   gotoReviewRefundConfirmationPage() {
-    if (this.oldRefundReason === this.refundlist.reason) {
-      this.refundCode = '';
-    }
-    const resubmitRequest = new IResubmitRefundRequest(this.refundCode,  this.changedAmount);
+    // if (this.oldRefundReason === this.refundlist.reason) {
+    //   this.refundCode = '';
+    // }
+    this.refundCode = this.refundlist.reason;
+    const resubmitRequest = new IResubmitRefundRequest(this.refundCode,  this.changedAmount, this.refundlist.contact_details);
     this.refundService.patchResubmitRefund(resubmitRequest, this.refundlist.refund_reference).subscribe(
       response => {
         if (JSON.parse(response)) {
