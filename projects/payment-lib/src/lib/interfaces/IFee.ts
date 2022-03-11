@@ -20,4 +20,5 @@ export interface IFee {
   date_updated?: string;
   amount_due?: number;
   remission_enable?: boolean;
+  issue_refund_add_refund_add_remission: boolean
 }
