@@ -271,11 +271,11 @@ export class ServiceRequestComponent implements OnInit {
 
   chkIsAddRemissionBtnEnable(fee: IFee): boolean {
     if (!fee.issue_refund_add_refund_add_remission){
-      return true;
+      return false;
     } else if (fee.remission_enable && fee.issue_refund_add_refund_add_remission) {
-      return false
+      return true
     } else {
-      return true;
+      return false;
     }
   }
   resetOrderData() {
