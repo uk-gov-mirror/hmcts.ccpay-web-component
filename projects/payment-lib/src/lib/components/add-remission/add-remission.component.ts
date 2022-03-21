@@ -44,6 +44,8 @@ export class AddRemissionComponent implements OnInit {
   @Input() isFromPaymentDetailPage: boolean;
   @Input() isFromServiceRequestPage: boolean;
   @Input() feeamount: number;
+  @Input() refundPaymentReference: string;
+  @Input() isFromRefundStatusPage: boolean;
   @Input('LOGGEDINUSERROLES') LOGGEDINUSERROLES: string[];
   @Input('orderDetail') orderDetail: any[];
   @Input('orderRef') orderRef: string;
@@ -125,6 +127,7 @@ export class AddRemissionComponent implements OnInit {
   isFromCheckAnsPage: boolean;
   refundAmtForFeeVolumes: number;
   
+  
   component: { account_number: string; amount: number; case_reference: string; ccd_case_number: string; channel: string; currency: string; customer_reference: string; date_created: string; date_updated: string; description: string; method: string; organisation_name: string; payment_allocation: any[]; reference: string; service_name: string; site_id: string; status: string; };
 
   constructor(private formBuilder: FormBuilder,
@@ -178,9 +181,15 @@ export class AddRemissionComponent implements OnInit {
     });
     const remissionctrls=this.remissionForm.controls;
     remissionctrls['refundDDReason'].setValue('Select a different reason', {onlySelf: true});
+    if(this.refundPaymentReference !== undefined && this.refundPaymentReference.length >0) {
+      this.paymentReference = this.refundPaymentReference
+    } else {
+      this.paymentReference = this.payment.reference;
+    }
+    
 
     if(this.isFromServiceRequestPage) {
-      this.paymentViewService.getApportionPaymentDetails(this.paymentLibComponent.paymentReference).subscribe(
+      this.paymentViewService.getApportionPaymentDetails(this.paymentReference).subscribe(
         paymentGroup => {
           let fees = [];
           paymentGroup.fees.forEach(fee => {
@@ -204,9 +213,9 @@ export class AddRemissionComponent implements OnInit {
           
           this.paymentGroup.payments = this.paymentGroup.payments.filter
             (paymentGroupObj => paymentGroupObj['reference'].includes(this.paymentLibComponent.paymentReference));
-          const paymentAllocation = this.paymentGroup.payments[0].payment_allocation;
-          this.isStatusAllocated = paymentAllocation.length > 0 && paymentAllocation[0].allocation_status === 'Allocated' || paymentAllocation.length === 0;
-          this.refundFeesList();
+          // const paymentAllocation = this.paymentGroup.payments[0].payment_allocation;
+          // this.isStatusAllocated = paymentAllocation.length > 0 && paymentAllocation[0].allocation_status === 'Allocated' || paymentAllocation.length === 0;
+           this.refundFeesList();
         },
         (error: any) => this.errorMessage = error
       );
@@ -731,17 +740,22 @@ export class AddRemissionComponent implements OnInit {
 				}
 			}
 
-  if(this.errorMsg.length === 0) {
-    if (this.isFromCheckAnsPage) {
-      this.isFromCheckAnsPage = false;
-      this.totalRefundAmount = this.remissionForm.value.feesList.reduce((a, c) => a + c.amounttorefund * c.selected, 0);
-      this.viewStatus = 'checkissuerefundpage'
-      this.viewCompStatus = '';
-      return;
-    }
-    this.viewCompStatus = 'issuerefundpage1';
-    this.getRefundReasons();
-  }
+      if(this.errorMsg.length === 0) {
+        if (this.isFromCheckAnsPage) {
+          this.isFromCheckAnsPage = false;
+          this.totalRefundAmount = this.remissionForm.value.feesList.reduce((a, c) => a + c.amounttorefund * c.selected, 0);
+          this.viewStatus = 'checkissuerefundpage'
+          this.viewCompStatus = '';
+          return;
+        } else if (this.isFromRefundStatusPage){
+          var remissionctrls=this.remissionForm.controls;
+          this.totalRefundAmount = this.remissionForm.value.feesList.reduce((a, c) => a + c.amounttorefund * c.selected, 0);
+          this.refundListAmount.emit(this.totalRefundAmount.toString());
+          return;
+        }
+        this.viewCompStatus = 'issuerefundpage1';
+        this.getRefundReasons();
+      }
   }
 
   calAmtToRefund(value,amount,volume, i: any) {

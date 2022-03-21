@@ -476,8 +476,11 @@
     <input #myInput type='hidden' id='iFrameDrivenImageValue' value='ISSUEREFUNDPAGE'> 
     <h1 class="heading-large">Process refund</h1>
     <h1 class="heading-medium">Case reference: {{ccdCaseNumber | ccdHyphens }}</h1>
-    <span id="how-contacted-conditional-hint govuk-font19px" class="form-hint">
+    <span id="how-contacted-conditional-hint govuk-font19px" *ngIf="this.payment" class="form-hint">
       Payment reference: {{this.payment.reference}}
+    </span>
+    <span id="how-contacted-conditional-hint govuk-font19px" *ngIf="this.refundPaymentReference" class="form-hint">
+      Payment reference: {{this.refundPaymentReference}}
     </span>
     <h1 class="heading-large">Why are you making this refund?
       </h1>
