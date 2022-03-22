@@ -245,23 +245,25 @@ export class AddRemissionComponent implements OnInit {
 
   refundFeesList() {
     const creds = this.remissionForm.controls.feesList as FormArray;
-    for(var i=0;i<this.fees.length;i++) {
-     creds.push(this.formBuilder.group({
-      id: this.fees[i].id,
-      code: this.fees[i].code,
-      volume: this.fees[i].volume,
-      calculated_amount: this.fees[i].calculated_amount,
-      apportion_amount: this.fees[i].apportion_amount,
-      ccd_case_number: this.fees[i].ccd_case_number,
-      description: this.fees[i].description,
-      net_amount: this.fees[i].net_amount,
-      version: this.fees[i].version,
-      amounttorefund : [''],
-      selected:[''] ,
-      updatedVolume: ''
-     }));
-   }
-   this.cd.detectChanges();
+    if(creds.controls.length > 0) {
+      for(var i=0;i<this.fees.length;i++) {
+        creds.push(this.formBuilder.group({
+          id: this.fees[i].id,
+          code: this.fees[i].code,
+          volume: this.fees[i].volume,
+          calculated_amount: this.fees[i].calculated_amount,
+          apportion_amount: this.fees[i].apportion_amount,
+          ccd_case_number: this.fees[i].ccd_case_number,
+          description: this.fees[i].description,
+          net_amount: this.fees[i].net_amount,
+          version: this.fees[i].version,
+          amounttorefund : [''],
+          selected:[''] ,
+          updatedVolume: ''
+        }));
+    }
+    this.cd.detectChanges();
+  }
   }
 
   get feesList()
