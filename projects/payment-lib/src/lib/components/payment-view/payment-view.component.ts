@@ -223,7 +223,7 @@ export class PaymentViewComponent implements OnInit {
   issueRefund(paymentgrp: IPaymentGroup) {
     
     if (paymentgrp !== null &&  paymentgrp !== undefined) {
-      if(paymentgrp.fees[0]?.over_payment > 0) {
+      if(paymentgrp.fees[0].over_payment > 0) {
         this.viewCompStatus  = 'overpayment';
       } else {
         if(this.chkIssueRefundBtnEnable(paymentgrp.payments[0])) {
