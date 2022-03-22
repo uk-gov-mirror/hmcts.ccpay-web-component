@@ -182,7 +182,7 @@
     <tr class="govuk-table__row">
       <td class="govuk-table__cell govuk-!-font-weight-bold">Reason for refund</td>
       <td class="govuk-table__cell"> {{ refundlist?.reason}}
-        <a (click)="gotoRefundReasonPage()" *ngIf="refundlist?.reason !== 'Retrospective remission' && refundlist?.reason !== 'Overpayment'"
+        <a (click)="gotoRefundReasonPage(refundlist?.reason)" *ngIf="refundlist?.reason !== 'Retrospective remission' && refundlist?.reason !== 'Overpayment'"
           class="govuk-link right">Change</a>
       </td>
 
@@ -245,8 +245,8 @@
 </ng-container>
 
 <ng-container *ngIf="viewName === 'issuerefundpage1' && !isResendOperationSuccess && !isEditDetailsClicked">
-  <ccpay-add-remission [isFromRefundListPage]="true" [viewCompStatus]="viewName" [isRefundRemission]="true"
-    [ccdCaseNumber]="ccdCaseNumber" (refundListReason)="getRefundListReason($event)" [refundPaymentReference]= "refundlist?.payment_reference" ></ccpay-add-remission>
+  <ccpay-add-remission [isFromRefundListPage]="true" [viewCompStatus]="viewName" [isRefundRemission]="true" [isFromRefundStatusPage] = "true"
+   [changeRefundReason]= "changeRefundReason" [ccdCaseNumber]="ccdCaseNumber" (refundListReason)="getRefundListReason($event)" [refundPaymentReference]= "refundlist?.payment_reference" ></ccpay-add-remission>
 </ng-container>
 
 <ng-container *ngIf="viewName === 'processretroremissonpage' && !isResendOperationSuccess && !isEditDetailsClicked">

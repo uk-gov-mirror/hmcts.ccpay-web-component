@@ -64,6 +64,7 @@ export class RefundStatusComponent implements OnInit {
   changedAmount: number;
   isRemissionsMatch: boolean;
   payment: IPayment;
+  changeRefundReason: string;
   allowedRolesToAccessRefund = ['payments-refund-approver', 'payments-refund'];
 
   constructor(private formBuilder: FormBuilder,
@@ -197,12 +198,13 @@ export class RefundStatusComponent implements OnInit {
         this.refundReasons = refundReasons;
       });
   }
-  gotoRefundReasonPage() {
+  gotoRefundReasonPage(refundReason:string) {
     this.isRefundBtnDisabled = false;
     this.paymentLibComponent.REFUNDLIST = "true";
     this.paymentLibComponent.isFromRefundStatusPage = true;
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
     this.errorMessage = false;
+    this.changeRefundReason = refundReason;
     this.viewName = 'issuerefundpage1';
   }
 
