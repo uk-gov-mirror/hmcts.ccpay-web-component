@@ -175,7 +175,7 @@ export class PaymentViewComponent implements OnInit {
     return false;
   }
   processRefund() {
-    
+
   }
   gotoAddressPage(note?: IRefundContactDetails) {
     if (note) {
@@ -221,14 +221,19 @@ export class PaymentViewComponent implements OnInit {
   }
 
   issueRefund(paymentgrp: IPaymentGroup) {
+    
     if (paymentgrp !== null &&  paymentgrp !== undefined) {
-    if(this.chkIssueRefundBtnEnable(paymentgrp.payments[0])) {
-    this.paymentGroup = paymentgrp;
-    this.viewStatus = 'issuerefund';
-    this.isRefundRemission = true;
-    this.paymentLibComponent.isFromPaymentDetailPage = true;
-    this.isFromPaymentDetailPage = true;
-    this.isFromServiceRequestPage = this.paymentLibComponent.isFromServiceRequestPage;
+      if(paymentgrp.fees[0]?.over_payment > 0) {
+        this.viewCompStatus  = 'overpayment';
+      } else {
+        if(this.chkIssueRefundBtnEnable(paymentgrp.payments[0])) {
+          this.paymentGroup = paymentgrp;
+          this.viewStatus = 'issuerefund';
+          this.isRefundRemission = true;
+          this.paymentLibComponent.isFromPaymentDetailPage = true;
+          this.isFromPaymentDetailPage = true;
+          this.isFromServiceRequestPage = this.paymentLibComponent.isFromServiceRequestPage;
+        }
     }
   }
   }
