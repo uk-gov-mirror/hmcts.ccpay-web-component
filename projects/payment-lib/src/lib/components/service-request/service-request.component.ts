@@ -251,21 +251,21 @@ export class ServiceRequestComponent implements OnInit {
 
   chkIsIssueRefundBtnEnable(payment: IPayment): boolean {
     if (!payment.issue_refund_add_refund_add_remission){
-      return true;
+      return false;
     } else if (payment.issue_refund && payment.refund_enable && payment.issue_refund_add_refund_add_remission) {
-      return false
+      return true
     } else {
-      return true;
+      return false;
     }
   }
 
   chkIsAddRefundBtnEnable(remission: IRemission): boolean {
     if (!remission.issue_refund_add_refund_add_remission){
-      return true;
+      return false;
     } else if (remission.add_refund && remission.issue_refund_add_refund_add_remission) {
-      return false
+      return true
     } else {
-      return true;
+      return false;
     }
   }
 
