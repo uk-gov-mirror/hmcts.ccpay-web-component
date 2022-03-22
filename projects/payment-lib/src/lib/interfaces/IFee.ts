@@ -20,4 +20,5 @@ export interface IFee {
   date_updated?: string;
   amount_due?: number;
   remission_enable?: boolean;
+  over_payment?: number; 
 }

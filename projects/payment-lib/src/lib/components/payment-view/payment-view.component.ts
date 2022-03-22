@@ -58,6 +58,7 @@ export class PaymentViewComponent implements OnInit {
   isContinueBtnDisabled: boolean = true;
   viewCompStatus: string;
   contactDetailsObj: IRefundContactDetails
+  notification: any;
 
   constructor(private paymentViewService: PaymentViewService,
     private paymentLibComponent: PaymentLibComponent,
@@ -173,7 +174,16 @@ export class PaymentViewComponent implements OnInit {
     }
     return false;
   }
-
+  processRefund() {
+    
+  }
+  gotoAddressPage(note?: IRefundContactDetails) {
+    if (note) {
+      this.notification = { contact_details: note, notification_type: note.notification_type };
+    }
+    this.errorMessage = '';
+    this.viewCompStatus = 'overPaymentAddressCapture';
+  }
   addRefundForRemission(payment: IPayment, remission: IRemission[],fees:any) {
  if(this.chkIsRefundRemissionBtnEnable()) {
     this.payment = payment;
