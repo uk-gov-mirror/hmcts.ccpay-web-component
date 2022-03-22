@@ -10,6 +10,8 @@ import { IRefundContactDetails } from '../../interfaces/IRefundContactDetails';
 import { IRefundStatus } from '../../interfaces/IRefundStatus';
 import { IResubmitRefundRequest } from '../../interfaces/IResubmitRefundRequest';
 import { PaymentLibComponent } from '../../payment-lib.component';
+import { PaymentViewService } from '../../services/payment-view/payment-view.service';
+import { IPayment } from '../../interfaces/IPayment';
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 
 @Component({
@@ -60,13 +62,16 @@ export class RefundStatusComponent implements OnInit {
   isLastUpdatedByCurrentUser: boolean = true;
   isProcessRefund: boolean = false;
   changedAmount: number;
+  isRemissionsMatch: boolean;
+  payment: IPayment;
   allowedRolesToAccessRefund = ['payments-refund-approver', 'payments-refund'];
 
   constructor(private formBuilder: FormBuilder,
     private refundService: RefundsService,
     private notificationService: NotificationService,
     private paymentLibComponent: PaymentLibComponent,
-    private OrderslistService: OrderslistService) { }
+    private OrderslistService: OrderslistService,
+    private paymentViewService: PaymentViewService) { }
 
   ngOnInit() {
 
@@ -114,6 +119,7 @@ export class RefundStatusComponent implements OnInit {
           this.refundButtonState = this.refundlist.refund_status.name;
         }
       }
+
   }
   
 
@@ -206,7 +212,11 @@ export class RefundStatusComponent implements OnInit {
     this.isRefundBtnDisabled = false;
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
     this.paymentLibComponent.isFromRefundStatusPage = true;
+    if(this.refundlist.reason == 'Retrospective remission') {
     this.viewName = 'processretroremissonpage';
+    } else {
+      this.viewName = 'issuerefund';
+    }
   }
 
   goToReviewAndSubmitView() {
@@ -277,9 +287,9 @@ export class RefundStatusComponent implements OnInit {
   }
 
   gotoReviewRefundConfirmationPage() {
-    if (this.oldRefundReason === this.refundlist.reason) {
-      this.refundCode = '';
-    }
+    // if (this.oldRefundReason === this.refundlist.reason) {
+    //   this.refundCode = '';
+    // }
     // this.refundCode = this.refundlist.reason;
     const resubmitRequest = new IResubmitRefundRequest(this.refundCode,  this.changedAmount, this.refundlist.contact_details);
     this.refundService.patchResubmitRefund(resubmitRequest, this.refundlist.refund_reference).subscribe(

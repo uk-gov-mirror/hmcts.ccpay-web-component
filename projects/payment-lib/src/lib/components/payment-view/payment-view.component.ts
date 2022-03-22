@@ -205,7 +205,7 @@ export class PaymentViewComponent implements OnInit {
     this.isRefundRemission = true;
     this.paymentLibComponent.isFromPaymentDetailPage = true;
     this.isFromPaymentDetailPage = true;
-    this.isFromServiceRequestPage = this.paymentLibComponent.isFromServiceRequestPage;
+    this.isFromServiceRequestPage = false;
     }
   }
   }

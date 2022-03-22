@@ -197,7 +197,7 @@
       <td *ngIf="refundlist?.reason === 'Retrospective remission'" class="govuk-table__cell govuk-!-font-weight-bold">Refund amount</td>
       <td *ngIf="refundlist?.reason !== 'Retrospective remission'" class="govuk-table__cell govuk-!-font-weight-bold">Payment amount</td>
       <td class="govuk-table__cell"> £{{ changedAmount | number:'.2' }}
-        <a (click)="gotoAmountPage()" *ngIf="refundlist?.reason !== 'Retrospective remission' && refundlist?.reason !== 'Overpayment'"
+        <a (click)="gotoAmountPage()" *ngIf="refundlist?.reason !== 'Overpayment'"
           class="govuk-link right">Change</a>
       </td>
 
@@ -246,12 +246,17 @@
 
 <ng-container *ngIf="viewName === 'issuerefundpage1' && !isResendOperationSuccess && !isEditDetailsClicked">
   <ccpay-add-remission [isFromRefundListPage]="true" [viewCompStatus]="viewName" [isRefundRemission]="true"
-    [ccdCaseNumber]="ccdCaseNumber" (refundListReason)="getRefundListReason($event)"></ccpay-add-remission>
+    [ccdCaseNumber]="ccdCaseNumber" (refundListReason)="getRefundListReason($event)" [refundPaymentReference]= "refundlist?.payment_reference" ></ccpay-add-remission>
 </ng-container>
 
 <ng-container *ngIf="viewName === 'processretroremissonpage' && !isResendOperationSuccess && !isEditDetailsClicked">
   <ccpay-add-remission [isFromRefundListPage]="true" [viewCompStatus]="viewName" [isRefundRemission]="true"
-    [ccdCaseNumber]="ccdCaseNumber" (refundListAmount)="getRefundAmount($event)"></ccpay-add-remission>
+    [ccdCaseNumber]="ccdCaseNumber" [refundPaymentReference]= "refundlist?.payment_reference" (refundListAmount)="getRefundAmount($event)"></ccpay-add-remission>
+</ng-container>
+
+<ng-container *ngIf="viewName === 'issuerefund' && !isResendOperationSuccess && !isEditDetailsClicked">
+  <ccpay-add-remission [isFromRefundListPage]="true" [viewCompStatus]="viewName" [isRefundRemission]="true" [isFromServiceRequestPage] = "true"
+    [ccdCaseNumber]="ccdCaseNumber" [refundPaymentReference]= "refundlist?.payment_reference" [isFromRefundStatusPage]="true"  (refundListAmount)="getRefundAmount($event)"></ccpay-add-remission>
 </ng-container>
 
 <ng-container *ngIf="viewName === 'reviewrefundconfirmationpage' && !isResendOperationSuccess && !isEditDetailsClicked">
