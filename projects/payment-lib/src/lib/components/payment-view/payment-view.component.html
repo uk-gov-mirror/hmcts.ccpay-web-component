@@ -347,7 +347,7 @@
 </div>
 </ng-container>
 
-<ng-container *ngIf="viewCompStatus === 'overPaymentAddressCapture' && viewCompStatus !== 'overpayment'">
+<ng-container *ngIf="viewCompStatus === 'overPaymentAddressCapture'">
   <input #myInput type='hidden' id='iFrameDrivenImageValue' value='OVERPAYMENTADDRESSCAPTUREPAGE'>      
   <h1 class="govuk-heading-l">Issue refund</h1>
   <h2 class="govuk-heading-m govuk-font19px">Case reference: {{ccdCaseNumber | ccdHyphens }}</h2>
@@ -364,7 +364,7 @@
     </a>
 </p>
 </ng-container>
-<ng-container *ngIf="viewCompStatus === 'overpaymentcheckandanswer' && viewCompStatus !== 'overpayment'">
+<ng-container *ngIf="viewCompStatus === 'overpaymentcheckandanswer'">
   <input #myInput type='hidden' id='iFrameDrivenImageValue' value='ADDREFUNDFORREMISSION'> 
   <div class="govuk-warning-text">
    
