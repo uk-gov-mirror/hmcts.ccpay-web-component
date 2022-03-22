@@ -307,7 +307,7 @@ export class PaymentViewComponent implements OnInit {
   }
   continuePayment() {
     if (this.paymentType === 'op') {
-
+      this.viewCompStatus  = 'overPaymentAddressCapture';
     } else if(this.paymentType === 'fp') {
 
     }
