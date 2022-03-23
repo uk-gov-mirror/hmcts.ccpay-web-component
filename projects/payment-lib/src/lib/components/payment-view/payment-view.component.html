@@ -334,9 +334,9 @@
         </label>
       </div>
       <div class="govuk-radios__item">
-        <input class="govuk-radios__input" id="full-payment" name="full-payment" type="radio" (click)="selectPymentOption('fp')" value="fp">
+        <input class="govuk-radios__input" id="full-payment" name="over-payment" type="radio" (click)="selectPymentOption('fp')" value="fp">
         <label class="govuk-label govuk-radios__label govuk-font19px" for="where-do-you-live-2">
-          Full payment £{{paymentGroup?.fees[0]?.net_amount | number:'.2'}}
+          Full payment £{{paymentGroup?.payments[0]?.amount | number:'.2'}}
         </label>
       </div>
     </div>

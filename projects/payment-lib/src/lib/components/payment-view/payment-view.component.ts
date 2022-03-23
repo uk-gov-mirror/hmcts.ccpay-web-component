@@ -313,6 +313,7 @@ export class PaymentViewComponent implements OnInit {
       this.isFullyRefund = true
       this.paymentGroup = paymentgrp;
       this.viewStatus = 'issuerefund';
+      this.viewCompStatus = "";
       this.isRefundRemission = true;
       this.paymentLibComponent.isFromPaymentDetailPage = true;
       this.isFromPaymentDetailPage = true;
