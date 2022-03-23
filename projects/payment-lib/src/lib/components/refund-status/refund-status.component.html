@@ -103,8 +103,8 @@
                 {{notification?.contact_details?.address_line}} {{notification?.contact_details?.city}} {{notification?.contact_details?.county}} {{notification?.contact_details?.country}} {{notification?.contact_details?.postal_code}}
               </div>
             </td>
-            <td class="govuk-table__cell whitespace-inherit" *ngIf="notificationList.length === i+1"><a href="Javascript:void(0);" (click)="putResend(notification)">Resend</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="Javascript:void(0);" (click)="gotoEditAddressDetails(notification)">Edit details</a></td>
-            <td class="govuk-table__cell whitespace-inherit" *ngIf="notificationList.length !== i+1"> &nbsp; </td>
+            <td class="govuk-table__cell whitespace-inherit" *ngIf="i === 0"><a href="Javascript:void(0);" (click)="putResend(notification)">Resend</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="Javascript:void(0);" (click)="gotoEditAddressDetails(notification)">Edit details</a></td>
+            <td class="govuk-table__cell whitespace-inherit" *ngIf="i > 0"> &nbsp; </td>
 
           </tr>
         </tbody>
