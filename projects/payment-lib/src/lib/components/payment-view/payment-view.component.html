@@ -310,7 +310,7 @@
 </ccpay-service-request>
 </ng-container>
 </div>
-<div class="over-payment">
+
 <ng-container *ngIf="viewCompStatus === 'overpayment'">
   <input #myInput type='hidden' id='iFrameDrivenImageValue' value='OVERPAYMENTPAGE'> 
   <h1 class="heading-large">Issue refund</h1>
@@ -328,13 +328,13 @@
     <div class="govuk-radios" data-module="govuk-radios">
       <div class="govuk-radios__item">
         <input class="govuk-radios__input" id="over-payment" name="over-payment" type="radio" (click)="selectPymentOption('op')" value="op">
-        <label class="govuk-label govuk-radios__label mar-17" for="where-do-you-live">
+        <label class="govuk-label govuk-radios__label govuk-font19px" for="where-do-you-live">
           Over payment £{{paymentGroup?.fees[0]?.over_payment | number:'.2'}}
         </label>
       </div>
       <div class="govuk-radios__item">
         <input class="govuk-radios__input" id="full-payment" name="full-payment" type="radio" (click)="selectPymentOption('fp')" value="fp">
-        <label class="govuk-label govuk-radios__label mar-17" for="where-do-you-live-2">
+        <label class="govuk-label govuk-radios__label govuk-font19px" for="where-do-you-live-2">
           Full payment £{{paymentGroup?.fees[0]?.net_amount | number:'.2'}}
         </label>
       </div>
@@ -366,6 +366,7 @@
     </a>
 </p>
 </ng-container>
+<div class="over-payment">
 <ng-container *ngIf="viewCompStatus === 'overpaymentcheckandanswer'">
   <input #myInput type='hidden' id='iFrameDrivenImageValue' value='ADDREFUNDFORREMISSION'> 
   <div class="govuk-warning-text">
