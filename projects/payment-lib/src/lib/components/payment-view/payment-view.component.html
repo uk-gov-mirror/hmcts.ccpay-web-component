@@ -288,6 +288,7 @@
     [orderCCDEvent] = "orderCCDEvent"
     [orderDetail] = "orderDetail"
     [fees] ="paymentFees"
+    [isFullyRefund] = "isFullyRefund"
     [LOGGEDINUSERROLES] = "LOGGEDINUSERROLES">
     
   ></ccpay-add-remission>
@@ -341,7 +342,7 @@
     </div>
       <button class="govuk-button govuk-button--secondary over-payment-alignment govuk-font19px"> Previous</button>
       <button 
-      (click)="continuePayment()"
+      (click)="continuePayment(paymentGroup)"
       [disabled]="isContinueBtnDisabled"
       [ngClass]='isContinueBtnDisabled ? "button button--disabled govuk-!-margin-right-1 govuk-font19px" : "button govuk-!-margin-right-1 govuk-font19px"'
       class="govuk-button"> Continue</button>

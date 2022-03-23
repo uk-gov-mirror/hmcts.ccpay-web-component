@@ -32,7 +32,7 @@ export class PaymentViewComponent implements OnInit {
   @Input() orderFeesTotal: number;
   @Input() orderRemissionTotal: number;
   @Input() orderDetail: any[];
-
+  isFullyRefund: boolean;
   paymentGroup: IPaymentGroup;
   errorMessage: string;
   ccdCaseNumber: string;
@@ -221,12 +221,11 @@ export class PaymentViewComponent implements OnInit {
   }
 
   issueRefund(paymentgrp: IPaymentGroup) {
-    
     if (paymentgrp !== null &&  paymentgrp !== undefined) {
-      if(paymentgrp.fees[0].over_payment > 0) {
-        this.viewCompStatus  = 'overpayment';
-      } else {
-        if(this.chkIssueRefundBtnEnable(paymentgrp.payments[0])) {
+      if(this.chkIssueRefundBtnEnable(paymentgrp.payments[0])) {
+        if(paymentgrp.fees[0].over_payment > 0) {
+          this.viewCompStatus  = 'overpayment';
+        } else {
           this.paymentGroup = paymentgrp;
           this.viewStatus = 'issuerefund';
           this.isRefundRemission = true;
@@ -234,8 +233,8 @@ export class PaymentViewComponent implements OnInit {
           this.isFromPaymentDetailPage = true;
           this.isFromServiceRequestPage = this.paymentLibComponent.isFromServiceRequestPage;
         }
+      }
     }
-  }
   }
 
   getRemissionByFeeCode(feeCode: string, remissions: IRemission[]): IRemission {
@@ -305,11 +304,19 @@ export class PaymentViewComponent implements OnInit {
     this.paymentType = paymentType;
     this.isContinueBtnDisabled = false;
   }
-  continuePayment() {
+  continuePayment(paymentgrp: IPaymentGroup) {
+    
     if (this.paymentType === 'op') {
+      this.isFullyRefund = false
       this.viewCompStatus  = 'overPaymentAddressCapture';
     } else if(this.paymentType === 'fp') {
-
+      this.isFullyRefund = true
+      this.paymentGroup = paymentgrp;
+      this.viewStatus = 'issuerefund';
+      this.isRefundRemission = true;
+      this.paymentLibComponent.isFromPaymentDetailPage = true;
+      this.isFromPaymentDetailPage = true;
+      this.isFromServiceRequestPage = this.paymentLibComponent.isFromServiceRequestPage;
     }
   }
   gotoPaymentSelectPage(event: Event) {

@@ -43,6 +43,7 @@ export class AddRemissionComponent implements OnInit {
   @Input() isFromRefundListPage: boolean;
   @Input() isFromPaymentDetailPage: boolean;
   @Input() isFromServiceRequestPage: boolean;
+  @Input('isFullyRefund') isFullyRefund: boolean;
   @Input() feeamount: number;
   @Input('LOGGEDINUSERROLES') LOGGEDINUSERROLES: string[];
   @Input('orderDetail') orderDetail: any[];
@@ -271,13 +272,17 @@ export class AddRemissionComponent implements OnInit {
   }
 
   noneSelected(){
-    if(!this.feesList.controls.some(item => item.get('selected').value === true)) {
-      this.errorMsg = [];
-      [].forEach.call(document.querySelectorAll('input'), function (el) {
-        el.classList.remove('inline-error-class');
-      });
-    }
-       return  !this.feesList.controls.some(item => item.get('selected').value === true);
+    if(this.isFullyRefund) {
+      return true;
+    } else {
+      if(!this.feesList.controls.some(item => item.get('selected').value === true)) {
+        this.errorMsg = [];
+        [].forEach.call(document.querySelectorAll('input'), function (el) {
+          el.classList.remove('inline-error-class');
+        });
+      }
+      return  !this.feesList.controls.some(item => item.get('selected').value === true);
+  }
   }
     
   check_en (i,v1: any, AppAmt,Volume) {
