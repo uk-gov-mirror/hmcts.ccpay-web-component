@@ -1,5 +1,5 @@
 
-<ng-container *ngIf="viewStatus === 'paymentview' && viewCompStatus !== 'overpayment'">
+<ng-container *ngIf="viewStatus === 'paymentview' && viewCompStatus !== 'overpayment' && viewCompStatus !== 'overPaymentAddressCapture' && viewCompStatus !== 'overpaymentcheckandanswer'">
 <div class="govuk-width-container">
 
   <div  class="govuk-breadcrumbs">
@@ -207,7 +207,7 @@
 </div>
 
 </ng-container>
-<ng-container *ngIf="viewStatus === 'addremission' && feeId && viewCompStatus !== 'overpayment'">
+<ng-container *ngIf="viewStatus === 'addremission' && feeId && viewCompStatus !== 'overpayment' && viewCompStatus !== 'overPaymentAddressCapture' && viewCompStatus !== 'overpaymentcheckandanswer'">
 <ccpay-add-remission 
 [isTurnOff]="isTurnOff"
 [isStrategicFixEnable]="isStrategicFixEnable" 
@@ -234,7 +234,7 @@
 [LOGGEDINUSERROLES] = "LOGGEDINUSERROLES"></ccpay-add-remission>
 </ng-container>
 
-<ng-container *ngIf="viewStatus === 'addrefundforremission' && payment && viewCompStatus !== 'overpayment'">
+<ng-container *ngIf="viewStatus === 'addrefundforremission' && payment && viewCompStatus !== 'overpayment' && viewCompStatus !== 'overPaymentAddressCapture' && viewCompStatus !== 'overpaymentcheckandanswer'">
 
 <ccpay-add-remission 
 [isTurnOff]="isTurnOff"
@@ -263,7 +263,7 @@
 [LOGGEDINUSERROLES] = "LOGGEDINUSERROLES"></ccpay-add-remission>
 </ng-container>
 
-<ng-container *ngIf="viewStatus === 'issuerefund' && viewCompStatus !== 'overpayment'">
+<ng-container *ngIf="viewStatus === 'issuerefund' && viewCompStatus !== 'overpayment' && viewCompStatus !== 'overPaymentAddressCapture' && viewCompStatus !== 'overpaymentcheckandanswer'">
     <ccpay-add-remission 
     [isTurnOff]="isTurnOff"
     [isStrategicFixEnable]="isStrategicFixEnable" 
@@ -292,7 +292,7 @@
     
   ></ccpay-add-remission>
 </ng-container>
-<ng-container *ngIf="viewStatus === 'order-full-view' && viewCompStatus !== 'overpayment'">
+<ng-container *ngIf="viewStatus === 'order-full-view' && viewCompStatus !== 'overpayment' && viewCompStatus !== 'overPaymentAddressCapture' && viewCompStatus !== 'overpaymentcheckandanswer'">
   <ccpay-service-request
   [viewStatus] = "viewStatus"
   [orderRef] = "orderRef"
@@ -337,7 +337,7 @@
         </label>
       </div>
     </div>
-      <button class="govuk-button govuk-button--secondary"> Previous</button>
+      <button class="govuk-button govuk-button--secondary over-payment-alignment"> Previous</button>
       <button 
       (click)="continuePayment()"
       [disabled]="isContinueBtnDisabled"
@@ -355,7 +355,7 @@
     Payment reference: {{paymentGroup?.payments[0]?.reference}}
   </span>
 <ccpay-contact-details 
-[addressObj] = contactDetailsObj
+[addressObj] = notification
 (assignContactDetails)="getContactDetails($event)"
 (redirectToIssueRefund)="gotoPaymentSelectPage($event)" ></ccpay-contact-details>
 <p>

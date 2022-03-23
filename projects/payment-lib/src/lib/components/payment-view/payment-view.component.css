@@ -8,7 +8,9 @@
 .payment-view-alignment {
     margin-left: 30px;
 }
-
+.over-payment-alignment {
+    margin-right: 10px;
+}
 .govuk-button {
     font-size: 19px;
     float: left;
