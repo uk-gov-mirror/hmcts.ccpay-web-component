@@ -117,10 +117,12 @@ export class ServiceRequestComponent implements OnInit {
       this.OrderslistService.getorderFeesTotals().subscribe((data) => this.orderFeesTotal = data);
       this.OrderslistService.getoorderTotalPaymentss().subscribe((data) => this.orderTotalPayments = data);
     }
+   
+    
     }
-    // if (this.takePayment) {
-    //   this.paymentLibComponent.TAKEPAYMENT = this.takePayment;
-    // }
+    if(this.paymentLibComponent.isFromServiceRequestPage && this.paymentLibComponent.TAKEPAYMENT) {
+      this.isServiceRequest = 'false';
+    }
   }
   goToServiceRequestPage() {
     this.goToServiceRquestComponent.emit();
