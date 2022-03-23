@@ -51,15 +51,23 @@
   .contactDetails-width {
     width: 70%;
   }
-  .over-payment-alignment {
-    margin-right: 10px;
-  }
+.margin-top10px {
+  margin-top: 20px;
+}
   
   .govuk-font19px {
     font-size: 19px !important;
   }
   .margin-top--size {
     margin-top: -30px;
+  }
+  .govuk-button-group {
+    .over-payment-alignment {
+      margin-right: 10px;
+    }
+    .govuk-font19px {
+      font-size: 19px !important;
+    }
   }
   .button {
       margin-top: 20px;
@@ -130,11 +138,6 @@
     font-size: 2.1875rem;
   }
 
-  .govuk-radios__item {
-    clear:initial !important;
-    display:inline-block;
-    width: 45% !important;
-  }
 
   .govuk-radios__conditional {
     padding-top: 12px !important;

@@ -339,12 +339,14 @@
         </label>
       </div>
     </div>
-      <button class="govuk-button govuk-button--secondary over-payment-alignment"> Previous</button>
+    <div class="govuk-button-group margin-top10px">
+      <button class="govuk-button govuk-button--secondary over-payment-alignment govuk-font19px"> Previous</button>
       <button 
       (click)="continuePayment()"
       [disabled]="isContinueBtnDisabled"
-      [ngClass]='isContinueBtnDisabled ? "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"'
+      [ngClass]='isContinueBtnDisabled ? "button button--disabled govuk-!-margin-right-1 govuk-font19px" : "button govuk-!-margin-right-1 govuk-font19px"'
       class="govuk-button"> Continue</button>
+      </div>
   </fieldset>
 </div>
 </ng-container>
