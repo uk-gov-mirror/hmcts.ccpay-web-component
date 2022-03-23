@@ -270,7 +270,7 @@ export class AddRemissionComponent implements OnInit {
           version: this.fees[i].version,
           amounttorefund : [''],
           selected:[''] ,
-          updatedVolume: ''
+          updatedVolume: this.fees[i].volume
         }));
    // }
     this.cd.detectChanges();
@@ -767,9 +767,10 @@ export class AddRemissionComponent implements OnInit {
      const amtToRefund = value * volumeFee;
      const formArray = this.remissionForm.controls.feesList as FormArray;
      formArray.at(i).get('amounttorefund').setValue(amtToRefund);
+    // formArray.at(i).get('volume').setValue(value);
    //  (<HTMLInputElement>document.getElementById('feeAmount_'+i)).value = +amtToRefund;
-    // const formControl = this.remissionForm.controls.feesList['amounttorefund'].at(index);
-     // formControl.setValue(amtToRefund);
+    //  const formControl = this.remissionForm.controls.feesList['volume'].at(i);
+    //  formControl.setValue(value);
 
   }
   gotoContactDetailsPage(note?: IRefundContactDetails) {

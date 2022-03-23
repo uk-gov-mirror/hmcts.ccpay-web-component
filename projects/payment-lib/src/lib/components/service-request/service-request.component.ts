@@ -220,12 +220,12 @@ export class ServiceRequestComponent implements OnInit {
 
   issueRefund(payment: IPayment) {
     if (payment !== null && payment !== undefined) {
-    if(this.chkIsIssueRefundBtnEnable(payment)) {
+   // if(this.chkIsIssueRefundBtnEnable(payment)) {
     this.viewStatus = 'issuerefund';
     this.payment = payment;
     this.paymentLibComponent.isFromServiceRequestPage = true;
     this.isRefundRemission = true;
-    }
+  //  }
   }
   }
 
