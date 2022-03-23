@@ -13,7 +13,7 @@ import { IRefundContactDetails } from '../../interfaces/IRefundContactDetails';
 @Component({
   selector: 'ccpay-payment-view',
   templateUrl: './payment-view.component.html',
-  styleUrls: ['./payment-view.component.css']
+  styleUrls: ['./payment-view.component.scss']
 })
 export class PaymentViewComponent implements OnInit {
   @Input() isTurnOff: boolean;

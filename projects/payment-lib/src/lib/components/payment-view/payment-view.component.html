@@ -1,4 +1,4 @@
-
+<div class="payment-view-section">
 <ng-container *ngIf="viewStatus === 'paymentview' && viewCompStatus !== 'overpayment' && viewCompStatus !== 'overPaymentAddressCapture' && viewCompStatus !== 'overpaymentcheckandanswer'">
 <div class="govuk-width-container">
 
@@ -309,6 +309,8 @@
   [orderRemissionTotal] = "orderRemissionTotal">
 </ccpay-service-request>
 </ng-container>
+</div>
+<div class="over-payment">
 <ng-container *ngIf="viewCompStatus === 'overpayment'">
   <input #myInput type='hidden' id='iFrameDrivenImageValue' value='OVERPAYMENTPAGE'> 
   <h1 class="heading-large">Issue refund</h1>
@@ -426,3 +428,4 @@
   </p>
 
 </ng-container>
+</div>
