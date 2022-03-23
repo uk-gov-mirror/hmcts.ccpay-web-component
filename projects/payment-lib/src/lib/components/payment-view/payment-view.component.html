@@ -414,16 +414,14 @@
         <a (click)="gotoAddressPage(contactDetailsObj)" class="govuk-link right margin-top--size" >Change</a>
     </td>
   </table>
-  <div class="govuk-button-group">
-  <button type="submit" class="button govuk-button--secondary" (click)="gotoAddressPage(contactDetailsObj)">Previous</button>
+  <button type="submit" class="button govuk-button--secondary over-payment-alignment govuk-font19px" (click)="gotoAddressPage(contactDetailsObj)">Previous</button>
   <button type="submit"
   class="button govuk-!-margin-right-1"
   (click)="processRefund()">
     Submit refund
   </button>
-  </div>
   <p>
-      <a href="javascript:void(0)"  (click)="goToCaseTransationPage($event)" class="govuk-link" data-module="govuk-button">
+      <a href="javascript:void(0)"  (click)="goToCaseTransationPage($event)" class="govuk-link govuk-font19px" data-module="govuk-button">
           Cancel
       </a>
   </p>
