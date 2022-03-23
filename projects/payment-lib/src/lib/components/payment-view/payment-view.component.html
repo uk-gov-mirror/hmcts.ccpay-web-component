@@ -310,7 +310,7 @@
 </ccpay-service-request>
 </ng-container>
 </div>
-
+<div class="over-payment">
 <ng-container *ngIf="viewCompStatus === 'overpayment'">
   <input #myInput type='hidden' id='iFrameDrivenImageValue' value='OVERPAYMENTPAGE'> 
   <h1 class="heading-large">Issue refund</h1>
@@ -366,7 +366,7 @@
     </a>
 </p>
 </ng-container>
-<div class="over-payment">
+
 <ng-container *ngIf="viewCompStatus === 'overpaymentcheckandanswer'">
   <input #myInput type='hidden' id='iFrameDrivenImageValue' value='ADDREFUNDFORREMISSION'> 
   <div class="govuk-warning-text">
