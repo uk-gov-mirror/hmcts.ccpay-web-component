@@ -29,7 +29,7 @@ export class RefundStatusComponent implements OnInit {
   refundStatusForm: FormGroup;
   selectedRefundReason: string;
   rejectedRefundList: IRefundList[] = [];
-  notificationList: IRefundsNotifications;
+  notificationList: any;
   notification:any;
   approvalStatus = 'Sent for approval';
   rejectStatus = 'Update required';
