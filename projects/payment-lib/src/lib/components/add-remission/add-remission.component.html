@@ -388,6 +388,7 @@
               <td class="govuk-table__header" scope="col"></td>
             </tr>
           </thead>
+          {{isFullyRefund}}
           <tbody class="govuk-table__body">
             <tr class="govuk-table__row" formArrayName="feesList" *ngFor="let fee of feesList?.controls; let i = index">
               <td class="govuk-table__cell">
@@ -399,7 +400,7 @@
                     name="organisation" 
                     type="checkbox" 
                     value="{{fee.controls['id'].value}}" 
-                    [disabled]="isConfirmationBtnDisabled"
+                    [disabled]="isFullyRefund"
                     formControlName="selected" >
                     <label class="govuk-label govuk-checkboxes__label" for="{{fee.controls['id'].value}}">
                       <span style="display:none">Select</span>
@@ -426,13 +427,8 @@
                   <div  [formGroupName]="i"  class="hmcts-currency-input">
                     
                     <div class="hmcts-currency-input__symbol" aria-hidden="true">£</div>
-                    <!-- <div *ngIf="fee.controls['volume'].value >1"> -->
-                      <input   disabled="disabled" class="govuk-input govuk-input--width-10" id="feeAmount_{{fee.controls['id'].value}}" name="feeAmount_{{fee.controls['id'].value}}" type="text" aria-describedby="amount-currency "  pattern="[0-9]*" formControlName="amounttorefund">
-                    <!-- </div> -->
-                    <!-- <div *ngIf="fee.controls['volume'].value ===1">
-                      <input   disabled="disabled" class="govuk-input govuk-input--width-10" id="feeAmount_{{fee.controls['id'].value}}" name="feeAmount_{{fee.controls['id'].value}}" type="text" aria-describedby="amount-currency "  pattern="[0-9]*" formControlName="amounttorefund">
-                    
-                    </div> -->
+                      <input   disabled="disabled" class="govuk-input govuk-input--width-10" id="feeAmount_{{fee.controls['id'].value}}" name="feeAmount_{{fee.controls['id'].value}}" type="text" aria-describedby="amount-currency "  [attr.value]="isFullyRefund? {{ fee.controls['apportion_amount'].value | currency:'GBP':'symbol-narrow':'1.2-2'}} : ''" pattern="[0-9]*" formControlName="amounttorefund">
+ 
                     <input  id="feeVolume_{{fee.controls['id'].value}}" name="feeVolume_{{fee.controls['id'].value}}" value= "{{fee.controls['volume'].value}}" type="hidden" formControlName="volume">
 					          <input id="feeApportionAmount_{{fee.controls['id'].value}}" name="feeApportionAmount_{{fee.controls['id'].value}}" value= "{{fee.controls['apportion_amount'].value}}" type="hidden" formControlName="apportion_amount">
 					          <input id="calculatedAmount_{{fee.controls['id'].value}}" name="calculatedAmount_{{fee.controls['id'].value}}" value= "{{fee.controls['calculated_amount'].value}}" type="hidden" formControlName="calculated_amount">

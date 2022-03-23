@@ -273,7 +273,7 @@ export class AddRemissionComponent implements OnInit {
 
   noneSelected(){
     if(this.isFullyRefund) {
-      return true;
+      return false;
     } else {
       if(!this.feesList.controls.some(item => item.get('selected').value === true)) {
         this.errorMsg = [];
