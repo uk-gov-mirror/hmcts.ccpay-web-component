@@ -294,6 +294,10 @@ export class RefundStatusComponent implements OnInit {
   getRefundFees(fees: IFee[])
   {
     this.fees = fees;
+    this.fees.map(data => {data.net_amount = data.refund_amount,data.volume = data.updatedVolume});
+    this.fees = this.fees.map(({refund_amount,updatedVolume,selected, ...rest}) => {
+      return rest;
+    });
   }
 
   gotoReviewRefundConfirmationPage() {
