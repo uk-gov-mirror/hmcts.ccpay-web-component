@@ -33,6 +33,7 @@ export class PaymentViewComponent implements OnInit {
   @Input() orderFeesTotal: number;
   @Input() orderRemissionTotal: number;
   @Input() orderDetail: any[];
+  fees: any;
   isFullyRefund: boolean;
   paymentGroup: IPaymentGroup;
   errorMessage: string;
@@ -180,9 +181,9 @@ export class PaymentViewComponent implements OnInit {
   processRefund() {
     this.isConfirmationBtnDisabled = true;
     this.errorMessage = '';
-  
+    this.fees = this.paymentGroup.fees[0];
     const requestBody = new PostRefundRetroRemission(this.ccdCaseNumber, this.payment.reference, 'RP001', 
-    this.paymentGroup.fees[0].over_payment, this.paymentGroup?.fees[0], this.contactDetailsObj);
+    this.paymentGroup.fees[0].over_payment, this.fees, this.contactDetailsObj);
     this.paymentViewService.postRefundsReason(requestBody).subscribe(
       response => {
           if (JSON.parse(response)) {

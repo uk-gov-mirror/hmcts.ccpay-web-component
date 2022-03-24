@@ -442,14 +442,12 @@
         </div>
   
       </div>
-      <div *ngIf="isPaymentSuccess">
       <h2 class="govuk-heading-l">What happens next</h2>
       <p class="govuk-body">
         A refund request for {{refundAmount  | currency:'GBP':'symbol-narrow':'1.2-2' }} has been created and will be passed to a team leader to approve.
       </p>
-    </div>
     <p class="govuk-body">
-    <a href="javascript:void(0)" (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link pointer" data-module="govuk-button">
+    <a href="javascript:void(0)" class="govuk-link pointer" data-module="govuk-button">
       Return to case
   </a>
     </p>
