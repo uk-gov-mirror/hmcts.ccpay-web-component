@@ -182,7 +182,7 @@ export class PaymentViewComponent implements OnInit {
     this.isConfirmationBtnDisabled = true;
     this.errorMessage = '';
     this.fees = this.paymentGroup.fees[0];
-    const requestBody = new PostRefundRetroRemission(this.ccdCaseNumber, this.payment.reference, 'RP001', 
+    const requestBody = new PostRefundRetroRemission(this.ccdCaseNumber, this.paymentGroup.payments[0].reference, 'RP001', 
     this.paymentGroup.fees[0].over_payment, this.fees, this.contactDetailsObj);
     this.paymentViewService.postRefundsReason(requestBody).subscribe(
       response => {

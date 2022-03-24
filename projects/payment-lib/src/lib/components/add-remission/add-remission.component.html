@@ -400,7 +400,7 @@
                     name="organisation" 
                     type="checkbox" 
                     value="{{fee.controls['id'].value}}" 
-                    [disabled]="isFullyRefund === true"
+                    [disabled]="isFullyRefund"
                     [checked]="isFullyRefund === true"
                     formControlName="selected" >
                     <label class="govuk-label govuk-checkboxes__label" for="{{fee.controls['id'].value}}">
