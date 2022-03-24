@@ -417,7 +417,7 @@
   </table>
   <button type="submit" class="button govuk-button--secondary over-payment-alignment govuk-font19px" (click)="gotoAddressPage(contactDetailsObj)">Previous</button>
   <button type="submit"
-  class="button govuk-!-margin-right-1"
+  [ngClass]='isContinueBtnDisabled ? "button button--disabled govuk-!-margin-right-1 govuk-font19px" : "button govuk-!-margin-right-1 govuk-font19px"'
   (click)="processRefund()">
     Submit refund
   </button>
@@ -426,6 +426,35 @@
           Cancel
       </a>
   </p>
+
+</ng-container>
+<ng-container *ngIf="viewStatus === 'refundconfirmationpage' && viewCompStatus !== 'overpayment' && viewCompStatus !== 'overPaymentAddressCapture' && viewCompStatus !== 'overpaymentcheckandanswer'">
+  <input #myInput type='hidden' id='iFrameDrivenImageValue' value='RETROREMISSIONREFUNDCONFIRMATIONPAGE'> 
+  <div class="govuk-grid-row">
+    <div >
+      <div class="govuk-panel govuk-panel--confirmation">
+        <h1 class="govuk-panel__title">
+          Refund submitted
+        </h1>
+        
+        <div class="govuk-panel__body">
+          <p class="govuk-body white"><strong>Refund reference: {{refundReference}}</strong></p>
+        </div>
+  
+      </div>
+      <div *ngIf="isPaymentSuccess">
+      <h2 class="govuk-heading-l">What happens next</h2>
+      <p class="govuk-body">
+        A refund request for {{refundAmount  | currency:'GBP':'symbol-narrow':'1.2-2' }} has been created and will be passed to a team leader to approve.
+      </p>
+    </div>
+    <p class="govuk-body">
+    <a href="javascript:void(0)" (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link pointer" data-module="govuk-button">
+      Return to case
+  </a>
+    </p>
+    </div>
+  </div>
 
 </ng-container>
 </div>

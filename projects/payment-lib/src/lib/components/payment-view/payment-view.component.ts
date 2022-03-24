@@ -5,6 +5,7 @@ import { IPaymentGroup } from '../../interfaces/IPaymentGroup';
 import { IFee } from '../../interfaces/IFee';
 import { IPayment } from '../../interfaces/IPayment';
 import { IRemission } from '../../interfaces/IRemission';
+import { PostRefundRetroRemission } from '../../interfaces/PostRefundRetroRemission';
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 import { ChangeDetectorRef } from '@angular/core';
 import { OrderslistService } from '../../services/orderslist.service';
@@ -59,7 +60,9 @@ export class PaymentViewComponent implements OnInit {
   viewCompStatus: string;
   contactDetailsObj: IRefundContactDetails
   notification: any;
-
+  isConfirmationBtnDisabled: boolean;
+  refundReference: string;
+  refundAmount: string;
   constructor(private paymentViewService: PaymentViewService,
     private paymentLibComponent: PaymentLibComponent,
     private cd: ChangeDetectorRef,
@@ -175,7 +178,25 @@ export class PaymentViewComponent implements OnInit {
     return false;
   }
   processRefund() {
-
+    this.isConfirmationBtnDisabled = true;
+    this.errorMessage = '';
+  
+    const requestBody = new PostRefundRetroRemission(this.ccdCaseNumber, this.payment.reference, 'RP001', 
+    this.paymentGroup.fees[0].over_payment, this.paymentGroup?.fees[0], this.contactDetailsObj);
+    this.paymentViewService.postRefundsReason(requestBody).subscribe(
+      response => {
+          if (JSON.parse(response)) {
+            this.viewCompStatus  = '';
+            this.viewStatus = 'refundconfirmationpage';
+            this.refundReference = JSON.parse(response).refund_reference;
+            this.refundAmount = JSON.parse(response).refund_amount;
+          }
+      },
+      (error: any) => {
+        this.errorMessage = error;
+        this.isConfirmationBtnDisabled = false;
+        this.cd.detectChanges();
+      })
   }
   gotoAddressPage(note?: IRefundContactDetails) {
     if (note) {
