@@ -13,5 +13,6 @@ export interface IRefundList {
     },
     contact_details: IRefundContactDetails,
     user_full_name: string,
-    service_type: string
+    service_type: string,
+    code:string
   }

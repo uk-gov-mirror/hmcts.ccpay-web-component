@@ -62,7 +62,7 @@ export class AddRemissionComponent implements OnInit {
   //@Output() refundListReason: EventEmitter<any> = new EventEmitter({reason:string, code:string});
   @Output() refundListReason = new EventEmitter<{reason: string, code: string}>();
   @Output() refundListAmount: EventEmitter<string> = new EventEmitter();
-
+  @Output() refundFees: EventEmitter<IFee[]> = new EventEmitter<IFee[]>();
   refund = {
     reason: {
       duplicate: 'Duplicate payment',
@@ -268,7 +268,7 @@ export class AddRemissionComponent implements OnInit {
           description: this.fees[i].description,
           net_amount: this.fees[i].net_amount,
           version: this.fees[i].version,
-          amounttorefund : [''],
+          refund_amount : [''],
           selected:[''] ,
           updatedVolume: this.fees[i].volume
         }));
@@ -298,7 +298,7 @@ export class AddRemissionComponent implements OnInit {
     const formArray = this.remissionForm.controls.feesList as FormArray;
   
     if(ele.checked){
-      formArray.at(i).get('amounttorefund').setValue(AppAmt);
+      formArray.at(i).get('refund_amount').setValue(AppAmt);
       formArray.at(i).get('volume').setValue(Volume);
       formArray.at(i).get('selected').setValue(true);
       formArray.at(i).get('updatedVolume').setValue(Volume);
@@ -314,12 +314,12 @@ export class AddRemissionComponent implements OnInit {
            document.getElementById('feeAmount_'+v1).removeAttribute("disabled"); 
            document.getElementById('feeVolumeUpdated_'+v1).removeAttribute("disabled");   
       }   
-     // this.remissionForm.value.feesList.find(x=>x=v1)['amounttorefund'] = AppAmt;
+     // this.remissionForm.value.feesList.find(x=>x=v1)['refund_amount'] = AppAmt;
       this.cd.detectChanges(); 
     } else {
       this.errorMsg = [];  
       document.getElementById('feeAmount_'+v1).setAttribute("disabled", "true"); 
-      this.remissionForm.value.feesList[i]["amounttorefund"] = ''; 
+      this.remissionForm.value.feesList[i]["refund_amount"] = ''; 
       this.remissionForm.value.feesList[i]["volume"] = ''; 
       this.remissionForm.value.feesList[i]["selected"] = false; 
       (<HTMLInputElement>document.getElementById('feeAmount_'+v1)).value = '';
@@ -600,7 +600,7 @@ export class AddRemissionComponent implements OnInit {
       this.isFromRefundListPage = true; 
     }
 
-    this.totalRefundAmount = this.remissionForm.value.feesList.reduce((a, c) => a + c.amounttorefund * c.selected, 0);
+    this.totalRefundAmount = this.remissionForm.value.feesList.reduce((a, c) => a + c.refund_amount * c.selected, 0);
 
 
     this.errorMessage = '';
@@ -618,7 +618,7 @@ export class AddRemissionComponent implements OnInit {
         this.refundListReason.emit({reason: this.displayRefundReason, code: this.refundReason});
       } else {
         if(this.isFromCheckAnsPage) {
-          this.totalRefundAmount = this.remissionForm.value.feesList.reduce((a, c) => a + c.amounttorefund * c.selected, 0);
+          this.totalRefundAmount = this.remissionForm.value.feesList.reduce((a, c) => a + c.refund_amount * c.selected, 0);
           this.isFromCheckAnsPage = false;
           this.viewStatus = 'checkissuerefundpage';
           this.viewCompStatus = '';
@@ -631,7 +631,7 @@ export class AddRemissionComponent implements OnInit {
     } else {
       this.displayRefundReason = this.selectedRefundReason;
       if(this.isFromCheckAnsPage) {
-        this.totalRefundAmount = this.remissionForm.value.feesList.reduce((a, c) => a + c.amounttorefund * c.selected, 0);
+        this.totalRefundAmount = this.remissionForm.value.feesList.reduce((a, c) => a + c.refund_amount * c.selected, 0);
         this.isFromCheckAnsPage = false;
         this.viewStatus = 'checkissuerefundpage';
         this.viewCompStatus = '';
@@ -740,21 +740,23 @@ export class AddRemissionComponent implements OnInit {
               this.getErrorClass(this.elementId);
             }
         }
-        //this.remissionForm.value.feesList.find(id=>id=checkboxs[j].value)['amounttorefund'] = apportionAmount;
+        //this.remissionForm.value.feesList.find(id=>id=checkboxs[j].value)['refund_amount'] = apportionAmount;
 				}
 			}
 
       if(this.errorMsg.length === 0) {
         if (this.isFromCheckAnsPage) {
           this.isFromCheckAnsPage = false;
-          this.totalRefundAmount = this.remissionForm.value.feesList.reduce((a, c) => a + c.amounttorefund * c.selected, 0);
+          this.totalRefundAmount = this.remissionForm.value.feesList.reduce((a, c) => a + c.refund_amount * c.selected, 0);
           this.viewStatus = 'checkissuerefundpage'
           this.viewCompStatus = '';
           return;
         } else if (this.isFromRefundStatusPage){
           var remissionctrls=this.remissionForm.controls;
-          this.totalRefundAmount = this.remissionForm.value.feesList.reduce((a, c) => a + c.amounttorefund * c.selected, 0);
+          this.totalRefundAmount = this.remissionForm.value.feesList.reduce((a, c) => a + c.refund_amount * c.selected, 0);
           this.refundListAmount.emit(this.totalRefundAmount.toString());
+          this.fees = this.remissionForm.value.feesList.filter(value => value.selected===true);
+          this.refundFees.emit(this.fees);
           return;
         }
         this.viewCompStatus = 'issuerefundpage1';
@@ -766,7 +768,7 @@ export class AddRemissionComponent implements OnInit {
      const volumeFee = amount/volume;
      const amtToRefund = value * volumeFee;
      const formArray = this.remissionForm.controls.feesList as FormArray;
-     formArray.at(i).get('amounttorefund').setValue(amtToRefund);
+     formArray.at(i).get('refund_amount').setValue(amtToRefund);
     // formArray.at(i).get('volume').setValue(value);
    //  (<HTMLInputElement>document.getElementById('feeAmount_'+i)).value = +amtToRefund;
     //  const formControl = this.remissionForm.controls.feesList['volume'].at(i);
@@ -944,7 +946,7 @@ export class AddRemissionComponent implements OnInit {
 
     if (this.isFromRefundStatusPage){
       var remissionctrls=this.remissionForm.controls;
-      this.totalRefundAmount = this.remissionForm.value.feesList.reduce((a, c) => a + c.amounttorefund * c.selected, 0);
+      this.totalRefundAmount = this.remissionForm.value.feesList.reduce((a, c) => a + c.refund_amount * c.selected, 0);
       this.refundListAmount.emit(this.totalRefundAmount.toString());
       return;
     }

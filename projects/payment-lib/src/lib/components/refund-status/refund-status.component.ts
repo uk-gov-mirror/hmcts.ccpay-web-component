@@ -12,6 +12,7 @@ import { IResubmitRefundRequest } from '../../interfaces/IResubmitRefundRequest'
 import { PaymentLibComponent } from '../../payment-lib.component';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import { IPayment } from '../../interfaces/IPayment';
+import { IFee } from '../../interfaces/IFee';
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 
 @Component({
@@ -65,6 +66,7 @@ export class RefundStatusComponent implements OnInit {
   isRemissionsMatch: boolean;
   payment: IPayment;
   changeRefundReason: string;
+  fees: IFee [];
   allowedRolesToAccessRefund = ['payments-refund-approver', 'payments-refund'];
 
   constructor(private formBuilder: FormBuilder,
@@ -267,6 +269,7 @@ export class RefundStatusComponent implements OnInit {
   getRefundListReason(refundListReason: any) {
     if (this.paymentLibComponent.isFromRefundStatusPage && !this.paymentLibComponent.iscancelClicked) {
       this.refundlist.reason = refundListReason.reason;
+      this.refundlist.code = refundListReason.code;
       this.refundCode = refundListReason.code;
     } else {
       this.isRefundBtnDisabled = true;
@@ -288,12 +291,17 @@ export class RefundStatusComponent implements OnInit {
     this.paymentLibComponent.CCD_CASE_NUMBER = this.ccdCaseNumber;
   }
 
+  getRefundFees(fees: IFee[])
+  {
+    this.fees = fees;
+  }
+
   gotoReviewRefundConfirmationPage() {
     // if (this.oldRefundReason === this.refundlist.reason) {
     //   this.refundCode = '';
     // }
-    // this.refundCode = this.refundlist.reason;
-    const resubmitRequest = new IResubmitRefundRequest(this.refundCode,  this.changedAmount, this.refundlist.contact_details);
+    this.refundCode = this.refundlist.code;
+    const resubmitRequest = new IResubmitRefundRequest(this.refundCode,  this.changedAmount, this.refundlist.contact_details, this.fees);
     this.refundService.patchResubmitRefund(resubmitRequest, this.refundlist.refund_reference).subscribe(
       response => {
         if (JSON.parse(response)) {

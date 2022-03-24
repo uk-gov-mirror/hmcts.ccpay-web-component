@@ -144,7 +144,7 @@
   </div>
 
   <ng-container *ngIf="viewName==='refundview' && !isResendOperationSuccess && !isEditDetailsClicked">
-    <div *ngIf="refundButtonState==='Update required'">
+    <div >
       <!-- <div *ngIf="refundButtonState==='sent back'"> -->
       <br />
       <button type="submit" class="button govuk-button--secondary btnmargin"
@@ -258,7 +258,7 @@
 
 <ng-container *ngIf="viewName === 'issuerefund' && !isResendOperationSuccess && !isEditDetailsClicked">
   <ccpay-add-remission [isFromRefundListPage]="true" [viewCompStatus]="viewName" [isRefundRemission]="true" [isFromServiceRequestPage] = "true"
-    [ccdCaseNumber]="ccdCaseNumber" [refundPaymentReference]= "refundlist?.payment_reference" [isFromRefundStatusPage]="true"  (refundListAmount)="getRefundAmount($event)"></ccpay-add-remission>
+    [ccdCaseNumber]="ccdCaseNumber" [refundPaymentReference]= "refundlist?.payment_reference" [isFromRefundStatusPage]="true"  (refundListAmount)="getRefundAmount($event)"  (refundFees)="getRefundFees($event)"></ccpay-add-remission>
 </ng-container>
 
 <ng-container *ngIf="viewName === 'reviewrefundconfirmationpage' && !isResendOperationSuccess && !isEditDetailsClicked">
