@@ -13,6 +13,7 @@ import { PaymentLibComponent } from '../../payment-lib.component';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import { IPayment } from '../../interfaces/IPayment';
 import { IFee } from '../../interfaces/IFee';
+import { IRefundFee } from '../../interfaces/IRefundFee';
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 
 @Component({
@@ -67,6 +68,7 @@ export class RefundStatusComponent implements OnInit {
   payment: IPayment;
   changeRefundReason: string;
   fees: IFee [];
+  refundFees: IRefundFee[];
   allowedRolesToAccessRefund = ['payments-refund-approver', 'payments-refund'];
 
   constructor(private formBuilder: FormBuilder,
@@ -294,10 +296,7 @@ export class RefundStatusComponent implements OnInit {
   getRefundFees(fees: IFee[])
   {
     this.fees = fees;
-    this.fees.map(data => {data.net_amount = data.refund_amount,data.volume = data.updatedVolume});
-    this.fees = this.fees.map(({refund_amount,updatedVolume,selected, ...rest}) => {
-      return rest;
-    });
+    this.refundFees  = this.fees.map(obj => ({ fee_id: obj.id, code: obj.code, version:obj.version, volume: obj.volume,refund_amount:obj.refund_amount }));
   }
 
   gotoReviewRefundConfirmationPage() {
@@ -305,7 +304,7 @@ export class RefundStatusComponent implements OnInit {
     //   this.refundCode = '';
     // }
     this.refundCode = this.refundlist.code;
-    const resubmitRequest = new IResubmitRefundRequest(this.refundCode,  this.changedAmount, this.refundlist.contact_details, this.fees);
+    const resubmitRequest = new IResubmitRefundRequest(this.refundCode,  this.changedAmount, this.refundlist.contact_details, this.refundFees);
     this.refundService.patchResubmitRefund(resubmitRequest, this.refundlist.refund_reference).subscribe(
       response => {
         if (JSON.parse(response)) {
