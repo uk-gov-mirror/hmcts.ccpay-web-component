@@ -394,14 +394,21 @@
               <td class="govuk-table__cell">
                 <div  [formGroupName]="i" class="govuk-checkboxes govuk-checkboxes--large" data-module="govuk-checkboxes">
                   <div class="govuk-checkboxes__item">
-                    <input  class="govuk-checkboxes__input" 
+                    <input  *ngIf="isFullyRefund" class="govuk-checkboxes__input" 
                     (click)="check_en(i,fee.controls['id'].value,fee.controls['apportion_amount'].value,fee.controls['volume'].value)" 
                     id="{{fee.controls['id'].value}}" 
                     name="organisation" 
                     type="checkbox" 
                     value="{{fee.controls['id'].value}}" 
-                    [disabled]="isFullyRefund"
-                    [checked]="isFullyRefund === true"
+                    disabled="disabled"
+                    checked="checked"
+                    formControlName="selected" >
+                    <input  *ngIf="!isFullyRefund" class="govuk-checkboxes__input" 
+                    (click)="check_en(i,fee.controls['id'].value,fee.controls['apportion_amount'].value,fee.controls['volume'].value)" 
+                    id="{{fee.controls['id'].value}}" 
+                    name="organisation" 
+                    type="checkbox" 
+                    value="{{fee.controls['id'].value}}"
                     formControlName="selected" >
                     <label class="govuk-label govuk-checkboxes__label" for="{{fee.controls['id'].value}}">
                       <span style="display:none">Select</span>
