@@ -811,6 +811,7 @@ export class AddRemissionComponent implements OnInit {
     }
     if(isFullyRefund) {
       this.totalRefundAmount = this.payment.amount;
+      this.fees = <any>this.paymentGroup.fees[0];
     }
     this.fees = this.remissionForm.value.feesList.filter(value => value.selected===true);
   
