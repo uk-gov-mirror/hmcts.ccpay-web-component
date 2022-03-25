@@ -401,7 +401,7 @@
                     type="checkbox" 
                     value="{{fee.controls['id'].value}}" 
                     disabled="disabled"
-                    checked="checked"
+                    [checked]="isFullyRefund === true"
                     formControlName="selected" >
                     <input  *ngIf="!isFullyRefund" class="govuk-checkboxes__input" 
                     (click)="check_en(i,fee.controls['id'].value,fee.controls['apportion_amount'].value,fee.controls['volume'].value)" 
