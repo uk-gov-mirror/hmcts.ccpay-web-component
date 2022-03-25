@@ -627,9 +627,7 @@
         </tr>
         <tr class="govuk-table__row" *ngIf="isFullyRefund">
           <td class="govuk-table__cell govuk-!-font-weight-bold">Refund amount</td>
-          <td class="govuk-table__cell">{{this.payment.amount | currency:'GBP':'symbol-narrow':'1.2-2'}}
-          <a (click)="changeRefundAmount()" class="govuk-link right" >Change</a>
-        </td>
+          <td class="govuk-table__cell">{{this.payment.amount | currency:'GBP':'symbol-narrow':'1.2-2'}}</td>
       </tr>
         <tr class="govuk-table__row">
             <td class="govuk-table__cell govuk-!-font-weight-bold">Send to</td>

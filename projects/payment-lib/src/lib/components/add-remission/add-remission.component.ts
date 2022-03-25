@@ -226,7 +226,7 @@ export class AddRemissionComponent implements OnInit {
       this.refundService.getRefundReasons().subscribe(
         refundReasons => { 
           this.refundReasons = refundReasons.filter((data) => data.recently_used === false);
-          this.refundReasons = this.refundReasons.filter((data) => data.name !== 'Retrospective remission');
+          this.refundReasons = this.refundReasons.filter((data) => data.name !== 'Retrospective remission' && data.name !== 'Overpayment');
           this.cd.detectChanges();
           this.commonRefundReasons = refundReasons.filter((data) => data.recently_used === true);
           this.commonRefundReasons.sort((a, b) => a.toString().localeCompare(b));
