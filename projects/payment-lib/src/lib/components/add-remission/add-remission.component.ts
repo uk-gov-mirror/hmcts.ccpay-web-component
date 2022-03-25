@@ -802,12 +802,15 @@ export class AddRemissionComponent implements OnInit {
     this.isRefundRemission = true;
   }
 
-  confirmIssueRefund() {
+  confirmIssueRefund(isFullyRefund: any) {
     this.isConfirmationBtnDisabled = true;
     this.errorMessage = '';
     this.errorMsg = [];
     if( this.isRefundRemission) {
       this.retroRemission = true;
+    }
+    if(isFullyRefund) {
+      this.totalRefundAmount = this.payment.amount;
     }
     this.fees = this.remissionForm.value.feesList.filter(value => value.selected===true);
   
