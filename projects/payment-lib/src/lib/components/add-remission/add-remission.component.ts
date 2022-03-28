@@ -748,6 +748,7 @@ export class AddRemissionComponent implements OnInit {
         if (this.isFromCheckAnsPage) {
           this.isFromCheckAnsPage = false;
           this.totalRefundAmount = this.remissionForm.value.feesList.reduce((a, c) => a + c.refund_amount * c.selected, 0);
+          this.fees = this.remissionForm.value.feesList.filter(value => value.selected===true);
           this.viewStatus = 'checkissuerefundpage'
           this.viewCompStatus = '';
           return;
@@ -826,6 +827,15 @@ export class AddRemissionComponent implements OnInit {
       this.retroRemission = true;
     }
     this.fees = this.remissionForm.value.feesList.filter(value => value.selected===true);
+    this.fees  = this.fees.map(obj => ({ id: obj.id, 
+                                        code: obj.code,
+                                        version:obj.version, 
+                                        apportion_amount: obj.apportion_amount,
+                                        calculated_amount: obj.calculated_amount,
+                                        updatedVolume: obj.updatedVolume,
+                                        volume: obj.volume,
+                                        refund_amount:obj.refund_amount }));
+ 
   
     const requestBody = new PostRefundRetroRemission(this.ccdCaseNumber, this.payment.reference, this.refundReason, 
       this.totalRefundAmount, this.fees, this.contactDetailsObj);
