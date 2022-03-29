@@ -92,7 +92,9 @@ export class RefundStatusComponent implements OnInit {
       this.refundService.getRefundStatusList(this.ccdCaseNumber).subscribe(
         refundList => {
           this.rejectedRefundList = refundList['refund_list'];
+          //this.refundFees = this.rejectedRefundList['refund_fees'];
         }
+        
       ),
         (error: any) => {
           this.errorMessage = error.replace(/"/g,"");
@@ -303,6 +305,9 @@ export class RefundStatusComponent implements OnInit {
     // if (this.oldRefundReason === this.refundlist.reason) {
     //   this.refundCode = '';
     // }
+    if (this.refundFees === undefined) {
+      this.refundFees = this.refundlist['refund_fees'];
+    }
     this.refundCode = this.refundlist.code;
     const resubmitRequest = new IResubmitRefundRequest(this.refundCode,  this.changedAmount, this.refundlist.contact_details, this.refundFees);
     this.refundService.patchResubmitRefund(resubmitRequest, this.refundlist.refund_reference).subscribe(
