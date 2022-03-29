@@ -417,7 +417,7 @@ export class AddRemissionComponent implements OnInit {
   // Add retro remission changes
   addRemissionCode() {
     this.errorMessage = false;
-    this.isFromCheckAnsPage = true;
+    // this.isFromCheckAnsPage = true;
     this.errorMsg = [];
     this.viewStatus = '';
     this.isRefundRemission = false;
@@ -428,8 +428,14 @@ export class AddRemissionComponent implements OnInit {
       this.remissionForm.controls['refundDDReason'].setErrors(null);
       this.remissionForm.controls['amount'].setErrors(null);
     if (this.remissionForm.dirty && this.remissionForm.valid ) {
-      this.viewCompStatus = '';
-      this.viewStatus = "processretroremissonpage";
+      if (!this.isFromCheckAnsPage) {
+        this.viewCompStatus = '';
+        this.viewStatus = "processretroremissonpage";
+      } else {
+        this.viewCompStatus = '';
+        this.viewStatus = 'checkretroremissionpage';
+      }
+      
     }else {
 
       if(remissionctrls['remissionCode'].value == '' ) {
@@ -1036,7 +1042,7 @@ export class AddRemissionComponent implements OnInit {
   gotoCasetransationPageCancelBtnClicked(event: Event) {
     event.preventDefault();
     this.errorMsg = [];
-    if( !this.paymentLibComponent.isFromServiceRequestPage) {
+    if( this.paymentLibComponent.isFromServiceRequestPage !== undefined && !this.paymentLibComponent.isFromServiceRequestPage) {
       this.OrderslistService.setnavigationPage('casetransactions');
       this.OrderslistService.setisFromServiceRequestPage(false);
       this.paymentLibComponent.VIEW ='case-transactions';
@@ -1068,8 +1074,9 @@ export class AddRemissionComponent implements OnInit {
     }
     if (this.paymentLibComponent.TAKEPAYMENT === undefined && this.paymentLibComponent.SERVICEREQUEST === undefined) {
       this.paymentLibComponent.SERVICEREQUEST = 'false';
+      this.OrderslistService.setisFromServiceRequestPage(false);
     }
-    this.OrderslistService.setisFromServiceRequestPage(false);
+   
     this.OrderslistService.setpaymentPageView({method: '',payment_group_reference: '', reference:''});
     this.OrderslistService.setnavigationPage('casetransactions');
     this.errorMessage = '';

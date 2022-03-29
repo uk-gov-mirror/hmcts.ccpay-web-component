@@ -220,7 +220,7 @@
             <td *ngIf="remessionPayment.status === 'Success'" class="govuk-table__cell govuk-!-font-weight-bold">Refund amount</td>
             <td *ngIf="remessionPayment.status !== 'Success'" class="govuk-table__cell govuk-!-font-weight-bold">Remission amount</td>
             <td class="govuk-table__cell">{{remissionForm.controls.amount.value  | currency:'GBP':'symbol-narrow':'1.2-2' }}
-                <a (click)="addRemissionCode()" class="govuk-link right" >Change</a>
+                <a (click)="gotoAmountRetroRemission()" class="govuk-link right" >Change</a>
             </td>
         </tr>
     </table>

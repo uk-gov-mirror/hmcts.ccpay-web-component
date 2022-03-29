@@ -138,7 +138,7 @@ export class ServiceRequestComponent implements OnInit {
     if (this.takePayment) {
       this.paymentLibComponent.isTakePayment = this.takePayment;
     }
-    this.paymentLibComponent.SERVICEREQUEST = "true";
+    //this.paymentLibComponent.SERVICEREQUEST = "true";
     this.paymentLibComponent.isFromServiceRequestPage = false;
     if(this.isServiceRequest !== 'false') {
       this.paymentLibComponent.isFromServiceRequestPage = true;
@@ -163,7 +163,7 @@ export class ServiceRequestComponent implements OnInit {
   }
 
   addRemission(fee: IFee) {
-   if(this.chkIsAddRemissionBtnEnable(fee)) {
+    if(this.chkIsAddRemissionBtnEnable(fee)) {
     this.feeId = fee;
     this.viewStatus = 'addremission';
     this.payment = this.orderDetail[0].payments[0];
@@ -181,12 +181,12 @@ export class ServiceRequestComponent implements OnInit {
       },
       (error: any) => this.errorMessage = error.replace(/"/g,"")
     );
-   }
+  }
   }
 
   addRefundForRemission(payment: IPayment, remission: IRemission[],fees:any) {
     this.viewStatus = 'addrefundforremission';
- 
+    this.paymentLibComponent.isFromServiceRequestPage = true;
     this.payment = payment;
     this.paymentViewService.getApportionPaymentDetails(this.payment.reference).subscribe(
       paymentGroup => {
