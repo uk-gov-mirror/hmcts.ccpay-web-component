@@ -270,7 +270,7 @@ export class AddRemissionComponent implements OnInit {
           version: this.fees[i].version,
           refund_amount : [''],
           selected:[''] ,
-          updatedVolume: this.fees[i].volume
+          updated_volume: this.fees[i].volume
         }));
    // }
     this.cd.detectChanges();
@@ -301,7 +301,7 @@ export class AddRemissionComponent implements OnInit {
       formArray.at(i).get('refund_amount').setValue(AppAmt);
       formArray.at(i).get('volume').setValue(Volume);
       formArray.at(i).get('selected').setValue(true);
-      formArray.at(i).get('updatedVolume').setValue(Volume);
+      formArray.at(i).get('updated_volume').setValue(Volume);
       (<HTMLInputElement>document.getElementById('feeAmount_'+v1)).value = AppAmt;
       document.getElementById('feeAmount_'+v1).removeAttribute("disabled"); 
       if(Volume === 1) {
@@ -832,7 +832,7 @@ export class AddRemissionComponent implements OnInit {
                                         version:obj.version, 
                                         apportion_amount: obj.apportion_amount,
                                         calculated_amount: obj.calculated_amount,
-                                        updatedVolume: obj.updatedVolume,
+                                        updated_volume: obj.updated_volume,
                                         volume: obj.volume,
                                         refund_amount:obj.refund_amount }));
  

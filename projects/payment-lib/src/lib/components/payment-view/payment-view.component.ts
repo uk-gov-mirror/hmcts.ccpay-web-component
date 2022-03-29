@@ -222,6 +222,7 @@ export class PaymentViewComponent implements OnInit {
   }
 
   chkIsIssueRefundBtnEnable(payment: IPayment): boolean {
+    if (payment !== null && payment !== undefined) {
     if (!payment.issue_refund_add_refund_add_remission){
       return false;
     } else if (payment.issue_refund && payment.refund_enable && payment.issue_refund_add_refund_add_remission) {
@@ -230,8 +231,10 @@ export class PaymentViewComponent implements OnInit {
       return false;
     }
   }
+  }
 
   chkIsAddRefundBtnEnable(remission: IRemission): boolean {
+    if (remission !== null && remission !== undefined) {
     if (!remission.issue_refund_add_refund_add_remission){
       return false;
     } else if (remission.add_refund && remission.issue_refund_add_refund_add_remission) {
@@ -240,8 +243,10 @@ export class PaymentViewComponent implements OnInit {
       return false;
     }
   }
+  }
 
   chkIsAddRemissionBtnEnable(fee: IFee): boolean {
+    if (fee !== null && fee !== undefined) {
     if (!fee.issue_refund_add_refund_add_remission){
       return false;
     } else if (fee.remission_enable && fee.issue_refund_add_refund_add_remission) {
@@ -249,6 +254,7 @@ export class PaymentViewComponent implements OnInit {
     } else {
       return false;
     }
+  }
   }
 
   resetOrderData() {
