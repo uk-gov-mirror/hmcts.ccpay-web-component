@@ -23,6 +23,7 @@ const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 export class CaseTransactionsComponent implements OnInit {
   @Input('LOGGEDINUSERROLES') LOGGEDINUSERROLES: string[];
   @Input() isTakePayment: boolean;
+  @Input() isFromServiceRequestPage: boolean;
   takePayment: boolean;
   servicerequest: string;
   ccdCaseNumber: string;
@@ -96,7 +97,7 @@ export class CaseTransactionsComponent implements OnInit {
   allowedRolesToAccessRefund = ['payments-refund-approver', 'payments-refund'];
   isEligible4PBAPayment = ['pui-finance-manager', 'pui-user-manager', 'pui-organisation-manager', 'pui-case-manager'];
   currentDate = new Date();
-  isFromServiceRequestPage: boolean;
+  //isFromServiceRequestPage: boolean;
   navigationpage: string;
   remissionFeeAmt: number;
   constructor(private router: Router,
@@ -137,13 +138,15 @@ export class CaseTransactionsComponent implements OnInit {
       this.servicerequest = this.paymentLibComponent.SERVICEREQUEST.toString();
       if (this.paymentLibComponent.SERVICEREQUEST.toString() === 'true') {
         this.serviceRequestValue = 'true';
+        this.paymentLibComponent.isFromServiceRequestPage = true;
       } else {
         this.serviceRequestValue = 'false';
+        this.paymentLibComponent.isFromServiceRequestPage = false;
       }
     } else {
       this.serviceRequestValue = 'false';
+      this.paymentLibComponent.isFromServiceRequestPage = false;
     }
-   
     this.isBulkScanEnable = this.paymentLibComponent.ISBSENABLE;
     this.dcnNumber = this.paymentLibComponent.DCN_NUMBER;
     this.selectedOption = this.paymentLibComponent.SELECTED_OPTION.toLocaleLowerCase();

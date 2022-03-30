@@ -47,6 +47,7 @@ export class AddRemissionComponent implements OnInit {
   @Input() refundPaymentReference: string;
   @Input() isFromRefundStatusPage: boolean;
   @Input() changeRefundReason: string;
+  @Input("isServiceRequest") isServiceRequest: string;
   @Input('LOGGEDINUSERROLES') LOGGEDINUSERROLES: string[];
   @Input('orderDetail') orderDetail: any[];
   @Input('orderRef') orderRef: string;
