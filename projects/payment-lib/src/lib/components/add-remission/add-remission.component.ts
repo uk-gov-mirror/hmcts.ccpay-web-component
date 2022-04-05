@@ -844,8 +844,8 @@ export class AddRemissionComponent implements OnInit {
                                         refund_amount:obj.refund_amount }));
  
   
-    const requestBody = new PostRefundRetroRemission(this.ccdCaseNumber, this.payment.reference, this.refundReason, 
-      this.totalRefundAmount, this.fees, this.contactDetailsObj);
+    const requestBody = new PostRefundRetroRemission(this.contactDetailsObj, this.fees,this.payment.reference, this.refundReason, 
+      this.totalRefundAmount);
     this.paymentViewService.postRefundsReason(requestBody).subscribe(
       response => {
           if (JSON.parse(response)) {
