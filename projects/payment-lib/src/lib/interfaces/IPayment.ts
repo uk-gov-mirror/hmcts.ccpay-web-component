@@ -30,4 +30,5 @@ export interface IPayment {
   payment_group_reference: string;
   paymentGroupReference?: string;
   refund_enable?: boolean;
+  over_payment?: number;
 }

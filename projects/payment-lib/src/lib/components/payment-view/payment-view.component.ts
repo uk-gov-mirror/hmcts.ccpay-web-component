@@ -245,7 +245,7 @@ export class PaymentViewComponent implements OnInit {
   issueRefund(paymentgrp: IPaymentGroup) {
     if (paymentgrp !== null &&  paymentgrp !== undefined) {
       if(this.chkIssueRefundBtnEnable(paymentgrp.payments[0])) {
-        if(this.checkIsOverPayment(paymentgrp.payments)) {
+        if(paymentgrp.payments[0].over_payment > 0) {
           this.viewCompStatus  = 'overpayment';
         } else {
           this.paymentGroup = paymentgrp;
@@ -258,13 +258,6 @@ export class PaymentViewComponent implements OnInit {
       }
     }
   }
-checkIsOverPayment(payments: any) {
-  let isOverpaymentAvailable = false;
-  payments.forEach(payment => {
-    isOverpaymentAvailable = payment.reference===this.payment.reference && payment.over_payment > 0
-  });
-return isOverpaymentAvailable;
-}
   getRemissionByFeeCode(feeCode: string, remissions: IRemission[]): IRemission {
     if (remissions && remissions.length > 0) {
       for (const remission of remissions) {
