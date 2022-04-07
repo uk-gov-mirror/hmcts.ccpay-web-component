@@ -847,9 +847,9 @@ export class AddRemissionComponent implements OnInit {
                                         version:obj.version, 
                                         apportion_amount: obj.apportion_amount,
                                         calculated_amount: obj.calculated_amount,
-                                        updated_volume: obj.updated_volume,
+                                        updated_volume: obj.updated_volume? obj.updated_volume : obj.volume,
                                         volume: obj.volume,
-                                        refund_amount:obj.refund_amount }));
+                                        refund_amount: isFullyRefund ? this.totalRefundAmount : obj.refund_amount }));
  
   
     const requestBody = new PostRefundRetroRemission(this.contactDetailsObj, this.fees,this.payment.reference, this.refundReason, 
