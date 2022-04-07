@@ -194,7 +194,7 @@ export class PaymentViewComponent implements OnInit {
       version:obj.version, 
       apportion_amount: obj.apportion_amount,
       calculated_amount: obj.calculated_amount,
-      updated_volume: obj.updated_volume,
+      updated_volume: obj.updated_volume ? obj.updated_volume : obj.volume,
       volume: obj.volume,
       refund_amount:obj.over_payment };
     const requestBody = new PostRefundRetroRemission(this.contactDetailsObj,this.fees, this.paymentGroup.payments[0].reference, 'RR037', 
