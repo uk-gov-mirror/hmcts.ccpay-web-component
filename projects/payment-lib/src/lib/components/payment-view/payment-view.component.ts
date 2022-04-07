@@ -189,8 +189,8 @@ export class PaymentViewComponent implements OnInit {
     this.isConfirmationBtnDisabled = true;
     this.errorMessage = '';
     this.fees = this.paymentGroup.fees[0];
-    const requestBody = new PostRefundRetroRemission(this.ccdCaseNumber, this.paymentGroup.payments[0].reference, 'RR037', 
-    this.paymentGroup.fees[0].over_payment, this.fees, this.contactDetailsObj);
+    const requestBody = new PostRefundRetroRemission(this.contactDetailsObj,this.fees, this.paymentGroup.payments[0].reference, 'RR037', 
+    this.paymentGroup.fees[0].over_payment);
     this.paymentViewService.postRefundsReason(requestBody).subscribe(
       response => {
           if (JSON.parse(response)) {
@@ -237,7 +237,7 @@ export class PaymentViewComponent implements OnInit {
  
   issueRefund(paymentgrp: IPaymentGroup) {
     if (paymentgrp !== null &&  paymentgrp !== undefined) {
-      if(this.chkIssueRefundBtnEnable(paymentgrp.payments[0])) {
+      if(this.chkIsIssueRefundBtnEnable(paymentgrp.payments[0])) {
         if(paymentgrp.payments[0].over_payment > 0) {
           this.viewCompStatus  = 'overpayment';
         } else {
