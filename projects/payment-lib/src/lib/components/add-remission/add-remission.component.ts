@@ -273,7 +273,7 @@ export class AddRemissionComponent implements OnInit {
           selected:[''] ,
           updated_volume: this.fees[i].volume
         }));
-   // }
+   //}
     this.cd.detectChanges();
   }
   }
@@ -840,7 +840,6 @@ export class AddRemissionComponent implements OnInit {
                                         apportion_amount: obj.apportion_amount,
                                         calculated_amount: obj.calculated_amount,
                                         updated_volume: obj.updated_volume,
-                                        volume: obj.volume,
                                         refund_amount:obj.refund_amount }));
  
   
