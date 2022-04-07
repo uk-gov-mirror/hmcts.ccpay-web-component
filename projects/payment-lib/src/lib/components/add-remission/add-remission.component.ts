@@ -836,7 +836,12 @@ export class AddRemissionComponent implements OnInit {
     if( this.isRefundRemission) {
       this.retroRemission = true;
     }
-    this.fees = this.remissionForm.value.feesList.filter(value => value.selected===true);
+    if(isFullyRefund) {
+      this.totalRefundAmount = this.payment.amount;
+    }
+    if(!isFullyRefund) {
+      this.fees = this.remissionForm.value.feesList.filter(value => value.selected===true);
+    }
     this.fees  = this.fees.map(obj => ({ id: obj.id, 
                                         code: obj.code,
                                         version:obj.version, 
