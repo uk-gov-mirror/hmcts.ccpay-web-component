@@ -22,7 +22,7 @@ import { IPayment } from './interfaces/IPayment';
     <ccpay-pba-payment *ngIf="viewName === 'pba-payment'"
     [pbaPayOrderRef]="pbaPayOrderRef"
     ></ccpay-pba-payment>
-    <ccpay-case-transactions [isTakePayment]="isTakePayment" [LOGGEDINUSERROLES]="LOGGEDINUSERROLES" *ngIf="viewName === 'case-transactions'"></ccpay-case-transactions>
+    <ccpay-case-transactions [isTakePayment]="isTakePayment" [isFromServiceRequestPage]="isFromServiceRequestPage" [LOGGEDINUSERROLES]="LOGGEDINUSERROLES" *ngIf="viewName === 'case-transactions'"></ccpay-case-transactions>
     <app-mark-unidentified-payment *ngIf="viewName === 'unidentifiedPage'"
     [caseType]="CASETYPE"></app-mark-unidentified-payment>
     <app-mark-unsolicited-payment *ngIf="viewName === 'unsolicitedPage'"

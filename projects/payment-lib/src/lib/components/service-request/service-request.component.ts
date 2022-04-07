@@ -118,10 +118,12 @@ export class ServiceRequestComponent implements OnInit {
       this.OrderslistService.getorderFeesTotals().subscribe((data) => this.orderFeesTotal = data);
       this.OrderslistService.getoorderTotalPaymentss().subscribe((data) => this.orderTotalPayments = data);
     }
+   
+    
     }
-    // if (this.takePayment) {
-    //   this.paymentLibComponent.TAKEPAYMENT = this.takePayment;
-    // }
+    if(this.paymentLibComponent.isFromServiceRequestPage && this.paymentLibComponent.TAKEPAYMENT) {
+      this.isServiceRequest = 'false';
+    }
   }
   goToServiceRequestPage() {
     this.goToServiceRquestComponent.emit();
@@ -137,7 +139,7 @@ export class ServiceRequestComponent implements OnInit {
     if (this.takePayment) {
       this.paymentLibComponent.isTakePayment = this.takePayment;
     }
-    this.paymentLibComponent.SERVICEREQUEST = "true";
+    //this.paymentLibComponent.SERVICEREQUEST = "true";
     this.paymentLibComponent.isFromServiceRequestPage = false;
     if(this.isServiceRequest !== 'false') {
       this.paymentLibComponent.isFromServiceRequestPage = true;
@@ -161,43 +163,8 @@ export class ServiceRequestComponent implements OnInit {
       this.router.navigateByUrl(url);
   }
 
-  chkForAddRemission(feeCode: string, feeId: number): boolean {
-    if (this.chkForPBAPayment() && this.check4AllowedRoles2AccessRefund()) {
-      if (this.orderDetail[0]['remissions'].length > 0) {
-        for (const remission of this.orderDetail[0]['remissions']) {
-          if (remission.fee_code === feeCode && remission.fee_id === feeId) {
-            return false;
-          }
-        }
-      }
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  chkForPBAPayment(): boolean {
-    if (this.orderDetail !== null &&  this.orderDetail !== undefined) {
-    this.orderDetail.forEach(orderDetail => {
-      if (orderDetail.payments) {
-        orderDetail.payments.forEach(payment => {
-          if (payment.method.toLocaleLowerCase() === 'payment by account' && this.allowFurtherAccessAfter4Days(payment)) {
-            this.paymentLibComponent.paymentReference = payment.reference;
-            this.isPBA = true;
-          }
-        });
-      }
-    });
-    if (this.isPBA) {
-      return true;
-    } else {
-      return false;
-    };
-  }
-  }
-
   addRemission(fee: IFee) {
-   if(this.chkForAddRemission(fee.code, fee.id)) {
+    if(this.chkIsAddRemissionBtnEnable(fee)) {
     this.feeId = fee;
     this.viewStatus = 'addremission';
     this.payment = this.orderDetail[0].payments[0];
@@ -208,17 +175,19 @@ export class ServiceRequestComponent implements OnInit {
         this.paymentGroup.payments = this.paymentGroup.payments.filter
           (paymentGroupObj => paymentGroupObj['reference'].includes(this.paymentLibComponent.paymentReference));
         this.payment = this.paymentGroup.payments[0];
-        // const paymentAllocation = this.paymentGroup.payments[0].payment_allocation;
-        // this.isStatusAllocated = paymentAllocation.length > 0 && paymentAllocation[0].allocation_status === 'Allocated' || paymentAllocation.length === 0;
+       
+          //  const paymentAllocation = this.paymentGroup.payments[0].payment_allocation;
+          //  this.isStatusAllocated = paymentAllocation.length > 0 && paymentAllocation[0].allocation_status === 'Allocated' || paymentAllocation.length === 0;
+        
       },
       (error: any) => this.errorMessage = error.replace(/"/g,"")
     );
-   }
+  }
   }
 
   addRefundForRemission(payment: IPayment, remission: IRemission[],fees:any) {
     this.viewStatus = 'addrefundforremission';
- 
+    this.paymentLibComponent.isFromServiceRequestPage = true;
     this.payment = payment;
     this.paymentViewService.getApportionPaymentDetails(this.payment.reference).subscribe(
       paymentGroup => {
@@ -252,56 +221,9 @@ export class ServiceRequestComponent implements OnInit {
     );
   }
 
-
-  chkIssueRefundBtnEnable(payment: IPayment): boolean {
-    if (this.check4AllowedRoles2AccessRefund() && this.allowFurtherAccessAfter4Days(payment) &&
-      payment.method === 'payment by account' && payment.status.toLocaleLowerCase() === 'success') {
-      this.isIssueRefunfBtnEnable = true;
-    }
-    if (this.isIssueRefunfBtnEnable) {
-      return true;
-    } else {
-      return false;
-    };
-  }
-
-  chkIsRefundRemissionBtnEnable(): boolean {
-    if (this.orderDetail !== null &&  this.orderDetail !== undefined) {
-      this.paymentLibComponent.isFromServiceRequestPage = true;
-    this.orderDetail.forEach(orderDetail => {
-      if (orderDetail.payments) {
-        orderDetail.payments.forEach(payment => {
-          if (payment.method.toLocaleLowerCase() === 'payment by account' && payment.status.toLocaleLowerCase() === 'success' && this.allowFurtherAccessAfter4Days(payment)) {
-            this.isRefundRemissionBtnEnable = true;
-          }
-        });
-      }
-    });
-    if (this.isRefundRemissionBtnEnable) {
-      return true;
-    } else {
-      return false;
-    };
-  }
-  }
-
-  check4AllowedRoles2AccessRefund = (): boolean => {
-    return this.allowedRolesToAccessRefund.some(role =>
-      this.LOGGEDINUSERROLES.indexOf(role) !== -1
-    );
-  }
-
-  allowFurtherAccessAfter4Days = (payment: IPayment): boolean => {
-    if (payment !== null && payment !== undefined) {
-    let tmp4DayAgo = new Date();
-    tmp4DayAgo.setDate(tmp4DayAgo.getDate() - 4);
-    return tmp4DayAgo >= new Date(payment.date_created);
-    }
-  }
-
   issueRefund(payment: IPayment) {
     if (payment !== null && payment !== undefined) {
-    if(this.chkIssueRefundBtnEnable(payment)) {
+    if( this.chkIsIssueRefundBtnEnable(payment)) {
     this.viewStatus = 'issuerefund';
     this.payment = payment;
     this.paymentLibComponent.isFromServiceRequestPage = true;
@@ -330,6 +252,41 @@ export class ServiceRequestComponent implements OnInit {
     this.viewStatus = 'payment-view';
   }
 
+  chkIsIssueRefundBtnEnable(payment: IPayment): boolean {
+    if (payment !== null && payment !== undefined) {
+    if (!payment.issue_refund_add_refund_add_remission){
+      return false;
+    } else if (payment.issue_refund && payment.refund_enable && payment.issue_refund_add_refund_add_remission) {
+      return true
+    } else {
+      return false;
+    }
+  }
+  }
+
+  chkIsAddRefundBtnEnable(remission: IRemission): boolean {
+    if (remission !== null && remission !== undefined) {
+    if (!remission.issue_refund_add_refund_add_remission){
+      return false;
+    } else if (remission.add_refund && remission.issue_refund_add_refund_add_remission) {
+      return true
+    } else {
+      return false;
+    }
+  }
+  }
+
+  chkIsAddRemissionBtnEnable(fee: IFee): boolean {
+    if (fee !== null && fee !== undefined) {
+    if (!fee.issue_refund_add_refund_add_remission){
+      return false;
+    } else if (fee.remission_enable && fee.issue_refund_add_refund_add_remission) {
+      return true
+    } else {
+      return false;
+    }
+  }
+  }
   resetOrderData() {
     this.OrderslistService.setOrderRef(null);
     this.OrderslistService.setorderCCDEvent(null);
@@ -340,4 +297,95 @@ export class ServiceRequestComponent implements OnInit {
     this.OrderslistService.setorderRemissionTotal(null);
     this.OrderslistService.setorderFeesTotal(null);
   }
+
+  // chkForAddRemission(feeCode: string): boolean {
+  //   if (this.chkForPBAPayment() && this.check4AllowedRoles2AccessRefund()) {
+  //     if (this.orderDetail[0]['remissions'].length > 0) {
+  //       for (const remission of this.orderDetail[0]['remissions']) {
+  //         if (remission.fee_code === feeCode) {
+  //           return false;
+  //         }
+  //       }
+  //     }
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
+
+  // chkForPBAPayment(): boolean {
+  //   if (this.orderDetail !== null &&  this.orderDetail !== undefined) {
+  //   this.orderDetail.forEach(orderDetail => {
+  //     if (orderDetail.payments) {
+  //       orderDetail.payments.forEach(payment => {
+  //         if (payment.method.toLocaleLowerCase() === 'payment by account' && this.allowFurtherAccessAfter4Days(payment)) {
+  //           this.paymentLibComponent.paymentReference = payment.reference;
+  //           this.isPBA = true;
+  //         }
+  //       });
+  //     }
+  //   });
+  //   if (this.isPBA) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   };
+  // }
+  // }
+  // chkIssueRefundBtnEnable(payment: IPayment): boolean {
+  //   if (this.check4AllowedRoles2AccessRefund() && this.allowFurtherAccessAfter4Days(payment) &&
+  //     payment.method === 'payment by account' && payment.status.toLocaleLowerCase() === 'success') {
+  //     this.isIssueRefunfBtnEnable = true;
+  //   }
+  //   if (this.isIssueRefunfBtnEnable) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   };
+  // }
+
+  // chkIsRefundRemissionBtnEnable(): boolean {
+  //   if (this.orderDetail !== null &&  this.orderDetail !== undefined) {
+  //     this.paymentLibComponent.isFromServiceRequestPage = true;
+  //   this.orderDetail.forEach(orderDetail => {
+  //     if (orderDetail.payments) {
+  //       orderDetail.payments.forEach(payment => {
+  //         if (payment.method.toLocaleLowerCase() === 'payment by account' && payment.status.toLocaleLowerCase() === 'success' && this.allowFurtherAccessAfter4Days(payment)) {
+  //           this.isRefundRemissionBtnEnable = true;
+  //         }
+  //       });
+  //     }
+  //   });
+  //   if (this.isRefundRemissionBtnEnable) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   };
+  // }
+  // }
+
+  // check4AllowedRoles2AccessRefund = (): boolean => {
+  //   return this.allowedRolesToAccessRefund.some(role =>
+  //     this.LOGGEDINUSERROLES.indexOf(role) !== -1
+  //   );
+  // }
+
+  // allowFurtherAccessAfter4Days = (payment: IPayment): boolean => {
+  //   if (payment !== null && payment !== undefined) {
+  //   let tmp4DayAgo = new Date();
+  //   tmp4DayAgo.setDate(tmp4DayAgo.getDate() - 4);
+  //   return tmp4DayAgo >= new Date(payment.date_created);
+  //   }
+  // }
+
+
+  // goToServiceRequestPage(event: any) {
+  //   event.preventDefault();
+  //   this.isFromServiceRequestPage = true;
+  //   this.viewStatus = 'main'
+  //   this.paymentLibComponent.viewName = 'case-transactions';
+  //   this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+  //   this.router.onSameUrlNavigation = 'reload';
+  // }
+
 }

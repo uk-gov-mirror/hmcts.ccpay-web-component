@@ -21,4 +21,8 @@ export interface IFee {
   amount_due?: number;
   remission_enable?: boolean;
   over_payment?: number; 
+  refund_amount?: number;
+  updated_volume?:number;
+  selected?:any;
+  issue_refund_add_refund_add_remission: boolean
 }

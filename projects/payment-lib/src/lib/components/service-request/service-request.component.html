@@ -6,7 +6,7 @@
           <a href="javascript:void(0)" (click)="goToCaseTransationPage($event)" class="govuk-back-link">Back</a>
         </li>
         <li class="govuk-breadcrumbs__list-item" *ngIf="isServiceRequest !== 'false'">
-          <a href="javascript:void(0)" (click)="goToServiceRequestPage()" class="govuk-back-link">Back</a>
+          <a href="javascript:void(0)" (click)="goToServiceRequestPage()" id="bckLnksize" class="govuk-back-link">Back</a>
         </li>
       </ol>
     </div>
@@ -59,7 +59,7 @@
               <td class="govuk-table__cell">{{fee.volume? fee.volume : '-'}} X {{ fee.calculated_amount/fee.volume| currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
               <td class="govuk-table__cell">{{ fee?.net_amount | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
               <td class="govuk-table__cell alignright" *ngIf="isServiceRequest === 'false'">
-                  <button [disabled]="!chkForAddRemission(fee.code, fee.id)" (click)="addRemission(fee)" class="govuk-button govuk-button--secondary"> Add remission</button>
+                  <button [disabled]="!chkIsAddRemissionBtnEnable(fee)"   (click)="addRemission(fee)" class="govuk-button govuk-button--secondary"> Add remission</button>
               </td>
           
             </tr>
@@ -96,7 +96,7 @@
            <td class="govuk-table__cell whitespace-inherit">{{ remission?.fee_code }}</td>
            <td class="govuk-table__cell whitespace-inherit">{{ remission?.hwf_amount | currency:'GBP':'symbol-narrow':'1.2-2'}}</td>
            <td class="govuk-table__cell refundBtn whitespace-inherit"  >
-              <button  [disabled]="!chkIsRefundRemissionBtnEnable()" (click)="addRefundForRemission(order.payments[0],remission,order.fees)" class="govuk-button govuk-button--secondary"> Add refund</button>
+              <button  [disabled]="!chkIsAddRefundBtnEnable(remission)" (click)="addRefundForRemission(order.payments[0],remission,order.fees)" class="govuk-button govuk-button--secondary"> Add refund</button>
            </td>
            <!-- <td  class="govuk-table__cell refundBtn whitespace-inherit"  >
             
@@ -142,7 +142,7 @@
             <td class="govuk-table__cell whitespace-inherit">{{ payment?.date_created | date:'dd MMM yyyy' }}</td>
             <td class="govuk-table__cell whitespace-inherit">{{ payment?.amount | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
             <td class="govuk-table__cell alignright">
-              <button [disabled] = "!chkIssueRefundBtnEnable(payment)" (click)="issueRefund(payment)" class="govuk-button govuk-button--secondary">Issue refund</button>
+              <button [disabled]="!chkIsIssueRefundBtnEnable(payment)"   (click)="issueRefund(payment)" class="govuk-button govuk-button--secondary">Issue refund</button>
             </td>
             <!-- <td  *ngIf="!chkIssueRefundBtnEnable(payment)" class="govuk-table__cell" style="text-align: right;">
             </td> -->
@@ -177,6 +177,7 @@
 [paidAmount]= "orderTotalPayments"
 [isRefundRemission]="isRefundRemission"
 [caseType]="caseType" 
+[isServiceRequest] = "isServiceRequest"
 [paymentGroupRef]="orderRef" 
 [isFromServiceRequestPage] = "true"
 [payment] = "payment"
@@ -215,6 +216,7 @@
 [orderCCDEvent] = "orderCCDEvent"
 [orderDetail] = "orderDetail"
 [LOGGEDINUSERROLES] = "LOGGEDINUSERROLES"
+[isFromRefundListPage] = "false"
 [takepayment] = "takePayment"
 [orderFeesTotal] = "orderFeesTotal"
 [orderTotalPayments] = "orderTotalPayments"
@@ -233,7 +235,7 @@
 [caseType]="caseType" 
 [feeamount]="remissionFeeAmt"
 [remission] = "remissions"
-[isFromServiceRequestPage]="true" 
+[isFromServiceRequestPage]="isServiceRequest" 
 [ccdCaseNumber]="ccdCaseNumber"
 [orderRef] = "orderRef"
 [orderStatus] = "orderStatus"
@@ -262,7 +264,8 @@
 [isNewPcipalOff] = "isNewPcipalOff"
 [orderFeesTotal] = "orderFeesTotal"
 [orderTotalPayments] = "orderTotalPayments"
-[orderRemissionTotal] = "orderRemissionTotal">
+[orderRemissionTotal] = "orderRemissionTotal"
+[isServiceRequest] = "isServiceRequest">
 </ccpay-payment-view>
 
 <ng-container *ngIf="viewStatus === 'feeRemovalConfirmation'">

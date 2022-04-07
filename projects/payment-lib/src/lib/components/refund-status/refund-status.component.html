@@ -9,6 +9,7 @@
     </div>
   </div>
 </div>
+
 <ng-container *ngIf="viewName==='refundstatuslist' && rejectedRefundList && !isResendOperationSuccess && !isEditDetailsClicked">
   <!-- payments -->
 
@@ -89,7 +90,7 @@
           </tr>
         </thead>
         <tbody class="govuk-table__body" *ngIf="notificationList">
-          <tr class="govuk-table__row" *ngFor="let notification of notificationList">
+          <tr class="govuk-table__row" *ngFor="let notification of notificationList; let i = index;">
             <td class="govuk-table__cell whitespace-inherit">{{notification.date_created | date:'dd MMMM yyyy hh:mm:ss'}}</td>
             <td class="govuk-table__cell whitespace-inherit">{{orderParty}}</td>
             <td class="govuk-table__cell whitespace-inherit col-40">
@@ -102,7 +103,9 @@
                 {{notification?.contact_details?.address_line}} {{notification?.contact_details?.city}} {{notification?.contact_details?.county}} {{notification?.contact_details?.country}} {{notification?.contact_details?.postal_code}}
               </div>
             </td>
-            <td class="govuk-table__cell whitespace-inherit"><a href="Javascript:void(0);" (click)="putResend(notification)">Resend</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="Javascript:void(0);" (click)="gotoEditAddressDetails(notification)">Edit details</a></td>
+            <td class="govuk-table__cell whitespace-inherit" *ngIf="i === 0"><a href="Javascript:void(0);" (click)="putResend(notification)">Resend</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="Javascript:void(0);" (click)="gotoEditAddressDetails(notification)">Edit details</a></td>
+            <td class="govuk-table__cell whitespace-inherit" *ngIf="i > 0"> &nbsp; </td>
+
           </tr>
         </tbody>
         <tbody class="govuk-table__body" *ngIf="!notificationList">
@@ -141,12 +144,11 @@
   </div>
 
   <ng-container *ngIf="viewName==='refundview' && !isResendOperationSuccess && !isEditDetailsClicked">
-    <div *ngIf="refundButtonState==='Update required'">
+    <div  *ngIf="refundButtonState==='Update required'" >
       <!-- <div *ngIf="refundButtonState==='sent back'"> -->
       <br />
       <button type="submit" class="button govuk-button--secondary btnmargin"
-        (click)="gotoReviewAndReSubmitPage()">Resubmit
-        refund</button>
+        (click)="gotoReviewAndReSubmitPage()">Change refund details</button>
     </div>
     <div *ngIf="isProcessRefund && !isLastUpdatedByCurrentUser && refundButtonState==='Sent for approval'" >
       <!-- <div *ngIf="isProcessRefund && !isLastUpdatedByCurrentUser && refundButtonState==='sent for approval'"> -->
@@ -168,11 +170,11 @@
     </ol>
   </div> -->
   <div class="govuk-warning-text">
-    <h1 class="heading-large">Review and resubmit refund</h1>
+    <h1 class="heading-large">Check your answers</h1>
   </div>
   <table class="govuk-table">
     <tr class="govuk-table__row">
-      <td class="govuk-table__cell govuk-!-font-weight-bold">Reason for rejection</td>
+      <td class="govuk-table__cell govuk-!-font-weight-bold">Reason for return</td>
       <td class="govuk-table__cell">{{refundreason}}</td>
     </tr>
     <tr class="govuk-table__row">
@@ -182,7 +184,7 @@
     <tr class="govuk-table__row">
       <td class="govuk-table__cell govuk-!-font-weight-bold">Reason for refund</td>
       <td class="govuk-table__cell"> {{ refundlist?.reason}}
-        <a (click)="gotoRefundReasonPage()" *ngIf="refundlist?.reason !== 'Retrospective remission'"
+        <a (click)="gotoRefundReasonPage(refundlist?.reason)" *ngIf="refundlist?.reason !== 'Retrospective remission' && refundlist?.reason !== 'Overpayment'"
           class="govuk-link right">Change</a>
       </td>
 
@@ -197,7 +199,7 @@
       <td *ngIf="refundlist?.reason === 'Retrospective remission'" class="govuk-table__cell govuk-!-font-weight-bold">Refund amount</td>
       <td *ngIf="refundlist?.reason !== 'Retrospective remission'" class="govuk-table__cell govuk-!-font-weight-bold">Payment amount</td>
       <td class="govuk-table__cell"> £{{ changedAmount | number:'.2' }}
-        <a (click)="gotoAmountPage()" *ngIf="refundlist?.reason === 'Retrospective remission'"
+        <a (click)="gotoAmountPage()" *ngIf="refundlist?.reason !== 'Overpayment'"
           class="govuk-link right">Change</a>
       </td>
 
@@ -219,8 +221,11 @@
           <br/>
           {{refundlist?.contact_details?.address_line}} {{refundlist?.contact_details?.city}} {{refundlist?.contact_details?.county}} {{refundlist?.contact_details?.country}} {{refundlist?.contact_details?.postal_code}}
         </div> 
+        <a class="govuk-link" href="Javascript:void(0)" *ngIf="refundlist?.contact_details !=null"  class="govuk-link right" (click)="gotoEditDetailsPage(refundlist?.contact_details)">
+          Change
+        </a>
       </td>
-    </tr>
+    </tr> 
   </table>
   <div class="govuk-button-group">
     <button (click)="gotoReviewDetailsPage($event)" class="govuk-button govuk-button--secondary"> Previous</button>
@@ -241,14 +246,19 @@
   </p> -->
 </ng-container>
 
-<ng-container *ngIf="viewName === 'issuerefund' && !isResendOperationSuccess && !isEditDetailsClicked">
-  <ccpay-add-remission [isFromRefundListPage]="true" [viewCompStatus]="viewName" [isRefundRemission]="true"
-    [ccdCaseNumber]="ccdCaseNumber" (refundListReason)="getRefundListReason($event)"></ccpay-add-remission>
+<ng-container *ngIf="viewName === 'issuerefundpage1' && !isResendOperationSuccess && !isEditDetailsClicked">
+  <ccpay-add-remission [isFromRefundListPage]="true" [viewCompStatus]="viewName" [isRefundRemission]="true" [isFromRefundStatusPage] = "true"
+   [changeRefundReason]= "changeRefundReason" [ccdCaseNumber]="ccdCaseNumber" (refundListReason)="getRefundListReason($event)" [refundPaymentReference]= "refundlist?.payment_reference" ></ccpay-add-remission>
 </ng-container>
 
 <ng-container *ngIf="viewName === 'processretroremissonpage' && !isResendOperationSuccess && !isEditDetailsClicked">
   <ccpay-add-remission [isFromRefundListPage]="true" [viewCompStatus]="viewName" [isRefundRemission]="true"
-    [ccdCaseNumber]="ccdCaseNumber" (refundListAmount)="getRefundAmount($event)"></ccpay-add-remission>
+    [ccdCaseNumber]="ccdCaseNumber" [refundPaymentReference]= "refundlist?.payment_reference" (refundListAmount)="getRefundAmount($event)"></ccpay-add-remission>
+</ng-container>
+
+<ng-container *ngIf="viewName === 'issuerefund' && !isResendOperationSuccess && !isEditDetailsClicked">
+  <ccpay-add-remission [isFromRefundListPage]="true" [viewCompStatus]="viewName" [isRefundRemission]="true" [isFromServiceRequestPage] = "true"
+    [ccdCaseNumber]="ccdCaseNumber" [refundPaymentReference]= "refundlist?.payment_reference" [isFromRefundStatusPage]="true"  (refundListAmount)="getRefundAmount($event)"  (refundFees)="getRefundFees($event)"></ccpay-add-remission>
 </ng-container>
 
 <ng-container *ngIf="viewName === 'reviewrefundconfirmationpage' && !isResendOperationSuccess && !isEditDetailsClicked">
@@ -304,9 +314,9 @@
       Refund reference: {{ refundlist?.refund_reference}}
     </span>
     <ccpay-contact-details
-    [isEditOperation] = isEditDetailsClicked
+    [isEditOperationInRefundList] = isEditDetailsClicked
     [addressObj] = notification
-    (assignContactDetails)="getContactDetails($event)"
+    (assignContactDetailsInFefundsList)="getContactDetailsForRefundList($event)"
     (redirectToIssueRefund)="gotoCasetransationPageCancelBtnClicked($event)" ></ccpay-contact-details>
   <p>
       <a (click)="loadRefundListPage()" class="govuk-link" data-module="govuk-button">

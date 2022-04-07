@@ -23,6 +23,7 @@ const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 export class CaseTransactionsComponent implements OnInit {
   @Input('LOGGEDINUSERROLES') LOGGEDINUSERROLES: string[];
   @Input() isTakePayment: boolean;
+  @Input() isFromServiceRequestPage: boolean;
   takePayment: boolean;
   servicerequest: string;
   ccdCaseNumber: string;
@@ -97,7 +98,7 @@ export class CaseTransactionsComponent implements OnInit {
   allowedRolesToAccessRefund = ['payments-refund-approver', 'payments-refund'];
   isEligible4PBAPayment = ['pui-finance-manager', 'pui-user-manager', 'pui-organisation-manager', 'pui-case-manager'];
   currentDate = new Date();
-  isFromServiceRequestPage: boolean;
+  //isFromServiceRequestPage: boolean;
   navigationpage: string;
   remissionFeeAmt: number;
   constructor(private router: Router,
@@ -133,11 +134,19 @@ export class CaseTransactionsComponent implements OnInit {
     this.excReference = this.paymentLibComponent.EXC_REFERENCE;
     this.takePayment = this.paymentLibComponent.TAKEPAYMENT;
 
-    this.servicerequest = this.paymentLibComponent.SERVICEREQUEST.toString();
-    if (this.paymentLibComponent.SERVICEREQUEST.toString() === 'true') {
-      this.serviceRequestValue = 'true';
+    
+    if(this.paymentLibComponent.SERVICEREQUEST !== undefined) {
+      this.servicerequest = this.paymentLibComponent.SERVICEREQUEST.toString();
+      if (this.paymentLibComponent.SERVICEREQUEST.toString() === 'true') {
+        this.serviceRequestValue = 'true';
+        this.paymentLibComponent.isFromServiceRequestPage = true;
+      } else {
+        this.serviceRequestValue = 'false';
+        this.paymentLibComponent.isFromServiceRequestPage = false;
+      }
     } else {
       this.serviceRequestValue = 'false';
+      this.paymentLibComponent.isFromServiceRequestPage = false;
     }
     this.isBulkScanEnable = this.paymentLibComponent.ISBSENABLE;
     this.dcnNumber = this.paymentLibComponent.DCN_NUMBER;
@@ -168,7 +177,7 @@ export class CaseTransactionsComponent implements OnInit {
   
               },
               (error: any) => {
-                this.errorMessage = <any>error.replace(/"/g,"");
+                this.errorMessage = <any>error ? error.replace(/"/g,"") : "";
                 this.isCPODown = true;
               }
             );
@@ -178,7 +187,7 @@ export class CaseTransactionsComponent implements OnInit {
         
         },
         (error: any) => {
-          this.errorMessage = <any>error.replace(/"/g,"");
+          this.errorMessage = <any>error ? error.replace(/"/g,"") : "";
           this.isAnyFeeGroupAvilable = false;
           this.setDefaults();
         }
@@ -197,7 +206,7 @@ export class CaseTransactionsComponent implements OnInit {
 
             },
             (error: any) => {
-              this.errorMessage = <any>error.replace(/"/g,"");
+              this.errorMessage = <any>error ? error.replace(/"/g,"") : "";
               this.setDefaults();
               this.isCPODown = true;
             }
@@ -205,7 +214,7 @@ export class CaseTransactionsComponent implements OnInit {
 
         },
         (error: any) => {
-          this.errorMessage = <any>error.replace(/"/g,"");
+          this.errorMessage = <any>error ? error.replace(/"/g,"") : "";
           this.isAnyFeeGroupAvilable = false;
           this.setDefaults();
         }
@@ -639,8 +648,8 @@ export class CaseTransactionsComponent implements OnInit {
         // const paymentAllocation = this.paymentGroup.payments[0].payment_allocation;
         // this.isStatusAllocated = paymentAllocation.length > 0 && paymentAllocation[0].allocation_status === 'Allocated' || paymentAllocation.length === 0;
       },
-      (error: any) => this.errorMessage = error.replace(/"/g,"")
-    );
+      (error: any) => this.errorMessage = error? error.replace(/"/g,"") : ""
+      );
     }
   }
 

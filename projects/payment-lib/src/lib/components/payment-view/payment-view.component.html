@@ -108,7 +108,7 @@
       <ccpay-payment-statuses *ngIf="isStatusAllocated" [isTakePayment]="isTakePayment"></ccpay-payment-statuses>
       </div>
      <div class="remission">
-        <button  [disabled]="!chkIssueRefundBtnEnable(paymentGroup?.payments[0])"  (click)="issueRefund(paymentGroup)" class="govuk-button govuk-button--secondary">Issue refund</button>
+        <button  [disabled]="!chkIsIssueRefundBtnEnable(paymentGroup?.payments[0])"  (click)="issueRefund(paymentGroup)" class="govuk-button govuk-button--secondary">Issue refund</button>
      </div>
       
      <div  *ngIf="checkForFees(paymentGroup)">
@@ -144,9 +144,7 @@
 
           </tbody>
         </table>
-        <button [disabled]="!chkForAddRemission(fee.code, fee.id)" (click)="addRemission(fee)" class="govuk-button govuk-button--secondary"> Add remission</button>
-
-
+        <button [disabled]="!chkIsAddRemissionBtnEnable(fee)" (click)="addRemission(fee)" class="govuk-button govuk-button--secondary"> Add remission</button>
            
         <!-- <button  *ngIf="paymentGroup.payments[0].method === 'payment by account'" (click)="addRemission(fee)" class="govuk-button govuk-button--secondary"> Add remission</button>
              -->
@@ -173,7 +171,7 @@
             <td class="govuk-table__cell whitespace-inherit">{{ remission?.fee_code }}</td>
             <td class="govuk-table__cell whitespace-inherit">{{ remission?.hwf_amount | currency:'GBP':'symbol-narrow':'1.2-2'}}</td>
             <td class="govuk-table__cell refundBtn whitespace-inherit"  >
-               <button  [disabled]="!paymentGroup.payments[0].refund_enable" (click)="addRefundForRemission(paymentGroup.payments[0],remission,paymentGroup.fees)" class="govuk-button govuk-button--secondary"> Add refund</button>
+               <button  [disabled]="!chkIsAddRefundBtnEnable(remission)" (click)="addRefundForRemission(paymentGroup.payments[0],remission,paymentGroup.fees)" class="govuk-button govuk-button--secondary"> Add refund</button>
             </td>
             <!-- <td *ngIf="!chkIsRefundRemissionBtnEnable()" class="govuk-table__cell refundBtn whitespace-inherit"  >
              
@@ -307,8 +305,15 @@
   [ccdCaseNumber] = "ccdCaseNumber"
   [orderFeesTotal] = "orderFeesTotal"
   [orderTotalPayments] = "orderTotalPayments"
-  [orderRemissionTotal] = "orderRemissionTotal">
+  [orderRemissionTotal] = "orderRemissionTotal"
+  [isServiceRequest] = "isServiceRequest"
+  (goToServiceRquestComponent) = "goToServiceRequestPage()"
+>
 </ccpay-service-request>
+
+
+
+
 </ng-container>
 </div>
 <div class="over-payment">

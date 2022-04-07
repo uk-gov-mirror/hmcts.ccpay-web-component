@@ -85,6 +85,10 @@ export class ProcessRefundComponent implements OnInit {
       ])),
     });
    this.ccdCaseNumber = this.refundlistsource.ccd_case_number;
+
+   if((typeof this.paymentLibComponent.TAKEPAYMENT === 'string' && this.paymentLibComponent.TAKEPAYMENT === 'false') || (typeof this.paymentLibComponent.TAKEPAYMENT === 'boolean' && !this.paymentLibComponent.TAKEPAYMENT) ) {
+    this.isFromRefundListPage = true;
+   }
    this.paymentViewService.getPartyDetails(this.ccdCaseNumber).subscribe(
     response => {
       this.cpoDetails = JSON.parse(response).content[0];
@@ -95,10 +99,6 @@ export class ProcessRefundComponent implements OnInit {
       this.isCPODown = true;
     }
   );
-
-   if((typeof this.paymentLibComponent.TAKEPAYMENT === 'string' && this.paymentLibComponent.TAKEPAYMENT === 'false') || (typeof this.paymentLibComponent.TAKEPAYMENT === 'boolean' && !this.paymentLibComponent.TAKEPAYMENT) ) {
-    this.isFromRefundListPage = true;
-   }
   }
   
   checkRefundActions(code: string) {

@@ -75,3 +75,6 @@
     float: right;
     padding-right: 2em;
   }
+  .float-left-padding {
+    padding-left: 12em;
+  }
