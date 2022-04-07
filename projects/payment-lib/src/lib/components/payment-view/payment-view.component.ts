@@ -188,15 +188,15 @@ export class PaymentViewComponent implements OnInit {
   processRefund() {
     this.isConfirmationBtnDisabled = true;
     this.errorMessage = '';
-    this.fees = this.paymentGroup.fees[0];
-    this.fees  = this.fees.map(obj => ({ id: obj.id, 
+    const obj = this.paymentGroup.fees[0];
+    this.fees  = { id: obj.id, 
       code: obj.code,
       version:obj.version, 
       apportion_amount: obj.apportion_amount,
       calculated_amount: obj.calculated_amount,
       updated_volume: obj.updated_volume,
       volume: obj.volume,
-      refund_amount:obj.refund_amount }));
+      refund_amount:obj.over_payment };
     const requestBody = new PostRefundRetroRemission(this.contactDetailsObj,this.fees, this.paymentGroup.payments[0].reference, 'RR037', 
     this.paymentGroup.fees[0].over_payment);
     this.paymentViewService.postRefundsReason(requestBody).subscribe(
