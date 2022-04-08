@@ -237,15 +237,19 @@ export class ContactDetailsComponent implements OnInit {
           for( let i=0; i<addressArray.length-2; i++ ) {
             addressLine +=addressArray[i]; 
           }
-
-          this.assignContactDetails.emit({
+          const addressObject = {
             address_line: addressLine,
             city: this.postcodeAddress.POST_TOWN,
             county: this.postcodeAddress.LOCAL_CUSTODIAN_CODE_DESCRIPTION,
             postal_code: this.postcodeAddress.POSTCODE,
             country: 'United Kingdom',
             notification_type: 'LETTER'
-          });
+          };
+          if(!this.isEditOperationInRefundList) {
+          this.assignContactDetails.emit(addressObject);
+        } else  {
+          this.assignContactDetailsInFefundsList.emit(addressObject);
+        }
         } else {
           this.isAddressBoxEmpty = true;
         }
