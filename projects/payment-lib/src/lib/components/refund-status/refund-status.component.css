@@ -139,3 +139,6 @@
 .govuk-link {
   cursor: pointer;
 }
+.contactDetails-width {
+  width: 70%;
+}
