@@ -257,7 +257,7 @@ export class AddRemissionComponent implements OnInit {
 
   refundFeesList() {
     const creds = this.remissionForm.controls.feesList as FormArray;
-   if(creds.controls.length > 0) {
+  // if(creds.controls.length > 0) {
       for(var i=0;i<this.fees.length;i++) {
         creds.push(this.formBuilder.group({
           id: this.fees[i].id,
@@ -275,7 +275,7 @@ export class AddRemissionComponent implements OnInit {
         }));
    }
     this.cd.detectChanges();
-  }
+  //}
   }
 
   get feesList()
