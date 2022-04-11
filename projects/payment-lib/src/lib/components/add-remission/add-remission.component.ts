@@ -257,7 +257,7 @@ export class AddRemissionComponent implements OnInit {
 
   refundFeesList() {
     const creds = this.remissionForm.controls.feesList as FormArray;
-   // if(creds.controls.length > 0) {
+   if(creds.controls.length > 0) {
       for(var i=0;i<this.fees.length;i++) {
         creds.push(this.formBuilder.group({
           id: this.fees[i].id,
@@ -273,7 +273,7 @@ export class AddRemissionComponent implements OnInit {
           selected:[''] ,
           updated_volume: this.fees[i].volume
         }));
-   // }
+   }
     this.cd.detectChanges();
   }
   }
@@ -847,9 +847,8 @@ export class AddRemissionComponent implements OnInit {
                                         version:obj.version, 
                                         apportion_amount: obj.apportion_amount,
                                         calculated_amount: obj.calculated_amount,
-                                        updated_volume: obj.updated_volume? obj.updated_volume : obj.volume,
-                                        volume: obj.volume,
-                                        refund_amount: isFullyRefund ? this.totalRefundAmount : obj.refund_amount }));
+                                        updated_volume: obj.updated_volume,
+                                        refund_amount:obj.refund_amount }));
  
   
     const requestBody = new PostRefundRetroRemission(this.contactDetailsObj, this.fees,this.payment.reference, this.refundReason, 
