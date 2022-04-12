@@ -226,6 +226,7 @@ export class AddRemissionComponent implements OnInit {
     
     if (this.fees && this.viewCompStatus === 'issuerefund') {
       this.refundFeesList();
+      this.gotoIssuePage()
     }
 
     if(this.viewCompStatus === ''){
