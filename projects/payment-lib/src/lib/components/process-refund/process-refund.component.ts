@@ -313,7 +313,7 @@ export class ProcessRefundComponent implements OnInit {
     }
   }
 
-  goToCaseReview() {
-    this.router.navigate([`/cases/case-details/${this.ccdCaseNumber}`], {relativeTo: this.activeRoute});
-  }
+  // goToCaseReview() {
+  //   this.router.navigate([`/cases/case-details/${this.ccdCaseNumber}`], {relativeTo: this.activeRoute});
+  // }
 }
