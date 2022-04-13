@@ -452,7 +452,7 @@
         A refund request for {{refundAmount  | currency:'GBP':'symbol-narrow':'1.2-2' }} has been created and will be passed to a team leader to approve.
       </p>
     <p class="govuk-body">
-    <a href="javascript:void(0)" class="govuk-link pointer" data-module="govuk-button">
+    <a href="javascript:void(0)" (click)="goToCaseTransationPage($event)" class="govuk-link pointer" data-module="govuk-button">
       Return to case
   </a>
     </p>

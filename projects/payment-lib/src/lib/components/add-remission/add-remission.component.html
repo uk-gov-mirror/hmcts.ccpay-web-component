@@ -436,7 +436,6 @@
           </tr>
         </tbody>
         <tbody class="govuk-table__body" *ngIf="isFullyRefund">
-          {{fees | json}}
           <tr class="govuk-table__row" *ngFor="let fee of fees; let i = index">
             <td class="govuk-table__cell">
               <div  class="govuk-checkboxes govuk-checkboxes--large" data-module="govuk-checkboxes">
