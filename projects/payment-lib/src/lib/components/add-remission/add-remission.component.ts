@@ -226,7 +226,6 @@ export class AddRemissionComponent implements OnInit {
     
     if (this.fees && this.viewCompStatus === 'issuerefund') {
       this.refundFeesList();
-      this.gotoIssuePage()
     }
 
     if(this.viewCompStatus === ''){
@@ -670,8 +669,11 @@ export class AddRemissionComponent implements OnInit {
     this.isReasonEmpty = false;
   }
 
-  gotoIssuePage(){
-
+  gotoIssuePage(isFullyRefund: any){
+if(isFullyRefund) {
+  this.viewCompStatus = 'issuerefundpage1';
+  this.getRefundReasons();
+} else {
     [].forEach.call(document.querySelectorAll('input'), function (el) {
       el.classList.remove('inline-error-class');
     });
@@ -774,6 +776,7 @@ export class AddRemissionComponent implements OnInit {
         this.viewCompStatus = 'issuerefundpage1';
         this.getRefundReasons();
       }
+    }
   }
 
   calAmtToRefund(value,amount,volume, i: any) {

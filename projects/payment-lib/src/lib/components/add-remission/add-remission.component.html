@@ -449,8 +449,7 @@
                   type="checkbox" 
                   value="{{fee.id}}"
                   disabled="disabled"
-                  [checked]="true"
-                  formControlName="selected" >
+                  [checked]="true" >
                   <label class="govuk-label govuk-checkboxes__label" for="{{fee.id}}">
                     <span style="display:none">Select</span>
                   </label>
@@ -465,7 +464,7 @@
             <td class="govuk-table__cell  whitespace-inherit left" >{{ fee.apportion_amount | currency:'GBP':'symbol-narrow':'1.2-2'}} </td>
             <td class="govuk-table__cell  whitespace-inherit left">
               <div >
-              <input disabled="disabled"  class="govuk-input govuk-input--width-4 center"  id="feeVolumeUpdated_{{fee.id}}"  value="{{fee.volume}}"  name="feeVolumeUpdated_{{fee.id}}" formControlName="updated_volume" type="text" >
+              <input disabled="disabled"  class="govuk-input govuk-input--width-4 center"  id="feeVolumeUpdated_{{fee.id}}"  value="{{fee.volume}}"  name="feeVolumeUpdated_{{fee.id}}" type="text" >
             </div>
             </td>
         
@@ -474,7 +473,7 @@
                 <div class="hmcts-currency-input">
                   
                   <div class="hmcts-currency-input__symbol" aria-hidden="true">£</div>
-                  <input disabled="disabled" class="govuk-input govuk-input--width-10" id="feeAmount_{{fee.id}}" name="feeAmount_{{fee.id}}" type="text" aria-describedby="amount-currency "  value="{{ fee.apportion_amount | currency:'GBP':'symbol-narrow':'1.2-2'}}" pattern="[0-9]*" formControlName="amounttorefund">
+                  <input disabled="disabled" class="govuk-input govuk-input--width-10" id="feeAmount_{{fee.id}}" name="feeAmount_{{fee.id}}" type="text" aria-describedby="amount-currency "  value="{{ fee.apportion_amount | currency:'GBP':'symbol-narrow':'1.2-2'}}" pattern="[0-9]*" >
                 </div> 
         
             </td>
@@ -493,7 +492,7 @@
   </a>
   
     
-  <button [disabled] = "noneSelected()" (click)="gotoIssuePage()" class="govuk-button">
+  <button [disabled] = "noneSelected()" (click)="gotoIssuePage(isFullyRefund)" class="govuk-button">
     Continue
   </button>
   
