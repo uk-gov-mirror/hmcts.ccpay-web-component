@@ -46,6 +46,10 @@
           <td class="bold tb-col-w">Payment amount</td>
           <td class="tb-col-w">£{{ paymentGroup?.payments[0]?.amount | number:'.2' }}</td>
         </tr>
+        <tr class="section">
+          <td class="bold tb-col-w">Over payment</td>
+          <td class="tb-col-w">£{{ paymentGroup?.payments[0]?.over_payment | number:'.2' }}</td>
+        </tr>
         <tr class="section" *ngIf="paymentGroup?.payments[0] && paymentGroup?.payments[0]?.document_control_number && !paymentGroup?.payments[0]?.external_reference">
           <td class="bold tb-col-w">Payment asset number(DCN)</td>
           <td class="tb-col-w">{{ paymentGroup?.payments[0]?.document_control_number }}</td>
