@@ -487,10 +487,12 @@
     <div class="govuk-button-group">
 
   
-  <a  (click)="gotoServiceRequestPage($event)"  draggable="false" class="govuk-button govuk-button--secondary" data-module="govuk-button">
+  <a  (click)="gotoServiceRequestPage($event)"  *ngIf="!isFullyRefund" draggable="false" class="govuk-button govuk-button--secondary" data-module="govuk-button">
     Previous
   </a>
-  
+  <a  (click)="goToPaymentViewComponent()"  *ngIf="isFullyRefund" draggable="false" class="govuk-button govuk-button--secondary" data-module="govuk-button">
+    Previous
+  </a>
     
   <button [disabled] = "noneSelected()" (click)="gotoIssuePage(isFullyRefund)" class="govuk-button">
     Continue
