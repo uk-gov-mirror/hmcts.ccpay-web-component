@@ -46,7 +46,7 @@
           <td class="bold tb-col-w">Payment amount</td>
           <td class="tb-col-w">£{{ paymentGroup?.payments[0]?.amount | number:'.2' }}</td>
         </tr>
-        <tr class="section" *ngIf="getOverPaymentValue() > 0">
+        <tr class="section" *ngIf="paymentGroup?.payments[0]?.over_payment > 0">
           <td class="bold tb-col-w">Over payment</td>
           <td class="tb-col-w">£{{ getOverPaymentValue() | number:'.2' }}</td>
         </tr>
@@ -399,7 +399,7 @@
       </tr>
       <tr class="govuk-table__row">
           <td class="govuk-table__cell govuk-!-font-weight-bold">Refund amount</td>
-          <td class="govuk-table__cell">{{paymentGroup?.fees[0]?.over_payment | currency:'GBP':'symbol-narrow':'1.2-2'}}</td>
+          <td class="govuk-table__cell">{{getOverPaymentValue() | currency:'GBP':'symbol-narrow':'1.2-2'}}</td>
       </tr>
       <tr class="govuk-table__row">
           <td class="govuk-table__cell govuk-!-font-weight-bold">Refund reason</td>

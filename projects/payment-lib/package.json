@@ -1,6 +1,6 @@
 {
   "name": "@hmcts/ccpay-web-component",
-  "version": "5.0.2-beta71",
+  "version": "5.0.2-beta72",
   "publishConfig": {
     "access": "public"
   },
