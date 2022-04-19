@@ -46,9 +46,9 @@
           <td class="bold tb-col-w">Payment amount</td>
           <td class="tb-col-w">£{{ paymentGroup?.payments[0]?.amount | number:'.2' }}</td>
         </tr>
-        <tr class="section" *ngIf="paymentGroup?.payments[0]?.over_payment > 0">
+        <tr class="section" *ngIf="getOverPaymentValue() > 0">
           <td class="bold tb-col-w">Over payment</td>
-          <td class="tb-col-w">£{{ paymentGroup?.payments[0]?.over_payment | number:'.2' }}</td>
+          <td class="tb-col-w">£{{ getOverPaymentValue() | number:'.2' }}</td>
         </tr>
         <tr class="section" *ngIf="paymentGroup?.payments[0] && paymentGroup?.payments[0]?.document_control_number && !paymentGroup?.payments[0]?.external_reference">
           <td class="bold tb-col-w">Payment asset number(DCN)</td>
@@ -339,7 +339,7 @@
       <div class="govuk-radios__item">
         <input class="govuk-radios__input" id="over-payment" name="over-payment" type="radio" (click)="selectPymentOption('op')" value="op">
         <label class="govuk-label govuk-radios__label govuk-font19px" for="where-do-you-live">
-          Over payment £{{paymentGroup?.fees[0]?.over_payment | number:'.2'}}
+          Over payment £{{getOverPaymentValue() | number:'.2'}}
         </label>
       </div>
       <div class="govuk-radios__item">
@@ -349,7 +349,8 @@
         </label>
       </div>
     </div>
-      <button class="govuk-button govuk-button--secondary over-payment-alignment govuk-font19px"> Previous</button>
+      <button class="govuk-button govuk-button--secondary over-payment-alignment govuk-font19px"
+      (click)="goToPaymentViewComponent(paymentGroup)"> Previous</button>
       <button 
       (click)="continuePayment(paymentGroup)"
       [disabled]="isContinueBtnDisabled"

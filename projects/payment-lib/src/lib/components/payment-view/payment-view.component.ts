@@ -126,6 +126,14 @@ export class PaymentViewComponent implements OnInit {
   public goToPaymentList(): void {
     this.paymentLibComponent.viewName = 'payment-list';
   }
+  getOverPaymentValue() {
+    let feesOverPayment = 0;
+    this.paymentGroup.fees.forEach(fee => {
+      feesOverPayment += fee.over_payment;
+    });
+    return feesOverPayment > 0 ? feesOverPayment : this.paymentGroup.payments[0].over_payment;
+
+  }
   goToServiceRequestPage() {
     this.paymentLibComponent.viewName = 'case-transactions';
     this.paymentLibComponent.TAKEPAYMENT = false;
@@ -196,9 +204,9 @@ export class PaymentViewComponent implements OnInit {
       calculated_amount: obj.calculated_amount,
       updated_volume: obj.updated_volume ? obj.updated_volume : obj.volume,
       volume: obj.volume,
-      refund_amount:obj.over_payment }];
+      refund_amount: this.getOverPaymentValue() }];
     const requestBody = new PostRefundRetroRemission(this.contactDetailsObj,this.fees, this.paymentGroup.payments[0].reference, 'RR037', 
-    this.paymentGroup.fees[0].over_payment);
+    this.getOverPaymentValue());
     this.paymentViewService.postRefundsReason(requestBody).subscribe(
       response => {
           if (JSON.parse(response)) {
