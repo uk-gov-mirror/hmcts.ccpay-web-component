@@ -316,7 +316,11 @@ export class CaseTransactionsComponent implements OnInit {
       }
 
       if (paymentGroup.payments) {
+        const isFeeOverPaymentExist = this.overPaymentAmount === 0;
         paymentGroup.payments.forEach(payment => {
+          if(isFeeOverPaymentExist) {
+            this.overPaymentAmount = this.overPaymentAmount + payment.over_payment
+          }
           if (payment.status.toUpperCase() === 'SUCCESS') {
             this.orderTotalPayments = this.orderTotalPayments + payment.amount;
           }

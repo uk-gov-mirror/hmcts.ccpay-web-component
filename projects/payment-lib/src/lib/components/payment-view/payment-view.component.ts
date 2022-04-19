@@ -242,7 +242,12 @@ export class PaymentViewComponent implements OnInit {
  }
   }
 
- 
+  goToPaymentViewComponent(paymentgrp: IPaymentGroup) {
+    this.paymentLibComponent.paymentMethod = paymentgrp.payments[0].method;
+    this.paymentLibComponent.paymentGroupReference = paymentgrp.payment_group_reference;
+    this.paymentLibComponent.paymentReference = paymentgrp.payments[0].reference;
+    this.paymentLibComponent.viewName = 'payment-view';
+  }
   issueRefund(paymentgrp: IPaymentGroup) {
     if (paymentgrp !== null &&  paymentgrp !== undefined) {
       if(this.chkIsIssueRefundBtnEnable(paymentgrp.payments[0])) {
