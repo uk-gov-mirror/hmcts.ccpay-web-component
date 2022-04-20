@@ -230,7 +230,7 @@ export class PaymentViewComponent implements OnInit {
     this.viewCompStatus = 'overPaymentAddressCapture';
   }
   addRefundForRemission(payment: IPayment, remission: IRemission[],fees:any) {
- if(this.chkIsIssueRefundBtnEnable(payment)) {
+ //if(!this.chkIsIssueRefundBtnEnable(payment)) {
     this.payment = payment;
     this.paymentViewService.getApportionPaymentDetails(this.payment.reference).subscribe(
       paymentGroup => {
@@ -247,7 +247,7 @@ export class PaymentViewComponent implements OnInit {
       },
       (error: any) => this.errorMessage = error
     );
- }
+   //}
   }
 
   goToPaymentViewComponent(paymentgrp: IPaymentGroup) {
