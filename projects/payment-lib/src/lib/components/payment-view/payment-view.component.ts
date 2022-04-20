@@ -284,38 +284,41 @@ export class PaymentViewComponent implements OnInit {
   }
 
   chkIsIssueRefundBtnEnable(payment: IPayment): boolean {
-    if (payment !== null && payment !== undefined) {
-    if (!payment.issue_refund_add_refund_add_remission){
-      return false;
-    } else if (payment.issue_refund && payment.refund_enable && payment.issue_refund_add_refund_add_remission) {
-      return true
-    } else {
-      return false;
+      if (payment !== null && payment !== undefined) {
+        return payment.issue_refund
+      // if (!payment.issue_refund_add_refund_add_remission){
+      //   return false;
+      // } else if (payment.issue_refund && payment.refund_enable && payment.issue_refund_add_refund_add_remission) {
+      //   return true
+      // } else {
+      //   return false;
+      // }
     }
-  }
   }
 
   chkIsAddRefundBtnEnable(remission: IRemission): boolean {
-    if (remission !== null && remission !== undefined) {
-    if (!remission.issue_refund_add_refund_add_remission){
-      return false;
-    } else if (remission.add_refund && remission.issue_refund_add_refund_add_remission) {
-      return true
-    } else {
-      return false;
+      if (remission !== null && remission !== undefined) {
+        return remission.add_refund;
+      // if (!remission.issue_refund_add_refund_add_remission){
+      //   return false;
+      // } else if (remission.add_refund && remission.issue_refund_add_refund_add_remission) {
+      //   return true
+      // } else {
+      //   return false;
+      // }
     }
-  }
   }
 
   chkIsAddRemissionBtnEnable(fee: IFee): boolean {
     if (fee !== null && fee !== undefined) {
-    if (!fee.issue_refund_add_refund_add_remission){
-      return false;
-    } else if (fee.remission_enable && fee.issue_refund_add_refund_add_remission) {
-      return true
-    } else {
-      return false;
-    }
+      return fee.add_remission && fee.remission_enable;
+    // if (!fee.issue_refund_add_refund_add_remission){
+    //   return false;
+    // } else if (fee.remission_enable && fee.issue_refund_add_refund_add_remission) {
+    //   return true
+    // } else {
+    //   return false;
+    // }
   }
 }
   selectPymentOption(paymentType: string) {
