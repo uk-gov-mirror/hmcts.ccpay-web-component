@@ -10,6 +10,7 @@ import { PayhubAntennaRequest } from '../../interfaces/PayhubAntennaRequest';
 import { SafeHtml } from '@angular/platform-browser';
 import {Router} from '@angular/router';
 import {Location} from '@angular/common';
+import { OrderslistService } from '../../services/orderslist.service';
 
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 
@@ -39,7 +40,7 @@ export class FeeSummaryComponent implements OnInit {
   selectedOption:string;
   isBackButtonEnable: boolean = true;
   outStandingAmount: number;
-  isFeeAmountZero: boolean = false;;
+  isFeeAmountZero: boolean = false;
   totalAfterRemission: number = 0;
   isConfirmationBtnDisabled: boolean = false;
   isRemoveBtnDisabled: boolean = false;
@@ -53,17 +54,20 @@ export class FeeSummaryComponent implements OnInit {
     private bulkScaningPaymentService: BulkScaningPaymentService,
     private location: Location,
     private paymentViewService: PaymentViewService,
-    private paymentLibComponent: PaymentLibComponent
+    private paymentLibComponent: PaymentLibComponent,
+    private OrderslistService: OrderslistService
   ) {}
 
   ngOnInit() {
     this.viewStatus = 'main';
+    this.caseType = this.paymentLibComponent.CASETYPE;
     this.bsPaymentDcnNumber = this.paymentLibComponent.bspaymentdcn;
     this.selectedOption = this.paymentLibComponent.SELECTED_OPTION.toLocaleLowerCase();
     this.isStrategicFixEnable = this.paymentLibComponent.ISSFENABLE;
+    this.OrderslistService.setCaseType(this.paymentLibComponent.CASETYPE);
 
-      //8X8 Retirement code changes
-     this.platForm = 'Antenna';
+    //8X8 Retirement code changes
+    this.platForm = 'Antenna';
 
     this.paymentViewService.getBSfeature().subscribe(
       features => {
@@ -155,7 +159,7 @@ export class FeeSummaryComponent implements OnInit {
 
         this.outStandingAmount = this.bulkScaningPaymentService.calculateOutStandingAmount(paymentGroup);
       },
-      (error: any) => this.errorMessage = error
+      (error: any) => this.errorMessage = error.replace(/"/g,"")
     );
   }
 

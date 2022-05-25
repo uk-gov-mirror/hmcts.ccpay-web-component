@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import {RouterModule} from '@angular/router';
 import { AppComponent } from './app.component';
 import {PhaseBannerComponent} from './components/shared/phase-banner/phase-banner.component';
 import { NavigationComponent } from './components/shared/navigation/navigation.component';
@@ -29,6 +29,7 @@ import { PaymentLibModule } from '../../projects/payment-lib/src/lib/payment-lib
     PaymentLibModule,
     AppRoutingModule,
     FormsModule,
+    RouterModule,
     ReactiveFormsModule
   ],
   providers: [],

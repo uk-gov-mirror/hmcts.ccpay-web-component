@@ -115,7 +115,7 @@ private setProcessedUnallocatedReportHeaders (worksheet: XLSX.WorkSheet): XLSX.W
 private setShortFallReportHeaders (worksheet: XLSX.WorkSheet): XLSX.WorkSheet {
   worksheet.A1.v = "Resp_Service ID";
   worksheet.B1.v = "Resp_Service Name";
-  worksheet.C1.v = "Surplus_Shortfall";
+  worksheet.C1.v = "Over Payment_Under Payment";
   worksheet.D1.v = "Balance";
   worksheet.E1.v = "Payment_Amount";
   worksheet.F1.v = "CCD_Case_Ref";

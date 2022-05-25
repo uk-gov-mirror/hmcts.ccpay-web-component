@@ -1,9 +1,11 @@
+
+<ng-container *ngIf="viewStatus === 'paymentview'">
 <div class="govuk-width-container">
 
-  <div class="govuk-breadcrumbs">
+  <div  class="govuk-breadcrumbs">
     <ol class="govuk-breadcrumbs__list">
       <li class="govuk-breadcrumbs__list-item">
-        <a href="#" (click)="goToCaseTransationPage($event)" class="govuk-back-link">Back</a>
+        <a href="javascript:void(0)" (click)="goToCaseTransationPage($event)" class="govuk-back-link">Back</a>
       </li>
     </ol>
   </div>
@@ -21,7 +23,7 @@
       </div>
     </div>
 
-    <div class="payment-view-alignment" *ngIf="!errorMessage && paymentGroup">
+    <div class="payment-view-alignment" *ngIf="!errorMessage && paymentGroup?.payments[0]">
 
       <input #myInput type='hidden' id='iFrameDrivenImageValue' value='PAYMENTDETAILS'>
       <div class="govuk-grid-row">
@@ -31,86 +33,393 @@
       </div>
       <table>
         <tbody>
-      <tr class="section" *ngIf="isTurnOff">
-          <td class="bold tb-col-w">Payment group reference</td>
-          <td>{{ paymentGroup.payment_group_reference }}</td>
+     
+        <tr class="section">
+          <td class="bold tb-col-w">Service request reference</td>
+          <td class="tb-col-w">{{ serviceReference  }}</td> 
         </tr>
         <tr class="section">
           <td class="bold tb-col-w">Payment reference</td>
-          <td>{{ paymentGroup.payments[0].reference }}</td>
+          <td class="tb-col-w">{{  paymentGroup?.payments[0]?.reference }}</td>
         </tr>
         <tr class="section">
           <td class="bold tb-col-w">Payment amount</td>
-          <td>£{{ paymentGroup.payments[0].amount | number:'.2' }}</td>
+          <td class="tb-col-w">£{{ paymentGroup?.payments[0]?.amount | number:'.2' }}</td>
         </tr>
-        <tr class="section" *ngIf="paymentGroup.payments[0] && paymentGroup.payments[0].external_reference">
-          <td class="bold tb-col-w">GovPay Transaction ID</td>
-          <td>{{ paymentGroup.payments[0].external_reference }}</td>
-        </tr>
-        <tr class="section" *ngIf="paymentGroup.payments[0] && paymentGroup.payments[0].document_control_number && !paymentGroup.payments[0].external_reference">
+        <tr class="section" *ngIf="paymentGroup?.payments[0] && paymentGroup?.payments[0]?.document_control_number && !paymentGroup?.payments[0]?.external_reference">
           <td class="bold tb-col-w">Payment asset number(DCN)</td>
-          <td>{{ paymentGroup.payments[0].document_control_number }}</td>
+          <td class="tb-col-w">{{ paymentGroup?.payments[0]?.document_control_number }}</td>
         </tr>
-        <tr class="section" *ngIf="paymentGroup.payments[0] && paymentGroup.payments[0].document_control_number && !paymentGroup.payments[0].external_reference">
+        <tr class="section" *ngIf="paymentGroup?.payments[0] && paymentGroup?.payments[0]?.document_control_number && !paymentGroup?.payments[0]?.external_reference">
           <td class="bold tb-col-w">Banked date</td>
-          <td>{{ paymentGroup.payments[0].banked_date | date:'dd MMM yyyy' }}</td>
+          <td class="tb-col-w">{{ paymentGroup?.payments[0]?.banked_date | date:'dd MMM yyyy' }}</td>
         </tr>
+        <tr class="section" *ngIf="paymentGroup?.payments[0] && paymentGroup?.payments[0]?.external_reference">
+          <td class="bold tb-col-w">GovPay Transaction ID</td>
+          <td class="tb-col-w">{{ paymentGroup?.payments[0]?.external_reference }}</td>
+        </tr>
+        <tr class="section" >
+            <td class="bold tb-col-w">Payment method</td>
+            <td class="tb-col-w text-transform">{{ paymentGroup?.payments[0]?.method  }}</td>
+        </tr>
+        <tr class="section" *ngIf="paymentGroup?.payments[0]?.method === 'payment by account'" >
+            <td class="bold tb-col-w">Type</td>
+            <td class="tb-col-w" *ngIf="paymentGroup?.payments[0]?.method !== 'card'">Credit</td>
+            <td class="tb-col-w" *ngIf="paymentGroup?.payments[0]?.method === 'card'">Card</td>
+        </tr>
+        <tr class="section">
+            <td class="bold tb-col-w">Channel</td>
+            <td class="tb-col-w text-transform">{{ paymentGroup?.payments[0]?.channel  }}</td>
+        </tr>
+        <!-- <tr class="section">
+            <td class="bold tb-col-w">Method</td>
+            <td *ngIf="paymentGroup?.payments[0]?.method !== 'card'">{{ paymentGroup?.payments[0]?.method }}</td>
+            <td *ngIf="paymentGroup?.payments[0]?.method === 'card'">CARD</td>
+        </tr> -->
+        <!-- <tr class="section" *ngIf="paymentGroup?.payments[0]?.channel !== 'telephony'">
+            <td class="bold tb-col-w">Status</td>
+            <td>{{ paymentGroup?.payments[0]?.status }}</td>
+         </tr> -->
+        <tr class="section" *ngIf="paymentGroup?.payments[0]?.payment_allocation[0] !== undefined">
+            <td class="bold tb-col-w">Allocaton status</td>
+            <td class="tb-col-w">{{ paymentGroup?.payments[0]?.payment_allocation[0]?.allocation_status }}</td>
+          </tr>
+          
+          <tr *ngIf="paymentGroup?.payments[0].organisation_name">
+            <td class="bold tb-col-w">PBA account name</td>
+            <td class="tb-col-w">{{ paymentGroup?.payments[0]?.organisation_name }}</td>
+          </tr>
+
+          <tr *ngIf="paymentGroup?.payments[0].account_number">
+            <td class="bold tb-col-w">PBA number</td>
+            <td class="tb-col-w">{{ paymentGroup?.payments[0]?.account_number }}</td>
+          </tr>
+
+          <tr *ngIf="paymentGroup?.payments[0].customer_reference">
+            <td class="bold tb-col-w">Customer internal reference</td>
+            <td class="tb-col-w">{{ paymentGroup?.payments[0]?.customer_reference }}</td>
+          </tr>
+      
         </tbody>
       </table>
 
-      <div class="govuk-grid-row" *ngIf="paymentGroup.fees.length > 0">
+      <div>
+            <!-- Status histories -->
+      <ccpay-payment-statuses *ngIf="isStatusAllocated" [isTakePayment]="isTakePayment"></ccpay-payment-statuses>
+      </div>
+     <div class="remission">
+        <button [disabled]="!chkIssueRefundBtnEnable(paymentGroup?.payments[0])" (click)="issueRefund(paymentGroup)" class="govuk-button govuk-button--secondary">Issue refund</button>
+     </div>
+      
+     <div  *ngIf="checkForFees(paymentGroup)">
+      <div  *ngIf="paymentGroup.fees.length > 0">
         <div class="column">
+          <br/>
+          <br/>
           <h2 class="heading-large">Fee and remission details</h2>
+        
         </div>
       </div>
-
+    
       <div *ngFor="let fee of paymentGroup.fees">
         <table class="table">
           <tbody>
           <tr class="section">
             <td class="bold tb-col-w">Description</td>
-            <td>Application for {{ fee.description }}</td>
+            <td class="tb-col-w">Application for {{ fee.description }}</td>
           </tr>
           <tr class="section">
             <td class="bold tb-col-w">Fee code</td>
-            <td>{{ fee.code }}</td>
+            <td class="tb-col-w">{{ fee?.code }}</td>
           </tr>
           <tr class="section">
             <td class="bold tb-col-w" [ngClass]="{'tr-border': !fee.apportion_amount && !fee.remissions && !isTurnOff }">Fee amount</td>
-            <td [ngClass]="{'tr-border': !fee.apportion_amount && !fee.remissions && !isTurnOff }">£{{ fee.calculated_amount | number:'.2' }}</td>
+            <td [ngClass]="{'tr-border': !fee.apportion_amount && !fee.remissions && !isTurnOff}">£{{ fee?.calculated_amount | number:'.2' }}</td>
           </tr>
-          <tr *ngIf="fee.net_amount && isTurnOff">
-            <td class="bold tb-col-w" [ngClass]="{'tr-border': !fee.apportion_amount && !fee.remissions}" >Net amount</td>
-            <td [ngClass]="{'tr-border': !fee.apportion_amount && !fee.remissions}">£{{ fee.net_amount | number:'.2' }}</td>
-          </tr>
+        
           <tr *ngIf="fee.apportion_amount">
             <td class="bold tb-col-w tr-border" [ngClass]="{'tr-border': !fee.remissions}">Allocated amount</td>
-            <td [ngClass]="{'tr-border': !fee.remissions}">£{{ fee.apportion_amount | number:'.2' }}</td>
+            <td [ngClass]="{'tr-border': !fee.remissions}">£{{ fee?.apportion_amount | number:'.2' }}</td>
           </tr>
 
-          <tr *ngIf="fee.remissions">
-            <td class="bold tb-col-w">Remission code</td>
-            <td>{{fee.remissions.hwf_reference}}</td>
-          </tr>
-          <tr *ngIf="fee.remissions">
-            <td class="bold tb-col-w tr-border">Remission amount</td>
-            <td class="tr-border">£{{ fee.remissions.hwf_amount | number:'.2'}}</td>
-          </tr>
           </tbody>
         </table>
+        <button [disabled]="!chkForAddRemission(fee.code)" (click)="addRemission(fee)" class="govuk-button govuk-button--secondary"> Add remission</button>
+
+
+           
+        <!-- <button  *ngIf="paymentGroup.payments[0].method === 'payment by account'" (click)="addRemission(fee)" class="govuk-button govuk-button--secondary"> Add remission</button>
+             -->
 
       </div>
 
+                <!-- remissions -->
+                <div class="order-class">
+                  <div class="column">
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+           <td class="govuk-table__header col-24 whitespace-inherit" scope="col">Help with fees or remission code</td>
+            <td class="govuk-table__header col-27 whitespace-inherit" scope="col">Reference</td>
+            <td class="govuk-table__header whitespace-inherit" scope="col">Fee</td>
+            <td class="govuk-table__header whitespace-inherit" scope="col">Amount</td>
+            <td  class="govuk-table__header whitespace-inherit refundBtn" scope="col"></td>
+          </tr>
+      </thead>
+      <tbody class="govuk-table__body"  *ngFor="let remission of paymentGroup.remissions">
+        <tr class="govuk-table__row">
+           <td class="govuk-table__cell whitespace-inherit">{{ remission?.hwf_reference }}</td>
+            <td class="govuk-table__cell whitespace-inherit">{{ remission?.remission_reference }}</td>
+            <td class="govuk-table__cell whitespace-inherit">{{ remission?.fee_code }}</td>
+            <td class="govuk-table__cell whitespace-inherit">{{ remission?.hwf_amount | currency:'GBP':'symbol-narrow':'1.2-2'}}</td>
+            <td class="govuk-table__cell refundBtn whitespace-inherit"  >
+               <button  [disabled]="!chkIsRefundRemissionBtnEnable()" (click)="addRefundForRemission(paymentGroup.payments[0],remission,paymentGroup.fees)" class="govuk-button govuk-button--secondary"> Add refund</button>
+            </td>
+            <!-- <td *ngIf="!chkIsRefundRemissionBtnEnable()" class="govuk-table__cell refundBtn whitespace-inherit"  >
+             
+          </td> -->
+          </tr>
+      </tbody>
+      
+
+    </table>
+                  </div></div>
+    
+   <div *ngIf="paymentGroup.remissions?.length === 0">
+      <span class="mar-17" >No help with fees or remissions.</span>
+   </div>
+   
+  </div>
+
+
+
       <!-- card details -->
-      <ccpay-card-details *ngIf="isCardPayment && !isTelephonyPayment"></ccpay-card-details>
+      <!-- <ccpay-card-details *ngIf="isCardPayment && !isTelephonyPayment"></ccpay-card-details> -->
 
       <!-- pba details -->
-      <ccpay-pba-details *ngIf="!isCardPayment" [payment]="paymentGroup.payments[0]"></ccpay-pba-details>
+      <!-- <ccpay-pba-details *ngIf="!isCardPayment" [payment]="paymentGroup.payments[0]"></ccpay-pba-details> -->
 
-      <!-- Status histories -->
-      <ccpay-payment-statuses *ngIf="isStatusAllocated"></ccpay-payment-statuses>
+  
 
     </div>
 
   </main>
 </div>
+
+</ng-container>
+<ng-container *ngIf="viewStatus === 'addremission' && feeId">
+<ccpay-add-remission 
+[isTurnOff]="isTurnOff"
+[isStrategicFixEnable]="isStrategicFixEnable" 
+[isOldPcipalOff]="isOldPcipalOff" 
+[viewCompStatus]= "viewStatus"
+[isNewPcipalOff]="isNewPcipalOff" 
+[fee]="feeId" 
+[payment] = "payment"
+[orderStatus] ="paymentGroup.payments[0].status"
+[paidAmount]= "paymentGroup.payments[0].amount"
+[isRefundRemission]="isRefundRemission"
+[caseType]="caseType" 
+[paymentGroupRef]="paymentGroup.payment_group_reference" 
+[isFromPaymentDetailPage] = "true"
+[ccdCaseNumber]="ccdCaseNumber"
+[orderFeesTotal] = "orderFeesTotal"
+[orderTotalPayments] = "orderTotalPayments"
+[orderRemissionTotal] = "orderRemissionTotal"
+[orderRef] = "orderRef"
+[orderCreated] = "orderCreated"
+[orderParty] = "orderParty"
+[orderCCDEvent] = "orderCCDEvent"
+[orderDetail] = "orderDetail"
+[LOGGEDINUSERROLES] = "LOGGEDINUSERROLES"></ccpay-add-remission>
+</ng-container>
+
+<ng-container *ngIf="viewStatus === 'addrefundforremission' && payment">
+
+<ccpay-add-remission 
+[isTurnOff]="isTurnOff"
+[isStrategicFixEnable]="isStrategicFixEnable" 
+[isOldPcipalOff]="isOldPcipalOff" 
+[viewCompStatus]= "viewStatus"
+[isNewPcipalOff]="isNewPcipalOff" 
+[payment]="payment" 
+[orderStatus] ="orderStatus"
+[paidAmount]= "orderTotalPayments"
+[isRefundRemission]="isRefundRemission"
+[caseType]="caseType" 
+[feeamount]="remissionFeeAmt"
+[remission] = "remissions"
+[isFromServiceRequestPage]="false" 
+[paymentGroupRef]="paymentGroup.payment_group_reference"
+[ccdCaseNumber]="ccdCaseNumber"
+[orderFeesTotal] = "orderFeesTotal"
+[orderTotalPayments] = "orderTotalPayments"
+[orderRemissionTotal] = "orderRemissionTotal"
+[orderRef] = "orderRef"
+[orderCreated] = "orderCreated"
+[orderParty] = "orderParty"
+[orderCCDEvent] = "orderCCDEvent"
+[orderDetail] = "orderDetail"
+[LOGGEDINUSERROLES] = "LOGGEDINUSERROLES"></ccpay-add-remission>
+</ng-container>
+
+<ng-container *ngIf="viewStatus === 'issuerefund'">
+    <ccpay-add-remission 
+    [isTurnOff]="isTurnOff"
+    [isStrategicFixEnable]="isStrategicFixEnable" 
+    [isOldPcipalOff]="isOldPcipalOff" 
+    [payment] = 'paymentGroup.payments[0]'
+    [viewCompStatus]= "viewStatus"
+    [isNewPcipalOff]="isNewPcipalOff" 
+    [orderStatus] ="paymentGroup.payments[0].status"
+    [paidAmount]= "paymentGroup.payments[0].amount"
+    [isRefundRemission]="isRefundRemission"
+    [caseType]="caseType" 
+    [isFromServiceRequestPage]="isFromServiceRequestPage"
+    [isFromPaymentDetailPage] = "isFromPaymentDetailPage"
+    [paymentGroupRef]="paymentGroup.payment_group_reference" 
+    [ccdCaseNumber]="ccdCaseNumber"
+    [orderFeesTotal] = "orderFeesTotal"
+    [orderTotalPayments] = "orderTotalPayments"
+    [orderRemissionTotal] = "orderRemissionTotal"
+    [orderRef] = "orderRef"
+    [orderCreated] = "orderCreated"
+    [orderParty] = "orderParty"
+    [orderCCDEvent] = "orderCCDEvent"
+    [orderDetail] = "orderDetail"
+    [LOGGEDINUSERROLES] = "LOGGEDINUSERROLES">
+  ></ccpay-add-remission>
+</ng-container>
+<ng-container *ngIf="viewStatus === 'order-full-view'">
+  <ccpay-service-request
+  [viewStatus] = "viewStatus"
+  [orderRef] = "orderRef"
+  [orderStatus] = "orderStatus"
+  [orderCreated] = "orderCreated"
+  [orderParty] = "orderParty"
+  [orderCCDEvent] = "orderCCDEvent"
+  [orderDetail] = "orderDetail"
+  [LOGGEDINUSERROLES] = "LOGGEDINUSERROLES"
+  [takePayment] = "isTakePayment"
+  [ccdCaseNumber] = "ccdCaseNumber"
+  [orderFeesTotal] = "orderFeesTotal"
+  [orderTotalPayments] = "orderTotalPayments"
+  [orderRemissionTotal] = "orderRemissionTotal">
+</ccpay-service-request>
+</ng-container>
+<!-- <ng-container *ngIf="isTakePayment">
+    <div class="govuk-width-container">
+        <div class="govuk-breadcrumbs">
+          <ol class="govuk-breadcrumbs__list">
+            <li class="govuk-breadcrumbs__list-item">
+              <a href="#" (click)="goToCaseTransationPage($event)" class="govuk-back-link">Back</a>
+            </li>
+          </ol>
+        </div>
+      
+        <main class="govuk-main-wrapper govuk-!-padding-top-0" id="main-content" role="main">
+      
+          <div *ngIf="errorMessage">
+            <div class="error-summary" role="group" aria-labelledby="failure-error-summary-heading" tabindex="-1">
+              <h2 class="heading-medium error-summary-heading" id="failure-error-summary-heading">
+                Payment details could not be retrieved
+              </h2>
+              <div class="govuk-error-summary__body">
+                {{ errorMessage }}
+              </div>
+            </div>
+          </div>
+      
+          <div class="payment-view-alignment" *ngIf="!errorMessage && paymentGroup">
+      
+            <input #myInput type='hidden' id='iFrameDrivenImageValue' value='PAYMENTDETAILS'>
+            <div class="govuk-grid-row">
+              <div class="column">
+                <h1 class="heading-large govuk-!-margin-top-0">Payment details</h1>
+              </div>
+            </div>
+            <table>
+              <tbody>
+            <tr class="section" *ngIf="isTurnOff">
+                <td class="bold tb-col-w">Payment group reference</td>
+                <td>{{ paymentGroup.payment_group_reference }}</td>
+              </tr>
+              <tr class="section">
+                <td class="bold tb-col-w">Payment reference</td>
+                <td>{{ paymentGroup.payments[0].reference }}</td>
+              </tr>
+              <tr class="section">
+                <td class="bold tb-col-w">Payment amount</td>
+                <td>£{{ paymentGroup.payments[0].amount | number:'.2' }}</td>
+              </tr>
+              <tr class="section" *ngIf="paymentGroup.payments[0] && paymentGroup.payments[0].external_reference">
+                <td class="bold tb-col-w">GovPay Transaction ID</td>
+                <td>{{ paymentGroup.payments[0].external_reference }}</td>
+              </tr>
+              <tr class="section" *ngIf="paymentGroup.payments[0] && paymentGroup.payments[0].document_control_number && !paymentGroup.payments[0].external_reference">
+                <td class="bold tb-col-w">Payment asset number(DCN)</td>
+                <td>{{ paymentGroup.payments[0].document_control_number }}</td>
+              </tr>
+              <tr class="section" *ngIf="paymentGroup.payments[0] && paymentGroup.payments[0].document_control_number && !paymentGroup.payments[0].external_reference">
+                <td class="bold tb-col-w">Banked date</td>
+                <td>{{ paymentGroup.payments[0].banked_date | date:'dd MMM yyyy' }}</td>
+              </tr>
+              </tbody>
+            </table>
+      
+            <div class="govuk-grid-row" *ngIf="paymentGroup.fees.length > 0">
+              <div class="column">
+                <h2 class="heading-large">Fee and remission details</h2>
+              </div>
+            </div>
+      
+            <div *ngFor="let fee of paymentGroup.fees">
+              <table class="table">
+                <tbody>
+                <tr class="section">
+                  <td class="bold tb-col-w">Description</td>
+                  <td>Application for {{ fee.description }}</td>
+                </tr>
+                <tr class="section">
+                  <td class="bold tb-col-w">Fee code</td>
+                  <td>{{ fee.code }}</td>
+                </tr>
+                <tr class="section">
+                  <td class="bold tb-col-w" [ngClass]="{'tr-border': !fee.apportion_amount && !fee.remissions && !isTurnOff }">Fee amount</td>
+                  <td [ngClass]="{'tr-border': !fee.apportion_amount && !fee.remissions && !isTurnOff }">£{{ fee.calculated_amount | number:'.2' }}</td>
+                </tr>
+                <tr *ngIf="fee.net_amount && isTurnOff">
+                  <td class="bold tb-col-w" [ngClass]="{'tr-border': !fee.apportion_amount && !fee.remissions}" >Net amount</td>
+                  <td [ngClass]="{'tr-border': !fee.apportion_amount && !fee.remissions}">£{{ fee.net_amount | number:'.2' }}</td>
+                </tr>
+                <tr *ngIf="fee.apportion_amount">
+                  <td class="bold tb-col-w tr-border" [ngClass]="{'tr-border': !fee.remissions}">Allocated amount</td>
+                  <td [ngClass]="{'tr-border': !fee.remissions}">£{{ fee.apportion_amount | number:'.2' }}</td>
+                </tr>
+      
+                <tr *ngIf="fee.remissions">
+                  <td class="bold tb-col-w">Remission code</td>
+                  <td>{{fee.remissions.hwf_reference}}</td>
+                </tr>
+                <tr *ngIf="fee.remissions">
+                  <td class="bold tb-col-w tr-border">Remission amount</td>
+                  <td class="tr-border">£{{ fee.remissions.hwf_amount | number:'.2'}}</td>
+                </tr>
+                </tbody>
+              </table>
+      
+            </div>
+      
+            <!-- card details -->
+            <!-- <ccpay-card-details *ngIf="isCardPayment && !isTelephonyPayment"></ccpay-card-details>
+       -->
+            <!-- pba details -->
+            <!-- <ccpay-pba-details *ngIf="!isCardPayment" [payment]="paymentGroup.payments[0]"></ccpay-pba-details> -->
+            <!-- Status histories -->
+            <!-- <ccpay-payment-statuses *ngIf="isStatusAllocated"[isTakePayment]="isTakePayment" ></ccpay-payment-statuses>
+      
+          </div>
+      
+        </main>
+      </div> -->
+<!-- </ng-container> --> 

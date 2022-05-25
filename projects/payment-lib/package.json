@@ -1,6 +1,6 @@
 {
   "name": "@hmcts/ccpay-web-component",
-  "version": "4.0.0-beta479",
+  "version": "5.0.2",
   "publishConfig": {
     "access": "public"
   },
@@ -13,6 +13,10 @@
   "description": "Angular web component for displaying payments returned from ccpay api",
   "author": "Mateusz Swirski <mateusz.swirski@hmcts.net>",
   "contributors": [
+    {
+      "name": "Santosh Govindu",
+      "email": "santosh.govindu@hmcts.net"
+    },
     {
       "name": "Tarun Palisetty",
       "email": "tarun.palisetty@hmcts.net"
