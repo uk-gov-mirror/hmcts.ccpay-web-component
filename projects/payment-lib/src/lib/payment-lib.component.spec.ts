@@ -9,7 +9,7 @@ describe('PaymentLibComponent', () => {
 
   beforeEach(() => {
     const paymentLibServiceStub = () => ({
-      setApiRootUrl: aPI_ROOT => ({}),
+      setApiRootUrl: API_ROOT => ({}),
       setBulkScanApiRootUrl: bULKSCAN_API_ROOT => ({}),
       setRefundndsApiRootUrl: rEFUNDS_API_ROOT => ({})
     });
