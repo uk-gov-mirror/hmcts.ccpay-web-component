@@ -125,7 +125,9 @@ details summary {
 .col-34 {
     width: 34% !important;
 }
-
+#bckLnksize {
+    font-size: 16px !important;
+}
 .col-15 {
     width: 15% !important;
     padding-left: 0px !important;
