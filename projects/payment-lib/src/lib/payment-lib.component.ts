@@ -12,7 +12,7 @@ import { IPayment } from './interfaces/IPayment';
     <ccpay-refund-status [LOGGEDINUSERROLES]="LOGGEDINUSERROLES" *ngIf="viewName === 'refundstatuslist'"> </ccpay-refund-status >
     <ccpay-payment-view [LOGGEDINUSERROLES]="LOGGEDINUSERROLES" *ngIf="viewName === 'payment-view'"
     [isTurnOff]="ISTURNOFF" [isTakePayment]="TAKEPAYMENT"  [caseType]="CASETYPE"
-    </ccpay-payment-view>
+    ></ccpay-payment-view>
 
     <ccpay-process-refund *ngIf="viewName === 'process-refund'"
     [refundReference]="refundReference"
