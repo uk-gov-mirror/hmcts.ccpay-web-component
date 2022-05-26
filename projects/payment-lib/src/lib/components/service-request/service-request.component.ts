@@ -49,9 +49,7 @@ export class ServiceRequestComponent implements OnInit {
   dcnNumber: string;
   paymentRef: string;
   isTurnOff: boolean;
-  isNewPcipalOff: boolean;
   isRefundRemission: boolean = true;
-  isOldPcipalOff: boolean;
   isStrategicFixEnable: boolean;
   isAddFeeBtnEnabled: boolean = true;
   isExceptionRecord: boolean = false;
@@ -210,7 +208,7 @@ export class ServiceRequestComponent implements OnInit {
 
   addRefundForRemission(payment: IPayment, remission: IRemission[],fees:any) {
     this.viewStatus = 'addrefundforremission';
- 
+
     this.payment = payment;
     this.paymentViewService.getApportionPaymentDetails(this.payment.reference).subscribe(
       paymentGroup => {
