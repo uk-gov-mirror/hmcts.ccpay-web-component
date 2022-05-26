@@ -1,5 +1,5 @@
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { PaymentLibComponent } from '../../payment-lib.component';
 import { IPayment } from '../../interfaces/IPayment';
 import { IRemission } from '../../interfaces/IRemission';
@@ -30,6 +30,9 @@ export class ServiceRequestComponent implements OnInit {
   @Input('orderRemissionTotal') orderRemissionTotal: number;
   @Input('takePayment') takePayment: boolean;
   @Input('ccdCaseNumber') ccdCaseNumber: boolean;
+  @Input("isServiceRequest") isServiceRequest: string;
+  @Output() goToServiceRquestComponent: EventEmitter<any> = new EventEmitter();
+
 
   servicerequest: string;
   // ccdCaseNumber: string;
@@ -117,6 +120,9 @@ export class ServiceRequestComponent implements OnInit {
     //   this.paymentLibComponent.TAKEPAYMENT = this.takePayment;
     // }
   }
+  goToServiceRequestPage() {
+    this.goToServiceRquestComponent.emit();
+  }
 
   goToCaseTransationPage(event: any) {
     event.preventDefault();
@@ -130,18 +136,19 @@ export class ServiceRequestComponent implements OnInit {
     }
     this.paymentLibComponent.SERVICEREQUEST = "true";
     this.paymentLibComponent.isFromServiceRequestPage = false;
+    if(this.isServiceRequest !== 'false') {
+      this.paymentLibComponent.isFromServiceRequestPage = true;
+    }
     this.paymentLibComponent.isFromRefundStatusPage = false;
     this.paymentLibComponent.viewName = 'case-transactions';
     this.resetOrderData();
-    // this.OrderslistService.setisFromServiceRequestPage(false);
-    // this.OrderslistService.setnavigationPage('servicerequestpage');
-    //  this.OrderslistService.setpaymentPageView({ method: this.payment.method, payment_group_reference: this.paymentGroupRef, reference: this.payment.reference });
-    // this.OrderslistService.setnavigationPage('servicerequestpage');
-    // let partUrl = this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
    let  partUrl = this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
     partUrl += this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
-    partUrl += this.paymentLibComponent.TAKEPAYMENT ? '&takePayment=true' : '&takePayment=false';
+    if(this.isServiceRequest === 'false') {
+      partUrl += this.paymentLibComponent.TAKEPAYMENT ? '&takePayment=true' : '&takePayment=false';
+    }
     partUrl += this.isStrategicFixEnable ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
+    partUrl += this.isServiceRequest !== 'false' ? '&servicerequest=true' : '&servicerequest=false';
     partUrl += `&caseType=${this.paymentLibComponent.CASETYPE}`;
     partUrl += this.paymentLibComponent.ISNEWPCIPALOFF ? '&isNewPcipalOff=Enable' : '&isNewPcipalOff=Disable';
     partUrl += this.paymentLibComponent.ISOLDPCIPALOFF ? '&isOldPcipalOff=Enable' : '&isOldPcipalOff=Disable';

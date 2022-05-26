@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import { PaymentLibComponent } from '../../payment-lib.component';
 import { IPaymentGroup } from '../../interfaces/IPaymentGroup';
@@ -29,6 +29,7 @@ export class PaymentViewComponent implements OnInit {
   @Input() orderFeesTotal: number;
   @Input() orderRemissionTotal: number;
   @Input() orderDetail: any[];
+  @Input("isServiceRequest") isServiceRequest: string;
 
   paymentGroup: IPaymentGroup;
   errorMessage: string;
@@ -110,10 +111,15 @@ export class PaymentViewComponent implements OnInit {
   public goToPaymentList(): void {
     this.paymentLibComponent.viewName = 'payment-list';
   }
-
+  goToServiceRequestPage() {
+    this.paymentLibComponent.viewName = 'case-transactions';
+    this.paymentLibComponent.TAKEPAYMENT = false;
+    this.paymentLibComponent.SERVICEREQUEST = 'true';
+    this.paymentLibComponent.isFromServiceRequestPage = true;
+    window.location.reload();
+  }
   goToCaseTransationPage(event: any) {
     event.preventDefault();
-
     if (!this.paymentLibComponent.isFromServiceRequestPage) {
         this.OrderslistService.setnavigationPage('casetransactions');
         this.OrderslistService.setisFromServiceRequestPage(false);
