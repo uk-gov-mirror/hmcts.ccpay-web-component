@@ -708,8 +708,6 @@ export class AddRemissionComponent implements OnInit {
     this.errorMessage = '';
     this.paymentLibComponent.viewName = 'case-transactions';
     this.paymentLibComponent.ISTURNOFF = this.isTurnOff;
-    this.paymentLibComponent.ISNEWPCIPALOFF = this.isNewPcipalOff;
-    this.paymentLibComponent.ISOLDPCIPALOFF = this.isOldPcipalOff;
     this.paymentLibComponent.isFromServiceRequestPage = true;  
     this.paymentLibComponent.ISBSENABLE = true;
     let partUrl = this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
