@@ -130,8 +130,8 @@ export class CaseTransactionsComponent implements OnInit {
     this.excReference = this.paymentLibComponent.EXC_REFERENCE;
     this.takePayment = this.paymentLibComponent.TAKEPAYMENT;
 
-    this.servicerequest = this.paymentLibComponent.SERVICEREQUEST.toString();
-    if (this.paymentLibComponent.SERVICEREQUEST.toString() === 'true') {
+    this.servicerequest = this.paymentLibComponent.SERVICEREQUEST;
+    if (this.paymentLibComponent.SERVICEREQUEST === 'true') {
       this.serviceRequestValue = 'true';
     } else {
       this.serviceRequestValue = 'false';
@@ -315,7 +315,7 @@ export class CaseTransactionsComponent implements OnInit {
       } else if (paymentGroup.service_request_status === 'Partially paid' || paymentGroup.service_request_status === 'Not paid') {
         this.orderStatus = paymentGroup.service_request_status;
         this.orderAddBtnEnable = true;
-      } 
+      }
 
       //this.orderLevelFees.push({orderRefId:paymentGroup['payment_group_reference'],orderTotalFees: this.orderFeesTotal,orderStatus: this.orderStatus,orderParty:'Santosh', orderCCDEvent:'Case Creation',orderCreated: new Date(), orderAddBtnEnable: this.orderAddBtnEnable}); this.cpoDetails['createdTimestamp']
       if (this.cpoDetails !== null) {
