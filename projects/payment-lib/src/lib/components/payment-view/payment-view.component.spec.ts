@@ -1,25 +1,127 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { PaymentViewService } from '../../services/payment-view/payment-view.service';
+import { PaymentLibComponent } from '../../payment-lib.component';
+import { IPaymentGroup } from '../../interfaces/IPaymentGroup';
+import { IFee } from '../../interfaces/IFee';
+import { IPayment } from '../../interfaces/IPayment';
+import { ChangeDetectorRef } from '@angular/core';
+import { OrderslistService } from '../../services/orderslist.service';
 import { PaymentViewComponent } from './payment-view.component';
 
 describe('PaymentViewComponent', () => {
   let component: PaymentViewComponent;
   let fixture: ComponentFixture<PaymentViewComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ PaymentViewComponent ]
-    })
-    .compileComponents();
-  }));
-
   beforeEach(() => {
+    const paymentViewServiceStub = () => ({
+      getApportionPaymentDetails: paymentReference => ({
+        subscribe: f => f({})
+      }),
+      getBSfeature: () => ({ subscribe: f => f({}) })
+    });
+    const paymentLibComponentStub = () => ({
+      CCD_CASE_NUMBER: {},
+      SELECTED_OPTION: {},
+      DCN_NUMBER: {},
+      ISTURNOFF: {},
+      paymentReference: {},
+      viewName: {},
+      ISBSENABLE: {},
+      isFromPaymentDetailPage: {}
+    });
+    const changeDetectorRefStub = () => ({ detectChanges: () => ({}) });
+    const orderslistServiceStub = () => ({
+      setnavigationPage: string => ({}),
+      setisFromServiceRequestPage: arg => ({})
+    });
+    TestBed.configureTestingModule({
+      schemas: [NO_ERRORS_SCHEMA],
+      declarations: [PaymentViewComponent],
+      providers: [
+        { provide: PaymentViewService, useFactory: paymentViewServiceStub },
+        { provide: PaymentLibComponent, useFactory: paymentLibComponentStub },
+        { provide: ChangeDetectorRef, useFactory: changeDetectorRefStub },
+        { provide: OrderslistService, useFactory: orderslistServiceStub }
+      ]
+    });
     fixture = TestBed.createComponent(PaymentViewComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('can load instance', () => {
     expect(component).toBeTruthy();
   });
+
+  it('isRefundRemission has default value', () => {
+    expect(component.isRefundRemission).toEqual(false);
+  });
+
+  it('isAddFeeBtnEnabled has default value', () => {
+    expect(component.isAddFeeBtnEnabled).toEqual(false);
+  });
+
+  it('isIssueRefunfBtnEnable has default value', () => {
+    expect(component.isIssueRefunfBtnEnable).toEqual(false);
+  });
+
+  it('allowedRolesToAccessRefund has default value', () => {
+    expect(component.allowedRolesToAccessRefund).toEqual([
+      'payments-refund-approver',
+      'payments-refund'
+    ]);
+  });
+
+  it('remissions has default value', () => {
+    expect(component.remissions).toEqual([]);
+  });
+
+  // describe('addRemission', () => {
+  //   it('makes expected calls', () => {
+  //     const paymentViewServiceStub: PaymentViewService = fixture.debugElement.injector.get(
+  //       PaymentViewService
+  //     );
+  //     const iFeeStub: IFee = <any>{};
+  //     const changeDetectorRefStub: ChangeDetectorRef = fixture.debugElement.injector.get(
+  //       ChangeDetectorRef
+  //     );
+  //     spyOn(component, 'chkForAddRemission').and.callThrough();
+  //     spyOn(
+  //       paymentViewServiceStub,
+  //       'getApportionPaymentDetails'
+  //     ).and.callThrough();
+  //     spyOn(changeDetectorRefStub, 'detectChanges').and.callThrough();
+  //     component.addRemission(iFeeStub);
+  //     expect(component.chkForAddRemission).toHaveBeenCalled();
+  //     expect(
+  //       paymentViewServiceStub.getApportionPaymentDetails
+  //     ).toHaveBeenCalled();
+  //     expect(changeDetectorRefStub.detectChanges).toHaveBeenCalled();
+  //   });
+  // });
+
+  // describe('issueRefund', () => {
+  //   it('makes expected calls', () => {
+  //     const iPaymentGroupStub: IPaymentGroup = <any>{};
+  //     spyOn(component, 'chkIssueRefundBtnEnable').and.callThrough();
+  //     component.issueRefund(iPaymentGroupStub);
+  //     expect(component.chkIssueRefundBtnEnable).toHaveBeenCalled();
+  //   });
+  // });
+
+  // describe('ngOnInit', () => {
+  //   it('makes expected calls', () => {
+  //     const paymentViewServiceStub: PaymentViewService = fixture.debugElement.injector.get(
+  //       PaymentViewService
+  //     );
+  //     spyOn(
+  //       paymentViewServiceStub,
+  //       'getApportionPaymentDetails'
+  //     ).and.callThrough();
+  //     component.ngOnInit();
+  //     expect(
+  //       paymentViewServiceStub.getApportionPaymentDetails
+  //     ).toHaveBeenCalled();
+  //   });
+  // });
 });

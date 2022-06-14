@@ -36,6 +36,29 @@
   background: #00823b;
 }
 
+.col-13 {
+  width: 13% !important;
+}
+.col-14 {
+  width: 14% !important;
+}
+.col-17 {
+  width: 17% !important;
+}
+.col-16 {
+  width: 16% !important;
+}
+.col-12 {
+  width: 12% !important;
+}
+
+.col-9 {
+  width: 9% !important;
+}
+
+.col-15 {
+  width: 15% !important;
+}
 
 .lowercase { text-transform: lowercase; }
 .capitalize::first-letter {
@@ -43,4 +66,94 @@
 }
 .whitespace-inherit {
   white-space: inherit !important;
+}
+
+.top_row {
+  display: table;
+  width: 100%;
+}
+
+.top_row > div {
+  display: table-cell;
+  width: 50%;
+  border-bottom: 1px solid #eee;
+}
+
+.unassigned {
+  border-top: hidden;
+}
+
+.col-16 {
+  width: 16% !important;
+}
+
+.col-10 {
+  width: 10% !important;
+}
+
+.col-14 {
+  width: 14% !important;
+}
+
+.col-19 {
+  width: 19% !important;
+  padding-left:0px !important;
+}
+
+.col-18 {
+  width: 18% !important;
+  padding-left:0px !important; 
+   padding-right:0px !important;
+}
+.col-21 {
+  width: 21% !important;
+}
+.col-20 {
+  width: 20% !important;
+}
+
+.col-11 {
+  width: 11% !important;
+}
+.col-37 {
+  width: 37% !important; 
+}
+.noborders > td{
+  border-color: transparent;
+  border-top-style: hidden;
+  border-right-style: hidden;
+  border-left-style: hidden;
+}
+
+.govuk-button--secondary {
+  margin-bottom: 10px;
+}
+.govuk-summary-list {
+  font-size: 19px;
+}
+
+.govuk-summary-list__key {
+  width: 35%;
+}
+td {
+  white-space: nowrap;
+  overflow: hidden !important;
+
+  }
+
+  table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+th, td {
+    word-wrap: break-word;
+}
+
+.alignright {
+  text-align: right;
+}
+
+.paddingright {
+  padding-right:0px;
 }

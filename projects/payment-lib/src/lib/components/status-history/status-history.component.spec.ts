@@ -1,25 +1,56 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { StatusHistoryService } from '../../services/status-history/status-history.service';
+import { PaymentLibComponent } from '../../payment-lib.component';
 import { StatusHistoryComponent } from './status-history.component';
 
-describe('PaymentStatusesComponent', () => {
+describe('StatusHistoryComponent', () => {
   let component: StatusHistoryComponent;
   let fixture: ComponentFixture<StatusHistoryComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ StatusHistoryComponent ]
-    })
-    .compileComponents();
-  }));
-
   beforeEach(() => {
+    const statusHistoryServiceStub = () => ({
+      getPaymentStatusesByReference: (paymentReference, paymentMethod) => ({
+        subscribe: f => f({})
+      })
+    });
+    const paymentLibComponentStub = () => ({
+      paymentReference: {},
+      paymentMethod: {}
+    });
+    TestBed.configureTestingModule({
+      schemas: [NO_ERRORS_SCHEMA],
+      declarations: [StatusHistoryComponent],
+      providers: [
+        { provide: StatusHistoryService, useFactory: statusHistoryServiceStub },
+        { provide: PaymentLibComponent, useFactory: paymentLibComponentStub }
+      ]
+    });
     fixture = TestBed.createComponent(StatusHistoryComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('can load instance', () => {
     expect(component).toBeTruthy();
+  });
+
+  it(`pageTitle has default value`, () => {
+    expect(component.pageTitle).toEqual(`Payment status history`);
+  });
+
+  describe('ngOnInit', () => {
+    it('makes expected calls', () => {
+      const statusHistoryServiceStub: StatusHistoryService = fixture.debugElement.injector.get(
+        StatusHistoryService
+      );
+      spyOn(
+        statusHistoryServiceStub,
+        'getPaymentStatusesByReference'
+      ).and.callThrough();
+      component.ngOnInit();
+      expect(
+        statusHistoryServiceStub.getPaymentStatusesByReference
+      ).toHaveBeenCalled();
+    });
   });
 });

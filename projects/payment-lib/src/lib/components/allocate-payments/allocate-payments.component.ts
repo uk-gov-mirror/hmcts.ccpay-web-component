@@ -9,6 +9,10 @@ import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
 import {IBSPayments} from '../../interfaces/IBSPayments';
 import {AllocatePaymentRequest} from '../../interfaces/AllocatePaymentRequest';
 import {IAllocationPaymentsRequest} from '../../interfaces/IAllocationPaymentsRequest';
+import { IOrderReferenceFee } from '../../interfaces/IOrderReferenceFee';
+import { OrderslistService } from '../../services/orderslist.service';
+
+
 
 @Component({
   selector: 'app-allocate-payments',
@@ -23,6 +27,7 @@ export class AllocatePaymentsComponent implements OnInit {
   viewStatus: string;
   ccdCaseNumber: string;
   bspaymentdcn: string;
+  recordId:string;
   feedbackUrlLabel:string;
   unAllocatedPayment: IBSPayments = {
     amount: 0
@@ -59,6 +64,10 @@ export class AllocatePaymentsComponent implements OnInit {
   paymentSectionLabel: any;
   paymentRef: string = null;
   isStrategicFixEnable: boolean = true;
+  orderLevelFees: IOrderReferenceFee[] = [];
+  cookieUserName: string[] = [];
+  enCookieUserName: any;
+  userNameField: string = null;
 
   reasonList: { [key: string]: { [key: string]: string } }= {
     overPayment: {
@@ -87,6 +96,15 @@ export class AllocatePaymentsComponent implements OnInit {
     }
   }
 
+  refund = {
+    reason: {
+      duplicate: 'Duplicate payment',
+      humanerror: 'Human error',
+      caseWithdrawn: 'Case withdrawn',
+      other: 'Other'
+    }
+  }
+
 
   constructor(
   private errorHandlerService: ErrorHandlerService,
@@ -94,10 +112,15 @@ export class AllocatePaymentsComponent implements OnInit {
   private formBuilder: FormBuilder,
   private paymentViewService: PaymentViewService,
   private paymentLibComponent: PaymentLibComponent,
-  private bulkScaningPaymentService: BulkScaningPaymentService) { }
+  private bulkScaningPaymentService: BulkScaningPaymentService,
+  private OrderslistService: OrderslistService) { }
 
   ngOnInit() {
     this.viewStatus = 'mainForm';
+    if (this.paymentLibComponent.paymentGroupReference !== null) {
+      this.viewStatus = 'allocatePaymentConfirmation';
+    }
+    
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
     this.bspaymentdcn = this.paymentLibComponent.bspaymentdcn;
     this.paymentRef = this.paymentLibComponent.paymentGroupReference;
@@ -116,6 +139,9 @@ export class AllocatePaymentsComponent implements OnInit {
         Validators.pattern('^([a-zA-Z0-9\\s]*)$')
       ])),
     });
+    this.OrderslistService.getOrdersList().subscribe( (data) =>
+    this.orderLevelFees = data.filter(data => data.orderStatus !== 'Paid'));
+    this.OrderslistService.getCaseType().subscribe( (data) => this.caseType = data);
     this.getUnassignedPayment();
   }
   getGroupOutstandingAmount(paymentGroup: IPaymentGroup): number {
@@ -191,17 +217,22 @@ export class AllocatePaymentsComponent implements OnInit {
     }
   }
   confirmAllocatePayement(){
+    this.enCookieUserName = document.cookie.split(";").find(row => row.includes("user-info")).split("=")[1].split(";");
+    this.cookieUserName = JSON.parse(decodeURIComponent(this.enCookieUserName));
+    
+    const fullName = this.cookieUserName['forename'] + ' ' + this.cookieUserName['surname'];
+
     const paymentDetailsField = this.overUnderPaymentForm.controls.moreDetails,
       paymentFormError = this.overUnderPaymentForm.controls.moreDetails.errors,
-      userNameField = this.overUnderPaymentForm.controls.userName,
+      userNameField = fullName,
       isEmptyCondtion = this.paymentReason && this.paymentExplanation,
       isOtherOptionSelected = this.paymentExplanation === 'Other';
 
     this.resetForm([false, false, false, false, false, false, false, false], 'all');
-    if ( (!this.isRemainingAmountGtZero && !this.isRemainingAmountLtZero) || isEmptyCondtion && (!isOtherOptionSelected && userNameField.valid || isOtherOptionSelected && userNameField.valid && paymentDetailsField.valid)) {
+    if ( (!this.isRemainingAmountGtZero && !this.isRemainingAmountLtZero) || isEmptyCondtion && (!isOtherOptionSelected && userNameField.length > 0 || isOtherOptionSelected && userNameField.length > 0 && paymentDetailsField.valid)) {
       this.isConfirmButtondisabled = true;
       this.otherPaymentExplanation = this.paymentExplanation === 'Other' ? paymentDetailsField.value : this.paymentExplanation;
-      this.userName = userNameField.value;
+      this.userName = userNameField;
       this.finalServiceCall();
     }else {
       if(!this.paymentReason) {
@@ -224,11 +255,8 @@ export class AllocatePaymentsComponent implements OnInit {
           this.resetForm([false, false, false, false, false, true, false, false], 'other');
         }
       }
-      if(userNameField.value === "") {
+      if(userNameField.length === 0) {
         this.resetForm([false, false, false, false, false, false, true, false], 'username');
-      }
-      if(userNameField.value !== "" &&  userNameField.invalid) {
-        this.resetForm([false, false, false, false, false, false, false, true], 'username');
       }
     }
   }
@@ -345,10 +373,10 @@ export class AllocatePaymentsComponent implements OnInit {
       this.isRemainingAmountGtZero = remainingToBeAssigned > 0;
       this.isRemainingAmountLtZero = remainingToBeAssigned < 0;
       this.paymentSectionLabel = this.isRemainingAmountGtZero ? { 
-          title: 'There is a surplus of',
+          title: 'There is an Over payment of',
           reason: 'Provide a reason. This will be used in the Refund process.',
         }: this.isRemainingAmountLtZero ? { 
-          title: 'There is a shortfall of',
+          title: 'There is an Under payment of',
           reason: 'Provide a reason',
         }: { 
           title:'Amount left to be allocated',
@@ -393,4 +421,15 @@ export class AllocatePaymentsComponent implements OnInit {
       this.isMoreDetailsBoxHide = false;
     }
   }
+  OrderListSelectEvent(orderef: any){
+    this.isContinueButtondisabled = false;
+    this.recordId= orderef;
+  }
+
+  redirectToOrderFeeSearchPage() {
+    // this.paymentLibComponent.bspaymentdcn = null;
+    this.paymentLibComponent.paymentGroupReference = this.recordId;
+    this.paymentLibComponent.isTurnOff = this.isTurnOff;
+    this.paymentLibComponent.viewName = 'fee-summary';
+}
 }

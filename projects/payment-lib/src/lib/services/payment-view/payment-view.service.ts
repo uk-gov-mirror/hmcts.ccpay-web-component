@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
-
+import { v4 as uuidv4 } from 'uuid';
 import {IPayment} from '../../interfaces/IPayment';
 import {PaymentLibService} from '../../payment-lib.service';
 import { WebComponentHttpClient } from '../shared/httpclient/webcomponent.http.client';
@@ -17,12 +17,21 @@ import { UnsolicitedPaymentsRequest } from '../../interfaces/UnsolicitedPayments
 import { Meta } from '@angular/platform-browser';
 import { AllocatePaymentRequest } from '../../interfaces/AllocatePaymentRequest';
 import { IAllocationPaymentsRequest } from '../../interfaces/IAllocationPaymentsRequest';
-
+import {IOrderReferenceFee} from '../../interfaces/IOrderReferenceFee';
+import { BehaviorSubject } from 'rxjs';
+import { IserviceRequestPbaPayment } from '../../interfaces/IserviceRequestPbaPayment';
+import { IserviceRequestCardPayment } from '../../interfaces/IserviceRequestCardPayment';
+import { RefundsRequest } from '../../interfaces/RefundsRequest';
+import { AddRetroRemissionRequest } from '../../interfaces/AddRetroRemissionRequest';
+import { PostRefundRetroRemission } from '../../interfaces/PostRefundRetroRemission';
+import { PostIssueRefundRetroRemission } from '../../interfaces/PostIssueRefundRetroRemission';
+import { error } from '@angular/compiler/src/util';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PaymentViewService {
+  private ordersList  = <BehaviorSubject<IOrderReferenceFee[]>>new BehaviorSubject([]);
 
   private meta: Meta;
 
@@ -65,6 +74,29 @@ export class PaymentViewService {
         catchError(this.errorHandlerService.handleError)
       );
   }
+  getPBAaccountDetails(): Observable<any> {
+    const url = `${this.paymentLibService.API_ROOT}/pba-accounts`;
+    return this.http.get(url, { withCredentials: true }).pipe(
+        catchError(this.errorHandlerService.handleError)
+      );
+  }
+
+  postWays2PayCardPayment(serviceRef: string, body: IserviceRequestCardPayment): Observable<any> {
+    const url = `${this.paymentLibService.API_ROOT}/service-request/${serviceRef}/card-payments`;
+    const rurl = this.paymentLibService.CARDPAYMENTRETURNURL.replace('.prod', '');
+    body['return-url'] = `${rurl}/payment`;
+    return this.https.post(url, body).pipe(
+      catchError(this.errorHandlerService.handleError)
+    );
+  }
+  
+  postPBAaccountPayment(serviceRef: string, body: IserviceRequestPbaPayment): Observable<any> {
+    let randomKey = 'idam-key-' + Math.random().toString().split('.').join('-');
+    body['idempotency_key'] = randomKey; 
+    const url = `${this.paymentLibService.API_ROOT}/service-request/${serviceRef}/pba-payments`;
+    return this.https.post(url, body);
+  }
+
   postBSPayments(body: AllocatePaymentRequest): Observable<any> {
     return this.https.post(`${this.paymentLibService.API_ROOT}/payment-groups/bulk-scan-payments`, body).pipe(
       catchError(this.errorHandlerService.handleError)
@@ -91,6 +123,7 @@ export class PaymentViewService {
       catchError(this.errorHandlerService.handleError)
     );
   }
+
   deleteFeeFromPaymentGroup(feeId: number): Observable<any> {
         this.logger.info('Payment-view-service deleteFeeFromPaymentGroup for: ', feeId);
     return this.https.delete(`${this.paymentLibService.API_ROOT}/fees/${feeId}`).pipe(
@@ -117,5 +150,36 @@ export class PaymentViewService {
   }
   getSiteID(): Observable<any> {
     return this.https.get('api/payment-history/refdata/legacy-sites', { withCredentials: true }).pipe( catchError(this.errorHandlerService.handleError));
+  }
+  getPartyDetails(caseNumber: string): Observable<any> {
+    const url = `${this.paymentLibService.API_ROOT}/case-payment-orders?case_ids=${caseNumber}`;
+    return this.https.get(url, { withCredentials: true }).pipe( catchError(this.errorHandlerService.handleError));
+  }
+  
+  setOrdersList(orderLevelFees: IOrderReferenceFee[]): void {
+    this.ordersList.next(Object.assign([], orderLevelFees));
+}
+  getOrdersList() {
+    return this.ordersList;
+  }
+
+  //issue refund
+  postRefundsReason(body: PostRefundRetroRemission): Observable<any> {
+    return this.https.post(`${this.paymentLibService.API_ROOT}/refund-for-payment`, body).pipe(
+      catchError(this.errorHandlerService.handleError)
+    );
+  }
+
+  // retro remissions
+  postPaymentGroupWithRetroRemissions(paymentGroupReference: string, feeId: number, body: AddRetroRemissionRequest): Observable<any> {
+    return this.https.post(`${this.paymentLibService.API_ROOT}/payment-groups/${paymentGroupReference}/fees/${feeId}/retro-remission`, body).pipe(
+      catchError(this.errorHandlerService.handleError)
+    );
+  }
+
+  postRefundRetroRemission(body:PostIssueRefundRetroRemission) {
+    return this.https.post(`${this.paymentLibService.API_ROOT}/refund-retro-remission`, body).pipe(
+      catchError(this.errorHandlerService.handleError)
+    );
   }
 }
