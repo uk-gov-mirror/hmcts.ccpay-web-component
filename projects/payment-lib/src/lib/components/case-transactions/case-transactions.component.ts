@@ -133,7 +133,7 @@ export class CaseTransactionsComponent implements OnInit {
     this.takePayment = this.paymentLibComponent.TAKEPAYMENT;
 
     this.servicerequest = this.paymentLibComponent.SERVICEREQUEST;
-    if (this.paymentLibComponent.SERVICEREQUEST === 'true' || this.paymentLibComponent.SERVICEREQUEST.toString() === 'true') {
+    if (this.paymentLibComponent.SERVICEREQUEST === 'true') {
       this.serviceRequestValue = 'true';
     } else {
       this.serviceRequestValue = 'false';
