@@ -5,7 +5,6 @@ import { IRefundList } from '../../interfaces/IRefundList';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import { Router } from '@angular/router';
 import { OrderslistService } from '../../services/orderslist.service';
-import { IRefundReasons } from '../../interfaces/IRefundReasons';
 import { IRefundStatus } from '../../interfaces/IRefundStatus';
 import { IResubmitRefundRequest } from '../../interfaces/IResubmitRefundRequest';
 import { PaymentLibComponent } from '../../payment-lib.component';
@@ -22,6 +21,7 @@ export class RefundStatusComponent implements OnInit {
   @Input() isNewPcipalOff: boolean;
   @Input() ccdCaseNumber: string;
   @Input() isTurnOff: boolean;
+  @Input() isEliginbleToAccess: boolean;
   refundStatusForm: FormGroup;
   selectedRefundReason: string;
   rejectedRefundList: IRefundList[] = [];
@@ -53,8 +53,6 @@ export class RefundStatusComponent implements OnInit {
   isLastUpdatedByCurrentUser: boolean = true;
   isProcessRefund: boolean = false;
   changedAmount: number;
-  allowedRolesToAccessRefund = ['payments-refund-approver', 'payments-refund'];
-
   constructor(private formBuilder: FormBuilder,
     private refundService: RefundsService,
     private paymentLibComponent: PaymentLibComponent,
@@ -77,14 +75,19 @@ export class RefundStatusComponent implements OnInit {
       this.OrderslistService.getCCDCaseNumberforRefund.subscribe((data) => this.ccdCaseNumber = data);
     } else {
       this.viewName = 'refundstatuslist';
-      this.refundService.getRefundStatusList(this.ccdCaseNumber).subscribe(
-        refundList => {
-          this.rejectedRefundList = refundList['refund_list'];
-        }
-      ),
+      if(this.isEliginbleToAccess) {
+        this.refundService.getRefundStatusList(this.ccdCaseNumber).subscribe(
+          refundList => {
+            this.rejectedRefundList = refundList['refund_list'];
+          }
+        ),
         (error: any) => {
           this.errorMessage = error.replace(/"/g,"");
         };
+      } else {
+        this.rejectedRefundList = [];
+      }
+
     }
 
 
@@ -112,13 +115,6 @@ export class RefundStatusComponent implements OnInit {
         }
       }
    //}
-  }
-  
-
-  check4AllowedRoles2AccessRefund = (): boolean => {
-    return this.allowedRolesToAccessRefund.some(role =>
-      this.LOGGEDINUSERROLES.indexOf(role) !== -1
-    );
   }
 
   getRefundsStatusHistoryList() {
