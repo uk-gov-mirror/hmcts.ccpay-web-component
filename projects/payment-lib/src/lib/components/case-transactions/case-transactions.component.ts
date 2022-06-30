@@ -11,7 +11,6 @@ import { IRemission } from '../../interfaces/IRemission';
 import { IPaymentView } from '../../interfaces/IPaymentView';
 import { IOrderReferenceFee } from '../../interfaces/IOrderReferenceFee';
 import { Router } from '@angular/router';
-import { ServiceRequestComponent } from '../../components/service-request/service-request.component';
 
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 
@@ -24,7 +23,6 @@ export class CaseTransactionsComponent implements OnInit {
   @Input('LOGGEDINUSERROLES') LOGGEDINUSERROLES: string[];
   @Input() isTakePayment: boolean;
   takePayment: boolean;
-  servicerequest: string;
   ccdCaseNumber: string;
   excReference: string;
   paymentGroups: any[] = [];
@@ -132,7 +130,6 @@ export class CaseTransactionsComponent implements OnInit {
     this.excReference = this.paymentLibComponent.EXC_REFERENCE;
     this.takePayment = this.paymentLibComponent.TAKEPAYMENT;
 
-    this.servicerequest = this.paymentLibComponent.SERVICEREQUEST.toString();
     if (this.paymentLibComponent.SERVICEREQUEST.toString() === 'true') {
       this.serviceRequestValue = 'true';
     } else {
