@@ -99,7 +99,11 @@ export class PaymentViewComponent implements OnInit {
       },
       (error: any) => this.errorMessage = error
     );
-
+    this.paymentViewService.getPaymentFailure(this.paymentLibComponent.paymentReference).subscribe(
+       (res) =>{
+         console.log(res);
+      }
+    )
   }
 
   get isCardPayment(): boolean {

@@ -182,4 +182,11 @@ export class PaymentViewService {
       catchError(this.errorHandlerService.handleError)
     );
   }
+ getPaymentFailure(paymentReference: string): Observable<any> {
+    return this.https.get(`${this.paymentLibService.API_ROOT}/payment-failures/${paymentReference}`, {
+      withCredentials: true
+    }).pipe(
+      catchError(this.errorHandlerService.handleError)
+    );
+  }
 }
