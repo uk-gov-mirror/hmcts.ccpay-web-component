@@ -7,6 +7,7 @@ import { IPayment } from '../../interfaces/IPayment';
 import { IRemission } from '../../interfaces/IRemission';
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 import { ChangeDetectorRef } from '@angular/core';
+import { map } from 'rxjs/operators';
 import { OrderslistService } from '../../services/orderslist.service';
 
 @Component({
@@ -100,8 +101,13 @@ export class PaymentViewComponent implements OnInit {
       (error: any) => this.errorMessage = error
     );
     this.paymentViewService.getPaymentFailure(this.paymentLibComponent.paymentReference).subscribe(
-       (res) =>{
-         console.log(res);
+       (res) => {
+        let allPaymentsFailure = [];
+        res.payment_failure_list.forEach(payments => {
+         allPaymentsFailure.push(payments.payment_failure_initiated);
+         allPaymentsFailure.push(payments.payment_failure_closed);
+        });
+        console.log(allPaymentsFailure);
       }
     )
   }
