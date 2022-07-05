@@ -103,7 +103,7 @@ export class PaymentViewComponent implements OnInit {
     this.paymentViewService.getPaymentFailure(this.paymentLibComponent.paymentReference).subscribe(
        (res) => {
         let allPaymentsFailure = [];
-        res.payment_failure_list.forEach(payments => {
+        JSON.parse(res).payment_failure_list.forEach(payments => {
          allPaymentsFailure.push(payments.payment_failure_initiated);
          allPaymentsFailure.push(payments.payment_failure_closed);
         });
