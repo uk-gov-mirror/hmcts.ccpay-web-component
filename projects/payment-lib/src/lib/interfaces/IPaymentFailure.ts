@@ -8,5 +8,6 @@ export interface IPaymentFailure {
   payment_reference: string;
   representment_date: string;
   representment_status: string;
+  has_amount_debited?: string;
   status: string;
 }

@@ -139,7 +139,7 @@
             <tr *ngFor="let payment of allPaymentsFailure">
               <td>{{ payment.status }}</td>
               <td>£{{ payment.disputed_amount | number:'.2' }}</td>
-              <td>{{ payment.failure_event_date_time | date:'dd MMMM yyyy'}}</td>
+              <td>{{(payment.representment_date ? payment.representment_date : payment.failure_event_date_time) | date:'dd MMM yyyy'}}</td>
               <td>{{ payment.payment_reference }}</td>
               <td >{{ payment.failure_type }}</td>
               <td>
@@ -381,11 +381,11 @@
       </tr>
       <tr class="section">
         <td class="bold">Failure event data and time</td>
-        <td> {{ selectedPaymentsStatus.failure_event_date_time| date:'dd MMM yyyy HH:mm:ss' }}</td>
+        <td> {{ selectedPaymentsStatus.failure_event_date_time | date:'dd MMM yyyy HH:mm:ss' }}</td>
       </tr>
-      <tr class="section">
+      <tr class="section" *ngIf="selectedPaymentsStatus.has_amount_debited">
         <td class="bold">Has disputed amount debited</td>
-        <td>	{{selectedPaymentsStatus.disputed_amount}}</td>
+        <td>	{{selectedPaymentsStatus.has_amount_debited}}</td>
       </tr>
       <tr class="section" *ngIf="selectedPaymentsStatus.representment_status">
         <td class="bold">Representment status</td>
