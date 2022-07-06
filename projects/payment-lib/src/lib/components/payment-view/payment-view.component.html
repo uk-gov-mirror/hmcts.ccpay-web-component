@@ -351,48 +351,48 @@
       <tbody>
 
       <tr class="section">
-        <td class="bold tb-col-w">Failure reference</td>
+        <td class="bold">Failure reference</td>
         <td>	{{selectedPaymentsStatus.failure_reference}}</td>
       </tr>
       <tr class="section">
-        <td class="bold tb-col-w">Failure reason</td>
+        <td class="bold">Failure reason</td>
         <td>	{{selectedPaymentsStatus.failure_reason}}</td>
       </tr>
       <tr class="section">
-          <td class="bold tb-col-w">Payment reference</td>
+          <td class="bold">Payment reference</td>
           <td>{{ selectedPaymentsStatus.payment_reference }}</td>
       </tr>
       <tr class="section">
-          <td class="bold tb-col-w">Payment amount</td>
+          <td class="bold">Payment amount</td>
           <td> £{{ paymentGroup?.payments[0]?.amount | number:'.2' }}</td>
 
       </tr>
       <tr class="section">
-          <td class="bold tb-col-w">Disputed amount</td>
+          <td class="bold">Disputed amount</td>
           <td>	{{selectedPaymentsStatus.disputed_amount  | number:'.2'}}</td>
       </tr>
       <tr class="section">
-        <td class="bold tb-col-w">Additional reference</td>
+        <td class="bold">Additional reference</td>
         <td>	{{selectedPaymentsStatus.additional_reference }})</td>
       </tr>
       <tr class="section">
-        <td class="bold tb-col-w">Failure type</td>
+        <td class="bold">Failure type</td>
         <td>	{{ selectedPaymentsStatus.failure_type }}</td>
       </tr>
       <tr class="section">
-        <td class="bold tb-col-w">Failure event data and time</td>
+        <td class="bold">Failure event data and time</td>
         <td> {{ selectedPaymentsStatus.failure_event_date_time| date:'dd MMM yyyy HH:mm:ss' }}</td>
       </tr>
       <tr class="section">
-        <td class="bold tb-col-w">Has disputed amount debited</td>
+        <td class="bold">Has disputed amount debited</td>
         <td>	{{selectedPaymentsStatus.disputed_amount}}</td>
       </tr>
       <tr class="section" *ngIf="selectedPaymentsStatus.representment_status">
-        <td class="bold tb-col-w">Representment status</td>
+        <td class="bold">Representment status</td>
         <td>	{{selectedPaymentsStatus.representment_status === 'Yes'? 'Success' : 'Failure'}}</td>
       </tr>
       <tr class="section" *ngIf="selectedPaymentsStatus.representment_date">
-        <td class="bold tb-col-w">Representment date</td>
+        <td class="bold">Representment date</td>
         <td>	{{selectedPaymentsStatus.representment_date  | date:'dd MMM yyyy HH:mm:ss'}}</td>
       </tr>
       </tbody>
