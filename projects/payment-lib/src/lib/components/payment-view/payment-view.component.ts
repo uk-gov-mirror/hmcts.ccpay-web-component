@@ -50,6 +50,7 @@ export class PaymentViewComponent implements OnInit {
   allowedRolesToAccessRefund = ['payments-refund-approver', 'payments-refund'];
   remissions: IRemission[] = [];
   allPaymentsFailure = [];
+  selectedPaymentsStatus = [];
   remissionFeeAmt: number;
   isRefundRemissionBtnEnable: boolean;
   serviceReference: string;
@@ -309,5 +310,10 @@ export class PaymentViewComponent implements OnInit {
     this.OrderslistService.setorderTotalPayments(null);
     this.OrderslistService.setorderRemissionTotal(null);
     this.OrderslistService.setorderFeesTotal(null);
+  }
+
+  goToPaymentFailuePage(payment: any) {
+  this.viewStatus = 'payment-failure';
+  this.selectedPaymentsStatus = payment;
   }
 }
