@@ -7,7 +7,7 @@ import { IPayment } from '../../interfaces/IPayment';
 import { IRemission } from '../../interfaces/IRemission';
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 import { ChangeDetectorRef } from '@angular/core';
-import { map } from 'rxjs/operators';
+import { IPaymentFailure } from '../../interfaces/IPaymentFailure';
 import { OrderslistService } from '../../services/orderslist.service';
 
 @Component({
@@ -49,8 +49,8 @@ export class PaymentViewComponent implements OnInit {
   isIssueRefunfBtnEnable: boolean = false;
   allowedRolesToAccessRefund = ['payments-refund-approver', 'payments-refund'];
   remissions: IRemission[] = [];
-  allPaymentsFailure = [];
-  selectedPaymentsStatus = [];
+  allPaymentsFailure: IPaymentFailure[] = [];
+  selectedPaymentsStatus: IPaymentFailure;
   remissionFeeAmt: number;
   isRefundRemissionBtnEnable: boolean;
   serviceReference: string;
