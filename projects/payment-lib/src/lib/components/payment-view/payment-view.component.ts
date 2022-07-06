@@ -105,8 +105,11 @@ export class PaymentViewComponent implements OnInit {
     this.paymentViewService.getPaymentFailure(this.paymentLibComponent.paymentReference).subscribe({
        next: (res) => {
         JSON.parse(res).payment_failure_list.reverse().forEach(payments => {
+
          this.allPaymentsFailure.push(payments.payment_failure_initiated);
-         this.allPaymentsFailure.push(payments.payment_failure_closed);
+         if(payments.payment_failure_closed) {
+          this.allPaymentsFailure.push(payments.payment_failure_closed);
+         }
         });
         this.allPaymentsFailure = this.allPaymentsFailure.reverse();
       },
@@ -315,5 +318,9 @@ export class PaymentViewComponent implements OnInit {
   goToPaymentFailuePage(payment: any) {
   this.viewStatus = 'payment-failure';
   this.selectedPaymentsStatus = payment;
+  }
+  goBackToPaymentView(event: any) {
+    event.preventDefault();
+    this.viewStatus = 'paymentview';
   }
 }

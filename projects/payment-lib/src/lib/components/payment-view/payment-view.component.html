@@ -334,7 +334,14 @@
 </ng-container>
 
 <ng-container *ngIf="viewStatus === 'payment-failure'">
-  <div class="payment-view-alignment">
+  <div class="payment-failure-alignment">
+    <div  class="govuk-breadcrumbs">
+      <ol class="govuk-breadcrumbs__list">
+        <li class="govuk-breadcrumbs__list-item">
+          <a href="javascript:void(0)" (click)="goBackToPaymentView($event)" class="govuk-back-link">Back</a>
+        </li>
+      </ol>
+    </div>
     <div class="govuk-grid-row">
       <div class="column">
         <h1 class="heading-large govuk-!-margin-top-0">Failure event details</h1>
@@ -373,7 +380,8 @@
         <td>	{{ selectedPaymentsStatus.failure_type }}</td>
       </tr>
       <tr class="section">
-        <td class="bold tb-col-w">Failure event data and time | date:'dd MMM yyyy HH:mm:ss' }}</td>
+        <td class="bold tb-col-w">Failure event data and time</td>
+        <td> {{ selectedPaymentsStatus.failure_event_date_time| date:'dd MMM yyyy HH:mm:ss' }}</td>
       </tr>
       <tr class="section">
         <td class="bold tb-col-w">Has disputed amount debited</td>
