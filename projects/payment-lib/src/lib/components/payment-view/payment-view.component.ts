@@ -107,7 +107,7 @@ export class PaymentViewComponent implements OnInit {
          this.allPaymentsFailure.push(payments.payment_failure_initiated);
          this.allPaymentsFailure.push(payments.payment_failure_closed);
         });
-        console.log(this.allPaymentsFailure);
+        this.allPaymentsFailure = this.allPaymentsFailure.reverse();
       },
       error: (e) => {
        this.allPaymentsFailure = [];
