@@ -110,6 +110,46 @@
      <div class="remission">
         <button  [disabled]="!chkIssueRefundBtnEnable(paymentGroup?.payments[0])"  (click)="issueRefund(paymentGroup)" class="govuk-button govuk-button--secondary">Issue refund</button>
      </div>
+
+     <div class="column">
+      <h2 class="heading-medium">Disputed payment history</h2>
+    </div>
+    
+    
+    <div class="error-summary" role="group" aria-labelledby="failure-error-summary-heading" tabindex="-1" *ngIf="errorMsg">
+      <h2 class="heading-medium error-summary-heading" id="failure-error-summary-heading">
+        Payment status history could not be retrieved
+      </h2>
+      <div class="govuk-error-summary__body">
+        {{ errorMsg }}
+      </div>
+    </div>
+    
+    <div *ngIf="!errorMsg && allPaymentsFailure.length > 0">
+      <table>
+          <thead>
+            <tr>
+              <th>Status</th>
+              <th>Amount</th>
+              <th>Date</th>
+              <th>Payment reference</th>
+              <th>Event</th>
+              <th></th>
+            </tr>
+          </thead> 
+          <tbody>
+            <tr *ngFor="let payment of allPaymentsFailure">
+              <td>{{ payment.status }}</td>
+              <td>£{{ payment.disputed_amount | number:'.2' }}</td>
+              <td>{{ payment.failure_event_date_time | date:'dd MMMM yyyy'}}</td>
+              <td>{{ payment.payment_reference }}</td>
+              <td >{{ payment.failure_type }}</td>
+              <td>Review</td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+
       
      <div  *ngIf="checkForFees(paymentGroup)">
       <div  *ngIf="paymentGroup.fees.length > 0">
@@ -145,12 +185,6 @@
           </tbody>
         </table>
         <button [disabled]="!chkForAddRemission(fee.code)" (click)="addRemission(fee)" class="govuk-button govuk-button--secondary"> Add remission</button>
-
-
-           
-        <!-- <button  *ngIf="paymentGroup.payments[0].method === 'payment by account'" (click)="addRemission(fee)" class="govuk-button govuk-button--secondary"> Add remission</button>
-             -->
-
       </div>
 
                 <!-- remissions -->
@@ -190,19 +224,7 @@
    </div>
    
   </div>
-
-
-
-      <!-- card details -->
-      <!-- <ccpay-card-details *ngIf="isCardPayment && !isTelephonyPayment"></ccpay-card-details> -->
-
-      <!-- pba details -->
-      <!-- <ccpay-pba-details *ngIf="!isCardPayment" [payment]="paymentGroup.payments[0]"></ccpay-pba-details> -->
-
-  
-
     </div>
-
   </main>
 </div>
 

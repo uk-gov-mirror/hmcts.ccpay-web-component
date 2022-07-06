@@ -33,7 +33,7 @@ export class PaymentViewComponent implements OnInit {
   @Input() orderRemissionTotal: number;
   @Input() orderDetail: any[];
   @Input("isServiceRequest") isServiceRequest: string;
-
+  errorMsg: string;
   paymentGroup: IPaymentGroup;
   errorMessage: string;
   ccdCaseNumber: string;
@@ -49,6 +49,7 @@ export class PaymentViewComponent implements OnInit {
   isIssueRefunfBtnEnable: boolean = false;
   allowedRolesToAccessRefund = ['payments-refund-approver', 'payments-refund'];
   remissions: IRemission[] = [];
+  allPaymentsFailure = [];
   remissionFeeAmt: number;
   isRefundRemissionBtnEnable: boolean;
   serviceReference: string;
@@ -100,16 +101,19 @@ export class PaymentViewComponent implements OnInit {
       },
       (error: any) => this.errorMessage = error
     );
-    this.paymentViewService.getPaymentFailure(this.paymentLibComponent.paymentReference).subscribe(
-       (res) => {
-        let allPaymentsFailure = [];
+    this.paymentViewService.getPaymentFailure(this.paymentLibComponent.paymentReference).subscribe({
+       next: (res) => {
         JSON.parse(res).payment_failure_list.forEach(payments => {
-         allPaymentsFailure.push(payments.payment_failure_initiated);
-         allPaymentsFailure.push(payments.payment_failure_closed);
+         this.allPaymentsFailure.push(payments.payment_failure_initiated);
+         this.allPaymentsFailure.push(payments.payment_failure_closed);
         });
-        console.log(allPaymentsFailure);
+        console.log(this.allPaymentsFailure);
+      },
+      error: (e) => {
+       this.allPaymentsFailure = [];
+       this.errorMsg = "Server error"
       }
-    )
+  })
   }
 
   get isCardPayment(): boolean {
