@@ -13,6 +13,7 @@ import { IPayment } from './interfaces/IPayment';
     <ccpay-payment-view [LOGGEDINUSERROLES]="LOGGEDINUSERROLES" *ngIf="viewName === 'payment-view'"
     [isTurnOff]="ISTURNOFF" [isTakePayment]="TAKEPAYMENT"  [caseType]="CASETYPE"
     [isOldPcipalOff]="ISOLDPCIPALOFF"
+    [ISPAYMENTSTATUSENABLED] = "ISPAYMENTSTATUSENABLED"
     [isNewPcipalOff]="ISNEWPCIPALOFF"></ccpay-payment-view>
 
     <ccpay-process-refund *ngIf="viewName === 'process-refund'"
@@ -64,6 +65,7 @@ export class PaymentLibComponent implements OnInit {
   @Input('CASETYPE') CASETYPE: string;
   @Input('ISOLDPCIPALOFF') ISOLDPCIPALOFF: boolean;
   @Input('ISNEWPCIPALOFF') ISNEWPCIPALOFF: boolean;
+  @Input('ISPAYMENTSTATUSENABLED') ISPAYMENTSTATUSENABLED: boolean;
   @Input('rootUrl') rootUrl: boolean;
   @Input('REFUNDLIST') REFUNDLIST: string;
   @Input('USERID') USERID: string;
