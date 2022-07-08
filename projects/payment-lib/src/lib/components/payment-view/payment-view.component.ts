@@ -26,7 +26,7 @@ export class PaymentViewComponent implements OnInit {
   @Input() orderTotalPayments: number;
   @Input() payment: IPayment;
   @Input() LOGGEDINUSERROLES: string[];
-  @Input() ISPAYMENTSTATUSENABLED: string[];
+  @Input() ISPAYMENTSTATUSENABLED: string;
   @Input() orderParty: string;
   @Input() orderCreated: Date;
   @Input() orderCCDEvent: string;
