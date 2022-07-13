@@ -373,14 +373,14 @@
       </tr>
       <tr class="section">
         <td class="bold">Additional reference</td>
-        <td>	{{selectedPaymentsStatus.additional_reference }})</td>
+        <td>	{{selectedPaymentsStatus.additional_reference }}</td>
       </tr>
       <tr class="section">
         <td class="bold">Failure type</td>
         <td>	{{ selectedPaymentsStatus.failure_type }}</td>
       </tr>
       <tr class="section">
-        <td class="bold">Failure event data and time</td>
+        <td class="bold">Failure event date and time</td>
         <td> {{ selectedPaymentsStatus.failure_event_date_time | date:'dd MMM yyyy HH:mm:ss' }}</td>
       </tr>
       <tr class="section" *ngIf="selectedPaymentsStatus.has_amount_debited">
