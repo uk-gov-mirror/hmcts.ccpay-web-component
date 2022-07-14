@@ -115,15 +115,15 @@
       <h2 class="heading-medium">Disputed payment history</h2>
     </div>
     
-    <div class="error-summary" role="group" aria-labelledby="failure-error-summary-heading" tabindex="-1" *ngIf="errorMsg">
+    <!-- <div class="error-summary" role="group" aria-labelledby="failure-error-summary-heading" tabindex="-1" *ngIf="errorMsg">
       <h2 class="heading-medium error-summary-heading" id="failure-error-summary-heading">
         Payment status history could not be retrieved
       </h2>
       <div class="govuk-error-summary__body">
         {{ errorMsg }}
       </div>
-    </div>
-    <div *ngIf="!errorMsg && allPaymentsFailure.length > 0">
+    </div> -->
+    <div>
       <table>
           <thead>
             <tr>
@@ -135,7 +135,7 @@
               <th></th>
             </tr>
           </thead> 
-          <tbody>
+          <tbody *ngIf="!errorMsg && allPaymentsFailure.length > 0">
             <tr *ngFor="let payment of allPaymentsFailure">
               <td>{{ payment.status }}</td>
               <td>£{{ payment.disputed_amount | number:'.2' }}</td>
@@ -147,6 +147,11 @@
                 <a href="javascript:void(0)" (click)="goToPaymentFailuePage(payment)">Review</a>
 
               </td>
+            </tr>
+          </tbody>
+          <tbody  *ngIf="errorMsg || allPaymentsFailure.length === 0">
+            <tr>
+              <td colspan="6"> No help with fees or remissions. </td>
             </tr>
         </tbody>
       </table>
@@ -389,7 +394,7 @@
       </tr>
       <tr class="section" *ngIf="selectedPaymentsStatus.representment_status">
         <td class="bold">Representment status</td>
-        <td>	{{selectedPaymentsStatus.representment_status === 'Yes'? 'Success' : 'Failure'}}</td>
+        <td>	{{selectedPaymentsStatus.representment_status === 'yes'? 'Success' : 'Failure'}}</td>
       </tr>
       <tr class="section" *ngIf="selectedPaymentsStatus.representment_date">
         <td class="bold">Representment date</td>
