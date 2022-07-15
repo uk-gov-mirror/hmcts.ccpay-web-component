@@ -102,7 +102,7 @@
 
   </div>
 
-  <ng-container *ngIf="viewName==='refundview'">
+  <ng-container *ngIf="viewName === 'refundview' && !isFromPayBubble">
     <div *ngIf="refundButtonState==='Update required'">
       <!-- <div *ngIf="refundButtonState==='sent back'"> -->
       <br />

@@ -17,6 +17,7 @@ const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 })
 export class RefundStatusComponent implements OnInit {
   @Input('LOGGEDINUSERROLES') LOGGEDINUSERROLES: string[] = [];
+  @Input('API_ROOT') API_ROOT: string;
   @Input() isOldPcipalOff: boolean;
   @Input() isNewPcipalOff: boolean;
   @Input() ccdCaseNumber: string;
@@ -115,6 +116,9 @@ export class RefundStatusComponent implements OnInit {
         }
       }
    //}
+  }
+  isFromPayBubble = (): boolean => { 
+    return this.API_ROOT === 'api/payment-history';
   }
 
   getRefundsStatusHistoryList() {
