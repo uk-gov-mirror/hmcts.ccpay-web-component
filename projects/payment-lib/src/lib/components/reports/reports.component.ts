@@ -192,6 +192,10 @@ downloadReport(){
         result = 'Over Payment_Under Payment';
         break; 
       } 
+      case 'PAYMENT_FAILURE_EVENT': { 
+        result = 'Payment failure event';
+        break; 
+      }
       default: { 
         result = selectedOption;
         break; 
