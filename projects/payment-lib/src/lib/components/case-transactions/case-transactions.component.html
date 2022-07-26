@@ -578,7 +578,8 @@
               <ccpay-refund-status
               [ccdCaseNumber]="ccdCaseNumber"
               [isTurnOff]="isTurnOff"
-              [LOGGEDINUSERROLES]="LOGGEDINUSERROLES"
+              [LOGGEDINUSERROLES]="LOGGEDINUSERROLES" 
+              [isEliginbleToAccess] = check4AllowedRoles2AccessRefund()
               ></ccpay-refund-status>
           </div>
       </div>
@@ -679,7 +680,10 @@
         </div>
         <div class="govuk-grid-column-full" *ngIf="!check4AllowedRoles2AccessPBApayment()">
             <span class="heading-medium"><br/>Refunds</span>
-            <ccpay-refund-status [ccdCaseNumber]="ccdCaseNumber" ></ccpay-refund-status>
+            <ccpay-refund-status 
+            [ccdCaseNumber]="ccdCaseNumber"
+            [isEliginbleToAccess] = check4AllowedRoles2AccessRefund()
+             ></ccpay-refund-status>
         </div>
 
    </ng-container>
