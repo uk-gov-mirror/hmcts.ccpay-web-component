@@ -121,7 +121,7 @@ downloadReport(){
         })
     }else if(selectedReportName === 'PAYMENT_FAILURE_EVENT') {
 
-      this.paymentViewService.downloadFailureReport().subscribe(
+      this.paymentViewService.downloadFailureReport(selectedStartDate,selectedEndDate).subscribe(
         response =>  {
 
         },

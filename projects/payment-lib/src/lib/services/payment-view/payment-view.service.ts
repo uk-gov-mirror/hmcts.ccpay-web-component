@@ -145,8 +145,8 @@ export class PaymentViewService {
     const url = `${this.paymentLibService.API_ROOT}/report/data?date_from=${startDate}&date_to=${endDate}&report_type=${reportName}`;
     return this.https.get(url, { withCredentials: true }).pipe( catchError(this.errorHandlerService.handleError));
   }
-  downloadFailureReport(): Observable<any> {
-    const url = `${this.paymentLibService.API_ROOT}/payment-failures/failure-report`;
+  downloadFailureReport(startDate: string, endDate:string): Observable<any> {
+    const url = `${this.paymentLibService.API_ROOT}/payment-failures/failure-report?date_from=${startDate}&date_to=${endDate}`;
     return this.https.get(url, { withCredentials: true }).pipe( catchError(this.errorHandlerService.handleError));
   }
   getBSfeature(): Observable<any> {
