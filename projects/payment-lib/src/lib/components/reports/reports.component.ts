@@ -119,6 +119,16 @@ downloadReport(){
           this.isDownLoadButtondisabled = false;
           this.errorMessage = this.errorHandlerService.getServerErrorMessage(true);
         })
+    }else if(selectedReportName === 'PAYMENT_FAILURE_EVENT') {
+
+      this.paymentViewService.downloadFailureReport().subscribe(
+        response =>  {
+
+        },
+        (error: any) => {
+
+        })
+
     } else {
       this.bulkScaningPaymentService.downloadSelectedReport(selectedReportName,selectedStartDate,selectedEndDate).subscribe(
         response =>  {
