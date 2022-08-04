@@ -120,18 +120,17 @@ downloadReport(){
           this.errorMessage = this.errorHandlerService.getServerErrorMessage(true);
         })
 
-    // }else if(selectedReportName === 'PAYMENT_FAILURE_EVENT') {
+    } else if(selectedReportName === 'PAYMENT_FAILURE_EVENT') {
 
-    //   this.paymentViewService.downloadFailureReport(selectedStartDate,selectedEndDate).subscribe(
-    //     response =>  {
+      this.paymentViewService.downloadFailureReport(selectedStartDate,selectedEndDate).subscribe(
+        response =>  {
 
-    //     },
-    //     (error: any) => {
+        },
+        (error: any) => {
 
-    //     })
+        })
 
-    // } 
-      } else {
+    } else {
       this.bulkScaningPaymentService.downloadSelectedReport(selectedReportName,selectedStartDate,selectedEndDate).subscribe(
         response =>  {
           this.errorMessage = this.errorHandlerService.getServerErrorMessage(false);
