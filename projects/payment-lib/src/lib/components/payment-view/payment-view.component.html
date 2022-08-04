@@ -386,7 +386,7 @@
       </tr>
       <tr class="section" *ngIf="selectedPaymentsStatus.representment_status">
         <td class="bold">Status following representation of payment</td>
-        <td>	{{selectedPaymentsStatus.representment_status === 'yes'? 'Success' : 'Failure'}}</td>
+        <td>	{{(selectedPaymentsStatus.representment_status === 'Yes' || selectedPaymentsStatus.representment_status === 'yes') ? 'Success' : 'Failure'}}</td>
       </tr>
       <tr class="section" *ngIf="selectedPaymentsStatus.representment_date">
         <td class="bold">Date payment represented</td>
