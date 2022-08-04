@@ -110,19 +110,11 @@
      <div class="remission">
         <button  [disabled]="!chkIssueRefundBtnEnable(paymentGroup?.payments[0])"  (click)="issueRefund(paymentGroup)" class="govuk-button govuk-button--secondary">Issue refund</button>
      </div>
-<div *ngIf="ISPAYMENTSTATUSENABLED === 'Disable'">
+<div *ngIf="ISPAYMENTSTATUSENABLED === 'Enable'">
      <div class="column">
       <h2 class="heading-medium">Disputed payment history</h2>
     </div>
     
-    <!-- <div class="error-summary" role="group" aria-labelledby="failure-error-summary-heading" tabindex="-1" *ngIf="errorMsg">
-      <h2 class="heading-medium error-summary-heading" id="failure-error-summary-heading">
-        Payment status history could not be retrieved
-      </h2>
-      <div class="govuk-error-summary__body">
-        {{ errorMsg }}
-      </div>
-    </div> -->
     <div>
       <table>
           <thead>
