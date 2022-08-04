@@ -119,17 +119,19 @@ downloadReport(){
           this.isDownLoadButtondisabled = false;
           this.errorMessage = this.errorHandlerService.getServerErrorMessage(true);
         })
-    }else if(selectedReportName === 'PAYMENT_FAILURE_EVENT') {
 
-      this.paymentViewService.downloadFailureReport(selectedStartDate,selectedEndDate).subscribe(
-        response =>  {
+    // }else if(selectedReportName === 'PAYMENT_FAILURE_EVENT') {
 
-        },
-        (error: any) => {
+    //   this.paymentViewService.downloadFailureReport(selectedStartDate,selectedEndDate).subscribe(
+    //     response =>  {
 
-        })
+    //     },
+    //     (error: any) => {
 
-    } else {
+    //     })
+
+    // } 
+      } else {
       this.bulkScaningPaymentService.downloadSelectedReport(selectedReportName,selectedStartDate,selectedEndDate).subscribe(
         response =>  {
           this.errorMessage = this.errorHandlerService.getServerErrorMessage(false);
