@@ -7,6 +7,7 @@ import { IPayment } from '../../interfaces/IPayment';
 import { IRemission } from '../../interfaces/IRemission';
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 import { ChangeDetectorRef } from '@angular/core';
+import { IPaymentFailure } from '../../interfaces/IPaymentFailure';
 import { OrderslistService } from '../../services/orderslist.service';
 
 @Component({
@@ -23,6 +24,7 @@ export class PaymentViewComponent implements OnInit {
   @Input() orderTotalPayments: number;
   @Input() payment: IPayment;
   @Input() LOGGEDINUSERROLES: string[];
+  @Input() ISPAYMENTSTATUSENABLED: string;
   @Input() orderParty: string;
   @Input() orderCreated: Date;
   @Input() orderCCDEvent: string;
@@ -30,7 +32,7 @@ export class PaymentViewComponent implements OnInit {
   @Input() orderRemissionTotal: number;
   @Input() orderDetail: any[];
   @Input("isServiceRequest") isServiceRequest: string;
-
+  errorMsg: string;
   paymentGroup: IPaymentGroup;
   errorMessage: string;
   ccdCaseNumber: string;
@@ -46,6 +48,8 @@ export class PaymentViewComponent implements OnInit {
   isIssueRefunfBtnEnable: boolean = false;
   allowedRolesToAccessRefund = ['payments-refund-approver', 'payments-refund'];
   remissions: IRemission[] = [];
+  allPaymentsFailure: IPaymentFailure[] = [];
+  selectedPaymentsStatus: IPaymentFailure;
   remissionFeeAmt: number;
   isRefundRemissionBtnEnable: boolean;
   serviceReference: string;
@@ -97,7 +101,22 @@ export class PaymentViewComponent implements OnInit {
       },
       (error: any) => this.errorMessage = error
     );
+    this.paymentViewService.getPaymentFailure(this.paymentLibComponent.paymentReference).subscribe({
+       next: (res) => {
+        JSON.parse(res).payment_failure_list.reverse().forEach(payments => {
 
+         this.allPaymentsFailure.push(payments.payment_failure_initiated);
+         if(payments.payment_failure_closed) {
+          this.allPaymentsFailure.push(payments.payment_failure_closed);
+         }
+        });
+        this.allPaymentsFailure = this.allPaymentsFailure.reverse();
+      },
+      error: (e) => {
+       this.allPaymentsFailure = [];
+       this.errorMsg = "Server error"
+      }
+  })
   }
 
   get isCardPayment(): boolean {
@@ -293,5 +312,14 @@ export class PaymentViewComponent implements OnInit {
     this.OrderslistService.setorderTotalPayments(null);
     this.OrderslistService.setorderRemissionTotal(null);
     this.OrderslistService.setorderFeesTotal(null);
+  }
+
+  goToPaymentFailuePage(payment: any) {
+  this.viewStatus = 'payment-failure';
+  this.selectedPaymentsStatus = payment;
+  }
+  goBackToPaymentView(event: any) {
+    event.preventDefault();
+    this.viewStatus = 'paymentview';
   }
 }
