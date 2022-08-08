@@ -313,7 +313,6 @@ export class PaymentViewComponent implements OnInit {
     this.OrderslistService.setorderRemissionTotal(null);
     this.OrderslistService.setorderFeesTotal(null);
   }
-<<<<<<< HEAD
 
   goToPaymentFailuePage(payment: any) {
   this.viewStatus = 'payment-failure';
@@ -324,6 +323,3 @@ export class PaymentViewComponent implements OnInit {
     this.viewStatus = 'paymentview';
   }
 }
-=======
-}
->>>>>>> 8041d4d48abaea595d6c1611a1d23608ec98bc8b
