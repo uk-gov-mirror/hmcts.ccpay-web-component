@@ -13,6 +13,8 @@ import {XlFileService} from '../../services/xl-file/xl-file.service';
   styleUrls: ['./reports.component.scss']
 })
 export class ReportsComponent implements OnInit {
+  fmt = 'dd/MM/yyyy';
+  loc = 'en-US';
   reportsForm: FormGroup;
   startDate: string;
   endDate: string;
@@ -124,10 +126,23 @@ downloadReport(){
 
       this.paymentViewService.downloadFailureReport(selectedStartDate,selectedEndDate).subscribe(
         response =>  {
+          this.errorMessage = this.errorHandlerService.getServerErrorMessage(false);
+          const result = {data: JSON.parse(response)['payment_failure_report_list']};
+          let res = {data: this.applyDateFormat(result)};
+          if (result['data'].length > 0) {
+            for ( var i=0; i< res['data'].length; i++) {
+              if (res['data'][i]["disputed_amount"] !== undefined) {
+                res['data'][i]['disputed_amount'] = this.convertToFloatValue(res['data'][i]["disputed_amount"]);
+              }
+            }
+          }
+          this.isDownLoadButtondisabled = false;
+          this.xlFileService.exportAsExcelFile(res['data'], this.getFileName(this.reportsForm.get('selectedreport').value, selectedStartDate, selectedEndDate ));
 
         },
         (error: any) => {
-
+          this.isDownLoadButtondisabled = false;
+          this.errorMessage = this.errorHandlerService.getServerErrorMessage(true);
         })
 
     } else {
@@ -215,14 +230,32 @@ downloadReport(){
    return result;
   }
   applyDateFormat(res) {
-    const fmt = 'dd/MM/yyyy',
-    loc = 'en-US';
     return res['data'].map(value => {
       if (value['date_banked']) {
-        value['date_banked'] = formatDate(value['date_banked'], fmt, loc);
+        value['date_banked'] = formatDate(value['date_banked'], this.fmt, this.loc);
+      }
+      if (value['event_date'] && value['event_date'].indexOf(',') === -1) {
+        value['event_date'] = formatDate(value['event_date'], this.fmt, this.loc);
+      } else if (value['event_date'] && value['event_date'].indexOf(',') !== -1) {
+        value['event_date'] = this.multiDateFormater(value['event_date'])
+      }
+
+      if (value['representment_date'] && value['representment_date'].indexOf(',') === -1) {
+        value['representment_date'] = formatDate(value['representment_date'], this.fmt, this.loc);
+      } else if (value['representment_date'] && value['representment_date'].indexOf(',') !== -1) {
+        value['representment_date'] = this.multiDateFormater(value['representment_date'])
+      }
+
+      if (value['refund_date'] && value['refund_date'].indexOf(',') === -1) {
+        value['refund_date'] = formatDate(value['refund_date'], this.fmt, this.loc);
+      } else if (value['refund_date'] && value['refund_date'].indexOf(',') !== -1) {
+        value['refund_date'] = this.multiDateFormater(value['refund_date'])
       }
       return value;
     });
+  }
+  multiDateFormater(dateStr) {
+   return dateStr.split(',').map((date) => formatDate(date, this.fmt, this.loc)).join(',');
   }
   
   convertToFloatValue(amt) {
