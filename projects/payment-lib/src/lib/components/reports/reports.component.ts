@@ -6,6 +6,7 @@ import { BulkScaningPaymentService } from '../../services/bulk-scaning-payment/b
 import { ErrorHandlerService } from '../../services/shared/error-handler.service';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import {XlFileService} from '../../services/xl-file/xl-file.service';
+import { FindValueSubscriber } from 'rxjs/internal/operators/find';
 
 @Component({
   selector: 'ccpay-reports',
@@ -133,6 +134,9 @@ downloadReport(){
             for ( var i=0; i< res['data'].length; i++) {
               if (res['data'][i]["disputed_amount"] !== undefined) {
                 res['data'][i]['disputed_amount'] = this.convertToFloatValue(res['data'][i]["disputed_amount"]);
+              }
+              if (res['data'][i]["representment_status"] !== undefined) {
+                res['data'][i]['representment_status'] = res['data'][i]["representment_status"].toLowerCase() === 'yes' ? 'Success' : 'Failure';
               }
             }
           }
