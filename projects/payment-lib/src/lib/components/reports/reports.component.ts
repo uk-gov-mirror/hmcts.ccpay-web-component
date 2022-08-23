@@ -22,6 +22,7 @@ export class ReportsComponent implements OnInit {
   ccdCaseNumber: string;
   isDownLoadButtondisabled:Boolean = false;
   isStartDateLesthanEndDate: Boolean = false;
+  isDateBetwnMonth: Boolean = false;
   isDateRangeBetnWeek: Boolean = false;
   errorMessage = this.errorHandlerService.getServerErrorMessage(false);
   paymentGroups: IPaymentGroup[] = [];
@@ -51,14 +52,22 @@ export class ReportsComponent implements OnInit {
   const selectedStartDate = this.tranformDate(this.reportsForm.get('startDate').value),
     selectedEndDate = this.tranformDate(this.reportsForm.get('endDate').value);
   const isDateRangeMoreThanWeek = (<any>new Date(selectedStartDate) - <any>new Date(selectedEndDate))/(1000 * 3600 * -24) > 7;
+  const isDateRangeMoreThanMonth = (<any>new Date(selectedStartDate) - <any>new Date(selectedEndDate))/(1000 * 3600 * -24) > 30;
   if(new Date(selectedStartDate) > new Date(selectedEndDate) && selectedEndDate !== ''){
     this.reportsForm.get('startDate').setValue('');
     this.isDateRangeBetnWeek = false;
+    this.isDateBetwnMonth = false;
     this.isStartDateLesthanEndDate = true;
   } else if(reportName && reportName ==='SURPLUS_AND_SHORTFALL' && isDateRangeMoreThanWeek ) {
     this.isDateRangeBetnWeek = true;
+    this.isDateBetwnMonth = false;
+    this.isStartDateLesthanEndDate = false;
+  } else if(reportName && reportName ==='PAYMENT_FAILURE_EVENT' && isDateRangeMoreThanMonth ) {
+    this.isDateRangeBetnWeek = false;
+    this.isDateBetwnMonth = true;
     this.isStartDateLesthanEndDate = false;
   } else {
+    this.isDateBetwnMonth = false;
     this.isDateRangeBetnWeek = false;
     this.isStartDateLesthanEndDate = false;
   }
