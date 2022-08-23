@@ -159,9 +159,9 @@ downloadReport(){
           const errorContent = error.replace(/[^a-zA-Z ]/g, '').trim();
           const statusCode = error.replace(/[^a-zA-Z0-9 ]/g, '').trim().split(' ')[0];
           if(statusCode === '404') {
-           this.errorHandlerService.getServerErrorMessage(true, true, errorContent);
+            this.errorMessage = this.errorHandlerService.getServerErrorMessage(true, true, errorContent);
           }else {
-            this.errorHandlerService.getServerErrorMessage(true, false, '');
+            this.errorMessage = this.errorHandlerService.getServerErrorMessage(true, false, '');
           }
         })
 
