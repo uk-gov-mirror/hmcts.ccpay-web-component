@@ -25,7 +25,7 @@ export class ReportsComponent implements OnInit {
   isStartDateLesthanEndDate: Boolean = false;
   isDateBetwnMonth: Boolean = false;
   isDateRangeBetnWeek: Boolean = false;
-  errorMessage = this.errorHandlerService.getServerErrorMessage(false);
+  errorMessage = this.errorHandlerService.getServerErrorMessage(false, false, '');
   paymentGroups: IPaymentGroup[] = [];
 
   constructor(
@@ -96,7 +96,7 @@ downloadReport(){
     if(selectedReportName === 'PROCESSED_UNALLOCATED' || selectedReportName === 'SURPLUS_AND_SHORTFALL' ){
       this.paymentViewService.downloadSelectedReport(selectedReportName,selectedStartDate,selectedEndDate).subscribe(
         response =>  {
-          this.errorMessage = this.errorHandlerService.getServerErrorMessage(false);
+          this.errorMessage = this.errorHandlerService.getServerErrorMessage(false, false, '');
           const result = JSON.parse(response);
           let res= {data: this.applyDateFormat(result)};
           if(res['data'].length === 0 && selectedReportName === 'PROCESSED_UNALLOCATED' ){
@@ -130,14 +130,14 @@ downloadReport(){
         },
         (error: any) => {
           this.isDownLoadButtondisabled = false;
-          this.errorMessage = this.errorHandlerService.getServerErrorMessage(true);
+          this.errorMessage = this.errorHandlerService.getServerErrorMessage(true, false, '');
         })
 
     } else if(selectedReportName === 'PAYMENT_FAILURE_EVENT') {
 
       this.paymentViewService.downloadFailureReport(selectedStartDate,selectedEndDate).subscribe(
         response =>  {
-          this.errorMessage = this.errorHandlerService.getServerErrorMessage(false);
+          this.errorMessage = this.errorHandlerService.getServerErrorMessage(false, false, '');
           const result = {data: JSON.parse(response)['payment_failure_report_list']};
           let res = {data: this.applyDateFormat(result)};
           if (result['data'].length > 0) {
@@ -160,14 +160,15 @@ downloadReport(){
           const statusCode = error.replace(/[^a-zA-Z0-9 ]/g, '').trim().split(' ')[0];
           if(statusCode === '404') {
            this.errorHandlerService.getServerErrorMessage(true, true, errorContent);
+          }else {
+            this.errorHandlerService.getServerErrorMessage(true, false, '');
           }
-          this.errorHandlerService.getServerErrorMessage(true);
         })
 
     } else {
       this.bulkScaningPaymentService.downloadSelectedReport(selectedReportName,selectedStartDate,selectedEndDate).subscribe(
         response =>  {
-          this.errorMessage = this.errorHandlerService.getServerErrorMessage(false);
+          this.errorMessage = this.errorHandlerService.getServerErrorMessage(false, false, '');
           const result = JSON.parse(response);
           let res = {data: this.applyDateFormat(result)};
           if(res['data'].length === 0 && selectedReportName === 'DATA_LOSS' ){
@@ -191,7 +192,7 @@ downloadReport(){
         },
         (error: any) => {
           this.isDownLoadButtondisabled = false;
-          this.errorMessage = this.errorHandlerService.getServerErrorMessage(true);
+          this.errorMessage = this.errorHandlerService.getServerErrorMessage(true, false, '');
         })
     }
   }
