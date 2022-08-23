@@ -19,6 +19,7 @@ export class ReportsComponent implements OnInit {
   reportsForm: FormGroup;
   startDate: string;
   endDate: string;
+  errorMeaagse: string;
   ccdCaseNumber: string;
   isDownLoadButtondisabled:Boolean = false;
   isStartDateLesthanEndDate: Boolean = false;
@@ -155,7 +156,12 @@ downloadReport(){
         },
         (error: any) => {
           this.isDownLoadButtondisabled = false;
-          this.errorMessage = this.errorHandlerService.getServerErrorMessage(true);
+          const errorContent = error.replace(/[^a-zA-Z ]/g, '').trim();
+          const statusCode = error.replace(/[^a-zA-Z0-9 ]/g, '').trim().split(' ')[0];
+          if(statusCode === '404') {
+           this.errorHandlerService.getServerErrorMessage(true, true, errorContent);
+          }
+          this.errorHandlerService.getServerErrorMessage(true);
         })
 
     } else {
