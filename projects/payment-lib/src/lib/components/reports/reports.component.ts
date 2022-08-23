@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { formatDate } from "@angular/common";
 import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
@@ -14,6 +14,7 @@ import { FindValueSubscriber } from 'rxjs/internal/operators/find';
   styleUrls: ['./reports.component.scss']
 })
 export class ReportsComponent implements OnInit {
+  @Input() ISPAYMENTSTATUSENABLED: string;
   fmt = 'dd/MM/yyyy';
   loc = 'en-US';
   reportsForm: FormGroup;
