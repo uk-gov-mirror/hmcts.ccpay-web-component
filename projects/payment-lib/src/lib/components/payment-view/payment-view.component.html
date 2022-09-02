@@ -129,7 +129,7 @@
           </thead> 
           <tbody *ngIf="!errorMsg && allPaymentsFailure.length > 0">
             <tr *ngFor="let payment of allPaymentsFailure">
-              <td>{{ payment.status }}</td>
+              <td>{{ payment.status | capitalize }}</td>
               <td>£{{ payment.disputed_amount | number:'.2' }}</td>
               <td>{{(payment.representment_date ? payment.representment_date : payment.failure_event_date_time) | date:'dd MMM yyyy'}}</td>
               <td>{{ payment.payment_reference }}</td>
@@ -148,6 +148,8 @@
         </tbody>
       </table>
     </div>
+    <br/>
+    <br/>
   </div>
       
      <div  *ngIf="checkForFees(paymentGroup)">
