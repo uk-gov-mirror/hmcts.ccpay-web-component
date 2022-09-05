@@ -149,9 +149,6 @@ downloadReport(){
               if (res['data'][i]["representment_status"] !== undefined) {
                 res['data'][i]['representment_status'] = res['data'][i]["representment_status"].toLowerCase() === 'yes' ? 'Success' : 'Failure';
               }
-              if (res['data'][i]["representment_status"] !== undefined) {
-                res['data'][i]['representment_status'] = res['data'][i]["representment_status"].toLowerCase() === 'yes' ? 'Success' : 'Failure';
-              }
               if (res['data'][i]['representment_status'] === undefined) {
                 res['data'][i]['representment_status'] = 'No representment received';
               }
