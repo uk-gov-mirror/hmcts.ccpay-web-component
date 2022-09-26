@@ -34,7 +34,7 @@
   </ng-container>
 
    <div *ngIf="viewStatus==='mainForm' && isTurnOff">
-    <input #myInput type='hidden' id='iFrameDrivenImageValue' value='ALLOCATEPAYMENTS'>
+    <input #myInput type='hidden' class='iFrameDrivenImageValue' value='ALLOCATEPAYMENTS'>
     <div class="govuk-breadcrumbs" *ngIf="paymentRef">
       <ol class="govuk-breadcrumbs__list">
         <li class="govuk-breadcrumbs__list-item">
@@ -103,7 +103,7 @@
 
   <ng-container *ngIf="(viewStatus === 'mainForm' && isTurnOff) || viewStatus === 'allocatePaymentConfirmation'">
     <ccpay-error-banner *ngIf="errorMessage.showError" [errorMessage]="errorMessage"></ccpay-error-banner>
-    <input #myInput type='hidden' id='iFrameDrivenImageValue' value='{{feedbackUrlLabel}}'>
+    <input #myInput type='hidden' class='iFrameDrivenImageValue' value='{{feedbackUrlLabel}}'>
     <h1 class="govuk-heading-xl">Confirm allocation</h1>
     <h2 class="govuk-heading-l govuk-heading-l--custom">
       Amount to be allocated: {{amountForAllocation | currency:'GBP':'symbol-narrow':'1.2-2'}}
