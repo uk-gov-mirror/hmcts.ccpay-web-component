@@ -72,9 +72,12 @@
     "tsickle": "^0.37.0",
     "tslib": "^1.7.1",
     "tslint": "~5.12.1",
-    "typescript": "~3.6.4",
+    "typescript": "3.8.3",
     "webpack-cli": "^4.10.0",
     "xlsx": "^0.18.5"
+  },
+  "peerDependencies": {
+    "typescript": "~3.5.3"
   },
   "resolutions": {
     "**/**/dot-prop": "^5.1.1",
