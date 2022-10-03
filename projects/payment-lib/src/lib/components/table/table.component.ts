@@ -26,8 +26,8 @@ export class TableComponent {
   actualcount: number;
   count: number;
   refundList: IRefundList[];
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   constructor(
     private paymentLibComponent: PaymentLibComponent,
     private cdRef: ChangeDetectorRef,
