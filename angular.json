@@ -144,9 +144,9 @@
           },
           "configurations": {
             "production": {
-              "project": "projects/payment-lib/ng-package.prod.json"
-            ,              "tsConfig": "projects/payment-lib/tsconfig.lib.prod.json"
-}
+              "project": "projects/payment-lib/ng-package.prod.json",
+              "tsConfig": "projects/payment-lib/tsconfig.lib.prod.json"
+            }
           }
         },
         "test": {
@@ -172,5 +172,8 @@
       }
     }
   },
-  "defaultProject": "ccpay-web-component"
+  "defaultProject": "ccpay-web-component",
+  "cli": {
+    "analytics": "740f19be-587b-4f7e-a5ac-ba6ffff3aa41"
+  }
 }
