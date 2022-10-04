@@ -25,7 +25,7 @@
   </div>
   
   <form [formGroup]="markPaymentUnsolicitedForm" novalidate>
-    <input #myInput type='hidden' id='iFrameDrivenImageValue' value='MARKTRANSFERRED'>
+    <input #myInput type='hidden' class='iFrameDrivenImageValue' value='MARKTRANSFERRED'>
     <div class="govuk-form-group">
       <label class="govuk-label custom-govuk-label custom-govuk-label" for="reason">
         Reason for payment being marked as transferred   
@@ -71,7 +71,7 @@
         <span class="govuk-warning-text__assistive">Warning</span>
         <h1 class="heading-small"> Are you sure you want to mark this payment as transferred? </h1>
         </strong>
-        <input #myInput type='hidden' id='iFrameDrivenImageValue' value='TRANSFERREDCONFIRMATION'>
+        <input #myInput type='hidden' class='iFrameDrivenImageValue' value='TRANSFERREDCONFIRMATION'>
         <div class="govuk-grid-column-full govuk-!-padding-bottom-3">
           <hr class="govuk-section-break govuk-section-break--visible">
           <table class="govuk-table">
@@ -101,7 +101,7 @@
       </div>
     </ng-container>
       <ng-container *ngIf="viewStatus === 'unsolicitedCancelConfirm'">
-        <input #myInput type='hidden' id='iFrameDrivenImageValue' value='CANCELTRANSFERRED'>
+        <input #myInput type='hidden' class='iFrameDrivenImageValue' value='CANCELTRANSFERRED'>
       <div class="govuk-warning-text">
         <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
         <strong class="govuk-warning-text__text">

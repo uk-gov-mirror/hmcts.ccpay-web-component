@@ -11,7 +11,7 @@
 </div>
 <div class="fee-summary" *ngIf="viewStatus === 'main'">
     <main class="govuk-main-wrapper">
-      <input #myInput type='hidden' id='iFrameDrivenImageValue' value='FEESUMMARY'>
+      <input #myInput type='hidden' class='iFrameDrivenImageValue' value='FEESUMMARY'>
       <div class="summaryheader">
           <h1 class="heading-large govuk-!-margin-top-3 govuk-!-margin-bottom-4">Summary </h1>
           <p class="govuk-!-margin-top-5 caseref">Case reference:{{ccdCaseNumber | ccdHyphens}}</p>
@@ -310,7 +310,7 @@
 </div>
 
   <ng-container *ngIf="viewStatus === 'feeRemovalConfirmation'">
-    <input #myInput type='hidden' id='iFrameDrivenImageValue' value='FEEREMOVALCONFIRMATION_1'>
+    <input #myInput type='hidden' class='iFrameDrivenImageValue' value='FEEREMOVALCONFIRMATION_1'>
       <div class="govuk-warning-text">
         <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
         <strong class="govuk-warning-text__text">
@@ -340,4 +340,4 @@
  [ccdCaseNumber]="ccdCaseNumber"
  [paymentGroupRef]="paymentGroupRef"
  (cancelRemission)="cancelRemission()"></ccpay-add-remission>
- <input *ngIf="viewStatus === 'payhub_view' && payhubHtml" #myInput type='hidden' id='iFrameDrivenImageValue' value='PCIPAL'>
+ <input *ngIf="viewStatus === 'payhub_view' && payhubHtml" #myInput type='hidden' class='iFrameDrivenImageValue' value='PCIPAL'>
