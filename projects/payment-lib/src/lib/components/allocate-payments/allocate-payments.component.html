@@ -14,7 +14,7 @@
         <p class="govuk-!-margin-top-5 casererf">Case reference: {{ccdReference}}</p>
     </div>
  
-    <div  *ngFor="let orderRef of orderLevelFees; let i of index;" class="multiple-choice unprocessed-payments--radio-button">
+    <div  *ngFor="let orderRef of orderLevelFees; let i = index;" class="multiple-choice unprocessed-payments--radio-button">
       <input id="'orderfee'+i+''"
       aria-label="orderLevelRecord"
       name="orderLevelRecord"
