@@ -75,7 +75,6 @@
     "webpack-cli": "^4.10.0",
     "xlsx": "^0.18.5"
   },
-
   "resolutions": {
     "**/**/dot-prop": "^5.1.1",
     "**/**/lodash": "^4.17.19",
