@@ -45,11 +45,11 @@
         <table class="govuk-table ">
           <thead class="govuk-table__head">
           <tr class="govuk-table__row">
-            <td class="govuk-table__header col-51" scope="col" *ngIf="isServiceRequest === 'false'">Fee</td>
-            <td class="govuk-table__header col-51" scope="col" colspan="2" *ngIf="isServiceRequest !== 'false'">Fee</td>
-            <td class="govuk-table__header" scope="col">Amount</td>
-            <td class="govuk-table__header" scope="col">Total</td>
-            <td  class="govuk-table__header" scope="col" *ngIf="isServiceRequest === 'false'"></td>
+            <th class="govuk-table__header col-51" scope="col" *ngIf="isServiceRequest === 'false'">Fee</th>
+            <th class="govuk-table__header col-51" scope="col" colspan="2" *ngIf="isServiceRequest !== 'false'">Fee</th>
+            <th class="govuk-table__header" scope="col">Amount</th>
+            <th class="govuk-table__header" scope="col">Total</th>
+            <th  class="govuk-table__header" scope="col" *ngIf="isServiceRequest === 'false'"></th>
           </tr>
           </thead>
           <tbody class="govuk-table__body" *ngFor="let order of orderDetail;">
@@ -82,11 +82,11 @@
    <table class="govuk-table">
      <thead class="govuk-table__head">
        <tr class="govuk-table__row">
-          <td class="govuk-table__header col-24 whitespace-inherit" scope="col">Help with fees or remission code</td>
-           <td class="govuk-table__header col-27 whitespace-inherit" scope="col">Reference</td>
-           <td class="govuk-table__header whitespace-inherit" scope="col">Fee</td>
-           <td class="govuk-table__header whitespace-inherit" scope="col">Amount</td>
-           <td  class="govuk-table__header whitespace-inherit refundBtn" scope="col"></td>
+          <th class="govuk-table__header col-24 whitespace-inherit" scope="col">Help with fees or remission code</th>
+           <th class="govuk-table__header col-27 whitespace-inherit" scope="col">Reference</th>
+           <th class="govuk-table__header whitespace-inherit" scope="col">Fee</th>
+           <th class="govuk-table__header whitespace-inherit" scope="col">Amount</th>
+           <th class="govuk-table__header whitespace-inherit refundBtn" scope="col"></th>
          </tr>
      </thead>
      <tbody  *ngIf="order.remissions?.length > 0"  class="govuk-table__body" >
@@ -128,10 +128,10 @@
    <table class="govuk-table ">
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
-            <td class="govuk-table__header col-25" scope="col"></td>
-            <td class="govuk-table__header" scope="col">Date created</td>
-            <td class="govuk-table__header" scope="col">Amount</td>
-            <td class="govuk-table__header" scope="col"></td>
+            <th class="govuk-table__header col-25" scope="col"></th>
+            <th class="govuk-table__header" scope="col">Date created</th>
+            <th class="govuk-table__header" scope="col">Amount</th>
+            <th class="govuk-table__header" scope="col"></th>
           </tr>
       </thead>
       <tbody  *ngIf="order.payments?.length > 0" class="govuk-table__body">
