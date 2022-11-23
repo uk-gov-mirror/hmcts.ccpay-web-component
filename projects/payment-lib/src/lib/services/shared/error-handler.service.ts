@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { _throw } from 'rxjs/observable/throw';
 import { Observable } from 'rxjs/internal/Observable';
 import { HttpErrorResponse } from '@angular/common/http';
+import{ ɵstringify } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,7 @@ export class ErrorHandlerService {
       if (err.status === 404) {
 
         if (typeof err.error === 'string' && err.error !== undefined) {
-    
+
           if(err.error.length > 60) {
             if (JSON.parse(err.error).statusCode !== undefined && JSON.parse(err.error).statusCode === 500)
             {
@@ -34,7 +35,7 @@ export class ErrorHandlerService {
               } else {
                 errorMessage =  err.error;
               }
-           
+
             }
           } else {
             errorMessage =  err.error;
@@ -42,7 +43,7 @@ export class ErrorHandlerService {
         } else {
           errorMessage =  JSON.parse(err.error).error;
         }
-        
+
       }
       else if (err.status === 500) {
         errorMessage = 'Internal server error';
@@ -51,7 +52,7 @@ export class ErrorHandlerService {
           errorMessage =  JSON.parse(JSON.stringify(err.error)).error;
         } else {
           if (typeof err.error === 'string' && err.error !== undefined) {
-    
+
             if(err.error.length > 60) {
               if (JSON.parse(err.error).statusCode !== undefined && JSON.parse(err.error).statusCode === 500)
               {
@@ -62,7 +63,7 @@ export class ErrorHandlerService {
                 } else {
                   errorMessage =  err.error;
                 }
-             
+
               }
             } else {
               errorMessage =  err.error;
@@ -70,16 +71,16 @@ export class ErrorHandlerService {
           } else {
             errorMessage =  JSON.parse(err.error).error;
           }
-          
+
         }
-       
+
       } else {
         if (err.error.message !== undefined) {
           errorMessage = `${err.error.message}`;
         } else {
           errorMessage = `${err.error}`;
         }
-        
+
       }
     }
     return _throw(errorMessage);
