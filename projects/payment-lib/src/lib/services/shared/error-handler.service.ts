@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { _throw } from 'rxjs/observable/throw';
-import { Observable } from 'rxjs/internal/Observable';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -82,7 +81,7 @@ export class ErrorHandlerService {
 
       }
     }
-    return _throw(errorMessage);
+    return throwError(errorMessage);
   }
 
 
