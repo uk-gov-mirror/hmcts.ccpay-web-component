@@ -83,8 +83,9 @@
          </div>
          <div  class="govuk-form-group">
             <div class="datefrom">
-            <label class="govuk-label govuk-radios__label govuk-label--m" for="date-from">Date from</label>
-            <input (change)="getSelectedFromDate()" [max]="getToday()" class="form-control" id="date-from" name="date-from" type="date"  formControlName="startDate" required/>
+               <label class="govuk-label govuk-radios__label govuk-label--m" for="date-from">Date from</label>
+               <input (change)="getSelectedFromDate()" [max]="getToday()" class="form-control" id="date-from" name="date-from" type="date"  formControlName="startDate" required/>
+            </div>
          </div>
 
          <div class="dateto">

@@ -338,3 +338,47 @@ th, td {
 .govuk-margin-btm-20px {
     margin-bottom: 20px;
 }
+
+@media screen and (max-width: 979px) {
+    table, th, tr, td {
+        font-size: 16px;
+    }
+    .summary-table-font {
+        font-size: 28px;
+    }
+    .govuk-button {
+        font-size: 14px;
+        white-space: normal;
+        word-wrap: break-word;
+    }
+}
+
+@media screen and (max-width: 650px) {
+    table, th, tr, td {
+        font-size: 14px;
+    }
+    .summary-table-font {
+        font-size: 22px;
+    }
+    .govuk-button {
+        font-size: 12px;
+        white-space: normal;
+        word-wrap: break-word;
+    }
+}
+
+@media screen and (max-width: 470px) {
+    table, th, tr, td {
+        font-size: 12px;
+    }
+    .summary-table-font {
+        font-size: 20px;
+        white-space: normal;
+        word-wrap: break-word;
+    }
+    .govuk-button {
+        font-size: 10px;
+        white-space: normal;
+        word-wrap: break-word;
+    }
+}

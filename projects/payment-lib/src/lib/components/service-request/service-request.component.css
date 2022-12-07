@@ -330,3 +330,34 @@ th, td {
 .maxwidth {
     width: 100%;
 }
+
+@media screen and (max-width: 979px) {
+    table, th, tr, td {
+        font-size: 16px;
+        white-space: normal;
+        word-wrap: break-word;
+    }
+    .govuk-button {
+        font-size: 14px;
+        white-space: normal;
+        word-wrap: break-word;
+    }
+}
+
+@media screen and (max-width: 650px) {
+    table, th, tr, td {
+        font-size: 14px;
+    }
+    .govuk-button {
+        font-size: 12px;
+    }
+}
+
+@media screen and (max-width: 470px) {
+    table, th, tr, td {
+        font-size: 12px;
+    }
+    .govuk-button {
+        font-size: 10px;
+    }
+}

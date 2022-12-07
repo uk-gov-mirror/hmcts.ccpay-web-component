@@ -23,7 +23,7 @@
             </div>
             <div class="govuk-grid-column-full govuk-!-padding-bottom-3">
               <hr class="govuk-section-break govuk-section-break--visible">
-              <table class="govuk-table">
+              <table class="table govuk-table" aria-describedby="case transactions">
                 <thead class="govuk-table__head">
                   <tr class="govuk-table__row">
                     <th class="govuk-table__header" scope="col">Total payments</th>
@@ -33,7 +33,7 @@
                   </tr>
                 </thead>
                 <tbody class="govuk-table__body">
-                  <tr class="totalpayments govuk-table__row">
+                  <tr class="totalpayments govuk-table__row" scope="row">
                     <td class="govuk-table__cell summary-table-font">{{ totalPayments | currency :'GBP':'symbol':'1.2-2' }}</td>
                     <td class="govuk-table__cell summary-table-font">{{ totalRemissions | currency :'GBP':'symbol':'1.2-2' }}</td>
                     <td class="govuk-table__cell summary-table-font">{{ clAmountDue | currency :'GBP':'symbol':'1.2-2'}}</td>
@@ -49,7 +49,7 @@
                 [ngClass]='!isAddFeeBtnEnabled ? "govuk-button govuk-button--secondary govuk-button--disabled govuk-!-margin-right-1" : "govuk-button govuk-button--secondary govuk-!-margin-right-1"'>
                 Take telephony payment
               </button>
-          </div>
+            </div>
 
           </div>
           <div class="govuk-grid-row">
@@ -62,7 +62,7 @@
                   <h3 class="heading-medium">Fees</h3>
               </div>
               <div class="govuk-grid-column-full">
-                <table class="govuk-table">
+                <table class="table govuk-table" aria-describedby="service request">
                   <thead class="govuk-table__head">
                   <tr class="govuk-table__row">
                     <th class="govuk-table__header" scope="col">Code</th>
@@ -76,7 +76,7 @@
                   </tr>
                   </thead>
                   <tbody class="govuk-table__body" *ngFor="let paymentGroup of paymentGroups;">
-                    <tr class="govuk-table__row" *ngFor="let fee of paymentGroup.fees; let i = index;">
+                    <tr class="govuk-table__row" *ngFor="let fee of paymentGroup.fees; let i = index;" scope="row">
                       <td class="govuk-table__cell">	{{fee.code}} </td>
                       <td class="govuk-table__cell">{{fee.description}}</td>
                       <td class="govuk-table__cell">{{fee.volume? fee.volume : '-'}}</td>
@@ -93,7 +93,7 @@
                     </tr>
                   </tbody>
                   <tbody class="govuk-table__body" *ngIf="paymentGroups?.length === 0">
-                    <tr class="govuk-table__row" >
+                    <tr class="govuk-table__row" scope="row">
                       <td class="govuk-table__cell" colspan="7">No fees recorded</td>
                     </tr>
                   </tbody>
@@ -178,7 +178,7 @@
           <h1 class="govuk-heading-xl">Case transactions</h1>
         </div>
 
-        <div  class="govuk-grid-column-one-third" align="right" >
+        <div class="govuk-grid-column-one-third" align="right">
           <a [ngClass]="{ 'disable': !isAddFeeBtnEnabled} " (click)="redirectToFeeSearchPage($event)" class="button">Add a new fee</a>
         </div>
       </div>
@@ -426,7 +426,7 @@
                     <td class="govuk-table__cell col-13 whitespace-inherit"></td>
                     <td class="govuk-table__cell whitespace-inherit">
                         <a href="javascript:void(0)" (click)="goToPayementView(payment.paymentGroupReference, payment.reference, payment.method)">Review</a>
-                      </td>
+                    </td>
                   </tr>
               </tbody>
 

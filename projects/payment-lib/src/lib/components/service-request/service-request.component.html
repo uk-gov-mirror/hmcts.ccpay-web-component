@@ -3,7 +3,7 @@
   <div class="govuk-breadcrumbs">
       <ol class="govuk-breadcrumbs__list">
         <li class="govuk-breadcrumbs__list-item" *ngIf="isServiceRequest === 'false'">
-          <a href="javascript:void(0)" (click)="goToCaseTransationPage($event)" class="govuk-back-link">Back</a>
+          <a href="javascript:void(0)" (click)="goToCaseTransationPage($event)" class="govuk-link">Back</a>
         </li>
         <li class="govuk-breadcrumbs__list-item" *ngIf="isServiceRequest !== 'false'">
           <a href="javascript:void(0)" (click)="goToServiceRequestPage()" id="bckLnksize" class="govuk-back-link">Back</a>
@@ -113,7 +113,7 @@
       <p>Total reductions: {{orderRemissionTotal | currency:'GBP':'symbol-narrow':'1.2-2'  }}</p>
   </div>
   <div class="summarypagealign">
-        <p class="summarypage">Total fees to pay: {{(orderFeesTotal - orderRemissionTotal) | currency:'GBP':'symbol-narrow':'1.2-2'  }}</p>
+        <p>Total fees to pay: {{(orderFeesTotal - orderRemissionTotal) | currency:'GBP':'symbol-narrow':'1.2-2'  }}</p>
     </div>
   </div>
 
