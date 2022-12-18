@@ -59,7 +59,7 @@ export class CaseTransactionsComponent implements OnInit {
   unprocessedRecordCount: number;
   isFeeRecordsExist: boolean = false;
   isGrpOutstandingAmtPositive: boolean = false;
-  totalRefundAmount: Number;
+  totalRefundAmount: number;
   caseType: String;
   // lsCcdNumber: any = ls.get<any>('ccdNumber');
   payment: IPayment;
