@@ -5,6 +5,7 @@ import { IRefundAction } from '../../interfaces/IRefundAction';
 import { IRefundList } from '../../interfaces/IRefundList';
 import { IRefundRejectReason } from '../../interfaces/IRefundRejectReason';
 import { OrderslistService } from '../../services/orderslist.service';
+import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import { PaymentLibComponent } from '../../payment-lib.component';
 import { ActivatedRoute,Router } from '@angular/router';
 
@@ -41,9 +42,11 @@ export class ProcessRefundComponent implements OnInit {
   navigationpage: string;
   ccdCaseNumber: string;
   isFromRefundListPage: boolean;
-
+  cpoDetails:any = null;
+  isCPODown: boolean;
   isConfirmButtondisabled: boolean = true;
   constructor(private RefundsService: RefundsService,
+              private paymentViewService: PaymentViewService,
               private formBuilder: FormBuilder,
               private OrderslistService: OrderslistService,
               private paymentLibComponent: PaymentLibComponent,
@@ -86,7 +89,18 @@ export class ProcessRefundComponent implements OnInit {
    if((typeof this.paymentLibComponent.TAKEPAYMENT === 'string' && this.paymentLibComponent.TAKEPAYMENT === 'false') || (typeof this.paymentLibComponent.TAKEPAYMENT === 'boolean' && !this.paymentLibComponent.TAKEPAYMENT) ) {
     this.isFromRefundListPage = true;
    }
+   this.paymentViewService.getPartyDetails(this.ccdCaseNumber).subscribe(
+    response => {
+      this.cpoDetails = JSON.parse(response).content[0];
+
+    },
+    (error: any) => {
+      this.errorMessage = <any>error.replace(/"/g,"");
+      this.isCPODown = true;
+    }
+  );
   }
+  
   checkRefundActions(code: string) {
     this.refundActionsHasError = false;
     this.isReasonFieldEmpty = false;
@@ -254,31 +268,13 @@ export class ProcessRefundComponent implements OnInit {
     this.loadRefundListPage();
    }
   }
-  // loadCaseTransactionPage() {
-  //   this.paymentLibComponent.isRefundStatusView = false;
-  //   this.paymentLibCo}mponent.TAKEPAYMENT = true;
-  //   this.paymentLibComponent.viewName = 'case-transactions';
-  //   this.paymentViewService.getBSfeature().subscribe(
-  //     features => {
-  //       let result = JSON.parse(features).filter(feature => feature.uid === BS_ENABLE_FLAG);
-  //       this.paymentLibComponent.ISBSENABLE = result[0] ? result[0].enable : false;
-  //     },
-  //     err => {
-  //       this.paymentLibComponent.ISBSENABLE = false;
-  //     }
-  //   );
-
-  //   let partUrl = `selectedOption=${this.paymentLibComponent.SELECTED_OPTION}`;
-  //   partUrl += this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
-  //   partUrl += this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
-  //   partUrl += this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
-  //   partUrl += this.paymentLibComponent.ISSFENABLE ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
-  //   partUrl += `&caseType=${this.paymentLibComponent.CASETYPE}`;
-  //   partUrl += this.isNewPcipalOff ? '&isNewPcipalOff=Enable' : '&isNewPcipalOff=Disable';
-  //   partUrl += this.isOldPcipalOff ? '&isOldPcipalOff=Enable' : '&isOldPcipalOff=Disable';
-  //   let url = `/payment-history/${this.ccdCaseNumber}?view=case-transactions&takePayment=true&${partUrl}`;
-  //   this.router.navigateByUrl(url);
-  // }
+  loadCaseTransactionPage() {
+    this.OrderslistService.setnavigationPage('casetransactions');
+    this.OrderslistService.setisFromServiceRequestPage(false);
+    this.paymentLibComponent.viewName = 'case-transactions';
+    this.paymentLibComponent.ISBSENABLE = true;
+    this.paymentLibComponent.isRefundStatusView = false;
+  }
 
   resetForm(vals, field) {
     if(field==='action' || field==='all') {
@@ -300,6 +296,11 @@ export class ProcessRefundComponent implements OnInit {
   }
 
   goToCaseReview() {
-    this.router.navigate([`/cases/case-details/${this.ccdCaseNumber}`], {relativeTo: this.activeRoute});
+    const isPayBubble = this.paymentLibComponent.isFromPayBubble;
+    if(isPayBubble) {
+      this.loadCaseTransactionPage();
+    } else {
+      this.router.navigate([`/cases/case-details/${this.ccdCaseNumber}`], {relativeTo: this.activeRoute});
+    }
   }
 }

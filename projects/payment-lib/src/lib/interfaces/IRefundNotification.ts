@@ -1,4 +1,3 @@
-import { IRefundContactDetails } from './IRefundContactDetails';
 export interface IRefundList {
     amount: number,
     ccd_case_number: string,
@@ -11,8 +10,5 @@ export interface IRefundList {
       description: string,
       name: string
     },
-    contact_details: IRefundContactDetails,
-    user_full_name: string,
-    service_type: string,
-    code:string
+    user_full_name: string
   }
