@@ -34,9 +34,9 @@ export class CaseTransactionsComponent implements OnInit {
   fees: IFee[] = [];
   errorMessage: string;
   totalFees: number;
-  totalPayments: number;
+  totalPayments: number = 0;
   totalNonOffPayments: number;
-  totalRemissions: number;
+  totalRemissions: number = 0;
   selectedOption: string;
   dcnNumber: string;
   paymentRef: string;
@@ -318,6 +318,9 @@ export class CaseTransactionsComponent implements OnInit {
         this.orderStatus = paymentGroup.service_request_status;
         this.orderAddBtnEnable = false;
       } else if (paymentGroup.service_request_status === 'Partially paid' || paymentGroup.service_request_status === 'Not paid') {
+        this.orderStatus = paymentGroup.service_request_status;
+        this.orderAddBtnEnable = true;
+      }else if (paymentGroup.service_request_status === 'Disputed'){
         this.orderStatus = paymentGroup.service_request_status;
         this.orderAddBtnEnable = true;
       }
