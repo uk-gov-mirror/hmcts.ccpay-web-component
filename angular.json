@@ -13,6 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "outputPath": "dist/ccpay-web-component",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -29,6 +30,12 @@
           },
           "configurations": {
             "production": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -38,7 +45,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
@@ -130,14 +136,15 @@
       "prefix": "ccpay",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/payment-lib/tsconfig.lib.json",
             "project": "projects/payment-lib/ng-package.json"
           },
           "configurations": {
             "production": {
-              "project": "projects/payment-lib/ng-package.prod.json"
+              "project": "projects/payment-lib/ng-package.prod.json",
+              "tsConfig": "projects/payment-lib/tsconfig.lib.prod.json"
             }
           }
         },
@@ -164,5 +171,8 @@
       }
     }
   },
-  "defaultProject": "ccpay-web-component"
+  "defaultProject": "ccpay-web-component",
+  "cli": {
+    "analytics": "740f19be-587b-4f7e-a5ac-ba6ffff3aa41"
+  }
 }

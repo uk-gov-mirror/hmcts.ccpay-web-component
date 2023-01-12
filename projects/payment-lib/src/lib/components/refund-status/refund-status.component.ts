@@ -8,7 +8,6 @@ import { OrderslistService } from '../../services/orderslist.service';
 import { IRefundStatus } from '../../interfaces/IRefundStatus';
 import { IResubmitRefundRequest } from '../../interfaces/IResubmitRefundRequest';
 import { PaymentLibComponent } from '../../payment-lib.component';
-const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 
 @Component({
   selector: 'ccpay-refund-status',
@@ -46,6 +45,7 @@ export class RefundStatusComponent implements OnInit {
   refundAmount: string;
   refundCode: string;
   isRefundBtnDisabled: boolean = true;
+  isFromPayBubble: boolean = false;
   oldRefundReason: string;
   refundreason: string;
   navigationpage: string;
@@ -68,6 +68,9 @@ export class RefundStatusComponent implements OnInit {
     // if(this.paymentLibComponent.isFromRefundStatusPage) {
     //   this.viewName = 'reviewandsubmitview';
     // }
+    if(this.API_ROOT == 'api/payment-history') {
+      this.isFromPayBubble = true;
+    }
     if (this.paymentLibComponent.isRefundStatusView) {
       this.viewName = 'refundview';
       this.OrderslistService.getRefundView().subscribe((data) => this.refundlist = data);
@@ -114,10 +117,6 @@ export class RefundStatusComponent implements OnInit {
         }
       }
    //}
-  }
-
-  isFromPayBubble = (): boolean => { 
-    return this.API_ROOT === 'api/payment-history';
   }
 
   getRefundsStatusHistoryList() {
