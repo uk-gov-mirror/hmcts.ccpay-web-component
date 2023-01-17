@@ -104,7 +104,7 @@
               </tr> -->
           </thead>
           <tbody class="govuk-table__body">
-          <tr class="govuk-table__row" *ngFor="let unassignedRecord of unassignedRecordList; let i of index;">
+          <tr class="govuk-table__row" *ngFor="let unassignedRecord of unassignedRecordList; let i = index;">
                     <td class="govuk-table__cell whitespace-inherit" class="col-13">
                     Unallocated 
                     </td>
@@ -138,7 +138,7 @@
                     </tr>
                 </thead>
               <tbody>
-            <ng-container *ngFor="let unassignedRecord of unassignedRecordList; let i of index;">
+            <ng-container *ngFor="let unassignedRecord of unassignedRecordList; let i = index;">
              <tr>
                 <td  class="govuk-table__cell whitespace-inherit col-13" >
                   Unallocated 
