@@ -199,14 +199,14 @@
           <tr class="govuk-table__row">
               <td class="govuk-table__cell govuk-!-font-weight-bold">Help with fees or remission reference</td>
               <td class="govuk-table__cell"> {{ remissionForm.controls.remissionCode.value }}
-               <a (click)="gotoProcessRetroRemissionPage()" class="govuk-link right" >Change</a>
+               <a (click)="gotoProcessRetroRemissionPage()" class="govuk-link right" href="javascript:void(0)">Change</a>
               </td>
           </tr>
           <tr class="govuk-table__row">
               <td *ngIf="remessionPayment.status === 'Success'" class="govuk-table__cell govuk-!-font-weight-bold">Refund amount</td>
               <td *ngIf="remessionPayment.status !== 'Success'" class="govuk-table__cell govuk-!-font-weight-bold">Remission amount</td>
               <td class="govuk-table__cell">{{remissionForm.controls.amount.value  | currency:'GBP':'symbol-narrow':'1.2-2' }}
-                  <a (click)="addRemissionCode()" class="govuk-link right" >Change</a>
+                  <a (click)="addRemissionCode()" class="govuk-link right" href="javascript:void(0)">Change</a>
               </td>
           </tr>
       </table>
@@ -375,7 +375,7 @@
           <tr class="govuk-table__row">
               <td class="govuk-table__cell govuk-!-font-weight-bold">Reason for refund</td>
               <td class="govuk-table__cell"> {{ displayRefundReason  }}
-               <a (click)="changeIssueRefundReason()" class="govuk-link right" >Change</a>
+               <a (click)="changeIssueRefundReason()" class="govuk-link right" href="javascript:void(0)">Change</a>
               </td>
           </tr>
           <tr class="govuk-table__row">
@@ -397,7 +397,7 @@
       </button>
       </div>
       <p>
-          <a (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link" data-module="govuk-button">
+          <a (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link" data-module="govuk-button" href="javascript:void(0)">
               Cancel
           </a>
       </p>

@@ -2,10 +2,10 @@
 <div class="govuk-breadcrumbs" *ngIf="isBackButtonEnable">
   <ol class="govuk-breadcrumbs__list">
     <li class="govuk-breadcrumbs__list-item" *ngIf="!isTurnOff">
-      <a (click)="loadCaseTransactionPage()" class="govuk-back-link govuk-label">Back</a>
+      <a (click)="loadCaseTransactionPage()" class="govuk-back-link govuk-label govuk-body" href="javascript:void(0)">Back</a>
     </li>
     <li class="govuk-breadcrumbs__list-item" *ngIf="isTurnOff">
-        <a (click)="redirectToFeeSearchPage($event,'summary')" class="govuk-back-link govuk-label">Back</a>
+        <a (click)="redirectToFeeSearchPage($event,'summary')" class="govuk-back-link govuk-label govuk-body" href="javascript:void(0)">Back</a>
       </li>
   </ol>
 </div>
@@ -194,24 +194,24 @@
               </tr>
           </thead>
 
-          <tbody class="govuk-table__body" *ngIf="paymentGroup.fees">
+          <tbody class="govuk-table__body" *ngIf="paymentGroup.fees" role="status">
               <tr class="govuk-table__row" *ngFor="let fee of paymentGroup.fees; let i = index;">
                       <td class="govuk-table__cell">{{ fee.description }}
 
                           <span class="no-border" *ngIf="(isPaymentExist || (getRemissionByFeeCode(fee.code)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code)?.hwf_amount)) && !isTurnOff">
 
 
-                              <a (click)="confirmRemoveFee(fee.id)" *ngIf="(!isPaymentExist || !fee.remissions)" [ngClass]='isPaymentExist || fee.remissions? "disable-link" : ""'> <br>Remove</a>
+                              <a (click)="confirmRemoveFee(fee.id)" *ngIf="(!isPaymentExist || !fee.remissions)" [ngClass]='isPaymentExist || fee.remissions? "disable-link" : ""' href="javascript:void(0)"> <br>Remove</a>
                           </span>
 
                           <span class="no-border" *ngIf="(!isPaymentExist || (getRemissionByFeeCode(fee.code)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code)?.hwf_amount)) && isTurnOff ">
-                              <a (click)="confirmRemoveFee(fee.id)">Remove</a>
+                              <a (click)="confirmRemoveFee(fee.id)" href="javascript:void(0)">Remove</a>
                             </span>
 
-                            <a (click)="addRemission(fee)" class="remissionActive"  *ngIf="(getRemissionByFeeCode(fee.code)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code)?.hwf_amount) && !isPaymentExist && !isTurnOff">
+                            <a (click)="addRemission(fee)" class="remissionActive"  *ngIf="(getRemissionByFeeCode(fee.code)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code)?.hwf_amount) && !isPaymentExist && !isTurnOff" href="javascript:void(0)">
                                   Add help with fees or remission
                             </a>
-                            <a (click)="addRemission(fee)" class="remissionActive"   *ngIf="(getRemissionByFeeCode(fee.code)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code)?.hwf_amount) && isTurnOff">
+                            <a (click)="addRemission(fee)" class="remissionActive"   *ngIf="(getRemissionByFeeCode(fee.code)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code)?.hwf_amount) && isTurnOff" href="javascript:void(0)">
                                   Add help with fees or remission
                             </a>
                             <span *ngIf = "getRemissionByFeeCode(fee.code)?.hwf_amount > 0">
@@ -277,7 +277,7 @@
       Add fee
       </button>
     </div>
-    <a *ngIf="isTurnOff" (click)="redirectToFeeSearchPage($event,'summary')" class="govuk-button govuk-button--secondary add-fee-button">Add a new fee</a>
+    <a *ngIf="isTurnOff" (click)="redirectToFeeSearchPage($event,'summary')" class="govuk-button govuk-button--secondary add-fee-button" href="javascript:void(0)">Add a new fee</a>
   </div>
 <!--
   <div class="govuk-form-group govuk-form-group--mg" *ngIf="!bsPaymentDcnNumber">

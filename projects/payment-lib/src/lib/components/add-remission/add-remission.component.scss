@@ -130,3 +130,7 @@
 .form-hint {
   font-size: 19px !important;
 }
+
+.govuk-input:focus, button:focus {
+  outline: 3.5px solid #ffdd00;
+}

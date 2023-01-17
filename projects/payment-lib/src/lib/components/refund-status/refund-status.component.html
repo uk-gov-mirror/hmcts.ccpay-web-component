@@ -23,7 +23,7 @@
         <th class="govuk-table__header" scope="col"></th>
       </tr>
     </thead>
-    <tbody class="govuk-table__body" *ngIf="rejectedRefundList?.length > 0">
+    <tbody class="govuk-table__body" *ngIf="rejectedRefundList?.length > 0" role="status">
       <tr class="govuk-table__row" *ngFor="let refundList of rejectedRefundList">
         <td class="govuk-table__cell whitespace-inherit">{{ refundList?.refund_status['name'] }}</td>
         <td class="channel govuk-table__cell whitespace-inherit">£{{ refundList?.amount | number:'.2' }}</td>
@@ -36,7 +36,7 @@
         </td>
       </tr>
     </tbody>
-    <tbody class="govuk-table__body" *ngIf="rejectedRefundList?.length === 0">
+    <tbody class="govuk-table__body" *ngIf="rejectedRefundList?.length === 0" role="status">
       <td class="govuk-table__cell" colspan="6">No refunds recorded</td>
     </tbody>
   </table>
@@ -46,7 +46,7 @@
   <div class="govuk-breadcrumbs">
     <ol class="govuk-breadcrumbs__list">
       <li class="govuk-breadcrumbs__list-item">
-        <a  href="javascript:void(0)" (click)="loadRefundListPage()" class="govuk-back-link govuk-label">Back</a>
+        <a  href="javascript:void(0)" (click)="loadRefundListPage()" class="govuk-back-link govuk-label govuk-body">Back</a>
       </li>
     </ol>
   </div>
@@ -145,7 +145,7 @@
       <td class="govuk-table__cell govuk-!-font-weight-bold">Reason for refund</td>
       <td class="govuk-table__cell"> {{ refundlist?.reason}}
         <a (click)="gotoRefundReasonPage()" *ngIf="refundlist?.reason !== 'Retrospective remission'"
-          class="govuk-link right">Change</a>
+          class="govuk-link right" href="javascript:void(0)">Change</a>
       </td>
 
       <!-- <td class="govuk-table__cell">{{ refundlist?.reason }}</td>

@@ -7,7 +7,7 @@
           <div   *ngIf="takePayment" class="govuk-grid-row">
 
             <div class="govuk-grid-column-two-thirds">
-              <h1 class="govuk-heading-xl">Case transactions</h1>
+              <h1 class="govuk-heading-m">Case transactions</h1>
             </div>
           </div>
 
@@ -85,10 +85,10 @@
                       <td class="govuk-table__cell govuk-!-font-weight-bold"  [attr.rowspan]="paymentGroup.fees.length" *ngIf="paymentGroup.old && i==0"> {{getGroupOutstandingAmount(paymentGroup)| currency:'GBP':'symbol-narrow':'1.2-2'}}* </td>
                       <td class="govuk-table__cell" *ngIf="!paymentGroup.old"> {{calculateAmountDue(fee) | currency:'GBP':'symbol-narrow':'1.2-2'}} </td>
                       <td class="govuk-table__cell" *ngIf="!paymentGroup.old">
-                        <a (click)="confirmRemoveFee(fee.id)" [ngClass]='!isCheckAmountdueExist(fee.amount_due) || fee.remissions ? "disable-link" : ""'>Remove</a>
+                        <a (click)="confirmRemoveFee(fee.id)" [ngClass]='!isCheckAmountdueExist(fee.amount_due) || fee.remissions ? "disable-link" : ""' href="javascript:void(0)">Remove</a>
                       </td>
                       <td class="govuk-table__cell" *ngIf="paymentGroup.old">
-                        <a (click)="confirmRemoveFee(fee.id)" [ngClass]='paymentGroup.payments?.length > 0 || paymentGroup.remissions?.length > 0 ? "disable-link" : ""'>Remove</a>
+                        <a (click)="confirmRemoveFee(fee.id)" [ngClass]='paymentGroup.payments?.length > 0 || paymentGroup.remissions?.length > 0 ? "disable-link" : ""' href="javascript:void(0)">Remove</a>
                     </td>
                     </tr>
                   </tbody>
@@ -179,7 +179,7 @@
         </div>
 
         <div class="govuk-grid-column-one-third" align="right">
-          <a [ngClass]="{ 'disable': !isAddFeeBtnEnabled} " (click)="redirectToFeeSearchPage($event)" class="button">Add a new fee</a>
+          <a [ngClass]="{ 'disable': !isAddFeeBtnEnabled} " (click)="redirectToFeeSearchPage($event)" class="button" href="javascript:void(0)">Add a new fee</a>
         </div>
       </div>
 
@@ -425,7 +425,7 @@
                     <td class="govuk-table__cell col-24 whitespace-inherit">{{ payment.paymentGroupReference }}</td>
                     <td class="govuk-table__cell col-13 whitespace-inherit"></td>
                     <td class="govuk-table__cell whitespace-inherit">
-                        <a href="javascript:void(0)" (click)="goToPayementView(payment.paymentGroupReference, payment.reference, payment.method)">Review</a>
+                        <a class="govuk-link" href="javascript:void(0)" (click)="goToPayementView(payment.paymentGroupReference, payment.reference, payment.method)">Review</a>
                     </td>
                   </tr>
               </tbody>
@@ -500,7 +500,7 @@
                     <th class="govuk-table__header col" scope="col"></th>
                   </tr>
                   </thead>
-                  <tbody class="govuk-table__body"  *ngIf="orderLevelFees?.length > 0">
+                  <tbody class="govuk-table__body"  *ngIf="orderLevelFees?.length > 0" role="status">
                     <tr *ngFor="let orderRef of orderLevelFees;let i = index;">
                       <td class="govuk-table__cell whitespace-inherit">{{orderRef.orderStatus}}</td>
                       <td class="govuk-table__cell whitespace-inherit">{{ orderRef.orderTotalFees | currency :'GBP':'symbol':'1.2-2' }}</td>
@@ -519,7 +519,7 @@
                       </button></td>
                     </tr>
                   </tbody>
-                  <tbody class="govuk-table__body alignleft" *ngIf="orderLevelFees?.length === 0">
+                  <tbody class="govuk-table__body alignleft" *ngIf="orderLevelFees?.length === 0" role="status">
                     <td colspan="6">No service requests on this case.</td>
                   </tbody>
               </table>
@@ -530,7 +530,7 @@
               <span>
                   <br/>
                   <a (click)="redirectToFeeSearchPage($event)"
-                    [class.disabled]="!isAddFeeBtnEnabled">Create service request and pay</a><br/>
+                    [class.disabled]="!isAddFeeBtnEnabled" href="javascript:void(0)">Create service request and pay</a><br/>
             </span>
           </div>
           <div>
@@ -550,12 +550,13 @@
                </ccpay-app-unprocessed-payments>
 
               <ng-container>
+                
               <table class="govuk-table">
                   <thead class="govuk-table__head">
                   </thead>
-                  <tbody class="govuk-table__body" *ngIf="allPayments?.length > 0">
+                  <tbody class="govuk-table__body" *ngIf="allPayments?.length > 0" role="status">
                     <tr class="govuk-table__row"  *ngFor="let payment of allPayments">
-                        <td class="govuk-table__cell col-14 whitespace-inherit">{{ payment.status }}</td>
+                        <td class="govuk-table__cell col-14 whitespace-inherit" role="status">{{ payment.status }}</td>
                         <td class="govuk-table__cell col-10 whitespace-inherit">{{ payment.amount | currency :'GBP':'symbol':'1.2-2' }}</td>
                         <td class="govuk-table__cell col-17 whitespace-inherit">{{ payment.date_created | date:'dd MMM yyyy' }}</td>
                         <td class="govuk-table__cell col-24 whitespace-inherit">{{ payment.paymentGroupReference }}</td>
@@ -601,7 +602,7 @@
                 <th class="govuk-table__header" scope="col"></th>
               </tr>
               </thead>
-              <tbody class="govuk-table__body" *ngIf="orderLevelFees?.length > 0">
+              <tbody class="govuk-table__body" *ngIf="orderLevelFees?.length > 0" role="status">
                 <tr class="govuk-table__row"  *ngFor="let orderRef of orderLevelFees;let i = index;">
                   <td class="govuk-table__cell whitespace-inherit">{{orderRef.orderStatus}}</td>
                   <td class="govuk-table__cell whitespace-inherit">{{orderRef.orderTotalFees | currency :'GBP':'symbol':'1.2-2'}}</td>
@@ -614,14 +615,14 @@
                 </td>
                 </tr>
               </tbody>
-              <tbody class="govuk-table__body" *ngIf="orderLevelFees?.length === 0 && serviceRequestValue === 'false'">
+              <tbody class="govuk-table__body" *ngIf="orderLevelFees?.length === 0 && serviceRequestValue === 'false'" role="status">
                 <tr class="govuk-table__row" >
                   <td class="alignleft" colspan="7">No service requests on this case.</td>
                 </tr>
               </tbody>
           </table>
         </ng-container>
-        <ng-container *ngIf="orderLevelFees?.length === 0 && serviceRequestValue !== 'false' && !isAnyFeeGroupAvilable">
+        <ng-container *ngIf="orderLevelFees?.length === 0 && serviceRequestValue !== 'false' && !isAnyFeeGroupAvilable" role="status">
           <h1 class="govuk-heading-l govuk-heading-lw">If you are expecting to pay and are not able to see a service request,</h1>
           <p>please refresh and try in some time.</p>
         </ng-container>
@@ -645,7 +646,7 @@
                     <th class="govuk-table__header" scope="col"></th>
                   </tr>
               </thead>
-              <tbody class="govuk-table__body" *ngIf="allPayments?.length > 0">
+              <tbody class="govuk-table__body" *ngIf="allPayments?.length > 0" role="status">
                 <tr class="govuk-table__row"  *ngFor="let payment of allPayments">
                     <td class="govuk-table__cell whitespace-inherit">{{ payment.status }}</td>
                     <td class="govuk-table__cell whitespace-inherit">{{ payment.amount | currency :'GBP':'symbol':'1.2-2' }}</td>
@@ -658,7 +659,7 @@
                   </tr>
               </tbody>
 
-              <tbody class="govuk-table__body" *ngIf="allPayments?.length === 0">
+              <tbody class="govuk-table__body" *ngIf="allPayments?.length === 0" role="status">
                 <td colspan="6">No payments recorded</td>
               </tbody>
               </table>
