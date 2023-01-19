@@ -33,9 +33,9 @@ export class CaseTransactionsComponent implements OnInit {
   fees: IFee[] = [];
   errorMessage: string;
   totalFees: number;
-  totalPayments: number;
+  totalPayments: number = 0;
   totalNonOffPayments: number;
-  totalRemissions: number;
+  totalRemissions: number = 0;
   selectedOption: string;
   dcnNumber: string;
   paymentRef: string;
@@ -57,7 +57,7 @@ export class CaseTransactionsComponent implements OnInit {
   unprocessedRecordCount: number;
   isFeeRecordsExist: boolean = false;
   isGrpOutstandingAmtPositive: boolean = false;
-  totalRefundAmount: Number;
+  totalRefundAmount: number;
   caseType: String;
   // lsCcdNumber: any = ls.get<any>('ccdNumber');
   payment: IPayment;
@@ -114,7 +114,7 @@ export class CaseTransactionsComponent implements OnInit {
     if(this.OrderslistService.getnavigationPageValue() !== null) {
       this.OrderslistService.getnavigationPageValue().subscribe((data) => this.navigationpage = data);
     }
-    
+
     if (this.paymentView !== undefined && this.paymentView !== null && this.paymentView.payment_group_reference !== undefined && this.navigationpage === 'paymentdetailspage') {
       this.goToPayementView(this.paymentView.payment_group_reference, this.paymentView.reference, this.paymentView.method);
     }
@@ -126,7 +126,7 @@ export class CaseTransactionsComponent implements OnInit {
     }
     this.excReference = this.paymentLibComponent.EXC_REFERENCE;
     this.takePayment = this.paymentLibComponent.TAKEPAYMENT;
-    
+
     const serviceRequest = this.paymentLibComponent.SERVICEREQUEST;
     if ( serviceRequest !== undefined && serviceRequest.toString() === 'true' ) {
       this.serviceRequestValue = 'true';
@@ -310,6 +310,9 @@ export class CaseTransactionsComponent implements OnInit {
         this.orderStatus = paymentGroup.service_request_status;
         this.orderAddBtnEnable = false;
       } else if (paymentGroup.service_request_status === 'Partially paid' || paymentGroup.service_request_status === 'Not paid') {
+        this.orderStatus = paymentGroup.service_request_status;
+        this.orderAddBtnEnable = true;
+      } else if (paymentGroup.service_request_status === 'Disputed'){
         this.orderStatus = paymentGroup.service_request_status;
         this.orderAddBtnEnable = true;
       }
