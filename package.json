@@ -75,7 +75,8 @@
     "xlsx": "^0.18.5"
   },
   "peerDependencies": {
-    "typescript": "^4.0.8"
+    "typescript": "^4.0.8",
+    "postcss": "^8.0.0"
   },
   "resolutions": {
     "**/**/dot-prop": "^5.1.1",
@@ -127,7 +128,6 @@
     "set-value": "^4.0.1",
     "ansi-regex": "^5.0.1",
     "jszip": ">=3.7.0",
-    "postcss": ">=7.0.36",
     "uuid": "7.0.3"
   },
   "license": "MIT"
