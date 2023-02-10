@@ -344,6 +344,10 @@ button:focus {
     outline: 3.5px solid #ffdd00;
 }
 
+.govuk-warning-text__icon {
+    margin-top: 8px;
+}
+
 @media screen and (max-width: 979px) {
     table, th, tr, td {
         font-size: 16px;
