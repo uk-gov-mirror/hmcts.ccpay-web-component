@@ -164,6 +164,9 @@ downloadReport(){
               if (res['data'][i]['refund_date'] === undefined) {
                 res['data'][i]['refund_date'] = 'N/A';
               }
+              if (res['data'][i]['document_control_number'] === undefined) {
+                res['data'][i]['document_control_number'] = 'N/A';
+              }
             }
           }
           this.isDownLoadButtondisabled = false;
