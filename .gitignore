@@ -97,6 +97,9 @@ fabric.properties
 
 wire-mock/wiremock-standalone-2.18.0.jar
 
+# Angular
+.angular/
+
 # Yarn v3
 .yarn/*
 !.yarn/patches
