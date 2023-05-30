@@ -13,7 +13,7 @@ import { OrderslistService } from '../../services/orderslist.service';
 })
 export class UnprocessedPaymentsComponent implements OnInit {
 
-  @Input('FEE_RECORDS_EXISTS') FEE_RECORDS_EXISTS: boolean;
+  @Input('FEE_RECORDS_EXISTS') FEE_RECORDS_EXISTS: boolean = false;
   @Input('PAYMENTREF') PAYMENTREF: string;
   @Input('ISTURNOFF') ISTURNOFF: boolean;
   @Input('IS_BUTTON_ENABLE') IS_BUTTON_ENABLE: boolean;
@@ -61,7 +61,14 @@ export class UnprocessedPaymentsComponent implements OnInit {
     this.isBulkScanEnable = this.paymentLibComponent.ISBSENABLE;
     this.isTurnOff = this.paymentLibComponent.ISTURNOFF;
     this.isStFixEnable = this.paymentLibComponent.ISSFENABLE;
-    this.OrderslistService.getFeeExists().subscribe( (data) => this.FEE_RECORDS_EXISTS = data);
+    this.OrderslistService.getFeeExists().subscribe((data) => {
+          if (data === null) {
+            this.FEE_RECORDS_EXISTS = false
+          }
+          else {
+            this.FEE_RECORDS_EXISTS = data
+          }
+        });
     this.getUnassignedPaymentlist();
 
   }
@@ -70,7 +77,6 @@ export class UnprocessedPaymentsComponent implements OnInit {
      if (this.selectedOption === 'dcn') {
         this.bulkScaningPaymentService.getBSPaymentsByDCN(this.dcnNumber).subscribe(
         unassignedPayments => {
-         //  unassignedPayments['data'].map(data => data.expandable=false);
         if(unassignedPayments['data'] && unassignedPayments['data'].payments) {
             this.setValuesForUnassignedRecord(unassignedPayments['data']);
           } else if(unassignedPayments['payments']) {
@@ -88,7 +94,6 @@ export class UnprocessedPaymentsComponent implements OnInit {
     } else {
         this.bulkScaningPaymentService.getBSPaymentsByCCD(this.ccdCaseNumber).subscribe(
         unassignedPayments => {
-         //  unassignedPayments['data'].map(data => data.expandable=false);
           if(unassignedPayments['data'] && unassignedPayments['data'].payments) {
             this.setValuesForUnassignedRecord(unassignedPayments['data']);
           } else if(unassignedPayments['payments']) {
@@ -117,7 +122,6 @@ export class UnprocessedPaymentsComponent implements OnInit {
     if (unassignedPayments['ccd_reference'] === undefined) {
       this.isExceptionCase = true;
     }
-    // this.isRecordExist =  this.unassignedRecordList.length === 0;
     this.getUnprocessedFeeCount.emit(<any>this.unassignedRecordList.length);
     this.unprocessedPaymentSelectEvent(this.unassignedRecordList);
   }
@@ -200,7 +204,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
     this.isAllocateToExistingFeebtnEnabled = false;
     this.isAllocatedToNewFeebtnEnabled = false;
     this.isMarkAsUnidentifiedbtnEnabled = false;
-    //this.validateButtons();
+
     this.selectedUnprocessedFeeEvent.emit('');
   }
 
