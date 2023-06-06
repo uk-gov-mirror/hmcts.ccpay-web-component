@@ -35,6 +35,7 @@ export class PaymentViewService {
 
   private meta: Meta;
 
+
   constructor(private http: HttpClient,
               private https: WebComponentHttpClient,
               private logger: LoggerService,
@@ -92,8 +93,11 @@ export class PaymentViewService {
   
   postPBAaccountPayment(serviceRef: string, body: IserviceRequestPbaPayment): Observable<any> {
     let randomKey = 'idam-key-' + Math.random().toString().split('.').join('-');
-    body['idempotency_key'] = randomKey; 
+    body['idempotency_key'] = randomKey;
     const url = `${this.paymentLibService.API_ROOT}/service-request/${serviceRef}/pba-payments`;
+    setTimeout(() => {
+      console.log('Good Night!');
+    }, 4000);
     return this.https.post(url, body);
   }
 
