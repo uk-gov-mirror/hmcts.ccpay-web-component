@@ -78,28 +78,36 @@ export class PbaPaymentComponent implements OnInit {
       if ( this.pbaAccountList.indexOf(this.selectedPbaAccount) !== -1 ) {
         const requestBody = new IserviceRequestPbaPayment(
           this.selectedPbaAccount, this.pbaPayOrderRef.orderTotalFees, this.pbaAccountRef, this.orgName);
-        this.paymentViewService.postPBAaccountPayment(this.pbaPayOrderRef.orderRefId, requestBody)
-        .subscribe(
-          r => {
-            try {
-              this.pbaAccountrPaymentResult = JSON.parse(r);
-            } catch(e) {
-              this.pbaAccountrPaymentResult = r;
-            }
-            this.isPBAAccountPaymentSuccess = true;
-          },
-          e => {
-            if(e.status == '402') {
-              this.isInSufficiantFund = true; 
-            } else if(e.status == '410') {
-              this.isPBAAccountNotExist = true;
-            } else if(e.status == '412') {
-              this.isPBAAccountHold = true;
-            } else {
-              this.isPBAServerError = true;
-            }
-          }
-        );
+        console.log('antes!');
+        setTimeout(() => {
+          console.log('primero!');
+
+          this.paymentViewService.postPBAaccountPayment(this.pbaPayOrderRef.orderRefId, requestBody)
+            .subscribe(
+              r => {
+                try {
+                  this.pbaAccountrPaymentResult = JSON.parse(r);
+                } catch(e) {
+                  this.pbaAccountrPaymentResult = r;
+                }
+                this.isPBAAccountPaymentSuccess = true;
+              },
+              e => {
+                if(e.status == '402') {
+                  this.isInSufficiantFund = true;
+                } else if(e.status == '410') {
+                  this.isPBAAccountNotExist = true;
+                } else if(e.status == '412') {
+                  this.isPBAAccountHold = true;
+                } else {
+                  this.isPBAServerError = true;
+                }
+              }
+            );
+
+          console.log('despues!');
+        }, 5000);
+        console.log('No te espero!');
       } else {
         this.isPBAServerError = true;
       }
