@@ -1,4 +1,4 @@
-import { Component, OnInit, Output,Input, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 import { BulkScaningPaymentService } from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
 import { PaymentLibComponent } from '../../payment-lib.component';
 import { IBSPayments } from '../../interfaces/IBSPayments';
@@ -61,16 +61,12 @@ export class UnprocessedPaymentsComponent implements OnInit {
     this.isBulkScanEnable = this.paymentLibComponent.ISBSENABLE;
     this.isTurnOff = this.paymentLibComponent.ISTURNOFF;
     this.isStFixEnable = this.paymentLibComponent.ISSFENABLE;
+    this.getUnassignedPaymentlist();
     this.OrderslistService.getFeeExists().subscribe((data) => {
-          if (data === null) {
-            this.FEE_RECORDS_EXISTS = false
-          }
-          else {
+          if (data !== null) {
             this.FEE_RECORDS_EXISTS = data
           }
         });
-    this.getUnassignedPaymentlist();
-
   }
 
   getUnassignedPaymentlist() {
