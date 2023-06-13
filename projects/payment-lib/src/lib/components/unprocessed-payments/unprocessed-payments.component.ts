@@ -5,6 +5,7 @@ import { IBSPayments } from '../../interfaces/IBSPayments';
 import {Router} from '@angular/router';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import { OrderslistService } from '../../services/orderslist.service';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'ccpay-app-unprocessed-payments',
@@ -61,13 +62,60 @@ export class UnprocessedPaymentsComponent implements OnInit {
     this.isBulkScanEnable = this.paymentLibComponent.ISBSENABLE;
     this.isTurnOff = this.paymentLibComponent.ISTURNOFF;
     this.isStFixEnable = this.paymentLibComponent.ISSFENABLE;
-    this.getUnassignedPaymentlist();
-    this.OrderslistService.getFeeExists().subscribe((data) => {
-          if (data !== null) {
-            this.FEE_RECORDS_EXISTS = data
-          }
-        });
+    this.getFeesAndUnassignedPayments();
   }
+
+
+
+  getFeesAndUnassignedPayments(){
+    if (this.selectedOption === 'dcn') {
+        this.bulkScaningPaymentService.getBSPaymentsByDCN(this.dcnNumber).pipe(
+          switchMap((unassignedPayments: any) => {
+            if (unassignedPayments['data'] && unassignedPayments['data'].payments) {
+              this.setValuesForUnassignedRecord(unassignedPayments['data']);
+            } else if (unassignedPayments['payments']) {
+              this.setValuesForUnassignedRecord(unassignedPayments);
+            } else {
+              this.upPaymentErrorMessage = 'error';
+              this.getUnprocessedFeeCount.emit('0');
+            }
+
+            return this.OrderslistService.getFeeExists();
+          })
+        ).subscribe((data: any) => {
+          if (data !== null) {
+            this.FEE_RECORDS_EXISTS = data;
+          }
+        }, (error: any) => {
+          this.upPaymentErrorMessage = error;
+          this.getUnprocessedFeeCount.emit('0');
+        });
+        }else{
+        this.bulkScaningPaymentService.getBSPaymentsByCCD(this.ccdCaseNumber).pipe(
+                  switchMap((unassignedPayments: any) => {
+                    if (unassignedPayments['data'] && unassignedPayments['data'].payments) {
+                      this.setValuesForUnassignedRecord(unassignedPayments['data']);
+                    } else if (unassignedPayments['payments']) {
+                      this.setValuesForUnassignedRecord(unassignedPayments);
+                    } else {
+                      this.upPaymentErrorMessage = 'error';
+                      this.getUnprocessedFeeCount.emit('0');
+                    }
+
+                    return this.OrderslistService.getFeeExists();
+                  })
+                ).subscribe((data: any) => {
+                  if (data !== null) {
+                    this.FEE_RECORDS_EXISTS = data;
+                  }
+                }, (error: any) => {
+                  this.upPaymentErrorMessage = error;
+                  this.getUnprocessedFeeCount.emit('0');
+                });
+        }
+  }
+
+
 
   getUnassignedPaymentlist() {
      if (this.selectedOption === 'dcn') {
@@ -81,6 +129,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
             this.upPaymentErrorMessage = 'error';
             this.getUnprocessedFeeCount.emit('0');
           }
+          return this.OrderslistService.getFeeExists();
         },
         (error: any) => {
           this.upPaymentErrorMessage = error;
