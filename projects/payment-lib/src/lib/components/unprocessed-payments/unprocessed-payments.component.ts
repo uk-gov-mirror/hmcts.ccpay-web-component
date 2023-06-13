@@ -62,100 +62,65 @@ export class UnprocessedPaymentsComponent implements OnInit {
     this.isBulkScanEnable = this.paymentLibComponent.ISBSENABLE;
     this.isTurnOff = this.paymentLibComponent.ISTURNOFF;
     this.isStFixEnable = this.paymentLibComponent.ISSFENABLE;
-    this.getFeesAndUnassignedPayments();
+    this.getUnassignedPaymentlist();
   }
 
-
-
-  getFeesAndUnassignedPayments(){
+  getUnassignedPaymentlist(){
     if (this.selectedOption === 'dcn') {
-        this.bulkScaningPaymentService.getBSPaymentsByDCN(this.dcnNumber).pipe(
-          switchMap((unassignedPayments: any) => {
-            if (unassignedPayments['data'] && unassignedPayments['data'].payments) {
-              this.setValuesForUnassignedRecord(unassignedPayments['data']);
-            } else if (unassignedPayments['payments']) {
-              this.setValuesForUnassignedRecord(unassignedPayments);
-            } else {
-              this.upPaymentErrorMessage = 'error';
-              this.getUnprocessedFeeCount.emit('0');
-            }
-
-            return this.OrderslistService.getFeeExists();
-          })
-        ).subscribe((data: any) => {
-          if (data !== null) {
-            this.FEE_RECORDS_EXISTS = data;
-          }
-        }, (error: any) => {
-          this.upPaymentErrorMessage = error;
-          this.getUnprocessedFeeCount.emit('0');
-        });
+          this.getBSPaymentsByDCNandFee();
         }else{
-        this.bulkScaningPaymentService.getBSPaymentsByCCD(this.ccdCaseNumber).pipe(
-                  switchMap((unassignedPayments: any) => {
-                    if (unassignedPayments['data'] && unassignedPayments['data'].payments) {
-                      this.setValuesForUnassignedRecord(unassignedPayments['data']);
-                    } else if (unassignedPayments['payments']) {
-                      this.setValuesForUnassignedRecord(unassignedPayments);
-                    } else {
-                      this.upPaymentErrorMessage = 'error';
-                      this.getUnprocessedFeeCount.emit('0');
-                    }
+          this.getBSPaymentsByCCDandFee();
+        }
+     }
 
-                    return this.OrderslistService.getFeeExists();
-                  })
-                ).subscribe((data: any) => {
-                  if (data !== null) {
-                    this.FEE_RECORDS_EXISTS = data;
-                  }
-                }, (error: any) => {
-                  this.upPaymentErrorMessage = error;
+  getBSPaymentsByDCNandFee(){
+    this.bulkScaningPaymentService.getBSPaymentsByDCN(this.dcnNumber).pipe(
+              switchMap((unassignedPayments: any) => {
+                if (unassignedPayments['data'] && unassignedPayments['data'].payments) {
+                  this.setValuesForUnassignedRecord(unassignedPayments['data']);
+                } else if (unassignedPayments['payments']) {
+                  this.setValuesForUnassignedRecord(unassignedPayments);
+                } else {
+                  this.upPaymentErrorMessage = 'error';
                   this.getUnprocessedFeeCount.emit('0');
-                });
-        }
+                }
+
+                return this.OrderslistService.getFeeExists();
+              })
+            ).subscribe((data: any) => {
+              if (data !== null) {
+                this.FEE_RECORDS_EXISTS = data;
+              }
+            }, (error: any) => {
+              this.upPaymentErrorMessage = error;
+              this.getUnprocessedFeeCount.emit('0');
+            });
+   }
+
+  getBSPaymentsByCCDandFee(){
+    this.bulkScaningPaymentService.getBSPaymentsByCCD(this.ccdCaseNumber).pipe(
+           switchMap((unassignedPayments: any) => {
+               if (unassignedPayments['data'] && unassignedPayments['data'].payments) {
+                 this.setValuesForUnassignedRecord(unassignedPayments['data']);
+               } else if (unassignedPayments['payments']) {
+                 this.setValuesForUnassignedRecord(unassignedPayments);
+               } else {
+                 this.upPaymentErrorMessage = 'error';
+                 this.getUnprocessedFeeCount.emit('0');
+               }
+
+               return this.OrderslistService.getFeeExists();
+             })
+           ).subscribe((data: any) => {
+             if (data !== null) {
+               this.FEE_RECORDS_EXISTS = data;
+             }
+           }, (error: any) => {
+             this.upPaymentErrorMessage = error;
+             this.getUnprocessedFeeCount.emit('0');
+           });
   }
 
-
-
-  getUnassignedPaymentlist() {
-     if (this.selectedOption === 'dcn') {
-        this.bulkScaningPaymentService.getBSPaymentsByDCN(this.dcnNumber).subscribe(
-        unassignedPayments => {
-        if(unassignedPayments['data'] && unassignedPayments['data'].payments) {
-            this.setValuesForUnassignedRecord(unassignedPayments['data']);
-          } else if(unassignedPayments['payments']) {
-            this.setValuesForUnassignedRecord(unassignedPayments);
-          } else {
-            this.upPaymentErrorMessage = 'error';
-            this.getUnprocessedFeeCount.emit('0');
-          }
-          return this.OrderslistService.getFeeExists();
-        },
-        (error: any) => {
-          this.upPaymentErrorMessage = error;
-          this.getUnprocessedFeeCount.emit('0');
-        }
-      );
-    } else {
-        this.bulkScaningPaymentService.getBSPaymentsByCCD(this.ccdCaseNumber).subscribe(
-        unassignedPayments => {
-          if(unassignedPayments['data'] && unassignedPayments['data'].payments) {
-            this.setValuesForUnassignedRecord(unassignedPayments['data']);
-          } else if(unassignedPayments['payments']) {
-            this.setValuesForUnassignedRecord(unassignedPayments);
-          } else {
-            this.upPaymentErrorMessage = 'error';
-            this.getUnprocessedFeeCount.emit('0');
-          }
-        },
-        (error: any) => {
-          this.upPaymentErrorMessage = error;
-          this.getUnprocessedFeeCount.emit('0');
-        }
-      );
-    }
-
-  }
 
   setValuesForUnassignedRecord(unassignedPayments) {
 
