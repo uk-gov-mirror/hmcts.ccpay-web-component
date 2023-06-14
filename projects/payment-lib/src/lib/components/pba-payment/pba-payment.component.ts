@@ -78,10 +78,8 @@ export class PbaPaymentComponent implements OnInit {
       if ( this.pbaAccountList.indexOf(this.selectedPbaAccount) !== -1 ) {
         const requestBody = new IserviceRequestPbaPayment(
           this.selectedPbaAccount, this.pbaPayOrderRef.orderTotalFees, this.pbaAccountRef, this.orgName);
-        console.log('antes!');
-        setTimeout(() => {
-          console.log('primero!');
 
+        setTimeout(() => {
           this.paymentViewService.postPBAaccountPayment(this.pbaPayOrderRef.orderRefId, requestBody)
             .subscribe(
               r => {
@@ -105,9 +103,7 @@ export class PbaPaymentComponent implements OnInit {
               }
             );
 
-          console.log('despues!');
         }, 5000);
-        console.log('No te espero!');
       } else {
         this.isPBAServerError = true;
       }
