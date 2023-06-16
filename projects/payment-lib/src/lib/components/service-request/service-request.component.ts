@@ -116,12 +116,11 @@ export class ServiceRequestComponent implements OnInit {
 
   ngOnInit() {
     this.isTurnOff = this.paymentLibComponent.ISTURNOFF;
-    this.isServiceRequest = 'true';
+    this.isServiceRequest = 'false';
     if (this.viewStatus === undefined) {
       this.viewStatus = this.paymentLibComponent.viewName;
     }
     if(this.paymentLibComponent.isFromServiceRequestPage && this.paymentLibComponent.isFromPaymentDetailPage) {
-      if(this.paymentLibComponent.isFromPaymentDetailPage && this.paymentLibComponent.isFromServiceRequestPage) {
       this.OrderslistService.getorderRefs().subscribe((data) => this.orderRef = data);
       this.OrderslistService.getorderCCDEvents().subscribe((data) => this.orderCCDEvent = data);
       this.OrderslistService.getorderCreateds().subscribe((data) => this.orderCreated = data);
@@ -131,13 +130,9 @@ export class ServiceRequestComponent implements OnInit {
       this.OrderslistService.getorderFeesTotals().subscribe((data) => this.orderFeesTotal = data);
       this.OrderslistService.getoorderTotalPaymentss().subscribe((data) => this.orderTotalPayments = data);
     }
-
-
-    }
     if(this.paymentLibComponent.isFromServiceRequestPage && this.paymentLibComponent.TAKEPAYMENT) {
       this.isServiceRequest = 'false';
     }
-
 
   }
   goToServiceRequestPage() {
@@ -162,18 +157,26 @@ export class ServiceRequestComponent implements OnInit {
     this.paymentLibComponent.isFromRefundStatusPage = false;
     this.paymentLibComponent.viewName = 'case-transactions';
     this.resetOrderData();
-   let  partUrl = this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
-    partUrl += this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
-    if(this.isServiceRequest === 'false') {
-      partUrl += this.paymentLibComponent.TAKEPAYMENT ? '&takePayment=true' : '&takePayment=false';
-    }
-    partUrl += this.isStrategicFixEnable ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
-    partUrl += this.isServiceRequest !== 'false' ? '&servicerequest=true' : '&servicerequest=false';
-    partUrl += `&caseType=${this.paymentLibComponent.CASETYPE}`;
-    const url = `/payment-history/${this.paymentLibComponent.CCD_CASE_NUMBER}?view=case-transactions&selectedOption=${this.paymentLibComponent.SELECTED_OPTION}${partUrl}`;
+
+    // Check we on XUI
+    if(this.router.url.startsWith('/cases/case-details/')) {
+      // Use ccpay-case-transactions component
+      this.viewStatus = 'case-transactions';
+    } else {
+      // Reload Paybubble case-transactions page.
+      let  partUrl = this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
+      partUrl += this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
+      if(this.isServiceRequest === 'false') {
+        partUrl += this.paymentLibComponent.TAKEPAYMENT ? '&takePayment=true' : '&takePayment=false';
+      }
+      partUrl += this.isStrategicFixEnable ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
+      partUrl += this.isServiceRequest !== 'false' ? '&servicerequest=true' : '&servicerequest=false';
+      partUrl += `&caseType=${this.paymentLibComponent.CASETYPE}`;
+      const url = `/payment-history/${this.paymentLibComponent.CCD_CASE_NUMBER}?view=case-transactions&selectedOption=${this.paymentLibComponent.SELECTED_OPTION}${partUrl}`;
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
       this.router.onSameUrlNavigation = 'reload';
       this.router.navigateByUrl(url);
+    }
   }
 
   addRemission(fee: IFee) {

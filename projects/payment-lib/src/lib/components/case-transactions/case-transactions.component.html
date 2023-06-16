@@ -1,6 +1,5 @@
-<div class="govuk-width-container">
-
-  <main class="govuk-main-wrapper">
+<!-- <div class="govuk-width-container"> -->
+  <!-- <main class="govuk-main-wrapper"> -->
     <ng-container  *ngIf="viewStatus === 'main1'">
       <div *ngIf="viewStatus === 'main1'&& !isTurnOff && takePayment">
           <div   *ngIf="takePayment" class="govuk-grid-row">
@@ -581,14 +580,14 @@
               [ccdCaseNumber]="ccdCaseNumber"
               [isTurnOff]="isTurnOff"
               [orderParty]="orderParty"
-              [LOGGEDINUSERROLES]="LOGGEDINUSERROLES" 
+              [LOGGEDINUSERROLES]="LOGGEDINUSERROLES"
               ></ccpay-refund-status>
           </div>
       </div>
    </ng-container>
 
    <ng-container *ngIf="!takePayment && viewStatus === 'main'">
-      <div  class="govuk-grid-column-full" [ngClass]='serviceRequestValue!== "false" ? "govuk-margin-btm-20px" : ""'>
+      <!-- <div  class="govuk-grid-column-full" [ngClass]='serviceRequestValue!== "false" ? "govuk-margin-btm-20px" : ""'>-->
         <!-- <span *ngIf="serviceRequestValue === 'false'" class="heading-medium">Service requests</span> -->
         <ng-container *ngIf="!(orderLevelFees?.length === 0 && !isAnyFeeGroupAvilable) && serviceRequestValue !== 'false' ">
           <table class="govuk-table">
@@ -626,11 +625,8 @@
           <h1 class="govuk-heading-l govuk-heading-lw">If you are expecting to pay and are not able to see a service request,</h1>
           <p>please refresh and try in some time.</p>
         </ng-container>
-
     <!-- </div> -->
-
-      </div>
-
+      <!-- </div lass="govuk-grid-column-full"> -->
         <div class="govuk-grid-column-full">
             <div  *ngIf="serviceRequestValue === 'false'">
             <span class="heading-medium"><br/>Payments</span>
@@ -682,7 +678,7 @@
         </div>
         <div class="govuk-grid-column-full" *ngIf="!check4AllowedRoles2AccessPBApayment()">
             <span class="heading-medium"><br/>Refunds</span>
-            <ccpay-refund-status 
+            <ccpay-refund-status
             [ccdCaseNumber]="ccdCaseNumber"
             [orderParty] ="orderParty"
              ></ccpay-refund-status>
@@ -776,5 +772,5 @@
     </form>
   </div>
 </ng-container>
-</main>
-</div>
+<!-- </main> -->
+<!-- </div class="govuk-width-container"> -->
