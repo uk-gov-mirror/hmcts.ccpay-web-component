@@ -59,6 +59,7 @@ export class CaseTransactionsComponent implements OnInit {
   unprocessedRecordCount: number;
   isFeeRecordsExist: boolean = false;
   isGrpOutstandingAmtPositive: boolean = false;
+  isRequestNotPaid: boolean = false;
   totalRefundAmount: number;
   caseType: String;
   // lsCcdNumber: any = ls.get<any>('ccdNumber');
@@ -320,6 +321,7 @@ export class CaseTransactionsComponent implements OnInit {
       } else if (paymentGroup.service_request_status === 'Partially paid' || paymentGroup.service_request_status === 'Not paid') {
         this.orderStatus = paymentGroup.service_request_status;
         this.orderAddBtnEnable = true;
+        this.isRequestNotPaid = true;
       } else if (paymentGroup.service_request_status === 'Disputed'){
         this.orderStatus = paymentGroup.service_request_status;
         this.orderAddBtnEnable = true;

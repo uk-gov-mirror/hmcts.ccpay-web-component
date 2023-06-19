@@ -5,7 +5,6 @@ import { IBSPayments } from '../../interfaces/IBSPayments';
 import {Router} from '@angular/router';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import { OrderslistService } from '../../services/orderslist.service';
-import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'ccpay-app-unprocessed-payments',
@@ -22,6 +21,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
   @Input('ISSFENABLE') ISSFENABLE: boolean;
   @Input('PAYMENTSLENGTH') PAYMENTSLENGTH:Number;
   @Input('LEVEL')LEVEL:Number;
+  @Input('IS_REQUEST_NOT_PAID') IS_REQUEST_NOT_PAID: boolean;
 
   @Output() selectedUnprocessedFeeEvent: EventEmitter<string> = new EventEmitter();
   @Output() getUnprocessedFeeCount: EventEmitter<string> = new EventEmitter();
@@ -56,71 +56,62 @@ export class UnprocessedPaymentsComponent implements OnInit {
 
   ngOnInit() {
     // Todo ...
+    this.dcnNumber = this.paymentLibComponent.DCN_NUMBER;
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
     this.selectedOption = this.paymentLibComponent.SELECTED_OPTION.toLocaleLowerCase();
-    this.dcnNumber = this.paymentLibComponent.DCN_NUMBER;
     this.isBulkScanEnable = this.paymentLibComponent.ISBSENABLE;
     this.isTurnOff = this.paymentLibComponent.ISTURNOFF;
     this.isStFixEnable = this.paymentLibComponent.ISSFENABLE;
+    this.OrderslistService.getFeeExists().subscribe((data) => {
+              if (data === null) {
+                this.FEE_RECORDS_EXISTS = false
+              }
+              else {
+                this.FEE_RECORDS_EXISTS = data
+              }
+            });
+
     this.getUnassignedPaymentlist();
   }
 
-  getUnassignedPaymentlist(){
-    if (this.selectedOption === 'dcn') {
-          this.getBSPaymentsByDCNandFee();
-        }else{
-          this.getBSPaymentsByCCDandFee();
+  getUnassignedPaymentlist() {
+     if (this.selectedOption === 'dcn') {
+        this.bulkScaningPaymentService.getBSPaymentsByDCN(this.dcnNumber).subscribe(
+        unassignedPayments => {
+        if(unassignedPayments['data'] && unassignedPayments['data'].payments) {
+            this.setValuesForUnassignedRecord(unassignedPayments['data']);
+          } else if(unassignedPayments['payments']) {
+            this.setValuesForUnassignedRecord(unassignedPayments);
+          } else {
+            this.upPaymentErrorMessage = 'error';
+            this.getUnprocessedFeeCount.emit('0');
+          }
+        },
+        (error: any) => {
+          this.upPaymentErrorMessage = error;
+          this.getUnprocessedFeeCount.emit('0');
         }
-     }
+      );
+    } else {
+        this.bulkScaningPaymentService.getBSPaymentsByCCD(this.ccdCaseNumber).subscribe(
+        unassignedPayments => {
+          if(unassignedPayments['data'] && unassignedPayments['data'].payments) {
+            this.setValuesForUnassignedRecord(unassignedPayments['data']);
+          } else if(unassignedPayments['payments']) {
+            this.setValuesForUnassignedRecord(unassignedPayments);
+          } else {
+            this.upPaymentErrorMessage = 'error';
+            this.getUnprocessedFeeCount.emit('0');
+          }
+        },
+        (error: any) => {
+          this.upPaymentErrorMessage = error;
+          this.getUnprocessedFeeCount.emit('0');
+        }
+      );
+    }
 
-  getBSPaymentsByDCNandFee(){
-    this.bulkScaningPaymentService.getBSPaymentsByDCN(this.dcnNumber).pipe(
-              switchMap((unassignedPayments: any) => {
-                if (unassignedPayments['data'] && unassignedPayments['data'].payments) {
-                  this.setValuesForUnassignedRecord(unassignedPayments['data']);
-                } else if (unassignedPayments['payments']) {
-                  this.setValuesForUnassignedRecord(unassignedPayments);
-                } else {
-                  this.upPaymentErrorMessage = 'error';
-                  this.getUnprocessedFeeCount.emit('0');
-                }
-
-                return this.OrderslistService.getFeeExists();
-              })
-            ).subscribe((data: any) => {
-              if (data !== null) {
-                this.FEE_RECORDS_EXISTS = data;
-              }
-            }, (error: any) => {
-              this.upPaymentErrorMessage = error;
-              this.getUnprocessedFeeCount.emit('0');
-            });
-   }
-
-  getBSPaymentsByCCDandFee(){
-    this.bulkScaningPaymentService.getBSPaymentsByCCD(this.ccdCaseNumber).pipe(
-           switchMap((unassignedPayments: any) => {
-               if (unassignedPayments['data'] && unassignedPayments['data'].payments) {
-                 this.setValuesForUnassignedRecord(unassignedPayments['data']);
-               } else if (unassignedPayments['payments']) {
-                 this.setValuesForUnassignedRecord(unassignedPayments);
-               } else {
-                 this.upPaymentErrorMessage = 'error';
-                 this.getUnprocessedFeeCount.emit('0');
-               }
-
-               return this.OrderslistService.getFeeExists();
-             })
-           ).subscribe((data: any) => {
-             if (data !== null) {
-               this.FEE_RECORDS_EXISTS = data;
-             }
-           }, (error: any) => {
-             this.upPaymentErrorMessage = error;
-             this.getUnprocessedFeeCount.emit('0');
-           });
   }
-
 
   setValuesForUnassignedRecord(unassignedPayments) {
 
@@ -191,20 +182,20 @@ export class UnprocessedPaymentsComponent implements OnInit {
   }
 
   validateButtons() {
-  if ( this.isUnprocessedRecordSelected  && this.isExceptionCase) {
-        this.isMarkAsUnidentifiedbtnEnabled = true;
-    } else if ( this.isUnprocessedRecordSelected  && !this.isExceptionCase && this.FEE_RECORDS_EXISTS!== null && !this.FEE_RECORDS_EXISTS) {
-      this.isAllocateToExistingFeebtnEnabled = false;
-      this.isAllocatedToNewFeebtnEnabled = true;
-    } else if( this.isUnprocessedRecordSelected && !this.isExceptionCase && (this.FEE_RECORDS_EXISTS === null || this.FEE_RECORDS_EXISTS) ) {
-      if(!this.ISTURNOFF) {
-        this.isAllocateToExistingFeebtnEnabled = true;
-        this.isAllocatedToNewFeebtnEnabled = false;
-      } else {
-        this.isAllocateToExistingFeebtnEnabled = this.IS_OS_AMT_AVAILABLE;
-        this.isAllocatedToNewFeebtnEnabled = true;
-      }
-    }
+    if ( this.isUnprocessedRecordSelected  && this.isExceptionCase) {
+            this.isMarkAsUnidentifiedbtnEnabled = true;
+        } else if ( this.isUnprocessedRecordSelected  && !this.isExceptionCase && !this.IS_REQUEST_NOT_PAID) {
+          this.isAllocateToExistingFeebtnEnabled = false;
+          this.isAllocatedToNewFeebtnEnabled = true;
+        } else if( this.isUnprocessedRecordSelected && !this.isExceptionCase && this.IS_REQUEST_NOT_PAID ) {
+          if(!this.ISTURNOFF) {
+            this.isAllocateToExistingFeebtnEnabled = true;
+            this.isAllocatedToNewFeebtnEnabled = false;
+          } else {
+            this.isAllocateToExistingFeebtnEnabled = this.IS_OS_AMT_AVAILABLE;
+            this.isAllocatedToNewFeebtnEnabled = true;
+          }
+        }
   }
 
   unprocessedPaymentUnSelectEvent(event: any) {
