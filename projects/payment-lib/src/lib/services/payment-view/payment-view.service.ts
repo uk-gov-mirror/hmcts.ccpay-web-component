@@ -104,7 +104,7 @@ export class PaymentViewService {
   
   postPBAaccountPayment(serviceRef: string, body: IserviceRequestPbaPayment): Observable<any> {
     let randomKey = 'idam-key-' + Math.random().toString().split('.').join('-');
-    body['idempotency_key'] = randomKey; 
+    body['idempotency_key'] = randomKey;
     const url = `${this.paymentLibService.API_ROOT}/service-request/${serviceRef}/pba-payments`;
     return this.https.post(url, body);
   }
