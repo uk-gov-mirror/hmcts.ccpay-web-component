@@ -95,6 +95,9 @@ fabric.properties
 .sass-cache/
 *.css.map
 
+.yarn/
+.angular/
+
 wire-mock/wiremock-standalone-2.18.0.jar
 
 # Angular
