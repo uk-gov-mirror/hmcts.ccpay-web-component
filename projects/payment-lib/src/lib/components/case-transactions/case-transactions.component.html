@@ -372,7 +372,7 @@
         [FEE_RECORDS_EXISTS]="isFeeRecordsExist"
         (getUnprocessedFeeCount) = "getUnprocessedFeeCount($event)"
         [IS_OS_AMT_AVAILABLE]="isGrpOutstandingAmtPositive"
-        [IS_REQUEST_NOT_PAID]="isRequestNotPaid"
+        [ORDER_LEVEL_FEES]="orderLevelFees"
         (selectedUnprocessedFeeEvent) = "selectedUnprocessedFeeEvent($event)">
       </ccpay-app-unprocessed-payments>
       <div class="govuk-grid-row govuk-grid__surplus-payments"  *ngIf="totalRefundAmount > 0 && takePayment">
@@ -398,6 +398,7 @@
         [PAYMENTSLENGTH]="allPayments?.length"
         [PAYMENTREF]="paymentRef"
         [IS_REQUEST_NOT_PAID]="isRequestNotPaid"
+        [ORDER_LEVEL_FEES]="orderLevelFees"
         (selectedUnprocessedFeeEvent) = "selectedUnprocessedFeeEvent($event)">
         </ccpay-app-unprocessed-payments>
       </div>
@@ -442,7 +443,7 @@
             [IS_OS_AMT_AVAILABLE]="isGrpOutstandingAmtPositive"
             [PAYMENTSLENGTH]="allPayments?.length"
             [PAYMENTREF]="paymentRef"
-            [IS_REQUEST_NOT_PAID]="isRequestNotPaid"
+            [ORDER_LEVEL_FEES]="orderLevelFees"
             (getUnprocessedFeeCount) = "getUnprocessedFeeCount($event)"
             (selectedUnprocessedFeeEvent) = "selectedUnprocessedFeeEvent($event)">
         </ccpay-app-unprocessed-payments>
@@ -550,7 +551,7 @@
               [FEE_RECORDS_EXISTS]="isFeeRecordsExist"
               (getUnprocessedFeeCount) = "getUnprocessedFeeCount($event)"
               [IS_OS_AMT_AVAILABLE]="isGrpOutstandingAmtPositive"
-              [IS_REQUEST_NOT_PAID]="isRequestNotPaid"
+              [ORDER_LEVEL_FEES]="orderLevelFees"
               (selectedUnprocessedFeeEvent) = "selectedUnprocessedFeeEvent($event)">
                </ccpay-app-unprocessed-payments>
 
@@ -678,7 +679,7 @@
             (getUnprocessedFeeCount) = "getUnprocessedFeeCount($event)"
             [FEE_RECORDS_EXISTS]="isAnyFeeGroupAvilable"
             [IS_OS_AMT_AVAILABLE]="isGrpOutstandingAmtPositive"
-            [IS_REQUEST_NOT_PAID]="isRequestNotPaid"
+            [ORDER_LEVEL_FEES]="orderLevelFees"
             (selectedUnprocessedFeeEvent) = "selectedUnprocessedFeeEvent($event)">
               </ccpay-app-unprocessed-payments>
             </ng-container>
