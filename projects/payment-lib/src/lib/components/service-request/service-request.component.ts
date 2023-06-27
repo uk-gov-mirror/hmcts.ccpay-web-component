@@ -121,7 +121,6 @@ export class ServiceRequestComponent implements OnInit {
       this.viewStatus = this.paymentLibComponent.viewName;
     }
     if(this.paymentLibComponent.isFromServiceRequestPage && this.paymentLibComponent.isFromPaymentDetailPage) {
-      if(this.paymentLibComponent.isFromPaymentDetailPage && this.paymentLibComponent.isFromServiceRequestPage) {
       this.OrderslistService.getorderRefs().subscribe((data) => this.orderRef = data);
       this.OrderslistService.getorderCCDEvents().subscribe((data) => this.orderCCDEvent = data);
       this.OrderslistService.getorderCreateds().subscribe((data) => this.orderCreated = data);
@@ -131,13 +130,9 @@ export class ServiceRequestComponent implements OnInit {
       this.OrderslistService.getorderFeesTotals().subscribe((data) => this.orderFeesTotal = data);
       this.OrderslistService.getoorderTotalPaymentss().subscribe((data) => this.orderTotalPayments = data);
     }
-   
-    
-    }
     if(this.paymentLibComponent.isFromServiceRequestPage && this.paymentLibComponent.TAKEPAYMENT) {
       this.isServiceRequest = 'false';
     }
-
 
   }
   goToServiceRequestPage() {
@@ -162,18 +157,26 @@ export class ServiceRequestComponent implements OnInit {
     this.paymentLibComponent.isFromRefundStatusPage = false;
     this.paymentLibComponent.viewName = 'case-transactions';
     this.resetOrderData();
-   let  partUrl = this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
-    partUrl += this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
-    if(this.isServiceRequest === 'false') {
-      partUrl += this.paymentLibComponent.TAKEPAYMENT ? '&takePayment=true' : '&takePayment=false';
-    }
-    partUrl += this.isStrategicFixEnable ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
-    partUrl += this.isServiceRequest !== 'false' ? '&servicerequest=true' : '&servicerequest=false';
-    partUrl += `&caseType=${this.paymentLibComponent.CASETYPE}`;
-    const url = `/payment-history/${this.paymentLibComponent.CCD_CASE_NUMBER}?view=case-transactions&selectedOption=${this.paymentLibComponent.SELECTED_OPTION}${partUrl}`;
+
+    // Check we on XUI
+    if(this.router.url.startsWith('/cases/case-details/')) {
+      // Use ccpay-case-transactions component
+      this.viewStatus = 'case-transactions';
+    } else {
+      // Reload Paybubble case-transactions page.
+      let  partUrl = this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
+      partUrl += this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
+      if(this.isServiceRequest === 'false') {
+        partUrl += this.paymentLibComponent.TAKEPAYMENT ? '&takePayment=true' : '&takePayment=false';
+      }
+      partUrl += this.isStrategicFixEnable ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
+      partUrl += this.isServiceRequest !== 'false' ? '&servicerequest=true' : '&servicerequest=false';
+      partUrl += `&caseType=${this.paymentLibComponent.CASETYPE}`;
+      const url = `/payment-history/${this.paymentLibComponent.CCD_CASE_NUMBER}?view=case-transactions&selectedOption=${this.paymentLibComponent.SELECTED_OPTION}${partUrl}`;
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
       this.router.onSameUrlNavigation = 'reload';
       this.router.navigateByUrl(url);
+    }
   }
 
   addRemission(fee: IFee) {
@@ -188,10 +191,10 @@ export class ServiceRequestComponent implements OnInit {
         this.paymentGroup.payments = this.paymentGroup.payments.filter
           (paymentGroupObj => paymentGroupObj['reference'].includes(this.paymentLibComponent.paymentReference));
         this.payment = this.paymentGroup.payments[0];
-       
+
           //  const paymentAllocation = this.paymentGroup.payments[0].payment_allocation;
           //  this.isStatusAllocated = paymentAllocation.length > 0 && paymentAllocation[0].allocation_status === 'Allocated' || paymentAllocation.length === 0;
-        
+
       },
       (error: any) => this.errorMessage = error.replace(/"/g,"")
     );
@@ -322,7 +325,7 @@ export class ServiceRequestComponent implements OnInit {
     this.viewStatus = 'paymentview';
   }
   continuePayment(paymentgrp: IPaymentGroup) {
-    
+
     if (this.paymentType === 'op') {
       this.isFullyRefund = false
       this.viewStatus = '';
@@ -362,15 +365,15 @@ export class ServiceRequestComponent implements OnInit {
     this.isConfirmationBtnDisabled = true;
     this.errorMessage = '';
     const obj = this.paymentGroupList.fees[0];
-    this.fees  = [{ id: obj.id, 
+    this.fees  = [{ id: obj.id,
       code: obj.code,
-      version:obj.version, 
+      version:obj.version,
       apportion_amount: obj.apportion_amount,
       calculated_amount: obj.calculated_amount,
       updated_volume: obj.updated_volume ? obj.updated_volume : obj.volume,
       volume: obj.volume,
       refund_amount: this.getOverPaymentValue() }];
-    const requestBody = new PostRefundRetroRemission(this.contactDetailsObj,this.fees, this.paymentGroupList.payments[0].reference, 'RR037', 
+    const requestBody = new PostRefundRetroRemission(this.contactDetailsObj,this.fees, this.paymentGroupList.payments[0].reference, 'RR037',
     this.getOverPaymentValue(), 'op');
     this.paymentViewService.postRefundsReason(requestBody).subscribe(
       response => {
@@ -404,7 +407,7 @@ export class ServiceRequestComponent implements OnInit {
     } else {
       this.templateInstructionType = this.notificationService.getNotificationInstructionType(payment.channel, payment.method);
     }
-    
+
   }
 
   showNotificationPreview(): void {
