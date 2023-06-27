@@ -55,10 +55,10 @@ export class PbaPaymentComponent implements OnInit {
   selectpbaaccount(args) {
     if(args.currentTarget.id === 'pbaAccountNumber') {
       this.isPBADropdownSelected = true;
-      this.selectedPbaAccount = args.target.value; 
+      this.selectedPbaAccount = args.target.value;
     }
     if(args.currentTarget.id === 'pbaAccountRef') {
-      this.pbaAccountRef = args.target.value; 
+      this.pbaAccountRef = args.target.value;
     }
     if(this.selectedPbaAccount !== '' && this.pbaAccountRef !== "") {
       this.isContinueButtondisabled = false;
@@ -90,7 +90,7 @@ export class PbaPaymentComponent implements OnInit {
           },
           e => {
             if(e.status == '402') {
-              this.isInSufficiantFund = true; 
+              this.isInSufficiantFund = true;
             } else if(e.status == '410') {
               this.isPBAAccountNotExist = true;
             } else if(e.status == '412') {

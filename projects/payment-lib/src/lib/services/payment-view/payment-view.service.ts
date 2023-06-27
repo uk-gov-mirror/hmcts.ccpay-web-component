@@ -101,10 +101,10 @@ export class PaymentViewService {
       catchError(this.errorHandlerService.handleError)
     );
   }
-  
+
   postPBAaccountPayment(serviceRef: string, body: IserviceRequestPbaPayment): Observable<any> {
     let randomKey = 'idam-key-' + Math.random().toString().split('.').join('-');
-    body['idempotency_key'] = randomKey; 
+    body['idempotency_key'] = randomKey;
     const url = `${this.paymentLibService.API_ROOT}/service-request/${serviceRef}/pba-payments`;
     return this.https.post(url, body);
   }
@@ -171,7 +171,7 @@ export class PaymentViewService {
     const url = `${this.paymentLibService.API_ROOT}/case-payment-orders?case_ids=${caseNumber}`;
     return this.https.get(url, { withCredentials: true }).pipe( catchError(this.errorHandlerService.handleError));
   }
-  
+
   setOrdersList(orderLevelFees: IOrderReferenceFee[]): void {
     this.ordersList.next(Object.assign([], orderLevelFees));
 }

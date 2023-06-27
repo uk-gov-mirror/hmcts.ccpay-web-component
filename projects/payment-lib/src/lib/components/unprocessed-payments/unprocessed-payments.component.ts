@@ -21,7 +21,6 @@ export class UnprocessedPaymentsComponent implements OnInit {
   @Input('ISSFENABLE') ISSFENABLE: boolean;
   @Input('PAYMENTSLENGTH') PAYMENTSLENGTH:Number;
   @Input('LEVEL')LEVEL:Number;
-  @Input('IS_REQUEST_NOT_PAID') IS_REQUEST_NOT_PAID: boolean;
   @Input('ORDER_LEVEL_FEES') ORDER_REF_FEES: any[];
   @Output() selectedUnprocessedFeeEvent: EventEmitter<string> = new EventEmitter();
   @Output() getUnprocessedFeeCount: EventEmitter<string> = new EventEmitter();
@@ -188,7 +187,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
           } else if ( this.isUnprocessedRecordSelected  && !this.isExceptionCase && this.ORDER_REF_FEES.length === 0 ) {
             this.isAllocateToExistingFeebtnEnabled = false;
             this.isAllocatedToNewFeebtnEnabled = true;
-          } else if( this.isUnprocessedRecordSelected && !this.isExceptionCase ) {
+          } else if( this.isUnprocessedRecordSelected && !this.isExceptionCase && this.ORDER_REF_FEES.length > 0) {
             if(!this.ISTURNOFF) {
               this.isAllocateToExistingFeebtnEnabled = true;
               this.isAllocatedToNewFeebtnEnabled = false;
