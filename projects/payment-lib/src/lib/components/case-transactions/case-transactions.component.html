@@ -1,6 +1,7 @@
-<div class="govuk-width-container">
-
-  <main class="govuk-main-wrapper">
+<!-- <div class="govuk-width-container"> -->
+  <!-- <main class="govuk-main-wrapper"> -->
+<div>
+  <main>
     <ng-container  *ngIf="viewStatus === 'main1'">
       <div *ngIf="viewStatus === 'main1'&& !isTurnOff && takePayment">
           <div   *ngIf="takePayment" class="govuk-grid-row">
@@ -630,11 +631,8 @@
           <h1 class="govuk-heading-l govuk-heading-lw">If you are expecting to pay and are not able to see a service request,</h1>
           <p>please refresh and try in some time.</p>
         </ng-container>
-
     <!-- </div> -->
-
-      </div>
-
+        </div>
         <div class="govuk-grid-column-full">
             <div  *ngIf="serviceRequestValue === 'false'">
             <span class="heading-medium"><br/>Payments</span>
@@ -783,3 +781,5 @@
 </ng-container>
 </main>
 </div>
+<!-- </main> -->
+<!-- </div class="govuk-width-container"> -->
