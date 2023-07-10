@@ -177,20 +177,22 @@ export class UnprocessedPaymentsComponent implements OnInit {
   }
 
   validateButtons() {
-  if ( this.isUnprocessedRecordSelected  && this.isExceptionCase) {
-        this.isMarkAsUnidentifiedbtnEnabled = true;
-    } else if ( this.isUnprocessedRecordSelected  && !this.isExceptionCase && !this.FEE_RECORDS_EXISTS) {
-      this.isAllocateToExistingFeebtnEnabled = false;
-      this.isAllocatedToNewFeebtnEnabled = true;
-    } else if( this.isUnprocessedRecordSelected && !this.isExceptionCase && this.FEE_RECORDS_EXISTS) {
-      if(!this.ISTURNOFF) {
-        this.isAllocateToExistingFeebtnEnabled = true;
-        this.isAllocatedToNewFeebtnEnabled = false;
-      } else {
-        this.isAllocateToExistingFeebtnEnabled = this.IS_OS_AMT_AVAILABLE;
-        this.isAllocatedToNewFeebtnEnabled = true;
-      }
-    }
+  setTimeout(() => {
+      if ( this.isUnprocessedRecordSelected  && this.isExceptionCase) {
+            this.isMarkAsUnidentifiedbtnEnabled = true;
+        } else if ( this.isUnprocessedRecordSelected  && !this.isExceptionCase && !this.FEE_RECORDS_EXISTS) {
+          this.isAllocateToExistingFeebtnEnabled = false;
+          this.isAllocatedToNewFeebtnEnabled = true;
+        } else if( this.isUnprocessedRecordSelected && !this.isExceptionCase && this.FEE_RECORDS_EXISTS) {
+          if(!this.ISTURNOFF) {
+            this.isAllocateToExistingFeebtnEnabled = true;
+            this.isAllocatedToNewFeebtnEnabled = false;
+          } else {
+            this.isAllocateToExistingFeebtnEnabled = this.IS_OS_AMT_AVAILABLE;
+            this.isAllocatedToNewFeebtnEnabled = true;
+          }
+        }
+     },2000);
   }
 
   unprocessedPaymentUnSelectEvent(event: any) {
