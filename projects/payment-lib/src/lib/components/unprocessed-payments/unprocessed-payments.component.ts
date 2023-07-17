@@ -192,7 +192,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
             this.isAllocatedToNewFeebtnEnabled = true;
           }
         }
-     },2000);
+     },4000);
   }
 
   unprocessedPaymentUnSelectEvent(event: any) {
