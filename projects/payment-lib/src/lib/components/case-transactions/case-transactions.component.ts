@@ -73,7 +73,8 @@ export class CaseTransactionsComponent implements OnInit {
   orderRemissionDetails: any[] = [];
   orderLevelFees: IOrderReferenceFee[] = [];
   ispaymentGroupApisuccess: boolean = false;
-  cpoDetails: any = null;
+  cpoDetails: any[] = [];
+  olliesTest: string;
   orderRef: string;
   orderStatus: string;
   orderParty: string;
@@ -159,7 +160,7 @@ export class CaseTransactionsComponent implements OnInit {
           } else {
             this.paymentViewService.getPartyDetails(this.ccdCaseNumber).subscribe(
               response => {
-                this.cpoDetails = JSON.parse(response).content[0];
+                this.cpoDetails = JSON.parse(response).content;
 
               },
               (error: any) => {
@@ -188,7 +189,7 @@ export class CaseTransactionsComponent implements OnInit {
           this.totalRefundAmount = this.calculateRefundAmount();
           this.paymentViewService.getPartyDetails(this.ccdCaseNumber).subscribe(
             response => {
-              this.cpoDetails = JSON.parse(response).content[0];
+              this.cpoDetails = JSON.parse(response).content;
 
             },
             (error: any) => {
