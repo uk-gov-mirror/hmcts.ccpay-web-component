@@ -74,7 +74,6 @@ export class CaseTransactionsComponent implements OnInit {
   orderLevelFees: IOrderReferenceFee[] = [];
   ispaymentGroupApisuccess: boolean = false;
   cpoDetails: any[] = [];
-  olliesTest: string;
   orderRef: string;
   orderStatus: string;
   orderParty: string;
@@ -328,7 +327,7 @@ export class CaseTransactionsComponent implements OnInit {
 
       //this.orderLevelFees.push({orderRefId:paymentGroup['payment_group_reference'],orderTotalFees: this.orderFeesTotal,orderStatus: this.orderStatus,orderParty:'Santosh', orderCCDEvent:'Case Creation',orderCreated: new Date(), orderAddBtnEnable: this.orderAddBtnEnable}); this.cpoDetails['createdTimestamp']
       if (this.cpoDetails !== null) {
-        this.orderLevelFees.push({ orderRefId: paymentGroup['payment_group_reference'], orderTotalFees: this.orderFeesTotal, orderStatus: this.orderStatus, orderParty: this.cpoDetails['responsibleParty'], orderCCDEvent: this.cpoDetails['action'], orderCreated: paymentGroup['date_created'], orderAddBtnEnable: this.orderAddBtnEnable });
+        this.orderLevelFees.push({ orderRefId: paymentGroup['payment_group_reference'], orderTotalFees: this.orderFeesTotal, orderStatus: this.orderStatus, orderParty: this.cpoDetails[0].responsibleParty, orderCCDEvent: this.cpoDetails[0].action, orderCreated: paymentGroup['date_created'], orderAddBtnEnable: this.orderAddBtnEnable });
 
       } else {
         this.orderLevelFees.push({ orderRefId: paymentGroup['payment_group_reference'], orderTotalFees: this.orderFeesTotal, orderStatus: this.orderStatus, orderParty: '', orderCCDEvent: '', orderCreated: paymentGroup['date_created'], orderAddBtnEnable: this.orderAddBtnEnable });
