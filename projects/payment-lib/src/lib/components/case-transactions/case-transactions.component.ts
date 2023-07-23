@@ -286,7 +286,8 @@ export class CaseTransactionsComponent implements OnInit {
 
   calculateOrderFeesAmounts(): void {
     let feesTotal = 0.00;
-    this.paymentGroups.forEach(paymentGroup => {
+    this.paymentGroups.forEach((paymentGroup, index) => {
+
       this.resetOrderVariables();
       if (paymentGroup.fees) {
         paymentGroup.fees.forEach(fee => {
@@ -303,7 +304,7 @@ export class CaseTransactionsComponent implements OnInit {
 
       if (paymentGroup.payments) {
         const isFeeOverPaymentExist = this.overPaymentAmount === 0;
-        paymentGroup.payments.forEach(payment => {
+        paymentGroup.payments.forEach((payment) => {
           if(isFeeOverPaymentExist) {
             this.overPaymentAmount = this.overPaymentAmount + payment.over_payment
           }
@@ -326,8 +327,8 @@ export class CaseTransactionsComponent implements OnInit {
       }
 
       //this.orderLevelFees.push({orderRefId:paymentGroup['payment_group_reference'],orderTotalFees: this.orderFeesTotal,orderStatus: this.orderStatus,orderParty:'Santosh', orderCCDEvent:'Case Creation',orderCreated: new Date(), orderAddBtnEnable: this.orderAddBtnEnable}); this.cpoDetails['createdTimestamp']
-      if (this.cpoDetails !== null) {
-        this.orderLevelFees.push({ orderRefId: paymentGroup['payment_group_reference'], orderTotalFees: this.orderFeesTotal, orderStatus: this.orderStatus, orderParty: this.cpoDetails[0].responsibleParty, orderCCDEvent: this.cpoDetails[0].action, orderCreated: paymentGroup['date_created'], orderAddBtnEnable: this.orderAddBtnEnable });
+      if (this.cpoDetails !== null && this.cpoDetails.length !== 0) {
+        this.orderLevelFees.push({ orderRefId: paymentGroup['payment_group_reference'], orderTotalFees: this.orderFeesTotal, orderStatus: this.orderStatus, orderParty: this.cpoDetails[index].responsibleParty, orderCCDEvent: this.cpoDetails[index].action, orderCreated: paymentGroup['date_created'], orderAddBtnEnable: this.orderAddBtnEnable });
 
       } else {
         this.orderLevelFees.push({ orderRefId: paymentGroup['payment_group_reference'], orderTotalFees: this.orderFeesTotal, orderStatus: this.orderStatus, orderParty: '', orderCCDEvent: '', orderCreated: paymentGroup['date_created'], orderAddBtnEnable: this.orderAddBtnEnable });
