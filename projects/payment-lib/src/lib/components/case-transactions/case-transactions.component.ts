@@ -73,7 +73,7 @@ export class CaseTransactionsComponent implements OnInit {
   orderRemissionDetails: any[] = [];
   orderLevelFees: IOrderReferenceFee[] = [];
   ispaymentGroupApisuccess: boolean = false;
-  cpoDetails: any[] = [];
+  cpoDetails: any[] = null;
   orderRef: string;
   orderStatus: string;
   orderParty: string;
@@ -396,10 +396,10 @@ export class CaseTransactionsComponent implements OnInit {
     // }
 
 
-    if (this.cpoDetails !== null) {
-      this.orderParty = this.cpoDetails['responsibleParty'];
-      this.orderCreated = this.cpoDetails['createdTimestamp'];
-      this.orderCCDEvent = this.cpoDetails['action'];
+    if (this.cpoDetails !== null && this.cpoDetails.length !==0) {
+      this.orderParty = this.cpoDetails[0].responsibleParty;
+      this.orderCreated = this.cpoDetails[0].createdTimestamp;
+      this.orderCCDEvent = this.cpoDetails[0].action;
     } else {
       this.orderParty = '';
       this.orderCCDEvent = '';

@@ -504,8 +504,8 @@
                     <tr *ngFor="let orderRef of orderLevelFees;let i = index;">
                       <td class="govuk-table__cell whitespace-inherit">{{orderRef.orderStatus}}</td>
                       <td class="govuk-table__cell whitespace-inherit">{{ orderRef.orderTotalFees | currency :'GBP':'symbol':'1.2-2' }}</td>
-                      <td *ngIf="cpoDetails !== null" class="govuk-table__cell  whitespace-inherit">{{cpoDetails[i].responsibleParty}}</td>
-                      <td *ngIf="cpoDetails === null" class="govuk-table__cell whitespace-inherit"></td>
+                      <td *ngIf="cpoDetails !== null && cpoDetails.length !== 0" class="govuk-table__cell  whitespace-inherit">{{cpoDetails[i].responsibleParty}}</td>
+                      <td *ngIf="cpoDetails === null || cpoDetails.length === 0" class="govuk-table__cell whitespace-inherit"></td>
                       <td class="govuk-table__cell whitespace-inherit">{{orderRef.orderRefId}}</td>
                       <td class="govuk-table__cell">
                               <a href="javascript:void(0)" (click)="goToOrderViewDetailSection(orderRef)">Review</a>
@@ -605,8 +605,8 @@
                 <tr class="govuk-table__row"  *ngFor="let orderRef of orderLevelFees;let i = index;">
                   <td class="govuk-table__cell whitespace-inherit">{{orderRef.orderStatus}}</td>
                   <td class="govuk-table__cell whitespace-inherit">{{orderRef.orderTotalFees | currency :'GBP':'symbol':'1.2-2'}}</td>
-                  <td *ngIf="cpoDetails !== null" class="govuk-table__cell  whitespace-inherit">{{cpoDetails[i].responsibleParty}}</td>
-                  <td *ngIf="cpoDetails === null" class="govuk-table__cell  whitespace-inherit"></td>
+                  <td *ngIf="cpoDetails !== null && cpoDetails.length !== 0" class="govuk-table__cell  whitespace-inherit">{{cpoDetails[i].responsibleParty}}</td>
+                  <td *ngIf="cpoDetails === null || cpoDetails.length === 0" class="govuk-table__cell  whitespace-inherit"></td>
                   <td class="govuk-table__cell whitespace-inherit">{{orderRef.orderRefId}}</td>
                   <td class="govuk-table__cell of-visible"> <a href="javascript:void(0)" (click)="loadPBAAccountPage(orderRef)" *ngIf="serviceRequestValue !== 'false' && check4AllowedRoles2AccessPBApayment() && orderRef.orderStatus === 'Not paid'"> Pay now</a></td>
                   <td class="govuk-table__cell">
