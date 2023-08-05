@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { PaymentLibComponent } from '../../payment-lib.component';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
-import {CaseTransactionsService} from '../../services/case-transactions/case-transactions.service'; 
+import {CaseTransactionsService} from '../../services/case-transactions/case-transactions.service';
 import {BulkScaningPaymentService} from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
 import { ErrorHandlerService } from '../../services/shared/error-handler.service';
 import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
@@ -33,9 +33,10 @@ export class AllocatePaymentsComponent implements OnInit {
     amount: 0
   };
   siteID: string = null;
-  errorMessage = this.errorHandlerService.getServerErrorMessage(false, false, '');
+  // errorMessage = this.errorHandlerService.getServerErrorMessage(false, false, '');
+  errorMessage = null
   paymentGroup: IPaymentGroup;
-  paymentGroups: IPaymentGroup[] = [];	
+  paymentGroups: IPaymentGroup[] = [];
   remainingAmount: number;
   isRemainingAmountGtZero: boolean;
   isMoreDetailsBoxHide: boolean  = true;
@@ -46,7 +47,7 @@ export class AllocatePaymentsComponent implements OnInit {
   isContinueButtondisabled: boolean = true;
   otherPaymentExplanation: string = null;
   selectedOption: string = null;
-  isFeeAmountZero: boolean = false;	
+  isFeeAmountZero: boolean = false;
 
   paymentReasonHasError: boolean = false;
   paymentExplanationHasError: boolean = false;
@@ -120,7 +121,7 @@ export class AllocatePaymentsComponent implements OnInit {
     if (this.paymentLibComponent.paymentGroupReference !== null) {
       this.viewStatus = 'allocatePaymentConfirmation';
     }
-    
+
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
     this.bspaymentdcn = this.paymentLibComponent.bspaymentdcn;
     this.paymentRef = this.paymentLibComponent.paymentGroupReference;
@@ -184,10 +185,10 @@ export class AllocatePaymentsComponent implements OnInit {
 
   }
 
-  selectedPaymentGroup(paymentGroup: IPaymentGroup) {	
-    this.isContinueButtondisabled = false;	
-    this.paymentGroup = paymentGroup;	
-  }	
+  selectedPaymentGroup(paymentGroup: IPaymentGroup) {
+    this.isContinueButtondisabled = false;
+    this.paymentGroup = paymentGroup;
+  }
 
   gotoCasetransationPage() {
     this.paymentLibComponent.viewName = 'case-transactions';
@@ -196,7 +197,7 @@ export class AllocatePaymentsComponent implements OnInit {
     this.paymentLibComponent.ISBSENABLE = true;
   }
 
-  gotoSummaryPage(event: any) { 
+  gotoSummaryPage(event: any) {
     event.preventDefault();
     this.paymentLibComponent.viewName = 'fee-summary';
     this.paymentLibComponent.isTurnOff = this.isTurnOff;
@@ -213,13 +214,13 @@ export class AllocatePaymentsComponent implements OnInit {
       this.paymentLibComponent.TAKEPAYMENT = true;
       this.paymentLibComponent.ISBSENABLE = true;
     } else {
-      this.viewStatus = 'mainForm';	
+      this.viewStatus = 'mainForm';
     }
   }
   confirmAllocatePayement(){
     this.enCookieUserName = document.cookie.split(";").find(row => row.includes("user-info")).split("=")[1].split(";");
     this.cookieUserName = JSON.parse(decodeURIComponent(this.enCookieUserName));
-    
+
     const fullName = this.cookieUserName['forename'] + ' ' + this.cookieUserName['surname'];
 
     const paymentDetailsField = this.overUnderPaymentForm.controls.moreDetails,
@@ -324,7 +325,7 @@ export class AllocatePaymentsComponent implements OnInit {
               (response2['data'].payment_group_reference, response2['data'].reference, this.paymentReason, this.otherPaymentExplanation, this.userName);
               if (response2.success) {
                 this.paymentViewService.postBSAllocationPayments(reqBody).subscribe(
-  
+
                 res3 => {
                   this.errorMessage = this.errorHandlerService.getServerErrorMessage(false, false, '');
                   let response3 = JSON.parse(res3);
@@ -355,7 +356,7 @@ export class AllocatePaymentsComponent implements OnInit {
         window.scrollTo(0, 0);
         this.isConfirmButtondisabled = false;
       }
-    );  
+    );
   }
   }
 
@@ -372,13 +373,13 @@ export class AllocatePaymentsComponent implements OnInit {
       const remainingToBeAssigned = this.unAllocatedPayment.amount - GroupOutstandingAmount;
       this.isRemainingAmountGtZero = remainingToBeAssigned > 0;
       this.isRemainingAmountLtZero = remainingToBeAssigned < 0;
-      this.paymentSectionLabel = this.isRemainingAmountGtZero ? { 
+      this.paymentSectionLabel = this.isRemainingAmountGtZero ? {
           title: 'There is an Over payment of',
           reason: 'Provide a reason. This will be used in the Refund process.',
-        }: this.isRemainingAmountLtZero ? { 
+        }: this.isRemainingAmountLtZero ? {
           title: 'There is an Under payment of',
           reason: 'Provide a reason',
-        }: { 
+        }: {
           title:'Amount left to be allocated',
           reason:'',
         };
@@ -387,7 +388,7 @@ export class AllocatePaymentsComponent implements OnInit {
       this.afterFeeAllocateOutstanding = remainingToBeAssigned >= 0 ? 0 : (remainingToBeAssigned * -1);
       this.amountForAllocation = GroupOutstandingAmount >= this.unAllocatedPayment.amount ? this.unAllocatedPayment.amount : GroupOutstandingAmount;
       if(this.isTurnOff){
-        this.viewStatus = 'allocatePaymentConfirmation';	
+        this.viewStatus = 'allocatePaymentConfirmation';
       }
     }
   }

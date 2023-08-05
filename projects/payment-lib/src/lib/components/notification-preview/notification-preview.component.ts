@@ -27,7 +27,8 @@ export class NotificationPreviewComponent implements OnInit {
   notification: INotificationPreview;
   notificationPreviewRequest: NotificationPreviewRequest;
   today: number = Date.now();
-  errorMessage = this.errorHandlerService.getServerErrorMessage(false, false, '');
+//   errorMessage = this.errorHandlerService.getServerErrorMessage(false, false, '');
+  errorMessage = null
 
   constructor(private errorHandlerService: ErrorHandlerService,
     private notificationService: NotificationService) { }
