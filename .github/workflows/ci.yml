@@ -26,7 +26,7 @@ jobs:
       - name: Yarn install
         run: yarn --frozen-lockfile
       - name: Build library
-        run: yarn run build:library
+        run: yarn run build-prod
       - name: Publish library
         env:
           NODE_AUTH_TOKEN:  ${{ secrets.NPM_API_TOKEN }}
