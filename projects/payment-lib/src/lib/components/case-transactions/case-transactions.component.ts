@@ -243,8 +243,7 @@ export class CaseTransactionsComponent implements OnInit {
             this.isAddFeeBtnEnabled = true;
           }
 
-          if (recordData['data'] && recordData['data'].exception_record_reference && recordData['data'].exception_record_reference.length > 0
-              && (recordData['data'].ccd_reference === undefined || recordData['data'].ccd_reference.length == 0) ) {
+          if (recordData['data'] && recordData['data'].exception_record_reference && recordData['data'].exception_record_reference.length > 0 && recordData['data'].ccd_reference === undefined) {
             this.isExceptionRecord = true;
             this.isAddFeeBtnEnabled = false;
           }
