@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {ErrorHandlerService} from '../shared/error-handler.service';
+import { HttpClient } from '@angular/common/http';
+import { ErrorHandlerService } from '../shared/error-handler.service';
 import { WebComponentHttpClient } from '../shared/httpclient/webcomponent.http.client';
-import {PaymentLibService} from '../../payment-lib.service';
-import {Observable} from 'rxjs/Observable';
-import {catchError} from 'rxjs/operators';
+import { PaymentLibService } from '../../payment-lib.service';
+import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { IRefundsNotifications } from '../../interfaces/IRefundsNotifications';
 import { NotificationPreviewRequest } from '../../interfaces/NotificationPreviewRequest';
 
@@ -15,9 +15,9 @@ export class NotificationService {
 
   constructor(private http: HttpClient,
     private https: WebComponentHttpClient,
-              private errorHandlerService: ErrorHandlerService,
-              private paymentLibService: PaymentLibService
-              ) { }
+    private errorHandlerService: ErrorHandlerService,
+    private paymentLibService: PaymentLibService
+  ) { }
 
   getRefundNotification(reference: string): Observable<IRefundsNotifications> {
     return this.http.get<IRefundsNotifications>(`${this.paymentLibService.NOTIFICATION_API_ROOT}/${reference}`, {
@@ -55,7 +55,7 @@ export class NotificationService {
       return 'SendRefund';
     } else if (paymentChannel === 'bulk scan' && paymentMethod === 'cheque') {
       return 'SendRefund';
-    }else {
+    } else {
       return 'Template'
     }
   }
