@@ -1,7 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Inject, Component, OnInit, Input } from '@angular/core';
 import { IStatusHistories } from '../../interfaces/IStatusHistories';
 import { StatusHistoryService } from '../../services/status-history/status-history.service';
-import { PaymentLibComponent } from '../../payment-lib.component';
+
+// Import ParentComponent as a type only to fix NG3003.
+// import { PaymentLibComponent } from '../../payment-lib.component';
+import type { PaymentLibComponent } from '../../payment-lib.component';
+import { PAYMENT_LIB_COMPONENT } from '../../payment-lib.token';
 
 @Component({
   selector: 'ccpay-payment-statuses',
@@ -15,14 +19,14 @@ export class StatusHistoryComponent implements OnInit {
   errorMessage: string;
 
   constructor(private statusHistoryService: StatusHistoryService,
-              private paymentLibComponent: PaymentLibComponent) { }
+              @Inject(PAYMENT_LIB_COMPONENT) private paymentLibComponent: PaymentLibComponent) { }
 
   ngOnInit() {
     this.statusHistoryService.getPaymentStatusesByReference(this.paymentLibComponent.paymentReference, this.paymentLibComponent.paymentMethod).subscribe(
       statuses => this.statuses = statuses,
       (error: any) => this.errorMessage = <any>error.replace(/"/g,"")
     );
-    
+
   }
 
 }

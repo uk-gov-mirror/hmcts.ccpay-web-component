@@ -1,18 +1,20 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Inject, Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { PaymentLibComponent } from '../../payment-lib.component';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
-import {CaseTransactionsService} from '../../services/case-transactions/case-transactions.service';
-import {BulkScaningPaymentService} from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
+import { CaseTransactionsService} from '../../services/case-transactions/case-transactions.service';
+import { BulkScaningPaymentService} from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
 import { ErrorHandlerService } from '../../services/shared/error-handler.service';
-import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
-import {IBSPayments} from '../../interfaces/IBSPayments';
-import {AllocatePaymentRequest} from '../../interfaces/AllocatePaymentRequest';
-import {IAllocationPaymentsRequest} from '../../interfaces/IAllocationPaymentsRequest';
+import { IPaymentGroup} from '../../interfaces/IPaymentGroup';
+import { IBSPayments} from '../../interfaces/IBSPayments';
+import { AllocatePaymentRequest} from '../../interfaces/AllocatePaymentRequest';
+import { IAllocationPaymentsRequest} from '../../interfaces/IAllocationPaymentsRequest';
 import { IOrderReferenceFee } from '../../interfaces/IOrderReferenceFee';
 import { OrderslistService } from '../../services/orderslist.service';
 
-
+// Import ParentComponent as a type only to fix NG3003.
+// import { PaymentLibComponent } from '../../payment-lib.component';
+import type { PaymentLibComponent } from '../../payment-lib.component';
+import { PAYMENT_LIB_COMPONENT } from '../../payment-lib.token';
 
 @Component({
   selector: 'app-allocate-payments',
@@ -112,7 +114,7 @@ export class AllocatePaymentsComponent implements OnInit {
   private caseTransactionsService: CaseTransactionsService,
   private formBuilder: FormBuilder,
   private paymentViewService: PaymentViewService,
-  private paymentLibComponent: PaymentLibComponent,
+  @Inject(PAYMENT_LIB_COMPONENT) private paymentLibComponent: PaymentLibComponent,
   private bulkScaningPaymentService: BulkScaningPaymentService,
   private OrderslistService: OrderslistService) { }
 

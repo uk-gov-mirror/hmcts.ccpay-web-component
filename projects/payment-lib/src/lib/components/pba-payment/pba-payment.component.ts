@@ -1,8 +1,12 @@
-import { Component, OnInit, Input} from '@angular/core';
+import { Inject, Component, OnInit, Input} from '@angular/core';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
-import { PaymentLibComponent } from '../../payment-lib.component';
 import { IserviceRequestCardPayment } from '../../interfaces/IserviceRequestCardPayment';
 import { IserviceRequestPbaPayment } from '../../interfaces/IserviceRequestPbaPayment';
+
+// Import ParentComponent as a type only to fix NG3003.
+// import {PaymentLibComponent} from '../../payment-lib.component';
+import type { PaymentLibComponent } from '../../payment-lib.component';
+import { PAYMENT_LIB_COMPONENT } from '../../payment-lib.token';
 
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 
@@ -32,7 +36,7 @@ export class PbaPaymentComponent implements OnInit {
   pbaAccountrPaymentResult: any;
   orgName: string = '';
 
-  constructor(private  paymentLibComponent: PaymentLibComponent,
+  constructor(@Inject(PAYMENT_LIB_COMPONENT) private  paymentLibComponent: PaymentLibComponent,
     private paymentViewService: PaymentViewService) {}
 
   ngOnInit() {
@@ -55,10 +59,10 @@ export class PbaPaymentComponent implements OnInit {
   selectpbaaccount(args) {
     if(args.currentTarget.id === 'pbaAccountNumber') {
       this.isPBADropdownSelected = true;
-      this.selectedPbaAccount = args.target.value; 
+      this.selectedPbaAccount = args.target.value;
     }
     if(args.currentTarget.id === 'pbaAccountRef') {
-      this.pbaAccountRef = args.target.value; 
+      this.pbaAccountRef = args.target.value;
     }
     if(this.selectedPbaAccount !== '' && this.pbaAccountRef !== "") {
       this.isContinueButtondisabled = false;

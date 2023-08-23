@@ -1,5 +1,4 @@
-import {Component, ViewChild, Input, ChangeDetectorRef} from '@angular/core';
-import {PaymentLibComponent} from '../../payment-lib.component';
+import {Inject, Component, ViewChild, Input, ChangeDetectorRef} from '@angular/core';
 import { MatTableDataSource} from '@angular/material/table';
 import {MatSort } from '@angular/material/sort';
 import {Sort } from '@angular/material/sort';
@@ -8,6 +7,12 @@ import { IRefundList } from '../../interfaces/IRefundList';
 import { OrderslistService } from '../../services/orderslist.service';
 // import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { ActivatedRoute,Router } from '@angular/router';
+
+// Import ParentComponent as a type only to fix NG3003.
+// import { PaymentLibComponent } from '../../payment-lib.component';
+import type { PaymentLibComponent } from '../../payment-lib.component';
+import { PAYMENT_LIB_COMPONENT } from '../../payment-lib.token';
+
 @Component({
   selector: 'ccpay-table',
   templateUrl: './table.component.html',
@@ -30,7 +35,7 @@ export class TableComponent {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   constructor(
-    private paymentLibComponent: PaymentLibComponent,
+    @Inject(PAYMENT_LIB_COMPONENT) private paymentLibComponent: PaymentLibComponent,
     private cdRef: ChangeDetectorRef,
     private OrderslistService: OrderslistService,
     private router: Router,

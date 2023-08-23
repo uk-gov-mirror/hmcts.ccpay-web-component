@@ -1,7 +1,11 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Inject, Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { PaymentLibComponent } from '../../payment-lib.component';
 import { NotificationService } from '../../services/notification/notification.service';
+
+// Import ParentComponent as a type only to fix NG3003.
+// import { PaymentLibComponent } from '../../payment-lib.component';
+import type { PaymentLibComponent } from '../../payment-lib.component';
+import { PAYMENT_LIB_COMPONENT } from '../../payment-lib.token';
 
 @Component({
   selector: 'ccpay-contact-details',
@@ -45,7 +49,7 @@ export class ContactDetailsComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private notificationService: NotificationService,
-              private paymentLibComponent: PaymentLibComponent) { }
+              @Inject(PAYMENT_LIB_COMPONENT) private paymentLibComponent: PaymentLibComponent) { }
 
   ngOnInit() {
     this.resetForm([false,false,false,false,false,false,false,false,false,false,false,false,false,false], 'all');
@@ -102,7 +106,7 @@ export class ContactDetailsComponent implements OnInit {
       this.isEmailSAddressClicked = false;
       this.isPostcodeClicked = true;
       this.isManualAddressClicked = true;
-      this.manualAddressForm.patchValue({ 
+      this.manualAddressForm.patchValue({
         addressl1: this.addressObj.contact_details.address_line,
         townorcity: this.addressObj.contact_details.city,
         county: this.addressObj.contact_details.county,
@@ -232,14 +236,14 @@ export class ContactDetailsComponent implements OnInit {
         (error: any) => {
           this.isShowPickAddress = false;
           this.errorMessage = error.replace(/"/g,"");
-        }; 
+        };
       } else if (str === 'FS') {
         if(this.postcodeAddress !== undefined && this.postcodeAddress) {
           this.isAddressBoxEmpty = false;
           let addressLine="";
           let addressArray = this.postcodeAddress.ADDRESS.split(",");
           for( let i=0; i<addressArray.length-2; i++ ) {
-            addressLine +=addressArray[i]; 
+            addressLine +=addressArray[i];
           }
           const addressObject = {
             address_line: addressLine,
@@ -301,6 +305,6 @@ export class ContactDetailsComponent implements OnInit {
     if(field==='country' || field==='all') {
       this.isCountryEmpty = val[13];
     }
-  
+
   }
 }

@@ -1,16 +1,20 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Inject, Component, OnInit, Input } from '@angular/core';
 import { IPaymentGroup } from '../../interfaces/IPaymentGroup';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import { BulkScaningPaymentService } from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
-import { PaymentLibComponent } from '../../payment-lib.component';
 import { IRemission } from '../../interfaces/IRemission';
 import { IFee } from '../../interfaces/IFee';
 import { PaymentToPayhubRequest } from '../../interfaces/PaymentToPayhubRequest';
 import { PayhubAntennaRequest } from '../../interfaces/PayhubAntennaRequest';
 import { SafeHtml } from '@angular/platform-browser';
-import {Router} from '@angular/router';
-import {Location} from '@angular/common';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 import { OrderslistService } from '../../services/orderslist.service';
+
+// Import ParentComponent as a type only to fix NG3003.
+// import { PaymentLibComponent } from '../../payment-lib.component';
+import type { PaymentLibComponent } from '../../payment-lib.component';
+import { PAYMENT_LIB_COMPONENT } from '../../payment-lib.token';
 
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 
@@ -54,7 +58,7 @@ export class FeeSummaryComponent implements OnInit {
     private bulkScaningPaymentService: BulkScaningPaymentService,
     private location: Location,
     private paymentViewService: PaymentViewService,
-    private paymentLibComponent: PaymentLibComponent,
+    @Inject(PAYMENT_LIB_COMPONENT) private paymentLibComponent: PaymentLibComponent,
     private OrderslistService: OrderslistService
   ) {}
 

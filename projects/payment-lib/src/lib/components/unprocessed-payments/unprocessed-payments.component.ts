@@ -1,10 +1,14 @@
-import { Component, OnInit, Output,Input, EventEmitter } from '@angular/core';
+import { Inject, Component, OnInit, Output,Input, EventEmitter } from '@angular/core';
 import { BulkScaningPaymentService } from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
-import { PaymentLibComponent } from '../../payment-lib.component';
 import { IBSPayments } from '../../interfaces/IBSPayments';
 import {Router} from '@angular/router';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import { OrderslistService } from '../../services/orderslist.service';
+
+// Import ParentComponent as a type only to fix NG3003.
+// import { PaymentLibComponent } from '../../payment-lib.component';
+import type { PaymentLibComponent } from '../../payment-lib.component';
+import { PAYMENT_LIB_COMPONENT } from '../../payment-lib.token';
 
 @Component({
   selector: 'ccpay-app-unprocessed-payments',
@@ -48,7 +52,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
 
   constructor(private router: Router,
     private bulkScaningPaymentService: BulkScaningPaymentService,
-    private paymentLibComponent: PaymentLibComponent,
+    @Inject(PAYMENT_LIB_COMPONENT) private paymentLibComponent: PaymentLibComponent,
     private paymentViewService: PaymentViewService,
     private OrderslistService: OrderslistService
     ) { }

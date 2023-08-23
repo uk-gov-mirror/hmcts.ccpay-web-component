@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Inject, Component, OnInit, Input } from '@angular/core';
 import { RefundsService } from '../../services/refunds/refunds.service';
 import { NotificationService } from '../../services/notification/notification.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
@@ -9,11 +9,15 @@ import { IPutNotificationRequest } from '../../interfaces/IPutNotificationReques
 import { IRefundContactDetails } from '../../interfaces/IRefundContactDetails';
 import { IRefundStatus } from '../../interfaces/IRefundStatus';
 import { IResubmitRefundRequest } from '../../interfaces/IResubmitRefundRequest';
-import { PaymentLibComponent } from '../../payment-lib.component';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import { IPayment } from '../../interfaces/IPayment';
 import { IFee } from '../../interfaces/IFee';
 import { IRefundFee } from '../../interfaces/IRefundFee';
+
+// Import ParentComponent as a type only to fix NG3003.
+// import {PaymentLibComponent} from '../../payment-lib.component';
+import type { PaymentLibComponent } from '../../payment-lib.component';
+import { PAYMENT_LIB_COMPONENT } from '../../payment-lib.token';
 
 @Component({
   selector: 'ccpay-refund-status',
@@ -78,7 +82,7 @@ export class RefundStatusComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
     private refundService: RefundsService,
     private notificationService: NotificationService,
-    private paymentLibComponent: PaymentLibComponent,
+    @Inject(PAYMENT_LIB_COMPONENT) private paymentLibComponent: PaymentLibComponent,
     private OrderslistService: OrderslistService,
     private paymentViewService: PaymentViewService) { }
 
@@ -131,7 +135,7 @@ export class RefundStatusComponent implements OnInit {
           this.refundButtonState = this.refundlist.refund_status.name;
         }
       }
-      
+
   }
 
   getRefundsStatusHistoryList() {
@@ -156,7 +160,7 @@ export class RefundStatusComponent implements OnInit {
     ),
     (error: any) => {
       this.errorMessage = error.replace(/"/g,"");
-    }; 
+    };
   }
 
   goToRefundView(refundlist: IRefundList, navigationpage: string) {

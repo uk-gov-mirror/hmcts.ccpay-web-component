@@ -1,10 +1,9 @@
-import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import { Inject, Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, RequiredValidator, FormArray } from '@angular/forms';
 import { IFee } from '../../interfaces/IFee';
 import {Router} from '@angular/router';
 import { AddRemissionRequest } from '../../interfaces/AddRemissionRequest';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
-import { PaymentLibComponent } from '../../payment-lib.component';
 
 import { IPayment } from '../../interfaces/IPayment';
 import { RefundsService } from '../../services/refunds/refunds.service';
@@ -18,6 +17,11 @@ import {ChangeDetectorRef} from '@angular/core';
 import { IRemission } from '../../interfaces/IRemission';
 import { OrderslistService } from '../../services/orderslist.service';
 import { IPaymentGroup } from '../../interfaces/IPaymentGroup';
+
+// Import ParentComponent as a type only to fix NG3003.
+// import { PaymentLibComponent } from '../../payment-lib.component';
+import type { PaymentLibComponent } from '../../payment-lib.component';
+import { PAYMENT_LIB_COMPONENT } from '../../payment-lib.token';
 
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 const resolvedPromise = Promise.resolve(null);
@@ -133,14 +137,14 @@ export class AddRemissionComponent implements OnInit {
   paymentObj: IPayment;
   templateInstructionType: string;
   notificationPreview: boolean;
-  
+
   component: { account_number: string; amount: number; case_reference: string; ccd_case_number: string; channel: string; currency: string; customer_reference: string; date_created: string; date_updated: string; description: string; method: string; organisation_name: string; payment_allocation: any[]; reference: string; service_name: string; site_id: string; status: string; };
 
   constructor(private formBuilder: FormBuilder,
     private router: Router,
     private paymentViewService: PaymentViewService,
     private notificationService : NotificationService,
-    private paymentLibComponent: PaymentLibComponent,
+    @Inject(PAYMENT_LIB_COMPONENT) private paymentLibComponent: PaymentLibComponent,
     private refundService: RefundsService,
     private cd: ChangeDetectorRef,
     private OrderslistService: OrderslistService) { }
@@ -159,7 +163,7 @@ export class AddRemissionComponent implements OnInit {
     if(this.fee) {
     this.amount = (this.fee.volume * this.fee.calculated_amount);
     }
-    
+
     if (this.payment){
       this.paymentReference = this.payment.reference;
       this.remessionPayment = this.payment;
@@ -191,9 +195,9 @@ export class AddRemissionComponent implements OnInit {
     if(this.refundPaymentReference !== undefined && this.refundPaymentReference.length >0) {
       this.paymentReference = this.refundPaymentReference
     } else {
-      this.paymentReference = (this.payment !== undefined) ? this.payment.reference : ''; 
+      this.paymentReference = (this.payment !== undefined) ? this.payment.reference : '';
     }
-    
+
 
     if(this.isFromServiceRequestPage) {
       this.paymentViewService.getApportionPaymentDetails(this.paymentReference).subscribe(
@@ -201,7 +205,7 @@ export class AddRemissionComponent implements OnInit {
           let fees = [];
           paymentGroup.fees.forEach(fee => {
             this.isRemissionsMatch = false;
-  
+
             paymentGroup.remissions.forEach(rem => {
               if (rem.fee_code === fee.code) {
                 this.isRemissionsMatch = true;
@@ -217,7 +221,7 @@ export class AddRemissionComponent implements OnInit {
           this.paymentFees =fees;
           this.fees = fees;
           this.paymentGroup = paymentGroup;
-          
+
           this.paymentGroup.payments = this.paymentGroup.payments.filter
             (paymentGroupObj => paymentGroupObj['reference'].includes(this.paymentLibComponent.paymentReference));
           // const paymentAllocation = this.paymentGroup.payments[0].payment_allocation;
@@ -228,7 +232,7 @@ export class AddRemissionComponent implements OnInit {
       );
     }
 
-    
+
     if (this.fees && this.viewCompStatus === 'issuerefund') {
       this.refundFeesList();
     }
@@ -236,7 +240,7 @@ export class AddRemissionComponent implements OnInit {
     if(this.viewCompStatus === ''){
     this.viewStatus = 'main';
     }
- 
+
     if(this.viewCompStatus === 'issuerefundpage1'){
       this.refundService.getRefundReasons().subscribe(
         refundReasons => {
@@ -313,46 +317,46 @@ export class AddRemissionComponent implements OnInit {
       return  !this.feesList.controls.some(item => item.get('selected').value === true);
   }
   }
-    
+
   check_en (i,v1: any, AppAmt,Volume) {
     const ele = document.getElementById(v1) as HTMLInputElement;
     const formArray = this.remissionForm.controls.feesList as FormArray;
-  
+
     if(ele.checked){
       formArray.at(i).get('refund_amount').setValue(AppAmt);
       formArray.at(i).get('volume').setValue(Volume);
       formArray.at(i).get('selected').setValue(true);
       formArray.at(i).get('updated_volume').setValue(Volume);
       (<HTMLInputElement>document.getElementById('feeAmount_'+v1)).value = AppAmt;
-      document.getElementById('feeAmount_'+v1).removeAttribute("disabled"); 
+      document.getElementById('feeAmount_'+v1).removeAttribute("disabled");
       if(Volume === 1) {
            (<HTMLInputElement>document.getElementById('VolumeUpdated_'+v1)).value = Volume;
       } else {
            (<HTMLInputElement>document.getElementById('feeVolumeUpdated_'+v1)).value = Volume;
       }
-    
+
       if (document.getElementById('feeVolumeUpdated_'+v1) !== null) {
-           document.getElementById('feeAmount_'+v1).removeAttribute("disabled"); 
-           document.getElementById('feeVolumeUpdated_'+v1).removeAttribute("disabled");   
-      }   
-      this.cd.detectChanges(); 
-    } else {
-      this.errorMsg = [];  
-      document.getElementById('feeAmount_'+v1).setAttribute("disabled", "true"); 
-      this.remissionForm.value.feesList[i]["refund_amount"] = ''; 
-      this.remissionForm.value.feesList[i]["volume"] = ''; 
-      this.remissionForm.value.feesList[i]["selected"] = false; 
-      (<HTMLInputElement>document.getElementById('feeAmount_'+v1)).value = '';
-      if(Volume>1) {
-        this.remissionForm.value.feesList[i]["volume"] = ''; 
-       (<HTMLInputElement>document.getElementById('feeVolumeUpdated_'+v1)).value = '';
-      }
-      
-      if (document.getElementById('feeVolumeUpdated_'+v1) !== null) {
-      document.getElementById('feeVolumeUpdated_'+v1).removeAttribute("disabled");  
+           document.getElementById('feeAmount_'+v1).removeAttribute("disabled");
+           document.getElementById('feeVolumeUpdated_'+v1).removeAttribute("disabled");
       }
       this.cd.detectChanges();
-    }  
+    } else {
+      this.errorMsg = [];
+      document.getElementById('feeAmount_'+v1).setAttribute("disabled", "true");
+      this.remissionForm.value.feesList[i]["refund_amount"] = '';
+      this.remissionForm.value.feesList[i]["volume"] = '';
+      this.remissionForm.value.feesList[i]["selected"] = false;
+      (<HTMLInputElement>document.getElementById('feeAmount_'+v1)).value = '';
+      if(Volume>1) {
+        this.remissionForm.value.feesList[i]["volume"] = '';
+       (<HTMLInputElement>document.getElementById('feeVolumeUpdated_'+v1)).value = '';
+      }
+
+      if (document.getElementById('feeVolumeUpdated_'+v1) !== null) {
+      document.getElementById('feeVolumeUpdated_'+v1).removeAttribute("disabled");
+      }
+      this.cd.detectChanges();
+    }
   }
 
 
@@ -453,7 +457,7 @@ export class AddRemissionComponent implements OnInit {
         this.viewCompStatus = '';
         this.viewStatus = 'checkretroremissionpage';
       }
-      
+
     }else {
 
       if(remissionctrls['remissionCode'].value == '' ) {
@@ -617,7 +621,7 @@ export class AddRemissionComponent implements OnInit {
   // Issue Refund changes
 
   gotoIssueRefundConfirmation(payment: IPayment) {
-   
+
     this.paymentLibComponent.iscancelClicked = false;
     if(this.paymentLibComponent.REFUNDLIST === "true") {
       this.isFromRefundListPage = true;
@@ -696,7 +700,7 @@ if(isFullyRefund) {
 	  var checkboxs = document.getElementsByTagName('input');
 	  this.errorMessage = '';
     this.totalRefundAmount = 0;
-    this.errorMsg = [];                                    
+    this.errorMsg = [];
 			for (var j=0;j<checkboxs.length;j++)
 			{
 				if(checkboxs[j].checked)
@@ -705,8 +709,8 @@ if(isFullyRefund) {
 					let quantity: number = +(<HTMLInputElement>document.getElementById('feeVolume_'+checkboxs[j].value)).value;
           let amountToRefund: number = +(<HTMLInputElement>document.getElementById('feeAmount_'+checkboxs[j].value)).value;
 					let apportionAmount: number = +(<HTMLInputElement>document.getElementById('feeApportionAmount_'+checkboxs[j].value)).value;
-					let calculatedAmount: number = +(<HTMLInputElement>document.getElementById('calculatedAmount_'+checkboxs[j].value)).value; 
-         
+					let calculatedAmount: number = +(<HTMLInputElement>document.getElementById('calculatedAmount_'+checkboxs[j].value)).value;
+
           if( amountToRefund === apportionAmount) {
             this.fullRefund = true;
           }
@@ -717,7 +721,7 @@ if(isFullyRefund) {
             this.getErrorClass(this.elementId);
 					}
 
-         
+
 
           if (quantity === 1)
           {
@@ -726,7 +730,7 @@ if(isFullyRefund) {
               this.errorMsg.push('The amount you want to refund is more than the amount paid');
               this.getErrorClass(this.elementId);
             }
-          } 
+          }
 
 					if(quantity > 1) {
 
@@ -747,7 +751,7 @@ if(isFullyRefund) {
             if (!this.fullRefund && this.quantityUpdated > 0 && amountToRefund > 0) {
               this.refundAmtForFeeVolumes = +(<HTMLInputElement>document.getElementById('feeVOl_'+checkboxs[j].value)).innerText;
               this.allowedRefundAmount = this.quantityUpdated * this.refundAmtForFeeVolumes;
-              if( this.allowedRefundAmount !== amountToRefund) 
+              if( this.allowedRefundAmount !== amountToRefund)
               {
                 this.elementId = 'feeAmount_'+checkboxs[j].value;
                 this.errorMsg.push('The Amount to Refund should be equal to the product of Fee Amount and quantity');
@@ -761,7 +765,7 @@ if(isFullyRefund) {
               this.errorMsg.push('The amount you want to refund is more than the amount paid');
               this.getErrorClass(this.elementId);
             }
-	
+
             if( !this.fullRefund && this.quantityUpdated >0 && this.quantityUpdated > quantity){
               this.elementId = 'feeVolumeUpdated_'+checkboxs[j].value;
               this.errorMsg.push('The quantity you want to refund is more than the available quantity');
@@ -816,11 +820,11 @@ if(isFullyRefund) {
     this.isRefundRemission = true;
     this.errorMessage = false;
   }
-  
+
   getRefundReasons(){
   if(this.viewCompStatus === 'issuerefundpage1'){
     this.refundService.getRefundReasons().subscribe(
-      refundReasons => { 
+      refundReasons => {
         this.refundReasons = refundReasons.filter((data) => data.recently_used === false);
         this.refundReasons = this.refundReasons.filter((data) => data.name !== 'Retrospective remission');
         this.cd.detectChanges();
@@ -835,7 +839,7 @@ if(isFullyRefund) {
        const ele = document.getElementById(elementId);
        ele.classList.add('inline-error-class');
      }
-      
+
   }
 
   changeIssueRefundReason() {
@@ -862,16 +866,16 @@ if(isFullyRefund) {
     if(!isFullyRefund) {
       this.fees = this.remissionForm.value.feesList.filter(value => value.selected===true);
     }
-    this.fees  = this.fees.map(obj => ({ id: obj.id, 
+    this.fees  = this.fees.map(obj => ({ id: obj.id,
                                         code: obj.code,
-                                        version:obj.version, 
+                                        version:obj.version,
                                         apportion_amount: obj.apportion_amount,
                                         calculated_amount: obj.calculated_amount,
                                         updated_volume: obj.updated_volume ? obj.updated_volume : obj.volume,
                                         refund_amount:obj.refund_amount ? obj.refund_amount : this.totalRefundAmount }));
- 
-  
-    const requestBody = new PostRefundRetroRemission(this.contactDetailsObj, this.fees,this.payment.reference, this.refundReason, 
+
+
+    const requestBody = new PostRefundRetroRemission(this.contactDetailsObj, this.fees,this.payment.reference, this.refundReason,
       this.totalRefundAmount, 'op');
     this.paymentViewService.postRefundsReason(requestBody).subscribe(
       response => {
@@ -894,7 +898,7 @@ if(isFullyRefund) {
   gotoRefundReasonPage () {
     this.viewStatus = '';
     this.viewCompStatus = 'issuerefundpage1';
-    
+
   }
 
 // Retro Refund
@@ -990,7 +994,7 @@ if(isFullyRefund) {
     this.viewStatus = '';
   }
 
-  
+
 
   gotoServiceRequestPage(event: any) {
     this.errorMessage ='';
@@ -1083,7 +1087,7 @@ if(isFullyRefund) {
       this.paymentLibComponent.viewName = 'case-transactions';
       this.paymentLibComponent.ISBSENABLE = true;
       this.paymentLibComponent.isRefundStatusView = false;
-    } else {  
+    } else {
 
     if (this.paymentLibComponent.REFUNDLIST) {
       this.paymentLibComponent.viewName = 'refund-list';
@@ -1135,7 +1139,7 @@ if(isFullyRefund) {
     this.OrderslistService.setorderFeesTotal(null);
   }
 
-  changeRefundAmount() {  
+  changeRefundAmount() {
     this.isFromCheckAnsPage = true;
     this.viewCompStatus = 'issuerefund';
     this.viewStatus = '';
@@ -1165,7 +1169,7 @@ if(isFullyRefund) {
         this.paymentObj.reference = paymentReference;
         this.templateInstructionType = this.notificationService.getNotificationInstructionType(this.paymentObj.channel, this.paymentObj.method);
       },
-      (error: any) => { 
+      (error: any) => {
         this.templateInstructionType = 'Template';
       })
     } else {

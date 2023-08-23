@@ -3,9 +3,14 @@ import { PaymentLibService } from './payment-lib.service';
 import { IBSPayments } from './interfaces/IBSPayments';
 import { OrderslistService } from './services/orderslist.service';
 import { IPayment } from './interfaces/IPayment';
+import { PAYMENT_LIB_COMPONENT } from './payment-lib.token';
 
 @Component({
   selector: 'ccpay-payment-lib',
+  providers:[{
+    provide: PAYMENT_LIB_COMPONENT,
+    useExisting: PaymentLibComponent
+  }],
   template: `
   <ccpay-refund-list [USERID]="USERID" [LOGGEDINUSERROLES]="LOGGEDINUSERROLES" [LOGGEDINUSEREMAIL]="LOGGEDINUSEREMAIL" *ngIf="viewName === 'refund-list'"></ccpay-refund-list>
     <ccpay-payment-list *ngIf="viewName === 'payment-list'"></ccpay-payment-list>

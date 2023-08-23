@@ -1,4 +1,4 @@
-import {Component, OnInit, Input} from '@angular/core';
+import { Inject, Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import {RefundsService} from '../../services/refunds/refunds.service';
 import { IRefundAction } from '../../interfaces/IRefundAction';
@@ -8,9 +8,13 @@ import { IRefundRejectReason } from '../../interfaces/IRefundRejectReason';
 import { OrderslistService } from '../../services/orderslist.service';
 import { NotificationService } from '../../services/notification/notification.service';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
-import { PaymentLibComponent } from '../../payment-lib.component';
 import { ActivatedRoute,Router } from '@angular/router';
 import { INotificationPreview } from '../../interfaces/INotificationPreview';
+
+// Import ParentComponent as a type only to fix NG3003.
+// import { PaymentLibComponent } from '../../payment-lib.component';
+import type { PaymentLibComponent } from '../../payment-lib.component';
+import { PAYMENT_LIB_COMPONENT } from '../../payment-lib.token';
 
 @Component({
   selector: 'ccpay-process-refund',
@@ -26,8 +30,8 @@ export class ProcessRefundComponent implements OnInit {
   errorMessage =  this.getErrorMessage(false, '', '', '');
   sendmeback: string = null;
   viewStatus: string;
-  refundActionList: IRefundAction[] = []; 
-  refundRejectReasonList: IRefundRejectReason[] = []; 
+  refundActionList: IRefundAction[] = [];
+  refundRejectReasonList: IRefundRejectReason[] = [];
   isSendMeBackClicked: boolean = false;
   isRejectClicked: boolean = false;
   isOtherClicked: boolean = false;
@@ -57,7 +61,7 @@ export class ProcessRefundComponent implements OnInit {
               private formBuilder: FormBuilder,
               private OrderslistService: OrderslistService,
               private notificationService: NotificationService,
-              private paymentLibComponent: PaymentLibComponent,
+              @Inject(PAYMENT_LIB_COMPONENT) private paymentLibComponent: PaymentLibComponent,
               private router: Router,
               private activeRoute: ActivatedRoute) {
   }
@@ -109,7 +113,7 @@ export class ProcessRefundComponent implements OnInit {
   );
   this.getTemplateInstructionType(this.paymentObj,this.refundlistsource.payment_reference);
   }
-  
+
   checkRefundActions(code: string) {
     this.refundActionsHasError = false;
     this.isReasonFieldEmpty = false;
@@ -158,7 +162,7 @@ export class ProcessRefundComponent implements OnInit {
     const controls = this.processRefundForm.controls;
     const processFormError = controls.sendMeBackField.errors;
 
-    if (this.processRefundForm.dirty && controls.refundActionField.valid 
+    if (this.processRefundForm.dirty && controls.refundActionField.valid
       && (controls.refundActionField.value == 'Approve'
       || (controls.refundActionField.value == 'Reject' && controls.refundRejectReasonField.valid && controls.refundRejectReasonField.value != 'RE005')
       || (controls.refundActionField.value == 'Reject' && controls.refundRejectReasonField.value == 'RE005' && controls.enterReasonField.valid)
@@ -228,7 +232,7 @@ export class ProcessRefundComponent implements OnInit {
           };
         }
 
-       
+
       } else if (controls.refundActionField.value === 'Return to caseworker') {
         status = 'SENDBACK';
 
@@ -263,7 +267,7 @@ export class ProcessRefundComponent implements OnInit {
 
         }
 
-      
+
       }
       this.RefundsService.patchRefundActions(processRefundRequest, this.refundReference, status).subscribe(
         response => {
@@ -315,7 +319,7 @@ export class ProcessRefundComponent implements OnInit {
       } else {
         bodyTxt = err;
       }
-      
+
     }
     return {
       title: 'Something went wrong',

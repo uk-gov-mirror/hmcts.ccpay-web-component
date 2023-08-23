@@ -1,6 +1,5 @@
 // import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { Component, Input, OnInit, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
-import { PaymentLibComponent } from '../../payment-lib.component';
+import { Inject, Component, Input, OnInit, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { IPayment } from '../../interfaces/IPayment';
 import { IRemission } from '../../interfaces/IRemission';
 import { IPaymentView } from '../../interfaces/IPaymentView';
@@ -13,6 +12,11 @@ import { NotificationService } from '../../services/notification/notification.se
 import { OrderslistService } from '../../services/orderslist.service';
 import { IRefundContactDetails } from '../../interfaces/IRefundContactDetails';
 import { PostRefundRetroRemission } from '../../interfaces/PostRefundRetroRemission';
+
+// Import ParentComponent as a type only to fix NG3003.
+// import { PaymentLibComponent } from '../../payment-lib.component';
+import type { PaymentLibComponent } from '../../payment-lib.component';
+import { PAYMENT_LIB_COMPONENT } from '../../payment-lib.token';
 
 @Component({
   selector: 'ccpay-service-request',
@@ -107,7 +111,7 @@ export class ServiceRequestComponent implements OnInit {
   notificationPreview: boolean;
 
   constructor(
-    private paymentLibComponent: PaymentLibComponent,
+    @Inject(PAYMENT_LIB_COMPONENT) private paymentLibComponent: PaymentLibComponent,
     private paymentViewService: PaymentViewService,
     private OrderslistService: OrderslistService,
     private notificationService: NotificationService,

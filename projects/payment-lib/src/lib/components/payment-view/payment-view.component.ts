@@ -1,7 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Inject, Component, OnInit, Input } from '@angular/core';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import { NotificationService } from '../../services/notification/notification.service';
-import { PaymentLibComponent } from '../../payment-lib.component';
 import { IPaymentGroup } from '../../interfaces/IPaymentGroup';
 import { IFee } from '../../interfaces/IFee';
 import { IPayment } from '../../interfaces/IPayment';
@@ -12,6 +11,11 @@ import { ChangeDetectorRef } from '@angular/core';
 import { IPaymentFailure } from '../../interfaces/IPaymentFailure';
 import { OrderslistService } from '../../services/orderslist.service';
 import { IRefundContactDetails } from '../../interfaces/IRefundContactDetails';
+
+// Import ParentComponent as a type only to fix NG3003.
+// import {PaymentLibComponent} from '../../payment-lib.component';
+import type { PaymentLibComponent } from '../../payment-lib.component';
+import { PAYMENT_LIB_COMPONENT } from '../../payment-lib.token';
 
 @Component({
   selector: 'ccpay-payment-view',
@@ -74,7 +78,7 @@ export class PaymentViewComponent implements OnInit {
   notificationPreview: boolean;
   constructor(private paymentViewService: PaymentViewService,
     private notificationService: NotificationService,
-    private paymentLibComponent: PaymentLibComponent,
+    @Inject(PAYMENT_LIB_COMPONENT) private paymentLibComponent: PaymentLibComponent,
     private cd: ChangeDetectorRef,
     private OrderslistService: OrderslistService) {
   }
@@ -219,15 +223,15 @@ export class PaymentViewComponent implements OnInit {
     this.isConfirmationBtnDisabled = true;
     this.errorMessage = '';
     const obj = this.paymentGroup.fees[0];
-    this.fees  = [{ id: obj.id, 
+    this.fees  = [{ id: obj.id,
       code: obj.code,
-      version:obj.version, 
+      version:obj.version,
       apportion_amount: obj.apportion_amount,
       calculated_amount: obj.calculated_amount,
       updated_volume: obj.updated_volume ? obj.updated_volume : obj.volume,
       volume: obj.volume,
       refund_amount: this.getOverPaymentValue() }];
-    const requestBody = new PostRefundRetroRemission(this.contactDetailsObj,this.fees, this.paymentGroup.payments[0].reference, 'RR037', 
+    const requestBody = new PostRefundRetroRemission(this.contactDetailsObj,this.fees, this.paymentGroup.payments[0].reference, 'RR037',
     this.getOverPaymentValue(), 'op');
     this.paymentViewService.postRefundsReason(requestBody).subscribe(
       response => {
@@ -330,7 +334,7 @@ export class PaymentViewComponent implements OnInit {
     this.isContinueBtnDisabled = false;
   }
   continuePayment(paymentgrp: IPaymentGroup) {
-    
+
     if (this.paymentType === 'op') {
       this.isFullyRefund = false
       this.viewCompStatus  = 'overPaymentAddressCapture';
@@ -354,7 +358,7 @@ export class PaymentViewComponent implements OnInit {
     this.notificationPreview = false;
     this.getTemplateInstructionType(this.paymentGroup.payments[0]);
     this.viewCompStatus = 'overpaymentcheckandanswer';
-    
+
   }
 
   resetOrderData() {
@@ -384,7 +388,7 @@ export class PaymentViewComponent implements OnInit {
     }else{
       this.templateInstructionType = this.notificationService.getNotificationInstructionType(payment.channel, payment.method);
     }
-     
+
   }
 
   showNotificationPreview(): void {

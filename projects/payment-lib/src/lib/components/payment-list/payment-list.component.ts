@@ -1,9 +1,13 @@
-import {Component, OnInit} from '@angular/core';
+import {Inject, Component, OnInit} from '@angular/core';
 
 import {PaymentListService} from '../../services/payment-list/payment-list.service';
 import {IPayments} from '../../interfaces/IPayments';
-import {PaymentLibComponent} from '../../payment-lib.component';
 import {IStatusHistory} from '../../interfaces/IStatusHistory';
+
+// Import ParentComponent as a type only to fix NG3003.
+// import {PaymentLibComponent} from '../../payment-lib.component';
+import type {PaymentLibComponent} from '../../payment-lib.component';
+import {PAYMENT_LIB_COMPONENT} from '../../payment-lib.token';
 
 @Component({
   selector: 'ccpay-payment-list',
@@ -16,7 +20,7 @@ export class PaymentListComponent implements OnInit {
   code: string;
 
   constructor(private paymentListService: PaymentListService,
-              private paymentLibComponent: PaymentLibComponent) {
+              @Inject(PAYMENT_LIB_COMPONENT) private paymentLibComponent: PaymentLibComponent) {
   }
 
   ngOnInit() {
