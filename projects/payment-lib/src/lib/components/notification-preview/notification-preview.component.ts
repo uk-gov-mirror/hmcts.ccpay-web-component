@@ -6,11 +6,14 @@ import { NotificationPreviewRequest } from '../../interfaces/NotificationPreview
 import { NotificationService } from '../../services/notification/notification.service';
 import { ErrorHandlerService } from '../../services/shared/error-handler.service';
 import { Output, EventEmitter } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-notification-preview',
   templateUrl: './notification-preview.component.html',
-  styleUrls: ['./notification-preview.component.scss']
+  styleUrls: ['./notification-preview.component.scss'],
+  imports: [CommonModule],
+  standalone: true
 })
 export class NotificationPreviewComponent implements OnInit {
   @Input() payment: IPayment;
@@ -27,7 +30,7 @@ export class NotificationPreviewComponent implements OnInit {
   notification: INotificationPreview;
   notificationPreviewRequest: NotificationPreviewRequest;
   today: number = Date.now();
-//   errorMessage = this.errorHandlerService.getServerErrorMessage(false, false, '');
+  //   errorMessage = this.errorHandlerService.getServerErrorMessage(false, false, '');
   errorMessage = null
 
   constructor(private errorHandlerService: ErrorHandlerService,

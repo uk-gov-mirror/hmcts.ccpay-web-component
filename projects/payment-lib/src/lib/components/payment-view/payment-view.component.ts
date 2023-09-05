@@ -1,7 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Inject, forwardRef, isStandalone } from '@angular/core';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import { NotificationService } from '../../services/notification/notification.service';
-import { PaymentLibComponent } from '../../payment-lib.component';
+import type { PaymentLibComponent } from '../../payment-lib.component';
 import { IPaymentGroup } from '../../interfaces/IPaymentGroup';
 import { IFee } from '../../interfaces/IFee';
 import { IPayment } from '../../interfaces/IPayment';
@@ -12,11 +12,29 @@ import { ChangeDetectorRef } from '@angular/core';
 import { IPaymentFailure } from '../../interfaces/IPaymentFailure';
 import { OrderslistService } from '../../services/orderslist.service';
 import { IRefundContactDetails } from '../../interfaces/IRefundContactDetails';
+import { AddRemissionComponent } from '../add-remission/add-remission.component';
+import { CommonModule } from '@angular/common';
+import { StatusHistoryComponent } from '../status-history/status-history.component';
+import { ServiceRequestComponent } from '../service-request/service-request.component';
+import { ContactDetailsComponent } from '../contact-details/contact-details.component';
+import { NotificationPreviewComponent } from '../notification-preview/notification-preview.component';
+import { CcdHyphensPipe } from '../../pipes/ccd-hyphens.pipe';
+import { CapitalizePipe } from '../../pipes/capitalize.pipe';
 
 @Component({
   selector: 'ccpay-payment-view',
   templateUrl: './payment-view.component.html',
-  styleUrls: ['./payment-view.component.scss']
+  styleUrls: ['./payment-view.component.scss'],
+  providers: [{ provide: 'PAYMENT_VIEW', useExisting: forwardRef(() => PaymentViewComponent) }],
+  imports: [
+    CommonModule, forwardRef(() => AddRemissionComponent),
+    StatusHistoryComponent, forwardRef(() => ServiceRequestComponent),
+    ContactDetailsComponent,
+    NotificationPreviewComponent,
+    CcdHyphensPipe,
+    CapitalizePipe
+  ],
+  standalone: true
 })
 
 export class PaymentViewComponent implements OnInit {
@@ -74,14 +92,14 @@ export class PaymentViewComponent implements OnInit {
   notificationPreview: boolean;
   constructor(private paymentViewService: PaymentViewService,
     private notificationService: NotificationService,
-    private paymentLibComponent: PaymentLibComponent,
+    @Inject('PAYMENT_LIB') private paymentLibComponent: PaymentLibComponent,
     private cd: ChangeDetectorRef,
     private OrderslistService: OrderslistService) {
   }
 
   ngAfterContentChecked(): void {
     this.cd.detectChanges();
- }
+  }
 
   ngOnInit() {
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
@@ -108,7 +126,7 @@ export class PaymentViewComponent implements OnInit {
           }
         });
         paymentGroup.fees = fees
-        this.paymentFees =fees;
+        this.paymentFees = fees;
         this.paymentGroup = paymentGroup;
 
         this.paymentGroup.payments = this.paymentGroup.payments.filter
@@ -120,21 +138,21 @@ export class PaymentViewComponent implements OnInit {
       (error: any) => this.errorMessage = error
     );
     this.paymentViewService.getPaymentFailure(this.paymentLibComponent.paymentReference).subscribe({
-       next: (res) => {
+      next: (res) => {
         JSON.parse(res).payment_failure_list.reverse().forEach(payments => {
 
-         this.allPaymentsFailure.push(payments.payment_failure_initiated);
-         if(payments.payment_failure_closed) {
-          this.allPaymentsFailure.push(payments.payment_failure_closed);
-         }
+          this.allPaymentsFailure.push(payments.payment_failure_initiated);
+          if (payments.payment_failure_closed) {
+            this.allPaymentsFailure.push(payments.payment_failure_closed);
+          }
         });
         this.allPaymentsFailure = this.allPaymentsFailure.reverse();
       },
       error: (e) => {
-       this.allPaymentsFailure = [];
-       this.errorMsg = "Server error"
+        this.allPaymentsFailure = [];
+        this.errorMsg = "Server error"
       }
-  })
+    })
   }
 
   get isCardPayment(): boolean {
@@ -166,11 +184,11 @@ export class PaymentViewComponent implements OnInit {
   goToCaseTransationPage(event: any) {
     event.preventDefault();
     if (!this.paymentLibComponent.isFromServiceRequestPage) {
-        this.OrderslistService.setnavigationPage('casetransactions');
-        this.OrderslistService.setisFromServiceRequestPage(false);
-        this.paymentLibComponent.viewName = 'case-transactions';
-        this.paymentLibComponent.ISBSENABLE = true;
-        this.resetOrderData();
+      this.OrderslistService.setnavigationPage('casetransactions');
+      this.OrderslistService.setisFromServiceRequestPage(false);
+      this.paymentLibComponent.viewName = 'case-transactions';
+      this.paymentLibComponent.ISBSENABLE = true;
+      this.resetOrderData();
     } else {
       this.OrderslistService.getorderRefs().subscribe((data) => this.orderRef = data);
       this.OrderslistService.getorderCCDEvents().subscribe((data) => this.orderCCDEvent = data);
@@ -186,28 +204,27 @@ export class PaymentViewComponent implements OnInit {
   }
 
   addRemission(fee: IFee) {
-    if(this.chkIsAddRemissionBtnEnable(fee)) {
-    this.feeId = fee;
-    this.paymentViewService.getApportionPaymentDetails(this.paymentGroup.payments[0].reference).subscribe(
-      paymentGroup => {
-        this.paymentGroup = paymentGroup;
+    if (this.chkIsAddRemissionBtnEnable(fee)) {
+      this.feeId = fee;
+      this.paymentViewService.getApportionPaymentDetails(this.paymentGroup.payments[0].reference).subscribe(
+        paymentGroup => {
+          this.paymentGroup = paymentGroup;
 
-        this.paymentGroup.payments = this.paymentGroup.payments.filter
-          (paymentGroupObj => paymentGroupObj['reference'].includes(this.paymentLibComponent.paymentReference));
-        this.payment = this.paymentGroup.payments[0];
-        this.paymentLibComponent.isFromPaymentDetailPage = true;
-        this.viewStatus = 'addremission';
-        this.isRefundRemission = true;
-        this.cd.detectChanges();
-      },
-      (error: any) => this.errorMessage = error
-    );
+          this.paymentGroup.payments = this.paymentGroup.payments.filter
+            (paymentGroupObj => paymentGroupObj['reference'].includes(this.paymentLibComponent.paymentReference));
+          this.payment = this.paymentGroup.payments[0];
+          this.paymentLibComponent.isFromPaymentDetailPage = true;
+          this.viewStatus = 'addremission';
+          this.isRefundRemission = true;
+          this.cd.detectChanges();
+        },
+        (error: any) => this.errorMessage = error
+      );
     }
   }
 
   checkForFees(paymentGroup: any) {
-    if(paymentGroup !== null && paymentGroup !== undefined)
-    {
+    if (paymentGroup !== null && paymentGroup !== undefined) {
       if (paymentGroup.fees !== null && paymentGroup.fees !== undefined) {
         return true;
       }
@@ -219,24 +236,26 @@ export class PaymentViewComponent implements OnInit {
     this.isConfirmationBtnDisabled = true;
     this.errorMessage = '';
     const obj = this.paymentGroup.fees[0];
-    this.fees  = [{ id: obj.id, 
+    this.fees = [{
+      id: obj.id,
       code: obj.code,
-      version:obj.version, 
+      version: obj.version,
       apportion_amount: obj.apportion_amount,
       calculated_amount: obj.calculated_amount,
       updated_volume: obj.updated_volume ? obj.updated_volume : obj.volume,
       volume: obj.volume,
-      refund_amount: this.getOverPaymentValue() }];
-    const requestBody = new PostRefundRetroRemission(this.contactDetailsObj,this.fees, this.paymentGroup.payments[0].reference, 'RR037', 
-    this.getOverPaymentValue(), 'op');
+      refund_amount: this.getOverPaymentValue()
+    }];
+    const requestBody = new PostRefundRetroRemission(this.contactDetailsObj, this.fees, this.paymentGroup.payments[0].reference, 'RR037',
+      this.getOverPaymentValue(), 'op');
     this.paymentViewService.postRefundsReason(requestBody).subscribe(
       response => {
-          if (JSON.parse(response)) {
-            this.viewCompStatus  = '';
-            this.viewStatus = 'refundconfirmationpage';
-            this.refundReference = JSON.parse(response).refund_reference;
-            this.refundAmount = JSON.parse(response).refund_amount;
-          }
+        if (JSON.parse(response)) {
+          this.viewCompStatus = '';
+          this.viewStatus = 'refundconfirmationpage';
+          this.refundReference = JSON.parse(response).refund_reference;
+          this.refundAmount = JSON.parse(response).refund_amount;
+        }
       },
       (error: any) => {
         this.errorMessage = error;
@@ -251,8 +270,8 @@ export class PaymentViewComponent implements OnInit {
     this.errorMessage = '';
     this.viewCompStatus = 'overPaymentAddressCapture';
   }
-  addRefundForRemission(payment: IPayment, remission: IRemission[],fees:any) {
- //if(!this.chkIsIssueRefundBtnEnable(payment)) {
+  addRefundForRemission(payment: IPayment, remission: IRemission[], fees: any) {
+    //if(!this.chkIsIssueRefundBtnEnable(payment)) {
     this.paymentViewService.getApportionPaymentDetails(payment.reference).subscribe(
       paymentGroup => {
         this.paymentGroup = paymentGroup;
@@ -261,25 +280,25 @@ export class PaymentViewComponent implements OnInit {
           (paymentGroupObj => paymentGroupObj['reference'].includes(payment.reference));
         this.payment = this.paymentGroup.payments[0];
         this.remissions = remission;
-        this.remissionFeeAmt = fees.filter(data=>data.code === this.remissions['fee_code'])[0].net_amount;
+        this.remissionFeeAmt = fees.filter(data => data.code === this.remissions['fee_code'])[0].net_amount;
         this.viewStatus = 'addrefundforremission';
         // const paymentAllocation = this.paymentGroup.payments[0].payment_allocation;
         // this.isStatusAllocated = paymentAllocation.length > 0 && paymentAllocation[0].allocation_status === 'Allocated' || paymentAllocation.length === 0;
       },
       (error: any) => this.errorMessage = error
     );
-   //}
+    //}
   }
 
   goToPaymentViewComponent() {
-    this.viewCompStatus  = '';
+    this.viewCompStatus = '';
     this.viewStatus = 'paymentview';
   }
   issueRefund(paymentgrp: IPaymentGroup) {
-    if (paymentgrp !== null &&  paymentgrp !== undefined) {
-      if(this.chkIsIssueRefundBtnEnable(paymentgrp.payments[0])) {
-        if(paymentgrp.payments[0].over_payment > 0) {
-          this.viewCompStatus  = 'overpayment';
+    if (paymentgrp !== null && paymentgrp !== undefined) {
+      if (this.chkIsIssueRefundBtnEnable(paymentgrp.payments[0])) {
+        if (paymentgrp.payments[0].over_payment > 0) {
+          this.viewCompStatus = 'overpayment';
         } else {
           this.paymentGroup = paymentgrp;
           this.viewStatus = 'issuerefund';
@@ -324,17 +343,17 @@ export class PaymentViewComponent implements OnInit {
     } else {
       return false
     }
-}
+  }
   selectPymentOption(paymentType: string) {
     this.paymentType = paymentType;
     this.isContinueBtnDisabled = false;
   }
   continuePayment(paymentgrp: IPaymentGroup) {
-    
+
     if (this.paymentType === 'op') {
       this.isFullyRefund = false
-      this.viewCompStatus  = 'overPaymentAddressCapture';
-    } else if(this.paymentType === 'fp') {
+      this.viewCompStatus = 'overPaymentAddressCapture';
+    } else if (this.paymentType === 'fp') {
       this.isFullyRefund = true
       this.paymentGroup = paymentgrp;
       this.viewStatus = 'issuerefund';
@@ -347,14 +366,14 @@ export class PaymentViewComponent implements OnInit {
   }
   gotoPaymentSelectPage(event: Event) {
     event.preventDefault();
-    this.viewCompStatus  = 'overpayment';
+    this.viewCompStatus = 'overpayment';
   }
-  getContactDetails(obj:IRefundContactDetails) {
+  getContactDetails(obj: IRefundContactDetails) {
     this.contactDetailsObj = obj;
     this.notificationPreview = false;
     this.getTemplateInstructionType(this.paymentGroup.payments[0]);
     this.viewCompStatus = 'overpaymentcheckandanswer';
-    
+
   }
 
   resetOrderData() {
@@ -369,8 +388,8 @@ export class PaymentViewComponent implements OnInit {
   }
 
   goToPaymentFailuePage(payment: any) {
-  this.viewStatus = 'payment-failure';
-  this.selectedPaymentsStatus = payment;
+    this.viewStatus = 'payment-failure';
+    this.selectedPaymentsStatus = payment;
   }
   goBackToPaymentView(event: any) {
     event.preventDefault();
@@ -381,10 +400,10 @@ export class PaymentViewComponent implements OnInit {
 
     if (payment == undefined || payment == null) {
       this.templateInstructionType = 'Template';
-    }else{
+    } else {
       this.templateInstructionType = this.notificationService.getNotificationInstructionType(payment.channel, payment.method);
     }
-     
+
   }
 
   showNotificationPreview(): void {

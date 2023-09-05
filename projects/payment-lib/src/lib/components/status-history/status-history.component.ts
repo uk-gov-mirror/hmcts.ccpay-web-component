@@ -1,12 +1,15 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Inject } from '@angular/core';
 import { IStatusHistories } from '../../interfaces/IStatusHistories';
 import { StatusHistoryService } from '../../services/status-history/status-history.service';
-import { PaymentLibComponent } from '../../payment-lib.component';
+import type { PaymentLibComponent } from '../../payment-lib.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'ccpay-payment-statuses',
   templateUrl: './status-history.component.html',
-  styleUrls: ['./status-history.component.css']
+  styleUrls: ['./status-history.component.css'],
+  imports: [CommonModule],
+  standalone: true
 })
 export class StatusHistoryComponent implements OnInit {
   @Input() isTakePayment: boolean;
@@ -15,14 +18,14 @@ export class StatusHistoryComponent implements OnInit {
   errorMessage: string;
 
   constructor(private statusHistoryService: StatusHistoryService,
-              private paymentLibComponent: PaymentLibComponent) { }
+    @Inject('PAYMENT_LIB') private paymentLibComponent: PaymentLibComponent) { }
 
   ngOnInit() {
     this.statusHistoryService.getPaymentStatusesByReference(this.paymentLibComponent.paymentReference, this.paymentLibComponent.paymentMethod).subscribe(
       statuses => this.statuses = statuses,
-      (error: any) => this.errorMessage = <any>error.replace(/"/g,"")
+      (error: any) => this.errorMessage = <any>error.replace(/"/g, "")
     );
-    
+
   }
 
 }

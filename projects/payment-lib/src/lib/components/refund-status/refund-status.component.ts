@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Inject, forwardRef } from '@angular/core';
 import { RefundsService } from '../../services/refunds/refunds.service';
 import { NotificationService } from '../../services/notification/notification.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
@@ -9,16 +9,31 @@ import { IPutNotificationRequest } from '../../interfaces/IPutNotificationReques
 import { IRefundContactDetails } from '../../interfaces/IRefundContactDetails';
 import { IRefundStatus } from '../../interfaces/IRefundStatus';
 import { IResubmitRefundRequest } from '../../interfaces/IResubmitRefundRequest';
-import { PaymentLibComponent } from '../../payment-lib.component';
+import type { PaymentLibComponent } from '../../payment-lib.component';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import { IPayment } from '../../interfaces/IPayment';
 import { IFee } from '../../interfaces/IFee';
 import { IRefundFee } from '../../interfaces/IRefundFee';
+import { CommonModule } from '@angular/common';
+import { NotificationPreviewComponent } from '../notification-preview/notification-preview.component';
+import { ContactDetailsComponent } from '../contact-details/contact-details.component';
+import { AddRemissionComponent } from '../add-remission/add-remission.component';
+import { CcdHyphensPipe } from '../../pipes/ccd-hyphens.pipe';
+import { CapitalizePipe } from '../../pipes/capitalize.pipe';
 
 @Component({
   selector: 'ccpay-refund-status',
   templateUrl: './refund-status.component.html',
-  styleUrls: ['./refund-status.component.css']
+  styleUrls: ['./refund-status.component.css'],
+  imports: [
+    CommonModule,
+    forwardRef(() => NotificationPreviewComponent),
+    forwardRef(() => ContactDetailsComponent),
+    forwardRef(() => AddRemissionComponent),
+    CcdHyphensPipe,
+    CapitalizePipe,
+  ],
+  standalone: true
 })
 export class RefundStatusComponent implements OnInit {
   @Input('LOGGEDINUSERROLES') LOGGEDINUSERROLES: string[] = [];
@@ -30,7 +45,7 @@ export class RefundStatusComponent implements OnInit {
   selectedRefundReason: string;
   rejectedRefundList: IRefundList[] = [];
   notificationList: any;
-  notification:any;
+  notification: any;
   approvalStatus = 'Sent for approval';
   rejectStatus = 'Update required';
   errorMessage = null;
@@ -66,7 +81,7 @@ export class RefundStatusComponent implements OnInit {
   isRemissionsMatch: boolean;
   payment: IPayment;
   changeRefundReason: string;
-  fees: IFee [];
+  fees: IFee[];
   refundFees: IRefundFee[];
   paymentObj: IPayment;
   templateInstructionType: string;
@@ -78,7 +93,7 @@ export class RefundStatusComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
     private refundService: RefundsService,
     private notificationService: NotificationService,
-    private paymentLibComponent: PaymentLibComponent,
+    @Inject('PAYMENT_LIB') private paymentLibComponent: PaymentLibComponent,
     private OrderslistService: OrderslistService,
     private paymentViewService: PaymentViewService) { }
 
@@ -87,7 +102,7 @@ export class RefundStatusComponent implements OnInit {
     this.resetRemissionForm([false, false, false, false], 'All');
     this.bsPaymentDcnNumber = this.paymentLibComponent.bspaymentdcn;
     this.isCallFromRefundList = this.paymentLibComponent.isCallFromRefundList;
-    if(this.API_ROOT == 'api/payment-history') {
+    if (this.API_ROOT == 'api/payment-history') {
       this.isFromPayBubble = true;
     }
     if (this.paymentLibComponent.isRefundStatusView) {
@@ -107,44 +122,44 @@ export class RefundStatusComponent implements OnInit {
     }
 
 
-      this.refundStatusForm = this.formBuilder.group({
-        amount: new FormControl('', Validators.compose([
-          Validators.required,
-          Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$')
-        ])),
-        refundReason: new FormControl('', Validators.compose([Validators.required])),
-        reason: new FormControl()
-      });
+    this.refundStatusForm = this.formBuilder.group({
+      amount: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$')
+      ])),
+      refundReason: new FormControl('', Validators.compose([Validators.required])),
+      reason: new FormControl()
+    });
 
-      if(this.refundlist !== undefined) {
-        this.getRefundsNotification();
-        this.getRefundsStatusHistoryList();
+    if (this.refundlist !== undefined) {
+      this.getRefundsNotification();
+      this.getRefundsStatusHistoryList();
 
-        if (this.LOGGEDINUSERROLES.some(i => i.includes('payments-refund-approver'))) {
-          this.isProcessRefund = true;
-          this.refundButtonState = this.refundlist.refund_status.name;
-          return;
-        }
-
-        if (this.LOGGEDINUSERROLES.some(i => i.includes('payments-refund'))) {
-          this.isProcessRefund = false;
-          this.refundButtonState = this.refundlist.refund_status.name;
-        }
+      if (this.LOGGEDINUSERROLES.some(i => i.includes('payments-refund-approver'))) {
+        this.isProcessRefund = true;
+        this.refundButtonState = this.refundlist.refund_status.name;
+        return;
       }
-      
+
+      if (this.LOGGEDINUSERROLES.some(i => i.includes('payments-refund'))) {
+        this.isProcessRefund = false;
+        this.refundButtonState = this.refundlist.refund_status.name;
+      }
+    }
+
   }
 
   getRefundsStatusHistoryList() {
-    if(this.refundlist !== undefined) {
-    this.refundService.getRefundStatusHistory(this.refundlist.refund_reference).subscribe(
-      statusHistoryList => {
-        this.refundStatusHistories = statusHistoryList.status_history_dto_list;
-        this.isLastUpdatedByCurrentUser = statusHistoryList.last_updated_by_current_user;
-      }
-    ),
-      (error: any) => {
-        this.errorMessage = error.replace(/"/g,"");
-      };
+    if (this.refundlist !== undefined) {
+      this.refundService.getRefundStatusHistory(this.refundlist.refund_reference).subscribe(
+        statusHistoryList => {
+          this.refundStatusHistories = statusHistoryList.status_history_dto_list;
+          this.isLastUpdatedByCurrentUser = statusHistoryList.last_updated_by_current_user;
+        }
+      ),
+        (error: any) => {
+          this.errorMessage = error.replace(/"/g, "");
+        };
     }
   }
 
@@ -154,9 +169,9 @@ export class RefundStatusComponent implements OnInit {
         this.notificationList = refundsNotification['notifications'];
       }
     ),
-    (error: any) => {
-      this.errorMessage = error.replace(/"/g,"");
-    }; 
+      (error: any) => {
+        this.errorMessage = error.replace(/"/g, "");
+      };
   }
 
   goToRefundView(refundlist: IRefundList, navigationpage: string) {
@@ -185,8 +200,8 @@ export class RefundStatusComponent implements OnInit {
     }
   }
 
-  gotoReviewDetailsPage(event:any) {
-   // event.preventDefault();
+  gotoReviewDetailsPage(event: any) {
+    // event.preventDefault();
     this.errorMessage = false;
     this.paymentLibComponent.isRefundStatusView = true;
     this.ngOnInit();
@@ -203,7 +218,7 @@ export class RefundStatusComponent implements OnInit {
         this.refundReasons = refundReasons;
       });
   }
-  gotoRefundReasonPage(refundReason:string) {
+  gotoRefundReasonPage(refundReason: string) {
     this.isRefundBtnDisabled = false;
     this.paymentLibComponent.REFUNDLIST = "true";
     this.paymentLibComponent.isFromRefundStatusPage = true;
@@ -219,8 +234,8 @@ export class RefundStatusComponent implements OnInit {
     this.isRefundBtnDisabled = false;
     this.ccdCaseNumber = this.paymentLibComponent.CCD_CASE_NUMBER;
     this.paymentLibComponent.isFromRefundStatusPage = true;
-    if(this.refundlist.reason == 'Retrospective remission') {
-    this.viewName = 'processretroremissonpage';
+    if (this.refundlist.reason == 'Retrospective remission') {
+      this.viewName = 'processretroremissonpage';
     } else {
       this.viewName = 'issuerefund';
     }
@@ -271,7 +286,7 @@ export class RefundStatusComponent implements OnInit {
 
   getRefundListReason(refundListReason: any) {
     if (this.paymentLibComponent.isFromRefundStatusPage && !this.paymentLibComponent.iscancelClicked) {
-      if(refundListReason.reason != undefined && refundListReason.reason != null && refundListReason.reason != this.refundlist.reason){
+      if (refundListReason.reason != undefined && refundListReason.reason != null && refundListReason.reason != this.refundlist.reason) {
         this.refundlist.reason = refundListReason.reason;
         this.refundlist.reason_code = refundListReason.code.split('-')[0].trim();
         this.refundlist.code = refundListReason.code;
@@ -299,8 +314,7 @@ export class RefundStatusComponent implements OnInit {
     this.paymentLibComponent.CCD_CASE_NUMBER = this.ccdCaseNumber;
   }
 
-  getRefundFees(fees: IFee[])
-  {
+  getRefundFees(fees: IFee[]) {
     this.fees = fees;
     this.refundFees = this.fees.map(obj => ({
       fee_id: obj.id,
@@ -318,11 +332,11 @@ export class RefundStatusComponent implements OnInit {
     if (this.refundFees === undefined) {
       this.refundFees = this.refundlist['refund_fees'];
     }
-    if(this.refundlist.reason == 'Retrospective remission') {
+    if (this.refundlist.reason == 'Retrospective remission') {
       this.refundFees[0].refund_amount = this.changedAmount;
     }
     this.refundCode = this.refundlist.code;
-    const resubmitRequest = new IResubmitRefundRequest(this.refundCode,  this.changedAmount, this.refundlist.contact_details, this.refundFees);
+    const resubmitRequest = new IResubmitRefundRequest(this.refundCode, this.changedAmount, this.refundlist.contact_details, this.refundFees);
     this.refundService.patchResubmitRefund(resubmitRequest, this.refundlist.refund_reference).subscribe(
       response => {
         if (JSON.parse(response)) {
@@ -332,7 +346,7 @@ export class RefundStatusComponent implements OnInit {
         }
       },
       (error: any) => {
-        this.errorMessage = error.replace(/"/g,"");
+        this.errorMessage = error.replace(/"/g, "");
       }
     );
   }
@@ -342,22 +356,22 @@ export class RefundStatusComponent implements OnInit {
     this.isEditDetailsClicked = true;
     this.viewName = 'refundEditView'
   }
-  getContactDetails(obj:IRefundContactDetails) {
+  getContactDetails(obj: IRefundContactDetails) {
     this.addressDetails = obj;
-    this.getTemplateInstructionType(this.paymentObj,this.refundlist.payment_reference);
+    this.getTemplateInstructionType(this.paymentObj, this.refundlist.payment_reference);
     this.notificationPreview = false;
     this.viewName = 'revieweditdetailsconfirmationpage';
   }
-  getContactDetailsForRefundList(obj:IRefundContactDetails) {
+  getContactDetailsForRefundList(obj: IRefundContactDetails) {
     this.refundlist.contact_details = obj;
-    this.getTemplateInstructionType(this.paymentObj,this.refundlist.payment_reference);
+    this.getTemplateInstructionType(this.paymentObj, this.refundlist.payment_reference);
     this.notificationPreview = false;
     this.isEditDetailsClicked = false;
     this.isRefundBtnDisabled = false;
     this.viewName = 'reviewandsubmitview';
   }
   gotoEditDetailsPage(note?: any, view?: string) {
-    if(note) {
+    if (note) {
       this.notification = { contact_details: note, notification_type: note.notification_type };
     }
     this.isEditDetailsClicked = true;
@@ -381,7 +395,7 @@ export class RefundStatusComponent implements OnInit {
       },
       (error: any) => {
         this.isResendOperationSuccess = false;
-        this.errorMessage = error.replace(/"/g,"");
+        this.errorMessage = error.replace(/"/g, "");
       }
     );
   }
@@ -389,7 +403,7 @@ export class RefundStatusComponent implements OnInit {
     this.isResendOperationSuccess = false;
     const contactDetails = notification.notification_type === 'EMAIL' ? notification.contact_details.email :
       {
-        address_line :notification.contact_details.address_line,
+        address_line: notification.contact_details.address_line,
         city: notification.contact_details.city,
         county: notification.contact_details.county,
         country: notification.contact_details.country,
@@ -403,7 +417,7 @@ export class RefundStatusComponent implements OnInit {
       },
       (error: any) => {
         this.isResendOperationSuccess = false;
-        this.errorMessage = error.replace(/"/g,"");
+        this.errorMessage = error.replace(/"/g, "");
       }
     );
 
@@ -412,13 +426,13 @@ export class RefundStatusComponent implements OnInit {
   gotoRefundViewPageCancelBtnClicked(event: Event) {
     event.preventDefault();
     this.isEditDetailsClicked = false;
-    this.viewName  = 'refundview';
+    this.viewName = 'refundview';
   }
 
   gotoRefundReviewAndSubmitViewPageCancelBtnClicked(event: Event) {
     event.preventDefault();
     this.isEditDetailsClicked = false;
-    this.viewName  = 'reviewandsubmitview';
+    this.viewName = 'reviewandsubmitview';
   }
 
   goToRefundProcessComponent(refundReference: string, refundList: IRefundList) {
