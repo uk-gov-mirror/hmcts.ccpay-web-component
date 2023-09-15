@@ -12,7 +12,6 @@ import {IAllocationPaymentsRequest} from '../../interfaces/IAllocationPaymentsRe
 import { IOrderReferenceFee } from '../../interfaces/IOrderReferenceFee';
 import { OrderslistService } from '../../services/orderslist.service';
 import { LoggerService } from '../../services/shared/logger/logger.service';
-import { ConsoleLoggerService } from '../../services/shared/logger/console-logger.service';
 
 
 
@@ -116,8 +115,7 @@ export class AllocatePaymentsComponent implements OnInit {
   private paymentLibComponent: PaymentLibComponent,
   private bulkScaningPaymentService: BulkScaningPaymentService,
   private OrderslistService: OrderslistService,
-  private logger: LoggerService,
-  private consoleLogger: ConsoleLoggerService) { }
+  private logger: LoggerService) { }
 
   ngOnInit() {
     this.viewStatus = 'mainForm';
@@ -154,7 +152,7 @@ export class AllocatePaymentsComponent implements OnInit {
   }
 
   getPaymentGroupDetails(){
-  this.logger.info('Allocate Payments getPaymentGroupDetails: ', new Date().toISOString().slice(0, -1) );
+    this.logger.info('Allocate Payments getPaymentGroupDetails: ', new Date().toISOString().slice(0, -1) );
     if(!this.isTurnOff){
       this.paymentViewService.getPaymentGroupDetails(this.paymentRef).subscribe(
         paymentGroup => {
@@ -191,13 +189,13 @@ export class AllocatePaymentsComponent implements OnInit {
   }
 
   selectedPaymentGroup(paymentGroup: IPaymentGroup) {
-  this.logger.info('Allocate Payments selectedPaymentGroup: ', new Date().toISOString().slice(0, -1) );
+    this.logger.info('Allocate Payments selectedPaymentGroup: ', new Date().toISOString().slice(0, -1) );
     this.isContinueButtondisabled = false;
     this.paymentGroup = paymentGroup;
   }
 
   gotoCasetransationPage() {
-  this.logger.info('Allocate Payments gotoCasetransationPage: ', new Date().toISOString().slice(0, -1) );
+    this.logger.info('Allocate Payments gotoCasetransationPage: ', new Date().toISOString().slice(0, -1) );
     this.paymentLibComponent.viewName = 'case-transactions';
     this.paymentLibComponent.isTurnOff = this.isTurnOff;
     this.paymentLibComponent.TAKEPAYMENT = true;
@@ -205,7 +203,7 @@ export class AllocatePaymentsComponent implements OnInit {
   }
 
   gotoSummaryPage(event: any) {
-  this.logger.info('Allocate Payments getPaymentGroupDetails: ', new Date().toISOString().slice(0, -1) );
+    this.logger.info('Allocate Payments getPaymentGroupDetails: ', new Date().toISOString().slice(0, -1) );
     event.preventDefault();
     this.paymentLibComponent.viewName = 'fee-summary';
     this.paymentLibComponent.isTurnOff = this.isTurnOff;
@@ -214,7 +212,7 @@ export class AllocatePaymentsComponent implements OnInit {
   }
 
   cancelAllocatePayment(event: any){
-  this.logger.info('Allocate Payments cancelAllocatePayment: ', new Date().toISOString().slice(0, -1) );
+    this.logger.info('Allocate Payments cancelAllocatePayment: ', new Date().toISOString().slice(0, -1) );
     event.preventDefault();
     this.resetForm([false, false, false, false, false, false, false, false], 'all');
     if(!this.isTurnOff){
@@ -227,7 +225,7 @@ export class AllocatePaymentsComponent implements OnInit {
     }
   }
   confirmAllocatePayement(){
-  this.logger.info('Allocate Payments confirmAllocatePayment: ', new Date().toISOString().slice(0, -1) );
+    this.logger.info('Allocate Payments confirmAllocatePayment: ', new Date().toISOString().slice(0, -1) );
     this.enCookieUserName = document.cookie.split(";").find(row => row.includes("user-info")).split("=")[1].split(";");
     this.cookieUserName = JSON.parse(decodeURIComponent(this.enCookieUserName));
 
@@ -273,7 +271,7 @@ export class AllocatePaymentsComponent implements OnInit {
     }
   }
   resetForm(vals, field) {
-  this.logger.info('Allocate Payments resetForm: ', new Date().toISOString().slice(0, -1) );
+    this.logger.info('Allocate Payments resetForm: ', new Date().toISOString().slice(0, -1) );
     if(field==='reason' || field==='all') {
       this.paymentReasonHasError = vals[0];
     }
@@ -292,7 +290,7 @@ export class AllocatePaymentsComponent implements OnInit {
     }
   }
   finalServiceCall() {
-  this.logger.info('Allocate Payments finalServiceCall: ', new Date().toISOString().slice(0, -1) );
+    this.logger.info('Allocate Payments finalServiceCall: ', new Date().toISOString().slice(0, -1) );
     if(!this.isStrategicFixEnable) {
       let allocatedRequest = {
         reason: this.paymentReason,
@@ -374,7 +372,7 @@ export class AllocatePaymentsComponent implements OnInit {
   }
 
   saveAndContinue(){
-   this.logger.info('Allocate Payments saveAndContinue: ', new Date().toISOString().slice(0, -1) );
+    this.logger.info('Allocate Payments saveAndContinue: ', new Date().toISOString().slice(0, -1) );
     if(this.paymentGroup) {
       this.isMoreDetailsBoxHide = true;
       this.overUnderPaymentForm.get('moreDetails').reset();
@@ -394,7 +392,7 @@ export class AllocatePaymentsComponent implements OnInit {
           title: 'There is an Under payment of',
           reason: 'Provide a reason',
         }: {
-          title:'Amountzz left to be allocated',
+          title:'Amount left to be allocated',
           reason:'',
         };
       this.feedbackUrlLabel = this.isRemainingAmountGtZero ? 'CONFIRMALLOCATION_SURPLUS' : this.isRemainingAmountLtZero ? 'CONFIRMALLOCATION_SHORTFALL' : 'CONFIRMALLOCATION';
@@ -407,7 +405,7 @@ export class AllocatePaymentsComponent implements OnInit {
     }
   }
    getUnassignedPayment() {
-   this.logger.info('Allocate Payments getUnassignedPayment: ', new Date().toISOString().slice(0, -1) );
+    this.logger.info('Allocate Payments getUnassignedPayment: ', new Date().toISOString().slice(0, -1) );
     this.bulkScaningPaymentService.getBSPaymentsByDCN(this.bspaymentdcn).subscribe(
       unassignedPayments => {
         this.errorMessage = this.errorHandlerService.getServerErrorMessage(false, false, '');
@@ -428,7 +426,7 @@ export class AllocatePaymentsComponent implements OnInit {
     );
   }
   selectRadioButton(key, type) {
-  this.logger.info('Allocate Payments selectRadioButton: ', new Date().toISOString().slice(0, -1) );
+    this.logger.info('Allocate Payments selectRadioButton: ', new Date().toISOString().slice(0, -1) );
     this.isMoreDetailsBoxHide = true;
     if( type === 'explanation' && key === 'other' ){
       this.isPaymentDetailsEmpty = false;
@@ -439,14 +437,13 @@ export class AllocatePaymentsComponent implements OnInit {
     }
   }
   OrderListSelectEvent(orderef: any){
-  this.logger.info('Allocate Payments OrderListSelectEvent: ', new Date().toISOString().slice(0, -1) );
+    this.logger.info('Allocate Payments OrderListSelectEvent: ', new Date().toISOString().slice(0, -1) );
     this.isContinueButtondisabled = false;
     this.recordId= orderef;
   }
 
   redirectToOrderFeeSearchPage() {
-  this.logger.info('Allocate Payments redirectToOrderFeeSearchPage: ', new Date().toISOString().slice(0, -1) );
-    // this.paymentLibComponent.bspaymentdcn = null;
+    this.logger.info('Allocate Payments redirectToOrderFeeSearchPage: ', new Date().toISOString().slice(0, -1) );
     this.paymentLibComponent.paymentGroupReference = this.recordId;
     this.paymentLibComponent.isTurnOff = this.isTurnOff;
     this.paymentLibComponent.viewName = 'fee-summary';
