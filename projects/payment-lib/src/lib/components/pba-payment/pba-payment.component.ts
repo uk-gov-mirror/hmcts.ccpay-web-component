@@ -74,31 +74,36 @@ export class PbaPaymentComponent implements OnInit {
       this.isPBAAccountNotExist = false;
       this.isPBAServerError = false;
       this.isPBAAccountPaymentSuccess = false;
+      this.isContinueButtondisabled = true;
       if ( this.pbaAccountList.indexOf(this.selectedPbaAccount) !== -1 ) {
         const requestBody = new IserviceRequestPbaPayment(
-          this.selectedPbaAccount, this.pbaPayOrderRef.orderTotalFees, this.pbaAccountRef, this.orgName);
-        this.paymentViewService.postPBAaccountPayment(this.pbaPayOrderRef.orderRefId, requestBody)
-        .subscribe(
-          r => {
-            try {
-              this.pbaAccountrPaymentResult = JSON.parse(r);
-            } catch(e) {
-              this.pbaAccountrPaymentResult = r;
-            }
-            this.isPBAAccountPaymentSuccess = true;
-          },
-          e => {
-            if(e.status == '402') {
-              this.isInSufficiantFund = true; 
-            } else if(e.status == '410') {
-              this.isPBAAccountNotExist = true;
-            } else if(e.status == '412') {
-              this.isPBAAccountHold = true;
-            } else {
-              this.isPBAServerError = true;
-            }
-          }
-        );
+        this.selectedPbaAccount, this.pbaPayOrderRef.orderTotalFees, this.pbaAccountRef, this.orgName);
+
+        setTimeout(() => {
+          this.paymentViewService.postPBAaccountPayment(this.pbaPayOrderRef.orderRefId, requestBody)
+            .subscribe(
+              r => {
+                try {
+                  this.pbaAccountrPaymentResult = JSON.parse(r);
+                } catch(e) {
+                  this.pbaAccountrPaymentResult = r;
+                }
+                this.isPBAAccountPaymentSuccess = true;
+              },
+              e => {
+                if(e.status == '402') {
+                  this.isInSufficiantFund = true;
+                } else if(e.status == '410') {
+                  this.isPBAAccountNotExist = true;
+                } else if(e.status == '412') {
+                  this.isPBAAccountHold = true;
+                } else {
+                  this.isPBAServerError = true;
+                }
+              }
+            );
+
+        }, 5000);
       } else {
         this.isPBAServerError = true;
       }

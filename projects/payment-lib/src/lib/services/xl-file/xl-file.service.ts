@@ -28,7 +28,7 @@ export class XlFileService {
       worksheet =  this.setProcessedUnallocatedReportHeaders(worksheet);
       worksheet = this.autoFitColumns(worksheet,json);
     } else if(excelFileName.match('Payment failure')!== null){
-      worksheet =  XLSX.utils.json_to_sheet(json,{header:['payment_reference','ccd_reference','org_id','service_name','failure_reference','failure_reason','disputed_amount','event_name','event_date','representment_status','representment_date','refund_reference','refund_amount','refund_date']});
+      worksheet =  XLSX.utils.json_to_sheet(json,{header:['payment_reference','ccd_reference','document_control_number','org_id','service_name','failure_reference','failure_reason','disputed_amount','event_name','event_date','representment_status','representment_date','refund_reference','refund_amount','refund_date']});
       worksheet =  this.setPaymentFailureReportHeaders(worksheet);
       worksheet = this.autoFitColumns(worksheet,json);
     } else {
@@ -118,18 +118,19 @@ private setProcessedUnallocatedReportHeaders (worksheet: XLSX.WorkSheet): XLSX.W
 private setPaymentFailureReportHeaders (worksheet: XLSX.WorkSheet): XLSX.WorkSheet {
   worksheet.A1.v = "Payment reference";
   worksheet.B1.v = "CCD reference";
-  worksheet.C1.v = "OrgID";
-  worksheet.D1.v = "Service name";
-  worksheet.E1.v = "Failure reference";
-  worksheet.F1.v = "Failure reason";
-  worksheet.G1.v = "Disputed amount";
-  worksheet.H1.v = "Event name";
-  worksheet.I1.v = "Event date";
-  worksheet.J1.v = "Representment status";
-  worksheet.K1.v = "Representment date";
-  worksheet.L1.v = "Refund reference";
-  worksheet.M1.v = "Refund amount";
-  worksheet.N1.v = "Refund date";
+  worksheet.C1.v = "Document Control Number";
+  worksheet.D1.v = "OrgID";
+  worksheet.E1.v = "Service name";
+  worksheet.F1.v = "Failure reference";
+  worksheet.G1.v = "Failure reason";
+  worksheet.H1.v = "Disputed amount";
+  worksheet.I1.v = "Event name";
+  worksheet.J1.v = "Event date";
+  worksheet.K1.v = "Representment status";
+  worksheet.L1.v = "Representment date";
+  worksheet.M1.v = "Refund reference";
+  worksheet.N1.v = "Refund amount";
+  worksheet.O1.v = "Refund date";
   return worksheet;
 }
 private setShortFallReportHeaders (worksheet: XLSX.WorkSheet): XLSX.WorkSheet {

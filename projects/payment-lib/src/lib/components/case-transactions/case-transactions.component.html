@@ -1,7 +1,7 @@
-<title>Case transaction - HMCTS Paybubble - GOV.UK</title>
-<div class="govuk-width-container">
-
-  <main class="govuk-main-wrapper">
+<!-- <div class="govuk-width-container"> -->
+  <!-- <main class="govuk-main-wrapper"> -->
+<div>
+  <main>
     <ng-container  *ngIf="viewStatus === 'main1'">
       <div *ngIf="viewStatus === 'main1'&& !isTurnOff && takePayment">
 
@@ -583,7 +583,7 @@
               [ccdCaseNumber]="ccdCaseNumber"
               [isTurnOff]="isTurnOff"
               [orderParty]="orderParty"
-              [LOGGEDINUSERROLES]="LOGGEDINUSERROLES" 
+              [LOGGEDINUSERROLES]="LOGGEDINUSERROLES"
               ></ccpay-refund-status>
           </div>
       </div>
@@ -628,11 +628,8 @@
           <h1 class="govuk-heading-l govuk-heading-lw">If you are expecting to pay and are not able to see a service request,</h1>
           <p>please refresh and try in some time.</p>
         </ng-container>
-
     <!-- </div> -->
-
-      </div>
-
+        </div>
         <div class="govuk-grid-column-full">
             <h1 class="govuk-heading-xl" *ngIf="!takePayment && serviceRequestValue === 'false'">Payment History</h1>
             <div  *ngIf="serviceRequestValue === 'false'">
@@ -685,7 +682,7 @@
         </div>
         <div class="govuk-grid-column-full" *ngIf="!check4AllowedRoles2AccessPBApayment()">
             <span class="heading-medium"><br/>Refunds</span>
-            <ccpay-refund-status 
+            <ccpay-refund-status
             [ccdCaseNumber]="ccdCaseNumber"
             [orderParty] ="orderParty"
              ></ccpay-refund-status>
@@ -782,3 +779,5 @@
 </ng-container>
 </main>
 </div>
+<!-- </main> -->
+<!-- </div class="govuk-width-container"> -->
