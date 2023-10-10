@@ -26,8 +26,8 @@ export class ProcessRefundComponent implements OnInit {
   errorMessage =  this.getErrorMessage(false, '', '', '');
   sendmeback: string = null;
   viewStatus: string;
-  refundActionList: IRefundAction[] = []; 
-  refundRejectReasonList: IRefundRejectReason[] = []; 
+  refundActionList: IRefundAction[] = [];
+  refundRejectReasonList: IRefundRejectReason[] = [];
   isSendMeBackClicked: boolean = false;
   isRejectClicked: boolean = false;
   isOtherClicked: boolean = false;
@@ -45,7 +45,7 @@ export class ProcessRefundComponent implements OnInit {
   navigationpage: string;
   ccdCaseNumber: string;
   isFromRefundListPage: boolean;
-  cpoDetails:any = null;
+  cpoDetails:any = [];
   isCPODown: boolean;
   isConfirmButtondisabled: boolean = true;
   paymentObj: IPayment;
@@ -99,7 +99,7 @@ export class ProcessRefundComponent implements OnInit {
    }
    this.paymentViewService.getPartyDetails(this.ccdCaseNumber).subscribe(
     response => {
-      this.cpoDetails = JSON.parse(response).content[0];
+      this.cpoDetails = JSON.parse(response).content;
 
     },
     (error: any) => {
@@ -109,7 +109,7 @@ export class ProcessRefundComponent implements OnInit {
   );
   this.getTemplateInstructionType(this.paymentObj,this.refundlistsource.payment_reference);
   }
-  
+
   checkRefundActions(code: string) {
     this.refundActionsHasError = false;
     this.isReasonFieldEmpty = false;
@@ -158,7 +158,7 @@ export class ProcessRefundComponent implements OnInit {
     const controls = this.processRefundForm.controls;
     const processFormError = controls.sendMeBackField.errors;
 
-    if (this.processRefundForm.dirty && controls.refundActionField.valid 
+    if (this.processRefundForm.dirty && controls.refundActionField.valid
       && (controls.refundActionField.value == 'Approve'
       || (controls.refundActionField.value == 'Reject' && controls.refundRejectReasonField.valid && controls.refundRejectReasonField.value != 'RE005')
       || (controls.refundActionField.value == 'Reject' && controls.refundRejectReasonField.value == 'RE005' && controls.enterReasonField.valid)
@@ -228,7 +228,7 @@ export class ProcessRefundComponent implements OnInit {
           };
         }
 
-       
+
       } else if (controls.refundActionField.value === 'Return to caseworker') {
         status = 'SENDBACK';
 
@@ -263,7 +263,7 @@ export class ProcessRefundComponent implements OnInit {
 
         }
 
-      
+
       }
       this.RefundsService.patchRefundActions(processRefundRequest, this.refundReference, status).subscribe(
         response => {
@@ -315,7 +315,7 @@ export class ProcessRefundComponent implements OnInit {
       } else {
         bodyTxt = err;
       }
-      
+
     }
     return {
       title: 'Something went wrong',

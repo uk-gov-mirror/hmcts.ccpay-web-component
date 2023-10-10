@@ -73,7 +73,7 @@ export class CaseTransactionsComponent implements OnInit {
   orderRemissionDetails: any[] = [];
   orderLevelFees: IOrderReferenceFee[] = [];
   ispaymentGroupApisuccess: boolean = false;
-  cpoDetails: any = null;
+  cpoDetails: any[] = null;
   orderRef: string;
   orderStatus: string;
   orderParty: string;
@@ -159,7 +159,7 @@ export class CaseTransactionsComponent implements OnInit {
           } else {
             this.paymentViewService.getPartyDetails(this.ccdCaseNumber).subscribe(
               response => {
-                this.cpoDetails = JSON.parse(response).content[0];
+                this.cpoDetails = JSON.parse(response).content;
 
               },
               (error: any) => {
@@ -188,7 +188,7 @@ export class CaseTransactionsComponent implements OnInit {
           this.totalRefundAmount = this.calculateRefundAmount();
           this.paymentViewService.getPartyDetails(this.ccdCaseNumber).subscribe(
             response => {
-              this.cpoDetails = JSON.parse(response).content[0];
+              this.cpoDetails = JSON.parse(response).content;
 
             },
             (error: any) => {
@@ -287,6 +287,7 @@ export class CaseTransactionsComponent implements OnInit {
   calculateOrderFeesAmounts(): void {
     let feesTotal = 0.00;
     this.paymentGroups.forEach(paymentGroup => {
+
       this.resetOrderVariables();
       if (paymentGroup.fees) {
         paymentGroup.fees.forEach(fee => {
@@ -303,7 +304,7 @@ export class CaseTransactionsComponent implements OnInit {
 
       if (paymentGroup.payments) {
         const isFeeOverPaymentExist = this.overPaymentAmount === 0;
-        paymentGroup.payments.forEach(payment => {
+        paymentGroup.payments.forEach((payment) => {
           if(isFeeOverPaymentExist) {
             this.overPaymentAmount = this.overPaymentAmount + payment.over_payment
           }
@@ -325,9 +326,14 @@ export class CaseTransactionsComponent implements OnInit {
         this.orderAddBtnEnable = true;
       }
 
-      //this.orderLevelFees.push({orderRefId:paymentGroup['payment_group_reference'],orderTotalFees: this.orderFeesTotal,orderStatus: this.orderStatus,orderParty:'Santosh', orderCCDEvent:'Case Creation',orderCreated: new Date(), orderAddBtnEnable: this.orderAddBtnEnable}); this.cpoDetails['createdTimestamp']
-      if (this.cpoDetails !== null) {
-        this.orderLevelFees.push({ orderRefId: paymentGroup['payment_group_reference'], orderTotalFees: this.orderFeesTotal, orderStatus: this.orderStatus, orderParty: this.cpoDetails['responsibleParty'], orderCCDEvent: this.cpoDetails['action'], orderCreated: paymentGroup['date_created'], orderAddBtnEnable: this.orderAddBtnEnable });
+      if (this.cpoDetails !== null && this.cpoDetails.length !== 0 ) {
+        let index = -1;
+        this.cpoDetails.forEach((cpo, i) =>{
+                    if(cpo.orderReference == this.orderRef){
+                    index = i;
+                    }
+              });
+        this.orderLevelFees.push({ orderRefId: paymentGroup['payment_group_reference'], orderTotalFees: this.orderFeesTotal, orderStatus: this.orderStatus, orderParty: this.cpoDetails[index].responsibleParty, orderCCDEvent: this.cpoDetails[index].action, orderCreated: paymentGroup['date_created'], orderAddBtnEnable: this.orderAddBtnEnable });
 
       } else {
         this.orderLevelFees.push({ orderRefId: paymentGroup['payment_group_reference'], orderTotalFees: this.orderFeesTotal, orderStatus: this.orderStatus, orderParty: '', orderCCDEvent: '', orderCreated: paymentGroup['date_created'], orderAddBtnEnable: this.orderAddBtnEnable });
@@ -384,21 +390,20 @@ export class CaseTransactionsComponent implements OnInit {
       }
       this.orderStatus = orderDetail.service_request_status;
     });
-    //this.orderPendingPayments = (this.orderFeesTotal - this.orderRemissionTotal) - this.orderTotalPayments;
-    // this.orderRef = orderReferenceObj.orderRefId;
-    // if (this.orderPendingPayments <= 0.00) {
-    //   this.orderStatus = 'Paid';
-    // } else if (this.orderFeesTotal > 0 && (this.orderTotalPayments > 0 || this.orderRemissionTotal > 0) && (this.orderTotalPayments < this.orderPendingPayments)) {
-    //   this.orderStatus = 'Partially paid'
-    // } else {
-    //   this.orderStatus = 'Not paid'
-    // }
 
+    let position = -1;
+    if (this.cpoDetails !== null && this.cpoDetails.length !==0) {
+    this.cpoDetails.forEach((cpo, i) =>{
+      if(cpo.orderReference == this.orderRef){
+      position = i;
+      }
+    });
 
-    if (this.cpoDetails !== null) {
-      this.orderParty = this.cpoDetails['responsibleParty'];
-      this.orderCreated = this.cpoDetails['createdTimestamp'];
-      this.orderCCDEvent = this.cpoDetails['action'];
+      if (position !== -1) {
+          this.orderParty = this.cpoDetails[position].responsibleParty;
+          this.orderCreated = this.cpoDetails[position].createdTimestamp;
+          this.orderCCDEvent = this.cpoDetails[position].action;
+      }
     } else {
       this.orderParty = '';
       this.orderCCDEvent = '';
@@ -416,9 +421,6 @@ export class CaseTransactionsComponent implements OnInit {
     this.paymentLibComponent.viewName = 'fee-summary';
     }
   }
-
-
-
 
   calculateAmounts(): void {
     let feesTotal = 0.00,
