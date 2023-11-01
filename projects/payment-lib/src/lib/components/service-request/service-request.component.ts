@@ -105,7 +105,7 @@ export class ServiceRequestComponent implements OnInit {
   isAddRemissionEnable: boolean = false;
   orderRemissionDetails: any[] = [];
   orderLevelFees: IOrderReferenceFee[] = [];
-  cpoDetails: any = null;
+  cpoDetails: any []= [];
   serviceRequestValue: string;
   orderAddBtnEnable: boolean;
   isFromPaymentDetailPage: boolean;

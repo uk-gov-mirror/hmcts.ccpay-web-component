@@ -45,7 +45,7 @@ export class ProcessRefundComponent implements OnInit {
   navigationpage: string;
   ccdCaseNumber: string;
   isFromRefundListPage: boolean;
-  cpoDetails: any = null;
+  cpoDetails:any = [];
   isCPODown: boolean;
   isConfirmButtondisabled: boolean = true;
   paymentObj: IPayment;
@@ -94,7 +94,7 @@ export class ProcessRefundComponent implements OnInit {
     });
     this.ccdCaseNumber = this.refundlistsource.ccd_case_number;
 
-    if ((typeof this.paymentLibComponent.TAKEPAYMENT === 'string' && this.paymentLibComponent.TAKEPAYMENT === 'false') || (typeof this.paymentLibComponent.TAKEPAYMENT === 'boolean' && !this.paymentLibComponent.TAKEPAYMENT)) {
+    if((typeof this.paymentLibComponent.TAKEPAYMENT === 'string' && this.paymentLibComponent.TAKEPAYMENT === 'false') || (typeof this.paymentLibComponent.TAKEPAYMENT === 'boolean' && !this.paymentLibComponent.TAKEPAYMENT) ) {
       this.isFromRefundListPage = true;
     }
     this.paymentViewService.getPartyDetails(this.ccdCaseNumber).subscribe(
@@ -108,6 +108,22 @@ export class ProcessRefundComponent implements OnInit {
       }
     );
     this.getTemplateInstructionType(this.paymentObj, this.refundlistsource.payment_reference);
+  }
+
+     if((typeof this.paymentLibComponent.TAKEPAYMENT === 'string' && this.paymentLibComponent.TAKEPAYMENT === 'false') || (typeof this.paymentLibComponent.TAKEPAYMENT === 'boolean' && !this.paymentLibComponent.TAKEPAYMENT) ) {
+      this.isFromRefundListPage = true;
+     }
+     this.paymentViewService.getPartyDetails(this.ccdCaseNumber).subscribe(
+      response => {
+        this.cpoDetails = JSON.parse(response).content;
+
+      },
+      (error: any) => {
+        this.errorMessage = <any>error.replace(/"/g,"");
+        this.isCPODown = true;
+      }
+    );
+    this.getTemplateInstructionType(this.paymentObj,this.refundlistsource.payment_reference);
   }
 
   checkRefundActions(code: string) {
