@@ -36,7 +36,7 @@
     <mat-table [dataSource]="dataSource" matSort>
 
       <ng-container matColumnDef="ccd_case_number">
-        <mat-header-cell *matHeaderCellDef>Case reference 13</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef>Case reference</mat-header-cell>
         <mat-cell *matCellDef="let row" class="whitespace-inherit"> {{row.ccd_case_number | ccdHyphens }}</mat-cell>
       </ng-container>
 
