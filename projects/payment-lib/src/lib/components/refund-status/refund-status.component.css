@@ -73,6 +73,16 @@
 .govuk-panel__title {
   font-size: 5rem;
 }
+
+.govuk-panel_refund_title {
+  margin-top: 0;
+  margin-bottom: 30px;
+  color: white;
+  font-family: nta,Arial,sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-weight: 700;
+}
+
 .govuk-body-m, .govuk-body {
   font-size: 2.1875rem;
 }

@@ -54,6 +54,15 @@
   margin-bottom: 0px !important;
 }
 
+.govuk-panel_service_request_title {
+  margin-top: 0;
+  margin-bottom: 30px;
+  color: white;
+  font-family: nta,Arial,sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-weight: 700;
+}
+
 .groupamount.govuk-table__header,
 .govuk-table__cell.govuk-table__cell--col6.govuk-table__custom--col6 {
     text-align: right;
