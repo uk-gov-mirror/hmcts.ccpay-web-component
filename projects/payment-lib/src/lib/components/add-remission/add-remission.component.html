@@ -28,7 +28,7 @@
       <div class="govuk-form-group">
         <form [formGroup]="remissionForm" novalidate>
           <div class="govuk-form-group">
-            <label class="govuk-label govuk-label--s" for="remission-code">
+            <label class="govuk-label" for="remission-code">
                 Add remission to {{ fee?.code }}: {{ fee?.description }}
               <span class="form-hint">Enter remission for reference. For example: HWF-A1B-23C OR PA21-123456</span>
             </label>
@@ -113,7 +113,7 @@
         <div class="govuk-form-group">
           <form [formGroup]="remissionForm" novalidate>
             <div class="govuk-form-group">
-              <label class="govuk-label govuk-label--s" for="remission-code">
+              <label class="govuk-label" for="remission-code">
                 <span class="form-hint">For example: HWF-A1B-23C OR PA21-123456</span>
               </label>
               <p class="inline-error-message" *ngIf="isRemissionCodeEmpty || remissionCodeHasError">
