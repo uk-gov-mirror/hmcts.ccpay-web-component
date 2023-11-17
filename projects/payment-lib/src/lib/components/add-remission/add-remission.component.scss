@@ -97,7 +97,11 @@
   font-weight: 400;
  }
 
- .govuk-input--width-10 {
+.govuk-input--width-10 {
+  max-width: 50ex;
+}
+
+.govuk-input--width-small{
   max-width: 110px;
 }
 
