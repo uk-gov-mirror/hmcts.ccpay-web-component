@@ -85,8 +85,8 @@
     </div>
     <div class="govuk-button--group"  *ngIf="!errorMsg">
       <button type="submit" [disabled]="isContinueButtondisabled" class="button pba-payments-19-font pba-payments-20-margin" (click)="saveAndContinue()">
-        <span *ngIf="!isPBADropdownSelected">Continue</span>
-        <span *ngIf="isPBADropdownSelected">Confirm payment</span>
+        <span *ngIf="!isPBADropdownSelected" class="white">Continue</span>
+        <span *ngIf="isPBADropdownSelected" class="white">Confirm payment</span>
       </button>
     </div>
   </div>
@@ -291,11 +291,11 @@
     <main class="govuk-main-wrapper govuk-main-wrapper--l" id="main-content" role="main">
       <div class="govuk-grid-row">
         <div class="govuk-panel govuk-panel--confirmation pba-payments--confirmation">
-          <h1 class="govuk-panel__title pba-payments--title">
+          <h1 class="govuk-panel__title pba-payments--title white">
               Payment successful
           </h1>
-          <div class="govuk-panel__body pba-payments__body">
-              Your payment reference is <br><strong>{{pbaAccountrPaymentResult.payment_reference}}</strong>
+          <div class="govuk-panel__body pba-payments__body white">
+              Your payment reference is <br><strong class="white">{{pbaAccountrPaymentResult.payment_reference}}</strong>
           </div>
       </div>
       <p class="govuk-body pba-payments-19-font">
