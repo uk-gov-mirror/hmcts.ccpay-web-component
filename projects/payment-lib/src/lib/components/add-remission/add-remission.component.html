@@ -46,7 +46,7 @@
             <div id="amount-currency" class="govuk-visually-hidden">in pounds</div>
               <div class="hmcts-currency-input">
               <div class="hmcts-currency-input__symbol" aria-hidden="true">£</div>
-              <input class="govuk-input .govuk-input-width-10-left" [ngClass]="{'inline-error-class': isAmountEmpty || amountHasError || isRemissionLessThanFeeError}" id="amount" aria-label="amount"  name="amount" type="text" aria-describedby="amount-currency" formControlName="amount">
+              <input class="govuk-input govuk-input-width-10-left" [ngClass]="{'inline-error-class': isAmountEmpty || amountHasError || isRemissionLessThanFeeError}" id="amount" aria-label="amount"  name="amount" type="text" aria-describedby="amount-currency" formControlName="amount">
               <p class="inline-error-message" *ngIf="isAmountEmpty || amountHasError || isRemissionLessThanFeeError">
                 <span *ngIf="isAmountEmpty">Enter a amount</span>
                 <span *ngIf="amountHasError">Enter a vaild amount</span>
