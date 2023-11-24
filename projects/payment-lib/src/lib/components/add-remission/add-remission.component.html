@@ -442,7 +442,6 @@
             <td class="govuk-table__cell  whitespace-inherit center" scope="row">
             
                 <div  [formGroupName]="i"  class="hmcts-currency-input">
-                  
                   <div class="hmcts-currency-input__symbol" aria-hidden="true">£</div>
                   <input disabled="disabled" class="govuk-input govuk-input--width-small" id="feeAmount_{{fee.controls['id'].value}}" name="feeAmount_{{fee.controls['id'].value}}" type="text" aria-describedby="amount-currency "  pattern="[0-9]*" formControlName="refund_amount">
                   <input id="feeVolume_{{fee.controls['id'].value}}" name="feeVolume_{{fee.controls['id'].value}}" value= "{{fee.controls['volume'].value}}" type="hidden" formControlName="volume">
@@ -490,7 +489,7 @@
                 <div class="hmcts-currency-input">
                   
                   <div class="hmcts-currency-input__symbol" aria-hidden="true">£</div>
-                  <input disabled="disabled" class="govuk-input govuk-input--width-10" id="feeAmount_{{fee.id}}" name="feeAmount_{{fee.id}}" type="text" aria-describedby="amount-currency "  value="{{ payment.amount | currency:'GBP':'symbol-narrow':'1.2-2'}}" pattern="[0-9]*" >
+                  <input disabled="disabled" class="govuk-input .govuk-input-width-10-left" id="feeAmount_{{fee.id}}" name="feeAmount_{{fee.id}}" type="text" aria-describedby="amount-currency "  value="{{ payment.amount | currency:'GBP':'symbol-narrow':'1.2-2'}}" pattern="[0-9]*" >
                 </div> 
         
             </td>
