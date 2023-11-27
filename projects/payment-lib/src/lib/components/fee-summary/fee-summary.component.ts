@@ -1,15 +1,15 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Inject } from '@angular/core';
 import { IPaymentGroup } from '../../interfaces/IPaymentGroup';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import { BulkScaningPaymentService } from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
-import { PaymentLibComponent } from '../../payment-lib.component';
+import type { PaymentLibComponent } from '../../payment-lib.component';
 import { IRemission } from '../../interfaces/IRemission';
 import { IFee } from '../../interfaces/IFee';
 import { PaymentToPayhubRequest } from '../../interfaces/PaymentToPayhubRequest';
 import { PayhubAntennaRequest } from '../../interfaces/PayhubAntennaRequest';
 import { SafeHtml } from '@angular/platform-browser';
-import {Router} from '@angular/router';
-import {Location} from '@angular/common';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 import { OrderslistService } from '../../services/orderslist.service';
 
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
@@ -37,7 +37,7 @@ export class FeeSummaryComponent implements OnInit {
   service: string = "";
   platForm: string = "";
   upPaymentErrorMessage: string;
-  selectedOption:string;
+  selectedOption: string;
   isBackButtonEnable: boolean = true;
   outStandingAmount: number;
   isFeeAmountZero: boolean = false;
@@ -54,9 +54,9 @@ export class FeeSummaryComponent implements OnInit {
     private bulkScaningPaymentService: BulkScaningPaymentService,
     private location: Location,
     private paymentViewService: PaymentViewService,
-    private paymentLibComponent: PaymentLibComponent,
+    @Inject('PAYMENT_LIB') private paymentLibComponent: PaymentLibComponent,
     private OrderslistService: OrderslistService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.viewStatus = 'main';
@@ -66,7 +66,7 @@ export class FeeSummaryComponent implements OnInit {
     this.isStrategicFixEnable = this.paymentLibComponent.ISSFENABLE;
     this.OrderslistService.setCaseType(this.paymentLibComponent.CASETYPE);
 
-      this.platForm = 'Antenna';
+    this.platForm = 'Antenna';
 
     this.paymentViewService.getBSfeature().subscribe(
       features => {
@@ -83,11 +83,11 @@ export class FeeSummaryComponent implements OnInit {
     this.getPaymentGroup();
   }
 
-    getUnassignedPaymentlist() {
-     if (this.selectedOption === 'dcn') {
-        this.bulkScaningPaymentService.getBSPaymentsByDCN(this.paymentLibComponent.DCN_NUMBER).subscribe(
+  getUnassignedPaymentlist() {
+    if (this.selectedOption === 'dcn') {
+      this.bulkScaningPaymentService.getBSPaymentsByDCN(this.paymentLibComponent.DCN_NUMBER).subscribe(
         unassignedPayments => {
-          if(unassignedPayments['data'].payments) {
+          if (unassignedPayments['data'].payments) {
             this.service = unassignedPayments['data'].responsible_service_id;
           } else {
             this.upPaymentErrorMessage = 'error';
@@ -96,9 +96,9 @@ export class FeeSummaryComponent implements OnInit {
         (error: any) => this.upPaymentErrorMessage = error
       );
     } else {
-        this.bulkScaningPaymentService.getBSPaymentsByCCD(this.ccdCaseNumber).subscribe(
+      this.bulkScaningPaymentService.getBSPaymentsByCCD(this.ccdCaseNumber).subscribe(
         unassignedPayments => {
-          if(unassignedPayments['data'].payments) {
+          if (unassignedPayments['data'].payments) {
             this.service = unassignedPayments['data'].responsible_service_id;
           } else {
             this.upPaymentErrorMessage = 'error';
@@ -136,23 +136,23 @@ export class FeeSummaryComponent implements OnInit {
 
         if (paymentGroup.fees) {
           paymentGroup.fees.forEach(fee => {
-              this.totalAfterRemission  = this.totalAfterRemission  + fee.net_amount;
-              if(fee.calculated_amount === 0) {
-                this.isFeeAmountZero = true;
-              }
-              if(paymentGroup.remissions) {
-                this.isRemissionsMatch = false;
-                paymentGroup.remissions.forEach(rem => {
-                  if(rem.fee_code === fee.code) {
-                    this.isRemissionsMatch = true;
-                    fee['remissions'] = rem;
-                    fees.push(fee);
-                  }
-                });
-
-                if(!this.isRemissionsMatch) {
+            this.totalAfterRemission = this.totalAfterRemission + fee.net_amount;
+            if (fee.calculated_amount === 0) {
+              this.isFeeAmountZero = true;
+            }
+            if (paymentGroup.remissions) {
+              this.isRemissionsMatch = false;
+              paymentGroup.remissions.forEach(rem => {
+                if (rem.fee_code === fee.code) {
+                  this.isRemissionsMatch = true;
+                  fee['remissions'] = rem;
                   fees.push(fee);
                 }
+              });
+
+              if (!this.isRemissionsMatch) {
+                fees.push(fee);
+              }
             } else {
               fees.push(fee);
             }
@@ -162,36 +162,36 @@ export class FeeSummaryComponent implements OnInit {
 
         this.outStandingAmount = this.bulkScaningPaymentService.calculateOutStandingAmount(paymentGroup);
       },
-      (error: any) => this.errorMessage = error.replace(/"/g,"")
+      (error: any) => this.errorMessage = error.replace(/"/g, "")
     );
   }
 
-  confirmRemoveFee(fee: IFee){
+  confirmRemoveFee(fee: IFee) {
     this.isRemoveBtnDisabled = false;
     this.currentFee = fee;
     this.viewStatus = 'feeRemovalConfirmation';
   }
 
-  removeFee(fee: any){
+  removeFee(fee: any) {
     this.isRemoveBtnDisabled = true;
     this.paymentViewService.deleteFeeFromPaymentGroup(fee).subscribe(
       (success: any) => {
-          if (this.paymentGroup.fees && this.paymentGroup.fees.length > 1){
+        if (this.paymentGroup.fees && this.paymentGroup.fees.length > 1) {
           this.totalAfterRemission = 0;
           this.getPaymentGroup();
           this.viewStatus = 'main';
           return;
-          }
-          this.loadCaseTransactionPage();
+        }
+        this.loadCaseTransactionPage();
       },
       (error: any) => {
-          this.errorMessage = error;
-          this.isRemoveBtnDisabled = false;
+        this.errorMessage = error;
+        this.isRemoveBtnDisabled = false;
       }
     );
   }
 
- loadCaseTransactionPage() {
+  loadCaseTransactionPage() {
     this.paymentLibComponent.TAKEPAYMENT = true;
     this.paymentLibComponent.viewName = 'case-transactions';
     this.paymentViewService.getBSfeature().subscribe(
@@ -205,11 +205,11 @@ export class FeeSummaryComponent implements OnInit {
     );
 
     let partUrl = `selectedOption=${this.paymentLibComponent.SELECTED_OPTION}`;
-      partUrl +=this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
-      partUrl +=this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
-      partUrl +=this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
-      partUrl +=this.paymentLibComponent.ISSFENABLE ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
-      partUrl +=`&caseType=${this.paymentLibComponent.CASETYPE}`;
+    partUrl += this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
+    partUrl += this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
+    partUrl += this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
+    partUrl += this.paymentLibComponent.ISSFENABLE ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
+    partUrl += `&caseType=${this.paymentLibComponent.CASETYPE}`;
 
     let url = `/payment-history/${this.ccdCaseNumber}?view=case-transactions&takePayment=true&${partUrl}`;
     this.router.navigateByUrl(url);
@@ -219,13 +219,13 @@ export class FeeSummaryComponent implements OnInit {
   }
   redirectToFeeSearchPage(event: any, page?: string) {
     event.preventDefault();
-    let partUrl =this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
-      partUrl +=this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
-      partUrl +=this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
-      partUrl +=this.paymentLibComponent.ISSFENABLE ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
-      partUrl +=`&caseType=${this.paymentLibComponent.CASETYPE}`;
+    let partUrl = this.bsPaymentDcnNumber ? `&dcn=${this.bsPaymentDcnNumber}` : '';
+    partUrl += this.paymentLibComponent.ISBSENABLE ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
+    partUrl += this.paymentLibComponent.ISTURNOFF ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
+    partUrl += this.paymentLibComponent.ISSFENABLE ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
+    partUrl += `&caseType=${this.paymentLibComponent.CASETYPE}`;
 
-    if(this.viewStatus === 'feeRemovalConfirmation' || this.viewStatus === 'add_remission') {
+    if (this.viewStatus === 'feeRemovalConfirmation' || this.viewStatus === 'add_remission') {
       this.viewStatus = 'main';
       return;
     }
@@ -234,14 +234,14 @@ export class FeeSummaryComponent implements OnInit {
   }
   takePayment() {
     this.isConfirmationBtnDisabled = true;
-      const requestBody = new PaymentToPayhubRequest(this.ccdCaseNumber, this.outStandingAmount, this.caseType),
+    const requestBody = new PaymentToPayhubRequest(this.ccdCaseNumber, this.outStandingAmount, this.caseType),
       antennaReqBody = new PayhubAntennaRequest(this.ccdCaseNumber, this.outStandingAmount, this.caseType);
 
-    if(this.platForm === 'Antenna') {
+    if (this.platForm === 'Antenna') {
 
       this.paymentViewService.postPaymentAntennaToPayHub(antennaReqBody, this.paymentGroupRef).subscribe(
         response => {
-          this.isBackButtonEnable=false;
+          this.isBackButtonEnable = false;
           window.location.href = '/makePaymentByTelephoneyProvider';
         },
         (error: any) => {

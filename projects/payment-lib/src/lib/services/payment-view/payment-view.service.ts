@@ -25,7 +25,7 @@ import { RefundsRequest } from '../../interfaces/RefundsRequest';
 import { AddRetroRemissionRequest } from '../../interfaces/AddRetroRemissionRequest';
 import { PostRefundRetroRemission } from '../../interfaces/PostRefundRetroRemission';
 import { PostIssueRefundRetroRemission } from '../../interfaces/PostIssueRefundRetroRemission';
-import { error } from '@angular/compiler/src/util';
+//import { error } from '@angular/compiler/src/util';
 
 @Injectable({
   providedIn: 'root'
@@ -101,7 +101,7 @@ export class PaymentViewService {
       catchError(this.errorHandlerService.handleError)
     );
   }
-  
+
   postPBAaccountPayment(serviceRef: string, body: IserviceRequestPbaPayment): Observable<any> {
     let randomKey = 'idam-key-' + Math.random().toString().split('.').join('-');
     body['idempotency_key'] = randomKey;
@@ -171,7 +171,7 @@ export class PaymentViewService {
     const url = `${this.paymentLibService.API_ROOT}/case-payment-orders?case_ids=${caseNumber}`;
     return this.https.get(url, { withCredentials: true }).pipe( catchError(this.errorHandlerService.handleError));
   }
-  
+
   setOrdersList(orderLevelFees: IOrderReferenceFee[]): void {
     this.ordersList.next(Object.assign([], orderLevelFees));
 }

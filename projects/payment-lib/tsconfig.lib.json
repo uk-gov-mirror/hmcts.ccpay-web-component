@@ -3,8 +3,8 @@
   "compilerOptions": {
     "outDir": "../../out-tsc/lib",
     "declarationMap": true,
-    "target": "es2015",
-    "module": "es2015",
+    "target": "es2022",
+    "module": "es2022",
     "moduleResolution": "node",
     "declaration": true,
     "sourceMap": true,
@@ -15,8 +15,8 @@
     "types": [],
     "lib": [
       "dom",
-      "es2015",
-      "es2017.object"
+      "es2022",
+      "es2022.object"
     ]
   },
   "angularCompilerOptions": {

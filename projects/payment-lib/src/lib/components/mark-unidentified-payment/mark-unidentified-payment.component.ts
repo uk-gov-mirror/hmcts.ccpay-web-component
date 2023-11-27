@@ -1,8 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { PaymentLibComponent } from '../../payment-lib.component';
+import type { PaymentLibComponent } from '../../payment-lib.component';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
-import {BulkScaningPaymentService} from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
+import { BulkScaningPaymentService } from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
 import { IBSPayments } from '../../interfaces/IBSPayments';
 import { UnidentifiedPaymentsRequest } from '../../interfaces/UnidentifiedPaymentsRequest';
 import { AllocatePaymentRequest } from '../../interfaces/AllocatePaymentRequest';
@@ -23,18 +23,18 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
   investicationDetailMinHasError: boolean = false;
   investicationDetailMaxHasError: boolean = false;
   errorMessage = this.getErrorMessage(false);
-  unassignedRecord:IBSPayments;
+  unassignedRecord: IBSPayments;
   siteID: string = null;
   investigationComment: string;
-  isConfirmButtondisabled:Boolean = false;
+  isConfirmButtondisabled: Boolean = false;
   ccdReference: string = null;
   exceptionReference: string = null;
   isStrategicFixEnable: boolean = true;
 
   constructor(private formBuilder: FormBuilder,
-  private paymentViewService: PaymentViewService,
-  private paymentLibComponent: PaymentLibComponent,
-  private bulkScaningPaymentService: BulkScaningPaymentService) { }
+    private paymentViewService: PaymentViewService,
+    @Inject('PAYMENT_LIB') private paymentLibComponent: PaymentLibComponent,
+    private bulkScaningPaymentService: BulkScaningPaymentService) { }
 
   ngOnInit() {
     this.viewStatus = 'mainForm';
@@ -52,7 +52,7 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
       ]))
     });
   }
- getUnassignedPayment() {
+  getUnassignedPayment() {
     this.bulkScaningPaymentService.getBSPaymentsByDCN(this.bspaymentdcn).subscribe(
       unassignedPayments => {
         this.errorMessage = this.getErrorMessage(false);
@@ -71,44 +71,44 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
       }
     );
   }
-  trimUnderscore(method: string){
-    return this.bulkScaningPaymentService.removeUnwantedString(method,' ');
+  trimUnderscore(method: string) {
+    return this.bulkScaningPaymentService.removeUnwantedString(method, ' ');
   }
- saveAndContinue() {
-  this.resetForm([false, false, false, false]);
-  const investicationField = this.markPaymentUnidentifiedForm.controls.investicationDetail;
-  const formerror = investicationField.errors;
+  saveAndContinue() {
+    this.resetForm([false, false, false, false]);
+    const investicationField = this.markPaymentUnidentifiedForm.controls.investicationDetail;
+    const formerror = investicationField.errors;
     if (this.markPaymentUnidentifiedForm.dirty && this.markPaymentUnidentifiedForm.valid) {
       this.investigationComment = this.markPaymentUnidentifiedForm.controls.investicationDetail.value;
       this.viewStatus = 'unidentifiedContinueConfirm';
-    }else {
-      if(investicationField.value == '' ) {
+    } else {
+      if (investicationField.value == '') {
         this.resetForm([true, false, false, false]);
       }
-      if(investicationField.value != '' && investicationField.invalid ) {
+      if (investicationField.value != '' && investicationField.invalid) {
         this.resetForm([false, true, false, false]);
       }
-      if(formerror && formerror.minlength && formerror.minlength.actualLength < 3 ) {
+      if (formerror && formerror.minlength && formerror.minlength.actualLength < 3) {
         this.resetForm([false, false, true, false]);
       }
-      if(formerror && formerror.maxlength && formerror.maxlength.actualLength > 255 ) {
+      if (formerror && formerror.maxlength && formerror.maxlength.actualLength > 255) {
         this.resetForm([false, false, false, true]);
       }
     }
   }
   resetForm(val) {
-      this.isInvesticationDetailEmpty = val[0];
-      this.investicationDetailHasError = val[1];
-      this.investicationDetailMinHasError = val[2];
-      this.investicationDetailMaxHasError = val[3];
+    this.isInvesticationDetailEmpty = val[0];
+    this.investicationDetailHasError = val[1];
+    this.investicationDetailMinHasError = val[2];
+    this.investicationDetailMaxHasError = val[3];
   }
   confirmPayments() {
     this.isConfirmButtondisabled = true;
     const reason = this.markPaymentUnidentifiedForm.get('investicationDetail').value;
 
-    if(!this.isStrategicFixEnable) {
+    if (!this.isStrategicFixEnable) {
       let allocatedRequest = {
-        allocation_status:'Unidentified',
+        allocation_status: 'Unidentified',
         payment_allocation_status: {
           description: '',
           name: 'Unidentified'
@@ -117,13 +117,13 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
         user_id: this.caseType,
       }
       const postStrategicBody = new AllocatePaymentRequest
-      (this.ccdReference, this.unassignedRecord, this.caseType, this.exceptionReference, allocatedRequest);
+        (this.ccdReference, this.unassignedRecord, this.caseType, this.exceptionReference, allocatedRequest);
       this.bulkScaningPaymentService.postBSWoPGStrategic(postStrategicBody).subscribe(
         res => {
           this.errorMessage = this.getErrorMessage(false);
           let response = JSON.parse(res);
           if (response.success) {
-          this.gotoCasetransationPage();
+            this.gotoCasetransationPage();
           }
         },
         (error: any) => {
@@ -131,55 +131,55 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
           this.isConfirmButtondisabled = false;
         });
     } else {
-          this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'PROCESSED').subscribe(
-          res1 => {
-            this.errorMessage = this.getErrorMessage(false);
-            const requestBody = new AllocatePaymentRequest
+      this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'PROCESSED').subscribe(
+        res1 => {
+          this.errorMessage = this.getErrorMessage(false);
+          const requestBody = new AllocatePaymentRequest
             (this.ccdReference, this.unassignedRecord, this.siteID, this.exceptionReference)
-            this.paymentViewService.postBSPayments(requestBody).subscribe(
-              res2 => {
-                this.errorMessage = this.getErrorMessage(false);
-                const response2 = JSON.parse(res2),
-                  reqBody = new UnidentifiedPaymentsRequest
+          this.paymentViewService.postBSPayments(requestBody).subscribe(
+            res2 => {
+              this.errorMessage = this.getErrorMessage(false);
+              const response2 = JSON.parse(res2),
+                reqBody = new UnidentifiedPaymentsRequest
                   (response2['data'].payment_group_reference, response2['data'].reference, reason);
-                if (response2.success) {
-                  this.paymentViewService.postBSUnidentifiedPayments(reqBody).subscribe(
-                    res3 => {
-                      this.errorMessage = this.getErrorMessage(false);
-                      const response3 = JSON.parse(res3);
-                      if (response3.success) {
-                        this.gotoCasetransationPage();
-                      }
-                    },
-                    (error: any) => {
-                      this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'COMPLETE').subscribe();
-                      this.errorMessage = this.getErrorMessage(true);
-                      this.isConfirmButtondisabled = false;
+              if (response2.success) {
+                this.paymentViewService.postBSUnidentifiedPayments(reqBody).subscribe(
+                  res3 => {
+                    this.errorMessage = this.getErrorMessage(false);
+                    const response3 = JSON.parse(res3);
+                    if (response3.success) {
+                      this.gotoCasetransationPage();
                     }
-                  );
-                }
-              },
-              (error: any) => {
-                this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'COMPLETE').subscribe();
-                this.errorMessage = this.getErrorMessage(true);
-                this.isConfirmButtondisabled = false;
+                  },
+                  (error: any) => {
+                    this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'COMPLETE').subscribe();
+                    this.errorMessage = this.getErrorMessage(true);
+                    this.isConfirmButtondisabled = false;
+                  }
+                );
               }
-            );
-          },
-          (error: any) => {
-            this.errorMessage = this.getErrorMessage(true);
-            this.isConfirmButtondisabled = false;
-          }
-        );
-      }
-  }
-  cancelMarkUnidentifiedPayments(type?:string){
-    if(type && type === 'cancel') {
-        if(this.markPaymentUnidentifiedForm.get('investicationDetail').value!==""){
-          this.viewStatus = 'unidentifiedCancelConfirm';
-        } else {
-          this.gotoCasetransationPage();
+            },
+            (error: any) => {
+              this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'COMPLETE').subscribe();
+              this.errorMessage = this.getErrorMessage(true);
+              this.isConfirmButtondisabled = false;
+            }
+          );
+        },
+        (error: any) => {
+          this.errorMessage = this.getErrorMessage(true);
+          this.isConfirmButtondisabled = false;
         }
+      );
+    }
+  }
+  cancelMarkUnidentifiedPayments(type?: string) {
+    if (type && type === 'cancel') {
+      if (this.markPaymentUnidentifiedForm.get('investicationDetail').value !== "") {
+        this.viewStatus = 'unidentifiedCancelConfirm';
+      } else {
+        this.gotoCasetransationPage();
+      }
     } else {
       this.viewStatus = 'mainForm';
     }

@@ -1,6 +1,6 @@
-import {Component, OnInit, Input} from '@angular/core';
+import { Component, OnInit, Input, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import {RefundsService} from '../../services/refunds/refunds.service';
+import { RefundsService } from '../../services/refunds/refunds.service';
 import { IRefundAction } from '../../interfaces/IRefundAction';
 import { IRefundList } from '../../interfaces/IRefundList';
 import { IPayment } from '../../interfaces/IPayment';
@@ -8,8 +8,8 @@ import { IRefundRejectReason } from '../../interfaces/IRefundRejectReason';
 import { OrderslistService } from '../../services/orderslist.service';
 import { NotificationService } from '../../services/notification/notification.service';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
-import { PaymentLibComponent } from '../../payment-lib.component';
-import { ActivatedRoute,Router } from '@angular/router';
+import type { PaymentLibComponent } from '../../payment-lib.component';
+import { ActivatedRoute, Router } from '@angular/router';
 import { INotificationPreview } from '../../interfaces/INotificationPreview';
 
 @Component({
@@ -23,7 +23,7 @@ export class ProcessRefundComponent implements OnInit {
 
   processRefundForm: FormGroup;
 
-  errorMessage =  this.getErrorMessage(false, '', '', '');
+  errorMessage = this.getErrorMessage(false, '', '', '');
   sendmeback: string = null;
   viewStatus: string;
   refundActionList: IRefundAction[] = [];
@@ -53,13 +53,13 @@ export class ProcessRefundComponent implements OnInit {
   notificationPreview: boolean = false;
   notificationPreviewObj: INotificationPreview;
   constructor(private RefundsService: RefundsService,
-              private paymentViewService: PaymentViewService,
-              private formBuilder: FormBuilder,
-              private OrderslistService: OrderslistService,
-              private notificationService: NotificationService,
-              private paymentLibComponent: PaymentLibComponent,
-              private router: Router,
-              private activeRoute: ActivatedRoute) {
+    private paymentViewService: PaymentViewService,
+    private formBuilder: FormBuilder,
+    private OrderslistService: OrderslistService,
+    private notificationService: NotificationService,
+    @Inject('PAYMENT_LIB') private paymentLibComponent: PaymentLibComponent,
+    private router: Router,
+    private activeRoute: ActivatedRoute) {
   }
 
   ngOnInit() {
@@ -92,22 +92,22 @@ export class ProcessRefundComponent implements OnInit {
         Validators.pattern('^([a-zA-Z0-9.\\s]*)$'),
       ])),
     });
-   this.ccdCaseNumber = this.refundlistsource.ccd_case_number;
+    this.ccdCaseNumber = this.refundlistsource.ccd_case_number;
 
-   if((typeof this.paymentLibComponent.TAKEPAYMENT === 'string' && this.paymentLibComponent.TAKEPAYMENT === 'false') || (typeof this.paymentLibComponent.TAKEPAYMENT === 'boolean' && !this.paymentLibComponent.TAKEPAYMENT) ) {
-    this.isFromRefundListPage = true;
-   }
-   this.paymentViewService.getPartyDetails(this.ccdCaseNumber).subscribe(
-    response => {
-      this.cpoDetails = JSON.parse(response).content;
-
-    },
-    (error: any) => {
-      this.errorMessage = <any>error.replace(/"/g,"");
-      this.isCPODown = true;
+    if((typeof this.paymentLibComponent.TAKEPAYMENT === 'string' && this.paymentLibComponent.TAKEPAYMENT === 'false') || (typeof this.paymentLibComponent.TAKEPAYMENT === 'boolean' && !this.paymentLibComponent.TAKEPAYMENT) ) {
+      this.isFromRefundListPage = true;
     }
-  );
-  this.getTemplateInstructionType(this.paymentObj,this.refundlistsource.payment_reference);
+    this.paymentViewService.getPartyDetails(this.ccdCaseNumber).subscribe(
+      response => {
+        this.cpoDetails = JSON.parse(response).content[0];
+
+      },
+      (error: any) => {
+        this.errorMessage = <any>error.replace(/"/g, "");
+        this.isCPODown = true;
+      }
+    );
+    this.getTemplateInstructionType(this.paymentObj, this.refundlistsource.payment_reference);
   }
 
   checkRefundActions(code: string) {
@@ -116,7 +116,7 @@ export class ProcessRefundComponent implements OnInit {
     this.isReasonEmpty = false;
     this.isReasonInvalid = false;
     this.refundRejectReasonHasError = false;
-    if(code === 'Return to caseworker') {
+    if (code === 'Return to caseworker') {
       this.isConfirmButtondisabled = true;
       this.isSendMeBackClicked = true;
       this.isRejectClicked = false;
@@ -147,7 +147,7 @@ export class ProcessRefundComponent implements OnInit {
     }
   }
 
-  getNotificationPreviewObj(notificationPreviewObj : INotificationPreview){
+  getNotificationPreviewObj(notificationPreviewObj: INotificationPreview) {
     this.notificationPreviewObj = notificationPreviewObj;
   }
 
@@ -160,10 +160,10 @@ export class ProcessRefundComponent implements OnInit {
 
     if (this.processRefundForm.dirty && controls.refundActionField.valid
       && (controls.refundActionField.value == 'Approve'
-      || (controls.refundActionField.value == 'Reject' && controls.refundRejectReasonField.valid && controls.refundRejectReasonField.value != 'RE005')
-      || (controls.refundActionField.value == 'Reject' && controls.refundRejectReasonField.value == 'RE005' && controls.enterReasonField.valid)
-      || (controls.refundActionField.value == 'Return to caseworker' && controls.sendMeBackField.valid))) {
-      if (controls.refundActionField.value === 'Approve'){
+        || (controls.refundActionField.value == 'Reject' && controls.refundRejectReasonField.valid && controls.refundRejectReasonField.value != 'RE005')
+        || (controls.refundActionField.value == 'Reject' && controls.refundRejectReasonField.value == 'RE005' && controls.enterReasonField.valid)
+        || (controls.refundActionField.value == 'Return to caseworker' && controls.sendMeBackField.valid))) {
+      if (controls.refundActionField.value === 'Approve') {
         status = 'APPROVE';
         if (this.notificationPreviewObj) {
           processRefundRequest = {
@@ -276,31 +276,31 @@ export class ProcessRefundComponent implements OnInit {
         }
       );
     } else {
-      if(controls.refundActionField.value == "") {
+      if (controls.refundActionField.value == "") {
         this.resetForm([true, false, false, false, false, false, false, false], 'action');
       }
-      if(controls.refundActionField.value == 'Reject' && controls.refundRejectReasonField.value == "") {
+      if (controls.refundActionField.value == 'Reject' && controls.refundRejectReasonField.value == "") {
         this.resetForm([false, true, false, false, false, false, false, false], 'rejectReason');
       }
-      if(controls.refundActionField.value == 'Return to caseworker') {
-        if(controls.sendMeBackField.value == '' ) {
+      if (controls.refundActionField.value == 'Return to caseworker') {
+        if (controls.sendMeBackField.value == '') {
           this.resetForm([false, false, true, false, false, false, false, false], 'addAreason');
         }
-        if(controls.sendMeBackField.value != '' && controls.sendMeBackField.invalid ) {
+        if (controls.sendMeBackField.value != '' && controls.sendMeBackField.invalid) {
           this.resetForm([false, false, false, true, false, false, false, false], 'addAreason');
         }
-        if(processFormError && processFormError.minlength && processFormError.minlength.actualLength < 3 ) {
+        if (processFormError && processFormError.minlength && processFormError.minlength.actualLength < 3) {
           this.resetForm([false, false, false, false, true, false, false, false], 'addAreason');
         }
-        if(processFormError && processFormError.maxlength && processFormError.maxlength.actualLength > 255 ) {
+        if (processFormError && processFormError.maxlength && processFormError.maxlength.actualLength > 255) {
           this.resetForm([false, false, false, false, false, true, false, false], 'addAreason');
         }
       }
-      if(controls.refundActionField.value == 'Reject' && controls.refundRejectReasonField.value == 'RE005') {
-        if(controls.enterReasonField.value === "") {
+      if (controls.refundActionField.value == 'Reject' && controls.refundRejectReasonField.value == 'RE005') {
+        if (controls.enterReasonField.value === "") {
           this.resetForm([false, false, false, false, false, false, true, false], 'enterReason');
         }
-        if(controls.enterReasonField.value!== "" && controls.enterReasonField.invalid) {
+        if (controls.enterReasonField.value !== "" && controls.enterReasonField.invalid) {
           this.resetForm([false, false, false, false, false, false, false, true], 'enterReason');
         }
       }
@@ -341,27 +341,27 @@ export class ProcessRefundComponent implements OnInit {
     }
   }
   loadRefundsHomePage() {
-    if(typeof this.paymentLibComponent.TAKEPAYMENT === 'string' && this.paymentLibComponent.TAKEPAYMENT === 'false') {
+    if (typeof this.paymentLibComponent.TAKEPAYMENT === 'string' && this.paymentLibComponent.TAKEPAYMENT === 'false') {
       //window.location.href='/refund-list?takePayment=false&refundlist=true';
       this.paymentLibComponent.viewName = 'refund-list';
-     }
-     else {
+    }
+    else {
       this.OrderslistService.setnavigationPage('casetransactions');
       this.OrderslistService.setisFromServiceRequestPage(false);
-      this.paymentLibComponent.VIEW ='case-transactions';
+      this.paymentLibComponent.VIEW = 'case-transactions';
       this.paymentLibComponent.viewName = 'case-transactions';
       this.paymentLibComponent.ISBSENABLE = true;
       this.paymentLibComponent.isRefundStatusView = false;
-     }
+    }
   }
- redirecttoRefundListPage() {
-   if((typeof this.paymentLibComponent.TAKEPAYMENT === 'string' && this.paymentLibComponent.TAKEPAYMENT === 'false') || (typeof this.paymentLibComponent.TAKEPAYMENT === 'boolean' && !this.paymentLibComponent.TAKEPAYMENT) ) {
-   // window.location.href='/refund-list?takePayment=false&refundlist=true';
-   this.paymentLibComponent.viewName = 'refund-list';
-   }
-   else {
-    this.loadRefundListPage();
-   }
+  redirecttoRefundListPage() {
+    if ((typeof this.paymentLibComponent.TAKEPAYMENT === 'string' && this.paymentLibComponent.TAKEPAYMENT === 'false') || (typeof this.paymentLibComponent.TAKEPAYMENT === 'boolean' && !this.paymentLibComponent.TAKEPAYMENT)) {
+      // window.location.href='/refund-list?takePayment=false&refundlist=true';
+      this.paymentLibComponent.viewName = 'refund-list';
+    }
+    else {
+      this.loadRefundListPage();
+    }
   }
   loadCaseTransactionPage() {
     this.OrderslistService.setnavigationPage('casetransactions');
@@ -372,19 +372,19 @@ export class ProcessRefundComponent implements OnInit {
   }
 
   resetForm(vals, field) {
-    if(field==='action' || field==='all') {
+    if (field === 'action' || field === 'all') {
       this.refundActionsHasError = vals[0];
     }
-    if(field==='rejectReason' || field==='all') {
+    if (field === 'rejectReason' || field === 'all') {
       this.refundRejectReasonHasError = vals[1];
     }
-    if(field==='addAreason' || field==='all') {
+    if (field === 'addAreason' || field === 'all') {
       this.isReasonFieldEmpty = vals[2];
       this.isReasonFieldInvalid = vals[3];
       this.reasonFieldMinHasError = vals[4];
       this.reasonFieldMaxHasError = vals[5];
     }
-    if(field==='enterReason' || field==='all') {
+    if (field === 'enterReason' || field === 'all') {
       this.isReasonEmpty = vals[6];
       this.isReasonInvalid = vals[7];
     }
@@ -392,10 +392,10 @@ export class ProcessRefundComponent implements OnInit {
 
   goToCaseReview() {
     const isPayBubble = this.paymentLibComponent.isFromPayBubble;
-    if(isPayBubble) {
+    if (isPayBubble) {
       this.loadCaseTransactionPage();
     } else {
-      this.router.navigate([`/cases/case-details/${this.ccdCaseNumber}`], {relativeTo: this.activeRoute});
+      this.router.navigate([`/cases/case-details/${this.ccdCaseNumber}`], { relativeTo: this.activeRoute });
     }
   }
 

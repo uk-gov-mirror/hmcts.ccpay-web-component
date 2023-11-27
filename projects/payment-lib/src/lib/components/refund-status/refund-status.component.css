@@ -25,7 +25,7 @@
 
   .govuk-warning-text__text,
   .govuk-label--s,
-  .hmcts-currency-input__symbol {
+  .refund__symbol {
     font-size: 19px;
     font-weight: 400;
   }
@@ -73,6 +73,17 @@
 .govuk-panel__title {
   font-size: 5rem;
 }
+
+.govuk-panel_refund_title {
+  margin-top: 0;
+  margin-bottom: 30px;
+  color: white;
+  font-family: nta,Arial,sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-weight: 700;
+  font-size: 48px;
+}
+
 .govuk-body-m, .govuk-body {
   font-size: 2.1875rem;
 }
@@ -145,4 +156,19 @@
 
 .whitespace-inherit {
   white-space: inherit !important;
+}
+
+.hmcts-currency-input__symbol {
+  font-family: nta,Arial,sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
+  line-height: initial;
+  position: absolute;
+  font-weight: 200;
+  padding: 8px 10px;
+  height: 40px;
+  box-sizing: border-box;
+  background-color: #dee0e2;
+  border: 2px solid #0b0c0c;
 }

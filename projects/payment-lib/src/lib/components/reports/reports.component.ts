@@ -26,7 +26,8 @@ export class ReportsComponent implements OnInit {
   isStartDateLesthanEndDate: Boolean = false;
   isDateBetwnMonth: Boolean = false;
   isDateRangeBetnWeek: Boolean = false;
-  errorMessage = this.errorHandlerService.getServerErrorMessage(false, false, '');
+  //errorMessage = this.errorHandlerService.getServerErrorMessage(false, false, '');
+  errorMessage = null;
   paymentGroups: IPaymentGroup[] = [];
 
   constructor(
@@ -35,7 +36,7 @@ export class ReportsComponent implements OnInit {
     private formBuilder: FormBuilder,
     private bulkScaningPaymentService: BulkScaningPaymentService,
     private paymentViewService: PaymentViewService) { }
-   
+
 
   ngOnInit() {
     this.fromValidation();
@@ -80,7 +81,7 @@ export class ReportsComponent implements OnInit {
     this.reportsForm = this.formBuilder.group({
       selectedreport: new FormControl('') ,
       startDate: new FormControl(''),
-      endDate: new FormControl('') 
+      endDate: new FormControl('')
     });
 }
 
@@ -104,7 +105,7 @@ downloadReport(){
             res.data= processedUnallocated;
           } else if(res['data'].length === 0 && selectedReportName === 'SURPLUS_AND_SHORTFALL' ) {
             res.data= shortFallsRptDefault;
-          } 
+          }
           if(result['data'].length > 0) {
             for( var i=0; i< res['data'].length; i++) {
               if(res['data'][i]["payment_asset_dcn"] !== undefined) {
@@ -125,7 +126,7 @@ downloadReport(){
                 res['data'][i]['payment_amount'] = this.convertToFloatValue(res['data'][i]['payment_amount']);
               }
             }
-          } 
+          }
           this.isDownLoadButtondisabled = false;
           this.xlFileService.exportAsExcelFile(res['data'], this.getFileName(this.reportsForm.get('selectedreport').value, selectedStartDate, selectedEndDate));
         },
@@ -224,9 +225,9 @@ downloadReport(){
       currentDate = formatDate(now, 'ddMMyy', loc),
       timestamp = `${currentDate}_${this.getTwodigit(now.getHours())}${this.getTwodigit(now.getMinutes())}${this.getTwodigit(now.getSeconds())}`,
       selectedOptionTxt = this.getCamelCaseString(selectedOption);
-      
+
       return selectedOptionTxt+'_'+stDt+'_To_'+enDt+'_Run_'+ timestamp;
-  } 
+  }
   tranformDate(strDate: string) {
     let result = '';
     if (strDate) {
@@ -240,32 +241,32 @@ downloadReport(){
   }
   getCamelCaseString(selectedOption) {
     let result;
-    switch(selectedOption) { 
-      case 'UNPROCESSED': { 
+    switch(selectedOption) {
+      case 'UNPROCESSED': {
         result = 'Unprocessed';
-        break; 
-      } 
-      case 'DATA_LOSS': { 
-        result = 'Data_Loss';
-        break; 
-      } 
-      case 'PROCESSED_UNALLOCATED': { 
-        result = 'Processed_Unallocated';
-        break; 
-      } 
-      case 'SURPLUS_AND_SHORTFALL': { 
-        result = 'Over Payment_Under Payment';
-        break; 
-      } 
-      case 'PAYMENT_FAILURE_EVENT': { 
-        result = 'Payment failure event';
-        break; 
+        break;
       }
-      default: { 
+      case 'DATA_LOSS': {
+        result = 'Data_Loss';
+        break;
+      }
+      case 'PROCESSED_UNALLOCATED': {
+        result = 'Processed_Unallocated';
+        break;
+      }
+      case 'SURPLUS_AND_SHORTFALL': {
+        result = 'Over Payment_Under Payment';
+        break;
+      }
+      case 'PAYMENT_FAILURE_EVENT': {
+        result = 'Payment failure event';
+        break;
+      }
+      default: {
         result = selectedOption;
-        break; 
-      } 
-   } 
+        break;
+      }
+   }
    return result;
   }
   applyDateFormat(res) {
@@ -296,7 +297,7 @@ downloadReport(){
   multiDateFormater(dateStr) {
    return dateStr.split(',').map((date) => formatDate(date, this.fmt, this.loc)).join(',');
   }
-  
+
   convertToFloatValue(amt) {
     return amt ? Number.parseFloat(amt).toFixed(2): '0.00';
   }

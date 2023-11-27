@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {LoggerService} from '../shared/logger/logger.service';
-import {ErrorHandlerService} from '../shared/error-handler.service';
-import {PaymentLibService} from '../../payment-lib.service';
-import {Observable} from 'rxjs/Observable';
-import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
-import {catchError} from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { LoggerService } from '../shared/logger/logger.service';
+import { ErrorHandlerService } from '../shared/error-handler.service';
+import { PaymentLibService } from '../../payment-lib.service';
+import { Observable } from 'rxjs';
+import { IPaymentGroup } from '../../interfaces/IPaymentGroup';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +13,10 @@ import {catchError} from 'rxjs/operators';
 export class CaseTransactionsService {
 
   constructor(private http: HttpClient,
-              private logger: LoggerService,
-              private errorHandlerService: ErrorHandlerService,
-              private paymentLibService: PaymentLibService
-              ) { }
+    private logger: LoggerService,
+    private errorHandlerService: ErrorHandlerService,
+    private paymentLibService: PaymentLibService
+  ) { }
 
   getPaymentGroups(ccdCaseNumber: string): Observable<IPaymentGroup[]> {
     this.logger.info('Case-transactions-service getPaymentGroups for: ', ccdCaseNumber);
