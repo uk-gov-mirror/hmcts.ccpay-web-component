@@ -3,7 +3,7 @@
     margin-top: 20px;
     margin-left: 2px;
     margin-right: 2px;
-    margin-bottom:20px;
+    margin-bottom: 20px;
     padding: 0.5em;
     font-size: 19px;
     font-weight: 200;
@@ -17,13 +17,12 @@
     background-color: #dee0e2;
     box-shadow: 0 2px 0 #858688;
     color: #0b0c0c;
-    margin-right:0.5em;
+    margin-right: 0.5em;
   }
-
 
   .govuk-warning-text__text,
   .govuk-label--s,
-  .hmcts-currency-input__symbol {
+  .label_remission__symbol {
     font-size: 19px;
     font-weight: 400;
   }
@@ -61,31 +60,32 @@
   .govuk-panel--confirmation {
     color: #FFFFFF;
     background: #00703C;
-}
-.govuk-panel__title {
-  font-size: 5rem;
-}
-.govuk-body-m, .govuk-body {
-  font-size: 2.1875rem;
-}
+  }
+  .govuk-panel__title {
+    font-size: 5rem;
+  }
+  .govuk-body-m, .govuk-body {
+    font-size: 2.1875rem;
+  }
 
-.govuk-radios__item {
-  clear:initial !important;
-  display:inline-block;
-  width: 45% !important;
-}
+  .govuk-radios__item {
+    clear: initial !important;
+    display: inline-block;
+    width: 45% !important;
+  }
 
-.govuk-radios__conditional {
-  padding-top: 12px !important;
-}
+  .govuk-radios__conditional {
+    padding-top: 12px !important;
+  }
 
-.right {
-  float: right;
-  cursor: pointer;
-}
+  .right {
+    float: right;
+    cursor: pointer;
+  }
 
-.radio { 
-  float: right; }
+  .radio {
+    float: right;
+  }
 }
 
 .govuk-input, .govuk-font19px {
@@ -97,8 +97,17 @@
   font-weight: 400;
  }
 
- .govuk-input--width-10 {
+.govuk-input--width-10 {
   max-width: 50ex;
+}
+
+.govuk-input--width-small{
+  max-width: 110px;
+}
+
+.govuk-input-width-10-left{
+  max-width: 50ex;
+  padding-left: 40px;
 }
 
 .govuk-label--m {
@@ -111,6 +120,16 @@
 
 .govuk-error-summary__title {
   font-size: 24px !important;
+}
+
+.govuk-panel_remission_title {
+  margin-top: 0;
+  margin-bottom: 30px;
+  color: white;
+  font-family: nta,Arial,sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-weight: 700;
+  font-size: 48px;
 }
 
 .white {
@@ -186,3 +205,17 @@
   cursor: pointer;
 }
 
+.hmcts-currency-input__symbol {
+  font-family: nta,Arial,sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
+  line-height: initial;
+  position: absolute;
+  font-weight: 200;
+  padding: 8px 10px;
+  height: 40px;
+  box-sizing: border-box;
+  background-color: #dee0e2;
+  border: 2px solid #0b0c0c;
+}

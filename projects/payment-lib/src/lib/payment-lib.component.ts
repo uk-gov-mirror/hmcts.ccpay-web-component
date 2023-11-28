@@ -1,8 +1,9 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, forwardRef } from '@angular/core';
 import { PaymentLibService } from './payment-lib.service';
 import { IBSPayments } from './interfaces/IBSPayments';
 import { OrderslistService } from './services/orderslist.service';
 import { IPayment } from './interfaces/IPayment';
+import { PaymentViewComponent } from './components/payment-view/payment-view.component';
 
 @Component({
   selector: 'ccpay-payment-lib',
@@ -43,7 +44,8 @@ import { IPayment } from './interfaces/IPayment';
     <ccpay-reports *ngIf="viewName === 'reports'"
     [ISPAYMENTSTATUSENABLED] = "ISPAYMENTSTATUSENABLED"
     ></ccpay-reports>
-    `
+    `,
+  providers: [{ provide: 'PAYMENT_LIB', useExisting: forwardRef(() => PaymentLibComponent) }]
 })
 
 export class PaymentLibComponent implements OnInit {
@@ -90,7 +92,7 @@ export class PaymentLibComponent implements OnInit {
   isRedirectFromCaseTransactionPage: string;
   isCallFromRefundList: boolean;
   isFromRefundStatusPage: boolean;
-  iscancelClicked : boolean;
+  iscancelClicked: boolean;
   isFromPaymentDetailPage: boolean;
   pbaPayOrderRef: IPayment;
   isTakePayment: boolean;
@@ -113,7 +115,7 @@ export class PaymentLibComponent implements OnInit {
     private OrderslistService: OrderslistService) { }
   ngAfterContentChecked(): void {
     this.cd.detectChanges();
- }
+  }
 
 
   ngOnInit() {
@@ -124,7 +126,7 @@ export class PaymentLibComponent implements OnInit {
     this.paymentLibService.setNoticationApiRootUrl(this.NOTIFICATION_API_ROOT);
     this.paymentLibService.setCardPaymentReturnUrl(this.CARDPAYMENTRETURNURL);
 
-    if(this.LOGGEDINUSERROLES.length > 0) {
+    if (this.LOGGEDINUSERROLES.length > 0) {
       this.OrderslistService.setUserRolesList(this.LOGGEDINUSERROLES);
     }
     if (this.PAYMENT_GROUP_REF) {
@@ -148,7 +150,7 @@ export class PaymentLibComponent implements OnInit {
     if (this.isTakePayment) {
       this.TAKEPAYMENT = true;
     }
-    if(this.API_ROOT == 'api/payment-history') {
+    if (this.API_ROOT == 'api/payment-history') {
       this.isFromPayBubble = true;
     }
   }

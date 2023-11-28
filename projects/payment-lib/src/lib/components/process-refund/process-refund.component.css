@@ -85,3 +85,14 @@
     margin: 2em;
     width: 97%;
   }
+
+.heading-refunds-xlarge {
+  color: white;
+  font-family: "nta",Arial,sans-serif;
+  font-weight: 700;
+  text-transform: none;
+  font-size: 32px;
+  line-height: 1.09375;
+  margin-top: 0.46875em;
+  margin-bottom: 0.9375em;
+}

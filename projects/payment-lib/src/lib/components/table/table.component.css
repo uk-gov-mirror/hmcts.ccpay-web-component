@@ -39,7 +39,33 @@
     cursor: pointer;
     font-family: inherit;
   }
-  
+
+  .mat-mdc-header-cell {
+    text-align: left;
+    font-weight: 700;
+    padding: 10px 10px 10px 0;
+    word-wrap: break-word;
+    font-size: 19px;
+    line-height: 25px;
+    color: #0b0c0c;
+    cursor: pointer;
+    font-family: inherit;
+  }
+
+  .mat-mdc-row, mat-header-row, mat-footer-row {
+     border-bottom-width: 1px;
+     border-style: solid;
+     align-items: center;
+     box-sizing: border-box;
+   }
+
+  .row.mat-mdc-row {
+    border-bottom-width: 1px;
+    border-style: solid;
+    align-items: center;
+    box-sizing: border-box;
+  }
+
   .dropdpwn {
     display: inline-block; 
     margin-right: 10px;
@@ -72,8 +98,9 @@
   }
 
   .float-right-padding {
-    float: right;
+    float: initial;
     padding-right: 2em;
+    padding-left: 8em;
   }
   .float-left-padding {
     padding-left: 12em;

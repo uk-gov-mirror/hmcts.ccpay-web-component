@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { PaymentLibComponent } from '../../payment-lib.component';
+import { Component, OnInit, Input, Inject, forwardRef } from '@angular/core';
+import type { PaymentLibComponent } from '../../payment-lib.component';
 import { IPaymentGroup } from '../../interfaces/IPaymentGroup';
 import { CaseTransactionsService } from '../../services/case-transactions/case-transactions.service';
 import { BulkScaningPaymentService } from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
@@ -11,13 +11,32 @@ import { IRemission } from '../../interfaces/IRemission';
 import { IPaymentView } from '../../interfaces/IPaymentView';
 import { IOrderReferenceFee } from '../../interfaces/IOrderReferenceFee';
 import { Router } from '@angular/router';
+import { ServiceRequestComponent } from '../service-request/service-request.component';
+import { UnprocessedPaymentsComponent } from '../unprocessed-payments/unprocessed-payments.component';
+import { CommonModule } from '@angular/common';
+import { AddRemissionComponent } from '../add-remission/add-remission.component';
+import { RefundStatusComponent } from '../refund-status/refund-status.component';
+import { CcdHyphensPipe } from '../../pipes/ccd-hyphens.pipe';
+import { CapitalizePipe } from '../../pipes/capitalize.pipe';
+import { FormsModule } from '@angular/forms';
 
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 
 @Component({
   selector: 'ccpay-case-transactions',
   templateUrl: './case-transactions.component.html',
-  styleUrls: ['./case-transactions.component.css']
+  styleUrls: ['./case-transactions.component.css'],
+  imports: [
+    CommonModule,
+    forwardRef(() => ServiceRequestComponent),
+    forwardRef(() => UnprocessedPaymentsComponent),
+    forwardRef(() => AddRemissionComponent),
+    RefundStatusComponent,
+    CcdHyphensPipe,
+    CapitalizePipe,
+    FormsModule
+  ],
+  standalone: true
 })
 export class CaseTransactionsComponent implements OnInit {
   @Input('LOGGEDINUSERROLES') LOGGEDINUSERROLES: string[];
@@ -101,19 +120,19 @@ export class CaseTransactionsComponent implements OnInit {
     private paymentViewService: PaymentViewService,
     private bulkScaningPaymentService: BulkScaningPaymentService,
     private caseTransactionsService: CaseTransactionsService,
-    private paymentLibComponent: PaymentLibComponent,
+    @Inject('PAYMENT_LIB') private paymentLibComponent: PaymentLibComponent,
     private OrderslistService: OrderslistService
   ) { }
 
   ngOnInit() {
-    this.navigationpage  = '';
-    if(this.OrderslistService.getpaymentPageView() !== null) {
+    this.navigationpage = '';
+    if (this.OrderslistService.getpaymentPageView() !== null) {
       this.OrderslistService.getpaymentPageView().subscribe((data) => this.paymentView = data);
     }
-    if((this.LOGGEDINUSERROLES === undefined || this.LOGGEDINUSERROLES.length === 0 )&&this.OrderslistService.getUserRolesList() !== null) {
+    if ((this.LOGGEDINUSERROLES === undefined || this.LOGGEDINUSERROLES.length === 0) && this.OrderslistService.getUserRolesList() !== null) {
       this.OrderslistService.getUserRolesList().subscribe((data) => this.LOGGEDINUSERROLES = data);
     }
-    if(this.OrderslistService.getnavigationPageValue() !== null) {
+    if (this.OrderslistService.getnavigationPageValue() !== null) {
       this.OrderslistService.getnavigationPageValue().subscribe((data) => this.navigationpage = data);
     }
 
@@ -130,7 +149,7 @@ export class CaseTransactionsComponent implements OnInit {
     this.takePayment = this.paymentLibComponent.TAKEPAYMENT;
 
     const serviceRequest = this.paymentLibComponent.SERVICEREQUEST;
-    if ( serviceRequest !== undefined && serviceRequest.toString() === 'true' ) {
+    if (serviceRequest !== undefined && serviceRequest.toString() === 'true') {
       this.serviceRequestValue = 'true';
     } else {
       this.serviceRequestValue = 'false';
@@ -148,7 +167,7 @@ export class CaseTransactionsComponent implements OnInit {
 
       this.caseTransactionsService.getPaymentGroups(this.ccdCaseNumber).subscribe(
         paymentGroups => {
-          this.isAnyFeeGroupAvilable =true;
+          this.isAnyFeeGroupAvilable = true;
           this.paymentGroups = paymentGroups['payment_groups'];
           this.calculateAmounts();
           this.calculateOrderFeesAmounts();
@@ -163,7 +182,7 @@ export class CaseTransactionsComponent implements OnInit {
 
               },
               (error: any) => {
-                this.errorMessage = <any>error ? error.replace(/"/g,"") : "";
+                this.errorMessage = <any>error ? error.replace(/"/g, "") : "";
                 this.isCPODown = true;
               }
             );
@@ -173,7 +192,7 @@ export class CaseTransactionsComponent implements OnInit {
 
         },
         (error: any) => {
-          this.errorMessage = <any>error ? error.replace(/"/g,"") : "";
+          this.errorMessage = <any>error ? error.replace(/"/g, "") : "";
           this.isAnyFeeGroupAvilable = false;
           this.setDefaults();
         }
@@ -181,7 +200,7 @@ export class CaseTransactionsComponent implements OnInit {
     } else {
       this.caseTransactionsService.getPaymentGroups(this.ccdCaseNumber).subscribe(
         paymentGroups => {
-          this.isAnyFeeGroupAvilable =true;
+          this.isAnyFeeGroupAvilable = true;
           this.paymentGroups = paymentGroups['payment_groups'];
           this.calculateAmounts();
           this.calculateOrderFeesAmounts();
@@ -192,7 +211,7 @@ export class CaseTransactionsComponent implements OnInit {
 
             },
             (error: any) => {
-              this.errorMessage = <any>error ? error.replace(/"/g,"") : "";
+              this.errorMessage = <any>error ? error.replace(/"/g, "") : "";
               this.setDefaults();
               this.isCPODown = true;
             }
@@ -200,18 +219,18 @@ export class CaseTransactionsComponent implements OnInit {
 
         },
         (error: any) => {
-          this.errorMessage = <any>error ? error.replace(/"/g,"") : "";
+          this.errorMessage = <any>error ? error.replace(/"/g, "") : "";
           this.isAnyFeeGroupAvilable = false;
           this.setDefaults();
         }
       );
     }
 
-    if( this.paymentGroups !== undefined) {
+    if (this.paymentGroups !== undefined) {
       this.checkForExceptionRecord();
     }
 
-    if(this.OrderslistService.getisFromServiceRequestPages() !== null) {
+    if (this.OrderslistService.getisFromServiceRequestPages() !== null) {
       this.OrderslistService.getisFromServiceRequestPages().subscribe((data) => this.isFromServiceRequestPage = data);
     }
 
@@ -304,8 +323,8 @@ export class CaseTransactionsComponent implements OnInit {
 
       if (paymentGroup.payments) {
         const isFeeOverPaymentExist = this.overPaymentAmount === 0;
-        paymentGroup.payments.forEach((payment) => {
-          if(isFeeOverPaymentExist) {
+        paymentGroup.payments.forEach(payment => {
+          if (isFeeOverPaymentExist) {
             this.overPaymentAmount = this.overPaymentAmount + payment.over_payment
           }
           if (payment.status.toUpperCase() === 'SUCCESS') {
@@ -321,7 +340,7 @@ export class CaseTransactionsComponent implements OnInit {
       } else if (paymentGroup.service_request_status === 'Partially paid' || paymentGroup.service_request_status === 'Not paid') {
         this.orderStatus = paymentGroup.service_request_status;
         this.orderAddBtnEnable = true;
-      } else if (paymentGroup.service_request_status === 'Disputed'){
+      } else if (paymentGroup.service_request_status === 'Disputed') {
         this.orderStatus = paymentGroup.service_request_status;
         this.orderAddBtnEnable = true;
       }
@@ -413,12 +432,12 @@ export class CaseTransactionsComponent implements OnInit {
   }
 
   redirectToOrderFeeSearchPage(event: any, orderef: any) {
-    if(orderef.orderAddBtnEnable) {
-    event.preventDefault();
-    this.paymentLibComponent.bspaymentdcn = null;
-    this.paymentLibComponent.paymentGroupReference = orderef.orderRefId;
-    this.paymentLibComponent.isTurnOff = this.isTurnOff;
-    this.paymentLibComponent.viewName = 'fee-summary';
+    if (orderef.orderAddBtnEnable) {
+      event.preventDefault();
+      this.paymentLibComponent.bspaymentdcn = null;
+      this.paymentLibComponent.paymentGroupReference = orderef.orderRefId;
+      this.paymentLibComponent.isTurnOff = this.isTurnOff;
+      this.paymentLibComponent.viewName = 'fee-summary';
     }
   }
 
@@ -628,33 +647,33 @@ export class CaseTransactionsComponent implements OnInit {
   }
 
   addRemission(fee: IFee) {
-    if(this.chkForAddRemission(fee.code)) {
-    this.feeId = fee;
-    this.viewStatus = 'addremission';
-    this.paymentViewService.getApportionPaymentDetails(this.payment.reference).subscribe(
-      paymentGroup => {
-        this.paymentGroup = paymentGroup;
+    if (this.chkForAddRemission(fee.code)) {
+      this.feeId = fee;
+      this.viewStatus = 'addremission';
+      this.paymentViewService.getApportionPaymentDetails(this.payment.reference).subscribe(
+        paymentGroup => {
+          this.paymentGroup = paymentGroup;
 
-        this.paymentGroup.payments = this.paymentGroup.payments.filter
-          (paymentGroupObj => paymentGroupObj['reference'].includes(this.paymentLibComponent.paymentReference));
-        this.payment = this.paymentGroup.payments[0];
-        // const paymentAllocation = this.paymentGroup.payments[0].payment_allocation;
-        // this.isStatusAllocated = paymentAllocation.length > 0 && paymentAllocation[0].allocation_status === 'Allocated' || paymentAllocation.length === 0;
-      },
-      (error: any) => this.errorMessage = error? error.replace(/"/g,"") : ""
+          this.paymentGroup.payments = this.paymentGroup.payments.filter
+            (paymentGroupObj => paymentGroupObj['reference'].includes(this.paymentLibComponent.paymentReference));
+          this.payment = this.paymentGroup.payments[0];
+          // const paymentAllocation = this.paymentGroup.payments[0].payment_allocation;
+          // this.isStatusAllocated = paymentAllocation.length > 0 && paymentAllocation[0].allocation_status === 'Allocated' || paymentAllocation.length === 0;
+        },
+        (error: any) => this.errorMessage = error ? error.replace(/"/g, "") : ""
       );
     }
   }
 
-  addRefundForRemission(payment: IPayment, remission: IRemission[],fees:any) {
-     this.paymentViewService.getApportionPaymentDetails(payment.reference).subscribe(
+  addRefundForRemission(payment: IPayment, remission: IRemission[], fees: any) {
+    this.paymentViewService.getApportionPaymentDetails(payment.reference).subscribe(
       paymentGroup => {
         this.paymentGroup = paymentGroup;
         this.paymentGroup.payments = paymentGroup.payments.filter
           (paymentGroupObj => paymentGroupObj.reference === payment.reference);
         this.payment = this.paymentGroup.payments[0];
         this.remissions = remission;
-        this.remissionFeeAmt = fees.filter(data=>data.code === this.remissions['fee_code'])[0].net_amount;
+        this.remissionFeeAmt = fees.filter(data => data.code === this.remissions['fee_code'])[0].net_amount;
         this.viewStatus = 'addrefundforremission';
         // const paymentAllocation = this.paymentGroup.payments[0].payment_allocation;
         // this.isStatusAllocated = paymentAllocation.length > 0 && paymentAllocation[0].allocation_status === 'Allocated' || paymentAllocation.length === 0;
@@ -753,13 +772,13 @@ export class CaseTransactionsComponent implements OnInit {
 
   issueRefund(payment: IPayment) {
     if (payment !== null && payment !== undefined) {
-    if(this.chkIssueRefundBtnEnable(payment)) {
-    this.viewStatus = 'issuerefund';
-    this.payment = payment;
-    this.paymentLibComponent.isFromServiceRequestPage = true;
-    this.isRefundRemission = true;
+      if (this.chkIssueRefundBtnEnable(payment)) {
+        this.viewStatus = 'issuerefund';
+        this.payment = payment;
+        this.paymentLibComponent.isFromServiceRequestPage = true;
+        this.isRefundRemission = true;
+      }
     }
-  }
   }
 
   chkForAddRemission(feeCode: string): boolean {
@@ -778,22 +797,22 @@ export class CaseTransactionsComponent implements OnInit {
   }
 
   chkForPBAPayment(): boolean {
-    if (this.orderDetail !== null &&  this.orderDetail !== undefined) {
-    this.orderDetail.forEach(orderDetail => {
-      if (orderDetail.payments) {
-        orderDetail.payments.forEach(payment => {
-          if (payment.method.toLocaleLowerCase() === 'payment by account' && this.allowFurtherAccessAfter4Days(payment)) {
-            this.isPBA = true;
-          }
-        });
-      }
-    });
-    if (this.isPBA) {
-      return true;
-    } else {
-      return false;
-    };
-  }
+    if (this.orderDetail !== null && this.orderDetail !== undefined) {
+      this.orderDetail.forEach(orderDetail => {
+        if (orderDetail.payments) {
+          orderDetail.payments.forEach(payment => {
+            if (payment.method.toLocaleLowerCase() === 'payment by account' && this.allowFurtherAccessAfter4Days(payment)) {
+              this.isPBA = true;
+            }
+          });
+        }
+      });
+      if (this.isPBA) {
+        return true;
+      } else {
+        return false;
+      };
+    }
   }
 
   chkIssueRefundBtnEnable(payment: IPayment): boolean {
@@ -814,23 +833,23 @@ export class CaseTransactionsComponent implements OnInit {
   }
 
   chkIsRefundRemissionBtnEnable(): boolean {
-    if (this.orderDetail !== null &&  this.orderDetail !== undefined) {
+    if (this.orderDetail !== null && this.orderDetail !== undefined) {
       this.paymentLibComponent.isFromServiceRequestPage = true;
-    this.orderDetail.forEach(orderDetail => {
-      if (orderDetail.payments) {
-        orderDetail.payments.forEach(payment => {
-          if (payment.method.toLocaleLowerCase() === 'payment by account' && payment.status.toLocaleLowerCase() === 'success' && this.allowFurtherAccessAfter4Days(payment)) {
-            this.isRefundRemissionBtnEnable = true;
-          }
-        });
-      }
-    });
-    if (this.isRefundRemissionBtnEnable) {
-      return true;
-    } else {
-      return false;
-    };
-  }
+      this.orderDetail.forEach(orderDetail => {
+        if (orderDetail.payments) {
+          orderDetail.payments.forEach(payment => {
+            if (payment.method.toLocaleLowerCase() === 'payment by account' && payment.status.toLocaleLowerCase() === 'success' && this.allowFurtherAccessAfter4Days(payment)) {
+              this.isRefundRemissionBtnEnable = true;
+            }
+          });
+        }
+      });
+      if (this.isRefundRemissionBtnEnable) {
+        return true;
+      } else {
+        return false;
+      };
+    }
   }
 
   check4AllowedRoles2AccessRefund = (): boolean => {
@@ -846,9 +865,9 @@ export class CaseTransactionsComponent implements OnInit {
 
   allowFurtherAccessAfter4Days = (payment: IPayment): boolean => {
     if (payment !== null && payment !== undefined) {
-    let tmp4DayAgo = new Date();
-    tmp4DayAgo.setDate(tmp4DayAgo.getDate() - 4);
-    return tmp4DayAgo >= new Date(payment.date_created);
+      let tmp4DayAgo = new Date();
+      tmp4DayAgo.setDate(tmp4DayAgo.getDate() - 4);
+      return tmp4DayAgo >= new Date(payment.date_created);
     }
   }
 

@@ -83,11 +83,10 @@
 
     .govuk-warning-text__text,
     .govuk-label--s,
-    .hmcts-currency-input__symbol {
+    .label_payment__symbol {
       font-size: 19px;
       font-weight: 400;
     }
-
     .inline-error-class {
       outline: 3px solid #a71414;
       outline-offset: 0;
@@ -138,11 +137,39 @@
   .radio { 
     float: right;
   }
-    .white {
-      color: #FFFFFF;
-    }
+  .white {
+    color: #FFFFFF;
+  }
 }
 
 .whitespace-inherit {
   white-space: inherit !important;
+}
+
+.govuk-panel_view_title {
+  margin-top: 0;
+  margin-bottom: 30px;
+  color: white;
+  font-family: nta,Arial,sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-weight: 700;
+}
+
+.white {
+  color: white;
+}
+
+.hmcts-currency-input__symbol {
+  font-family: nta,Arial,sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
+  line-height: initial;
+  position: absolute;
+  font-weight: 200;
+  padding: 8px 10px;
+  height: 40px;
+  box-sizing: border-box;
+  background-color: #dee0e2;
+  border: 2px solid #0b0c0c;
 }

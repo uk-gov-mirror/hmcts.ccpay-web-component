@@ -1,6 +1,6 @@
-import { Component, OnInit, Input} from '@angular/core';
+import { Component, OnInit, Input, Inject } from '@angular/core';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
-import { PaymentLibComponent } from '../../payment-lib.component';
+import type { PaymentLibComponent } from '../../payment-lib.component';
 import { IserviceRequestCardPayment } from '../../interfaces/IserviceRequestCardPayment';
 import { IserviceRequestPbaPayment } from '../../interfaces/IserviceRequestPbaPayment';
 
@@ -32,35 +32,35 @@ export class PbaPaymentComponent implements OnInit {
   pbaAccountrPaymentResult: any;
   orgName: string = '';
 
-  constructor(private  paymentLibComponent: PaymentLibComponent,
-    private paymentViewService: PaymentViewService) {}
+  constructor(@Inject('PAYMENT_LIB') private paymentLibComponent: PaymentLibComponent,
+    private paymentViewService: PaymentViewService) { }
 
   ngOnInit() {
     this.pbaPayOrderRef = this.paymentLibComponent.pbaPayOrderRef;
     this.viewStatus = 'pba-payment';
     this.errorMsg = null;
     this.paymentViewService.getPBAaccountDetails()
-    .subscribe(
-      result => {
-        this.isGetPBAAccountSucceed = true;
-        this.orgName = result.organisationEntityResponse.name;
-        this.pbaAccountList = result.organisationEntityResponse.paymentAccount;
-      },
-      error => {
-        this.errorMsg = error;
-      }
-    );
+      .subscribe(
+        result => {
+          this.isGetPBAAccountSucceed = true;
+          this.orgName = result.organisationEntityResponse.name;
+          this.pbaAccountList = result.organisationEntityResponse.paymentAccount;
+        },
+        error => {
+          this.errorMsg = error;
+        }
+      );
 
   }
   selectpbaaccount(args) {
-    if(args.currentTarget.id === 'pbaAccountNumber') {
+    if (args.currentTarget.id === 'pbaAccountNumber') {
       this.isPBADropdownSelected = true;
       this.selectedPbaAccount = args.target.value;
     }
-    if(args.currentTarget.id === 'pbaAccountRef') {
+    if (args.currentTarget.id === 'pbaAccountRef') {
       this.pbaAccountRef = args.target.value;
     }
-    if(this.selectedPbaAccount !== '' && this.pbaAccountRef !== "") {
+    if (this.selectedPbaAccount !== '' && this.pbaAccountRef !== "") {
       this.isContinueButtondisabled = false;
     } else {
       this.isContinueButtondisabled = true;
@@ -69,15 +69,15 @@ export class PbaPaymentComponent implements OnInit {
 
   saveAndContinue() {
 
-    if(this.isPbaAccountSelected) {
+    if (this.isPbaAccountSelected) {
       this.isInSufficiantFund = false;
       this.isPBAAccountNotExist = false;
       this.isPBAServerError = false;
       this.isPBAAccountPaymentSuccess = false;
       this.isContinueButtondisabled = false;
-      if ( this.pbaAccountList.indexOf(this.selectedPbaAccount) !== -1 ) {
+      if (this.pbaAccountList.indexOf(this.selectedPbaAccount) !== -1 ) {
         const requestBody = new IserviceRequestPbaPayment(
-        this.selectedPbaAccount, this.pbaPayOrderRef.orderTotalFees, this.pbaAccountRef, this.orgName);
+          this.selectedPbaAccount, this.pbaPayOrderRef.orderTotalFees, this.pbaAccountRef, this.orgName);
 
         setTimeout(() => {
           this.paymentViewService.postPBAaccountPayment(this.pbaPayOrderRef.orderRefId, requestBody)
@@ -85,17 +85,17 @@ export class PbaPaymentComponent implements OnInit {
               r => {
                 try {
                   this.pbaAccountrPaymentResult = JSON.parse(r);
-                } catch(e) {
+                } catch (e) {
                   this.pbaAccountrPaymentResult = r;
                 }
                 this.isPBAAccountPaymentSuccess = true;
               },
               e => {
-                if(e.status == '402') {
+                if (e.status == '402') {
                   this.isInSufficiantFund = true;
-                } else if(e.status == '410') {
+                } else if (e.status == '410') {
                   this.isPBAAccountNotExist = true;
-                } else if(e.status == '412') {
+                } else if (e.status == '412') {
                   this.isPBAAccountHold = true;
                 } else {
                   this.isPBAServerError = true;
@@ -114,22 +114,22 @@ export class PbaPaymentComponent implements OnInit {
   }
   cardPayment() {
     this.isCardPaymentSuccess = true;
-    const requestBody = new IserviceRequestCardPayment (
+    const requestBody = new IserviceRequestCardPayment(
       this.pbaPayOrderRef.orderTotalFees);
     this.paymentViewService.postWays2PayCardPayment(this.pbaPayOrderRef.orderRefId, requestBody)
-    .subscribe(
-      result => {
-        const paymentUrl = JSON.parse(result).next_url;
-        window.location.href = paymentUrl;
-      },
-      error => {
-        this.isCardPaymentSuccess = false;
-      }
-    );
+      .subscribe(
+        result => {
+          const paymentUrl = JSON.parse(result).next_url;
+          window.location.href = paymentUrl;
+        },
+        error => {
+          this.isCardPaymentSuccess = false;
+        }
+      );
 
   }
   selectPaymentMethod(type: string) {
-    if(type === 'PBA') {
+    if (type === 'PBA') {
       this.isPbaAccountSelected = true;
       this.isCardPaymentSelected = false;
       this.isPBADropdownSelected = false

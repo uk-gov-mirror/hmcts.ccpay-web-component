@@ -160,10 +160,10 @@
         Take payment
     </button>
     <button *ngIf="bsPaymentDcnNumber" type="button" (click)="goToAllocatePage(outStandingAmount, isFeeAmountZero)" class="button govuk-!-margin-right-1">
-      <span *ngIf="outStandingAmount > 0 || (isFeeAmountZero && outStandingAmount === 0)">
+      <span class="white" *ngIf="outStandingAmount > 0 || (isFeeAmountZero && outStandingAmount === 0)">
         Allocate payment
       </span>
-      <span *ngIf="outStandingAmount < 0 || (!isFeeAmountZero && outStandingAmount === 0)">
+      <span class="white" *ngIf="outStandingAmount < 0 || (!isFeeAmountZero && outStandingAmount === 0)">
         Continue
       </span>
     </button>
