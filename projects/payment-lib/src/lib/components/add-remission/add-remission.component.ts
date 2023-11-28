@@ -1190,7 +1190,7 @@ export class AddRemissionComponent implements OnInit {
   }
 
   getFormattedAmount(): string {
-    this.amount.replaceAll("£","");
+    return this.amount.replaceAll("£","");
   }
 
 }
