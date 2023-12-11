@@ -212,8 +212,7 @@
             <td class="govuk-table__cell whitespace-inherit">{{ remission?.fee_code }}</td>
             <td class="govuk-table__cell whitespace-inherit">{{ remission?.hwf_amount | currency:'GBP':'symbol-narrow':'1.2-2'}}</td>
             <td class="govuk-table__cell refundBtn whitespace-inherit"  >
-              <span class="mar-17" > payment-view-tobias</span>
-                 <button  [disabled]="!chkIsAddRefundBtnEnable(remission)" (click)="addRefundForRemission(paymentGroup.payments[0],remission,paymentGroup.fees)" class="govuk-button govuk-button--secondary"> Add refund <payment-view-tobias> </payment-view-tobias></button>
+               <button  [disabled]="canItBeRefunded(paymentGroup.payments[0],remission,paymentGroup.fees)" (click)="addRefundForRemission(paymentGroup.payments[0],remission,paymentGroup.fees)" class="govuk-button govuk-button--secondary"> Add refund</button>
             </td>
           </tr>
       </tbody>
