@@ -212,7 +212,7 @@
             <td class="govuk-table__cell whitespace-inherit">{{ remission?.fee_code }}</td>
             <td class="govuk-table__cell whitespace-inherit">{{ remission?.hwf_amount | currency:'GBP':'symbol-narrow':'1.2-2'}}</td>
             <td class="govuk-table__cell refundBtn whitespace-inherit"  >
-               <button  [disabled]="!canItBeRefunded(paymentGroup.payments[0],remission,paymentGroup.fees[0])" (click)="addRefundForRemission(paymentGroup.payments[0],remission,paymentGroup.fees)" class="govuk-button govuk-button--secondary"> Add refund</button>
+               <button  [disabled]="!canItBeRefunded(remission)" (click)="addRefundForRemission(paymentGroup.payments[0],remission,paymentGroup.fees)" class="govuk-button govuk-button--secondary"> Add refund</button>
             </td>
           </tr>
       </tbody>

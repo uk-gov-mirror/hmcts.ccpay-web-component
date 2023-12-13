@@ -338,12 +338,10 @@ export class PaymentViewComponent implements OnInit {
   }
 
 
-  canItBeRefunded(payment: IPayment ,remission: IRemission,fee: IFee ): boolean {
+  canItBeRefunded(remission: IRemission): boolean {
 
-    if ((remission !== null && remission !== undefined) && (fee !== null && fee !== undefined) && (payment !== null && payment !== undefined)) {
-      let overallBalance: number = payment.amount - (fee.calculated_amount - remission.hwf_amount);
-
-      if (overallBalance > 0) {
+    if (remission !== null && remission !== undefined) {
+      if (remission.overallBalance > 0) {
         return true;
       }
     }
