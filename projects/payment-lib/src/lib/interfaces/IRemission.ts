@@ -9,5 +9,5 @@ export interface IRemission {
   fee_id: number;
   issue_refund_add_refund_add_remission: boolean;
   add_refund: boolean;
-  overallBalance:number;
+  overall_balance:number;
 }
