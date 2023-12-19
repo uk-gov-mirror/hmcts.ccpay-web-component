@@ -90,90 +90,39 @@ describe('MarkUnsolicitedPaymentComponent', () => {
     expect(component.isStrategicFixEnable).toEqual(true);
   });
 
-  // describe('ngOnInit', () => {
-  //   it('makes expected calls', () => {
-  //     const formBuilderStub: FormBuilder = fixture.debugElement.injector.get(
-  //       FormBuilder
-  //     );
-  //     const paymentViewServiceStub: PaymentViewService = fixture.debugElement.injector.get(
-  //       PaymentViewService
-  //     );
-  //     spyOn(component, 'resetForm').and.callThrough();
-  //     spyOn(component, 'getUnassignedPayment').and.callThrough();
-  //     spyOn(component, 'getErrorMessage').and.callThrough();
-  //     spyOn(formBuilderStub, 'group').and.callThrough();
-  //     spyOn(paymentViewServiceStub, 'getSiteID').and.callThrough();
-  //     component.ngOnInit();
-  //     expect(component.resetForm).toHaveBeenCalled();
-  //     expect(component.getUnassignedPayment).toHaveBeenCalled();
-  //     expect(component.getErrorMessage).toHaveBeenCalled();
-  //     expect(formBuilderStub.group).toHaveBeenCalled();
-  //     expect(paymentViewServiceStub.getSiteID).toHaveBeenCalled();
-  //   });
-  // });
+  it('should return default error message when status is 500', () => {
+    const result = component.getErrorMessage(true, 500, 'Custom error message', 'Sample error');
+    expect(result.title).toBe('Something went wrong');
+    expect(result.body).toBe('Please try again later');
+    expect(result.showError).toBe(true);
+  });
 
-  // describe('confirmPayments', () => {
-  //   it('makes expected calls', () => {
-  //     const bulkScaningPaymentServiceStub: BulkScaningPaymentService = fixture.debugElement.injector.get(
-  //       BulkScaningPaymentService
-  //     );
-  //     const paymentViewServiceStub: PaymentViewService = fixture.debugElement.injector.get(
-  //       PaymentViewService
-  //     );
-  //     spyOn(component, 'getErrorMessage').and.callThrough();
-  //     spyOn(component, 'gotoCasetransationPage').and.callThrough();
-  //     spyOn(
-  //       bulkScaningPaymentServiceStub,
-  //       'postBSWoPGStrategic'
-  //     ).and.callThrough();
-  //     spyOn(
-  //       bulkScaningPaymentServiceStub,
-  //       'patchBSChangeStatus'
-  //     ).and.callThrough();
-  //     spyOn(paymentViewServiceStub, 'postBSPayments').and.callThrough();
-  //     spyOn(
-  //       paymentViewServiceStub,
-  //       'postBSUnsolicitedPayments'
-  //     ).and.callThrough();
-  //     component.confirmPayments();
-  //     expect(component.getErrorMessage).toHaveBeenCalled();
-  //     expect(component.gotoCasetransationPage).toHaveBeenCalled();
-  //     expect(
-  //       bulkScaningPaymentServiceStub.postBSWoPGStrategic
-  //     ).toHaveBeenCalled();
-  //     expect(
-  //       bulkScaningPaymentServiceStub.patchBSChangeStatus
-  //     ).toHaveBeenCalled();
-  //     expect(paymentViewServiceStub.postBSPayments).toHaveBeenCalled();
-  //     expect(
-  //       paymentViewServiceStub.postBSUnsolicitedPayments
-  //     ).toHaveBeenCalled();
-  //   });
-  // });
+  it('should return custom error message when status is not 500 and errorMsg is provided', () => {
+    const result = component.getErrorMessage(true, 404, 'Custom error message', 'Sample error');
+    expect(result.title).toBe('Something went wrong');
+    expect(result.body).toBe('Custom error message');
+    expect(result.showError).toBe(true);
+  });
 
-  // describe('saveAndContinue', () => {
-  //   it('makes expected calls', () => {
-  //     spyOn(component, 'resetForm').and.callThrough();
-  //     component.saveAndContinue();
-  //     expect(component.resetForm).toHaveBeenCalled();
-  //   });
-  // });
+  it('should return bodyTxt as error message when status is not 500 and errorMsg is undefined', () => {
+    const result = component.getErrorMessage(true, 404, undefined, 'Sample error');
+    expect(result.title).toBe('Something went wrong');
+    expect(result.body).toBe('Sample error');
+    expect(result.showError).toBe(true);
+  });
 
-  // describe('getUnassignedPayment', () => {
-  //   it('makes expected calls', () => {
-  //     const bulkScaningPaymentServiceStub: BulkScaningPaymentService = fixture.debugElement.injector.get(
-  //       BulkScaningPaymentService
-  //     );
-  //     spyOn(component, 'getErrorMessage').and.callThrough();
-  //     spyOn(
-  //       bulkScaningPaymentServiceStub,
-  //       'getBSPaymentsByDCN'
-  //     ).and.callThrough();
-  //     component.getUnassignedPayment();
-  //     expect(component.getErrorMessage).toHaveBeenCalled();
-  //     expect(
-  //       bulkScaningPaymentServiceStub.getBSPaymentsByDCN
-  //     ).toHaveBeenCalled();
-  //   });
-  // });
+  it('should parse and return bodyTxt when error format is "<number> - <message>"', () => {
+    const result = component.getErrorMessage(true, 404, undefined, '404 - Not Found');
+    expect(result.title).toBe('Something went wrong');
+    expect(result.body).toBe('Not Found');
+    expect(result.showError).toBe(true);
+  });
+
+  it('should return full error message if format is not "<number> - <message>"', () => {
+    const result = component.getErrorMessage(true, 404, undefined, 'An unexpected error occurred');
+    expect(result.title).toBe('Something went wrong');
+    expect(result.body).toBe('An unexpected error occurred');
+    expect(result.showError).toBe(true);
+  });
+
 });
