@@ -29,8 +29,7 @@ export class ErrorHandlerService {
               errorMessage = 'Internal server error';
             } else {
               if(err.error.length > 60) {
-                const parsedError = JSON.parse(err.error);
-                errorMessage =  parsedError.err;
+                errorMessage =  JSON.parse(err.error).error;
               } else {
                 errorMessage =  err.error;
               }
@@ -58,8 +57,7 @@ export class ErrorHandlerService {
                 errorMessage = 'Internal server error';
               } else {
                 if(err.error.length > 60) {
-                  const parsedError = JSON.parse(err.error);
-                  errorMessage =  parsedError.err;
+                  errorMessage =  JSON.parse(err.error).error;
                 } else {
                   errorMessage =  err.error;
                 }
@@ -69,8 +67,7 @@ export class ErrorHandlerService {
               errorMessage =  err.error;
             }
           } else {
-            const parsedError = JSON.parse(err.error);
-            errorMessage =  parsedError.err;
+            errorMessage =  JSON.parse(err.error).error;
           }
 
         }
