@@ -24,7 +24,7 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
   reasonMaxHasError: boolean = false;
   responsibleOfficeHasError: boolean = false;
   isResponsibleOfficeEmpty: boolean = false;
-  errorMessage = this.getErrorMessage(false);
+  errorMessage = this.getErrorMessage(false,'','','');
   ccdCaseNumber: string;
   bspaymentdcn: string;
   unassignedRecord: IBSPayments;
@@ -58,13 +58,13 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
     this.paymentViewService.getSiteID().subscribe(
       siteids => {
         this.isContinueButtondisabled = false;
-        this.errorMessage = this.getErrorMessage(false);
+        this.errorMessage = this.getErrorMessage(false,'','','');
         this.siteIDList = JSON.parse(siteids);
       },
       err => {
         window.scrollTo(0, 0);
         this.isContinueButtondisabled = true;
-        this.errorMessage = this.getErrorMessage(true);
+        this.errorMessage = this.getErrorMessage(true, err.statusCode, err.err, err);
       }
     );
 
@@ -73,7 +73,7 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
         Validators.required,
         Validators.minLength(3),
         Validators.maxLength(255),
-        Validators.pattern('^([a-zA-Z0-9\\s,\\.]*)$')
+        Validators.pattern('^([a-zA-Z0-9\\s,\\.()£]*)$')
       ])),
       responsibleOffice: new FormControl('', Validators.compose([
         Validators.required,
@@ -104,34 +104,34 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
         (this.ccdReference, this.unassignedRecord, this.caseType, this.exceptionReference, allocatedRequest);
       this.bulkScaningPaymentService.postBSWoPGStrategic(postStrategicBody).subscribe(
         res => {
-          this.errorMessage = this.getErrorMessage(false);
+          this.errorMessage = this.getErrorMessage(false,'','','');
           let response = JSON.parse(res);
           if (response.success) {
             this.gotoCasetransationPage();
           }
         },
         (error: any) => {
-          this.errorMessage = this.getErrorMessage(true);
+          this.errorMessage = this.getErrorMessage(true, error.statusCode, error.err, error);
           this.isConfirmButtondisabled = false;
         });
     } else {
       // controls.responsibleOffice.setValue('P219');
       this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'PROCESSED').subscribe(
         res1 => {
-          this.errorMessage = this.getErrorMessage(false);
+          this.errorMessage = this.getErrorMessage(false,'','','');
           const response1 = JSON.parse(res1),
             requestBody = new AllocatePaymentRequest
               (this.ccdReference, this.unassignedRecord, this.siteID, this.exceptionReference)
           this.paymentViewService.postBSPayments(requestBody).subscribe(
             res2 => {
-              this.errorMessage = this.getErrorMessage(false);
+              this.errorMessage = this.getErrorMessage(false,'','','');
               const response2 = JSON.parse(res2),
                 reqBody = new UnsolicitedPaymentsRequest
                   (response2['data'].payment_group_reference, response2['data'].reference, controls.reason.value, this.selectedSiteId, controls.responsiblePerson.value, controls.emailId.value);
               if (response2.success) {
                 this.paymentViewService.postBSUnsolicitedPayments(reqBody).subscribe(
                   res3 => {
-                    this.errorMessage = this.getErrorMessage(false);
+                    this.errorMessage = this.getErrorMessage(false,'','','');
                     const response3 = JSON.parse(res3);
                     if (response3.success) {
                       this.gotoCasetransationPage();
@@ -139,7 +139,7 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
                   },
                   (error: any) => {
                     this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'COMPLETE').subscribe();
-                    this.errorMessage = this.getErrorMessage(true);
+                    this.errorMessage = this.getErrorMessage(true, error.statusCode, error.err, error);
                     this.isConfirmButtondisabled = false;
                   }
                 );
@@ -147,13 +147,13 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
             },
             (error: any) => {
               this.bulkScaningPaymentService.patchBSChangeStatus(this.unassignedRecord.dcn_reference, 'COMPLETE').subscribe();
-              this.errorMessage = this.getErrorMessage(true);
+              this.errorMessage = this.getErrorMessage(true, error.statusCode, error.err, error);
               this.isConfirmButtondisabled = false;
             }
           );
         },
         (error: any) => {
-          this.errorMessage = this.getErrorMessage(true);
+          this.errorMessage = this.getErrorMessage(true, error.statusCode, error.err, error);
           this.isConfirmButtondisabled = false;
         }
       );
@@ -250,15 +250,32 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
         this.exceptionReference = beExceptionNumber ? beExceptionNumber : exceptionReference;
       },
       (error: any) => {
-        this.errorMessage = this.getErrorMessage(true);
+        this.errorMessage = this.getErrorMessage(true, error.statusCode, error.err, error);
       }
     );
   }
 
-  getErrorMessage(isErrorExist) {
+  getErrorMessage(isErrorExist, status, errorMsg, err) {
+    let bodyTxt = 'Please try again later';
+    if (status !== 500) {
+        if (errorMsg !== undefined) {
+          bodyTxt = errorMsg;
+        } else {
+          if(/^\d+\s-\s/.test(err)){
+           const parts = err.split(' - ');
+              if (parts.length > 1) {
+                  bodyTxt = parts[1];
+                  }else{
+                       bodyTxt = err
+                  }
+          }else{
+            bodyTxt = err;
+          }
+        }
+    }
     return {
-      title: "Something went wrong.",
-      body: "Please try again later.",
+      title: 'Something went wrong',
+      body: bodyTxt,
       showError: isErrorExist
     };
   }
