@@ -113,7 +113,7 @@
       <p>Total reductions: {{orderRemissionTotal | currency:'GBP':'symbol-narrow':'1.2-2'  }}</p>
   </div>
   <div class="summarypagealign">
-        <p class="summarypage">Total fees to pay: {{(orderFeesTotal - orderRemissionTotal) | currency:'GBP':'symbol-narrow':'1.2-2'  }}</p>
+        <p class="summarypage">Total fees left to pay: {{((orderFeesTotal - orderRemissionTotal)- orderTotalPayments ) | currency:'GBP':'symbol-narrow':'1.2-2'  }}</p>
     </div>
   </div>
 
@@ -156,10 +156,10 @@
 </ng-container>
 <div *ngIf="isServiceRequest === 'false'">
   <div *ngIf="((orderFeesTotal - orderRemissionTotal)- orderTotalPayments) > 0" >
-      <p class="totalPay">Total left to pay: <b>{{((orderFeesTotal - orderRemissionTotal)- orderTotalPayments )| currency:'GBP':'symbol-narrow':'1.2-2' }}</b> </p>
+      <p class="totalPay">Total fees left to pay: <b>{{((orderFeesTotal - orderRemissionTotal)- orderTotalPayments )| currency:'GBP':'symbol-narrow':'1.2-2' }}</b> </p>
   </div>
   <div *ngIf="((orderFeesTotal - orderRemissionTotal)- orderTotalPayments) < 0" >
-      <p class="totalPay">Total left to pay: <b>0</b> </p>
+      <p class="totalPay">Total fees left to pay: <b>0</b> </p>
   </div>
 </div>
 </ng-container>
