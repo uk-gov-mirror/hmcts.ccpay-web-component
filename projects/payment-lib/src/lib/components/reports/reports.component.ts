@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Inject } from '@angular/core';
+import { Component, Input, OnInit, forwardRef, isStandalone, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { formatDate } from "@angular/common";
 import type { PaymentLibComponent } from '../../payment-lib.component';
@@ -15,7 +15,7 @@ import { FindValueSubscriber } from 'rxjs/internal/operators/find';
   styleUrls: ['./reports.component.scss']
 })
 export class ReportsComponent implements OnInit {
-  @Input() ISPAYMENTSTATUSENABLED: string;
+  @Input('ISPAYMENTSTATUSENABLED') ISPAYMENTSTATUSENABLED: boolean = true;
   fmt = 'dd/MM/yyyy';
   loc = 'en-US';
   reportsForm: FormGroup;
@@ -27,7 +27,6 @@ export class ReportsComponent implements OnInit {
   isStartDateLesthanEndDate: Boolean = false;
   isDateBetwnMonth: Boolean = false;
   isDateRangeBetnWeek: Boolean = false;
-  //errorMessage = this.errorHandlerService.getServerErrorMessage(false, false, '');
   errorMessage = null;
   paymentGroups: IPaymentGroup[] = [];
 
@@ -39,8 +38,8 @@ export class ReportsComponent implements OnInit {
     @Inject('PAYMENT_LIB') private paymentLibComponent: PaymentLibComponent,
     private paymentViewService: PaymentViewService) { }
 
-
   ngOnInit() {
+    this.errorMessage = this.errorHandlerService.getServerErrorMessage(false, false, '');
     this.fromValidation();
    }
 
