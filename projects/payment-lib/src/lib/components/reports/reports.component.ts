@@ -35,12 +35,12 @@ export class ReportsComponent implements OnInit {
     private errorHandlerService: ErrorHandlerService,
     private formBuilder: FormBuilder,
     private bulkScaningPaymentService: BulkScaningPaymentService,
+    @Inject('PAYMENT_LIB') private paymentLibComponent: PaymentLibComponent,
     private paymentViewService: PaymentViewService) { }
 
 
   ngOnInit() {
     this.fromValidation();
-
    }
 
   getToday(): string {
