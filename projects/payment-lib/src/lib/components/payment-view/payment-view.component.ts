@@ -1,25 +1,25 @@
-import { Component, OnInit, Input, Inject, forwardRef, isStandalone } from '@angular/core';
-import { PaymentViewService } from '../../services/payment-view/payment-view.service';
-import { NotificationService } from '../../services/notification/notification.service';
+import {ChangeDetectorRef, Component, forwardRef, Inject, Input, OnInit} from '@angular/core';
+import {PaymentViewService} from '../../services/payment-view/payment-view.service';
+import {NotificationService} from '../../services/notification/notification.service';
+import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
+import {IFee} from '../../interfaces/IFee';
+import {IPayment} from '../../interfaces/IPayment';
+import {IRemission} from '../../interfaces/IRemission';
+import {PostRefundRetroRemission} from '../../interfaces/PostRefundRetroRemission';
+import {IPaymentFailure} from '../../interfaces/IPaymentFailure';
+import {OrderslistService} from '../../services/orderslist.service';
+import {IRefundContactDetails} from '../../interfaces/IRefundContactDetails';
+import {AddRemissionComponent} from '../add-remission/add-remission.component';
+import {CommonModule} from '@angular/common';
+import {StatusHistoryComponent} from '../status-history/status-history.component';
+import {ServiceRequestComponent} from '../service-request/service-request.component';
+import {ContactDetailsComponent} from '../contact-details/contact-details.component';
+import {NotificationPreviewComponent} from '../notification-preview/notification-preview.component';
+import {CcdHyphensPipe} from '../../pipes/ccd-hyphens.pipe';
+import {CapitalizePipe} from '../../pipes/capitalize.pipe';
 import type { PaymentLibComponent } from '../../payment-lib.component';
-import { IPaymentGroup } from '../../interfaces/IPaymentGroup';
-import { IFee } from '../../interfaces/IFee';
-import { IPayment } from '../../interfaces/IPayment';
-import { IRemission } from '../../interfaces/IRemission';
-import { PostRefundRetroRemission } from '../../interfaces/PostRefundRetroRemission';
+
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
-import { ChangeDetectorRef } from '@angular/core';
-import { IPaymentFailure } from '../../interfaces/IPaymentFailure';
-import { OrderslistService } from '../../services/orderslist.service';
-import { IRefundContactDetails } from '../../interfaces/IRefundContactDetails';
-import { AddRemissionComponent } from '../add-remission/add-remission.component';
-import { CommonModule } from '@angular/common';
-import { StatusHistoryComponent } from '../status-history/status-history.component';
-import { ServiceRequestComponent } from '../service-request/service-request.component';
-import { ContactDetailsComponent } from '../contact-details/contact-details.component';
-import { NotificationPreviewComponent } from '../notification-preview/notification-preview.component';
-import { CcdHyphensPipe } from '../../pipes/ccd-hyphens.pipe';
-import { CapitalizePipe } from '../../pipes/capitalize.pipe';
 
 @Component({
   selector: 'ccpay-payment-view',
@@ -335,6 +335,19 @@ export class PaymentViewComponent implements OnInit {
     } else {
       return false;
     }
+  }
+
+
+  canItBeRefunded(remission: IRemission): boolean {
+    if (remission !== null && remission !== undefined) {
+      if (remission.add_refund == false) {
+        return false;
+      }
+      if (remission.overall_balance > 0) {
+        return true;
+      }
+    }
+    return false;
   }
 
   chkIsAddRemissionBtnEnable(fee: IFee): boolean {
