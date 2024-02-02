@@ -44,6 +44,7 @@ import { RefundStatusComponent } from './components/refund-status/refund-status.
 import { ServiceRequestComponent } from './components/service-request/service-request.component';
 import { PbaPaymentComponent } from './components/pba-payment/pba-payment.component';
 import { NotificationPreviewComponent } from './components/notification-preview/notification-preview.component';
+import { RpxTranslationModule } from 'rpx-xui-translation';
 
 @NgModule({
   imports: [
@@ -66,9 +67,10 @@ import { NotificationPreviewComponent } from './components/notification-preview/
     CaseTransactionsComponent,
     AddRemissionComponent,
     UnprocessedPaymentsComponent,
-    RefundStatusComponent
+    RefundStatusComponent,
     // BrowserAnimationsModule,
     // NoopAnimationsModule
+    RpxTranslationModule.forChild(),
   ],
   declarations: [
     PaymentLibComponent,
