@@ -18,7 +18,7 @@ import { AddRemissionComponent } from '../add-remission/add-remission.component'
 import { RefundStatusComponent } from '../refund-status/refund-status.component';
 import { CcdHyphensPipe } from '../../pipes/ccd-hyphens.pipe';
 import { CapitalizePipe } from '../../pipes/capitalize.pipe';
-import { RpxTranslationModule } from 'rpx-xui-translation';
+import { RpxTranslationModule, RpxTranslatePipe } from 'rpx-xui-translation';
 import { FormsModule } from '@angular/forms';
 
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
@@ -36,6 +36,7 @@ const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
     CcdHyphensPipe,
     CapitalizePipe,
     RpxTranslationModule,
+    RpxTranslatePipe,
     FormsModule
   ],
   standalone: true
