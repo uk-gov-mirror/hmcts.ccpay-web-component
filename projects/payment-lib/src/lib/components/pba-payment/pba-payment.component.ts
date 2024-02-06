@@ -3,13 +3,18 @@ import { PaymentViewService } from '../../services/payment-view/payment-view.ser
 import type { PaymentLibComponent } from '../../payment-lib.component';
 import { IserviceRequestCardPayment } from '../../interfaces/IserviceRequestCardPayment';
 import { IserviceRequestPbaPayment } from '../../interfaces/IserviceRequestPbaPayment';
+import { RpxTranslationModule, RpxTranslatePipe } from 'rpx-xui-translation';
 
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 
 @Component({
   selector: 'ccpay-pba-payment',
   templateUrl: './pba-payment.component.html',
-  styleUrls: ['./pba-payment.component.scss']
+  styleUrls: ['./pba-payment.component.scss'],
+  imports: [
+    RpxTranslationModule,
+    RpxTranslatePipe
+  ]
 })
 export class PbaPaymentComponent implements OnInit {
   @Input() pbaPayOrderRef: any;

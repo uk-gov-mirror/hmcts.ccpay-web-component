@@ -21,6 +21,7 @@ import { NotificationPreviewComponent } from '../notification-preview/notificati
 import { CaseTransactionsComponent } from '../case-transactions/case-transactions.component';
 import { CcdHyphensPipe } from '../../pipes/ccd-hyphens.pipe';
 import { CapitalizePipe } from '../../pipes/capitalize.pipe';
+import { RpxTranslationModule, RpxTranslatePipe } from 'rpx-xui-translation';
 
 @Component({
   selector: 'ccpay-service-request',
@@ -36,6 +37,8 @@ import { CapitalizePipe } from '../../pipes/capitalize.pipe';
     forwardRef(() => CaseTransactionsComponent),
     CcdHyphensPipe,
     CapitalizePipe,
+    RpxTranslationModule,
+    RpxTranslatePipe
   ],
   standalone: true
 })

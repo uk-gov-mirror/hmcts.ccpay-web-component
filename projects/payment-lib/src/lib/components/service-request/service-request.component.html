@@ -3,38 +3,38 @@
   <div class="govuk-breadcrumbs">
       <ol class="govuk-breadcrumbs__list">
         <li class="govuk-breadcrumbs__list-item" *ngIf="isServiceRequest === 'false'">
-          <a href="javascript:void(0)" (click)="goToCaseTransationPage($event)" class="govuk-back-link">Back</a>
+          <a href="javascript:void(0)" (click)="goToCaseTransationPage($event)" class="govuk-back-link">{{ "Back" | rpxTranslate }}</a>
         </li>
         <li class="govuk-breadcrumbs__list-item" *ngIf="isServiceRequest !== 'false'">
-          <a href="javascript:void(0)" (click)="goToServiceRequestPage()" id="bckLnksize" class="govuk-back-link">Back</a>
+          <a href="javascript:void(0)" (click)="goToServiceRequestPage()" id="bckLnksize" class="govuk-back-link">{{ "Back" | rpxTranslate }}</a>
         </li>
       </ol>
     </div>
   <div class="govuk-grid-column-full">
       <div class="column">
-        <h1 class="heading-large govuk-!-margin-top-0">Service request</h1>
+        <h1 class="heading-large govuk-!-margin-top-0">{{ "Service request" | rpxTranslate }}</h1>
       </div>
       <table >
           <tbody>
             <tr class="section">
-              <td class="bold tb-col-w">Service request reference</td>
+              <td class="bold tb-col-w">{{ "Service request reference" | rpxTranslate }}</td>
               <td>{{orderRef}}</td>
             </tr>
             <tr class="section">
-              <td class="bold tb-col-w">Status</td>
-              <td>{{orderStatus}}</td>
+              <td class="bold tb-col-w">{{ "Status" | rpxTranslate }}</td>
+              <td>{{ orderStatus | rpxTranslate }}</td>
             </tr>
             <tr class="section">
-              <td class="bold tb-col-w">Date created</td>
+              <td class="bold tb-col-w">{{ "Date created" | rpxTranslate }}</td>
               <td>{{orderCreated | date:'dd MMMM yyyy'}}</td>
             </tr>
             <tr class="section">
-              <td class="bold tb-col-w">Party</td>
+              <td class="bold tb-col-w">{{ "Party" | rpxTranslate }}</td>
               <td>{{orderParty}}</td>
             </tr>
             <tr class="section">
-              <td class="bold tb-col-w">CCD event</td>
-              <td>{{orderCCDEvent}}</td>
+              <td class="bold tb-col-w">CCD {{ "event" | rpxTranslate }}</td>
+              <td>{{ orderCCDEvent | rpxTranslate}}</td>
             </tr>
           </tbody>
         </table>
@@ -45,35 +45,35 @@
         <table class="govuk-table ">
           <thead class="govuk-table__head">
           <tr class="govuk-table__row">
-            <td class="govuk-table__header col-51" scope="col" *ngIf="isServiceRequest === 'false'">Fee</td>
-            <td class="govuk-table__header col-51" scope="col" colspan="2" *ngIf="isServiceRequest !== 'false'">Fee</td>
-            <td class="govuk-table__header" scope="col">Amount</td>
-            <td class="govuk-table__header" scope="col">Total</td>
+            <td class="govuk-table__header col-51" scope="col" *ngIf="isServiceRequest === 'false'">{{ "Fee" | rpxTranslate }}</td>
+            <td class="govuk-table__header col-51" scope="col" colspan="2" *ngIf="isServiceRequest !== 'false'">{{ "Fee" | rpxTranslate }}</td>
+            <td class="govuk-table__header" scope="col">{{ "Amount" | rpxTranslate }}</td>
+            <td class="govuk-table__header" scope="col">{{ "Total" | rpxTranslate }}</td>
             <td  class="govuk-table__header" scope="col" *ngIf="isServiceRequest === 'false'"></td>
           </tr>
           </thead>
           <tbody class="govuk-table__body" *ngFor="let order of orderDetail;">
             <tr class="govuk-table__row" *ngFor="let fee of order.fees; let i = index;">
-              <td class="govuk-table__cell col-60 whitespace-inherit" *ngIf="isServiceRequest === 'false'">{{fee.description}}</td>
-              <td class="govuk-table__cell col-60 whitespace-inherit" colspan="2" *ngIf="isServiceRequest !== 'false'">{{fee.description}}</td>
+              <td class="govuk-table__cell col-60 whitespace-inherit" *ngIf="isServiceRequest === 'false'">{{ fee.description | rpxTranslate}}</td>
+              <td class="govuk-table__cell col-60 whitespace-inherit" colspan="2" *ngIf="isServiceRequest !== 'false'">{{fee.description | rpxTranslate }}</td>
               <td class="govuk-table__cell">{{fee.volume? fee.volume : '-'}} X {{ fee.calculated_amount/fee.volume| currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
               <td class="govuk-table__cell">{{ fee?.net_amount | currency:'GBP':'symbol-narrow':'1.2-2' }}</td>
               <td class="govuk-table__cell alignright" *ngIf="isServiceRequest === 'false'">
-                  <button [disabled]="!chkIsAddRemissionBtnEnable(fee)"   (click)="addRemission(fee)" class="govuk-button govuk-button--secondary"> Add remission</button>
+                  <button [disabled]="!chkIsAddRemissionBtnEnable(fee)"   (click)="addRemission(fee)" class="govuk-button govuk-button--secondary">{{ "Add remission" | rpxTranslate }}</button>
               </td>
 
             </tr>
           </tbody>
           <tbody class="govuk-table__body" *ngFor="let order of orderDetail;">
             <tr class="govuk-table__row" *ngIf="order.fees?.length === 0" >
-              <td class="govuk-table__cell alignleft" colspan="7">No fees recorded</td>
+              <td class="govuk-table__cell alignleft" colspan="7">{{ "No fees recorded" | rpxTranslate }}</td>
             </tr>
           </tbody>
         </table>
 
       </div>
       <div class="maxwidth">
-          <p class="totalfees">Total fees: {{orderFeesTotal | currency:'GBP':'symbol-narrow':'1.2-2' }}</p>
+          <p class="totalfees">{{ "Total fees" | rpxTranslate }}: {{orderFeesTotal | currency:'GBP':'symbol-narrow':'1.2-2' }}</p>
       </div>
   </div>
    <!-- remissions -->
