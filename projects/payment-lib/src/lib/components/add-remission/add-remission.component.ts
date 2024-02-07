@@ -1189,4 +1189,16 @@ export class AddRemissionComponent implements OnInit {
     }
   }
 
+  getRefundAmountToBeDisplayed(remission: IRemission): string {
+
+    if (remission !== null && remission !== undefined) {
+      if (remission.overall_balance > 0) {
+        return remission.overall_balance.toString();
+      }else{
+        return remission.hwf_amount.toString()
+      }
+    }
+    return "undefined";
+  }
+
 }
