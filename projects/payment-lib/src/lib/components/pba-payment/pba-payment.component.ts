@@ -3,7 +3,8 @@ import { PaymentViewService } from '../../services/payment-view/payment-view.ser
 import type { PaymentLibComponent } from '../../payment-lib.component';
 import { IserviceRequestCardPayment } from '../../interfaces/IserviceRequestCardPayment';
 import { IserviceRequestPbaPayment } from '../../interfaces/IserviceRequestPbaPayment';
-import { RpxTranslationModule, RpxTranslatePipe } from 'rpx-xui-translation';
+import { CommonModule } from '@angular/common';
+import { RpxTranslationModule } from 'rpx-xui-translation';
 
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 
@@ -12,9 +13,10 @@ const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
   templateUrl: './pba-payment.component.html',
   styleUrls: ['./pba-payment.component.scss'],
   imports: [
-    RpxTranslationModule,
-    RpxTranslatePipe
-  ]
+    CommonModule,
+    RpxTranslationModule
+  ],
+  standalone: true
 })
 export class PbaPaymentComponent implements OnInit {
   @Input() pbaPayOrderRef: any;

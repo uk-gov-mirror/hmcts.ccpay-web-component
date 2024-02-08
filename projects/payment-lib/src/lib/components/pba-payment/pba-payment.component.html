@@ -19,7 +19,7 @@
             {{ "Your PBA account cannot be found." | rpxTranslate }}
           </li>
           <li class="pba-payments-error-16-font">
-            {{ "If you know your organisation has a PBA, try again." | rpxTranslate : "PBA" }}
+            {{ "If you know your organisation has a PBA, try again." | rpxTranslate : {pba: "PBA"} }}
           </li>
           <li class="pba-payments-error-16-font">
             {{ "You can also pay by credit or debit card." | rpxTranslate }}
@@ -41,13 +41,13 @@
           <div class="govuk-radios__item">
             <input class="govuk-radios__input" id="pbaAccount" name="paymentSelection" type="radio" value="PBA" (click)="selectPaymentMethod('PBA')" data-aria-controls="pba-account">
             <label class="govuk-label govuk-radios__label pba-payments-19-font pba-payments-font-bld" for="pbaAccount">
-              {{ "Pay fee using Payment by Account (PBA)" | rpxTranslate: "(PBA)" }}
+              {{ "Pay fee using Payment by Account (PBA)" | rpxTranslate: {pba: "(PBA)"} }}
             </label>
           </div>
           <div class="govuk-radios__conditional" id="conditional-contact" *ngIf="isPbaAccountSelected">
             <div class="govuk-form-group pba-payments-select-box--size">
               <label class="govuk-label pba-payments-govuk__label pba-payments-19-font" for="pbaAccountNumber">
-                {{ "Select a PBA" | rpxTranslate: "PBA" }}
+                {{ "Select a PBA" | rpxTranslate: {pba: "PBA"} }}
               </label>
               <select class="form-control short-input" id="pbaAccountNumber" (change)="selectpbaaccount($event)">
                 <option value="" selected='selected'>{{ "Select option" | rpxTranslate }}</option>
@@ -56,7 +56,7 @@
             </div>
             <div class="govuk-form-group" *ngIf="!errorMsg && selectedPbaAccount">
               <label class="govuk-label pba-payments-govuk__label pba-payments-24-font" for="pbaAccountNumber">
-                {{ "Enter a reference for your PBA account statements" | rpxTranslate: "PBA" }}
+                {{ "Enter a reference for your PBA account statements" | rpxTranslate: {pba: "PBA"} }}
               </label>
               <div id="event-name-hint" class="govuk-hint pba-payments-19-font pba-payment-width">
                 {{ "This should be your own unique reference to identify the case. It will appear on your statements." | rpxTranslate }}
@@ -98,7 +98,7 @@
           <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
           <strong class="govuk-warning-text__text">
             <span class="govuk-warning-text__assistive">{{ "Warning" | rpxTranslate }}</span>
-            <h2 class="warning-heading-m">{{ "You don’t have a registered PBA." | rpxTranslate: "PBA" }}</h2>
+            <h2 class="warning-heading-m">{{ "You don’t have a registered PBA." | rpxTranslate: {pba: "PBA"} }}</h2>
           </strong>
         </div>
         <div class="pba-payments-margin-top-10">
@@ -117,11 +117,11 @@
           
         </div>
         <div class="pba-payments-margin-top-10">
-          <h2 class="heading-medium">{{ "Register an existing PBA with MyHMCTS" | rpxTranslate: ["PBA", "MyHMCTS"] }}</h2>
+          <h2 class="heading-medium">{{ "Register an existing PBA with MyHMCTS" | rpxTranslate: {pba: "PBA", myhmcts: "MyHMCTS"} }}</h2>
           <p class="govuk-body pba-payments-19-font">
             {{ "You may find it easier in future to pay by PBA, your organisation administrator will need to 
-            email" | rpxTranslate: "PBA" }} <a href="mailto: MyHMCTSsupport@justice.gov.uk">MyHMCTSsupport@justice.gov.uk</a>{{ "to ask for your PBA to be registered with your 
-            MyHMCTS account. You should include your organisation name and PBA number." | rpxTranslate: ["PBA", "MyHMCTS"] }}
+            email" | rpxTranslate: {pba: "PBA"} }} <a href="mailto: MyHMCTSsupport@justice.gov.uk">MyHMCTSsupport@justice.gov.uk</a>{{ "to ask for your PBA to be registered with your 
+            MyHMCTS account. You should include your organisation name and PBA number." | rpxTranslate: {pba: "PBA", myhmcts: "MyHMCTS"} }}
           </p>
           <p class="govuk-body pba-payments-19-font">
             {{ "It can then take up to 3 days for your account to be updated. You’ll need to start your claim 
@@ -129,7 +129,7 @@
           </p>
         </div>
         <div class="pba-payments-margin-top-10">
-          <h2 class="heading-medium">{{ "Apply to get a new PBA" | rpxTranslate: "PBA" }}</h2>
+          <h2 class="heading-medium">{{ "Apply to get a new PBA" | rpxTranslate: {pba: "PBA"} }}</h2>
           <p class="govuk-body pba-payments-19-font">
             {{ "You’ll need to provide details for you and your organisation, including the required credit
              limit for your account." | rpxTranslate }}
@@ -138,7 +138,7 @@
             {{ "Once your account has been registered, you’ll need to start your claim again to pay the fee." | rpxTranslate }}
           </p>
           <p class="govuk-body pba-payments-19-font">
-            {{ "Read more information on" | rpxTranslate }} <a target="_blank" href="https://www.gov.uk/guidance/hmcts-payment-by-account-for-online-services">{{ "registering for PBA" | rpxTranslate: "PBA"}}</a>.
+            {{ "Read more information on" | rpxTranslate }} <a target="_blank" href="https://www.gov.uk/guidance/hmcts-payment-by-account-for-online-services">{{ "registering for PBA" | rpxTranslate: {pba: "PBA"} }}</a>.
           </p>
         </div>
       </div>
@@ -160,7 +160,7 @@
                 {{ "You don't have enough funds in your PBA account to pay for this fee." | rpxTranslate }}
               </li>
               <li class="pba-payments-error-16-font">
-                {{ "If you have already topped up your PBA account, wait up to 24 hours for the new balance to become available." | rpxTranslate: ["PBA", "24"] }}
+                {{ "If you have already topped up your PBA account, wait up to 24 hours for the new balance to become available." | rpxTranslate: {pba: "PBA", number: "24"} }}
               </li>
             </ul>
           </div>
@@ -197,7 +197,7 @@
           <div class="govuk-error-summary__body">
             <ul class="govuk-list govuk-error-summary__list">
               <li class="pba-payments-error-16-font">
-                {{ "Your PBA account" | rpxTranslate: "PBS"}} ({{selectedPbaAccount}}) {{ "no longer exists." | rpxTranslate }}
+                ({{ "Your PBA account" | rpxTranslate: {pba: "PBA"} }}) ({{ selectedPbaAccount }}) ({{ "no longer exists." | rpxTranslate }})
               </li>
             </ul>
           </div>
@@ -206,7 +206,6 @@
           <h2 class="heading-medium">{{ "Should you need any further advice" | rpxTranslate }}</h2>
           <p class="govuk-body pba-payments-19-font govuk-body-width">
             {{ "Email" | rpxTranslate }} <a href="mailto:MiddleOffice.DDservices@liberata.com">MiddleOffice.DDservices@liberata.com</a> {{ "or call" | rpxTranslate }} <a href="tel:01633-652-125">01633 652 125</a> ({{ "option" | rpxTranslate }} 3) {{ "to try to fix the issue." | rpxTranslate }}
-          </p>
           </p>
           <p class="govuk-body pba-payments-19-font">
             {{ "you can also pay by credit or debit card." | rpxTranslate }}
@@ -235,7 +234,7 @@
           <div class="govuk-error-summary__body">
             <ul class="govuk-list govuk-error-summary__list">
               <li class="pba-payments-error-16-font">
-                {{ "Your PBA account" | rpxTranslate: "PBA" }} ({{selectedPbaAccount}}) {{ "has been put on hold." | rpxTranslate }}
+                {{ "Your PBA account " | rpxTranslate: {pba: "PBA"} }}  ({{selectedPbaAccount}}) {{ " has been put on hold." | rpxTranslate }}
               </li>
             </ul>
           </div>

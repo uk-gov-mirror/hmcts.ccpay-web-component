@@ -68,6 +68,7 @@ import { RpxTranslationModule } from 'rpx-xui-translation';
     AddRemissionComponent,
     UnprocessedPaymentsComponent,
     RefundStatusComponent,
+    PbaPaymentComponent,
     // BrowserAnimationsModule,
     // NoopAnimationsModule
     RpxTranslationModule.forChild(),
@@ -76,7 +77,6 @@ import { RpxTranslationModule } from 'rpx-xui-translation';
     PaymentLibComponent,
     PaymentListComponent,
     //PaymentViewComponent,
-    PbaPaymentComponent,
     //ContactDetailsComponent,
     ProcessRefundComponent,
     RefundListComponent,
