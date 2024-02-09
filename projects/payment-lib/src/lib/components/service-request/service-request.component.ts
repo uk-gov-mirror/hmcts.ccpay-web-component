@@ -320,6 +320,19 @@ export class ServiceRequestComponent implements OnInit {
     }
   }
 
+  canItBeRefunded(remission: IRemission): boolean {
+
+    if (remission !== null && remission !== undefined) {
+      if (remission.add_refund == false) {
+        return false;
+      }
+      if (remission.overall_balance > 0) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   chkIsAddRemissionBtnEnable(fee: IFee): boolean {
     if (fee !== null && fee !== undefined) {
       return fee.add_remission && fee.remission_enable;
