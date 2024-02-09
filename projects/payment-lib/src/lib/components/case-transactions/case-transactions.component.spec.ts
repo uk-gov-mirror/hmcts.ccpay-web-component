@@ -1,6 +1,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { Pipe, PipeTransform } from '@angular/core'
 import { CaseTransactionsComponent } from './case-transactions.component';
+
+@Pipe({ name: 'rpxTranslate' })
+class RpxTranslateMockPipe implements PipeTransform {
+  public transform(value: string): string {
+    return value;
+  }
+}
 
 describe('CaseTransactionsComponent', () => {
   let component: CaseTransactionsComponent;
@@ -8,7 +15,7 @@ describe('CaseTransactionsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CaseTransactionsComponent ]
+      declarations: [ CaseTransactionsComponent, RpxTranslateMockPipe ]
     })
     .compileComponents();
   }));
