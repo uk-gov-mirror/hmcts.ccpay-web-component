@@ -38,7 +38,7 @@ import { RpxTranslationModule } from 'rpx-xui-translation';
       validity: {
         days: 1
       },
-      testMode: false
+      testMode: true
     })
   ],
   providers: [],
