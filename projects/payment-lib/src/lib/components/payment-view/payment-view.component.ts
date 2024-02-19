@@ -18,6 +18,7 @@ import {NotificationPreviewComponent} from '../notification-preview/notification
 import {CcdHyphensPipe} from '../../pipes/ccd-hyphens.pipe';
 import {CapitalizePipe} from '../../pipes/capitalize.pipe';
 import type { PaymentLibComponent } from '../../payment-lib.component';
+import { RpxTranslationModule } from 'rpx-xui-translation';
 
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 
@@ -32,7 +33,8 @@ const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
     ContactDetailsComponent,
     NotificationPreviewComponent,
     CcdHyphensPipe,
-    CapitalizePipe
+    CapitalizePipe,
+    RpxTranslationModule
   ],
   standalone: true
 })
