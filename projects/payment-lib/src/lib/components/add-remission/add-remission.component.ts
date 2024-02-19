@@ -1140,6 +1140,19 @@ export class AddRemissionComponent implements OnInit {
 
   }
 
+  canRefundBeApplied(){
+
+    if(this.remissionamt == null || this.fee.fee_amount == null || this.payment.amount ==null ){
+      return true;
+    }
+
+    if ( this.fee.fee_amount-this.payment.amount == this.remissionamt){
+      return false;
+    }
+    return true;
+
+  }
+
   resetOrderData() {
     this.OrderslistService.setOrderRef(null);
     this.OrderslistService.setorderCCDEvent(null);
