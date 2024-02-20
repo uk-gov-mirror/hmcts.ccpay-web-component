@@ -13,6 +13,14 @@ import { ChangeDetectorRef } from '@angular/core';
 import { OrderslistService } from '../../services/orderslist.service';
 import { AddRemissionComponent } from './add-remission.component';
 import { of } from 'rxjs';
+import { Pipe, PipeTransform } from '@angular/core'
+
+@Pipe({ name: 'rpxTranslate' })
+class RpxTranslateMockPipe implements PipeTransform {
+  public transform(value: string): string {
+    return value;
+  }
+}
 
 
 describe('AddRemissionComponent', () => {
@@ -97,7 +105,7 @@ describe('AddRemissionComponent', () => {
 
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
-      declarations: [AddRemissionComponent],
+      declarations: [AddRemissionComponent, RpxTranslateMockPipe],
       providers: [
         { provide: FormBuilder, useFactory: formBuilderStub },
         { provide: Router, useFactory: routerStub },

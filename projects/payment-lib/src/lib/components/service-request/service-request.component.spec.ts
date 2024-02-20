@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { Pipe, PipeTransform } from '@angular/core'
+import { Pipe, PipeTransform } from '@angular/core';
 import { ServiceRequestComponent } from './service-request.component';
 
 @Pipe({ name: 'rpxTranslate' })
