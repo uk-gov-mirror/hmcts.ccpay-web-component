@@ -1192,7 +1192,7 @@ export class AddRemissionComponent implements OnInit {
   getRefundAmountToBeDisplayed(remission: IRemission): string {
 
     if (remission !== null && remission !== undefined) {
-      if (remission.overall_balance > 0) {
+      if (remission.overall_balance > 0 && remission.acollection_of_fess == false) {
         return remission.overall_balance.toString();
       }else{
         return remission.hwf_amount.toString()
