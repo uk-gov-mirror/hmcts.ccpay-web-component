@@ -763,7 +763,7 @@
         </tr>
         <tr class="govuk-table__row">
             <td class="govuk-table__cell govuk-!-font-weight-bold">Refund amount</td>
-            <td class="govuk-table__cell">{{remission.hwf_amount | currency:'GBP':'symbol-narrow':'1.2-2'}}</td>
+            <td class="govuk-table__cell">{{getRefundAmountToBeDisplayed(remission)| currency:'GBP':'symbol-narrow':'1.2-2'}}</td>
         </tr>
         <tr class="govuk-table__row">
             <td class="govuk-table__cell govuk-!-font-weight-bold">Fee code</td>
