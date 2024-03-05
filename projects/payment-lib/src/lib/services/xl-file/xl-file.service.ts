@@ -1,54 +1,63 @@
 import { Injectable } from '@angular/core';
 import * as FileSaver from 'file-saver';
-import * as XLSX from 'xlsx';
-import * as XLSXStyle from 'xlsx-style';
+//import * as excel from 'excel';
+//import * as excelStyle from 'excel-style';
+//import * as ExcelJS from 'exceljs';
+import * as excel from 'excel4node';
 
 
-const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
-const EXCEL_EXTENSION = '.xlsx';
-
+ const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+const EXCEL_EXTENSION = '.excel4node';
+//const excel = require('excel4node');
 @Injectable()
 export class XlFileService {
 
   constructor() { }
 
   public exportAsExcelFile(json: any[], excelFileName: string): void {
-    let worksheet: XLSX.WorkSheet; 
-    let workbook: XLSX.WorkBook; 
+    let worksheet: excel.WorkSheet;
+    let workbook: excel.WorkBook;
     if(excelFileName.match('Data_Loss')!== null){
-     worksheet =  XLSX.utils.json_to_sheet(json,{header:['loss_resp','payment_asset_dcn','env_ref','env_item','resp_service_id','resp_service_name','date_banked','bgc_batch','payment_method','amount']});
+     worksheet =  excel.utils.json_to_sheet(json,{header:['loss_resp','payment_asset_dcn','env_ref','env_item','resp_service_id','resp_service_name','date_banked','bgc_batch','payment_method','amount']});
      worksheet =  this.setDataLossReportHeaders(worksheet);
      worksheet = this.autoFitColumns(worksheet,json);
      } else if(excelFileName.match('Unprocessed')!== null){
-     worksheet =  XLSX.utils.json_to_sheet(json,{header:['resp_service_id','resp_service_name','exception_ref','ccd_ref','date_banked','bgc_batch','payment_asset_dcn','env_ref','env_item','payment_method','amount']});
+     worksheet =  excel.utils.json_to_sheet(json,{header:['resp_service_id','resp_service_name','exception_ref','ccd_ref','date_banked','bgc_batch','payment_asset_dcn','env_ref','env_item','payment_method','amount']});
      worksheet =  this.setUnprocessedReportHeaders(worksheet);
      worksheet = this.autoFitColumns(worksheet,json);
     } else if(excelFileName.match('Processed_Unallocated')!== null){
-      worksheet =  XLSX.utils.json_to_sheet(json,{header:['resp_service_id','resp_service_name','allocation_status','receiving_office','allocation_reason','ccd_exception_reference','ccd_case_reference','payment_asset_dcn','env_ref','env_item','date_banked','bgc_batch','payment_method','amount']});
+      worksheet =  excel.utils.json_to_sheet(json,{header:['resp_service_id','resp_service_name','allocation_status','receiving_office','allocation_reason','ccd_exception_reference','ccd_case_reference','payment_asset_dcn','env_ref','env_item','date_banked','bgc_batch','payment_method','amount']});
       worksheet =  this.setProcessedUnallocatedReportHeaders(worksheet);
       worksheet = this.autoFitColumns(worksheet,json);
     } else if(excelFileName.match('Payment failure')!== null){
-      worksheet =  XLSX.utils.json_to_sheet(json,{header:['payment_reference','ccd_reference','document_control_number','org_id','service_name','failure_reference','failure_reason','disputed_amount','event_name','event_date','representment_status','representment_date','refund_reference','refund_amount','refund_date']});
+      worksheet =  excel.utils.json_to_sheet(json,{header:['payment_reference','ccd_reference','document_control_number','org_id','service_name','failure_reference','failure_reason','disputed_amount','event_name','event_date','representment_status','representment_date','refund_reference','refund_amount','refund_date']});
       worksheet =  this.setPaymentFailureReportHeaders(worksheet);
       worksheet = this.autoFitColumns(worksheet,json);
     } else {
-      worksheet =  XLSX.utils.json_to_sheet(json,{header:['resp_service_id','resp_service_name','surplus_shortfall','balance','payment_amount','ccd_case_reference', 'ccd_exception_reference', 'processed_date', 'reason', 'explanation', 'user_name']});
+      worksheet =  excel.utils.json_to_sheet(json,{header:['resp_service_id','resp_service_name','surplus_shortfall','balance','payment_amount','ccd_case_reference', 'ccd_exception_reference', 'processed_date', 'reason', 'explanation', 'user_name']});
       worksheet =  this.setShortFallReportHeaders(worksheet);
       worksheet = this.autoFitColumns(worksheet,json);
     }
     workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
-    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    const excelBuffer: any = excel.write(workbook, { bookType: 'excel', type: 'array' });
     this.saveAsExcelFile(excelBuffer, excelFileName);
+
   }
 
 
-private autoFitColumns (worksheet: XLSX.WorkSheet,json:any) : XLSX.WorkSheet {
-  let objectMaxLength = []; 
+ private autoFitColumns (worksheet: excel.WorkSheet,json:any) : excel.WorkSheet {
+  let objectMaxLength = [];
   let ColWidth = [];
   let obj = <any>Object;
     for (let i = 0; i < json.length; i++) {
+
       let value = obj.values(json[i]);
       let key = obj.keys(json[i]);
+          // console.debug('test67 ' + value[i]);
+             console.debug('test68 ' + obj.keys(json[i]));
+              console.debug('test69 ' + obj.values(json[i]));
+               //console.debug('test70 ' + (json[i]));
+              // console.debug('test71 ' + [i]);
       for (let j = 0; j < value.length; j++) {
         if(value[j] === null){
           value[j] = '';
@@ -62,13 +71,15 @@ private autoFitColumns (worksheet: XLSX.WorkSheet,json:any) : XLSX.WorkSheet {
             }
       ColWidth.push({'width': +objectMaxLength[j]});
       }
+
     }
     worksheet['!cols'] = ColWidth;
+
     return worksheet;
 }
 
 
-private setDataLossReportHeaders (worksheet: XLSX.WorkSheet): XLSX.WorkSheet {
+private setDataLossReportHeaders (worksheet: excel.WorkSheet): excel.WorkSheet {
   worksheet.A1.v = "Loss_Resp";
   worksheet.B1.v = "Payment_Asset_DCN";
   worksheet.C1.v = "Envelope_Ref";
@@ -80,9 +91,11 @@ private setDataLossReportHeaders (worksheet: XLSX.WorkSheet): XLSX.WorkSheet {
   worksheet.I1.v = "Payment_Method";
   worksheet.J1.v = "Amount";
   return worksheet;
+
+
 }
 
-private setUnprocessedReportHeaders (worksheet: XLSX.WorkSheet): XLSX.WorkSheet {
+private setUnprocessedReportHeaders (worksheet: excel.WorkSheet): excel.WorkSheet {
   worksheet.A1.v = "Resp_Service ID";
   worksheet.B1.v = "Resp_Service Name";
   worksheet.C1.v = "Exception_Ref";
@@ -97,7 +110,7 @@ private setUnprocessedReportHeaders (worksheet: XLSX.WorkSheet): XLSX.WorkSheet 
   return worksheet;
 }
 
-private setProcessedUnallocatedReportHeaders (worksheet: XLSX.WorkSheet): XLSX.WorkSheet {
+private setProcessedUnallocatedReportHeaders (worksheet: excel.WorkSheet): excel.WorkSheet {
   worksheet.A1.v = "Resp_Service ID";
   worksheet.B1.v = "Resp_Service Name";
   worksheet.C1.v = "Allocation_Status";
@@ -115,7 +128,7 @@ private setProcessedUnallocatedReportHeaders (worksheet: XLSX.WorkSheet): XLSX.W
   return worksheet;
 }
 
-private setPaymentFailureReportHeaders (worksheet: XLSX.WorkSheet): XLSX.WorkSheet {
+private setPaymentFailureReportHeaders (worksheet: excel.WorkSheet): excel.WorkSheet {
   worksheet.A1.v = "Payment reference";
   worksheet.B1.v = "CCD reference";
   worksheet.C1.v = "Document Control Number";
@@ -133,7 +146,8 @@ private setPaymentFailureReportHeaders (worksheet: XLSX.WorkSheet): XLSX.WorkShe
   worksheet.O1.v = "Refund date";
   return worksheet;
 }
-private setShortFallReportHeaders (worksheet: XLSX.WorkSheet): XLSX.WorkSheet {
+
+private setShortFallReportHeaders (worksheet: excel.WorkSheet): excel.WorkSheet {
   worksheet.A1.v = "Resp_Service ID";
   worksheet.B1.v = "Resp_Service Name";
   worksheet.C1.v = "Over Payment_Under Payment";
@@ -147,6 +161,7 @@ private setShortFallReportHeaders (worksheet: XLSX.WorkSheet): XLSX.WorkSheet {
   worksheet.K1.v = "Updated Name";
   return worksheet;
 }
+
 
 private saveAsExcelFile(buffer: any, fileName: string): void {
     const data: Blob = new Blob([buffer], {
