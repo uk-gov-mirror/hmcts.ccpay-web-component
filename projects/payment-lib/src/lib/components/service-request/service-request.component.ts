@@ -89,7 +89,7 @@ export class ServiceRequestComponent implements OnInit {
   isRemissionsMatch: boolean;
   isRemoveBtnDisabled: boolean = false;
   feeId: IFee;
-  clAmountDue: number = 0;
+  clAmountDue: number;
   unprocessedRecordCount: number;
   isFeeRecordsExist: boolean = false;
   isGrpOutstandingAmtPositive: boolean = false;
@@ -128,6 +128,7 @@ export class ServiceRequestComponent implements OnInit {
 
   constructor(
     @Inject('PAYMENT_LIB') private paymentLibComponent: PaymentLibComponent,
+    private caseTransactionsComponent: CaseTransactionsComponent,
     private paymentViewService: PaymentViewService,
     private OrderslistService: OrderslistService,
     private notificationService: NotificationService,
@@ -135,6 +136,8 @@ export class ServiceRequestComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
+
+    this.clAmountDue = this.caseTransactionsComponent.clAmountDue;
     this.isTurnOff = this.paymentLibComponent.ISTURNOFF;
     this.isServiceRequest = 'false';
     if (this.viewStatus === undefined) {
