@@ -16,20 +16,6 @@ export class XlFileService {
 
     if(excelFileName.match('Data_Loss')!== null){
       //worksheet =  XLSX.utils.json_to_sheet(json,{header:['loss_resp','payment_asset_dcn','env_ref','env_item','resp_service_id','resp_service_name','date_banked','bgc_batch','payment_method','amount']});
-
-      worksheet.columns = [
-        { header: 'Loss_Resp', key: 'loss_resp', width: 10 },
-        { header: 'Payment_Asset_DCN', key: 'payment_asset_dcn', width: 10 },
-        { header: 'Envelope_Ref', key: 'env_ref', width: 10 },
-        { header: 'Envelope_Item', key: 'env_item', width: 10 },
-        { header: 'Resp_Service ID', key: 'resp_service_id', width: 10 },
-        { header: 'Resp_Service Name', key: 'resp_service_name', width: 10 },
-        { header: 'Date_Banked', key: 'date_banked', width: 10 },
-        { header: 'BGC_Batch', key: 'bgc_batch', width: 10 },
-        { header: 'Payment_Method', key: 'payment_method', width: 10 },
-        { header: 'Amount', key: 'amount', width: 10 }
-      ];
-
       worksheet =  this.setDataLossReportHeaders(worksheet);
       worksheet = this.autoFitColumns(worksheet,json);
       worksheet =  this.addRowData(worksheet,json);
@@ -37,18 +23,22 @@ export class XlFileService {
       //worksheet =  XLSX.utils.json_to_sheet(json,{header:['resp_service_id','resp_service_name','exception_ref','ccd_ref','date_banked','bgc_batch','payment_asset_dcn','env_ref','env_item','payment_method','amount']});
       worksheet =  this.setUnprocessedReportHeaders(worksheet);
       worksheet = this.autoFitColumns(worksheet,json);
+      worksheet =  this.addRowData(worksheet,json);
     } else if(excelFileName.match('Processed_Unallocated')!== null){
       //worksheet =  XLSX.utils.json_to_sheet(json,{header:['resp_service_id','resp_service_name','allocation_status','receiving_office','allocation_reason','ccd_exception_reference','ccd_case_reference','payment_asset_dcn','env_ref','env_item','date_banked','bgc_batch','payment_method','amount']});
       worksheet =  this.setProcessedUnallocatedReportHeaders(worksheet);
       worksheet = this.autoFitColumns(worksheet,json);
+      worksheet =  this.addRowData(worksheet,json);
     } else if(excelFileName.match('Payment failure')!== null){
       //worksheet =  XLSX.utils.json_to_sheet(json,{header:['payment_reference','ccd_reference','document_control_number','org_id','service_name','failure_reference','failure_reason','disputed_amount','event_name','event_date','representment_status','representment_date','refund_reference','refund_amount','refund_date']});
       worksheet =  this.setPaymentFailureReportHeaders(worksheet);
       worksheet = this.autoFitColumns(worksheet,json);
+      worksheet =  this.addRowData(worksheet,json);
     } else {
       //worksheet =  XLSX.utils.json_to_sheet(json,{header:['resp_service_id','resp_service_name','surplus_shortfall','balance','payment_amount','ccd_case_reference', 'ccd_exception_reference', 'processed_date', 'reason', 'explanation', 'user_name']});
       worksheet =  this.setShortFallReportHeaders(worksheet);
       worksheet = this.autoFitColumns(worksheet,json);
+      worksheet =  this.addRowData(worksheet,json);
     }
     //workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
 
@@ -83,7 +73,6 @@ private autoFitColumns (worksheet: ExcelJS.Worksheet,json:any) : ExcelJS.Workshe
       ColWidth.push({'width': +objectMaxLength[j]});
       }
     }
-    //worksheet['!cols'] = ColWidth;
     worksheet.columns = ColWidth;
     return worksheet;
 }
@@ -164,6 +153,7 @@ private setPaymentFailureReportHeaders (worksheet: ExcelJS.Worksheet): ExcelJS.W
   worksheet.getCell('O1').value = "Refund date";
   return worksheet;
 }
+
 private setShortFallReportHeaders (worksheet: ExcelJS.Worksheet): ExcelJS.Worksheet {
   worksheet.getCell('A1').value = "Resp_Service ID";
   worksheet.getCell('B1').value = "Resp_Service Name";
@@ -179,10 +169,4 @@ private setShortFallReportHeaders (worksheet: ExcelJS.Worksheet): ExcelJS.Worksh
   return worksheet;
 }
 
-private saveAsExcelFile(buffer: any, fileName: string): void {
-    const data: Blob = new Blob([buffer], {
-      type: EXCEL_TYPE
-    });
-    FileSaver.saveAs(data, fileName + EXCEL_EXTENSION);
-  }
 }
