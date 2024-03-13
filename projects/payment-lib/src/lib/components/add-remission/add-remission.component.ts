@@ -25,6 +25,7 @@ import { NotificationPreviewComponent } from '../notification-preview/notificati
 import { CcdHyphensPipe } from '../../pipes/ccd-hyphens.pipe';
 import { CapitalizePipe } from '../../pipes/capitalize.pipe';
 import { ContactDetailsComponent } from '../contact-details/contact-details.component';
+import { RpxTranslationModule } from 'rpx-xui-translation';
 
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 const resolvedPromise = Promise.resolve(null);
@@ -43,7 +44,8 @@ const resolvedPromise = Promise.resolve(null);
     CcdHyphensPipe,
     CapitalizePipe,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RpxTranslationModule
   ],
   standalone: true
 })
