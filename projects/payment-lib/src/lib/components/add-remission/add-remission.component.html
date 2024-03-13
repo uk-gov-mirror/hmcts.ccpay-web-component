@@ -245,7 +245,7 @@
           </div>
         </div>
         <div *ngIf="remessionPayment.status === 'Success'" >
-            <button type="submit" [disabled]="!isRemissionApplied" [ngClass]='isConfirmationBtnDisabled ? "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"' (click)="gotoProcessRetroRemission()">{{ "Continue" | rpxTranslate }} </button>
+            <button type="submit" [disabled]="!canRefundBeApplied()" [ngClass]='isConfirmationBtnDisabled ? "button button--disabled govuk-!-margin-right-1" : "button govuk-!-margin-right-1"' (click)="gotoProcessRetroRemission()">{{ "Continue" | rpxTranslate }} </button>
           </div>
           <p class="govuk-body">
           <a href="javascript:void(0)" (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link pointer" data-module="govuk-button">
@@ -763,7 +763,7 @@
         </tr>
         <tr class="govuk-table__row">
             <td class="govuk-table__cell govuk-!-font-weight-bold">{{ "Refund amount" | rpxTranslate }}</td>
-            <td class="govuk-table__cell">{{remission.hwf_amount | currency:'GBP':'symbol-narrow':'1.2-2'}}</td>
+            <td class="govuk-table__cell">{{getRefundAmountToBeDisplayed(remission)| currency:'GBP':'symbol-narrow':'1.2-2'}}</td>
         </tr>
         <tr class="govuk-table__row">
             <td class="govuk-table__cell govuk-!-font-weight-bold">{{ "Fee code" | rpxTranslate }}</td>

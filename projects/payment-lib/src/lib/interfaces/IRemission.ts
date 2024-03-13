@@ -10,4 +10,5 @@ export interface IRemission {
   issue_refund_add_refund_add_remission: boolean;
   add_refund: boolean;
   overall_balance:number;
+  acollection_of_fess: boolean;
 }

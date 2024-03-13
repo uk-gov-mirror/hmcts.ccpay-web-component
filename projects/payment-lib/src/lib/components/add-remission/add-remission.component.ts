@@ -416,14 +416,13 @@ export class AddRemissionComponent implements OnInit {
         if (JSON.parse(response).success) {
           let LDUrl = this.isTurnOff ? '&isTurnOff=Enable' : '&isTurnOff=Disable'
           LDUrl += `&caseType=${this.caseType}`
-          if (this.paymentLibComponent.bspaymentdcn) {
+          if (this.paymentLibComponent.SELECTED_OPTION != null && this.paymentLibComponent.SELECTED_OPTION.toLocaleLowerCase() === 'ccdorexception' ) {
             this.router.routeReuseStrategy.shouldReuseRoute = () => false;
             this.router.onSameUrlNavigation = 'reload';
             this.router.navigateByUrl(`/payment-history/${this.ccdCaseNumber}?view=fee-summary&selectedOption=${this.option}&paymentGroupRef=${this.paymentGroupRef}&dcn=${this.paymentLibComponent.bspaymentdcn}${LDUrl}`);
           } else {
             this.gotoCasetransationPage();
           }
-
         }
       },
       (error: any) => {
@@ -1142,6 +1141,19 @@ export class AddRemissionComponent implements OnInit {
 
   }
 
+  canRefundBeApplied(){
+
+    if(this.remissionamt == null || this.fee.fee_amount == null || this.payment.amount ==null ){
+      return true;
+    }
+
+    if ( this.fee.fee_amount-this.payment.amount == this.remissionamt){
+      return false;
+    }
+    return true;
+
+  }
+
   resetOrderData() {
     this.OrderslistService.setOrderRef(null);
     this.OrderslistService.setorderCCDEvent(null);
@@ -1191,4 +1203,15 @@ export class AddRemissionComponent implements OnInit {
     }
   }
 
+  getRefundAmountToBeDisplayed(remission: IRemission): string {
+
+    if (remission !== null && remission !== undefined) {
+      if (remission.overall_balance > 0 && remission.acollection_of_fess == false) {
+        return remission.overall_balance.toString();
+      }else{
+        return remission.hwf_amount.toString()
+      }
+    }
+    return "undefined";
+  }
 }
