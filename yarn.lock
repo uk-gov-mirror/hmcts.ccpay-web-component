@@ -5667,7 +5667,6 @@ __metadata:
     rxjs-compat: ^6.6.7
     sass: ^1.64.1
     server: ^1.0.37
-    stream: ^0.0.2
     ts-mockito: ^2.3.1
     ts-node: ~8.0.2
     tslib: ^2.0.0
@@ -6876,13 +6875,6 @@ __metadata:
   version: 1.4.710
   resolution: "electron-to-chromium@npm:1.4.710"
   checksum: 1f68232a054abcde73a3e5a22d12ab2cca70c04761a36923e8848a56d429ac97e3205b51688a61a5c2c90401b2b0a4e9ef8dc95698e95382aa1ae62e698cedcd
-  languageName: node
-  linkType: hard
-
-"emitter-component@npm:^1.1.1":
-  version: 1.1.2
-  resolution: "emitter-component@npm:1.1.2"
-  checksum: caf43e59e8e3b03532553d5870433f771b75f88c9d3594dec7498f50b47e49c05ed9b308dea41251cc9349bb210094ddc9185a98fbc8db8264621a7d21cc0457
   languageName: node
   linkType: hard
 
@@ -13744,15 +13736,6 @@ __metadata:
   dependencies:
     internal-slot: ^1.0.4
   checksum: d04173690b2efa40e24ab70e5e51a3ff31d56d699550cfad084104ab3381390daccb36652b25755e420245f3b0737de66c1879eaa2a8d4fc0a78f9bf892fcb42
-  languageName: node
-  linkType: hard
-
-"stream@npm:^0.0.2":
-  version: 0.0.2
-  resolution: "stream@npm:0.0.2"
-  dependencies:
-    emitter-component: ^1.1.1
-  checksum: 43d89e176c282234d452754f9b55a82c74ea68345bf6176af32c4c213801f88df7984c83ec5a735457705dddf4668373edb9f0ec270a7491e1d881631a763978
   languageName: node
   linkType: hard
 
