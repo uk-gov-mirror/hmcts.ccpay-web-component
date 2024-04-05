@@ -581,6 +581,7 @@ export class AddRemissionComponent implements OnInit {
     this.viewCompStatus = '';
     this.isRefundRemission = true;
     this.errorMessage = '';
+    this.isConfirmationBtnDisabled = false;
   }
 
   confirmRetroRemission() {
