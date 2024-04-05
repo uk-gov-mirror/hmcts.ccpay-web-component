@@ -5,7 +5,14 @@ import { PaymentLibComponent } from '../../payment-lib.component';
 import { PbaPaymentComponent } from './pba-payment.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core'
+
+@Pipe({ name: 'rpxTranslate' })
+class RpxTranslateMockPipe implements PipeTransform {
+  public transform(value: string): string {
+    return value;
+  }
+}
 
 describe('Add remission component', () => {
   let component: PbaPaymentComponent,
@@ -13,7 +20,7 @@ describe('Add remission component', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [PbaPaymentComponent],
+      declarations: [PbaPaymentComponent, RpxTranslateMockPipe],
       providers: [PaymentLibComponent],
       imports: [
         CommonModule,

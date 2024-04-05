@@ -8,6 +8,14 @@ import { IPayment } from '../../interfaces/IPayment';
 import { ChangeDetectorRef } from '@angular/core';
 import { OrderslistService } from '../../services/orderslist.service';
 import { PaymentViewComponent } from './payment-view.component';
+import { Pipe, PipeTransform } from '@angular/core';
+
+@Pipe({ name: 'rpxTranslate' })
+class RpxTranslateMockPipe implements PipeTransform {
+  public transform(value: string): string {
+    return value;
+  }
+}
 
 describe('PaymentViewComponent', () => {
   let component: PaymentViewComponent;
@@ -37,7 +45,7 @@ describe('PaymentViewComponent', () => {
     });
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
-      declarations: [PaymentViewComponent],
+      declarations: [PaymentViewComponent, RpxTranslateMockPipe],
       providers: [
         { provide: PaymentViewService, useFactory: paymentViewServiceStub },
         { provide: PaymentLibComponent, useFactory: paymentLibComponentStub },

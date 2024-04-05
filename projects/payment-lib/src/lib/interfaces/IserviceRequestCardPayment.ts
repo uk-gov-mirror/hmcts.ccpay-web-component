@@ -3,10 +3,10 @@ export class IserviceRequestCardPayment {
     currency: string
     language: string
     
-    constructor(amount : string) {
+    constructor(amount : string, language : string) {
         this.amount = amount;
         this.currency = 'GBP';
-        this.language = 'string';
+        this.language = language;
     } 
 }
     

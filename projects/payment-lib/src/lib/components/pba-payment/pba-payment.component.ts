@@ -3,13 +3,20 @@ import { PaymentViewService } from '../../services/payment-view/payment-view.ser
 import type { PaymentLibComponent } from '../../payment-lib.component';
 import { IserviceRequestCardPayment } from '../../interfaces/IserviceRequestCardPayment';
 import { IserviceRequestPbaPayment } from '../../interfaces/IserviceRequestPbaPayment';
+import { CommonModule } from '@angular/common';
+import { RpxTranslationModule, RpxLanguage } from 'rpx-xui-translation';
 
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 
 @Component({
   selector: 'ccpay-pba-payment',
   templateUrl: './pba-payment.component.html',
-  styleUrls: ['./pba-payment.component.scss']
+  styleUrls: ['./pba-payment.component.scss'],
+  imports: [
+    CommonModule,
+    RpxTranslationModule
+  ],
+  standalone: true
 })
 export class PbaPaymentComponent implements OnInit {
   @Input() pbaPayOrderRef: any;
@@ -52,6 +59,11 @@ export class PbaPaymentComponent implements OnInit {
       );
 
   }
+
+  getPersistedLanguage(): RpxLanguage {
+    return document.cookie.split(';').find((cookie) => cookie.trim().startsWith('exui-preferred-language' + '='))?.split('=')[1].trim() as RpxLanguage;
+  }
+
   selectpbaaccount(args) {
     if (args.currentTarget.id === 'pbaAccountNumber') {
       this.isPBADropdownSelected = true;
@@ -115,7 +127,7 @@ export class PbaPaymentComponent implements OnInit {
   cardPayment() {
     this.isCardPaymentSuccess = true;
     const requestBody = new IserviceRequestCardPayment(
-      this.pbaPayOrderRef.orderTotalFees);
+      this.pbaPayOrderRef.orderTotalFees, this.getPersistedLanguage());
     this.paymentViewService.postWays2PayCardPayment(this.pbaPayOrderRef.orderRefId, requestBody)
       .subscribe(
         result => {

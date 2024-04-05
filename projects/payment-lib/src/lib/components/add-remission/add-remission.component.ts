@@ -25,6 +25,7 @@ import { NotificationPreviewComponent } from '../notification-preview/notificati
 import { CcdHyphensPipe } from '../../pipes/ccd-hyphens.pipe';
 import { CapitalizePipe } from '../../pipes/capitalize.pipe';
 import { ContactDetailsComponent } from '../contact-details/contact-details.component';
+import { RpxTranslationModule } from 'rpx-xui-translation';
 
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 const resolvedPromise = Promise.resolve(null);
@@ -43,7 +44,8 @@ const resolvedPromise = Promise.resolve(null);
     CcdHyphensPipe,
     CapitalizePipe,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RpxTranslationModule
   ],
   standalone: true
 })
@@ -414,7 +416,7 @@ export class AddRemissionComponent implements OnInit {
         if (JSON.parse(response).success) {
           let LDUrl = this.isTurnOff ? '&isTurnOff=Enable' : '&isTurnOff=Disable'
           LDUrl += `&caseType=${this.caseType}`
-          if (this.paymentLibComponent.SELECTED_OPTION != null && this.paymentLibComponent.SELECTED_OPTION.toLocaleLowerCase() === 'ccdorexception' ) {
+          if (this.paymentLibComponent.bspaymentdcn) {
             this.router.routeReuseStrategy.shouldReuseRoute = () => false;
             this.router.onSameUrlNavigation = 'reload';
             this.router.navigateByUrl(`/payment-history/${this.ccdCaseNumber}?view=fee-summary&selectedOption=${this.option}&paymentGroupRef=${this.paymentGroupRef}&dcn=${this.paymentLibComponent.bspaymentdcn}${LDUrl}`);
