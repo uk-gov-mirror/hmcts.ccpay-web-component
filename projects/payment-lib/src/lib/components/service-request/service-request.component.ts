@@ -455,7 +455,7 @@ export class ServiceRequestComponent implements OnInit {
     this.notificationPreview = false;
   }
 
-  hasPaymentRole(): boolean {
+  hasPaymentsRole(): boolean {
     return this.LOGGEDINUSERROLES.includes('payments');
   }
 }
