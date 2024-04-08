@@ -121,7 +121,7 @@
 
    <!--Payments-->
   <ng-container *ngFor="let order of orderDetail;" >
-   <div class="govuk-grid-column-full" *ngIf="order.payments && hasPaymentRole()">
+   <div class="govuk-grid-column-full" *ngIf="order.payments && hasPaymentsRole()">
       <h3 class="heading-medium">{{ "Payments" | rpxTranslate }}</h3>
    <table class="govuk-table ">
       <thead class="govuk-table__head">
