@@ -59,7 +59,7 @@
           <td class="tb-col-w">{{ paymentGroup?.payments[0]?.banked_date | date:'dd MMM yyyy' }}</td>
         </tr>
         <tr class="section" *ngIf="paymentGroup?.payments[0] && paymentGroup?.payments[0]?.external_reference">
-          <td class="bold tb-col-w">{{ "GovPay Transaction ID" | rpxTranslate: {"gov": "GovPay", "id": "ID"} }}</td>
+          <td class="bold tb-col-w">{{ "GovPay Transaction ID" | rpxTranslate: {gov: "GovPay", id: "ID"} }}</td>
           <td class="tb-col-w">{{ paymentGroup?.payments[0]?.external_reference }}</td>
         </tr>
         <tr class="section" >
@@ -90,7 +90,7 @@
           </tr>
 
           <tr *ngIf="paymentGroup?.payments[0].organisation_name">
-            <td class="bold tb-col-w">{{ "PBA account name" | rpxTranslate: {"pba": "PBA"} }}</td>
+            <td class="bold tb-col-w">{{ "PBA account name" | rpxTranslate: {pba: "PBA"} }}</td>
             <td class="tb-col-w">{{ paymentGroup?.payments[0]?.organisation_name }}</td>
           </tr>
 
