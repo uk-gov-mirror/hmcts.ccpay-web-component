@@ -90,7 +90,7 @@
           </tr>
 
           <tr *ngIf="paymentGroup?.payments[0].organisation_name">
-            <td class="bold tb-col-w">{{ "PBA account name" | rpxTranslate" {"pba": "PBA"} }}</td>
+            <td class="bold tb-col-w">{{ "PBA account name" | rpxTranslate: {"pba": "PBA"} }}</td>
             <td class="tb-col-w">{{ paymentGroup?.payments[0]?.organisation_name }}</td>
           </tr>
 
