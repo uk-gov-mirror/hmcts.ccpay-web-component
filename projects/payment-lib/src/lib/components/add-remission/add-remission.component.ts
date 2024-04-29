@@ -583,29 +583,31 @@ export class AddRemissionComponent implements OnInit {
     this.viewCompStatus = '';
     this.isRefundRemission = true;
     this.errorMessage = '';
+    this.isConfirmationBtnDisabled = false;
   }
 
   confirmRetroRemission() {
-    if (!this.isConfirmationBtnDisabled) {
-      this.retroRemission = true;
-      this.remissionamt = this.remissionForm.controls.amount.value;
-      const requestBody = new AddRetroRemissionRequest(this.remissionamt, this.remissionForm.controls.remissionCode.value)
-      this.paymentViewService.postPaymentGroupWithRetroRemissions(decodeURIComponent(this.paymentGroupRef).trim(), this.fee.id, requestBody).subscribe(
-        response => {
-          if (JSON.parse(response)) {
-            this.isRemissionApplied = true;
-            this.viewCompStatus = '';
-            this.viewStatus = 'retroremissionconfirmationpage';
-            this.remissionReference = JSON.parse(response).remission_reference;
-          }
-        },
-        (error: any) => {
-          this.errorMessage = error;
-          this.isConfirmationBtnDisabled = false;
-          this.cd.detectChanges();
+
+    this.isConfirmationBtnDisabled = true;
+    this.retroRemission = true;
+    this.remissionamt = this.remissionForm.controls.amount.value;
+    const requestBody = new AddRetroRemissionRequest(this.remissionamt, this.remissionForm.controls.remissionCode.value)
+    this.paymentViewService.postPaymentGroupWithRetroRemissions(decodeURIComponent(this.paymentGroupRef).trim(), this.fee.id, requestBody).subscribe(
+      response => {
+        if (JSON.parse(response)) {
+          this.isRemissionApplied = true;
+          this.viewCompStatus = '';
+          this.viewStatus = 'retroremissionconfirmationpage';
+          this.remissionReference = JSON.parse(response).remission_reference;
         }
-      );
-    }
+      },
+      (error: any) => {
+        this.errorMessage = error;
+        this.isConfirmationBtnDisabled = false;
+        this.cd.detectChanges();
+      }
+    );
+
   }
 
   processRefund() {
