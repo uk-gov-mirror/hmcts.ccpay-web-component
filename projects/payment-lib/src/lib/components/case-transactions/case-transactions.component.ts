@@ -1,25 +1,25 @@
-import { Component, OnInit, Input, Inject, forwardRef } from '@angular/core';
+import {Component, forwardRef, Inject, Input, OnInit} from '@angular/core';
+import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
+import {CaseTransactionsService} from '../../services/case-transactions/case-transactions.service';
+import {BulkScaningPaymentService} from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
+import {PaymentViewService} from '../../services/payment-view/payment-view.service';
+import {OrderslistService} from '../../services/orderslist.service';
+import {IFee} from '../../interfaces/IFee';
+import {IPayment} from '../../interfaces/IPayment';
+import {IRemission} from '../../interfaces/IRemission';
+import {IPaymentView} from '../../interfaces/IPaymentView';
+import {IOrderReferenceFee} from '../../interfaces/IOrderReferenceFee';
+import {Router} from '@angular/router';
+import {ServiceRequestComponent} from '../service-request/service-request.component';
+import {UnprocessedPaymentsComponent} from '../unprocessed-payments/unprocessed-payments.component';
+import {CommonModule} from '@angular/common';
+import {AddRemissionComponent} from '../add-remission/add-remission.component';
+import {RefundStatusComponent} from '../refund-status/refund-status.component';
+import {CcdHyphensPipe} from '../../pipes/ccd-hyphens.pipe';
+import {CapitalizePipe} from '../../pipes/capitalize.pipe';
+import {FormsModule} from '@angular/forms';
+import {RpxTranslationModule} from 'rpx-xui-translation';
 import type { PaymentLibComponent } from '../../payment-lib.component';
-import { IPaymentGroup } from '../../interfaces/IPaymentGroup';
-import { CaseTransactionsService } from '../../services/case-transactions/case-transactions.service';
-import { BulkScaningPaymentService } from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
-import { PaymentViewService } from '../../services/payment-view/payment-view.service';
-import { OrderslistService } from '../../services/orderslist.service';
-import { IFee } from '../../interfaces/IFee';
-import { IPayment } from '../../interfaces/IPayment';
-import { IRemission } from '../../interfaces/IRemission';
-import { IPaymentView } from '../../interfaces/IPaymentView';
-import { IOrderReferenceFee } from '../../interfaces/IOrderReferenceFee';
-import { Router } from '@angular/router';
-import { ServiceRequestComponent } from '../service-request/service-request.component';
-import { UnprocessedPaymentsComponent } from '../unprocessed-payments/unprocessed-payments.component';
-import { CommonModule } from '@angular/common';
-import { AddRemissionComponent } from '../add-remission/add-remission.component';
-import { RefundStatusComponent } from '../refund-status/refund-status.component';
-import { CcdHyphensPipe } from '../../pipes/ccd-hyphens.pipe';
-import { CapitalizePipe } from '../../pipes/capitalize.pipe';
-import { FormsModule } from '@angular/forms';
-import { RpxTranslationModule } from 'rpx-xui-translation';
 
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 
@@ -174,6 +174,9 @@ export class CaseTransactionsComponent implements OnInit {
           this.calculateAmounts();
           this.calculateOrderFeesAmounts();
           this.calculateRefundAmount();
+          this.calculateAmountDueTo();
+          this.calculateOverpayment();
+          this.validateAmountDueTo();
           if (this.isFromServiceRequestPage) {
             this.OrderslistService.getSelectedOrderRefId().subscribe((data) => this.orderRef = data);
             this.goToOrderViewDetailSection(this.orderRef);
@@ -206,6 +209,9 @@ export class CaseTransactionsComponent implements OnInit {
           this.paymentGroups = paymentGroups['payment_groups'];
           this.calculateAmounts();
           this.calculateOrderFeesAmounts();
+          this.calculateAmountDueTo();
+          this.calculateOverpayment();
+          this.validateAmountDueTo();
           this.totalRefundAmount = this.calculateRefundAmount();
           this.paymentViewService.getPartyDetails(this.ccdCaseNumber).subscribe(
             response => {
@@ -307,12 +313,12 @@ export class CaseTransactionsComponent implements OnInit {
 
   calculateOrderFeesAmounts(): void {
     let feesTotal = 0.00;
-    this.paymentGroups.forEach(paymentGroup => {
+      this.paymentGroups.forEach(paymentGroup => {
 
       this.resetOrderVariables();
       if (paymentGroup.fees) {
         paymentGroup.fees.forEach(fee => {
-          this.orderFeesTotal = this.orderFeesTotal + fee.calculated_amount
+          this.orderFeesTotal = this.orderFeesTotal + fee.calculated_amount;
           this.overPaymentAmount = this.overPaymentAmount + fee.over_payment
         }
         )
@@ -490,14 +496,14 @@ export class CaseTransactionsComponent implements OnInit {
             if (allocationLen.length === 0) {
               this.payments.push(payment);
             }
-            payment.paymentGroupReference = paymentGroup.payment_group_reference
+            payment.paymentGroupReference = paymentGroup.payment_group_reference;
             this.allPayments.push(payment);
           } else {
             if (payment.status.toUpperCase() === 'SUCCESS') {
               paymentsTotal = paymentsTotal + payment.amount;
               this.payments.push(payment);
             }
-            payment.paymentGroupReference = paymentGroup.payment_group_reference
+            payment.paymentGroupReference = paymentGroup.payment_group_reference;
             this.allPayments.push(payment);
           }
         });
@@ -517,6 +523,45 @@ export class CaseTransactionsComponent implements OnInit {
       this.totalRemissions = remissionsTotal;
     });
 
+  }
+
+  isThereRemissions(): boolean {
+    let result = false;
+    this.paymentGroups.forEach(paymentGroup => {
+      if (paymentGroup.remissions != null && paymentGroup.remissions.length > 0) {
+        result = true;
+      }
+    });
+    return result;
+  }
+
+  calculateOverpayment() {
+    if (this.isThereRemissions()) {
+      let newValue = this.totalPayments - (this.orderFeesTotal - this.totalRemissions);
+      if (newValue > 0){
+        this.overPaymentAmount = newValue;
+      }
+    }
+  }
+
+  calculateAmountDueTo() {
+    if (this.isThereRemissions()) {
+      let newValue = this.totalPayments - (this.orderFeesTotal - this.totalRemissions);
+      if (newValue <= 0) {
+        this.clAmountDue = Math.abs(newValue);
+      }
+    }
+  }
+
+  validateAmountDueTo() {
+    // if there is an overPayment there is not need to add due to amount.
+    if (this.overPaymentAmount > 0) {
+      this.clAmountDue = 0;
+    }
+  }
+
+  canItCalculateAmountDueForRemission(): boolean {
+    return (this.overPaymentAmount < 0);
   }
 
   calculateRefundAmount() {
@@ -644,7 +689,7 @@ export class CaseTransactionsComponent implements OnInit {
     let url = this.isBulkScanEnable ? '&isBulkScanning=Enable' : '&isBulkScanning=Disable';
     url += this.isTurnOff ? '&isTurnOff=Enable' : '&isTurnOff=Disable';
     url += this.isStrategicFixEnable ? '&isStFixEnable=Enable' : '&isStFixEnable=Disable';
-    url += `&caseType=${this.caseType}`
+    url += `&caseType=${this.caseType}`;
     this.router.navigateByUrl(`/fee-search?selectedOption=${this.selectedOption}&ccdCaseNumber=${this.ccdCaseNumber}${url}`);
   }
 
@@ -813,7 +858,7 @@ export class CaseTransactionsComponent implements OnInit {
         return true;
       } else {
         return false;
-      };
+      }
     }
   }
 
@@ -850,7 +895,7 @@ export class CaseTransactionsComponent implements OnInit {
         return true;
       } else {
         return false;
-      };
+      }
     }
   }
 
@@ -858,12 +903,12 @@ export class CaseTransactionsComponent implements OnInit {
     return this.allowedRolesToAccessRefund.some(role =>
       this.LOGGEDINUSERROLES.indexOf(role) !== -1
     );
-  }
+  };
   check4AllowedRoles2AccessPBApayment = (): boolean => {
     return this.isEligible4PBAPayment.some(role =>
       this.LOGGEDINUSERROLES.indexOf(role) !== -1
     );
-  }
+  };
 
   allowFurtherAccessAfter4Days = (payment: IPayment): boolean => {
     if (payment !== null && payment !== undefined) {
@@ -871,7 +916,7 @@ export class CaseTransactionsComponent implements OnInit {
       tmp4DayAgo.setDate(tmp4DayAgo.getDate() - 4);
       return tmp4DayAgo >= new Date(payment.date_created);
     }
-  }
+  };
 
   loadPBAAccountPage(orderRef: IPayment) {
     this.paymentLibComponent.pbaPayOrderRef = orderRef;
