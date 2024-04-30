@@ -198,11 +198,11 @@
     <table class="govuk-table">
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
-           <td class="govuk-table__header col-24 whitespace-inherit" scope="col">{{ "Help with fees or remission code" | rpxTranslate }}</td>
-            <td class="govuk-table__header col-27 whitespace-inherit" scope="col">{{ "Reference" | rpxTranslate }}</td>
-            <td class="govuk-table__header whitespace-inherit" scope="col">{{ "Fee" | rpxTranslate }}</td>
-            <td class="govuk-table__header whitespace-inherit" scope="col">{{ "Amount" | rpxTranslate }}</td>
-            <td  class="govuk-table__header whitespace-inherit refundBtn" scope="col"></td>
+           <th class="govuk-table__header col-24 whitespace-inherit" scope="col">{{ "Help with fees or remission code" | rpxTranslate }}</th>
+            <th class="govuk-table__header col-27 whitespace-inherit" scope="col">{{ "Reference" | rpxTranslate }}</th>
+            <th class="govuk-table__header whitespace-inherit" scope="col">{{ "Fee" | rpxTranslate }}</th>
+            <th class="govuk-table__header whitespace-inherit" scope="col">{{ "Amount" | rpxTranslate }}</th>
+            <th class="govuk-table__header whitespace-inherit refundBtn" scope="col"></th>
           </tr>
       </thead>
       <tbody class="govuk-table__body"  *ngFor="let remission of paymentGroup.remissions">
