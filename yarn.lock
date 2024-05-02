@@ -5671,12 +5671,12 @@ __metadata:
     ts-node: ~8.0.2
     tslib: ^2.0.0
     tslint: ^6.1.3
-    typescript: 5.1.6
+    typescript: ^5.2
     uuid: 7.0.3
     webpack-cli: ^4.10.0
-    zone.js: ~0.13.1
+    zone.js: ^0.14.5
   peerDependencies:
-    typescript: ^5.1.6
+    typescript: ^5.2
   languageName: unknown
   linkType: soft
 
@@ -14342,23 +14342,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:5.1.6":
-  version: 5.1.6
-  resolution: "typescript@npm:5.1.6"
+"typescript@npm:^5.2":
+  version: 5.4.5
+  resolution: "typescript@npm:5.4.5"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: b2f2c35096035fe1f5facd1e38922ccb8558996331405eb00a5111cc948b2e733163cc22fab5db46992aba7dd520fff637f2c1df4996ff0e134e77d3249a7350
+  checksum: 53c879c6fa1e3bcb194b274d4501ba1985894b2c2692fa079db03c5a5a7140587a1e04e1ba03184605d35f439b40192d9e138eb3279ca8eee313c081c8bcd9b0
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@5.1.6#~builtin<compat/typescript>":
-  version: 5.1.6
-  resolution: "typescript@patch:typescript@npm%3A5.1.6#~builtin<compat/typescript>::version=5.1.6&hash=77c9e2"
+"typescript@patch:typescript@^5.2#~builtin<compat/typescript>":
+  version: 5.4.5
+  resolution: "typescript@patch:typescript@npm%3A5.4.5#~builtin<compat/typescript>::version=5.4.5&hash=77c9e2"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 21e88b0a0c0226f9cb9fd25b9626fb05b4c0f3fddac521844a13e1f30beb8f14e90bd409a9ac43c812c5946d714d6e0dee12d5d02dfc1c562c5aacfa1f49b606
+  checksum: 2373c693f3b328f3b2387c3efafe6d257b057a142f9a79291854b14ff4d5367d3d730810aee981726b677ae0fd8329b23309da3b6aaab8263dbdccf1da07a3ba
   languageName: node
   linkType: hard
 
@@ -15367,11 +15367,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zone.js@npm:~0.13.1":
-  version: 0.13.3
-  resolution: "zone.js@npm:0.13.3"
+"zone.js@npm:^0.14.5":
+  version: 0.14.5
+  resolution: "zone.js@npm:0.14.5"
   dependencies:
     tslib: ^2.3.0
-  checksum: 73888a51b0299b4b56c56b97c71fe4a3548a9bdb9e4b4c49dd0e110a4487fbe7f141c08d3e3acff875a6fbb6d581750209ac767ae5d82dca0636ede41aebd436
+  checksum: a9424fa22679c8aa96f67dea3de52aa1d4ea2d0d2ebd13bf3fe9a5bcc1edae797ecf761aaec5dcf17cc287251df4d6edcf7c418d34897b77f303f20c94c1babc
   languageName: node
   linkType: hard
