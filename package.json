@@ -17,6 +17,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular-eslint/schematics": "^17.3.0",
     "@angular/animations": "^17.3.7",
     "@angular/cdk": "^16.1.6",
     "@angular/common": "^17.3.7",
@@ -36,6 +37,7 @@
     "govuk_frontend_toolkit": "^8.1.0",
     "govuk_template_jinja": "^0.24.1",
     "local-storage": "^2.0.0",
+    "rpx-xui-translation": "^1.0.3-angular-upgrade-17-rc",
     "rxjs": "~6.6.7",
     "rxjs-compat": "^6.6.7",
     "tslib": "^2.0.0",
