@@ -34,9 +34,9 @@ describe('TableComponent', () => {
     component = fixture.componentInstance;
   });
 
-  // it('can load instance', () => {
-  //   expect(component).toBeTruthy();
-  // });
+  it('can load instance', () => {
+    expect(component).toBeTruthy();
+  });
 
   // it('displayedColumns has default value', () => {
   //   expect(component.displayedColumns).toEqual([
