@@ -6003,6 +6003,7 @@ __metadata:
     govuk-frontend: ^2.7.0
     govuk_frontend_toolkit: ^8.1.0
     govuk_template_jinja: ^0.24.1
+    jasmine-core: ^5.1.2
     karma: ~6.4.1
     karma-chrome-launcher: ~3.1.0
     karma-cli: 2.0.0
@@ -9801,6 +9802,13 @@ __metadata:
   version: 4.6.0
   resolution: "jasmine-core@npm:4.6.0"
   checksum: c5c5ce16c512cf0bc8b6b4f2d4f0ac7b23cae90624e0cd9d22da3baab3266e9a4da5a9363fb7937b16e0a4cf550bb79183cd74483ce55cfff4b6678434d599b7
+  languageName: node
+  linkType: hard
+
+"jasmine-core@npm:^5.1.2":
+  version: 5.1.2
+  resolution: "jasmine-core@npm:5.1.2"
+  checksum: 42e8db69879b64392d797b2e35b108782b73c70302787903af49fec27cb12daf795f1e3b7e8c30ef5d4ab501f37aa347590f6b472fc336568e9ada2d06e9726f
   languageName: node
   linkType: hard
 
