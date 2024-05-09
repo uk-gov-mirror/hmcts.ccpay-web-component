@@ -9,7 +9,7 @@ describe('PaymentService', () => {
     });
   });
 
-  // it('should be created', inject([WebComponentHttpClient], (service: WebComponentHttpClient) => {
-  //   expect(service).toBeTruthy();
-  // }));
+  it('should be created', inject([WebComponentHttpClient], (service: WebComponentHttpClient) => {
+    expect(service).toBeTruthy();
+  }));
 });
