@@ -3,11 +3,14 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { RefundsService } from '../../services/refunds/refunds.service';
 import { OrderslistService } from '../../services/orderslist.service';
-//import { FakePaymentLibComponent } from '../../fake-payment-lib.component';
+import { PaymentLibComponent } from '../../payment-lib.component';
 import { ProcessRefundComponent } from './process-refund.component';
+import { PaymentViewService} from "../../services/payment-view/payment-view.service";
+import { NotificationService} from "../../services/notification/notification.service";
+import { ActivatedRoute} from "@angular/router";
+
+
 import { of } from 'rxjs';
-import {FakePaymentLibComponent} from "../../fake-payment-lib.component";
-import { PaymentLibComponent} from "../../payment-lib.component";
 
 describe('ProcessRefundComponent', () => {
   let component: ProcessRefundComponent;
@@ -23,7 +26,7 @@ describe('ProcessRefundComponent', () => {
   form.setValue({refundActionField:"Approve",refundRejectReasonField:"",sendMeBackField:"Test Refund  Reason",enterReasonField:"Default Reason"});
 
 
-  beforeEach(async () => {
+  beforeEach(() => {
     const formBuilderStub = () => ({ group: object => ({}) });
     const refundsServiceStub = () => ({
       getRefundActions: refundReference => ({ subscribe: f => f({}) }),
@@ -35,19 +38,22 @@ describe('ProcessRefundComponent', () => {
     const orderslistServiceStub = () => ({
       getnavigationPageValue: () => ({ subscribe: f => f({}) })
     });
-    //const paymentLibComponentStub = () => ({ viewName: {} });
-    await TestBed.configureTestingModule({
+    const paymentLibComponentStub = () => ({ viewName: {} });
+    const emptyServiceStub = () => ({  });
+    TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
-      declarations: [ProcessRefundComponent, FakePaymentLibComponent],
+      declarations: [ProcessRefundComponent],
       providers: [
-        { provide: FormBuilder, useFactory: formBuilderStub },
-        { provide: RefundsService, useFactory: refundsServiceStub },
-        { provide: OrderslistService, useFactory: orderslistServiceStub },
-        { provide: PaymentLibComponent, useValue: FakePaymentLibComponent }
+      { provide: FormBuilder, useFactory: formBuilderStub },
+      { provide: RefundsService, useFactory: refundsServiceStub },
+      { provide: OrderslistService, useFactory: orderslistServiceStub },
+      { provide: 'PAYMENT_LIB', useFactory: paymentLibComponentStub },
+      { provide: PaymentViewService, useFactory: emptyServiceStub },
+      { provide: NotificationService, useFactory: emptyServiceStub },
+      { provide: ActivatedRoute, useFactory: paymentLibComponentStub }
       ]
-    }).compileComponents();
+    });
     fixture = TestBed.createComponent(ProcessRefundComponent);
-    fixture.detectChanges();
     component = fixture.componentInstance;
   });
 
