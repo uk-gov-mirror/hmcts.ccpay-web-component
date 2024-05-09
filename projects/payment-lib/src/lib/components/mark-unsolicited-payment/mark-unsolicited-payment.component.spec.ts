@@ -38,7 +38,7 @@ describe('MarkUnsolicitedPaymentComponent', () => {
       declarations: [MarkUnsolicitedPaymentComponent],
       providers: [
         { provide: FormBuilder, useFactory: formBuilderStub },
-        { provide: PaymentLibComponent, useFactory: paymentLibComponentStub },
+        { provide: 'PAYMENT_LIB', useFactory: paymentLibComponentStub },
         {
           provide: BulkScaningPaymentService,
           useFactory: bulkScaningPaymentServiceStub

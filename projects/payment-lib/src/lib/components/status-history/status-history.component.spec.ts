@@ -20,10 +20,10 @@ describe('StatusHistoryComponent', () => {
     });
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
-      declarations: [StatusHistoryComponent],
+      declarations: [],
       providers: [
         { provide: StatusHistoryService, useFactory: statusHistoryServiceStub },
-        { provide: PaymentLibComponent, useFactory: paymentLibComponentStub }
+        { provide: 'PAYMENT_LIB', useFactory: paymentLibComponentStub }
       ]
     });
     fixture = TestBed.createComponent(StatusHistoryComponent);

@@ -105,7 +105,7 @@ describe('AddRemissionComponent', () => {
 
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
-      declarations: [AddRemissionComponent, RpxTranslateMockPipe],
+      declarations: [RpxTranslateMockPipe],
       providers: [
         { provide: FormBuilder, useFactory: formBuilderStub },
         { provide: Router, useFactory: routerStub },
@@ -226,7 +226,7 @@ describe('AddRemissionComponent', () => {
       const changeDetectorRefStub: ChangeDetectorRef = fixture.debugElement.injector.get(
         ChangeDetectorRef
       );
-     
+
       component.fee = <any>fee;
       spyOn(formBuilderStub, 'group').and.callThrough();
       spyOn(refundsServiceStub, 'getRefundReasons').and.callThrough();

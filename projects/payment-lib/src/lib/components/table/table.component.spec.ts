@@ -26,7 +26,7 @@ describe('TableComponent', () => {
       declarations: [TableComponent],
       providers: [
         { provide: ChangeDetectorRef, useFactory: changeDetectorRefStub },
-        { provide: PaymentLibComponent, useFactory: paymentLibComponentStub },
+        { provide: 'PAYMENT_LIB', useFactory: paymentLibComponentStub },
         { provide: OrderslistService, useFactory: orderslistServiceStub }
       ]
     });
@@ -34,9 +34,9 @@ describe('TableComponent', () => {
     component = fixture.componentInstance;
   });
 
-  // it('can load instance', () => {
-  //   expect(component).toBeTruthy();
-  // });
+  it('can load instance', () => {
+    expect(component).toBeTruthy();
+  });
 
   // it('displayedColumns has default value', () => {
   //   expect(component.displayedColumns).toEqual([

@@ -45,10 +45,10 @@ describe('PaymentViewComponent', () => {
     });
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
-      declarations: [PaymentViewComponent, RpxTranslateMockPipe],
+      declarations: [RpxTranslateMockPipe],
       providers: [
         { provide: PaymentViewService, useFactory: paymentViewServiceStub },
-        { provide: PaymentLibComponent, useFactory: paymentLibComponentStub },
+        { provide: 'PAYMENT_LIB', useFactory: paymentLibComponentStub },
         { provide: ChangeDetectorRef, useFactory: changeDetectorRefStub },
         { provide: OrderslistService, useFactory: orderslistServiceStub }
       ]
