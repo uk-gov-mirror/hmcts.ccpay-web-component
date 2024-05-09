@@ -128,14 +128,14 @@ describe('RefundStatusComponent', () => {
     });
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
-      declarations: [RefundStatusComponent],
+      declarations: [],
       providers: [
         { provide: RefundsService, useFactory: refundsServiceStub },
         { provide: FormBuilder, useFactory: formBuilderStub },
         { provide: PaymentViewService, useFactory: paymentViewServiceStub },
         { provide: Router, useFactory: routerStub },
         { provide: OrderslistService, useFactory: orderslistServiceStub },
-        { provide: PaymentLibComponent, useFactory: paymentLibComponentStub }
+        { provide: 'PAYMENT_LIB', useFactory: paymentLibComponentStub }
       ]
     });
     fixture = TestBed.createComponent(RefundStatusComponent);
@@ -266,7 +266,7 @@ describe('RefundStatusComponent', () => {
   //     const refundsServiceStub: RefundsService = fixture.debugElement.injector.get(
   //       RefundsService
   //     );
-     
+
   //     spyOn(refundsServiceStub, 'getRefundReasons').and.callThrough();
   //     component.gotoReviewAndReSubmitPage();
   //     expect(refundsServiceStub.getRefundReasons).toHaveBeenCalled();
@@ -281,7 +281,7 @@ describe('RefundStatusComponent', () => {
   //   });
   // });
 
-  
+
 
   // describe('gotoReviewRefundConfirmationPage', () => {
   //   it('makes expected calls', () => {

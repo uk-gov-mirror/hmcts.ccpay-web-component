@@ -15,7 +15,7 @@ describe('ServiceRequestComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ServiceRequestComponent, RpxTranslateMockPipe ]
+      declarations: [ RpxTranslateMockPipe ]
     })
     .compileComponents();
   }));

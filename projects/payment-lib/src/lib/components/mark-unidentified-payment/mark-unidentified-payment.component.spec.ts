@@ -37,7 +37,7 @@ describe('MarkUnidentifiedPaymentComponent', () => {
       declarations: [MarkUnidentifiedPaymentComponent],
       providers: [
         { provide: FormBuilder, useFactory: formBuilderStub },
-        { provide: PaymentLibComponent, useFactory: paymentLibComponentStub },
+        { provide: 'PAYMENT_LIB', useFactory: paymentLibComponentStub },
         { provide: PaymentViewService, useFactory: paymentViewServiceStub },
         {
           provide: BulkScaningPaymentService,

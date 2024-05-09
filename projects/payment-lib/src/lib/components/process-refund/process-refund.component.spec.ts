@@ -42,7 +42,7 @@ describe('ProcessRefundComponent', () => {
     const emptyServiceStub = () => ({  });
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
-      declarations: [ProcessRefundComponent],
+      declarations: [],
       providers: [
       { provide: FormBuilder, useFactory: formBuilderStub },
       { provide: RefundsService, useFactory: refundsServiceStub },

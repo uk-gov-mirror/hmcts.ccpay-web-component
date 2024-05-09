@@ -1,27 +1,33 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AllocatePaymentsComponent } from './allocate-payments.component';
+import { CaseTransactionsService} from "../../services/case-transactions/case-transactions.service";
+import { PaymentViewService} from "../../services/payment-view/payment-view.service";
+import {NO_ERRORS_SCHEMA} from "@angular/core";
 
 describe('MarkUnidentifiedPaymentComponent', () => {
   let component: AllocatePaymentsComponent;
   let fixture: ComponentFixture<AllocatePaymentsComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ AllocatePaymentsComponent ]
-    })
-    .compileComponents();
-  }));
-
   beforeEach(() => {
+    const paymentLibComponentStub = () => ({ viewName: {} });
+    const emptyServiceStub = () => ({  });
+    TestBed.configureTestingModule({
+      schemas: [NO_ERRORS_SCHEMA],
+      declarations: [],
+      providers: [
+        { provide: 'PAYMENT_LIB', useFactory: paymentLibComponentStub },
+        { provide: CaseTransactionsService, useFactory: emptyServiceStub },
+        { provide: PaymentViewService, useFactory: emptyServiceStub }
+      ]
+    });
     fixture = TestBed.createComponent(AllocatePaymentsComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
-  // it('should create', () => {
-  //   expect(component).toBeTruthy();
-  // });
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });
 
 // import { ComponentFixture, TestBed } from '@angular/core/testing';
