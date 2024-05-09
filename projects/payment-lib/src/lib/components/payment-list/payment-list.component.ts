@@ -1,8 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
-
 import { PaymentListService } from '../../services/payment-list/payment-list.service';
 import { IPayments } from '../../interfaces/IPayments';
-import type { PaymentLibComponent } from '../../payment-lib.component';
+import { PaymentLibComponent } from '../../payment-lib.component';
 import { IStatusHistory } from '../../interfaces/IStatusHistory';
 
 @Component({

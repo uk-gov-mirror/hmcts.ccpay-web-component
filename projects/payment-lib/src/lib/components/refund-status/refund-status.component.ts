@@ -9,7 +9,7 @@ import { IPutNotificationRequest } from '../../interfaces/IPutNotificationReques
 import { IRefundContactDetails } from '../../interfaces/IRefundContactDetails';
 import { IRefundStatus } from '../../interfaces/IRefundStatus';
 import { IResubmitRefundRequest } from '../../interfaces/IResubmitRefundRequest';
-import type { PaymentLibComponent } from '../../payment-lib.component';
+import { PaymentLibComponent } from '../../payment-lib.component';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import { IPayment } from '../../interfaces/IPayment';
 import { IFee } from '../../interfaces/IFee';

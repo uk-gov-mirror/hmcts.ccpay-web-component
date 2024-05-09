@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Inject } from '@angular/core';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
-import type { PaymentLibComponent } from '../../payment-lib.component';
+import { PaymentLibComponent } from '../../payment-lib.component';
 import { IserviceRequestCardPayment } from '../../interfaces/IserviceRequestCardPayment';
 import { IserviceRequestPbaPayment } from '../../interfaces/IserviceRequestPbaPayment';
 import { CommonModule } from '@angular/common';
@@ -67,7 +67,7 @@ export class PbaPaymentComponent implements OnInit {
   buttonCheck() {
     if (this.selectedPbaAccount !== '' && this.pbaAccountRef !== "") {
       this.isContinueButtondisabled = false;
-    } 
+    }
     else {
       this.isContinueButtondisabled = true;
     }
