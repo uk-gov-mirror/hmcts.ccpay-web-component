@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Inject } from '@angular/core';
 import { IPaymentGroup } from '../../interfaces/IPaymentGroup';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import { BulkScaningPaymentService } from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
-import type { PaymentLibComponent } from '../../payment-lib.component';
+import { PaymentLibComponent } from '../../payment-lib.component';
 import { IRemission } from '../../interfaces/IRemission';
 import { IFee } from '../../interfaces/IFee';
 import { PaymentToPayhubRequest } from '../../interfaces/PaymentToPayhubRequest';

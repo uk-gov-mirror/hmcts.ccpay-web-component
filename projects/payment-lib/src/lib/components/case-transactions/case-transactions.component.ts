@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Inject, forwardRef } from '@angular/core';
-import type { PaymentLibComponent } from '../../payment-lib.component';
+import { PaymentLibComponent } from '../../payment-lib.component';
 import { IPaymentGroup } from '../../interfaces/IPaymentGroup';
 import { CaseTransactionsService } from '../../services/case-transactions/case-transactions.service';
 import { BulkScaningPaymentService } from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';

@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import type { PaymentLibComponent } from '../../payment-lib.component';
+import  { PaymentLibComponent } from '../../payment-lib.component';
 import { NotificationService } from '../../services/notification/notification.service';
 import { CommonModule } from '@angular/common';
 
