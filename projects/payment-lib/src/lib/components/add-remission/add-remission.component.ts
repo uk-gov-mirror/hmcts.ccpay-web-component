@@ -26,6 +26,7 @@ import { CcdHyphensPipe } from '../../pipes/ccd-hyphens.pipe';
 import { CapitalizePipe } from '../../pipes/capitalize.pipe';
 import { ContactDetailsComponent } from '../contact-details/contact-details.component';
 import { RpxTranslationModule } from 'rpx-xui-translation';
+type PaymentLibAlias = PaymentLibComponent;
 
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 const resolvedPromise = Promise.resolve(null);
@@ -162,7 +163,7 @@ export class AddRemissionComponent implements OnInit {
     private router: Router,
     private paymentViewService: PaymentViewService,
     private notificationService: NotificationService,
-    @Inject('PAYMENT_LIB') private paymentLibComponent: PaymentLibComponent,
+    @Inject('PAYMENT_LIB') private paymentLibComponent: PaymentLibAlias,
     private refundService: RefundsService,
     private cd: ChangeDetectorRef,
     private OrderslistService: OrderslistService) { }
