@@ -1,14 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
-import { PaymentLibComponent } from '../../payment-lib.component';
-import { IPaymentGroup } from '../../interfaces/IPaymentGroup';
-import { IFee } from '../../interfaces/IFee';
-import { IPayment } from '../../interfaces/IPayment';
 import { ChangeDetectorRef } from '@angular/core';
 import { OrderslistService } from '../../services/orderslist.service';
 import { PaymentViewComponent } from './payment-view.component';
 import { Pipe, PipeTransform } from '@angular/core';
+import { NotificationService} from "../../services/notification/notification.service";
 
 @Pipe({ name: 'rpxTranslate' })
 class RpxTranslateMockPipe implements PipeTransform {
@@ -39,6 +36,7 @@ describe('PaymentViewComponent', () => {
       isFromPaymentDetailPage: {}
     });
     const changeDetectorRefStub = () => ({ detectChanges: () => ({}) });
+    const notificationServiceStub = () => ({  });
     const orderslistServiceStub = () => ({
       setnavigationPage: string => ({}),
       setisFromServiceRequestPage: arg => ({})
@@ -50,6 +48,7 @@ describe('PaymentViewComponent', () => {
         { provide: PaymentViewService, useFactory: paymentViewServiceStub },
         { provide: 'PAYMENT_LIB', useFactory: paymentLibComponentStub },
         { provide: ChangeDetectorRef, useFactory: changeDetectorRefStub },
+        { provide: NotificationService, useFactory: notificationServiceStub },
         { provide: OrderslistService, useFactory: orderslistServiceStub }
       ]
     });
