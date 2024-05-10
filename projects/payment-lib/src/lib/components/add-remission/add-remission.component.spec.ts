@@ -4,9 +4,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
-import { PaymentLibComponent } from '../../payment-lib.component';
 import { IPayment } from '../../interfaces/IPayment';
-import { IFee } from '../../interfaces/IFee';
 import { IRemission } from '../../interfaces/IRemission';
 import { RefundsService } from '../../services/refunds/refunds.service';
 import { ChangeDetectorRef } from '@angular/core';
@@ -14,6 +12,7 @@ import { OrderslistService } from '../../services/orderslist.service';
 import { AddRemissionComponent } from './add-remission.component';
 import { of } from 'rxjs';
 import { Pipe, PipeTransform } from '@angular/core'
+import {NotificationService} from "../../services/notification/notification.service";
 
 @Pipe({ name: 'rpxTranslate' })
 class RpxTranslateMockPipe implements PipeTransform {
@@ -73,7 +72,7 @@ describe('AddRemissionComponent', () => {
       postPaymentGroupWithRetroRemissions: (arg, id, requestBody) => ({
         subscribe: f => f({})
       }),
-      postRefundRetroRemission: requestBody => ({ subscribe: f => f({}) }),
+      postRefundRetroRemission: requestBody => ({ subscribe: f => f('{}') }),
       postRefundsReason: requestBody => ({ subscribe: f => f({}) }),
       getBSfeature: () => ({ subscribe: f => f({}) })
     });
@@ -96,6 +95,7 @@ describe('AddRemissionComponent', () => {
       getRefundReasons: () => ({ subscribe: f => f({}) })
     });
     const changeDetectorRefStub = () => ({ detectChanges: () => ({}) });
+    const notificationServiceStub = () => ({  });
     const orderslistServiceStub = () => ({
       setisFromServiceRequestPage: arg => ({}),
       setnavigationPage: string => ({}),
@@ -110,9 +110,10 @@ describe('AddRemissionComponent', () => {
         { provide: FormBuilder, useFactory: formBuilderStub },
         { provide: Router, useFactory: routerStub },
         { provide: PaymentViewService, useFactory: paymentViewServiceStub },
-        { provide: PaymentLibComponent, useFactory: paymentLibComponentStub },
+        { provide: 'PAYMENT_LIB', useFactory: paymentLibComponentStub },
         { provide: RefundsService, useFactory: refundsServiceStub },
         { provide: ChangeDetectorRef, useFactory: changeDetectorRefStub },
+        { provide: NotificationService, useFactory: notificationServiceStub },
         { provide: OrderslistService, useFactory: orderslistServiceStub }
       ]
     });
