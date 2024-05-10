@@ -12,10 +12,14 @@ class RpxTranslateMockPipe implements PipeTransform {
 describe('ServiceRequestComponent', () => {
   let component: ServiceRequestComponent;
   let fixture: ComponentFixture<ServiceRequestComponent>;
+  const paymentLibComponentStub = () => ({ viewName: {} });
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RpxTranslateMockPipe ]
+      declarations: [ RpxTranslateMockPipe ],
+      providers: [
+        { provide: 'PAYMENT_LIB', useFactory: paymentLibComponentStub },
+      ]
     })
     .compileComponents();
   }));
