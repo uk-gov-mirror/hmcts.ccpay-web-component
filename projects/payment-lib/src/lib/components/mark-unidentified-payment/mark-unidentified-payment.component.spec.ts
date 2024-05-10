@@ -42,9 +42,6 @@ describe('MarkUnidentifiedPaymentComponent', () => {
         {
           provide: BulkScaningPaymentService,
           useFactory: bulkScaningPaymentServiceStub
-        },
-        {
-          provide: HttpClient, useClass: httpClient
         }
       ]
     });
