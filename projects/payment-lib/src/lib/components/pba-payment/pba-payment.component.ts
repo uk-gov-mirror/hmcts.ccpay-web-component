@@ -1,10 +1,11 @@
 import { Component, OnInit, Input, Inject } from '@angular/core';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
-import { PaymentLibComponent } from '../../payment-lib.component';
+import type { PaymentLibComponent } from '../../payment-lib.component';
 import { IserviceRequestCardPayment } from '../../interfaces/IserviceRequestCardPayment';
 import { IserviceRequestPbaPayment } from '../../interfaces/IserviceRequestPbaPayment';
 import { CommonModule } from '@angular/common';
 import { RpxTranslationModule, RpxLanguage } from 'rpx-xui-translation';
+type PaymentLibAlias = PaymentLibComponent;
 
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 
@@ -39,7 +40,7 @@ export class PbaPaymentComponent implements OnInit {
   pbaAccountrPaymentResult: any;
   orgName: string = '';
 
-  constructor(@Inject('PAYMENT_LIB') private paymentLibComponent: PaymentLibComponent,
+  constructor(@Inject('PAYMENT_LIB') private paymentLibComponent: PaymentLibAlias,
     private paymentViewService: PaymentViewService) { }
 
   ngOnInit() {
