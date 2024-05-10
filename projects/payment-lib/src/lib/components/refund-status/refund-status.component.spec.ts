@@ -35,6 +35,7 @@ import { Router } from '@angular/router';
 import { OrderslistService } from '../../services/orderslist.service';
 import { PaymentLibComponent } from '../../payment-lib.component';
 import { RefundStatusComponent } from './refund-status.component';
+import { NotificationService} from "../../services/notification/notification.service";
 
 describe('RefundStatusComponent', () => {
   let component: RefundStatusComponent;
@@ -62,6 +63,7 @@ describe('RefundStatusComponent', () => {
       setnavigationPage: navigationpage => ({}),
       getnavigationPageValue: () => ({ subscribe: f => f({}) })
     });
+    const notificationServiceStub = () => ({ });
     const paymentLibComponentStub = () => ({
       bspaymentdcn: {},
       isCallFromRefundList: true,
@@ -135,6 +137,7 @@ describe('RefundStatusComponent', () => {
         { provide: PaymentViewService, useFactory: paymentViewServiceStub },
         { provide: Router, useFactory: routerStub },
         { provide: OrderslistService, useFactory: orderslistServiceStub },
+        { provide: NotificationService, useFactory: notificationServiceStub },
         { provide: 'PAYMENT_LIB', useFactory: paymentLibComponentStub }
       ]
     });
