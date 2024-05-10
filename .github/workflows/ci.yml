@@ -24,7 +24,7 @@ jobs:
           node-version: 18.12.0
           registry-url: https://registry.npmjs.org/
       - name: Yarn install
-        run: yarn --frozen-lockfile
+        run: yarn install
       - name: Build library
         run: yarn run build-prod
       - name: Publish library
