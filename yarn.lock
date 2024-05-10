@@ -4498,12 +4498,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^18.11.9":
-  version: 18.19.26
-  resolution: "@types/node@npm:18.19.26"
+"@types/node@npm:^18.3":
+  version: 18.19.33
+  resolution: "@types/node@npm:18.19.33"
   dependencies:
     undici-types: ~5.26.4
-  checksum: d72d4e7e520206a2a05cb3e03a73696fc3bdcdc6ba5330a75cfef4818cb137b260c32dfe85e8b4ea28e8fe92f1d1497e26336c607254c5eaf47032a1b1c8bb6e
+  checksum: b6db87d095bc541d64a410fa323a35c22c6113220b71b608bbe810b2397932d0f0a51c3c0f3ef90c20d8180a1502d950a7c5314b907e182d9cc10b36efd2a44e
   languageName: node
   linkType: hard
 
@@ -5994,7 +5994,7 @@ __metadata:
     "@types/file-saver": ^2.0.5
     "@types/jasmine": ~3.6.0
     "@types/jasminewd2": ~2.0.6
-    "@types/node": ^18.11.9
+    "@types/node": ^18.3
     "@typescript-eslint/eslint-plugin": 5.62.0
     "@typescript-eslint/parser": 5.62.0
     acorn: ^8.8.0
