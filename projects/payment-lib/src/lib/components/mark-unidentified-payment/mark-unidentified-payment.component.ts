@@ -1,11 +1,12 @@
 import { Component, OnInit, Input, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { PaymentLibComponent } from '../../payment-lib.component';
+import type { PaymentLibComponent } from '../../payment-lib.component';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import { BulkScaningPaymentService } from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
 import { IBSPayments } from '../../interfaces/IBSPayments';
 import { UnidentifiedPaymentsRequest } from '../../interfaces/UnidentifiedPaymentsRequest';
 import { AllocatePaymentRequest } from '../../interfaces/AllocatePaymentRequest';
+type PaymentLibAlias = PaymentLibComponent;
 
 @Component({
   selector: 'app-mark-unidentified-payment',
@@ -33,7 +34,7 @@ export class MarkUnidentifiedPaymentComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
     private paymentViewService: PaymentViewService,
-    @Inject('PAYMENT_LIB') private paymentLibComponent: PaymentLibComponent,
+    @Inject('PAYMENT_LIB') private paymentLibComponent: PaymentLibAlias,
     private bulkScaningPaymentService: BulkScaningPaymentService) { }
 
   ngOnInit() {

@@ -1,13 +1,14 @@
 import { Component, Input, OnInit, forwardRef, isStandalone, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { formatDate } from "@angular/common";
-import { PaymentLibComponent } from '../../payment-lib.component';
+import type { PaymentLibComponent } from '../../payment-lib.component';
 import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
 import { BulkScaningPaymentService } from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
 import { ErrorHandlerService } from '../../services/shared/error-handler.service';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import {XlFileService} from '../../services/xl-file/xl-file.service';
 import { FindValueSubscriber } from 'rxjs/internal/operators/find';
+type PaymentLibAlias = PaymentLibComponent;
 
 @Component({
   selector: 'ccpay-reports',
@@ -35,7 +36,7 @@ export class ReportsComponent implements OnInit {
     private errorHandlerService: ErrorHandlerService,
     private formBuilder: FormBuilder,
     private bulkScaningPaymentService: BulkScaningPaymentService,
-    @Inject('PAYMENT_LIB') private paymentLibComponent: PaymentLibComponent,
+    @Inject('PAYMENT_LIB') private paymentLibComponent: PaymentLibAlias,
     private paymentViewService: PaymentViewService) { }
 
   ngOnInit() {

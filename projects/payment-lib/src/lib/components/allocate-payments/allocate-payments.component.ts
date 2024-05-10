@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { PaymentLibComponent } from '../../payment-lib.component';
+import type { PaymentLibComponent } from '../../payment-lib.component';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import { CaseTransactionsService } from '../../services/case-transactions/case-transactions.service';
 import { BulkScaningPaymentService } from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
@@ -11,6 +11,7 @@ import { AllocatePaymentRequest } from '../../interfaces/AllocatePaymentRequest'
 import { IAllocationPaymentsRequest } from '../../interfaces/IAllocationPaymentsRequest';
 import { IOrderReferenceFee } from '../../interfaces/IOrderReferenceFee';
 import { OrderslistService } from '../../services/orderslist.service';
+type PaymentLibAlias = PaymentLibComponent;
 
 
 
@@ -112,7 +113,7 @@ export class AllocatePaymentsComponent implements OnInit {
     private caseTransactionsService: CaseTransactionsService,
     private formBuilder: FormBuilder,
     private paymentViewService: PaymentViewService,
-    @Inject('PAYMENT_LIB') private paymentLibComponent: PaymentLibComponent,
+    @Inject('PAYMENT_LIB') private paymentLibComponent: PaymentLibAlias,
     private bulkScaningPaymentService: BulkScaningPaymentService,
     private OrderslistService: OrderslistService) { }
 

@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Inject } from '@angular/core';
 import { IPaymentGroup } from '../../interfaces/IPaymentGroup';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import { BulkScaningPaymentService } from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
-import { PaymentLibComponent } from '../../payment-lib.component';
+import type { PaymentLibComponent } from '../../payment-lib.component';
 import { IRemission } from '../../interfaces/IRemission';
 import { IFee } from '../../interfaces/IFee';
 import { PaymentToPayhubRequest } from '../../interfaces/PaymentToPayhubRequest';
@@ -11,6 +11,7 @@ import { SafeHtml } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { OrderslistService } from '../../services/orderslist.service';
+type PaymentLibAlias = PaymentLibComponent;
 
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 
@@ -54,7 +55,7 @@ export class FeeSummaryComponent implements OnInit {
     private bulkScaningPaymentService: BulkScaningPaymentService,
     private location: Location,
     private paymentViewService: PaymentViewService,
-    @Inject('PAYMENT_LIB') private paymentLibComponent: PaymentLibComponent,
+    @Inject('PAYMENT_LIB') private paymentLibComponent: PaymentLibAlias,
     private OrderslistService: OrderslistService
   ) { }
 
