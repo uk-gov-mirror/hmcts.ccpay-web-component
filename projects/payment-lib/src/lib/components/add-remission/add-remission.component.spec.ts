@@ -107,7 +107,7 @@ describe('AddRemissionComponent', () => {
       schemas: [NO_ERRORS_SCHEMA],
       declarations: [RpxTranslateMockPipe],
       providers: [
-        { provide: FormBuilder, useFactory: formBuilderStub },
+        { provide: FormBuilder, useValue: {FormBuilder}},
         { provide: Router, useFactory: routerStub },
         { provide: PaymentViewService, useFactory: paymentViewServiceStub },
         { provide: 'PAYMENT_LIB', useFactory: paymentLibComponentStub },
