@@ -19,7 +19,7 @@ export class ErrorHandlerService {
       errorMessage = `An error occurred: ${err.error.message}`;
     } else {
       // The backend returned an unsuccessful response code.
-      if (err.status === 404) {
+      if (err.status === 400 || err.status === 404) {
 
         if (typeof err.error === 'string' && err.error !== undefined) {
 
