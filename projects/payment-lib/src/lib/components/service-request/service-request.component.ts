@@ -22,6 +22,7 @@ import { CaseTransactionsComponent } from '../case-transactions/case-transaction
 import { CcdHyphensPipe } from '../../pipes/ccd-hyphens.pipe';
 import { CapitalizePipe } from '../../pipes/capitalize.pipe';
 import { RpxTranslationModule } from 'rpx-xui-translation';
+type PaymentLibAlias = PaymentLibComponent;
 
 @Component({
   selector: 'ccpay-service-request',
@@ -129,7 +130,7 @@ export class ServiceRequestComponent implements OnInit {
   notificationPreview: boolean;
 
   constructor(
-    @Inject('PAYMENT_LIB') private paymentLibComponent: PaymentLibComponent,
+    @Inject('PAYMENT_LIB') private paymentLibComponent: PaymentLibAlias,
     private paymentViewService: PaymentViewService,
     private OrderslistService: OrderslistService,
     private notificationService: NotificationService,

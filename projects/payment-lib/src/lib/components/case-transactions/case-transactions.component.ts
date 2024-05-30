@@ -1,4 +1,5 @@
 import {Component, forwardRef, Inject, Input, OnInit} from '@angular/core';
+import type { PaymentLibComponent } from '../../payment-lib.component';
 import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
 import {CaseTransactionsService} from '../../services/case-transactions/case-transactions.service';
 import {BulkScaningPaymentService} from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
@@ -19,7 +20,7 @@ import {CcdHyphensPipe} from '../../pipes/ccd-hyphens.pipe';
 import {CapitalizePipe} from '../../pipes/capitalize.pipe';
 import {FormsModule} from '@angular/forms';
 import {RpxTranslationModule} from 'rpx-xui-translation';
-import type { PaymentLibComponent } from '../../payment-lib.component';
+type PaymentLibAlias = PaymentLibComponent;
 
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 
@@ -122,7 +123,7 @@ export class CaseTransactionsComponent implements OnInit {
     private paymentViewService: PaymentViewService,
     private bulkScaningPaymentService: BulkScaningPaymentService,
     private caseTransactionsService: CaseTransactionsService,
-    @Inject('PAYMENT_LIB') private paymentLibComponent: PaymentLibComponent,
+    @Inject('PAYMENT_LIB') private paymentLibComponent: PaymentLibAlias,
     private OrderslistService: OrderslistService
   ) { }
 
