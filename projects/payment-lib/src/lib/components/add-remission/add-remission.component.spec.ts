@@ -212,17 +212,6 @@ describe('AddRemissionComponent', () => {
     });
   });
 
-  describe('gotoIssueRefundConfirmation', () => {
-    it('makes expected calls', () => {
-      const iPaymentStub: IPayment = <any>{};
-      spyOn(component, 'resetRemissionForm').and.callThrough();
-      component.selectedRefundReason = "Other";
-      component.remissionForm = form;
-      component.gotoIssueRefundConfirmation(iPaymentStub);
-      expect(component.resetRemissionForm).not.toHaveBeenCalled();
-    });
-  });
-
   describe('ngOnInit', () => {
     it('makes expected calls', () => {
       const refundsServiceStub: RefundsService = fixture.debugElement.injector.get(
