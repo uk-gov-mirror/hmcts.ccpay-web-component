@@ -99,7 +99,15 @@ describe('AddRemissionComponent', () => {
     const orderslistServiceStub = () => ({
       setisFromServiceRequestPage: arg => ({}),
       setnavigationPage: string => ({}),
-      setpaymentPageView: object => ({})
+      setpaymentPageView: object => ({}),
+      setOrderRef: ()  => ({}),
+      setorderCCDEvent: ()  => ({}),
+      setorderCreated: ()  => ({}),
+      setorderDetail: ()  => ({}),
+      setorderParty: ()  => ({}),
+      setorderTotalPayments: ()  => ({}),
+      setorderRemissionTotal: ()  => ({}),
+      setorderFeesTotal: ()  => ({}),
     });
 
 
