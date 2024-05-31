@@ -59,7 +59,6 @@ describe('AddRemissionComponent', () => {
   }
 
   beforeEach(() => {
-    const formBuilderStub = () => ({ group: object => ({  remissionCode:"HWF-A1B-23C",amount: 10,refundReason: "Test Reason", refundDDReason:"Test Default reason", reason:"Testing"}) });
     const routerStub = () => ({
       routeReuseStrategy: { shouldReuseRoute: {} },
       onSameUrlNavigation: {},
@@ -115,7 +114,7 @@ describe('AddRemissionComponent', () => {
       schemas: [NO_ERRORS_SCHEMA],
       declarations: [RpxTranslateMockPipe],
       providers: [
-        { provide: FormBuilder, useValue: {FormBuilder}},
+        { provide: FormBuilder},
         { provide: Router, useFactory: routerStub },
         { provide: PaymentViewService, useFactory: paymentViewServiceStub },
         { provide: 'PAYMENT_LIB', useFactory: paymentLibComponentStub },
@@ -226,9 +225,6 @@ describe('AddRemissionComponent', () => {
 
   describe('ngOnInit', () => {
     it('makes expected calls', () => {
-      const formBuilderStub: FormBuilder = fixture.debugElement.injector.get(
-        FormBuilder
-      );
       const refundsServiceStub: RefundsService = fixture.debugElement.injector.get(
         RefundsService
       );
@@ -237,12 +233,10 @@ describe('AddRemissionComponent', () => {
       );
 
       component.fee = <any>fee;
-      spyOn(formBuilderStub, 'group').and.callThrough();
       spyOn(refundsServiceStub, 'getRefundReasons').and.callThrough();
       spyOn(changeDetectorRefStub, 'detectChanges').and.callThrough();
       component.viewCompStatus ='processretroremissonpage';
       component.ngOnInit();
-      expect(formBuilderStub.group).toHaveBeenCalled();
       expect(refundsServiceStub.getRefundReasons).not.toHaveBeenCalled();
       expect(changeDetectorRefStub.detectChanges).not.toHaveBeenCalled();
     });
@@ -301,9 +295,6 @@ describe('AddRemissionComponent', () => {
       const changeDetectorRefStub: ChangeDetectorRef = fixture.debugElement.injector.get(
         ChangeDetectorRef
       );
-      // const formBuilderStub: FormBuilder = fixture.debugElement.injector.get(
-      //   FormBuilder
-      // );
     const mockResponse  = {
                               "_links": {
                                 "empty": true
