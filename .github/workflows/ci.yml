@@ -25,6 +25,8 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - name: Yarn install
         run: yarn install
+      - name: Yarn test
+        run: yarn test
       - name: Build library
         run: yarn run build-prod
       - name: Publish library
