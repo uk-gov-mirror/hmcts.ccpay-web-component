@@ -1,27 +1,29 @@
-import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
-import { PaymentLibComponent } from '../../payment-lib.component';
-import { PbaPaymentComponent } from './pba-payment.component';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { RouterTestingModule } from '@angular/router/testing';
-import { NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core'
+import {TestBed, ComponentFixture} from '@angular/core/testing';
+import {CommonModule} from '@angular/common';
+import {HttpClientModule} from '@angular/common/http';
+import {PbaPaymentComponent} from './pba-payment.component';
+import {ReactiveFormsModule, FormsModule} from '@angular/forms';
+import {RouterTestingModule} from '@angular/router/testing';
+import {NO_ERRORS_SCHEMA, Pipe, PipeTransform} from '@angular/core'
 
-@Pipe({ name: 'rpxTranslate' })
+@Pipe({name: 'rpxTranslate'})
 class RpxTranslateMockPipe implements PipeTransform {
   public transform(value: string): string {
     return value;
   }
 }
 
-describe('Add remission component', () => {
+describe('PBA payment component', () => {
   let component: PbaPaymentComponent,
-  fixture: ComponentFixture<PbaPaymentComponent>;
+    fixture: ComponentFixture<PbaPaymentComponent>;
+  const paymentLibComponentStub = () => ({ viewName: {} });
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [PbaPaymentComponent, RpxTranslateMockPipe],
-      providers: [PaymentLibComponent],
+      declarations: [RpxTranslateMockPipe],
+      providers: [
+        {provide: 'PAYMENT_LIB', useFactory: paymentLibComponentStub}
+      ],
       imports: [
         CommonModule,
         HttpClientModule,

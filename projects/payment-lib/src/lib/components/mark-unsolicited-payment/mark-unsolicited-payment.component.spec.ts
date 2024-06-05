@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { PaymentLibComponent } from '../../payment-lib.component';
 import { BulkScaningPaymentService } from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import { MarkUnsolicitedPaymentComponent } from './mark-unsolicited-payment.component';
@@ -35,10 +34,10 @@ describe('MarkUnsolicitedPaymentComponent', () => {
     });
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
-      declarations: [MarkUnsolicitedPaymentComponent],
+      declarations: [],
       providers: [
         { provide: FormBuilder, useFactory: formBuilderStub },
-        { provide: PaymentLibComponent, useFactory: paymentLibComponentStub },
+        { provide: 'PAYMENT_LIB', useFactory: paymentLibComponentStub },
         {
           provide: BulkScaningPaymentService,
           useFactory: bulkScaningPaymentServiceStub

@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { BulkScaningPaymentService } from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
-import { PaymentLibComponent } from '../../payment-lib.component';
 import { Router } from '@angular/router';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import { OrderslistService } from '../../services/orderslist.service';
@@ -40,13 +39,12 @@ describe('UnprocessedPaymentsComponent', () => {
     TestBed.configureTestingModule({
       imports: [FormsModule],
       schemas: [NO_ERRORS_SCHEMA],
-      declarations: [UnprocessedPaymentsComponent],
       providers: [
         {
           provide: BulkScaningPaymentService,
           useFactory: bulkScaningPaymentServiceStub
         },
-        { provide: PaymentLibComponent, useFactory: paymentLibComponentStub },
+        { provide: 'PAYMENT_LIB', useFactory: paymentLibComponentStub },
         { provide: Router, useFactory: routerStub },
         { provide: PaymentViewService, useFactory: paymentViewServiceStub },
         { provide: OrderslistService, useFactory: orderslistServiceStub }

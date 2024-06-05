@@ -6,7 +6,7 @@ import { IBSPayments } from '../../interfaces/IBSPayments';
 import { UnsolicitedPaymentsRequest } from '../../interfaces/UnsolicitedPaymentsRequest';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import { AllocatePaymentRequest } from '../../interfaces/AllocatePaymentRequest';
-import { ErrorHandlerService } from '../../services/shared/error-handler.service';
+type PaymentLibAlias = PaymentLibComponent;
 
 
 @Component({
@@ -44,7 +44,7 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
     private paymentViewService: PaymentViewService,
-    @Inject('PAYMENT_LIB') private paymentLibComponent: PaymentLibComponent,
+    @Inject('PAYMENT_LIB') private paymentLibComponent: PaymentLibAlias,
     private bulkScaningPaymentService: BulkScaningPaymentService) { }
 
   ngOnInit() {
