@@ -4,6 +4,7 @@ import { IBSPayments } from './interfaces/IBSPayments';
 import { OrderslistService } from './services/orderslist.service';
 import { IPayment } from './interfaces/IPayment';
 import { PaymentViewComponent } from './components/payment-view/payment-view.component';
+import { RefundListComponent} from "./components/refund-list/refund-list.component";
 
 @Component({
   selector: 'ccpay-payment-lib',
