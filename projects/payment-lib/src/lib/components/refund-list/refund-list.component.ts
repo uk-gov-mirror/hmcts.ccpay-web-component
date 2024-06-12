@@ -6,7 +6,9 @@ import { TableComponent} from "../table/table.component";
 @Component({
   selector: 'ccpay-refund-list',
   templateUrl: './refund-list.component.html',
-  styleUrls: ['./refund-list.component.css']
+  styleUrls: ['./refund-list.component.css'],
+  standalone: true,
+  imports: [TableComponent],
 })
 export class RefundListComponent implements OnInit {
   @Input('USERID') USERID: string;
