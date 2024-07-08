@@ -14,28 +14,35 @@ export class ErrorHandlerService {
 handleError(err: HttpErrorResponse): Observable<any> {
   let errorMessage: string;
 
+   if (!err) {
+        return throwError('An unexpected error occurred');
+      }
+
   // Check if the error is client-side or network error
   if (err.error instanceof ErrorEvent) {
     errorMessage = `An error occurred: ${err.error.message}`;
   } else {
     // Check if the error is from the server-side
-    if (err.status === 400 || err.status === 404) {
+    if (err.status === 400 || err.status === 404 || err.status === 500) {
       try {
         // Attempt to parse error as JSON
         const parsedError = typeof err.error === 'string' ? JSON.parse(err.error) : err.error;
-
-        if (parsedError.statusCode && parsedError.statusCode === 500) {
-          errorMessage = 'Internal server error';
-        } else if (parsedError.message) {
-            if(parsedError.error !=undefined && parsedError.statusCode === 400){
-                errorMessage = parsedError.error;
-            }else{
-              errorMessage = parsedError.message;
-            }
-        } else if (parsedError.error) {
-          errorMessage = parsedError.error;
-        } else {
-          errorMessage = err.error;
+        if(parsedError){
+          if (parsedError.statusCode && parsedError.statusCode === 500) {
+            errorMessage = 'Internal server error';
+          } else if (parsedError.message) {
+              if(parsedError.error !=undefined && parsedError.statusCode === 400){
+                  errorMessage = parsedError.error;
+              }else{
+                errorMessage = parsedError.message;
+              }
+          } else if (parsedError.error) {
+            errorMessage = parsedError.error;
+          } else {
+            errorMessage = err.error;
+          }
+        }else{
+          errorMessage = 'An unexpected error occurred';
         }
       } catch (e) {
         // Fallback if parsing fails
