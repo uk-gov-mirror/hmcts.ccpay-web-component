@@ -1,5 +1,4 @@
 import {Component, forwardRef, Inject, Input, OnInit} from '@angular/core';
-import type { PaymentLibComponent } from '../../payment-lib.component';
 import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
 import {CaseTransactionsService} from '../../services/case-transactions/case-transactions.service';
 import {BulkScaningPaymentService} from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
@@ -20,6 +19,8 @@ import {CcdHyphensPipe} from '../../pipes/ccd-hyphens.pipe';
 import {CapitalizePipe} from '../../pipes/capitalize.pipe';
 import {FormsModule} from '@angular/forms';
 import {RpxTranslationModule} from 'rpx-xui-translation';
+import type { PaymentLibComponent } from '../../payment-lib.component';
+
 type PaymentLibAlias = PaymentLibComponent;
 
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
@@ -178,6 +179,7 @@ export class CaseTransactionsComponent implements OnInit {
           this.calculateAmountDueTo();
           this.calculateOverpayment();
           this.validateAmountDueTo();
+          this.calculateOverpaymentBaseOnAcceptedRefund();
           if (this.isFromServiceRequestPage) {
             this.OrderslistService.getSelectedOrderRefId().subscribe((data) => this.orderRef = data);
             this.goToOrderViewDetailSection(this.orderRef);
@@ -213,6 +215,7 @@ export class CaseTransactionsComponent implements OnInit {
           this.calculateAmountDueTo();
           this.calculateOverpayment();
           this.validateAmountDueTo();
+          this.calculateOverpaymentBaseOnAcceptedRefund();
           this.totalRefundAmount = this.calculateRefundAmount();
           this.paymentViewService.getPartyDetails(this.ccdCaseNumber).subscribe(
             response => {
@@ -559,6 +562,22 @@ export class CaseTransactionsComponent implements OnInit {
     if (this.overPaymentAmount > 0) {
       this.clAmountDue = 0;
     }
+  }
+
+  calculateOverpaymentBaseOnAcceptedRefund() {
+    this.paymentGroups.forEach(paymentGroup => {
+      if (paymentGroup.refunds != null && paymentGroup.refunds.length > 0) {
+        console.log("aca1 !!!");
+
+        paymentGroup.refunds.forEach(refund => {
+          console.log("aca2 !!!"+ refund.refund_status.name);
+
+          if (refund.refund_status.name === 'Accepted') {
+            this.overPaymentAmount = this.overPaymentAmount - refund.amount;
+          }
+        });
+      }
+    });
   }
 
   canItCalculateAmountDueForRemission(): boolean {
