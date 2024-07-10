@@ -567,10 +567,8 @@ export class CaseTransactionsComponent implements OnInit {
   calculateOverpaymentBaseOnAcceptedRefund() {
     this.paymentGroups.forEach(paymentGroup => {
       if (paymentGroup.refunds != null && paymentGroup.refunds.length > 0) {
-        console.log("aca1 !!!");
 
-        paymentGroup.refunds.forEach(refund => {
-          console.log("aca2 !!!"+ refund.refund_status.name);
+          paymentGroup.refunds.forEach(refund => {
 
           if (refund.refund_status.name === 'Accepted') {
             this.overPaymentAmount = this.overPaymentAmount - refund.amount;
