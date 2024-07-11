@@ -39,7 +39,14 @@ handleError(err: HttpErrorResponse): Observable<any> {
           } else if (parsedError.error) {
             errorMessage = parsedError.error;
           } else {
-            errorMessage = err.error;
+            const errorMessagePattern = /^\d+\s-\s\"(.+)\"$/;
+            const match = parsedError.err.match(errorMessagePattern);
+            if (match && match[1]) {
+              errorMessage = match[1];
+            } else {
+              // Fallback in case the pattern does not match
+              errorMessage = err.error;
+            }
           }
         }else{
           errorMessage = 'An unexpected error occurred';
