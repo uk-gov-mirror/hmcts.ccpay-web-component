@@ -572,6 +572,7 @@ export class CaseTransactionsComponent implements OnInit {
 
           if (refund.refund_status.name === 'Accepted') {
             let newValue = this.overPaymentAmount - refund.amount;
+
             if (newValue < 0) {
               this.overPaymentAmount = 0;
             } else {
