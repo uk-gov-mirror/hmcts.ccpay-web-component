@@ -571,7 +571,12 @@ export class CaseTransactionsComponent implements OnInit {
           paymentGroup.refunds.forEach(refund => {
 
           if (refund.refund_status.name === 'Accepted') {
-            this.overPaymentAmount = this.overPaymentAmount - refund.amount;
+            let newValue = this.overPaymentAmount - refund.amount;
+            if (newValue < 0) {
+              this.overPaymentAmount = 0;
+            } else {
+              this.overPaymentAmount = newValue;
+            }
           }
         });
       }
