@@ -22,6 +22,7 @@ import { CaseTransactionsComponent } from '../case-transactions/case-transaction
 import { CcdHyphensPipe } from '../../pipes/ccd-hyphens.pipe';
 import { CapitalizePipe } from '../../pipes/capitalize.pipe';
 import { RpxTranslationModule } from 'rpx-xui-translation';
+import {IRefundList} from "../../interfaces/IRefundList";
 type PaymentLibAlias = PaymentLibComponent;
 
 @Component({
@@ -265,25 +266,77 @@ export class ServiceRequestComponent implements OnInit {
           paymentGroup => {
             paymentGroup.payments = paymentGroup.payments.filter
               (paymentGroupObj => paymentGroupObj['reference'].includes(payment.reference));
-            if (payment.over_payment > 0) {
-              this.viewStatus = '';
-              this.payment = payment;
-              this.paymentGroupList = paymentGroup;
-              this.viewCompStatus = 'overpayment';
-            } else {
-              this.viewStatus = 'issuerefund';
-              this.viewCompStatus = '';
-              this.paymentFees = paymentGroup.fees;
-              this.payment = payment;
-              this.paymentLibComponent.isFromServiceRequestPage = true;
-              this.isRefundRemission = true;
+
+
+            // No refund and no over payment
+            if (!this.isAnyRefundsForThisCase() && this.getBalanceToBePaid() == 0) {
+              this.showIssueRefundPage(paymentGroup);
+              return
             }
+            // No refund and over payment
+            if (!this.isAnyRefundsForThisCase() && this.getBalanceToBePaid() > 0) {
+              this.showOverPayment();
+              return
+            }
+            // Refunds means and No over payment --> refunds accepted.
+            if (this.isAnyRefundsForThisCase() && this.getBalanceToBePaid() == 0) {
+              this.showIssueRefundPage(paymentGroup);
+              return
+            }
+            // Refunds means and No over payment --> refunds in process or Rejected.
+            if (this.isAnyRefundsForThisCase() && this.getBalanceToBePaid() > 0) {
+
+              let refund = this.getRefundByFeeID(this.paymentFees.at(0).id.toString());
+
+              if (refund.refund_status.name === 'Rejected') {
+                this.showOverPayment();
+                return
+              }
+              // refunds in process Sent for approval,Approved
+              this.showIssueRefundPage(paymentGroup);
+              return
+            }
+
           },
           (error: any) => this.errorMessage = error
         );
       }
     }
   }
+
+  isAnyRefundsForThisCase(){
+    return (this.paymentLibComponent.refunds != null) && (this.paymentLibComponent.refunds.length > 0);
+  }
+  showOverPayment() {
+    this.viewCompStatus = 'overpayment';
+  }
+
+  showIssueRefundPage(paymentgrp: IPaymentGroup) {
+
+    this.paymentGroup = paymentgrp;
+    this.viewStatus = 'issuerefund';
+    this.isRefundRemission = true;
+    this.paymentLibComponent.isFromPaymentDetailPage = true;
+    this.isFromPaymentDetailPage = true;
+    this.isFromServiceRequestPage = false;
+  }
+
+  getBalanceToBePaid(){
+    return this.paymentLibComponent.balanceToBePaid
+  }
+
+
+  getRefundByFeeID(feeCode: string): IRefundList {
+
+    for (const refund of this.paymentLibComponent.refunds) {
+      if (refund.fee_ids === feeCode) {
+        return refund;
+      }
+    }
+
+    return null;
+  }
+
 
   goToPayementView(paymentGroupReference: string, paymentReference: string, paymentMethod: string) {
     this.goToPaymentViewComponent({ paymentGroupReference, paymentReference, paymentMethod });
@@ -434,7 +487,7 @@ export class ServiceRequestComponent implements OnInit {
     this.paymentGroupList.fees.forEach(fee => {
       feesOverPayment += fee.over_payment;
     });
-    return feesOverPayment > 0 ? feesOverPayment : this.paymentGroupList.payments[0].over_payment;
+    return feesOverPayment > 0 ? feesOverPayment : this.paymentLibComponent.balanceToBePaid;
 
   }
 

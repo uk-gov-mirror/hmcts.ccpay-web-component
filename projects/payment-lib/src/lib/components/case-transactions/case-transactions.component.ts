@@ -322,8 +322,10 @@ export class CaseTransactionsComponent implements OnInit {
       this.resetOrderVariables();
       if (paymentGroup.fees) {
         paymentGroup.fees.forEach(fee => {
+
           this.orderFeesTotal = this.orderFeesTotal + fee.calculated_amount;
-          this.overPaymentAmount = this.overPaymentAmount + fee.over_payment
+          this.overPaymentAmount = this.overPaymentAmount + fee.over_payment;
+          this.paymentLibComponent.balanceToBePaid = this.overPaymentAmount;
         }
         )
       }
@@ -338,6 +340,7 @@ export class CaseTransactionsComponent implements OnInit {
         paymentGroup.payments.forEach(payment => {
           if (isFeeOverPaymentExist) {
             this.overPaymentAmount = this.overPaymentAmount + payment.over_payment
+            this.paymentLibComponent.balanceToBePaid = this.overPaymentAmount;
           }
           if (payment.status.toUpperCase() === 'SUCCESS') {
             this.orderTotalPayments = this.orderTotalPayments + payment.amount;
@@ -544,6 +547,7 @@ export class CaseTransactionsComponent implements OnInit {
       let newValue = this.totalPayments - (this.orderFeesTotal - this.totalRemissions);
       if (newValue > 0){
         this.overPaymentAmount = newValue;
+        this.paymentLibComponent.balanceToBePaid = this.overPaymentAmount;
       }
     }
   }
@@ -568,17 +572,19 @@ export class CaseTransactionsComponent implements OnInit {
     this.paymentGroups.forEach(paymentGroup => {
       if (paymentGroup.refunds != null && paymentGroup.refunds.length > 0) {
 
+          this.paymentLibComponent.refunds = paymentGroup.refunds;
+
           paymentGroup.refunds.forEach(refund => {
 
           if (refund.refund_status.name === 'Accepted') {
             let newValue = this.overPaymentAmount - refund.amount;
-
             if (newValue < 0) {
               this.overPaymentAmount = 0;
             } else {
               this.overPaymentAmount = newValue;
             }
           }
+          this.paymentLibComponent.balanceToBePaid = this.overPaymentAmount;
         });
       }
     });
@@ -781,6 +787,8 @@ export class CaseTransactionsComponent implements OnInit {
     this.paymentLibComponent.paymentGroupReference = paymentGroup.paymentGroupReference;
     this.paymentLibComponent.paymentReference = paymentGroup.paymentReference;
     this.paymentLibComponent.viewName = 'payment-view';
+    this.paymentLibComponent.paymentGroup = this.paymentGroup
+    this.paymentLibComponent.balanceToBePaid = this.overPaymentAmount;
   }
 
   goToPayementView(paymentGroupReference: string, paymentReference: string, paymentMethod: string) {
