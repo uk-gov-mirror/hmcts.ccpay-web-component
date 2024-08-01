@@ -1,28 +1,29 @@
 // import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { Component, Input, OnInit, Output, EventEmitter, ChangeDetectorRef, Inject, forwardRef } from '@angular/core';
-import type { PaymentLibComponent } from '../../payment-lib.component';
-import { IPayment } from '../../interfaces/IPayment';
-import { IRemission } from '../../interfaces/IRemission';
-import { IPaymentView } from '../../interfaces/IPaymentView';
-import { IOrderReferenceFee } from '../../interfaces/IOrderReferenceFee';
-import { IFee } from '../../interfaces/IFee';
-import { IPaymentGroup } from '../../interfaces/IPaymentGroup';
-import { Router } from '@angular/router';
-import { PaymentViewService } from '../../services/payment-view/payment-view.service';
-import { NotificationService } from '../../services/notification/notification.service';
-import { OrderslistService } from '../../services/orderslist.service';
-import { IRefundContactDetails } from '../../interfaces/IRefundContactDetails';
-import { PostRefundRetroRemission } from '../../interfaces/PostRefundRetroRemission';
-import { AddRemissionComponent } from '../add-remission/add-remission.component';
-import { CommonModule } from '@angular/common';
-import { PaymentViewComponent } from '../payment-view/payment-view.component';
-import { ContactDetailsComponent } from '../contact-details/contact-details.component';
-import { NotificationPreviewComponent } from '../notification-preview/notification-preview.component';
-import { CaseTransactionsComponent } from '../case-transactions/case-transactions.component';
-import { CcdHyphensPipe } from '../../pipes/ccd-hyphens.pipe';
-import { CapitalizePipe } from '../../pipes/capitalize.pipe';
-import { RpxTranslationModule } from 'rpx-xui-translation';
+import {ChangeDetectorRef, Component, EventEmitter, forwardRef, Inject, Input, OnInit, Output} from '@angular/core';
+import {IPayment} from '../../interfaces/IPayment';
+import {IRemission} from '../../interfaces/IRemission';
+import {IPaymentView} from '../../interfaces/IPaymentView';
+import {IOrderReferenceFee} from '../../interfaces/IOrderReferenceFee';
+import {IFee} from '../../interfaces/IFee';
+import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
+import {Router} from '@angular/router';
+import {PaymentViewService} from '../../services/payment-view/payment-view.service';
+import {NotificationService} from '../../services/notification/notification.service';
+import {OrderslistService} from '../../services/orderslist.service';
+import {IRefundContactDetails} from '../../interfaces/IRefundContactDetails';
+import {PostRefundRetroRemission} from '../../interfaces/PostRefundRetroRemission';
+import {AddRemissionComponent} from '../add-remission/add-remission.component';
+import {CommonModule} from '@angular/common';
+import {PaymentViewComponent} from '../payment-view/payment-view.component';
+import {ContactDetailsComponent} from '../contact-details/contact-details.component';
+import {NotificationPreviewComponent} from '../notification-preview/notification-preview.component';
+import {CaseTransactionsComponent} from '../case-transactions/case-transactions.component';
+import {CcdHyphensPipe} from '../../pipes/ccd-hyphens.pipe';
+import {CapitalizePipe} from '../../pipes/capitalize.pipe';
+import {RpxTranslationModule} from 'rpx-xui-translation';
 import {IRefundList} from "../../interfaces/IRefundList";
+import type { PaymentLibComponent } from '../../payment-lib.component';
+
 type PaymentLibAlias = PaymentLibComponent;
 
 @Component({
@@ -270,30 +271,30 @@ export class ServiceRequestComponent implements OnInit {
 
             // No refund and no over payment
             if (!this.isAnyRefundsForThisCase() && this.getBalanceToBePaid() == 0) {
-              this.showIssueRefundPage(paymentGroup);
+              this.showIssueRefundPage(paymentGroup, payment);
               return
             }
             // No refund and over payment
             if (!this.isAnyRefundsForThisCase() && this.getBalanceToBePaid() > 0) {
-              this.showOverPayment();
+              this.showOverPayment(paymentGroup, payment);
               return
             }
             // Refunds means and No over payment --> refunds accepted.
             if (this.isAnyRefundsForThisCase() && this.getBalanceToBePaid() == 0) {
-              this.showIssueRefundPage(paymentGroup);
+              this.showIssueRefundPage(paymentGroup, payment);
               return
             }
             // Refunds means and No over payment --> refunds in process or Rejected.
             if (this.isAnyRefundsForThisCase() && this.getBalanceToBePaid() > 0) {
 
-              let refund = this.getRefundByFeeID(this.paymentFees.at(0).id.toString());
+              let refund = this.getRefundByFeeID(paymentGroup.fees.at(0).id.toString());
 
               if (refund.refund_status.name === 'Rejected') {
-                this.showOverPayment();
+                this.showOverPayment(paymentGroup, payment);
                 return
               }
               // refunds in process Sent for approval,Approved
-              this.showIssueRefundPage(paymentGroup);
+              this.showIssueRefundPage(paymentGroup, payment);
               return
             }
 
@@ -307,11 +308,24 @@ export class ServiceRequestComponent implements OnInit {
   isAnyRefundsForThisCase(){
     return (this.paymentLibComponent.refunds != null) && (this.paymentLibComponent.refunds.length > 0);
   }
-  showOverPayment() {
+
+  showOverPayment(paymentgrp: IPaymentGroup, payment) {
+    this.viewStatus = '';
+    this.payment = payment;
+    this.paymentGroupList = paymentgrp;
     this.viewCompStatus = 'overpayment';
   }
 
-  showIssueRefundPage(paymentgrp: IPaymentGroup) {
+  showIssueRefundPage(paymentgrp: IPaymentGroup, payment) {
+
+
+    this.viewStatus = 'issuerefund';
+    this.viewCompStatus = '';
+    this.paymentFees = paymentgrp.fees;
+    this.payment = payment;
+    this.paymentLibComponent.isFromServiceRequestPage = true;
+    this.isRefundRemission = true;
+
 
     this.paymentGroup = paymentgrp;
     this.viewStatus = 'issuerefund';
