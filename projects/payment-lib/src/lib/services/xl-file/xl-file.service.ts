@@ -80,12 +80,7 @@ export class XlFileService {
         let row = json[i];
         for (let key in row) {
               if (row[key] && typeof row[key] === 'string') {
-                // Remove '=' sign if it is the first character
-                if (row[key].charAt(0) === '=') {
-                  row[key] = row[key].substring(1);
-                }
-                // Remove 0x09 (Tab) and 0x0D (Carriage Return)
-                row[key] = row[key].replace(/\t|\r/g, '');
+                row[key] = this.sanitizeString(row[key]);
               }
             }
         worksheet.addRow(row);
@@ -172,6 +167,15 @@ export class XlFileService {
     worksheet.getCell('J1').value = "Explanation";
     worksheet.getCell('K1').value = "Updated Name";
     return worksheet;
+  }
+
+  private sanitizeString(value: string): string {
+    // Remove '=' sign if it is the first character
+    if (value.charAt(0) === '=') {
+      value = value.substring(1);
+    }
+    // Remove 0x09 (Tab) and 0x0D (Carriage Return)
+    return value.replace(/\t|\r/g, '');
   }
 
 }
