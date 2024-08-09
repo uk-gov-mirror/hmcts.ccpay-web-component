@@ -18,7 +18,6 @@ import {NotificationPreviewComponent} from '../notification-preview/notification
 import {CcdHyphensPipe} from '../../pipes/ccd-hyphens.pipe';
 import {CapitalizePipe} from '../../pipes/capitalize.pipe';
 import {RpxTranslationModule} from 'rpx-xui-translation';
-import {IRefundList} from "../../interfaces/IRefundList";
 import type {PaymentLibComponent } from '../../payment-lib.component';
 
 type PaymentLibAlias = PaymentLibComponent;
@@ -176,7 +175,7 @@ export class PaymentViewComponent implements OnInit {
     this.paymentGroup.fees.forEach(fee => {
       feesOverPayment += fee.over_payment;
     });
-    return feesOverPayment > 0 ? feesOverPayment : this.paymentLibComponent.balanceToBePaid
+    return feesOverPayment > 0 ? feesOverPayment : this.paymentLibComponent.overPaymentAmount
 
   }
   goToServiceRequestPage() {
@@ -305,27 +304,26 @@ export class PaymentViewComponent implements OnInit {
     if (paymentgrp !== null && paymentgrp !== undefined) {
       if (this.chkIsIssueRefundBtnEnable(paymentgrp.payments[0])) {
 
-        // No refund and no over payment
+        // No refund and no over payment --> showIssueRefundPage()
         if (!this.isAnyRefundsForThisCase() && this.getBalanceToBePaid() == 0) {
           this.showIssueRefundPage(paymentgrp);
           return
         }
-        // No refund and over payment
+        // No refund and over payment --> showOverPayment()
         if (!this.isAnyRefundsForThisCase() && this.getBalanceToBePaid() > 0) {
           this.showOverPayment();
           return
         }
-        // Refunds means and No over payment --> refunds accepted.
+        // Refunds > 0  and overPayment == 0 ---> refunds accepted. showIssueRefundPage(s)
         if (this.isAnyRefundsForThisCase() && this.getBalanceToBePaid() == 0) {
           this.showIssueRefundPage(paymentgrp);
           return
         }
-        // Refunds means and No over payment --> refunds in process or Rejected.
+        // Refunds > 0 and overPayment > 0 --> refunds in process or Rejected.
         if (this.isAnyRefundsForThisCase() && this.getBalanceToBePaid() > 0) {
 
-          let refund = this.getRefundByFeeID(this.paymentFees.at(0).id.toString());
-
-          if (refund.refund_status.name === 'Rejected') {
+          // rejected by fee refunds === refunds by fee it means that refund for the current fee is rejected.
+          if (this.isTheCurrentRefundRejectedForTheFee(this.paymentFees.at(0).id.toString())) {
             this.showOverPayment();
             return
           }
@@ -333,10 +331,22 @@ export class PaymentViewComponent implements OnInit {
           this.showIssueRefundPage(paymentgrp);
           return
         }
-
       }
     }
   }
+
+  isTheCurrentRefundRejectedForTheFee(feeCode: string): boolean {
+
+    let refundsByFee = this.paymentLibComponent.refunds.filter(refund => refund.fee_ids === feeCode);
+    let refundsByFeeAndRejected = this.paymentLibComponent.refunds.filter(refund => refund.refund_status.name === 'Rejected');
+
+    // Refunds > 0  and overPayment --> refunds in process or Rejected.
+    if (refundsByFee.length === refundsByFeeAndRejected.length) {
+      return true;
+    }
+    return false;
+  }
+
 
   isAnyRefundsForThisCase(){
     return (this.paymentLibComponent.refunds != null) && (this.paymentLibComponent.refunds.length > 0);
@@ -356,20 +366,10 @@ export class PaymentViewComponent implements OnInit {
   }
 
   getBalanceToBePaid(){
-    return this.paymentLibComponent.balanceToBePaid
+    return this.paymentLibComponent.overPaymentAmount
   }
 
 
-  getRefundByFeeID(feeCode: string): IRefundList {
-
-    for (const refund of this.paymentLibComponent.refunds) {
-      if (refund.fee_ids === feeCode) {
-        return refund;
-      }
-    }
-
-    return null;
-  }
 
   getRemissionByFeeCode(feeCode: string, remissions: IRemission[]): IRemission {
     if (remissions && remissions.length > 0) {

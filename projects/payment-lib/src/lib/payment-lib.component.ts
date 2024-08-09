@@ -113,7 +113,7 @@ export class PaymentLibComponent implements OnInit {
   orderPendingPayments: number = 0.00;
 
   paymentGroup:IPaymentGroup
-  balanceToBePaid: number = 0.00;
+  overPaymentAmount: number = 0.00;
   refunds: IRefundList[];
 
   constructor(private paymentLibService: PaymentLibService,
