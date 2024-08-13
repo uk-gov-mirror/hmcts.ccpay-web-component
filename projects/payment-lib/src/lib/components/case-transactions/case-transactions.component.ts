@@ -177,7 +177,7 @@ export class CaseTransactionsComponent implements OnInit {
           this.calculateOrderFeesAmounts();
           this.calculateRefundAmount();
           this.calculateAmountDueTo();
-          this.calculateOverpayment();
+          this.calculateOverpaymentBasedOnRemission();
           this.validateAmountDueTo();
           this.calculateOverpaymentBaseOnAcceptedRefund();
           if (this.isFromServiceRequestPage) {
@@ -213,7 +213,7 @@ export class CaseTransactionsComponent implements OnInit {
           this.calculateAmounts();
           this.calculateOrderFeesAmounts();
           this.calculateAmountDueTo();
-          this.calculateOverpayment();
+          this.calculateOverpaymentBasedOnRemission();
           this.validateAmountDueTo();
           this.calculateOverpaymentBaseOnAcceptedRefund();
           this.totalRefundAmount = this.calculateRefundAmount();
@@ -542,7 +542,8 @@ export class CaseTransactionsComponent implements OnInit {
     return result;
   }
 
-  calculateOverpayment() {
+  calculateOverpaymentBasedOnRemission() {
+    // This sept is done to calculate a possible over payment due to remissions on fees.
     if (this.isThereRemissions()) {
       let newValue = this.totalPayments - (this.orderFeesTotal - this.totalRemissions);
       if (newValue > 0){
@@ -569,6 +570,7 @@ export class CaseTransactionsComponent implements OnInit {
   }
 
   calculateOverpaymentBaseOnAcceptedRefund() {
+    // This sept is done to re calculate the final over payments values based on accepted refunds.
     this.paymentGroups.forEach(paymentGroup => {
       if (paymentGroup.refunds != null && paymentGroup.refunds.length > 0) {
 
