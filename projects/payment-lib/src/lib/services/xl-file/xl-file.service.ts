@@ -172,7 +172,7 @@ export class XlFileService {
   private sanitizeString(value: string): string {
     if (value) {
         // Remove tabs, carriage returns, and newlines
-        value = value.replace(/^[\t\r@]+|[\t\r@]/g, (match, offset) => offset === 0 ? '' : ' ');
+        value = value.replace(/^[\t\r\n@]+|[\t\r\n@]/g, (match, offset) => offset === 0 ? '' : ' ');
         // Check if the first character is '=' and remove it
         if (value.charAt(0) === '=') {
           value = value.substring(1);
