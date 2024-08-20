@@ -173,9 +173,10 @@ export class XlFileService {
     if (value) {
         // Remove tabs, carriage returns, and newlines
         value = value.replace(/^[\t\r\n@]+|[\t\r\n@]/g, (match, offset) => offset === 0 ? '' : ' ');
-        // Check if the first character is '=' and remove it
-        if (value.charAt(0) === '=') {
-          value = value.substring(1);
+
+        // Check if the first character is '-' or '=' or '+'
+        if (value.charAt(0) === '-' || value.charAt(0) === '=' || value.charAt(0) === '+') {
+             value = "'" + value;
         }
         return value;
       }
