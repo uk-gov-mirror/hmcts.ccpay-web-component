@@ -413,11 +413,22 @@ export class PaymentViewComponent implements OnInit {
 
   chkIsAddRemissionBtnEnable(fee: IFee): boolean {
     if (fee !== null && fee !== undefined) {
-      return fee.add_remission && fee.remission_enable;
+      return fee.add_remission && fee.remission_enable && this.isTheCurrentRefundInProcessForThisFee(fee);
     } else {
       return false
     }
   }
+
+  // This method is going to check if the current refund has been rejected.
+  // If this is the case the button should be disable.
+  isTheCurrentRefundInProcessForThisFee(fee: IFee): boolean{
+    // No refunds
+    if (this.paymentLibComponent.refunds == null || this.paymentLibComponent.refunds.length === 0) {
+      return false;
+    }
+    return !this.isTheCurrentRefundRejectedForTheFee(fee.id.toString());
+  }
+
   selectPymentOption(paymentType: string) {
     this.paymentType = paymentType;
     this.isContinueBtnDisabled = false;

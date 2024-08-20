@@ -304,7 +304,6 @@ export class ServiceRequestComponent implements OnInit {
   }
 
   isTheCurrentRefundRejectedForTheFee(feeCode: string): boolean {
-
     let refundsByFee = this.paymentLibComponent.refunds.filter(refund => refund.fee_ids === feeCode);
     let refundsByFeeAndRejected = this.paymentLibComponent.refunds.filter(refund => refund.refund_status.name === 'Rejected');
 
@@ -401,11 +400,22 @@ export class ServiceRequestComponent implements OnInit {
 
   chkIsAddRemissionBtnEnable(fee: IFee): boolean {
     if (fee !== null && fee !== undefined) {
-      return fee.add_remission && fee.remission_enable;
+      return fee.add_remission && fee.remission_enable && this.isTheCurrentRefundInProcessForThisFee(fee);
     } else {
       return false
     }
   }
+
+  // This method is going to check if the current refund has been rejected.
+  // If this is the case the button should be disable.
+  isTheCurrentRefundInProcessForThisFee(fee: IFee): boolean{
+    // No refunds
+    if (this.paymentLibComponent.refunds == null || this.paymentLibComponent.refunds.length === 0) {
+      return false;
+    }
+    return !this.isTheCurrentRefundRejectedForTheFee(fee.id.toString());
+  }
+
   resetOrderData() {
     this.OrderslistService.setOrderRef(null);
     this.OrderslistService.setorderCCDEvent(null);
