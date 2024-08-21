@@ -321,7 +321,7 @@ export class RefundStatusComponent implements OnInit {
       fee_id: obj.id,
       code: obj.code,
       version: obj.version,
-      volume: obj.updated_volume ? obj.updated_volume : obj.volume,
+      volume: obj.updated_volume ? obj.updated_volume : (obj.volume ? obj.volume : 1),
       refund_amount: obj.refund_amount
     }));
   }
