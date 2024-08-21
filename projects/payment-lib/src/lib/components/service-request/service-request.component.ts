@@ -287,7 +287,7 @@ export class ServiceRequestComponent implements OnInit {
             if (this.isAnyRefundsForThisCase() && this.getBalanceToBePaid() > 0) {
 
               // rejected by fee refunds === refunds by fee it means that refund for the current fee is rejected.
-              if (this.isTheCurrentRefundRejectedForTheFee(paymentGroup.fees.at(0).id.toString())) {
+              if (this.paymentLibComponent.isTheCurrentRefundRejectedForTheFee(paymentGroup.fees.at(0).id.toString())) {
                 this.showOverPayment(paymentGroup, payment);
                 return
               }
@@ -303,16 +303,6 @@ export class ServiceRequestComponent implements OnInit {
     }
   }
 
-  isTheCurrentRefundRejectedForTheFee(feeCode: string): boolean {
-    let refundsByFee = this.paymentLibComponent.refunds.filter(refund => refund.fee_ids === feeCode);
-    let refundsByFeeAndRejected = this.paymentLibComponent.refunds.filter(refund => refund.refund_status.name === 'Rejected');
-
-    // Refunds > 0  and overPayment --> refunds in process or Rejected.
-    if (refundsByFee.length === refundsByFeeAndRejected.length) {
-      return true;
-    }
-    return false;
-  }
 
   isAnyRefundsForThisCase(){
     return (this.paymentLibComponent.refunds != null) && (this.paymentLibComponent.refunds.length > 0);
@@ -400,21 +390,12 @@ export class ServiceRequestComponent implements OnInit {
 
   chkIsAddRemissionBtnEnable(fee: IFee): boolean {
     if (fee !== null && fee !== undefined) {
-      return fee.add_remission && fee.remission_enable && this.isTheCurrentRefundInProcessForThisFee(fee);
+      return fee.add_remission && fee.remission_enable && this.paymentLibComponent.isTheCurrentRefundInProcessForThisFee(fee);
     } else {
       return false
     }
   }
 
-  // This method is going to check if the current refund has been rejected.
-  // If this is the case the button should be disable.
-  isTheCurrentRefundInProcessForThisFee(fee: IFee): boolean{
-    // No refunds
-    if (this.paymentLibComponent.refunds == null || this.paymentLibComponent.refunds.length === 0) {
-      return false;
-    }
-    return !this.isTheCurrentRefundRejectedForTheFee(fee.id.toString());
-  }
 
   resetOrderData() {
     this.OrderslistService.setOrderRef(null);
