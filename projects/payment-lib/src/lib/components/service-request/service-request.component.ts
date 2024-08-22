@@ -390,7 +390,7 @@ export class ServiceRequestComponent implements OnInit {
 
   chkIsAddRemissionBtnEnable(fee: IFee): boolean {
     if (fee !== null && fee !== undefined) {
-      return fee.add_remission && fee.remission_enable && this.paymentLibComponent.isTheCurrentRefundInProcessForThisFee(fee);
+      return fee.add_remission && fee.remission_enable || this.paymentLibComponent.isTheCurrentRefundInProcessForThisFee(fee);
     } else {
       return false
     }
