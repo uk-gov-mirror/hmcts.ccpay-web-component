@@ -401,7 +401,10 @@ export class PaymentViewComponent implements OnInit {
 
   chkIsAddRemissionBtnEnable(fee: IFee): boolean {
     if (fee !== null && fee !== undefined) {
-      return fee.add_remission && fee.remission_enable || this.paymentLibComponent.isTheCurrentRefundInProcessForThisFee(fee);
+      if (this.paymentLibComponent.overPaymentAmount > 0) {
+        return fee.add_remission && fee.remission_enable && this.paymentLibComponent.isTheCurrentRefundInProcessForThisFee(fee);
+      }
+      return fee.add_remission && fee.remission_enable;
     } else {
       return false
     }
