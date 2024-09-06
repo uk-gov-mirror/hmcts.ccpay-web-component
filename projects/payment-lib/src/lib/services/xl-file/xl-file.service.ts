@@ -34,6 +34,11 @@ export class XlFileService {
       worksheet =  this.setPaymentFailureReportHeaders(worksheet);
       worksheet = this.autoFitColumns(worksheet,json);
       worksheet =  this.addRowData(worksheet,json,headers);
+    }else if(excelFileName.match('Telephony Payments')!== null){
+      headers = ['Resp_Service Name','CCD_Ref','Payment Reference','Fee Code','Payment Date','Amount','Payment Status'];
+      worksheet =  this.setTelphonyPaymentsReportHeaders(worksheet);
+      worksheet = this.autoFitColumns(worksheet,json);
+      worksheet =  this.addRowData(worksheet,json,headers);
     } else {
       headers = ['resp_service_id','resp_service_name','surplus_shortfall','balance','payment_amount','ccd_case_reference', 'ccd_exception_reference', 'processed_date', 'reason', 'explanation', 'user_name'];
       worksheet =  this.setShortFallReportHeaders(worksheet);
@@ -168,6 +173,17 @@ export class XlFileService {
     worksheet.getCell('K1').value = "Updated Name";
     return worksheet;
   }
+
+    private setTelphonyPaymentsReportHeaders (worksheet: ExcelJS.Worksheet): ExcelJS.Worksheet {
+      worksheet.getCell('A1').value = "Resp_Service Name";
+      worksheet.getCell('B1').value = "CCD_Ref";
+      worksheet.getCell('C1').value = "Payment Reference";
+      worksheet.getCell('D1').value = "Fee Code";
+      worksheet.getCell('E1').value = "Payment Date";
+      worksheet.getCell('F1').value = "Amount";
+      worksheet.getCell('G1').value = "Payment Status";
+      return worksheet;
+    }
 
   private sanitizeString(value: string): string {
     if (value) {

@@ -78,6 +78,19 @@
             <label class="govuk-label govuk-radios__label govuk-label--m" for="PaymentFailureEvent">Payment failure event</label>
             <span class="form-hint">Failed payment transaction details</span>
          </div>
+          <div class="govuk-radios__item">
+            <input
+              id="TelephonyPayments"
+              class="govuk-radios__input"
+              formControlName="selectedreport"
+              name="selectedreport"
+              (click)="validateDates('TELEPHONY_PAYMENTS')"
+              type="radio"
+              value="TELEPHONY_PAYMENTS"
+              data-aria-controls="TelephonyPayments"/>
+            <label class="govuk-label govuk-radios__label govuk-label--m" for="TelephonyPayments">Telephony Payments</label>
+            <span class="form-hint">All Telephony Payments</span>
+          </div>
        </div>
      </div>
      <div  class="govuk-form-group">

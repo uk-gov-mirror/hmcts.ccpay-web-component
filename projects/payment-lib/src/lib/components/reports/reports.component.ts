@@ -66,7 +66,7 @@ export class ReportsComponent implements OnInit {
     this.isDateRangeBetnWeek = true;
     this.isDateBetwnMonth = false;
     this.isStartDateLesthanEndDate = false;
-  } else if(reportName && reportName ==='PAYMENT_FAILURE_EVENT' && isDateRangeMoreThanMonth ) {
+  } else if(reportName && (reportName ==='PAYMENT_FAILURE_EVENT'|| reportName ==="TELEPHONY_PAYMENTS") && isDateRangeMoreThanMonth ) {
     this.isDateRangeBetnWeek = false;
     this.isDateBetwnMonth = true;
     this.isStartDateLesthanEndDate = false;
@@ -186,7 +186,38 @@ downloadReport(){
           }
         })
 
-    } else {
+    } else if(selectedReportName === 'TELEPHONY_PAYMENTS') {
+
+            this.paymentViewService.downloadTelephonyPaymentsReport(selectedStartDate,selectedEndDate).subscribe(
+              response =>  {
+                this.errorMessage = this.errorHandlerService.getServerErrorMessage(false, false, '');
+
+                const result = {data: JSON.parse(response)['telephony_payments_report_list']};
+                let res= {data: this.applyDateFormat(result)};
+                //res.data= telephonyPaymentsRptDefault;
+                if(result['data'].length > 0) {
+                   for( var i=0; i< res['data'].length; i++) {
+                     if(res['data'][i]["Amount"] !== undefined) {
+                        res['data'][i]['Amount'] = this.convertToFloatValue(res['data'][i]['Amount']);
+                     }
+                  }
+                }
+                this.isDownLoadButtondisabled = false;
+                this.xlFileService.exportAsExcelFile(res['data'], this.getFileName(this.reportsForm.get('selectedreport').value, selectedStartDate, selectedEndDate ));
+
+              },
+              (error: any) => {
+                this.isDownLoadButtondisabled = false;
+                const errorContent = error.replace(/[^a-zA-Z ]/g, '').trim();
+                const statusCode = error.replace(/[^a-zA-Z0-9 ]/g, '').trim().split(' ')[0];
+                if(statusCode === '404') {
+                  this.errorMessage = this.errorHandlerService.getServerErrorMessage(true, true, errorContent);
+                }else {
+                  this.errorMessage = this.errorHandlerService.getServerErrorMessage(true, false, '');
+                }
+              })
+
+          } else {
       this.bulkScaningPaymentService.downloadSelectedReport(selectedReportName,selectedStartDate,selectedEndDate).subscribe(
         response =>  {
           this.errorMessage = this.errorHandlerService.getServerErrorMessage(false, false, '');
@@ -263,6 +294,10 @@ downloadReport(){
         result = 'Payment failure event';
         break;
       }
+      case 'TELEPHONY_PAYMENTS': {
+              result = 'Telephony Payments';
+              break;
+            }
       default: {
         result = selectedOption;
         break;
@@ -292,6 +327,10 @@ downloadReport(){
       } else if (value['refund_date'] && value['refund_date'].indexOf(',') !== -1) {
         value['refund_date'] = this.multiDateFormater(value['refund_date'])
       }
+
+      if (value['Payment Date']) {
+              value['Payment Date'] = formatDate(value['Payment Date'], this.fmt, this.loc);
+            }
       return value;
     });
   }
