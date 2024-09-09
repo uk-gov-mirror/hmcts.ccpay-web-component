@@ -1,27 +1,28 @@
 // import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { Component, Input, OnInit, Output, EventEmitter, ChangeDetectorRef, Inject, forwardRef } from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, forwardRef, Inject, Input, OnInit, Output} from '@angular/core';
+import {IPayment} from '../../interfaces/IPayment';
+import {IRemission} from '../../interfaces/IRemission';
+import {IPaymentView} from '../../interfaces/IPaymentView';
+import {IOrderReferenceFee} from '../../interfaces/IOrderReferenceFee';
+import {IFee} from '../../interfaces/IFee';
+import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
+import {Router} from '@angular/router';
+import {PaymentViewService} from '../../services/payment-view/payment-view.service';
+import {NotificationService} from '../../services/notification/notification.service';
+import {OrderslistService} from '../../services/orderslist.service';
+import {IRefundContactDetails} from '../../interfaces/IRefundContactDetails';
+import {PostRefundRetroRemission} from '../../interfaces/PostRefundRetroRemission';
+import {AddRemissionComponent} from '../add-remission/add-remission.component';
+import {CommonModule} from '@angular/common';
+import {PaymentViewComponent} from '../payment-view/payment-view.component';
+import {ContactDetailsComponent} from '../contact-details/contact-details.component';
+import {NotificationPreviewComponent} from '../notification-preview/notification-preview.component';
+import {CaseTransactionsComponent} from '../case-transactions/case-transactions.component';
+import {CcdHyphensPipe} from '../../pipes/ccd-hyphens.pipe';
+import {CapitalizePipe} from '../../pipes/capitalize.pipe';
+import {RpxTranslationModule} from 'rpx-xui-translation';
 import type { PaymentLibComponent } from '../../payment-lib.component';
-import { IPayment } from '../../interfaces/IPayment';
-import { IRemission } from '../../interfaces/IRemission';
-import { IPaymentView } from '../../interfaces/IPaymentView';
-import { IOrderReferenceFee } from '../../interfaces/IOrderReferenceFee';
-import { IFee } from '../../interfaces/IFee';
-import { IPaymentGroup } from '../../interfaces/IPaymentGroup';
-import { Router } from '@angular/router';
-import { PaymentViewService } from '../../services/payment-view/payment-view.service';
-import { NotificationService } from '../../services/notification/notification.service';
-import { OrderslistService } from '../../services/orderslist.service';
-import { IRefundContactDetails } from '../../interfaces/IRefundContactDetails';
-import { PostRefundRetroRemission } from '../../interfaces/PostRefundRetroRemission';
-import { AddRemissionComponent } from '../add-remission/add-remission.component';
-import { CommonModule } from '@angular/common';
-import { PaymentViewComponent } from '../payment-view/payment-view.component';
-import { ContactDetailsComponent } from '../contact-details/contact-details.component';
-import { NotificationPreviewComponent } from '../notification-preview/notification-preview.component';
-import { CaseTransactionsComponent } from '../case-transactions/case-transactions.component';
-import { CcdHyphensPipe } from '../../pipes/ccd-hyphens.pipe';
-import { CapitalizePipe } from '../../pipes/capitalize.pipe';
-import { RpxTranslationModule } from 'rpx-xui-translation';
+
 type PaymentLibAlias = PaymentLibComponent;
 
 @Component({
@@ -265,25 +266,78 @@ export class ServiceRequestComponent implements OnInit {
           paymentGroup => {
             paymentGroup.payments = paymentGroup.payments.filter
               (paymentGroupObj => paymentGroupObj['reference'].includes(payment.reference));
-            if (payment.over_payment > 0) {
-              this.viewStatus = '';
-              this.payment = payment;
-              this.paymentGroupList = paymentGroup;
-              this.viewCompStatus = 'overpayment';
-            } else {
-              this.viewStatus = 'issuerefund';
-              this.viewCompStatus = '';
-              this.paymentFees = paymentGroup.fees;
-              this.payment = payment;
-              this.paymentLibComponent.isFromServiceRequestPage = true;
-              this.isRefundRemission = true;
+
+
+            // No refund and no over payment --> showIssueRefundPage()
+            if (!this.isAnyRefundsForThisCase() && this.getBalanceToBePaid() == 0) {
+              this.showIssueRefundPage(paymentGroup, payment);
+              return
             }
+            // No refund and over payment --> showOverPayment()
+            if (!this.isAnyRefundsForThisCase() && this.getBalanceToBePaid() > 0) {
+              this.showOverPayment(paymentGroup, payment);
+              return
+            }
+            // Refunds > 0  and overPayment == 0 ---> refunds accepted. showIssueRefundPage()
+            if (this.isAnyRefundsForThisCase() && this.getBalanceToBePaid() == 0) {
+              this.showIssueRefundPage(paymentGroup, payment);
+              return
+            }
+            // Refunds > 0 and overPayment > 0 --> refunds in process or Rejected.
+            if (this.isAnyRefundsForThisCase() && this.getBalanceToBePaid() > 0) {
+
+              // rejected by fee refunds === refunds by fee it means that refund for the current fee is rejected.
+              if (this.paymentLibComponent.isTheCurrentRefundRejectedForTheFee(paymentGroup.fees.at(0).id.toString())) {
+                this.showOverPayment(paymentGroup, payment);
+                return
+              }
+              // refunds in process Sent for approval,Approved
+              this.showIssueRefundPage(paymentGroup, payment);
+              return
+            }
+
           },
           (error: any) => this.errorMessage = error
         );
       }
     }
   }
+
+
+  isAnyRefundsForThisCase(){
+    return (this.paymentLibComponent.refunds != null) && (this.paymentLibComponent.refunds.length > 0);
+  }
+
+  showOverPayment(paymentgrp: IPaymentGroup, payment) {
+    this.viewStatus = '';
+    this.payment = payment;
+    this.paymentGroupList = paymentgrp;
+    this.viewCompStatus = 'overpayment';
+  }
+
+  showIssueRefundPage(paymentgrp: IPaymentGroup, payment) {
+
+
+    this.viewStatus = 'issuerefund';
+    this.viewCompStatus = '';
+    this.paymentFees = paymentgrp.fees;
+    this.payment = payment;
+    this.paymentLibComponent.isFromServiceRequestPage = true;
+    this.isRefundRemission = true;
+
+
+    this.paymentGroup = paymentgrp;
+    this.viewStatus = 'issuerefund';
+    this.isRefundRemission = true;
+    this.paymentLibComponent.isFromPaymentDetailPage = true;
+    this.isFromPaymentDetailPage = true;
+    this.isFromServiceRequestPage = false;
+  }
+
+  getBalanceToBePaid(){
+    return this.paymentLibComponent.overPaymentAmount
+  }
+
 
   goToPayementView(paymentGroupReference: string, paymentReference: string, paymentMethod: string) {
     this.goToPaymentViewComponent({ paymentGroupReference, paymentReference, paymentMethod });
@@ -336,11 +390,16 @@ export class ServiceRequestComponent implements OnInit {
 
   chkIsAddRemissionBtnEnable(fee: IFee): boolean {
     if (fee !== null && fee !== undefined) {
+      if (this.paymentLibComponent.overPaymentAmount > 0) {
+        return fee.add_remission && fee.remission_enable && this.paymentLibComponent.isTheCurrentRefundInProcessForThisFee(fee);
+      }
       return fee.add_remission && fee.remission_enable;
     } else {
       return false
     }
   }
+
+
   resetOrderData() {
     this.OrderslistService.setOrderRef(null);
     this.OrderslistService.setorderCCDEvent(null);
@@ -434,7 +493,7 @@ export class ServiceRequestComponent implements OnInit {
     this.paymentGroupList.fees.forEach(fee => {
       feesOverPayment += fee.over_payment;
     });
-    return feesOverPayment > 0 ? feesOverPayment : this.paymentGroupList.payments[0].over_payment;
+    return feesOverPayment > 0 ? feesOverPayment : this.paymentLibComponent.overPaymentAmount;
 
   }
 

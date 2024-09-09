@@ -4,6 +4,9 @@ import { IBSPayments } from './interfaces/IBSPayments';
 import { OrderslistService } from './services/orderslist.service';
 import { IPayment } from './interfaces/IPayment';
 import { PaymentViewComponent } from './components/payment-view/payment-view.component';
+import {IPaymentGroup} from "./interfaces/IPaymentGroup";
+import {IRefundList} from "./interfaces/IRefundList";
+import {IFee} from "./interfaces/IFee";
 
 @Component({
   selector: 'ccpay-payment-lib',
@@ -110,6 +113,10 @@ export class PaymentLibComponent implements OnInit {
   orderTotalPayments: number = 0.00;
   orderPendingPayments: number = 0.00;
 
+  paymentGroup:IPaymentGroup
+  overPaymentAmount: number = 0.00;
+  refunds: IRefundList[];
+
   constructor(private paymentLibService: PaymentLibService,
     private cd: ChangeDetectorRef,
     private OrderslistService: OrderslistService) { }
@@ -154,4 +161,38 @@ export class PaymentLibComponent implements OnInit {
       this.isFromPayBubble = true;
     }
   }
+
+  // Refunds libs section.
+
+
+  /**
+   * This function is used to find out if the current refunds list are in progress for the fee passed as parameter
+   * @param fee this is the fee used to find out if the refunds are in progress.
+   */
+  isTheCurrentRefundInProcessForThisFee(fee: IFee): boolean{
+    // No refunds
+    if (this.refunds == null || this.refunds.length === 0) {
+      return false;
+    }
+    return !this.isTheCurrentRefundRejectedForTheFee(fee.id.toString());
+  }
+
+  /**
+   * This function is used to find out if in current list of refunds all refunds has been rejected
+   * for the fee passed as parameter.
+   * @param feeCode this is the fee code used to find out all refunds rejected refunds.
+   */
+  isTheCurrentRefundRejectedForTheFee(feeCode: string): boolean {
+
+    let refundsByFee = this.refunds.filter(refund => refund.fee_ids === feeCode);
+    let refundsByFeeAndRejected = this.refunds.filter(refund => refund.refund_status.name === 'Rejected');
+
+    // Refunds > 0  and overPayment --> refunds in process or Rejected.
+    if (refundsByFee.length === refundsByFeeAndRejected.length) {
+      return true;
+    }
+    return false;
+  }
+
+
 }
