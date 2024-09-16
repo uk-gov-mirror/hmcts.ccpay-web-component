@@ -1,5 +1,4 @@
 import {Component, forwardRef, Inject, Input, OnInit} from '@angular/core';
-import type { PaymentLibComponent } from '../../payment-lib.component';
 import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
 import {CaseTransactionsService} from '../../services/case-transactions/case-transactions.service';
 import {BulkScaningPaymentService} from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
@@ -20,6 +19,8 @@ import {CcdHyphensPipe} from '../../pipes/ccd-hyphens.pipe';
 import {CapitalizePipe} from '../../pipes/capitalize.pipe';
 import {FormsModule} from '@angular/forms';
 import {RpxTranslationModule} from 'rpx-xui-translation';
+import type { PaymentLibComponent } from '../../payment-lib.component';
+
 type PaymentLibAlias = PaymentLibComponent;
 
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
@@ -176,8 +177,9 @@ export class CaseTransactionsComponent implements OnInit {
           this.calculateOrderFeesAmounts();
           this.calculateRefundAmount();
           this.calculateAmountDueTo();
-          this.calculateOverpayment();
+          this.calculateOverpaymentBasedOnRemission();
           this.validateAmountDueTo();
+          this.calculateOverpaymentBaseOnAcceptedRefund();
           if (this.isFromServiceRequestPage) {
             this.OrderslistService.getSelectedOrderRefId().subscribe((data) => this.orderRef = data);
             this.goToOrderViewDetailSection(this.orderRef);
@@ -211,8 +213,9 @@ export class CaseTransactionsComponent implements OnInit {
           this.calculateAmounts();
           this.calculateOrderFeesAmounts();
           this.calculateAmountDueTo();
-          this.calculateOverpayment();
+          this.calculateOverpaymentBasedOnRemission();
           this.validateAmountDueTo();
+          this.calculateOverpaymentBaseOnAcceptedRefund();
           this.totalRefundAmount = this.calculateRefundAmount();
           this.paymentViewService.getPartyDetails(this.ccdCaseNumber).subscribe(
             response => {
@@ -317,13 +320,15 @@ export class CaseTransactionsComponent implements OnInit {
       this.paymentGroups.forEach(paymentGroup => {
 
       this.resetOrderVariables();
-      if (paymentGroup.fees) {
-        paymentGroup.fees.forEach(fee => {
-          this.orderFeesTotal = this.orderFeesTotal + fee.calculated_amount;
-          this.overPaymentAmount = this.overPaymentAmount + fee.over_payment
+        if (paymentGroup.fees) {
+          paymentGroup.fees.forEach(fee => {
+
+              this.orderFeesTotal = this.orderFeesTotal + fee.calculated_amount;
+              this.overPaymentAmount = this.overPaymentAmount + fee.over_payment;
+              this.paymentLibComponent.overPaymentAmount = this.overPaymentAmount;
+            }
+          )
         }
-        )
-      }
       if (paymentGroup.remissions) {
         paymentGroup.remissions.forEach(remission => {
           this.orderRemissionTotal = this.orderRemissionTotal + remission.hwf_amount;
@@ -335,6 +340,7 @@ export class CaseTransactionsComponent implements OnInit {
         paymentGroup.payments.forEach(payment => {
           if (isFeeOverPaymentExist) {
             this.overPaymentAmount = this.overPaymentAmount + payment.over_payment
+            this.paymentLibComponent.overPaymentAmount = this.overPaymentAmount;
           }
           if (payment.status.toUpperCase() === 'SUCCESS') {
             this.orderTotalPayments = this.orderTotalPayments + payment.amount;
@@ -536,11 +542,13 @@ export class CaseTransactionsComponent implements OnInit {
     return result;
   }
 
-  calculateOverpayment() {
+  calculateOverpaymentBasedOnRemission() {
+    // This sept is done to calculate a possible over payment due to remissions on fees.
     if (this.isThereRemissions()) {
       let newValue = this.totalPayments - (this.orderFeesTotal - this.totalRemissions);
       if (newValue > 0){
         this.overPaymentAmount = newValue;
+        this.paymentLibComponent.overPaymentAmount = this.overPaymentAmount;
       }
     }
   }
@@ -559,6 +567,29 @@ export class CaseTransactionsComponent implements OnInit {
     if (this.overPaymentAmount > 0) {
       this.clAmountDue = 0;
     }
+  }
+
+  calculateOverpaymentBaseOnAcceptedRefund() {
+    // This sept is done to re calculate the final over payments values based on accepted refunds.
+    this.paymentGroups.forEach(paymentGroup => {
+      if (paymentGroup.refunds != null && paymentGroup.refunds.length > 0) {
+
+          this.paymentLibComponent.refunds = paymentGroup.refunds;
+
+          paymentGroup.refunds.forEach(refund => {
+
+          if (refund.refund_status.name === 'Accepted') {
+            let newValue = this.overPaymentAmount - refund.amount;
+            if (newValue < 0) {
+              this.overPaymentAmount = 0;
+            } else {
+              this.overPaymentAmount = newValue;
+            }
+          }
+          this.paymentLibComponent.overPaymentAmount = this.overPaymentAmount;
+        });
+      }
+    });
   }
 
   canItCalculateAmountDueForRemission(): boolean {
@@ -758,6 +789,8 @@ export class CaseTransactionsComponent implements OnInit {
     this.paymentLibComponent.paymentGroupReference = paymentGroup.paymentGroupReference;
     this.paymentLibComponent.paymentReference = paymentGroup.paymentReference;
     this.paymentLibComponent.viewName = 'payment-view';
+    this.paymentLibComponent.paymentGroup = this.paymentGroup
+    this.paymentLibComponent.overPaymentAmount = this.overPaymentAmount;
   }
 
   goToPayementView(paymentGroupReference: string, paymentReference: string, paymentMethod: string) {
