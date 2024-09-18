@@ -110,7 +110,7 @@
       <span *ngIf="isDateBetwnMonth"> Please select the date range between 30 days</span>
    </p>
     <div class="btnsubmit">
-     <button type="submit" (click)="downloadReport()" class="button" [disabled]="!reportsForm.valid || isDownLoadButtondisabled || isStartDateLesthanEndDate || isDateRangeBetnWeek">Download report</button>
+     <button type="submit" (click)="downloadReport()" class="button" [disabled]="!reportsForm.valid || isDownLoadButtondisabled || isStartDateLesthanEndDate || isDateRangeBetnWeek || isDateBetwnMonth">Download report</button>
    </div>
  </form>
 
