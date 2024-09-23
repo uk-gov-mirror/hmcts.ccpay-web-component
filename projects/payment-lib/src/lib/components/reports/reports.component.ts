@@ -92,6 +92,8 @@ downloadReport(){
     unProcessedRptDefault = [{resp_service_id:'',resp_service_name:'',exception_ref:'',ccd_ref:'',date_banked:'',bgc_batch:'',payment_asset_dcn:'',env_ref:'',env_item:'',payment_method:'',amount:''}],
     processedUnallocated =[{resp_service_id:'',resp_service_name:'',allocation_status:'',receiving_office:'',allocation_reason:'',ccd_exception_ref:'',ccd_case_ref:'',payment_asset_dcn:'',env_ref:'',env_item:'',date_banked:'',bgc_batch:'',payment_method:'',amount:'',updated_by:''}],
     shortFallsRptDefault = [{resp_service_id:'',resp_service_name:'',surplus_shortfall:'',balance:'',payment_amount:'',ccd_case_reference:'',ccd_exception_reference:'',processed_date:'', reason:'', explanation:'', user_name:''}],
+    telephonyPaymentsRptDefault = [{service_name:'',ccd_Reference:'',payment_reference:'',fee_code:'',payment_date:'',amount:'', payment_status:''}],
+    paymentFailureRptDefault = [{payment_reference:'',ccd_reference:'',document_control_number:'',org_id:'',service_name:'',failure_reference:'',failure_reason:'',disputed_amount:'',event_name:'',event_date:'',representment_status:'',representment_date:'',refund_reference:'',refund_amount:'',refund_date:''}],
     selectedReportName = this.reportsForm.get('selectedreport').value,
     selectedStartDate = this.tranformDate(this.reportsForm.get('startDate').value),
     selectedEndDate = this.tranformDate(this.reportsForm.get('endDate').value);
@@ -171,6 +173,9 @@ downloadReport(){
               }
             }
           }
+          else{
+            res.data = paymentFailureRptDefault;
+          }
           this.isDownLoadButtondisabled = false;
           this.xlFileService.exportAsExcelFile(res['data'], this.getFileName(this.reportsForm.get('selectedreport').value, selectedStartDate, selectedEndDate ));
 
@@ -201,6 +206,8 @@ downloadReport(){
                         res['data'][i]['Amount'] = this.convertToFloatValue(res['data'][i]['Amount']);
                      }
                   }
+                }else{
+                  res.data = telephonyPaymentsRptDefault;
                 }
                 this.isDownLoadButtondisabled = false;
                 this.xlFileService.exportAsExcelFile(res['data'], this.getFileName(this.reportsForm.get('selectedreport').value, selectedStartDate, selectedEndDate ));
