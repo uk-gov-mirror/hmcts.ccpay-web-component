@@ -314,7 +314,7 @@
 
         <tr class="govuk-table__row">
             <td *ngIf="remessionPayment.status === 'Success'" class="govuk-table__cell govuk-!-font-weight-bold">{{ "Refund amount" | rpxTranslate }}</td>
-            <td class="govuk-table__cell">{{remissionForm.controls.amount.value  | currency:'GBP':'symbol-narrow':'1.2-2' }}
+            <td class="govuk-table__cell">{{ getRefundAmountToBeDisplayedForContinueJourney()| currency:'GBP':'symbol-narrow':'1.2-2' }}
             </td>
         </tr>
         <tr class="govuk-table__row">
@@ -779,7 +779,7 @@
 
         <tr class="govuk-table__row">
           <td *ngIf="remessionPayment.status === 'Success'" class="govuk-table__cell govuk-!-font-weight-bold">{{ "Remission amount" | rpxTranslate }}</td>
-          <td class="govuk-table__cell">{{getRefundAmountToBeDisplayed(remission)| currency:'GBP':'symbol-narrow':'1.2-2' }}
+          <td class="govuk-table__cell">{{getRemissionAmountToBeDisplayed(remission)| currency:'GBP':'symbol-narrow':'1.2-2' }}
           </td>
         </tr>
 
