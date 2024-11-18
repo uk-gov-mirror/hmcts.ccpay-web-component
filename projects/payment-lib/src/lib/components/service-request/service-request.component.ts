@@ -260,6 +260,9 @@ export class ServiceRequestComponent implements OnInit {
   }
 
   issueRefund(payment: IPayment) {
+
+    this.paymentLibComponent.addPaymentGroup(this.paymentGroup);
+
     if (payment !== null && payment !== undefined) {
       if (this.chkIsIssueRefundBtnEnable(payment)) {
         this.paymentViewService.getApportionPaymentDetails(payment.reference).subscribe(

@@ -301,6 +301,8 @@ export class PaymentViewComponent implements OnInit {
 
   issueRefund(paymentgrp: IPaymentGroup) {
 
+    this.paymentLibComponent.addPaymentGroup(this.paymentGroup);
+
     if (paymentgrp !== null && paymentgrp !== undefined) {
       if (this.chkIsIssueRefundBtnEnable(paymentgrp.payments[0])) {
 

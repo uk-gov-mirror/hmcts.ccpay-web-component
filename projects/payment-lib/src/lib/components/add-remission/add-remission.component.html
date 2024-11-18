@@ -401,7 +401,7 @@
     <span id="how-contacted-conditional-hint" class="form-hint govuk-font19px">
       {{ "Payment reference" | rpxTranslate }}: {{paymentReference}}
     </span>
-    <h3 class="heading-small">{{ "Select fees to be refunded" | rpxTranslate }}</h3>
+    <h3 class="heading-small">{{ "Select fees to be refunded XXXin add remission" | rpxTranslate }}</h3>
     <!--TABLE-->
     <div>
       <table class="govuk-table">
@@ -417,8 +417,12 @@
           </tr>
         </thead>
         <tbody class="govuk-table__body" *ngIf="!isFullyRefund">
-          <tr class="govuk-table__row" formArrayName="feesList" *ngFor="let fee of feesList?.controls; let i = index">
-            <td class="govuk-table__cell">
+
+        <ng-container formArrayName="feesList"  *ngFor="let fee of feesList?.controls; let i = index">
+
+          <tr class="govuk-table__row">
+
+              <td class="govuk-table__cell">
               <div  [formGroupName]="i" class="govuk-checkboxes govuk-checkboxes--large" data-module="govuk-checkboxes">
                 <div class="govuk-checkboxes__item">
 
@@ -462,7 +466,38 @@
  
             </td>
           </tr>
+
+          <tr *ngIf="isRemissionEnabled(fee.controls['code'].value)" >
+            <td class="govuk-table__cell whitespace-inherit" style="text-align:left">
+              <div></div>
+            </td>
+
+            <td class="govuk-table__cell whitespace-inherit" colspan="0" style="text-align:left">
+              <div>Deduction: {{ this.getRemissions(fee.controls['code'].value ).hwf_reference }}</div>
+            </td>
+            <td class="govuk-table__cell whitespace-inherit" colspan="5" style="text-align:left">
+              <div>{{ this.getRemissions(fee.controls['code'].value).hwf_amount | currency:'GBP':'symbol-narrow':'1.2-2' }}</div>
+            </td>
+          </tr>
+
+          <tr *ngIf="isRemissionEnabled(fee.controls['code'].value)" >
+            <td class="govuk-table__cell whitespace-inherit" style="text-align:left">
+              <div></div>
+            </td>
+
+            <td class="govuk-table__cell whitespace-inherit" colspan="0" style="text-align:left">
+              <div>	Max amount to be refund: </div>
+            </td>
+            <td class="govuk-table__cell whitespace-inherit" colspan="5" style="text-align:left">
+              <div>{{ this.getNetAmountFee( this.getRemissions(fee.controls['code'].value).hwf_amount,
+                fee.controls['apportion_amount'].value) | currency:'GBP':'symbol-narrow':'1.2-2' }}
+              </div>
+            </td>
+          </tr>
+
+        </ng-container>
         </tbody>
+
         <tbody class="govuk-table__body" *ngIf="isFullyRefund">
           <tr class="govuk-table__row" *ngFor="let fee of fees; let i = index">
             <td class="govuk-table__cell">
