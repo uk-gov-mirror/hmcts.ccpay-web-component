@@ -319,8 +319,6 @@ export class ServiceRequestComponent implements OnInit {
   }
 
   showIssueRefundPage(paymentgrp: IPaymentGroup, payment) {
-
-
     this.viewStatus = 'issuerefund';
     this.viewCompStatus = '';
     this.paymentFees = paymentgrp.fees;
@@ -335,6 +333,7 @@ export class ServiceRequestComponent implements OnInit {
     this.paymentLibComponent.isFromPaymentDetailPage = true;
     this.isFromPaymentDetailPage = true;
     this.isFromServiceRequestPage = false;
+    this.paymentLibComponent.addPaymentGroup(paymentgrp);
   }
 
   getBalanceToBePaid(){
