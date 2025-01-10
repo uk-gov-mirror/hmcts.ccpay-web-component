@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { StatusHistoryService } from '../../services/status-history/status-history.service';
-import { PaymentLibComponent } from '../../payment-lib.component';
 import { StatusHistoryComponent } from './status-history.component';
 
 describe('StatusHistoryComponent', () => {
@@ -20,10 +19,10 @@ describe('StatusHistoryComponent', () => {
     });
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
-      declarations: [StatusHistoryComponent],
+      declarations: [],
       providers: [
         { provide: StatusHistoryService, useFactory: statusHistoryServiceStub },
-        { provide: PaymentLibComponent, useFactory: paymentLibComponentStub }
+        { provide: 'PAYMENT_LIB', useFactory: paymentLibComponentStub }
       ]
     });
     fixture = TestBed.createComponent(StatusHistoryComponent);

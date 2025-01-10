@@ -8,6 +8,7 @@ import { ErrorHandlerService } from '../../services/shared/error-handler.service
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import {XlFileService} from '../../services/xl-file/xl-file.service';
 import { FindValueSubscriber } from 'rxjs/internal/operators/find';
+type PaymentLibAlias = PaymentLibComponent;
 
 @Component({
   selector: 'ccpay-reports',
@@ -35,7 +36,7 @@ export class ReportsComponent implements OnInit {
     private errorHandlerService: ErrorHandlerService,
     private formBuilder: FormBuilder,
     private bulkScaningPaymentService: BulkScaningPaymentService,
-    @Inject('PAYMENT_LIB') private paymentLibComponent: PaymentLibComponent,
+    @Inject('PAYMENT_LIB') private paymentLibComponent: PaymentLibAlias,
     private paymentViewService: PaymentViewService) { }
 
   ngOnInit() {
@@ -65,7 +66,7 @@ export class ReportsComponent implements OnInit {
     this.isDateRangeBetnWeek = true;
     this.isDateBetwnMonth = false;
     this.isStartDateLesthanEndDate = false;
-  } else if(reportName && reportName ==='PAYMENT_FAILURE_EVENT' && isDateRangeMoreThanMonth ) {
+  } else if(reportName && (reportName ==='PAYMENT_FAILURE_EVENT'|| reportName ==="TELEPHONY_PAYMENTS") && isDateRangeMoreThanMonth ) {
     this.isDateRangeBetnWeek = false;
     this.isDateBetwnMonth = true;
     this.isStartDateLesthanEndDate = false;
@@ -91,6 +92,8 @@ downloadReport(){
     unProcessedRptDefault = [{resp_service_id:'',resp_service_name:'',exception_ref:'',ccd_ref:'',date_banked:'',bgc_batch:'',payment_asset_dcn:'',env_ref:'',env_item:'',payment_method:'',amount:''}],
     processedUnallocated =[{resp_service_id:'',resp_service_name:'',allocation_status:'',receiving_office:'',allocation_reason:'',ccd_exception_ref:'',ccd_case_ref:'',payment_asset_dcn:'',env_ref:'',env_item:'',date_banked:'',bgc_batch:'',payment_method:'',amount:'',updated_by:''}],
     shortFallsRptDefault = [{resp_service_id:'',resp_service_name:'',surplus_shortfall:'',balance:'',payment_amount:'',ccd_case_reference:'',ccd_exception_reference:'',processed_date:'', reason:'', explanation:'', user_name:''}],
+    telephonyPaymentsRptDefault = [{service_name:'',ccd_Reference:'',payment_reference:'',fee_code:'',payment_date:'',amount:'', payment_status:''}],
+    paymentFailureRptDefault = [{payment_reference:'',ccd_reference:'',document_control_number:'',org_id:'',service_name:'',failure_reference:'',failure_reason:'',disputed_amount:'',event_name:'',event_date:'',representment_status:'',representment_date:'',refund_reference:'',refund_amount:'',refund_date:''}],
     selectedReportName = this.reportsForm.get('selectedreport').value,
     selectedStartDate = this.tranformDate(this.reportsForm.get('startDate').value),
     selectedEndDate = this.tranformDate(this.reportsForm.get('endDate').value);
@@ -170,6 +173,9 @@ downloadReport(){
               }
             }
           }
+          else{
+            res.data = paymentFailureRptDefault;
+          }
           this.isDownLoadButtondisabled = false;
           this.xlFileService.exportAsExcelFile(res['data'], this.getFileName(this.reportsForm.get('selectedreport').value, selectedStartDate, selectedEndDate ));
 
@@ -185,7 +191,40 @@ downloadReport(){
           }
         })
 
-    } else {
+    } else if(selectedReportName === 'TELEPHONY_PAYMENTS') {
+
+            this.paymentViewService.downloadTelephonyPaymentsReport(selectedStartDate,selectedEndDate).subscribe(
+              response =>  {
+                this.errorMessage = this.errorHandlerService.getServerErrorMessage(false, false, '');
+
+                const result = {data: JSON.parse(response)['telephony_payments_report_list']};
+                let res= {data: this.applyDateFormat(result)};
+                //res.data= telephonyPaymentsRptDefault;
+                if(result['data'].length > 0) {
+                   for( var i=0; i< res['data'].length; i++) {
+                     if(res['data'][i]["Amount"] !== undefined) {
+                        res['data'][i]['Amount'] = this.convertToFloatValue(res['data'][i]['Amount']);
+                     }
+                  }
+                }else{
+                  res.data = telephonyPaymentsRptDefault;
+                }
+                this.isDownLoadButtondisabled = false;
+                this.xlFileService.exportAsExcelFile(res['data'], this.getFileName(this.reportsForm.get('selectedreport').value, selectedStartDate, selectedEndDate ));
+
+              },
+              (error: any) => {
+                this.isDownLoadButtondisabled = false;
+                const errorContent = error.replace(/[^a-zA-Z ]/g, '').trim();
+                const statusCode = error.replace(/[^a-zA-Z0-9 ]/g, '').trim().split(' ')[0];
+                if(statusCode === '404') {
+                  this.errorMessage = this.errorHandlerService.getServerErrorMessage(true, true, errorContent);
+                }else {
+                  this.errorMessage = this.errorHandlerService.getServerErrorMessage(true, false, '');
+                }
+              })
+
+          } else {
       this.bulkScaningPaymentService.downloadSelectedReport(selectedReportName,selectedStartDate,selectedEndDate).subscribe(
         response =>  {
           this.errorMessage = this.errorHandlerService.getServerErrorMessage(false, false, '');
@@ -262,6 +301,10 @@ downloadReport(){
         result = 'Payment failure event';
         break;
       }
+      case 'TELEPHONY_PAYMENTS': {
+              result = 'Telephony Payments';
+              break;
+            }
       default: {
         result = selectedOption;
         break;
@@ -291,6 +334,10 @@ downloadReport(){
       } else if (value['refund_date'] && value['refund_date'].indexOf(',') !== -1) {
         value['refund_date'] = this.multiDateFormater(value['refund_date'])
       }
+
+      if (value['Payment Date']) {
+              value['Payment Date'] = formatDate(value['Payment Date'], this.fmt, this.loc);
+            }
       return value;
     });
   }

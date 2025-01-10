@@ -86,6 +86,7 @@
            <th class="govuk-table__header col-27 whitespace-inherit" scope="col">{{ "Reference" | rpxTranslate }}</th>
            <th class="govuk-table__header whitespace-inherit" scope="col">{{ "Fee" | rpxTranslate }}</th>
            <th class="govuk-table__header whitespace-inherit" scope="col">{{ "Amount" | rpxTranslate }}</th>
+           <th class="govuk-table__header whitespace-inherit" scope="col">{{ "Remission Amount" | rpxTranslate }}</th>
            <th class="govuk-table__header whitespace-inherit refundBtn" scope="col"></th>
          </tr>
      </thead>
@@ -121,7 +122,7 @@
 
    <!--Payments-->
   <ng-container *ngFor="let order of orderDetail;" >
-   <div class="govuk-grid-column-full" *ngIf="order.payments">
+   <div class="govuk-grid-column-full" *ngIf="order.payments && hasPaymentsRole()">
       <h3 class="heading-medium">{{ "Payments" | rpxTranslate }}</h3>
    <table class="govuk-table ">
       <thead class="govuk-table__head">
@@ -154,14 +155,9 @@
   </div>
 </div>
 </ng-container>
-<div *ngIf="isServiceRequest === 'false'">
-  <div *ngIf="((orderFeesTotal - orderRemissionTotal)- orderTotalPayments) > 0" >
-      <p class="totalPay">{{ "Total left to pay" | rpxTranslate }}: <b>{{((orderFeesTotal - orderRemissionTotal)- orderTotalPayments )| currency:'GBP':'symbol-narrow':'1.2-2' }}</b> </p>
+  <div>
+      <p class="totalPay">{{ "Total fees left to pay" | rpxTranslate }}: <b>{{((orderFeesTotal - orderRemissionTotal)- orderTotalPayments )| currency:'GBP':'symbol-narrow':'1.2-2' }}</b> </p>
   </div>
-  <div *ngIf="((orderFeesTotal - orderRemissionTotal)- orderTotalPayments) < 0" >
-      <p class="totalPay">{{"Total left to pay" | rpxTranslate }}: <b>0</b> </p>
-  </div>
-</div>
 </ng-container>
 
 <ccpay-add-remission *ngIf="viewStatus === 'addremission' && feeId"

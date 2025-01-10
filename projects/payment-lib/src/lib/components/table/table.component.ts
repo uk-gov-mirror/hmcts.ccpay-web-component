@@ -2,12 +2,11 @@ import { Component, ViewChild, Input, ChangeDetectorRef, Inject } from '@angular
 import type { PaymentLibComponent } from '../../payment-lib.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { Sort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { IRefundList } from '../../interfaces/IRefundList';
 import { OrderslistService } from '../../services/orderslist.service';
-// import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { ActivatedRoute, Router } from '@angular/router';
+type PaymentLibAlias = PaymentLibComponent;
 @Component({
   selector: 'ccpay-table',
   templateUrl: './table.component.html',
@@ -30,7 +29,7 @@ export class TableComponent {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   constructor(
-    @Inject('PAYMENT_LIB') private paymentLibComponent: PaymentLibComponent,
+    @Inject('PAYMENT_LIB') private paymentLibComponent: PaymentLibAlias,
     private cdRef: ChangeDetectorRef,
     private OrderslistService: OrderslistService,
     private router: Router,
