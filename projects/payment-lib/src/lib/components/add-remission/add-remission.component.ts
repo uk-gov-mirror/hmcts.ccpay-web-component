@@ -1281,7 +1281,20 @@ export class AddRemissionComponent implements OnInit {
     return myRemission.at(0);
   }
 
+  getRemissionsHwfAmount(feeCode: string): string {
+    let myRemission = this.getRemissions(feeCode);
+    if (myRemission === null) {
+      return this.getRemissionValueForFullyRefund().toString();
+    } else {
+      return myRemission.hwf_amount.toString();
+    }
+  }
+
   getNetAmountFee(hwfAmount: number, feeAmount: number){
     return feeAmount - hwfAmount;
+  }
+
+  getRemissionValueForFullyRefund(){
+    return 0;
   }
 }
