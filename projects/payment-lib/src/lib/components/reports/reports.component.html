@@ -7,6 +7,7 @@
 </div>
 <form [formGroup]="reportsForm">
      <div  class="govuk-form-group">
+      <fieldset class="govuk-fieldset">
         <div class="govuk-radios govuk-radios--conditional" data-module="govuk-radios">
           <div  class="govuk-radios__item">
               <input
@@ -92,17 +93,20 @@
             <span class="form-hint">All Telephony Payments</span>
           </div>
        </div>
+       </fieldset>
      </div>
      <div  class="govuk-form-group">
-      <div class="datefrom">
-      <label class="govuk-label govuk-radios__label govuk-label--m" for="date-from">Date from</label>
-      <input (change)="getSelectedFromDate()" [max]="getToday()" class="form-control" id="date-from" name="date-from" type="date"  formControlName="startDate" required/>
-      </div>
+      <fieldset class="govuk-fieldset">
+         <div class="datefrom">
+         <label class="govuk-label govuk-radios__label govuk-label--m" for="date-from">Date from</label>
+         <input (change)="getSelectedFromDate()" [max]="getToday()" class="form-control" id="date-from" name="date-from" type="date"  formControlName="startDate" required/>
+         </div>
 
-      <div class="dateto">
-      <label class="govuk-label govuk-radios__label govuk-label--m" for="date-to">Date to</label>
-      <input (change)="getSelectedFromDate()" [max]="getToday()" class="form-control" id="date-to" name="search" type="date" formControlName="endDate" required/>
-      </div>
+         <div class="dateto">
+         <label class="govuk-label govuk-radios__label govuk-label--m" for="date-to">Date to</label>
+         <input (change)="getSelectedFromDate()" [max]="getToday()" class="form-control" id="date-to" name="search" type="date" formControlName="endDate" required/>
+         </div>
+      </fieldset>
      </div>
    <p class="inline-error-message" *ngIf="isStartDateLesthanEndDate || isDateRangeBetnWeek || isDateBetwnMonth">
       <span *ngIf="isStartDateLesthanEndDate">Please select 'Date From' less than or equal to 'Date To'</span>

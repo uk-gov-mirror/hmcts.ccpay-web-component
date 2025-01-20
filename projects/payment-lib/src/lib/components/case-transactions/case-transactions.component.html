@@ -24,10 +24,10 @@
               <table class="govuk-table">
                 <thead class="govuk-table__head">
                   <tr class="govuk-table__row">
-                    <td class="govuk-table__header" scope="col">Total payments</td>
-                    <td class="govuk-table__header" scope="col">Total remissions</td>
-                    <td class="govuk-table__header" scope="col">Amount due</td>
-                    <td class="govuk-table__header govuk-table__header--custom" scope="col" *ngIf="isBulkScanEnable">Unallocated payments</td>
+                    <th class="govuk-table__header" scope="col">Total payments</th>
+                    <th class="govuk-table__header" scope="col">Total remissions</th>
+                    <th class="govuk-table__header" scope="col">Amount due</th>
+                    <th class="govuk-table__header govuk-table__header--custom" scope="col" *ngIf="isBulkScanEnable">Unallocated payments</th>
                   </tr>
                 </thead>
                 <tbody class="govuk-table__body">
@@ -63,13 +63,13 @@
                 <table class="govuk-table">
                   <thead class="govuk-table__head">
                   <tr class="govuk-table__row">
-                    <td class="govuk-table__header" scope="col">Code</td>
-                    <td class="govuk-table__header" scope="col">Description</td>
-                    <td class="govuk-table__header" scope="col">Volume</td>
-                    <td class="govuk-table__header" scope="col">Fee amount</td>
-                    <td class="govuk-table__header" scope="col">Calculated amount</td>
-                    <td class="govuk-table__header" scope="col">Amount due</td>
-                    <td class="govuk-table__header" scope="col">Action</td>
+                    <th class="govuk-table__header" scope="col">Code</th>
+                    <th class="govuk-table__header" scope="col">Description</th>
+                    <th class="govuk-table__header" scope="col">Volume</th>
+                    <th class="govuk-table__header" scope="col">Fee amount</th>
+                    <th class="govuk-table__header" scope="col">Calculated amount</th>
+                    <th class="govuk-table__header" scope="col">Amount due</th>
+                    <th class="govuk-table__header" scope="col">Action</th>
 
                   </tr>
                   </thead>
@@ -114,13 +114,13 @@
                   <table class="govuk-table">
                     <thead class="govuk-table__head">
                       <tr class="govuk-table__row">
-                          <td class="govuk-table__header col-28" scope="col">Payment reference</td>
-                          <td class="govuk-table__header" scope="col">Date created</td>
-                          <td class="govuk-table__header" scope="col">Channel</td>
-                          <td class="govuk-table__header" scope="col">Method</td>
-                          <td class="govuk-table__header col-15" scope="col">Amount</td>
-                          <td class="govuk-table__header" scope="col">Allocation status</td>
-                          <td class="govuk-table__header" scope="col">Payment status</td>
+                          <th class="govuk-table__header col-28" scope="col">Payment reference</th>
+                          <th class="govuk-table__header" scope="col">Date created</th>
+                          <th class="govuk-table__header" scope="col">Channel</th>
+                          <th class="govuk-table__header" scope="col">Method</th>
+                          <th class="govuk-table__header col-15" scope="col">Amount</th>
+                          <th class="govuk-table__header" scope="col">Allocation status</th>
+                          <th class="govuk-table__header" scope="col">Payment status</th>
                         </tr>
                     </thead>
                     <tbody class="govuk-table__body" *ngIf="allPayments?.length > 0">
@@ -146,11 +146,11 @@
                   <table class="govuk-table">
                     <thead class="govuk-table__head">
                       <tr class="govuk-table__row">
-                          <td class="govuk-table__header" scope="col">Remission reference</td>
-                          <td class="govuk-table__header" scope="col">Date created</td>
-                          <td class="govuk-table__header" scope="col">Remission code</td>
-                          <td class="govuk-table__header" scope="col">Fee code</td>
-                          <td class="govuk-table__header" scope="col">Remission amount</td>
+                          <th class="govuk-table__header" scope="col">Remission reference</th>
+                          <th class="govuk-table__header" scope="col">Date created</th>
+                          <th class="govuk-table__header" scope="col">Remission code</th>
+                          <th class="govuk-table__header" scope="col">Fee code</th>
+                          <th class="govuk-table__header" scope="col">Remission amount</th>
                         </tr>
                     </thead>
                     <tbody class="govuk-table__body" *ngIf="remissions?.length > 0">
@@ -192,9 +192,9 @@
           <table class="govuk-table">
             <thead class="govuk-table__head">
               <tr class="govuk-table__row">
-                <td class="govuk-table__header" scope="col">Total payments</td>
-                <td class="govuk-table__header" scope="col">Total remissions</td>
-                <td class="govuk-table__header" scope="col">Amount due</td>
+                <th class="govuk-table__header" scope="col">Total payments</th>
+                <th class="govuk-table__header" scope="col">Total remissions</th>
+                <th class="govuk-table__header" scope="col">Amount due</th>
               </tr>
             </thead>
             <tbody class="govuk-table__body">
@@ -220,12 +220,12 @@
             <table class="govuk-table">
               <thead class="govuk-table__head">
               <tr class="govuk-table__row">
-                <td class="govuk-table__header" scope="col">Code</td>
-                <td class="govuk-table__header" scope="col">Description</td>
-                <td class="govuk-table__header" scope="col">Volume</td>
-                <td class="govuk-table__header" scope="col">Fee amount</td>
-                <td class="govuk-table__header" scope="col">Calculated amount</td>
-                <td class="govuk-table__header" scope="col">Group amount outstanding</td>
+                <th class="govuk-table__header" scope="col">Code</th>
+                <th class="govuk-table__header" scope="col">Description</th>
+                <th class="govuk-table__header" scope="col">Volume</th>
+                <th class="govuk-table__header" scope="col">Fee amount</th>
+                <th class="govuk-table__header" scope="col">Calculated amount</th>
+                <th class="govuk-table__header" scope="col">Group amount outstanding</th>
               </tr>
               </thead>
               <tbody class="govuk-table__body">
@@ -258,12 +258,12 @@
           <table class="govuk-table">
             <thead class="govuk-table__head">
             <tr class="govuk-table__row">
-              <td class="govuk-table__header" scope="col">Code</td>
-              <td class="govuk-table__header" scope="col">Description</td>
-              <td class="govuk-table__header" scope="col">Volume</td>
-              <td class="govuk-table__header" scope="col">Fee amount</td>
-              <td class="govuk-table__header" scope="col">Calculated amount</td>
-              <td class="groupamount govuk-table__header" scope="col">Group amount outstanding</td>
+              <th class="govuk-table__header" scope="col">Code</th>
+              <th class="govuk-table__header" scope="col">Description</th>
+              <th class="govuk-table__header" scope="col">Volume</th>
+              <th class="govuk-table__header" scope="col">Fee amount</th>
+              <th class="govuk-table__header" scope="col">Calculated amount</th>
+              <th class="groupamount govuk-table__header" scope="col">Group amount outstanding</th>
             </tr>
             </thead>
             <tbody class="govuk-table__body" >
@@ -295,13 +295,13 @@
                   <table class="govuk-table">
                     <thead class="govuk-table__head">
                       <tr class="govuk-table__row">
-                          <td class="govuk-table__header" scope="col">Payment reference</td>
-                          <td class="govuk-table__header" scope="col">Date created</td>
-                          <td class="govuk-table__header" scope="col">Channel</td>
-                          <td class="govuk-table__header" scope="col">Method</td>
-                          <td class="govuk-table__header" scope="col">Amount</td>
-                          <td class="govuk-table__header" scope="col">Allocation status</td>
-                          <td class="govuk-table__header" scope="col">Status</td>
+                          <th class="govuk-table__header" scope="col">Payment reference</th>
+                          <th class="govuk-table__header" scope="col">Date created</th>
+                          <th class="govuk-table__header" scope="col">Channel</th>
+                          <th class="govuk-table__header" scope="col">Method</th>
+                          <th class="govuk-table__header" scope="col">Amount</th>
+                          <th class="govuk-table__header" scope="col">Allocation status</th>
+                          <th class="govuk-table__header" scope="col">Status</th>
                         </tr>
                     </thead>
                     <tbody class="govuk-table__body" *ngIf="paymentGroup.payments?.length > 0">
@@ -327,11 +327,11 @@
                   <table class="govuk-table">
                     <thead class="govuk-table__head">
                       <tr class="govuk-table__row">
-                          <td class="govuk-table__header" scope="col">Remission reference</td>
-                          <td class="govuk-table__header" scope="col">Date created</td>
-                          <td class="govuk-table__header" scope="col">Remission code</td>
-                          <td class="govuk-table__header" scope="col">Fee applied against</td>
-                          <td class="govuk-table__header" scope="col">Remission amount</td>
+                          <th class="govuk-table__header" scope="col">Remission reference</th>
+                          <th class="govuk-table__header" scope="col">Date created</th>
+                          <th class="govuk-table__header" scope="col">Remission code</th>
+                          <th class="govuk-table__header" scope="col">Fee applied against</th>
+                          <th class="govuk-table__header" scope="col">Remission amount</th>
                         </tr>
                     </thead>
                     <tbody class="govuk-table__body" *ngIf="paymentGroup.remissions?.length > 0">
@@ -407,12 +407,12 @@
           <table class="govuk-table">
               <thead class="govuk-table__head">
                 <tr class="govuk-table__row">
-                    <td class="govuk-table__header col-13" scope="col">{{ "Status" | rpxTranslate }}</td>
-                    <td class="govuk-table__header col-10" scope="col">{{ "Amount" | rpxTranslate }}</td>
-                    <td class="govuk-table__header col-14" scope="col">{{ "Date allocated" | rpxTranslate }}</td>
-                    <td class="govuk-table__header col-20" scope="col">{{ "Request reference" | rpxTranslate }}</td>
-                    <td class="govuk-table__header col-9" scope="col"></td>
-                    <td class="govuk-table__header" scope="col"></td>
+                    <th class="govuk-table__header col-13" scope="col">{{ "Status" | rpxTranslate }}</th>
+                    <th class="govuk-table__header col-10" scope="col">{{ "Amount" | rpxTranslate }}</th>
+                    <th class="govuk-table__header col-14" scope="col">{{ "Date allocated" | rpxTranslate }}</th>
+                    <th class="govuk-table__header col-20" scope="col">{{ "Request reference" | rpxTranslate }}</th>
+                    <th class="govuk-table__header col-9" scope="col"></th>
+                    <th class="govuk-table__header" scope="col"></th>
                   </tr>
               </thead>
               <tbody class="govuk-table__body" *ngIf="allPayments?.length > 0">
@@ -462,11 +462,11 @@
               <table class="govuk-table">
                 <thead class="govuk-table__head">
                   <tr class="govuk-table__row">
-                    <td class="govuk-table__header col-25" scope="col">Total payments</td>
-                    <td class="govuk-table__header govuk-table__header--custom col-25" scope="col" *ngIf="isBulkScanEnable">Unallocated payments</td>
-                    <td class="govuk-table__header col-25" scope="col">Total remissions</td>
-                    <td class="govuk-table__header col-20" scope="col">Amount due</td>
-                    <td class="govuk-table__header col-20" scope="col">Over payment</td>
+                    <th class="govuk-table__header col-25" scope="col">Total payments</th>
+                    <th class="govuk-table__header govuk-table__header--custom col-25" scope="col" *ngIf="isBulkScanEnable">Unallocated payments</th>
+                    <th class="govuk-table__header col-25" scope="col">Total remissions</th>
+                    <th class="govuk-table__header col-20" scope="col">Amount due</th>
+                    <th class="govuk-table__header col-20" scope="col">Over payment</th>
                   </tr>
                 </thead>
                 <tbody class="govuk-table__body">
@@ -492,12 +492,12 @@
               <table class="govuk-table">
                   <thead class="govuk-table__head">
                   <tr class="govuk-table__row">
-                    <td class="govuk-table__header  col-14" scope="col">{{ "Status" | rpxTranslate }}</td>
-                    <td class="govuk-table__header  col-10" scope="col">{{ "Amount" | rpxTranslate }}</td>
-                    <td class="govuk-table__header  col-18" scope="col">{{ "Party" | rpxTranslate }}</td>
-                    <td class="govuk-table__header  col-21" scope="col">{{ "Request reference" | rpxTranslate }}</td>
-                    <td class="govuk-table__header  col-9" scope="col"></td>
-                    <td class="govuk-table__header col" scope="col"></td>
+                    <th class="govuk-table__header  col-14" scope="col">{{ "Status" | rpxTranslate }}</th>
+                    <th class="govuk-table__header  col-10" scope="col">{{ "Amount" | rpxTranslate }}</th>
+                    <th class="govuk-table__header  col-18" scope="col">{{ "Party" | rpxTranslate }}</th>
+                    <th class="govuk-table__header  col-21" scope="col">{{ "Request reference" | rpxTranslate }}</th>
+                    <th class="govuk-table__header  col-9" scope="col"></th>
+                    <th class="govuk-table__header col" scope="col"></th>
                   </tr>
                   </thead>
                   <tbody class="govuk-table__body"  *ngIf="orderLevelFees?.length > 0">
@@ -599,13 +599,12 @@
           <table class="govuk-table">
               <thead class="govuk-table__head">
               <tr class="govuk-table__row">
-                <td class="govuk-table__header col-14" scope="col">{{ "Status" | rpxTranslate }}</td>
-                <td class="govuk-table__header col-18" scope="col">{{ "Amount" | rpxTranslate }}</td>
-                <td class="govuk-table__header col-18" scope="col">{{ "Party" | rpxTranslate }}</td>
-                <td class="govuk-table__header col-24" scope="col">{{ "Request reference	" | rpxTranslate }}
-                </td>
-                <td class="govuk-table__header col-9" scope="col"></td>
-                <td class="govuk-table__header" scope="col"></td>
+                <th class="govuk-table__header col-14" scope="col">{{ "Status" | rpxTranslate }}</th>
+                <th class="govuk-table__header col-18" scope="col">{{ "Amount" | rpxTranslate }}</th>
+                <th class="govuk-table__header col-18" scope="col">{{ "Party" | rpxTranslate }}</th>
+                <th class="govuk-table__header col-24" scope="col">{{ "Request reference	" | rpxTranslate }}</th>
+                <th class="govuk-table__header col-9" scope="col"></th>
+                <th class="govuk-table__header" scope="col"></th>
               </tr>
               </thead>
               <tbody class="govuk-table__body" *ngIf="orderLevelFees?.length > 0">
@@ -647,12 +646,12 @@
               <table class="govuk-table">
               <thead class="govuk-table__head">
                 <tr class="govuk-table__row">
-                    <td class="govuk-table__header col-14" scope="col">{{ "Status" | rpxTranslate }}</td>
-                    <td class="govuk-table__header col-10" scope="col">{{ "Amount" | rpxTranslate }}</td>
-                    <td class="govuk-table__header col-17" scope="col">{{ "Date" | rpxTranslate }}</td>
-                    <td class="govuk-table__header col-24" scope="col">{{ "Payment reference" | rpxTranslate }}</td>
-                    <td class="govuk-table__header col-13" scope="col"></td>
-                    <td class="govuk-table__header" scope="col"></td>
+                    <th class="govuk-table__header col-14" scope="col">{{ "Status" | rpxTranslate }}</th>
+                    <th class="govuk-table__header col-10" scope="col">{{ "Amount" | rpxTranslate }}</th>
+                    <th class="govuk-table__header col-17" scope="col">{{ "Date" | rpxTranslate }}</th>
+                    <th class="govuk-table__header col-24" scope="col">{{ "Payment reference" | rpxTranslate }}</th>
+                    <th class="govuk-table__header col-13" scope="col"></th>
+                    <th class="govuk-table__header" scope="col"></th>
                   </tr>
               </thead>
               <tbody class="govuk-table__body" *ngIf="allPayments?.length > 0">

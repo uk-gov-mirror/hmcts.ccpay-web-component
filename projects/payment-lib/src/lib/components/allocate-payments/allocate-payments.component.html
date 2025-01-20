@@ -8,29 +8,29 @@
             </li>
           </ol>
         </div>
-  
+
     <div class="paymentrequest">
         <h1 class="govuk-heading-xl govuk-!-margin-top-3 govuk-!-margin-bottom-4">Select payment request</h1>
         <p class="govuk-!-margin-top-5 casererf">Case reference: {{ccdReference}}</p>
     </div>
- 
+
     <div  *ngFor="let orderRef of orderLevelFees; let i = index;" class="multiple-choice unprocessed-payments--radio-button">
       <input id="'orderfee'+i+''"
       aria-label="orderLevelRecord"
       name="orderLevelRecord"
-    
+
       (click)="OrderListSelectEvent(orderRef.orderRefId)"
       type="radio"
       value="{{orderRef.orderTotalFees}}" />
       <label for="radio-inline-1"> {{orderRef.orderTotalFees | currency :'GBP':'symbol':'1.2-2'}}({{orderRef.orderStatus}})</label>
     </div>
-  
+
     <div class="paymentrequest">
         <button [disabled]="isContinueButtondisabled" type="submit" (click)="redirectToOrderFeeSearchPage()" class="button allbtb button--disabled govuk-!-margin-right-1">
           Continue
         </button>
       </div>
-   
+
   </ng-container>
 
    <div *ngIf="viewStatus==='mainForm' && isTurnOff">
@@ -52,13 +52,13 @@
       <table class="govuk-table">
         <thead class="govuk-table__head">
           <tr class="govuk-table__row">
-            <td class="govuk-table__header" scope="col"></td>
-            <td class="govuk-table__header" scope="col">Code</td>
-            <td class="govuk-table__header" scope="col">Description</td>
-            <td class="govuk-table__header" scope="col">Volume</td>
-            <td class="govuk-table__header" scope="col">Fee amount</td>
-            <td class="govuk-table__header" scope="col">Calculated amount</td>
-            <td class="govuk-table__header" scope="col">Group amount outstanding</td>
+            <th class="govuk-table__header" scope="col"></th>
+            <th class="govuk-table__header" scope="col">Code</th>
+            <th class="govuk-table__header" scope="col">Description</th>
+            <th class="govuk-table__header" scope="col">Volume</th>
+            <th class="govuk-table__header" scope="col">Fee amount</th>
+            <th class="govuk-table__header" scope="col">Calculated amount</th>
+            <th class="govuk-table__header" scope="col">Group amount outstanding</th>
           </tr>
         </thead>
         <tbody class="govuk-table__body">
@@ -114,12 +114,12 @@
       <table class="govuk-table">
         <thead class="govuk-table__head">
           <tr class="govuk-table__row">
-            <td class="govuk-table__header" scope="col">Code</td>
-            <td class="govuk-table__header" scope="col">Description</td>
-            <td class="govuk-table__header" scope="col">Volume</td>
-            <td class="govuk-table__header" scope="col">Fee amount</td>
-            <td class="govuk-table__header" scope="col">Calculated amount</td>
-            <td class="govuk-table__header" scope="col">Amount Due</td>
+            <th class="govuk-table__header" scope="col">Code</th>
+            <th class="govuk-table__header" scope="col">Description</th>
+            <th class="govuk-table__header" scope="col">Volume</th>
+            <th class="govuk-table__header" scope="col">Fee amount</th>
+            <th class="govuk-table__header" scope="col">Calculated amount</th>
+            <th class="govuk-table__header" scope="col">Amount Due</th>
           </tr>
         </thead>
         <tbody class="govuk-table__body">
