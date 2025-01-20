@@ -2,7 +2,7 @@
 <div class="govuk-breadcrumbs" *ngIf="isBackButtonEnable">
   <ol class="govuk-breadcrumbs__list">
     <li class="govuk-breadcrumbs__list-item" *ngIf="!isTurnOff">
-      <a (click)="loadCaseTransactionPage()" class="govuk-back-link govuk-label">Back</a>
+      <a href=javascript:void(0) (click)="loadCaseTransactionPage()" class="govuk-back-link govuk-label">Back</a>
     </li>
     <li class="govuk-breadcrumbs__list-item" *ngIf="isTurnOff">
         <a (click)="redirectToFeeSearchPage($event,'summary')" class="govuk-back-link govuk-label">Back</a>
@@ -64,14 +64,14 @@
                           <span class="no-border" *ngIf="(isPaymentExist || (getRemissionByFeeCode(fee.code)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code)?.hwf_amount)) && !isTurnOff">
 
 
-                              <a (click)="confirmRemoveFee(fee.id)" *ngIf="(!isPaymentExist || !fee.remissions)" [ngClass]='isPaymentExist || fee.remissions? "disable-link" : ""'> <br>Remove</a>
+                              <a href=javascript:void(0) (click)="confirmRemoveFee(fee.id)" *ngIf="(!isPaymentExist || !fee.remissions)" [ngClass]='isPaymentExist || fee.remissions? "disable-link" : ""'> <br>Remove</a>
                           </span>
 
                           <span class="no-border" *ngIf="(!isPaymentExist || (getRemissionByFeeCode(fee.code)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code)?.hwf_amount)) && isTurnOff ">
                               <a (click)="confirmRemoveFee(fee.id)">Remove</a>
                             </span>
 
-                            <a (click)="addRemission(fee)" class="remissionActive"  *ngIf="(getRemissionByFeeCode(fee.code)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code)?.hwf_amount) && !isPaymentExist && !isTurnOff">
+                            <a href=javascript:void(0) (click)="addRemission(fee)" class="remissionActive"  *ngIf="(getRemissionByFeeCode(fee.code)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code)?.hwf_amount) && !isPaymentExist && !isTurnOff">
                                   Add help with fees or remission
                             </a>
                             <a (click)="addRemission(fee)" class="remissionActive"   *ngIf="(getRemissionByFeeCode(fee.code)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code)?.hwf_amount) && isTurnOff">
