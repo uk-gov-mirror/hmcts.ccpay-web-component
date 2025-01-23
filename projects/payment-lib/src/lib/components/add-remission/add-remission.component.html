@@ -411,7 +411,7 @@
             <td class="govuk-table__header col-18" scope="col">{{ "Fee description" | rpxTranslate }}</td>
             <td class="govuk-table__header col-6" scope="col">{{ "Fee amount" | rpxTranslate }}</td>
             <td class="govuk-table__header col-6" scope="col">{{ "Total paid" | rpxTranslate }}</td>
-            <td class="govuk-table__header col-6" scope="col">{{ "Remission refunded amount" | rpxTranslate }}</td>
+            <td class="govuk-table__header col-6" scope="col">{{ "Remission Amount" | rpxTranslate }}</td>
             <td class="govuk-table__header col-6" scope="col">{{ "Quantity" | rpxTranslate }}</td>
             <td class="govuk-table__header col-8" scope="col">{{ "Amount to refund" | rpxTranslate }}</td>
             <td class="govuk-table__header" scope="col"></td>
@@ -499,7 +499,7 @@
 
             <td class="govuk-table__cell  whitespace-inherit left" >
               <div type="hidden" style="display:none;background-color:white;" id="feeRemission_{{fee.id}}">{{ this.getRemissionValueForFullyRefund()}}</div>
-              {{ this.getRemissionValueForFullyRefund() | currency:'GBP':'symbol-narrow':'1.2-2' }}
+              {{ this.getRemissionsHwfAmount(fee.code) | currency:'GBP':'symbol-narrow':'1.2-2' }}
 
             </td>
 
