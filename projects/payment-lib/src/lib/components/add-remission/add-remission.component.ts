@@ -344,16 +344,28 @@ export class AddRemissionComponent implements OnInit {
     }
   }
 
+  calculateRefundAmount(index, AppAmt) {
+    const formArray = this.remissionForm.controls.feesList as FormArray;
+    if (this.isRemissionEnabled(formArray.value.at(index).code)) {
+      let remission = this.getRemissions(formArray.value.at(index).code);
+      let feeAmount = this.paymentLibComponent.paymentGroup.fees.at(index).fee_amount;
+      return this.getNetAmountFee(remission.hwf_amount, feeAmount);
+    } else {
+      return AppAmt;
+    }
+  }
+
   check_en(i, v1: any, AppAmt, Volume) {
     const ele = document.getElementById(v1) as HTMLInputElement;
     const formArray = this.remissionForm.controls.feesList as FormArray;
 
     if (ele.checked) {
-      formArray.at(i).get('refund_amount').setValue(AppAmt);
+      let refundAmount = this.calculateRefundAmount(i, AppAmt);
+      formArray.at(i).get('refund_amount').setValue(refundAmount);
       formArray.at(i).get('volume').setValue(Volume);
       formArray.at(i).get('selected').setValue(true);
       formArray.at(i).get('updated_volume').setValue(Volume);
-      (<HTMLInputElement>document.getElementById('feeAmount_' + v1)).value = AppAmt;
+      (<HTMLInputElement>document.getElementById('feeAmount_' + v1)).value = refundAmount;
       document.getElementById('feeAmount_' + v1).removeAttribute("disabled");
       if (Volume === 1) {
         (<HTMLInputElement>document.getElementById('VolumeUpdated_' + v1)).value = Volume;
@@ -1241,5 +1253,48 @@ export class AddRemissionComponent implements OnInit {
       return remission.hwf_amount.toString();
     }
     return "undefined";
+  }
+
+  isRemissionEnabled(feeCode: string): boolean {
+    if (this.paymentLibComponent.paymentGroup.remissions != null &&
+      this.paymentLibComponent.paymentGroup.remissions.length > 0 && this.isRemissionEnabledForFeeCode(feeCode)) {
+
+      return true;
+    }
+    return false;
+  }
+
+  isRemissionEnabledForFeeCode(feeCode: string): boolean {
+    let result = this.getRemissions(feeCode);
+    if (result === null) {
+      return false;
+    }
+    return true;
+  }
+
+  getRemissions(feeCode: string): IRemission {
+    let myRemission = this.paymentLibComponent.paymentGroup.remissions.filter(remission => remission.fee_code === feeCode);
+    if (myRemission.length == 0) {
+      return null;
+    }
+    // We  can have one remission per case, only
+    return myRemission.at(0);
+  }
+
+  getRemissionsHwfAmount(feeCode: string): string {
+    let myRemission = this.getRemissions(feeCode);
+    if (myRemission === null) {
+      return this.getRemissionValueForFullyRefund().toString();
+    } else {
+      return myRemission.hwf_amount.toString();
+    }
+  }
+
+  getNetAmountFee(hwfAmount: number, feeAmount: number){
+    return feeAmount - hwfAmount;
+  }
+
+  getRemissionValueForFullyRefund(){
+    return 0;
   }
 }

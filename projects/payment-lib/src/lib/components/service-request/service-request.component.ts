@@ -260,6 +260,9 @@ export class ServiceRequestComponent implements OnInit {
   }
 
   issueRefund(payment: IPayment) {
+
+    this.paymentLibComponent.addPaymentGroup(this.paymentGroup);
+
     if (payment !== null && payment !== undefined) {
       if (this.chkIsIssueRefundBtnEnable(payment)) {
         this.paymentViewService.getApportionPaymentDetails(payment.reference).subscribe(
@@ -316,8 +319,6 @@ export class ServiceRequestComponent implements OnInit {
   }
 
   showIssueRefundPage(paymentgrp: IPaymentGroup, payment) {
-
-
     this.viewStatus = 'issuerefund';
     this.viewCompStatus = '';
     this.paymentFees = paymentgrp.fees;
@@ -332,6 +333,7 @@ export class ServiceRequestComponent implements OnInit {
     this.paymentLibComponent.isFromPaymentDetailPage = true;
     this.isFromPaymentDetailPage = true;
     this.isFromServiceRequestPage = false;
+    this.paymentLibComponent.addPaymentGroup(paymentgrp);
   }
 
   getBalanceToBePaid(){
