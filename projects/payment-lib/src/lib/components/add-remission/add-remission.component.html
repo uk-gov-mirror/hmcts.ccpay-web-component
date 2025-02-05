@@ -107,8 +107,8 @@
 <ng-container *ngIf="viewCompStatus === 'addremission'">
     <input #myInput type='hidden' id='iFrameDrivenImageValue' value='PROCESSADDRETROREMISSIONPAGE'>
     <h1 class="heading-large">{{ "Process remission" | rpxTranslate }}</h1>
-    <h1 class="heading-medium">#{{ccdCaseNumber | ccdHyphens}}</h1>
-    <h1 class="heading-large">{{ "Enter help with fees or remission reference" | rpxTranslate }}</h1>
+    <h2 class="heading-medium">#{{ccdCaseNumber | ccdHyphens}}</h2>
+    <h3 class="heading-large">{{ "Enter help with fees or remission reference" | rpxTranslate }}</h3>
     <form novalidate>
         <div class="govuk-form-group">
           <form [formGroup]="remissionForm" novalidate>
@@ -138,22 +138,22 @@
 <ng-container *ngIf="viewStatus === 'processretroremissonpage'" >
     <input #myInput type='hidden' id='iFrameDrivenImageValue' value='PROCESSRETROREMISSIONPAGE'>
     <h1 class="heading-large">{{ "Process remission" | rpxTranslate }}</h1>
-    <h1 class="heading-medium">#{{ccdCaseNumber | ccdHyphens }}</h1>
+    <h2 class="heading-medium">#{{ccdCaseNumber | ccdHyphens }}</h2>
     <div class="govuk-form-group">
         <form novalidate>
             <div class="govuk-form-group">
                 <form [formGroup]="remissionForm" novalidate>
                     <fieldset class="govuk-fieldset">
                       <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                          <h1 *ngIf="remessionPayment?.status === 'Success' ||   isFromRefundListPage" class="heading-medium">
+                          <h3 *ngIf="remessionPayment?.status === 'Success' ||   isFromRefundListPage" class="heading-medium">
                               {{ "Enter the HWF or remission amount" | rpxTranslate }}
-                          </h1>
-                          <h1 *ngIf="remessionPayment?.status !== 'Success' && !isFromRefundListPage" class="heading-medium">
+                          </h3>
+                          <h3 *ngIf="remessionPayment?.status !== 'Success' && !isFromRefundListPage" class="heading-medium">
                               {{ "Enter the remission amount" | rpxTranslate }}
-                          </h1>
-                          <h1 *ngIf="remessionPayment?.status === 'undefined'" class="heading-medium">
+                          </h3>
+                          <h3 *ngIf="remessionPayment?.status === 'undefined'" class="heading-medium">
                               {{ "Enter the  amount" | rpxTranslate }}
-                          </h1>
+                          </h3>
                         </legend>
                      <div id="amount-currency" class="govuk-visually-hidden">{{ "in pounds" | rpxTranslate }}</div>
                      <p class="inline-error-message" *ngIf="isAmountEmpty || amountHasError || isRemissionLessThanFeeError">
@@ -537,15 +537,15 @@
 
     <input #myInput type='hidden' id='iFrameDrivenImageValue' value='ISSUEREFUNDPAGE'>
     <h1 class="heading-large">{{ "Process refund" | rpxTranslate }}</h1>
-    <h1 class="heading-medium">{{ "Case reference" | rpxTranslate }}: {{ccdCaseNumber | ccdHyphens }}</h1>
+    <h2 class="heading-medium">{{ "Case reference" | rpxTranslate }}: {{ccdCaseNumber | ccdHyphens }}</h2>
     <span id="how-contacted-conditional-hint govuk-font19px" *ngIf="payment" class="form-hint">
       {{ "Payment reference" | rpxTranslate }}: {{paymentReference}}
     </span>
     <span id="how-contacted-conditional-hint govuk-font19px" *ngIf="refundPaymentReference" class="form-hint">
       {{ "Payment reference" | rpxTranslate }}: {{refundPaymentReference}}
     </span>
-    <h1 class="heading-large">{{ "Why are you making this refund" | rpxTranslate }}?
-      </h1>
+    <h3 class="heading-large">{{ "Why are you making this refund" | rpxTranslate }}?
+      </h3>
 
 
       <div class="govuk-form-group">
