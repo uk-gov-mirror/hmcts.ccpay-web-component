@@ -544,8 +544,6 @@
     <span id="how-contacted-conditional-hint govuk-font19px" *ngIf="refundPaymentReference" class="form-hint">
       {{ "Payment reference" | rpxTranslate }}: {{refundPaymentReference}}
     </span>
-    <h3 class="heading-large">{{ "Why are you making this refund" | rpxTranslate }}?
-      </h3>
 
 
       <div class="govuk-form-group">
@@ -553,6 +551,9 @@
               <div class="govuk-form-group">
                 <form [formGroup]="remissionForm" novalidate>
                   <fieldset class="govuk-fieldset" aria-describedby="how-contacted-conditional-hint">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                      {{ "Why are you making this refund" | rpxTranslate }}?
+                    </legend>
 
                         <div
                           [ngClass]="refundHasError ? 'govuk-radios govuk-radios--conditional form-group-error' : 'govuk-radios govuk-radios--conditional'"
