@@ -213,13 +213,13 @@
         <tr class="govuk-table__row">
             <td class="govuk-table__cell govuk-!-font-weight-bold">{{ "Help with fees or remission reference" | rpxTranslate }}</td>
             <td class="govuk-table__cell">{{ remissionForm.controls.remissionCode.value?.trim() }}
-             <a (click)="gotoProcessRetroRemissionPage()" class="govuk-link right" >{{ "Change" | rpxTranslate }}</a>
+             <a href="javascript:void(0)" (click)="gotoProcessRetroRemissionPage()" class="govuk-link right" >{{ "Change" | rpxTranslate }}</a>
             </td>
         </tr>
         <tr class="govuk-table__row">
             <td class="govuk-table__cell govuk-!-font-weight-bold">{{ "Remission amount" | rpxTranslate }}</td>
             <td class="govuk-table__cell">{{remissionForm.controls.amount.value  | currency:'GBP':'symbol-narrow':'1.2-2' }}
-                <a (click)="gotoAmountRetroRemission()" class="govuk-link right" >{{ "Change" | rpxTranslate }}</a>
+                <a href="javascript:void(0)" (click)="gotoAmountRetroRemission()" class="govuk-link right" >{{ "Change" | rpxTranslate }}</a>
             </td>
         </tr>
     </table>
@@ -265,7 +265,7 @@
   (assignContactDetails)="getContactDetails($event, 'checkaddRefundpage')"
   (redirectToIssueRefund)="gotoRemissionSuccess($event)" ></ccpay-contact-details>
   <p>
-      <a (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link" data-module="govuk-button">
+      <a href="javascript:void(0)" (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link" data-module="govuk-button">
           {{ "Cancel" | rpxTranslate }}
       </a>
   </p>
@@ -334,7 +334,7 @@
             <br/>
             {{contactDetailsObj?.address_line?.trim()}}&nbsp;{{contactDetailsObj?.city?.trim()}}&nbsp;{{contactDetailsObj?.county?.trim()}}&nbsp;{{contactDetailsObj?.country?.trim()}}&nbsp;{{contactDetailsObj?.postal_code?.trim()}}
           </div>
-          <a (click)="gotoProcessRetroRemission(contactDetailsObj)" class="govuk-link right" >{{ "Change" | rpxTranslate }}</a>
+          <a href="javascript:void(0)" (click)="gotoProcessRetroRemission(contactDetailsObj)" class="govuk-link right" >{{ "Change" | rpxTranslate }}</a>
         </td>
       </tr>
       <tr class="govuk-table__row">
@@ -514,10 +514,10 @@
     <div class="govuk-button-group">
 
 
-  <a  (click)="gotoServiceRequestPage($event)"  *ngIf="!isFullyRefund" draggable="false" class="govuk-button govuk-button--secondary" data-module="govuk-button">
+  <a href="javascript:void(0)" (click)="gotoServiceRequestPage($event)"  *ngIf="!isFullyRefund" draggable="false" class="govuk-button govuk-button--secondary" data-module="govuk-button">
     {{ "Previous" | rpxTranslate }}
   </a>
-  <a  (click)="goToPaymentViewComponent()"  *ngIf="isFullyRefund" draggable="false" class="govuk-button govuk-button--secondary" data-module="govuk-button">
+  <a href="javascript:void(0)" (click)="goToPaymentViewComponent()"  *ngIf="isFullyRefund" draggable="false" class="govuk-button govuk-button--secondary" data-module="govuk-button">
     {{ "Previous" | rpxTranslate }}
   </a>
 
@@ -527,7 +527,7 @@
 
     </div>
     <p>
-      <a  (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link" data-module="govuk-button">{{ "Cancel" | rpxTranslate }}</a>
+      <a href="javascript:void(0)" (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link" data-module="govuk-button">{{ "Cancel" | rpxTranslate }}</a>
     </p>
   </form>
   </div>
@@ -643,7 +643,7 @@
   (assignContactDetails)="getContactDetails($event, 'checkissuerefundpage')"
   (redirectToIssueRefund)="gotoRefundReasonPage()" ></ccpay-contact-details>
   <p>
-      <a (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link" data-module="govuk-button">
+      <a href="javascript:void(0)" (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link" data-module="govuk-button">
           {{ "Cancel" | rpxTranslate }}
       </a>
   </p>
@@ -669,13 +669,13 @@
         <tr>
         <td class="govuk-table__cell govuk-!-font-weight-bold">{{ "Reason for refund" | rpxTranslate }}</td>
         <td class="govuk-table__cell">{{ displayRefundReason?.trim()  }}
-         <a (click)="changeIssueRefundReason()" class="govuk-link right" >{{ "Change" | rpxTranslate }}</a>
+         <a href="javascript:void(0)" (click)="changeIssueRefundReason()" class="govuk-link right" >{{ "Change" | rpxTranslate }}</a>
         </td>
       </tr>
       <tr class="govuk-table__row" *ngIf="!isFullyRefund">
         <td class="govuk-table__cell govuk-!-font-weight-bold">{{ "Refund amount" | rpxTranslate }}</td>
         <td class="govuk-table__cell">{{totalRefundAmount | currency:'GBP':'symbol-narrow':'1.2-2'}}
-        <a (click)="changeRefundAmount()" class="govuk-link right" >{{ "Change" | rpxTranslate }}</a>
+        <a href="javascript:void(0)" (click)="changeRefundAmount()" class="govuk-link right" >{{ "Change" | rpxTranslate }}</a>
         </td>
       </tr>
       <tr class="govuk-table__row" *ngIf="isFullyRefund">
@@ -699,7 +699,7 @@
             <br/>
             {{contactDetailsObj?.address_line?.trim()}}&nbsp;{{contactDetailsObj?.city?.trim()}}&nbsp;{{contactDetailsObj?.county?.trim()}}&nbsp;{{contactDetailsObj?.country?.trim()}}&nbsp;{{contactDetailsObj?.postal_code?.trim()}}
           </div>
-          <a (click)="gotoContactDetailsPage(contactDetailsObj)" class="govuk-link right" >{{ "Change" | rpxTranslate }}</a>
+          <a href="javascript:void(0)" (click)="gotoContactDetailsPage(contactDetailsObj)" class="govuk-link right" >{{ "Change" | rpxTranslate }}</a>
         </td>
       </tr>
 
@@ -733,7 +733,7 @@
     </button>
     </div>
     <p>
-        <a (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link" data-module="govuk-button">
+        <a href="javascript:void(0)" (click)="gotoCasetransationPageCancelBtnClicked($event)" class="govuk-link" data-module="govuk-button">
             {{ "Cancel" | rpxTranslate }}
         </a>
     </p>
@@ -809,7 +809,7 @@
             <br/>
             {{contactDetailsObj?.address_line?.trim()}}&nbsp;{{contactDetailsObj?.city?.trim()}}&nbsp;{{contactDetailsObj?.county?.trim()}}&nbsp;{{contactDetailsObj?.country?.trim()}}&nbsp;{{contactDetailsObj?.postal_code?.trim()}}
           </div>
-          <a (click)="gotoAddressPage(contactDetailsObj)" class="govuk-link right" >{{ "Change" | rpxTranslate }}</a>
+          <a href="javascript:void(0)" (click)="gotoAddressPage(contactDetailsObj)" class="govuk-link right" >{{ "Change" | rpxTranslate }}</a>
         </td>
       </tr>
 

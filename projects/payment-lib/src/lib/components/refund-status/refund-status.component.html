@@ -198,7 +198,7 @@
     <tr class="govuk-table__row">
       <td class="govuk-table__cell govuk-!-font-weight-bold">Reason for refund</td>
       <td class="govuk-table__cell">{{ refundlist?.reason?.trim()}}
-        <a (click)="gotoRefundReasonPage(refundlist?.reason)" *ngIf="refundlist?.reason !== 'Retrospective remission' && refundlist?.reason !== 'Overpayment'"
+        <a href="javascript:(0)" (click)="gotoRefundReasonPage(refundlist?.reason)" *ngIf="refundlist?.reason !== 'Retrospective remission' && refundlist?.reason !== 'Overpayment'"
           class="govuk-link right">Change</a>
       </td>
 
@@ -208,7 +208,7 @@
     <tr class="govuk-table__row">
       <td class="govuk-table__cell govuk-!-font-weight-bold">Refund amount</td>
       <td class="govuk-table__cell">£{{ changedAmount ? changedAmount : refundlist?.amount | number:'.2' }}
-        <a (click)="gotoAmountPage()" *ngIf="refundlist?.reason !== 'Overpayment'"
+        <a href="javascript:(0)" (click)="gotoAmountPage()" *ngIf="refundlist?.reason !== 'Overpayment'"
           class="govuk-link right">Change</a>
       </td>
 
@@ -288,7 +288,7 @@
     (assignContactDetailsInFefundsList)="getContactDetailsForRefundList($event)"
     (redirectToIssueRefund)="gotoRefundReviewAndSubmitViewPageCancelBtnClicked($event)" ></ccpay-contact-details>
   <p>
-      <a (click)="loadRefundListPage()" class="govuk-link" data-module="govuk-button">
+      <a href="javascript:(0)" (click)="loadRefundListPage()" class="govuk-link" data-module="govuk-button">
           Cancel
       </a>
   </p>
@@ -368,7 +368,7 @@
     (assignContactDetailsInFefundsList)="getContactDetails($event)"
     (redirectToIssueRefund)="gotoRefundViewPageCancelBtnClicked($event)" ></ccpay-contact-details>
   <p>
-      <a (click)="loadRefundListPage()" class="govuk-link" data-module="govuk-button">
+      <a href="javascript:(0)" (click)="loadRefundListPage()" class="govuk-link" data-module="govuk-button">
           Cancel
       </a>
   </p>
