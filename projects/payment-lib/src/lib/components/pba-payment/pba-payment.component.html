@@ -37,6 +37,9 @@
 
     <div class="govuk-form-group" *ngIf="!errorMsg">
       <fieldset class="govuk-fieldset" aria-describedby="contact-hint">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+          {{ "Select a payment method" | rpxTranslate }}
+        </legend>
         <div class="govuk-radios" data-module="govuk-radios">
           <div class="govuk-radios__item">
             <input class="govuk-radios__input" id="pbaAccount" name="paymentSelection" type="radio" value="PBA" (click)="selectPaymentMethod('PBA')" data-aria-controls="pba-account">
