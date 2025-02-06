@@ -39,12 +39,11 @@ export class NotificationPreviewRequest {
         }
 
         this.personalisation = {
-            ccd_case_number: (payment !== undefined && payment !== null) ? payment.ccd_case_number : '',
+            ccd_case_number: payment?.ccd_case_number || '',
             refund_reason: refund_reason,
             refund_amount: refund_amount,
             refund_reference: refund_reference,
-            customer_reference: (payment !== undefined && payment !== null && payment.customer_reference !== undefined
-              && payment.customer_reference !== null) ? payment.customer_reference : ''
+            customer_reference: payment?.customer_reference || ''
         };
 
         if (this.notification_type === "EMAIL") {
