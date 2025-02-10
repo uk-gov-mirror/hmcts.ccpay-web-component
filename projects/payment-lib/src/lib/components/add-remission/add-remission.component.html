@@ -120,7 +120,7 @@
                 <span *ngIf="isRemissionCodeEmpty">{{ "Enter a remission code" | rpxTranslate }}</span>
                 <span *ngIf="remissionCodeHasError">{{ "Enter a vaild remission code" | rpxTranslate }}</span>
               </p>
-              <input [ngClass]="{'inline-error-class': isRemissionCodeEmpty || remissionCodeHasError}" class="govuk-input govuk-input--width-20 govuk-!-margin-right-1" id="remissionCode" aria-label="remissionCode"  name="remissionCode" type="text" formControlName="remissionCode">
+              <input [ngClass]="{'inline-error-class': isRemissionCodeEmpty || remissionCodeHasError}" class="govuk-input govuk-input--width-20 govuk-!-margin-right-1" id="remissionCode" aria-label="Enter help with fees or remission reference"  name="remissionCode" type="text" formControlName="remissionCode">
 
             </div>
 
