@@ -145,7 +145,7 @@
                 <form [formGroup]="remissionForm" novalidate>
                     <fieldset class="govuk-fieldset">
                       <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                          <h1 *ngIf="remessionPayment?.status === 'Success' ||   isFromRefundListPage" class="heading-medium">
+                          <h3 *ngIf="remessionPayment?.status === 'Success' ||   isFromRefundListPage" class="heading-medium">
                               {{ "Enter the HWF or remission amount" | rpxTranslate }}
                           </h3>
                           <h3 *ngIf="remessionPayment?.status !== 'Success' && !isFromRefundListPage" class="heading-medium">
