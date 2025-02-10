@@ -571,7 +571,7 @@
                                 <input   class="govuk-radios__input" id="{{refund.name}}" name="refundReason" type="radio"
                                 formControlName="refundReason" value={{refund.code}}
                                   (change)="selectRadioButton(refund.code, refund.name)">
-                                <label class="govuk-label--s govuk-radios__label govuk-font__custom" for="how-contacted-conditional">
+                                <label for="{{refund.name}}" class="govuk-label--s govuk-radios__label govuk-font__custom" for="how-contacted-conditional">
                                   {{refund.name}}
                                 </label>
 
