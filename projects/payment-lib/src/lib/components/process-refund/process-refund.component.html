@@ -51,7 +51,7 @@
             <strong>Post</strong>
             <br/>
             {{refundlistsource?.contact_details?.address_line?.trim()}} {{refundlistsource?.contact_details?.city?.trim()}} {{refundlistsource?.contact_details?.county?.trim()}} {{refundlistsource?.contact_details?.country?.trim()}} {{refundlistsource?.contact_details?.postal_code?.trim()}}
-          </div> 
+          </div>
           </td>
         </tr>
         <tr class="section">
@@ -106,8 +106,8 @@
             <span *ngIf="refundActionsHasError">Please select an action</span>
           </p>
             <div class="govuk-radios__item" *ngFor="let refundAction of refundActionList; let i = index;">
-              <input class="govuk-radios__input" 
-              id="refundAction-{{i}}" 
+              <input class="govuk-radios__input"
+              id="refundAction-{{i}}"
               name="refundActionField"
               type="radio"
               formControlName="refundActionField"
@@ -122,7 +122,7 @@
             </div>
             <div class="govuk-radios__conditional" [ngClass]="{'govuk-radios__conditional--hidden': !isSendMeBackClicked}">
               <div class="govuk-form-group">
-                <label class="govuk-label process-refund-font" for="contact-by-text">
+                <label class="govuk-label process-refund-font" for="sendmeback">
                   Add a reason
                 </label>
                 <p class="inline-error-message"
@@ -135,16 +135,16 @@
                 <textarea class="govuk-textarea govuk-!-width-one-third reason-font"
                 [ngClass]="{'inline-error-class': isReasonFieldEmpty || isReasonFieldInvalid || reasonFieldMinHasError || reasonFieldMaxHasError}"
                   id="sendmeback"
-                  name="sendMeBackField" 
+                  name="sendMeBackField"
                   formControlName="sendMeBackField"
                 rows="5"></textarea>
-              
+
               </div>
 
             </div>
-  
+
           </div>
-      
+
         </fieldset>
       </div>
 
@@ -161,7 +161,7 @@
             <span *ngIf="refundRejectReasonHasError">Please select a reject reason</span>
           </p>
             <div class="govuk-radios__item" *ngFor="let refundRejectReason of refundRejectReasonList; let j = index;">
-              <input class="govuk-radios__input" 
+              <input class="govuk-radios__input"
               id="refundRejectReason-{{j}}"
               formControlName="refundRejectReasonField"
               name="refundRejectReasonField"
@@ -174,19 +174,19 @@
             </div>
       <div class="govuk-radios__conditional" [ngClass]="{'govuk-radios__conditional--hidden': !isOtherClicked}" id="conditional-contact-3">
         <div class="govuk-form-group">
-          <label class="govuk-label process-refund-font " for="contact-by-text">
+          <label class="govuk-label process-refund-font " for="otherReason">
             Enter reason
           </label>
           <p class="inline-error-message" *ngIf="isReasonEmpty || isReasonInvalid">
             <span *ngIf="isReasonEmpty">Enter reason.</span>
             <span *ngIf="isReasonInvalid">Enter a valid reason</span>
           </p>
-          <input class="govuk-input govuk-!-width-one-third reason-font" id="otherReason" 
+          <input class="govuk-input govuk-!-width-one-third reason-font" id="otherReason"
           [ngClass]="{'inline-error-class': isReasonEmpty || isReasonInvalid}"
           formControlName="enterReasonField" name="enterReasonField" type="text"></div>
-        
+
       </div>
-      
+
         </fieldset>
       </div>
 
@@ -194,21 +194,21 @@
         <button (click)="redirecttoRefundListPage()" class="govuk-button govuk-button--secondary marginright"> Previous</button>
         <button (click)="processRefundSubmit()" class="govuk-button button"
           data-module="govuk-button">
-          Submit 
+          Submit
         </button>
       <br/><br/>
     </div>
-   
+
   <div *ngIf="!isFromRefundListPage" class="govuk-button-group margin">
 
   <p><a (click)="loadRefundsHomePage()" class="govuk-link pointer" data-module="govuk-button">Cancel</a></p>
 </div>
 </form>
   </div>
- 
+
 
   </main>
- 
+
   <main class="govuk-main-wrapper govuk-main-wrapper--l success-page-padding--top25" [ngClass]="{'govuk-radios__conditional--hidden': !isSuccesspageEnable}" id="main-content" role="main" >
     <div class="govuk-grid-row pagesize">
         <div class="govuk-panel govuk-panel-refund--confirmation">
