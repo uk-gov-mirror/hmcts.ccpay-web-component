@@ -274,7 +274,7 @@ describe('AddRemissionComponent', () => {
   });
 
   describe('confirmRemission', () => {
-    fit('makes expected calls', () => {
+    it('makes expected calls', () => {
       const routerStub: Router = fixture.debugElement.injector.get(Router);
       const paymentViewServiceStub: PaymentViewService = fixture.debugElement.injector.get(PaymentViewService);
       spyOn(component, 'gotoCasetransationPage').and.callThrough();
