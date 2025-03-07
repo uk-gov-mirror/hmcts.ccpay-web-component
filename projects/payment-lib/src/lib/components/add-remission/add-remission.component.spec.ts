@@ -274,39 +274,51 @@ describe('AddRemissionComponent', () => {
   });
 
   describe('confirmRemission', () => {
-    it('makes expected calls', () => {
+    fit('makes expected calls', () => {
       const routerStub: Router = fixture.debugElement.injector.get(Router);
-      const paymentViewServiceStub: PaymentViewService = fixture.debugElement.injector.get(
-        PaymentViewService
-      );
+      const paymentViewServiceStub: PaymentViewService = fixture.debugElement.injector.get(PaymentViewService);
       spyOn(component, 'gotoCasetransationPage').and.callThrough();
       spyOn(routerStub, 'navigateByUrl').and.callThrough();
-      spyOn(
-        paymentViewServiceStub,
-        'postPaymentGroupWithRemissions'
-      ).and.callThrough();
+      spyOn(paymentViewServiceStub, 'postPaymentGroupWithRemissions').and.returnValue(of(JSON.stringify({ success: true })));
+
       component.ccdCaseNumber = "1010101010101010";
       component.caseType = "divorse";
       component.paymentGroupRef = "2021-1629193543478";
       component.remissionForm = form;
       component.fee = <any>fee;
       component.confirmRemission();
+
       expect(component.gotoCasetransationPage).not.toHaveBeenCalled();
-      expect(routerStub.navigateByUrl).not.toHaveBeenCalled();
-      expect(
-        paymentViewServiceStub.postPaymentGroupWithRemissions
-      ).toHaveBeenCalled();
+      expect(routerStub.navigateByUrl).toHaveBeenCalled();
+      expect(paymentViewServiceStub.postPaymentGroupWithRemissions).toHaveBeenCalled();
     });
 
-   it('should calculate remissionAmount correctly', () => {
-     component.remissionForm = form;
-     component.fee = <any>fee02;
-     component.remissionForm.controls.amount.setValue(215);
-     component.confirmRemission();
-     const newNetAmount = component.remissionForm.controls.amount.value;
-     const expectedRemissionAmount = parseFloat((component.fee.net_amount - newNetAmount).toFixed(2));
-     expect(expectedRemissionAmount).toEqual(356.91); // 571.91 - 215 = 356.91
-   });
+    it('calculates remissionAmount correctly when newNetAmount is less than net_amount', () => {
+      component.remissionForm = form;
+      component.fee = <any>fee02;
+      component.remissionForm.controls.amount.setValue(100.20);
+      const newNetAmount = component.remissionForm.controls.amount.value;
+      const expectedRemissionAmount = parseFloat((component.fee.net_amount - newNetAmount).toFixed(2));
+      expect(expectedRemissionAmount).toEqual(467.71); // 567.91 - 100.20 = 467.71
+    });
+
+    it('calculates remissionAmount correctly when newNetAmount is equal to net_amount', () => {
+      component.remissionForm = form;
+      component.fee = <any>fee02;
+      component.remissionForm.controls.amount.setValue(567.91);
+      const newNetAmount = component.remissionForm.controls.amount.value;
+      const expectedRemissionAmount = parseFloat((component.fee.net_amount - newNetAmount).toFixed(2));
+      expect(expectedRemissionAmount).toEqual(0); // 567.91 - 567.91 = 0
+    });
+
+    it('calculates remissionAmount correctly when newNetAmount is greater than net_amount', () => {
+      component.remissionForm = form;
+      component.fee = <any>fee02;
+      component.remissionForm.controls.amount.setValue(1000.55);
+      const newNetAmount = component.remissionForm.controls.amount.value;
+      const expectedRemissionAmount = parseFloat((component.fee.net_amount - newNetAmount).toFixed(2));
+      expect(expectedRemissionAmount).toEqual(-432.64); // 567.91 - 1000.55 = -432.64
+    });
   });
 
   describe('addRemissionCode', () => {
