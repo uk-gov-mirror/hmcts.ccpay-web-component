@@ -72,7 +72,7 @@ describe('AddRemissionComponent', () => {
     "reference": "",
     "memo_line": "",
     "fee_amount": 567.91,
-    "apportion_amount": 569.91,
+    "apportion_amount": 567.91,
     "allocated_amount": 567.91,
     "is_fully_apportioned": "",
     "date_apportioned": "2021-08-17T09:45:43.468+00:00",
