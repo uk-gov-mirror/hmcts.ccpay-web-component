@@ -58,6 +58,29 @@ describe('AddRemissionComponent', () => {
     "amount_due": 100
   }
 
+  let fee02 = {
+    "code": "FEE0210",
+    "version": "3",
+    "volume": 1,
+    "calculated_amount": 567.91,
+    "net_amount": 567.91,
+    "description": "desc",
+    "ccd_case_number": "1010101010101011",
+    "id": 299,
+    "jurisdiction1": "",
+    "jurisdiction2": "",
+    "reference": "",
+    "memo_line": "",
+    "fee_amount": 567.91,
+    "apportion_amount": 569.91,
+    "allocated_amount": 567.91,
+    "is_fully_apportioned": "",
+    "date_apportioned": "2021-08-17T09:45:43.468+00:00",
+    "date_created":"2021-08-17T09:45:43.468+00:00",
+    "date_updated": "2021-08-17T09:45:43.468+00:00",
+    "amount_due": 567.91
+  }
+
   beforeEach(() => {
     const formBuilderStub = () => ({ group: object => ({  remissionCode:"HWF-A1B-23C",amount: 10,refundReason: "Test Reason", refundDDReason:"Test Default reason", reason:"Testing"}) });
     const routerStub = () => ({
@@ -274,6 +297,16 @@ describe('AddRemissionComponent', () => {
         paymentViewServiceStub.postPaymentGroupWithRemissions
       ).toHaveBeenCalled();
     });
+
+   it('should calculate remissionAmount correctly', () => {
+     component.remissionForm = form;
+     component.fee = <any>fee02;
+     component.remissionForm.controls.amount.setValue(215);
+     component.confirmRemission();
+     const newNetAmount = component.remissionForm.controls.amount.value;
+     const expectedRemissionAmount = parseFloat((component.fee.net_amount - newNetAmount).toFixed(2));
+     expect(expectedRemissionAmount).toEqual(356.91); // 571.91 - 215 = 356.91
+   });
   });
 
   describe('addRemissionCode', () => {
