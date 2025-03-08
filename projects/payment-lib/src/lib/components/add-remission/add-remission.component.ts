@@ -429,7 +429,7 @@ export class AddRemissionComponent implements OnInit {
   confirmRemission() {
     this.isConfirmationBtnDisabled = true;
     const newNetAmount = this.remissionForm.controls.amount.value,
-      remissionAmount = this.fee.net_amount - newNetAmount,
+      remissionAmount = parseFloat((this.fee.net_amount - newNetAmount).toFixed(2)),
       requestBody = new AddRemissionRequest
         (this.ccdCaseNumber, this.fee, remissionAmount, this.remissionForm.controls.remissionCode.value, this.caseType);
     this.paymentViewService.postPaymentGroupWithRemissions(decodeURIComponent(this.paymentGroupRef).trim(), this.fee.id, requestBody).subscribe(
