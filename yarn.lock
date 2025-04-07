@@ -5876,12 +5876,12 @@ __metadata:
     ts-node: ~8.0.2
     tslib: ^2.0.0
     tslint: ^6.1.3
-    typescript: ^5.2
+    typescript: ^5.8.3
     uuid: 7.0.3
     webpack-cli: ^4.10.0
     zone.js: ^0.14.5
   peerDependencies:
-    typescript: ^5.2
+    typescript: ^5.8.3
   languageName: unknown
   linkType: soft
 
@@ -14417,7 +14417,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^5.2":
+"typescript@npm:^5.8.3":
   version: 5.8.3
   resolution: "typescript@npm:5.8.3"
   bin:
@@ -14427,7 +14427,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^5.2#~builtin<compat/typescript>":
+"typescript@patch:typescript@^5.8.3#~builtin<compat/typescript>":
   version: 5.8.3
   resolution: "typescript@patch:typescript@npm%3A5.8.3#~builtin<compat/typescript>::version=5.8.3&hash=77c9e2"
   bin:
