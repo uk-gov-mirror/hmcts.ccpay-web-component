@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Inject } from '@angular/core';
+import { Component, OnInit, Input, Inject, AfterViewInit, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import type { PaymentLibComponent } from '../../payment-lib.component';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
@@ -23,7 +23,8 @@ type PaymentLibAlias = PaymentLibComponent;
 export class AllocatePaymentsComponent implements OnInit {
   @Input() isTurnOff: boolean;
   @Input() caseType: string;
-
+  @Output() public reasonEventEmitter: EventEmitter<string> = new EventEmitter<string>();
+  @Output() public explanationEventEmitter: EventEmitter<string> = new EventEmitter<string>();
   overUnderPaymentForm: FormGroup;
   viewStatus: string;
   ccdCaseNumber: string;
@@ -60,6 +61,8 @@ export class AllocatePaymentsComponent implements OnInit {
   isUserNameInvalid: boolean = false;
   ccdReference: string = null;
   exceptionReference: string = null;
+  paymentReason: string = null;
+  paymentExplanation: string = null;
   userName: string = null;
   paymentSectionLabel: any;
   paymentRef: string = null;
@@ -138,8 +141,6 @@ export class AllocatePaymentsComponent implements OnInit {
         Validators.required,
         Validators.pattern('^([a-zA-Z0-9\\s]*)$')
       ])),
-      paymentReason: new FormControl(null, Validators.required),
-      paymentExplanation: new FormControl(null, Validators.required)
     });
     this.OrderslistService.getOrdersList().subscribe((data) =>
       this.orderLevelFees = data.filter(data => data.orderStatus !== 'Paid'));
@@ -149,6 +150,17 @@ export class AllocatePaymentsComponent implements OnInit {
   getGroupOutstandingAmount(paymentGroup: IPaymentGroup): number {
     return this.bulkScaningPaymentService.calculateOutStandingAmount(paymentGroup);
   }
+
+
+  getExplanationValue(inputValue: string):void{
+    this.paymentExplanation = inputValue;
+    this.explanationEventEmitter.emit(this.paymentExplanation);
+  };
+
+  getReasonValue(inputValue: string):void{
+    this.paymentReason = inputValue;
+    this.reasonEventEmitter.emit(this.paymentReason);
+  };
 
   getPaymentGroupDetails() {
 
@@ -368,7 +380,8 @@ export class AllocatePaymentsComponent implements OnInit {
       this.overUnderPaymentForm.get('moreDetails').setValue('');
       this.overUnderPaymentForm.get('userName').reset();
       this.overUnderPaymentForm.get('userName').setValue('');
-      this.overUnderPaymentForm.get('paymentReason').setValue('');
+      this.paymentReason = '';
+      this.paymentExplanation = '';
       let GroupOutstandingAmount = this.getGroupOutstandingAmount(this.paymentGroup);
       const remainingToBeAssigned = this.unAllocatedPayment.amount - GroupOutstandingAmount;
       this.isRemainingAmountGtZero = remainingToBeAssigned > 0;
@@ -432,13 +445,5 @@ export class AllocatePaymentsComponent implements OnInit {
     this.paymentLibComponent.paymentGroupReference = this.recordId;
     this.paymentLibComponent.isTurnOff = this.isTurnOff;
     this.paymentLibComponent.viewName = 'fee-summary';
-  }
-
-  get paymentReason() {
-    return this.overUnderPaymentForm.get('paymentReason')?.value;
-  }
-
-  get paymentExplanation() {
-    return this.overUnderPaymentForm.get('paymentExplanation')?.value;
   }
 }
