@@ -159,7 +159,7 @@
             data-module="govuk-radios" *ngIf="isRemainingAmountGtZero">
             <div class="govuk-radios__item" *ngFor="let reason of reasonList.overPayment | keyValue">
               <input class="govuk-radios__input" id="{{reason.key}}" name="paymentReason" type="radio"
-                [(ngModel)]="paymentReason" value={{reason.value}}>
+                     [value]="reason.key" (input)="getReasonValue(reason.value)"/>
               <label class="govuk-label govuk-radios__label govuk-font__custom" for="how-contacted-conditional">
                 {{reason.value}}
               </label>
@@ -170,7 +170,7 @@
             data-module="govuk-radios" *ngIf="isRemainingAmountLtZero">
             <div class="govuk-radios__item" *ngFor="let reason of reasonList.shortFall | keyValue">
               <input class="govuk-radios__input" id="{{reason.key}}" name="paymentReason" type="radio"
-                [(ngModel)]="paymentReason" value={{reason.value}}>
+                     [value]="reason.key" (input)="getReasonValue(reason.value)"/>
               <label class="govuk-label govuk-radios__label govuk-font__custom" for="how-contacted-conditional">
                 {{reason.value}}
               </label>
@@ -189,8 +189,8 @@
             data-module="govuk-radios" *ngIf="isRemainingAmountGtZero">
             <div class="govuk-radios__item" *ngFor="let explanation of explanationList.overPayment | keyValue">
               <input class="govuk-radios__input" id="{{explanation.key}}" name="paymentExplanation" type="radio"
-                [(ngModel)]="paymentExplanation" value={{explanation.value}}
-                (click)="selectRadioButton(explanation.key, 'explanation')">
+                     [value]="explanation.key" (input)="getExplanationValue(explanation.value)"
+                (click)="selectRadioButton(explanation.key, 'explanation')"/>
               <label class="govuk-label govuk-radios__label govuk-font__custom" for="how-contacted-conditional">
                 {{explanation.value}}
               </label>
@@ -201,8 +201,8 @@
             data-module="govuk-radios" *ngIf="isRemainingAmountLtZero">
             <div class="govuk-radios__item" *ngFor="let explanation of explanationList.shortFall | keyValue">
               <input class="govuk-radios__input" id="{{explanation.key}}" name="paymentExplanation" type="radio"
-                [(ngModel)]="paymentExplanation" value={{explanation.value}}
-                (click)="selectRadioButton(explanation.key, 'explanation')">
+                     [value]="explanation.key" (input)="getExplanationValue(explanation.value)"
+                (click)="selectRadioButton(explanation.key, 'explanation')"/>
               <label class="govuk-label govuk-radios__label govuk-font__custom" for="how-contacted-conditional">
                 {{explanation.value}}
               </label>

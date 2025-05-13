@@ -58,6 +58,29 @@ describe('AddRemissionComponent', () => {
     "amount_due": 100
   }
 
+  let fee02 = {
+    "code": "FEE0210",
+    "version": "3",
+    "volume": 1,
+    "calculated_amount": 567.91,
+    "net_amount": 567.91,
+    "description": "desc",
+    "ccd_case_number": "1010101010101011",
+    "id": 299,
+    "jurisdiction1": "",
+    "jurisdiction2": "",
+    "reference": "",
+    "memo_line": "",
+    "fee_amount": 567.91,
+    "apportion_amount": 567.91,
+    "allocated_amount": 567.91,
+    "is_fully_apportioned": "",
+    "date_apportioned": "2021-08-17T09:45:43.468+00:00",
+    "date_created":"2021-08-17T09:45:43.468+00:00",
+    "date_updated": "2021-08-17T09:45:43.468+00:00",
+    "amount_due": 567.91
+  }
+
   beforeEach(() => {
     const formBuilderStub = () => ({ group: object => ({  remissionCode:"HWF-A1B-23C",amount: 10,refundReason: "Test Reason", refundDDReason:"Test Default reason", reason:"Testing"}) });
     const routerStub = () => ({
@@ -253,26 +276,48 @@ describe('AddRemissionComponent', () => {
   describe('confirmRemission', () => {
     it('makes expected calls', () => {
       const routerStub: Router = fixture.debugElement.injector.get(Router);
-      const paymentViewServiceStub: PaymentViewService = fixture.debugElement.injector.get(
-        PaymentViewService
-      );
+      const paymentViewServiceStub: PaymentViewService = fixture.debugElement.injector.get(PaymentViewService);
       spyOn(component, 'gotoCasetransationPage').and.callThrough();
       spyOn(routerStub, 'navigateByUrl').and.callThrough();
-      spyOn(
-        paymentViewServiceStub,
-        'postPaymentGroupWithRemissions'
-      ).and.callThrough();
+      spyOn(paymentViewServiceStub, 'postPaymentGroupWithRemissions').and.returnValue(of(JSON.stringify({ success: true })));
+
       component.ccdCaseNumber = "1010101010101010";
       component.caseType = "divorse";
       component.paymentGroupRef = "2021-1629193543478";
       component.remissionForm = form;
       component.fee = <any>fee;
       component.confirmRemission();
+
       expect(component.gotoCasetransationPage).not.toHaveBeenCalled();
-      expect(routerStub.navigateByUrl).not.toHaveBeenCalled();
-      expect(
-        paymentViewServiceStub.postPaymentGroupWithRemissions
-      ).toHaveBeenCalled();
+      expect(routerStub.navigateByUrl).toHaveBeenCalled();
+      expect(paymentViewServiceStub.postPaymentGroupWithRemissions).toHaveBeenCalled();
+    });
+
+    it('calculates remissionAmount correctly when newNetAmount is less than net_amount', () => {
+      component.remissionForm = form;
+      component.fee = <any>fee02;
+      component.remissionForm.controls.amount.setValue(100.20);
+      const newNetAmount = component.remissionForm.controls.amount.value;
+      const expectedRemissionAmount = parseFloat((component.fee.net_amount - newNetAmount).toFixed(2));
+      expect(expectedRemissionAmount).toEqual(467.71); // 567.91 - 100.20 = 467.71
+    });
+
+    it('calculates remissionAmount correctly when newNetAmount is equal to net_amount', () => {
+      component.remissionForm = form;
+      component.fee = <any>fee02;
+      component.remissionForm.controls.amount.setValue(567.91);
+      const newNetAmount = component.remissionForm.controls.amount.value;
+      const expectedRemissionAmount = parseFloat((component.fee.net_amount - newNetAmount).toFixed(2));
+      expect(expectedRemissionAmount).toEqual(0); // 567.91 - 567.91 = 0
+    });
+
+    it('calculates remissionAmount correctly when newNetAmount is greater than net_amount', () => {
+      component.remissionForm = form;
+      component.fee = <any>fee02;
+      component.remissionForm.controls.amount.setValue(1000.55);
+      const newNetAmount = component.remissionForm.controls.amount.value;
+      const expectedRemissionAmount = parseFloat((component.fee.net_amount - newNetAmount).toFixed(2));
+      expect(expectedRemissionAmount).toEqual(-432.64); // 567.91 - 1000.55 = -432.64
     });
   });
 

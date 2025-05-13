@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Inject } from '@angular/core';
+import { Component, OnInit, Input, Inject, AfterViewInit, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import type { PaymentLibComponent } from '../../payment-lib.component';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
@@ -23,7 +23,8 @@ type PaymentLibAlias = PaymentLibComponent;
 export class AllocatePaymentsComponent implements OnInit {
   @Input() isTurnOff: boolean;
   @Input() caseType: string;
-
+  @Output() public reasonEventEmitter: EventEmitter<string> = new EventEmitter<string>();
+  @Output() public explanationEventEmitter: EventEmitter<string> = new EventEmitter<string>();
   overUnderPaymentForm: FormGroup;
   viewStatus: string;
   ccdCaseNumber: string;
@@ -149,6 +150,17 @@ export class AllocatePaymentsComponent implements OnInit {
   getGroupOutstandingAmount(paymentGroup: IPaymentGroup): number {
     return this.bulkScaningPaymentService.calculateOutStandingAmount(paymentGroup);
   }
+
+
+  getExplanationValue(inputValue: string):void{
+    this.paymentExplanation = inputValue;
+    this.explanationEventEmitter.emit(this.paymentExplanation);
+  };
+
+  getReasonValue(inputValue: string):void{
+    this.paymentReason = inputValue;
+    this.reasonEventEmitter.emit(this.paymentReason);
+  };
 
   getPaymentGroupDetails() {
 

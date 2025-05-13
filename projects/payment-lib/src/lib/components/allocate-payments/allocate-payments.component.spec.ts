@@ -1,9 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { HttpClientModule } from '@angular/common/http';
 import { AllocatePaymentsComponent } from './allocate-payments.component';
 import { CaseTransactionsService} from "../../services/case-transactions/case-transactions.service";
 import { PaymentViewService} from "../../services/payment-view/payment-view.service";
 import {NO_ERRORS_SCHEMA} from "@angular/core";
+import { WebComponentHttpClient } from '../../services/shared/httpclient/webcomponent.http.client';
 
 describe('MarkUnidentifiedPaymentComponent', () => {
   let component: AllocatePaymentsComponent;
@@ -27,6 +28,45 @@ describe('MarkUnidentifiedPaymentComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+});
+describe('AllocatePaymentsComponent', () => {
+  let component: AllocatePaymentsComponent;
+  let fixture: ComponentFixture<AllocatePaymentsComponent>;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientModule], // Import HttpClientModule
+      // imports : [WebComponentHttpClient],
+      schemas: [NO_ERRORS_SCHEMA],
+      declarations: [AllocatePaymentsComponent],
+      providers: [
+        { provide: CaseTransactionsService, useClass: CaseTransactionsService },
+        { provide: PaymentViewService, useClass: PaymentViewService },
+        { provide: WebComponentHttpClient, useValue: {} },
+        { provide: 'PAYMENT_LIB', useValue: {} } // Mock the PAYMENT_LIB provider
+      ]
+    });
+    fixture = TestBed.createComponent(AllocatePaymentsComponent);
+    component = fixture.componentInstance;
+  });
+
+  it('should emit the correct value via reasonEventEmitter', () => {
+    spyOn(component.reasonEventEmitter, 'emit'); // Spy on the emitter
+    const testValue = 'testReason';
+
+    component.getReasonValue(testValue); // Call the method
+
+    expect(component.reasonEventEmitter.emit).toHaveBeenCalledWith(testValue); // Assert the emitted value
+  });
+
+  it('should emit the correct value via explanationEventEmitter', () => {
+    spyOn(component.explanationEventEmitter, 'emit'); // Spy on the emitter
+    const testValue = 'testReason';
+
+    component.getExplanationValue(testValue); // Call the method
+
+    expect(component.explanationEventEmitter.emit).toHaveBeenCalledWith(testValue); // Assert the emitted value
   });
 });
 
