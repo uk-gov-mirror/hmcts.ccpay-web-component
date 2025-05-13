@@ -1273,13 +1273,21 @@ export class AddRemissionComponent implements OnInit {
   }
 
   getRemissions(feeCode: string): IRemission {
-    let myRemission = this.paymentLibComponent.paymentGroup.remissions.filter(remission => remission.fee_code === feeCode);
+    let myRemission = this.paymentGroupData.remissions.filter(remission => remission.fee_code === feeCode);
     if (myRemission.length == 0) {
       return null;
     }
     // We  can have one remission per case, only
     return myRemission.at(0);
   }
+
+  get paymentGroupData(): IPaymentGroup {
+    if (!this.paymentLibComponent.paymentGroup) {
+      this.paymentLibComponent.addPaymentGroup(this.paymentGroup);
+    }
+    return this.paymentLibComponent.paymentGroup;
+  }
+
 
   getRemissionsHwfAmount(feeCode: string): string {
     let myRemission = this.getRemissions(feeCode);
