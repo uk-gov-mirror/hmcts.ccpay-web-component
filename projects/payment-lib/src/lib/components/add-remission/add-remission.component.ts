@@ -253,6 +253,7 @@ export class AddRemissionComponent implements OnInit {
             (paymentGroupObj => paymentGroupObj['reference'].includes(this.paymentLibComponent.paymentReference));
           // const paymentAllocation = this.paymentGroup.payments[0].payment_allocation;
           // this.isStatusAllocated = paymentAllocation.length > 0 && paymentAllocation[0].allocation_status === 'Allocated' || paymentAllocation.length === 0;
+          this.paymentLibComponent.addPaymentGroup(this.paymentGroup);
           this.refundFeesList();
         },
         (error: any) => this.errorMessage = error
@@ -1273,21 +1274,13 @@ export class AddRemissionComponent implements OnInit {
   }
 
   getRemissions(feeCode: string): IRemission {
-    let myRemission = this.paymentGroupData.remissions.filter(remission => remission.fee_code === feeCode);
+    let myRemission = this.paymentLibComponent.paymentGroup.remissions.filter(remission => remission.fee_code === feeCode);
     if (myRemission.length == 0) {
       return null;
     }
     // We  can have one remission per case, only
     return myRemission.at(0);
   }
-
-  get paymentGroupData(): IPaymentGroup {
-    if (!this.paymentLibComponent.paymentGroup) {
-      this.paymentLibComponent.addPaymentGroup(this.paymentGroup);
-    }
-    return this.paymentLibComponent.paymentGroup;
-  }
-
 
   getRemissionsHwfAmount(feeCode: string): string {
     let myRemission = this.getRemissions(feeCode);
