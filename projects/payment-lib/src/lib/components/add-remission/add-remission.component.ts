@@ -253,6 +253,7 @@ export class AddRemissionComponent implements OnInit {
             (paymentGroupObj => paymentGroupObj['reference'].includes(this.paymentLibComponent.paymentReference));
           // const paymentAllocation = this.paymentGroup.payments[0].payment_allocation;
           // this.isStatusAllocated = paymentAllocation.length > 0 && paymentAllocation[0].allocation_status === 'Allocated' || paymentAllocation.length === 0;
+          this.paymentLibComponent.addPaymentGroup(this.paymentGroup);
           this.refundFeesList();
         },
         (error: any) => this.errorMessage = error
