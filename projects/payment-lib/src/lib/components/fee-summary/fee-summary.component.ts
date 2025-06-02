@@ -12,7 +12,9 @@ import {Location} from '@angular/common';
 import {OrderslistService} from '../../services/orderslist.service';
 import type { PaymentLibComponent } from '../../payment-lib.component';
 
+
 type PaymentLibAlias = PaymentLibComponent;
+
 
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 const ANTENNA_VALUE = 'Antenna';
@@ -30,7 +32,7 @@ export class FeeSummaryComponent implements OnInit {
   @Input() ccdCaseNumber: string;
   @Input() isTurnOff: string;
   @Input() caseType: string;
-
+  @Input() telephonySelectionEnable: boolean;
 
 
   paymentMethod: string;
@@ -72,6 +74,8 @@ export class FeeSummaryComponent implements OnInit {
     this.selectedOption = this.paymentLibComponent.SELECTED_OPTION.toLocaleLowerCase();
     this.isStrategicFixEnable = this.paymentLibComponent.ISSFENABLE;
     this.OrderslistService.setCaseType(this.paymentLibComponent.CASETYPE);
+    this.isTelephonySelectionEnableNull();
+
 
     this.platForm = 'Antenna';
 
@@ -290,6 +294,19 @@ export class FeeSummaryComponent implements OnInit {
 
 
   isTakePaymentButtonDisabled(): boolean {
-    return (this.paymentMethod === null || this.paymentMethod === undefined || this.paymentMethod === '');
+    if (this.telephonySelectionEnable){
+      return (this.paymentMethod === null || this.paymentMethod === undefined || this.paymentMethod === '');
+    }
+    return false;
+  }
+
+  isTelephonySelectionEnable() : boolean{
+    return  this.telephonySelectionEnable;
+  }
+
+  isTelephonySelectionEnableNull() {
+    if (this.telephonySelectionEnable === null || this.telephonySelectionEnable === undefined) {
+      this.telephonySelectionEnable = false;
+    }
   }
 }
