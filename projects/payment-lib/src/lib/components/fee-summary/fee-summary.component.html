@@ -41,7 +41,7 @@
   <div *ngIf="errorMessage">
     <div class="error-summary" role="group" aria-labelledby="failure-error-summary-heading" tabindex="-1">
       <h2 class="heading-medium error-summary-heading" id="failure-error-summary-heading">
-        Payment Group details could not be retrieved
+        An error has occurred on the Fee summary page.
       </h2>
       <div class="govuk-error-summary__body">
         {{ errorMessage }}
@@ -145,7 +145,7 @@
   </div>
 
   <div class="summaryheader" *ngIf="isTelephonySelectionEnable()">
-    <h3 class="heading-large govuk-!-margin-top-3 govuk-!-margin-bottom-4">Which system are you using to take a payment?</h3>
+    <h3 class="heading-medium govuk-!-margin-top-3 govuk-!-margin-bottom-4">Which system are you using to take a payment?</h3>
   </div>
 
   <div class="govuk-radios__item" *ngIf="isTelephonySelectionEnable()">
