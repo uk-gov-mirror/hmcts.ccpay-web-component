@@ -301,7 +301,7 @@ export class FeeSummaryComponent implements OnInit {
   }
 
   isTelephonySelectionEnable() : boolean{
-    return  this.telephonySelectionEnable;
+    return  this.telephonySelectionEnable && !this.bsPaymentDcnNumber;
   }
 
   isTelephonySelectionEnableNull() {
