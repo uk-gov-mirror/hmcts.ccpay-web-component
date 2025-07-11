@@ -567,7 +567,7 @@ export class CaseTransactionsComponent implements OnInit {
   getOrderFeesTotalOrTotalFees() : number {
     //It means that there is more than one service request.
     if( (this.getNumberOfFeesPerCaseTransaction() > 1)
-      && (this.getNumberOfFeesPerCaseTransaction() > this.remissions.length )) {
+      && (this.getNumberOfFeesPerCaseTransaction() >= this.remissions.length )) {
       return this.totalFees;
     }
     return this.orderFeesTotal;
