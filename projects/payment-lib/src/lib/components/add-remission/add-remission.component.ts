@@ -225,8 +225,9 @@ export class AddRemissionComponent implements OnInit {
       this.paymentReference = (this.payment !== undefined) ? this.payment.reference : '';
     }
 
-
-    if (this.isFromServiceRequestPage) {
+    // PAY-7956: Refresh paymentGroup if this.paymentReference is known.
+    // this call was originally based on if (this.isFromServiceRequestPage) {
+    if (this.paymentReference) {
       this.paymentViewService.getApportionPaymentDetails(this.paymentReference).subscribe(
         paymentGroup => {
           let fees = [];
@@ -259,7 +260,6 @@ export class AddRemissionComponent implements OnInit {
         (error: any) => this.errorMessage = error
       );
     }
-
 
     if (this.fees && this.viewCompStatus === 'issuerefund') {
       this.refundFeesList();
