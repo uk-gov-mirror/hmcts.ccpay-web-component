@@ -56,7 +56,7 @@ export class CaseTransactionsComponent implements OnInit {
   remissions: IRemission[] = [];
   fees: IFee[] = [];
   errorMessage: string;
-  totalFees: number;
+  totalFees: number = 0;
   totalPayments: number = 0;
   totalNonOffPayments: number;
   totalRemissions: number = 0;
@@ -521,16 +521,27 @@ export class CaseTransactionsComponent implements OnInit {
         this.totalNonOffPayments = nonOffLinePayment;
       }
 
+
+      if (paymentGroup.fees) {
+        paymentGroup.fees.forEach(fee => {
+            feesTotal = feesTotal + fee.calculated_amount;
+            this.fees.push(fee);
+          }
+        )
+      }
+
       if (paymentGroup.remissions) {
         paymentGroup.remissions.forEach(remisison => {
           remissionsTotal = remissionsTotal + remisison.hwf_amount;
           this.remissions.push(remisison);
         });
       }
+      this.totalFees = feesTotal;
       this.totalRemissions = remissionsTotal;
     });
 
   }
+
 
   isThereRemissions(): boolean {
     let result = false;
@@ -545,13 +556,29 @@ export class CaseTransactionsComponent implements OnInit {
   calculateOverpaymentBasedOnRemission() {
     // This sept is done to calculate a possible over payment due to remissions on fees.
     if (this.isThereRemissions()) {
-      let newValue = this.totalPayments - (this.orderFeesTotal - this.totalRemissions);
+      let newValue = this.totalPayments - (this.getOrderFeesTotalOrTotalFees() - this.totalRemissions);
       if (newValue > 0){
         this.overPaymentAmount = newValue;
         this.paymentLibComponent.overPaymentAmount = this.overPaymentAmount;
       }
     }
   }
+
+  getOrderFeesTotalOrTotalFees() : number {
+    //It means that there is more than one service request.
+    if( (this.getNumberOfFeesPerCaseTransaction() > 1)
+      && (this.getNumberOfFeesPerCaseTransaction() >= this.remissions.length )) {
+      return this.totalFees;
+    }
+    return this.orderFeesTotal;
+  }
+
+
+
+  getNumberOfFeesPerCaseTransaction(): number {
+    return this.paymentGroups.reduce((total, group) => { return total + (group.fees?.length || 0); }, 0);
+  }
+
 
   calculateAmountDueTo() {
     if (this.isThereRemissions()) {
