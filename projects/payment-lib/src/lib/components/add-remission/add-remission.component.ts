@@ -343,15 +343,9 @@ export class AddRemissionComponent implements OnInit {
     const formArray = this.remissionForm.controls.feesList as FormArray;
     if (this.isRemissionEnabled(formArray.value.at(index).code)) {
       let remission = this.getRemissions(formArray.value.at(index).code);
-      // Dump out the fees.at(index) to console for debugging
-      //console.log(`fees.at(${index}):`, this.paymentLibComponent.paymentGroup.fees.at(index));
       let feeAmount = this.paymentLibComponent.paymentGroup.fees.at(index).calculated_amount;
-      // Dump out parameters to console for debugging
-      //console.log(`Calculating refund amount for index: ${index}, AppAmt: ${AppAmt}, feeAmount: ${feeAmount}, remission.hwf_amount: ${remission.hwf_amount}`);
       return this.getNetAmountFee(remission.hwf_amount, feeAmount);
     } else {
-      // Dump out parameters to console for debugging
-      //console.log(`Calculating refund amount for index: ${index}, AppAmt: ${AppAmt}`);
       return AppAmt;
     }
   }
@@ -361,9 +355,6 @@ export class AddRemissionComponent implements OnInit {
     const formArray = this.remissionForm.controls.feesList as FormArray;
 
     if (ele.checked) {
-      // Dump out parameters to console for debugging
-      //console.log(`Checkbox checked at index: ${i}, v1: ${v1}, AppAmt: ${AppAmt}, Volume: ${Volume}`);
-
       // Checkbox checked at index: 0, v1: 6012667, AppAmt: 100, Volume: 1
       let refundAmount = this.calculateRefundAmount(i, AppAmt);
       formArray.at(i).get('refund_amount').setValue(refundAmount);
