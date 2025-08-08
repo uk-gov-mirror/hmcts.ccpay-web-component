@@ -313,7 +313,7 @@ export class PaymentLibComponent implements OnInit {
   }
 
 
-  getRoundedOverPayment() : number{
+  getRoundedOverPayment(): number {
     this.roundTinyValue(this.overPaymentAmount);
   }
 
