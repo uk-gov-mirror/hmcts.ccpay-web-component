@@ -314,12 +314,8 @@ export class PaymentLibComponent implements OnInit {
 
 
   getRoundedOverPayment(): number {
-    this.roundTinyValue(this.overPaymentAmount);
+    return this.roundTinyValue(this.overPaymentAmount);
   }
-
-
-
-
 }
 
 
