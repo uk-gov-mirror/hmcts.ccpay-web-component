@@ -308,7 +308,7 @@ export class PaymentLibComponent implements OnInit {
    * roundTinyValue(1.1368683772161603e-13); // returns 0
    * roundTinyValue(0.00001); // returns 0.00001
    */
-  roundTinyValue(value: number, threshold: number = 1e-10): number {
+  roundTinyValue(value: number, threshold: number = 1e-4): number {
     return Math.abs(value) < threshold ? 0 : value;
   }
 
