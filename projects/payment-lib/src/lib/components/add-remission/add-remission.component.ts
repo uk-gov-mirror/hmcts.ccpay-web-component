@@ -225,14 +225,14 @@ export class AddRemissionComponent implements OnInit {
       this.paymentReference = (this.payment !== undefined) ? this.payment.reference : '';
     }
 
-
-    if (this.isFromServiceRequestPage) {
+    // PAY-7956: Refresh paymentGroup if this.paymentReference is known.
+    // this call was originally based on if (this.isFromServiceRequestPage) {
+    if (this.paymentReference) {
       this.paymentViewService.getApportionPaymentDetails(this.paymentReference).subscribe(
         paymentGroup => {
           let fees = [];
           paymentGroup.fees.forEach(fee => {
             this.isRemissionsMatch = false;
-
             paymentGroup.remissions.forEach(rem => {
               if (rem.fee_code === fee.code) {
                 this.isRemissionsMatch = true;
@@ -248,7 +248,6 @@ export class AddRemissionComponent implements OnInit {
           this.paymentFees = fees;
           this.fees = fees;
           this.paymentGroup = paymentGroup;
-
           this.paymentGroup.payments = this.paymentGroup.payments.filter
             (paymentGroupObj => paymentGroupObj['reference'].includes(this.paymentLibComponent.paymentReference));
           // const paymentAllocation = this.paymentGroup.payments[0].payment_allocation;
@@ -258,11 +257,6 @@ export class AddRemissionComponent implements OnInit {
         },
         (error: any) => this.errorMessage = error
       );
-    }
-
-
-    if (this.fees && this.viewCompStatus === 'issuerefund') {
-      this.refundFeesList();
     }
 
     if (this.viewCompStatus === '') {
@@ -349,7 +343,7 @@ export class AddRemissionComponent implements OnInit {
     const formArray = this.remissionForm.controls.feesList as FormArray;
     if (this.isRemissionEnabled(formArray.value.at(index).code)) {
       let remission = this.getRemissions(formArray.value.at(index).code);
-      let feeAmount = this.paymentLibComponent.paymentGroup.fees.at(index).fee_amount;
+      let feeAmount = this.paymentLibComponent.paymentGroup.fees.at(index).calculated_amount;
       return this.getNetAmountFee(remission.hwf_amount, feeAmount);
     } else {
       return AppAmt;
@@ -361,6 +355,7 @@ export class AddRemissionComponent implements OnInit {
     const formArray = this.remissionForm.controls.feesList as FormArray;
 
     if (ele.checked) {
+      // Checkbox checked at index: 0, v1: 6012667, AppAmt: 100, Volume: 1
       let refundAmount = this.calculateRefundAmount(i, AppAmt);
       formArray.at(i).get('refund_amount').setValue(refundAmount);
       formArray.at(i).get('volume').setValue(Volume);
