@@ -297,6 +297,30 @@ export class PaymentLibComponent implements OnInit {
     return false;
   }
 
+
+  /**
+   * Rounds very small values to zero if they fall below a specified threshold.
+   *
+   * This is useful for eliminating floating-point precision errors that result in
+   * extremely small non-zero values (e.g., 1.1368683772161603e-13) which should
+   * logically be treated as zero.
+   *
+   * @param value - The numeric value to evaluate and potentially round.
+   * @param threshold - The minimum absolute value considered significant. Defaults to 1e-10.
+   * @returns The original value if it's above the threshold, or 0 if it's below.
+   *
+   * @example
+   * roundTinyValue(1.1368683772161603e-13); // returns 0
+   * roundTinyValue(0.00001); // returns 0.00001
+   */
+  roundTinyValue(value: number, threshold: number = 1e-4): number {
+    return Math.abs(value) < threshold ? 0 : value;
+  }
+
+
+  getRoundedOverPayment(): number {
+    return this.roundTinyValue(this.overPaymentAmount);
+  }
 }
 
 
