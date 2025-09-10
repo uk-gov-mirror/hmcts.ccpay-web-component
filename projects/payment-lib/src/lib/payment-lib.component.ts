@@ -9,7 +9,6 @@ import {IFee} from "./interfaces/IFee";
 import {IRemission} from "./interfaces/IRemission";
 import {AddRetroRemissionRequest} from "./interfaces/AddRetroRemissionRequest";
 
-
 @Component({
   selector: 'ccpay-payment-lib',
   template: `
@@ -45,7 +44,6 @@ import {AddRetroRemissionRequest} from "./interfaces/AddRetroRemissionRequest";
       [paymentGroupRef]="paymentGroupReference"
       [isTurnOff]="ISTURNOFF"
       [caseType]="CASETYPE"
-      [telephonySelectionEnable] ="telephonySelectionEnable"
       ></ccpay-fee-summary>
     <ccpay-reports *ngIf="viewName === 'reports'"
     [ISPAYMENTSTATUSENABLED] = "ISPAYMENTSTATUSENABLED"
@@ -81,9 +79,6 @@ export class PaymentLibComponent implements OnInit {
   @Input('LOGGEDINUSERROLES') LOGGEDINUSERROLES: any[];
   @Input('LOGGEDINUSEREMAIL') LOGGEDINUSEREMAIL: string;
   @Input('isFromServiceRequestPage') isFromServiceRequestPage: boolean;
-  @Input('telephonySelectionEnable') telephonySelectionEnable: boolean;
-
-
 
   paymentMethod: string;
   bspaymentdcn: string;
