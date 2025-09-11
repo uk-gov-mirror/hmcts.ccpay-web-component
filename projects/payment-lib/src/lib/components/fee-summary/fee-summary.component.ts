@@ -1,24 +1,19 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
-import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
-import {PaymentViewService} from '../../services/payment-view/payment-view.service';
-import {BulkScaningPaymentService} from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
-import {IRemission} from '../../interfaces/IRemission';
-import {IFee} from '../../interfaces/IFee';
-import {PaymentToPayhubRequest} from '../../interfaces/PaymentToPayhubRequest';
-import {PayhubAntennaRequest} from '../../interfaces/PayhubAntennaRequest';
-import {SafeHtml} from '@angular/platform-browser';
-import {Router} from '@angular/router';
-import {Location} from '@angular/common';
-import {OrderslistService} from '../../services/orderslist.service';
+import { Component, OnInit, Input, Inject } from '@angular/core';
+import { IPaymentGroup } from '../../interfaces/IPaymentGroup';
+import { PaymentViewService } from '../../services/payment-view/payment-view.service';
+import { BulkScaningPaymentService } from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
 import type { PaymentLibComponent } from '../../payment-lib.component';
-
-
+import { IRemission } from '../../interfaces/IRemission';
+import { IFee } from '../../interfaces/IFee';
+import { PaymentToPayhubRequest } from '../../interfaces/PaymentToPayhubRequest';
+import { PayhubAntennaRequest } from '../../interfaces/PayhubAntennaRequest';
+import { SafeHtml } from '@angular/platform-browser';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
+import { OrderslistService } from '../../services/orderslist.service';
 type PaymentLibAlias = PaymentLibComponent;
 
-
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
-const ANTENNA_VALUE = 'Antenna';
-const KERV_VALUE = 'Kerv';
 
 @Component({
   selector: 'ccpay-fee-summary',
@@ -27,15 +22,12 @@ const KERV_VALUE = 'Kerv';
 })
 
 export class FeeSummaryComponent implements OnInit {
-
   @Input() paymentGroupRef: string;
   @Input() ccdCaseNumber: string;
   @Input() isTurnOff: string;
   @Input() caseType: string;
-  @Input() telephonySelectionEnable: boolean;
 
 
-  paymentMethod: string;
   bsPaymentDcnNumber: string;
   paymentGroup: IPaymentGroup;
   errorMessage: string;
@@ -74,8 +66,6 @@ export class FeeSummaryComponent implements OnInit {
     this.selectedOption = this.paymentLibComponent.SELECTED_OPTION.toLocaleLowerCase();
     this.isStrategicFixEnable = this.paymentLibComponent.ISSFENABLE;
     this.OrderslistService.setCaseType(this.paymentLibComponent.CASETYPE);
-    this.isTelephonySelectionEnableNull();
-
 
     this.platForm = 'Antenna';
 
@@ -245,8 +235,8 @@ export class FeeSummaryComponent implements OnInit {
   }
   takePayment() {
     this.isConfirmationBtnDisabled = true;
-    const requestBody = new PaymentToPayhubRequest(this.ccdCaseNumber, this.outStandingAmount, this.caseType, this.paymentMethod),
-      antennaReqBody = new PayhubAntennaRequest(this.ccdCaseNumber, this.outStandingAmount, this.caseType, this.paymentMethod);
+    const requestBody = new PaymentToPayhubRequest(this.ccdCaseNumber, this.outStandingAmount, this.caseType),
+      antennaReqBody = new PayhubAntennaRequest(this.ccdCaseNumber, this.outStandingAmount, this.caseType);
 
     if (this.platForm === 'Antenna') {
 
@@ -262,6 +252,7 @@ export class FeeSummaryComponent implements OnInit {
         }
       );
     }
+
   }
 
   goToAllocatePage(outStandingAmount: number, isFeeAmountZero: Boolean) {
@@ -274,39 +265,5 @@ export class FeeSummaryComponent implements OnInit {
   }
   isCheckAmountdueExist(amountDue: any) {
     return typeof amountDue === 'undefined';
-  }
-
-  getAntennaValue() : string{
-    return ANTENNA_VALUE;
-  }
-
-  getKervValue() : string{
-    return KERV_VALUE;
-  }
-
-  getPaymentMethod(): string {
-    return this.paymentMethod;
-  }
-
-  setPaymentValue(value: string) {
-    this.paymentMethod = value;
-  }
-
-
-  isTakePaymentButtonDisabled(): boolean {
-    if (this.telephonySelectionEnable){
-      return (this.paymentMethod === null || this.paymentMethod === undefined || this.paymentMethod === '');
-    }
-    return false;
-  }
-
-  isTelephonySelectionEnable() : boolean{
-    return  this.telephonySelectionEnable && !this.bsPaymentDcnNumber;
-  }
-
-  isTelephonySelectionEnableNull() {
-    if (this.telephonySelectionEnable === null || this.telephonySelectionEnable === undefined) {
-      this.telephonySelectionEnable = false;
-    }
   }
 }
