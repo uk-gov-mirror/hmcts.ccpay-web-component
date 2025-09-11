@@ -200,13 +200,13 @@
                       <td class="tb-col-w">{{ fee?.code }}</td>
                     </tr>
                     <tr class="section">
-                      <td class="bold tb-col-w" [ngClass]="{'tr-border': !fee.apportion_amount && !fee.remissions && !isTurnOff }">{{ "Fee amount" | rpxTranslate }}</td>
-                      <td [ngClass]="{'tr-border': !fee.apportion_amount && !fee.remissions && !isTurnOff}">£{{ fee?.calculated_amount | number:'.2' }}</td>
+                      <td class="bold tb-col-w" [ngClass]="{'tr-border': !fee.apportion_amount && !getRemissionByFeeCode(fee.code, paymentGroup.remissions) && !isTurnOff }">{{ "Fee amount" | rpxTranslate }}</td>
+                      <td [ngClass]="{'tr-border': !fee.apportion_amount && !getRemissionByFeeCode(fee.code, paymentGroup.remissions) && !isTurnOff}">£{{ fee?.calculated_amount | number:'.2' }}</td>
                     </tr>
                     @if (fee.apportion_amount) {
                       <tr>
-                        <td class="bold tb-col-w tr-border" [ngClass]="{'tr-border': !fee.remissions}">{{ "Allocated amount" | rpxTranslate }}</td>
-                        <td [ngClass]="{'tr-border': !fee.remissions}">£{{ fee?.apportion_amount | number:'.2' }}</td>
+                        <td class="bold tb-col-w tr-border" [ngClass]="{'tr-border': !getRemissionByFeeCode(fee.code, paymentGroup.remissions)}">{{ "Allocated amount" | rpxTranslate }}</td>
+                        <td [ngClass]="{'tr-border': !getRemissionByFeeCode(fee.code, paymentGroup.remissions)}">£{{ fee?.apportion_amount | number:'.2' }}</td>
                       </tr>
                     }
                   </tbody>
@@ -235,7 +235,7 @@
                         <td class="govuk-table__cell whitespace-inherit">{{ remission?.fee_code }}</td>
                         <td class="govuk-table__cell whitespace-inherit">{{ remission?.hwf_amount | currency:'GBP':'symbol-narrow':'1.2-2'}}</td>
                         <td class="govuk-table__cell refundBtn whitespace-inherit"  >
-                          <button  [disabled]="!canItBeRefunded(remission)" (click)="addRefundForRemission(paymentGroup.payments[0],remission,paymentGroup.fees)" class="govuk-button govuk-button--secondary"> Add refund</button>
+                          <button  [disabled]="!canItBeRefunded(remission)" (click)="addRefundForRemission(paymentGroup.payments[0],[remission],paymentGroup.fees)" class="govuk-button govuk-button--secondary"> Add refund</button>
                         </td>
                       </tr>
                     </tbody>

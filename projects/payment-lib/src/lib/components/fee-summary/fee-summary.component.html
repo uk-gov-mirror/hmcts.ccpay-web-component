@@ -66,14 +66,14 @@
                   <td class="govuk-table__cell">{{ fee.description }}
                     @if ((isPaymentExist || (getRemissionByFeeCode(fee.code)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code)?.hwf_amount)) && !isTurnOff) {
                       <span class="no-border">
-                        @if ((!isPaymentExist || !fee.remissions)) {
-                          <a (click)="confirmRemoveFee(fee.id)" [ngClass]='isPaymentExist || fee.remissions? "disable-link" : ""'> <br>Remove</a>
+                        @if ((!isPaymentExist || !getRemissionByFeeCode(fee.code))) {
+                          <a (click)="confirmRemoveFee(fee)" [ngClass]='isPaymentExist || getRemissionByFeeCode(fee.code)? "disable-link" : ""'> <br>Remove</a>
                         }
                       </span>
                     }
                     @if ((!isPaymentExist || (getRemissionByFeeCode(fee.code)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code)?.hwf_amount)) && isTurnOff ) {
                       <span class="no-border">
-                        <a (click)="confirmRemoveFee(fee.id)">Remove</a>
+                        <a (click)="confirmRemoveFee(fee)">Remove</a>
                       </span>
                     }
                     @if ((getRemissionByFeeCode(fee.code)?.hwf_amount === 0 || !getRemissionByFeeCode(fee.code)?.hwf_amount) && !isPaymentExist && !isTurnOff) {

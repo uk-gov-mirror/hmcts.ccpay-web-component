@@ -705,7 +705,7 @@
                     }
                     <td class="govuk-table__cell whitespace-inherit">{{orderRef.orderRefId}}</td>
                     <td class="govuk-table__cell of-visible"> @if (serviceRequestValue !== 'false' && check4AllowedRoles2AccessPBApayment() && orderRef.orderStatus === 'Not paid') {
-                      <a href="javascript:void(0)" (click)="loadPBAAccountPage(orderRef)"> {{ "Pay now" | rpxTranslate }}</a>
+                      <a href="javascript:void(0)" (click)="loadPBAAccountPageFromOrderRef(orderRef)"> {{ "Pay now" | rpxTranslate }}</a>
                     }</td>
                     <td class="govuk-table__cell">
                       <a href="javascript:void(0)" (click)="goToOrderViewDetailSection(orderRef)">{{ "Review" | rpxTranslate }}</a>

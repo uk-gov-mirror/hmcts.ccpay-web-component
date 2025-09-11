@@ -983,4 +983,42 @@ export class CaseTransactionsComponent implements OnInit {
     this.paymentLibComponent.pbaPayOrderRef = orderRef;
     this.paymentLibComponent.viewName = 'pba-payment';
   }
+
+  loadPBAAccountPageFromOrderRef(orderRef: IOrderReferenceFee) {
+    // Convert IOrderReferenceFee to IPayment-like object
+    const paymentLike = {
+      reference: orderRef.orderRefId.toString(),
+      amount: orderRef.orderTotalFees,
+      // Add other required properties with default values
+      description: '',
+      currency: 'GBP',
+      date_created: orderRef.orderCreated.toISOString(),
+      banked_date: '',
+      document_control_number: '',
+      payer_name: orderRef.orderParty,
+      date_updated: orderRef.orderCreated.toISOString(),
+      ccd_case_number: '',
+      case_reference: '',
+      channel: '',
+      method: '',
+      external_provider: '',
+      status: orderRef.orderStatus,
+      payment_allocation: [],
+      external_reference: '',
+      site_id: '',
+      service_name: '',
+      account_number: '',
+      customer_reference: '',
+      organisation_name: '',
+      fees: [],
+      status_histories: [],
+      payment_group_reference: orderRef.orderRefId.toString(),
+      refund_enable: false,
+      over_payment: 0,
+      issue_refund_add_refund_add_remission: false,
+      issue_refund: false
+    } as IPayment;
+    
+    this.loadPBAAccountPage(paymentLike);
+  }
 }
