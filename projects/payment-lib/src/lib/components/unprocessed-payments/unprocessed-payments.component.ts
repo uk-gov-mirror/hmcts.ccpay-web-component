@@ -28,7 +28,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
   @Output() getUnprocessedFeeCount: EventEmitter<string> = new EventEmitter();
 
   viewStatus = 'main';
-  unassignedRecordList: IBSPayments;
+  unassignedRecordList: IBSPayments[];
   upPaymentErrorMessage: string = null;
   ccdCaseNumber: string;
   recordId: string = null;
@@ -44,7 +44,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
   isBulkScanEnable;
   isTurnOff: boolean = true;
   isStFixEnable;
-  unassignedRecordSelectedList: IBSPayments;
+  unassignedRecordSelectedList: IBSPayments[];
   unassignedRecordListLength: number = 0;
   showContent: boolean;
 

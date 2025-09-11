@@ -28,8 +28,8 @@
         @for (payment of payments.payments; track payment) {
           <tr>
             <td class="font-xsmall">
-              <a href="javascript:void(0)" (click)="loadPaymentViewComponent(payment.payment_group_reference, payment.payment_reference, payment.method)">{{ payment.payment_group_reference }}</a>
-              <td class="font-xsmall">{{ payment.payment_reference }}</td>
+              <a href="javascript:void(0)" (click)="loadPaymentViewComponent(payment.payment_group_reference, payment.reference, payment.method)">{{ payment.payment_group_reference }}</a>
+              <td class="font-xsmall">{{ payment.reference }}</td>
               <td class="font-xsmall">{{ payment.date_created | date:'dd MMM yyyy' }}</td>
               <td class="font-xsmall">{{ payment.channel | titlecase }}</td>
               <td class="font-xsmall">{{ payment.method | titlecase }}</td>
