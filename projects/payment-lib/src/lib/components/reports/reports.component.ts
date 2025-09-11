@@ -1,5 +1,7 @@
 import { Component, Input, OnInit, forwardRef, isStandalone, Inject } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { ErrorBannerComponent } from '../error-banner/error-banner.component';
 import { formatDate } from "@angular/common";
 import type { PaymentLibComponent } from '../../payment-lib.component';
 import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
@@ -7,13 +9,14 @@ import { BulkScaningPaymentService } from '../../services/bulk-scaning-payment/b
 import { ErrorHandlerService } from '../../services/shared/error-handler.service';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import {XlFileService} from '../../services/xl-file/xl-file.service';
-import { FindValueSubscriber } from 'rxjs/internal/operators/find';
 type PaymentLibAlias = PaymentLibComponent;
 
 @Component({
-  selector: 'ccpay-reports',
-  templateUrl: './reports.component.html',
-  styleUrls: ['./reports.component.scss']
+    selector: 'ccpay-reports',
+    templateUrl: './reports.component.html',
+    styleUrls: ['./reports.component.scss'],
+    standalone: true,
+    imports: [CommonModule, ReactiveFormsModule, ErrorBannerComponent]
 })
 export class ReportsComponent implements OnInit {
   @Input('ISPAYMENTSTATUSENABLED') ISPAYMENTSTATUSENABLED: boolean = true;

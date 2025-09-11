@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, Inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { NotificationPreviewComponent } from '../notification-preview/notification-preview.component';
 import { RefundsService } from '../../services/refunds/refunds.service';
 import { IRefundAction } from '../../interfaces/IRefundAction';
 import { IRefundList } from '../../interfaces/IRefundList';
@@ -14,9 +16,11 @@ import { INotificationPreview } from '../../interfaces/INotificationPreview';
 type PaymentLibAlias = PaymentLibComponent;
 
 @Component({
-  selector: 'ccpay-process-refund',
-  templateUrl: './process-refund.component.html',
-  styleUrls: ['./process-refund.component.css']
+    selector: 'ccpay-process-refund',
+    templateUrl: './process-refund.component.html',
+    styleUrls: ['./process-refund.component.css'],
+    standalone: true,
+    imports: [CommonModule, ReactiveFormsModule, NotificationPreviewComponent]
 })
 export class ProcessRefundComponent implements OnInit {
   @Input() refundReference: string;

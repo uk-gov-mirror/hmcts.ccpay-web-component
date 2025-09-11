@@ -1,5 +1,8 @@
 import { Component, OnInit, Input, Inject, AfterViewInit, EventEmitter, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { ErrorBannerComponent } from '../error-banner/error-banner.component';
+import { keyValuePipe } from '../../pipes/key-value.pipe';
 import type { PaymentLibComponent } from '../../payment-lib.component';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import { CaseTransactionsService } from '../../services/case-transactions/case-transactions.service';
@@ -16,9 +19,11 @@ type PaymentLibAlias = PaymentLibComponent;
 
 
 @Component({
-  selector: 'app-allocate-payments',
-  templateUrl: './allocate-payments.component.html',
-  styleUrls: ['./allocate-payments.component.scss']
+    selector: 'app-allocate-payments',
+    templateUrl: './allocate-payments.component.html',
+    styleUrls: ['./allocate-payments.component.scss'],
+    standalone: true,
+    imports: [CommonModule, ReactiveFormsModule, ErrorBannerComponent, keyValuePipe]
 })
 export class AllocatePaymentsComponent implements OnInit {
   @Input() isTurnOff: boolean;

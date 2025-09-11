@@ -1,13 +1,16 @@
 import { Component, Inject, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { PaymentListService } from '../../services/payment-list/payment-list.service';
 import { IPayments } from '../../interfaces/IPayments';
 import type { PaymentLibComponent } from '../../payment-lib.component';
 type PaymentLibAlias = PaymentLibComponent;
 
 @Component({
-  selector: 'ccpay-payment-list',
-  templateUrl: './payment-list.component.html',
-  styleUrls: ['./payment-list.component.css']
+    selector: 'ccpay-payment-list',
+    templateUrl: './payment-list.component.html',
+    styleUrls: ['./payment-list.component.css'],
+    standalone: true,
+    imports: [CommonModule]
 })
 export class PaymentListComponent implements OnInit {
   payments: IPayments;

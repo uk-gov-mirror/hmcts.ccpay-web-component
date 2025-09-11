@@ -1,4 +1,7 @@
 import { Component, OnInit, Input, Inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { AddRemissionComponent } from '../add-remission/add-remission.component';
+import { CcdHyphensPipe } from '../../pipes/ccd-hyphens.pipe';
 import { IPaymentGroup } from '../../interfaces/IPaymentGroup';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import { BulkScaningPaymentService } from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
@@ -16,9 +19,11 @@ type PaymentLibAlias = PaymentLibComponent;
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 
 @Component({
-  selector: 'ccpay-fee-summary',
-  templateUrl: './fee-summary.component.html',
-  styleUrls: ['./fee-summary.component.scss']
+    selector: 'ccpay-fee-summary',
+    templateUrl: './fee-summary.component.html',
+    styleUrls: ['./fee-summary.component.scss'],
+    standalone: true,
+    imports: [CommonModule, AddRemissionComponent, CcdHyphensPipe]
 })
 
 export class FeeSummaryComponent implements OnInit {

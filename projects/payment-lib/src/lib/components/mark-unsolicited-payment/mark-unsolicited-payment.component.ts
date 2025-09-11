@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, Inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { ErrorBannerComponent } from '../error-banner/error-banner.component';
 import type { PaymentLibComponent } from '../../payment-lib.component';
 import { BulkScaningPaymentService } from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
 import { IBSPayments } from '../../interfaces/IBSPayments';
@@ -10,9 +12,11 @@ type PaymentLibAlias = PaymentLibComponent;
 
 
 @Component({
-  selector: 'app-mark-unsolicited-payment',
-  templateUrl: './mark-unsolicited-payment.component.html',
-  styleUrls: ['./mark-unsolicited-payment.component.scss']
+    selector: 'app-mark-unsolicited-payment',
+    templateUrl: './mark-unsolicited-payment.component.html',
+    styleUrls: ['./mark-unsolicited-payment.component.scss'],
+    standalone: true,
+    imports: [CommonModule, ReactiveFormsModule, ErrorBannerComponent]
 })
 export class MarkUnsolicitedPaymentComponent implements OnInit {
   @Input() caseType: string;

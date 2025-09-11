@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { PaymentLibComponent } from '../../../../projects/payment-lib/src/lib/payment-lib.component';
 
 @Component({
-  selector: 'app-payment-lib-int',
-  templateUrl: './payment-lib-int.component.html',
-  styleUrls: ['./payment-lib-int.component.css']
+    selector: 'app-payment-lib-int',
+    templateUrl: './payment-lib-int.component.html',
+    styleUrls: ['./payment-lib-int.component.css'],
+    standalone: true,
+    imports: [CommonModule, PaymentLibComponent]
 })
 export class PaymentLibIntComponent implements OnInit {
   ccdCaseNumber: string;

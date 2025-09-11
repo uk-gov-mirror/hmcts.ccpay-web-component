@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, Inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { ErrorBannerComponent } from '../error-banner/error-banner.component';
 import type { PaymentLibComponent } from '../../payment-lib.component';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import { BulkScaningPaymentService } from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
@@ -9,9 +11,11 @@ import { AllocatePaymentRequest } from '../../interfaces/AllocatePaymentRequest'
 type PaymentLibAlias = PaymentLibComponent;
 
 @Component({
-  selector: 'app-mark-unidentified-payment',
-  templateUrl: './mark-unidentified-payment.component.html',
-  styleUrls: ['./mark-unidentified-payment.component.scss']
+    selector: 'app-mark-unidentified-payment',
+    templateUrl: './mark-unidentified-payment.component.html',
+    styleUrls: ['./mark-unidentified-payment.component.scss'],
+    standalone: true,
+    imports: [CommonModule, ReactiveFormsModule, ErrorBannerComponent]
 })
 export class MarkUnidentifiedPaymentComponent implements OnInit {
   @Input() caseType: string;
