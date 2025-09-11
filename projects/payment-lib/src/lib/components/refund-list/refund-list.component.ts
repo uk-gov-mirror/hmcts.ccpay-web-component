@@ -1,5 +1,5 @@
 import {Component, OnInit, Input} from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { RefundsService } from '../../services/refunds/refunds.service';
 import { IRefundList } from '../../interfaces/IRefundList';
 import { TableComponent } from '../table/table.component';
@@ -9,7 +9,7 @@ import { TableComponent } from '../table/table.component';
     templateUrl: './refund-list.component.html',
     styleUrls: ['./refund-list.component.css'],
     standalone: true,
-    imports: [CommonModule, TableComponent]
+    imports: [TableComponent]
 })
 export class RefundListComponent implements OnInit {
   @Input('USERID') USERID: string;

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { CommonModule } from '@angular/common';
+
 
 import { ICase } from '../../interfaces/ICase';
 import { CASES } from './mock-case-data';
@@ -10,7 +10,7 @@ import { CASES } from './mock-case-data';
     templateUrl: './case-list.component.html',
     styleUrls: ['./case-list.component.css'],
     standalone: true,
-    imports: [CommonModule, RouterLink]
+    imports: [RouterLink]
 })
 export class CaseListComponent implements OnInit {
   pageTitle: string = 'Case list';

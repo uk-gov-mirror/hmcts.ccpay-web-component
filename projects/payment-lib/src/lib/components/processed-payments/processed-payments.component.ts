@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { BulkScaningPaymentService } from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
 import {IPayment} from '../../interfaces/IPayment';
 import {Router} from '@angular/router';
@@ -7,7 +8,8 @@ import {Router} from '@angular/router';
     selector: 'ccpay-app-processed-payments',
     templateUrl: './processed-payments.component.html',
     styleUrls: ['./processed-payments.component.scss'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule]
 })
 export class ProcessedPaymentsComponent implements OnInit {
 

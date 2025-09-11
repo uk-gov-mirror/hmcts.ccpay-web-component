@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, forwardRef, isStandalone, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+
 import { ErrorBannerComponent } from '../error-banner/error-banner.component';
 import { formatDate } from "@angular/common";
 import type { PaymentLibComponent } from '../../payment-lib.component';
@@ -16,7 +16,7 @@ type PaymentLibAlias = PaymentLibComponent;
     templateUrl: './reports.component.html',
     styleUrls: ['./reports.component.scss'],
     standalone: true,
-    imports: [CommonModule, ReactiveFormsModule, ErrorBannerComponent]
+    imports: [ReactiveFormsModule, ErrorBannerComponent]
 })
 export class ReportsComponent implements OnInit {
   @Input('ISPAYMENTSTATUSENABLED') ISPAYMENTSTATUSENABLED: boolean = true;
