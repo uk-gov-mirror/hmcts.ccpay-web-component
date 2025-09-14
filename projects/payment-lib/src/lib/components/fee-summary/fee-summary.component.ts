@@ -31,6 +31,7 @@ export class FeeSummaryComponent implements OnInit {
   @Input() ccdCaseNumber: string;
   @Input() isTurnOff: string;
   @Input() caseType: string;
+  @Input() paymentLibComponent: PaymentLibAlias;
 
 
   bsPaymentDcnNumber: string;
@@ -60,7 +61,6 @@ export class FeeSummaryComponent implements OnInit {
     private bulkScaningPaymentService: BulkScaningPaymentService,
     private location: Location,
     private paymentViewService: PaymentViewService,
-    @Inject('PAYMENT_LIB') private paymentLibComponent: PaymentLibAlias,
     private OrderslistService: OrderslistService
   ) { }
 
@@ -68,7 +68,7 @@ export class FeeSummaryComponent implements OnInit {
     this.viewStatus = 'main';
     this.caseType = this.paymentLibComponent.CASETYPE;
     this.bsPaymentDcnNumber = this.paymentLibComponent.bspaymentdcn;
-    this.selectedOption = this.paymentLibComponent.SELECTED_OPTION.toLocaleLowerCase();
+    this.selectedOption = this.paymentLibComponent.SELECTED_OPTION?.toLocaleLowerCase();
     this.isStrategicFixEnable = this.paymentLibComponent.ISSFENABLE;
     this.OrderslistService.setCaseType(this.paymentLibComponent.CASETYPE);
 

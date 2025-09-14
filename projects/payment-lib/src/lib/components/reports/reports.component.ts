@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, forwardRef, isStandalone, Inject } from '@angular/core';
+import { Component, Input, OnInit, forwardRef, isStandalone } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 
 import { ErrorBannerComponent } from '../error-banner/error-banner.component';
@@ -20,6 +20,7 @@ type PaymentLibAlias = PaymentLibComponent;
 })
 export class ReportsComponent implements OnInit {
   @Input('ISPAYMENTSTATUSENABLED') ISPAYMENTSTATUSENABLED: boolean = true;
+  @Input() paymentLibComponent: PaymentLibAlias;
   fmt = 'dd/MM/yyyy';
   loc = 'en-US';
   reportsForm: FormGroup;
@@ -39,7 +40,6 @@ export class ReportsComponent implements OnInit {
     private errorHandlerService: ErrorHandlerService,
     private formBuilder: FormBuilder,
     private bulkScaningPaymentService: BulkScaningPaymentService,
-    @Inject('PAYMENT_LIB') private paymentLibComponent: PaymentLibAlias,
     private paymentViewService: PaymentViewService) { }
 
   ngOnInit() {

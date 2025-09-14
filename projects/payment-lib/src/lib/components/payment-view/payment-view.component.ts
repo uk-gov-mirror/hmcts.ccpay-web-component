@@ -28,7 +28,7 @@ const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
     selector: 'ccpay-payment-view',
     templateUrl: './payment-view.component.html',
     styleUrls: ['./payment-view.component.scss'],
-    providers: [{ provide: 'PAYMENT_VIEW', useExisting: forwardRef(() => PaymentViewComponent) }],
+    // providers removed - standalone components don't use providers array
     standalone: true,
     imports: [
         CommonModule, forwardRef(() => AddRemissionComponent),
@@ -48,6 +48,7 @@ export class PaymentViewComponent implements OnInit {
   @Input() orderRef: string;
   @Input() orderStatus: string;
   @Input() orderTotalPayments: number;
+  @Input() paymentLibComponent: PaymentLibAlias;
   @Input() payment: IPayment;
   @Input() LOGGEDINUSERROLES: string[];
   @Input() ISPAYMENTSTATUSENABLED: string;
@@ -96,7 +97,6 @@ export class PaymentViewComponent implements OnInit {
   notificationPreview: boolean;
   constructor(private paymentViewService: PaymentViewService,
     private notificationService: NotificationService,
-    @Inject('PAYMENT_LIB') private paymentLibComponent: PaymentLibAlias,
     private cd: ChangeDetectorRef,
     private OrderslistService: OrderslistService) {
   }

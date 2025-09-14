@@ -29,7 +29,7 @@ type PaymentLibAlias = PaymentLibComponent;
     selector: 'ccpay-service-request',
     templateUrl: './service-request.component.html',
     styleUrls: ['./service-request.component.scss'],
-    providers: [{ provide: 'SERVICE_REQUEST', useExisting: forwardRef(() => ServiceRequestComponent) }],
+    // providers removed - standalone components don't use providers array
     imports: [
         forwardRef(() => AddRemissionComponent),
         CommonModule,
@@ -48,6 +48,7 @@ export class ServiceRequestComponent implements OnInit {
   @Input('orderDetail') orderDetail: any[];
   @Input('orderRef') orderRef: string;
   @Input('orderStatus') orderStatus: string;
+  @Input() paymentLibComponent: PaymentLibAlias;
   @Input('orderParty') orderParty: string;
   @Input('orderCreated') orderCreated: Date;
   @Input('orderCCDEvent') orderCCDEvent: string;
@@ -130,7 +131,6 @@ export class ServiceRequestComponent implements OnInit {
   notificationPreview: boolean;
 
   constructor(
-    @Inject('PAYMENT_LIB') private paymentLibComponent: PaymentLibAlias,
     private paymentViewService: PaymentViewService,
     private OrderslistService: OrderslistService,
     private notificationService: NotificationService,
@@ -138,12 +138,12 @@ export class ServiceRequestComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-    this.isTurnOff = this.paymentLibComponent.ISTURNOFF;
+    this.isTurnOff = this.paymentLibComponent?.ISTURNOFF || false;
     this.isServiceRequest = 'false';
     if (this.viewStatus === undefined) {
-      this.viewStatus = this.paymentLibComponent.viewName;
+      this.viewStatus = this.paymentLibComponent?.viewName || '';
     }
-    if (this.paymentLibComponent.isFromServiceRequestPage && this.paymentLibComponent.isFromPaymentDetailPage) {
+    if (this.paymentLibComponent?.isFromServiceRequestPage && this.paymentLibComponent?.isFromPaymentDetailPage) {
       this.OrderslistService.getorderRefs().subscribe((data) => this.orderRef = data);
       this.OrderslistService.getorderCCDEvents().subscribe((data) => this.orderCCDEvent = data);
       this.OrderslistService.getorderCreateds().subscribe((data) => this.orderCreated = data);

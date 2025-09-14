@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Inject } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ErrorBannerComponent } from '../error-banner/error-banner.component';
@@ -20,6 +20,7 @@ type PaymentLibAlias = PaymentLibComponent;
 })
 export class MarkUnsolicitedPaymentComponent implements OnInit {
   @Input() caseType: string;
+  @Input() paymentLibComponent: PaymentLibAlias;
   markPaymentUnsolicitedForm: FormGroup;
   viewStatus: string;
   reasonHasError: boolean = false;
@@ -48,7 +49,6 @@ export class MarkUnsolicitedPaymentComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
     private paymentViewService: PaymentViewService,
-    @Inject('PAYMENT_LIB') private paymentLibComponent: PaymentLibAlias,
     private bulkScaningPaymentService: BulkScaningPaymentService) { }
 
   ngOnInit() {

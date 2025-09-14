@@ -3,7 +3,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Meta } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class WebComponentHttpClient {
   constructor(
     private http: HttpClient,
@@ -45,16 +47,35 @@ export class WebComponentHttpClient {
       });
     }
     headers['X-Requested-With'] = 'XMLHttpRequest';
-    if (csrfToken === null) {
-      if( document.cookie.split(';').find(row => row.startsWith('XSRF-TOKEN')) !== undefined ) {
-        headers['CSRF-Token'] = document.cookie.split(';').find(row => row.startsWith('XSRF-TOKEN')).split('=')[1];     
-      } else {
-        headers['CSRF-Token'] = document.cookie.split(';').find(row => row.startsWith(' XSRF-TOKEN')).split('=')[1];
-      }
-      
+    
+    // CSRF Token handling with proper error checking
+    let csrfTokenValue = null;
+    
+    if (csrfToken && csrfToken.content) {
+      // Primary: Get CSRF token from meta tag
+      csrfTokenValue = csrfToken.content;
+      console.log('WebComponentHttpClient: Using CSRF token from meta tag:', csrfTokenValue);
     } else {
-      headers['CSRF-Token'] = csrfToken.content;
+      // Fallback: Get CSRF token from cookie
+      try {
+        const xsrfCookie = document.cookie.split(';').find(row => row.trim().startsWith('XSRF-TOKEN'));
+        if (xsrfCookie) {
+          csrfTokenValue = xsrfCookie.split('=')[1];
+          console.log('WebComponentHttpClient: Using CSRF token from XSRF-TOKEN cookie:', csrfTokenValue);
+        } else {
+          console.warn('WebComponentHttpClient: No CSRF token found in meta tag or XSRF-TOKEN cookie');
+        }
+      } catch (error) {
+        console.error('WebComponentHttpClient: Error parsing XSRF-TOKEN cookie:', error);
+      }
     }
+    
+    if (csrfTokenValue) {
+      headers['CSRF-Token'] = csrfTokenValue;
+    } else {
+      console.warn('WebComponentHttpClient: No CSRF token available for request');
+    }
+    
     options.headers = new HttpHeaders(headers);
     options.responseType = 'text';
     return options;

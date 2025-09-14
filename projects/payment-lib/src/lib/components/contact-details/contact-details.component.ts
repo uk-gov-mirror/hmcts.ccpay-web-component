@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input, Inject } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import type { PaymentLibComponent } from '../../payment-lib.component';
 import { NotificationService } from '../../services/notification/notification.service';
@@ -19,6 +19,7 @@ export class ContactDetailsComponent implements OnInit {
   @Input('isEditOperation') isEditOperation: boolean;
   @Input('isEditOperationInRefundList') isEditOperationInRefundList: boolean;
   @Input('addressObj') addressObj: any;
+  @Input() paymentLibComponent: PaymentLibAlias;
   @Output() assignContactDetails: EventEmitter<any> = new EventEmitter();
   @Output() assignContactDetailsInFefundsList: EventEmitter<any> = new EventEmitter();
   @Output() redirectToIssueRefund: EventEmitter<any> = new EventEmitter();
@@ -51,8 +52,7 @@ export class ContactDetailsComponent implements OnInit {
   isCountryEmpty: boolean = false;
 
   constructor(private formBuilder: FormBuilder,
-    private notificationService: NotificationService,
-    @Inject('PAYMENT_LIB') private paymentLibComponent: PaymentLibAlias) { }
+    private notificationService: NotificationService) { }
 
   ngOnInit() {
     this.resetForm([false, false, false, false, false, false, false, false, false, false, false, false, false, false], 'all');

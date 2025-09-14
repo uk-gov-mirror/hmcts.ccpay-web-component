@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, Input, EventEmitter, Inject } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 import { BulkScaningPaymentService } from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
 import type { PaymentLibComponent } from '../../payment-lib.component';
 import { IBSPayments } from '../../interfaces/IBSPayments';
@@ -23,6 +23,7 @@ export class UnprocessedPaymentsComponent implements OnInit {
   @Input('ISSFENABLE') ISSFENABLE: boolean;
   @Input('PAYMENTSLENGTH') PAYMENTSLENGTH: Number;
   @Input('LEVEL') LEVEL: Number;
+  @Input() paymentLibComponent: PaymentLibComponent;
 
   @Output() selectedUnprocessedFeeEvent: EventEmitter<string> = new EventEmitter();
   @Output() getUnprocessedFeeCount: EventEmitter<string> = new EventEmitter();
@@ -50,7 +51,6 @@ export class UnprocessedPaymentsComponent implements OnInit {
 
   constructor(private router: Router,
     private bulkScaningPaymentService: BulkScaningPaymentService,
-    @Inject('PAYMENT_LIB') private paymentLibComponent: PaymentLibComponent,
     private paymentViewService: PaymentViewService,
     private OrderslistService: OrderslistService
   ) { }

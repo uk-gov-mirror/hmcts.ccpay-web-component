@@ -42,6 +42,7 @@ export class RefundStatusComponent implements OnInit {
   @Input() ccdCaseNumber: string;
   @Input() isTurnOff: boolean;
   @Input() orderParty: string;
+  @Input() paymentLibComponent: PaymentLibAlias;
   refundStatusForm: FormGroup;
   selectedRefundReason: string;
   rejectedRefundList: IRefundList[] = [];
@@ -94,7 +95,6 @@ export class RefundStatusComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
     private refundService: RefundsService,
     private notificationService: NotificationService,
-    @Inject('PAYMENT_LIB') private paymentLibComponent: PaymentLibAlias,
     private OrderslistService: OrderslistService,
     private paymentViewService: PaymentViewService) { }
 

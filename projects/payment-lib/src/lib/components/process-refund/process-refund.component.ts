@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Inject } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NotificationPreviewComponent } from '../notification-preview/notification-preview.component';
@@ -25,6 +25,7 @@ type PaymentLibAlias = PaymentLibComponent;
 export class ProcessRefundComponent implements OnInit {
   @Input() refundReference: string;
   @Input() refundlistsource: IRefundList;
+  @Input() paymentLibComponent: PaymentLibAlias;
 
   processRefundForm: FormGroup;
 
@@ -62,7 +63,6 @@ export class ProcessRefundComponent implements OnInit {
     private formBuilder: FormBuilder,
     private OrderslistService: OrderslistService,
     private notificationService: NotificationService,
-    @Inject('PAYMENT_LIB') private paymentLibComponent: PaymentLibAlias,
     private router: Router,
     private activeRoute: ActivatedRoute) {
   }

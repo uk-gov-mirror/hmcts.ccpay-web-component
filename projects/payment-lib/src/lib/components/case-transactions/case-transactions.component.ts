@@ -46,6 +46,7 @@ export class CaseTransactionsComponent implements OnInit {
   @Input('LOGGEDINUSERROLES') LOGGEDINUSERROLES: string[];
   @Input() isTakePayment: boolean;
   @Input() isFromServiceRequestPage: boolean;
+  @Input() paymentLibComponent: PaymentLibAlias;
   takePayment: boolean;
   ccdCaseNumber: string;
   excReference: string;
@@ -124,7 +125,6 @@ export class CaseTransactionsComponent implements OnInit {
     private paymentViewService: PaymentViewService,
     private bulkScaningPaymentService: BulkScaningPaymentService,
     private caseTransactionsService: CaseTransactionsService,
-    @Inject('PAYMENT_LIB') private paymentLibComponent: PaymentLibAlias,
     private OrderslistService: OrderslistService
   ) { }
 
@@ -161,7 +161,7 @@ export class CaseTransactionsComponent implements OnInit {
     }
     this.isBulkScanEnable = this.paymentLibComponent.ISBSENABLE;
     this.dcnNumber = this.paymentLibComponent.DCN_NUMBER;
-    this.selectedOption = this.paymentLibComponent.SELECTED_OPTION.toLocaleLowerCase();
+    this.selectedOption = this.paymentLibComponent.SELECTED_OPTION?.toLocaleLowerCase();
     this.isTurnOff = this.paymentLibComponent.ISTURNOFF;
     this.isStrategicFixEnable = this.paymentLibComponent.ISSFENABLE;
     if (!this.isTurnOff) {
@@ -1018,7 +1018,7 @@ export class CaseTransactionsComponent implements OnInit {
       issue_refund_add_refund_add_remission: false,
       issue_refund: false
     } as IPayment;
-    
+
     this.loadPBAAccountPage(paymentLike);
   }
 }

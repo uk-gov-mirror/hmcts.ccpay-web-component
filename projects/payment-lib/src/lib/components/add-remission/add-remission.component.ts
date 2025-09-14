@@ -43,7 +43,7 @@ const resolvedPromise = Promise.resolve(null);
     selector: 'ccpay-add-remission',
     templateUrl: './add-remission.component.html',
     styleUrls: ['./add-remission.component.scss'],
-    providers: [{ provide: 'ADD_REMISSION', useExisting: AddRemissionComponent }],
+    // providers removed - standalone components don't use providers array
     imports: [
         forwardRef(() => PaymentViewComponent),
         CommonModule,
@@ -90,6 +90,7 @@ export class AddRemissionComponent implements OnInit {
   @Input('orderFeesTotal') orderFeesTotal: number;
   @Input('orderTotalPayments') orderTotalPayments: number;
   @Input('orderRemissionTotal') orderRemissionTotal: number;
+  @Input() paymentLibComponent: PaymentLibAlias;
   @Output() cancelRemission: EventEmitter<void> = new EventEmitter();
   //@Output() refundListReason: EventEmitter<any> = new EventEmitter({reason:string, code:string});
   @Output() refundListReason = new EventEmitter<{ reason: string, code: string }>();
@@ -170,7 +171,6 @@ export class AddRemissionComponent implements OnInit {
     private router: Router,
     private paymentViewService: PaymentViewService,
     private notificationService: NotificationService,
-    @Inject('PAYMENT_LIB') private paymentLibComponent: PaymentLibAlias,
     private refundService: RefundsService,
     private cd: ChangeDetectorRef,
     private OrderslistService: OrderslistService) { }

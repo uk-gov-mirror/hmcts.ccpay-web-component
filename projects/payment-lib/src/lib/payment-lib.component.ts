@@ -22,41 +22,75 @@ import {AllocatePaymentsComponent} from './components/allocate-payments/allocate
 import {FeeSummaryComponent} from './components/fee-summary/fee-summary.component';
 import {ReportsComponent} from './components/reports/reports.component';
 
+// Import all required services
+import {PaymentViewService} from './services/payment-view/payment-view.service';
+import {BulkScaningPaymentService} from './services/bulk-scaning-payment/bulk-scaning-payment.service';
+import {RefundsService} from './services/refunds/refunds.service';
+import {CardDetailsService} from './services/card-details/card-details.service';
+import {CaseTransactionsService} from './services/case-transactions/case-transactions.service';
+import {ErrorHandlerService} from './services/shared/error-handler.service';
+import {XlFileService} from './services/xl-file/xl-file.service';
+import {NotificationService} from './services/notification/notification.service';
+import {PaymentListService} from './services/payment-list/payment-list.service';
+import {StatusHistoryService} from './services/status-history/status-history.service';
+
 @Component({
     selector: 'ccpay-payment-lib',
     template: `
+  <!-- Debug info -->
+  <div style="background: #f0f0f0; padding: 10px; margin: 10px; border: 1px solid #ccc;">
+    <h3>PaymentLibComponent Debug Info</h3>
+    <p><strong>viewName:</strong> {{viewName}}</p>
+    <p><strong>VIEW:</strong> {{VIEW}}</p>
+    <p><strong>REFUNDLIST:</strong> {{REFUNDLIST}}</p>
+    <p><strong>LOGGEDINUSERROLES length:</strong> {{LOGGEDINUSERROLES?.length}}</p>
+    <p><strong>API_ROOT:</strong> {{API_ROOT}}</p>
+  </div>
+
   @if (viewName === 'refund-list') {
     <ccpay-refund-list [USERID]="USERID" [LOGGEDINUSERROLES]="LOGGEDINUSERROLES" [LOGGEDINUSEREMAIL]="LOGGEDINUSEREMAIL"></ccpay-refund-list>
   }
   @if (viewName === 'payment-list') {
-    <ccpay-payment-list></ccpay-payment-list>
+    <ccpay-payment-list [paymentLibComponent]="this"></ccpay-payment-list>
   }
   @if (viewName === 'refundstatuslist') {
     <ccpay-refund-status
       [LOGGEDINUSERROLES]="LOGGEDINUSERROLES"
       [API_ROOT]="API_ROOT"
+      [paymentLibComponent]="this"
     > </ccpay-refund-status >
   }
   @if (viewName === 'payment-view') {
-    <ccpay-payment-view [LOGGEDINUSERROLES]="LOGGEDINUSERROLES"
-      [isTurnOff]="ISTURNOFF" [isTakePayment]="TAKEPAYMENT"  [caseType]="CASETYPE"
-      [ISPAYMENTSTATUSENABLED] = "ISPAYMENTSTATUSENABLED"
+    <ccpay-payment-view
+      [LOGGEDINUSERROLES]="LOGGEDINUSERROLES"
+      [isTurnOff]="ISTURNOFF"
+      [isTakePayment]="TAKEPAYMENT"
+      [caseType]="CASETYPE"
+      [ISPAYMENTSTATUSENABLED]="ISPAYMENTSTATUSENABLED"
+      [paymentLibComponent]="this"
     ></ccpay-payment-view>
   }
-  
+
   @if (viewName === 'process-refund') {
     <ccpay-process-refund
       [refundReference]="refundReference"
       [refundlistsource]="refundlistsource"
+      [paymentLibComponent]="this"
     ></ccpay-process-refund>
   }
   @if (viewName === 'pba-payment') {
     <ccpay-pba-payment
       [pbaPayOrderRef]="pbaPayOrderRef"
+      [paymentLibComponent]="this"
     ></ccpay-pba-payment>
   }
   @if (viewName === 'case-transactions') {
-    <ccpay-case-transactions [isTakePayment]="isTakePayment" [isFromServiceRequestPage]="isFromServiceRequestPage" [LOGGEDINUSERROLES]="LOGGEDINUSERROLES"></ccpay-case-transactions>
+    <ccpay-case-transactions
+      [isTakePayment]="isTakePayment"
+      [isFromServiceRequestPage]="isFromServiceRequestPage"
+      [LOGGEDINUSERROLES]="LOGGEDINUSERROLES"
+      [paymentLibComponent]="this"
+    ></ccpay-case-transactions>
   }
   @if (viewName === 'unidentifiedPage') {
     <app-mark-unidentified-payment
@@ -78,6 +112,7 @@ import {ReportsComponent} from './components/reports/reports.component';
       [paymentGroupRef]="paymentGroupReference"
       [isTurnOff]="ISTURNOFF"
       [caseType]="CASETYPE"
+      [paymentLibComponent]="this"
     ></ccpay-fee-summary>
   }
   @if (viewName === 'reports') {
@@ -85,8 +120,17 @@ import {ReportsComponent} from './components/reports/reports.component';
       [ISPAYMENTSTATUSENABLED] = "ISPAYMENTSTATUSENABLED"
     ></ccpay-reports>
   }
+
+  <!-- Fallback if no view matches -->
+  @if (!viewName) {
+    <div style="background: #ffebee; padding: 10px; margin: 10px; border: 1px solid #f44336;">
+      <h3>No View Selected</h3>
+      <p>viewName is empty or undefined. Check the view logic.</p>
+    </div>
+  }
   `,
-    providers: [{ provide: 'PAYMENT_LIB', useExisting: forwardRef(() => PaymentLibComponent) }],
+    // providers removed - standalone components don't use providers array
+    // Services should be provided at the application level or with @Injectable({ providedIn: 'root' })
     standalone: true,
     imports: [
     RefundListComponent,

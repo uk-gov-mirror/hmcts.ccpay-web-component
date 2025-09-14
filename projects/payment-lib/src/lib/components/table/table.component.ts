@@ -1,4 +1,4 @@
-import { Component, ViewChild, Input, ChangeDetectorRef, Inject } from '@angular/core';
+import { Component, ViewChild, Input, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
@@ -25,6 +25,7 @@ export class TableComponent {
   @Input('DATASOURCE') DATASOURCE: any[];
   @Input('STATUS') STATUS: string;
   @Input('errorMessage') errorMessage: string;
+  @Input() paymentLibComponent: PaymentLibAlias;
   isApprovalFlow: boolean;
   // displayedColumns = ['ccdCaseNumber', 'refundReference', 'reason', 'createBy', 'updateDate', 'Action'];
   displayedColumns = ['ccd_case_number', 'refund_reference', 'user_full_name', 'date_created', 'date_updated', 'Action'];
@@ -38,7 +39,6 @@ export class TableComponent {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   constructor(
-    @Inject('PAYMENT_LIB') private paymentLibComponent: PaymentLibAlias,
     private cdRef: ChangeDetectorRef,
     private OrderslistService: OrderslistService,
     private router: Router,

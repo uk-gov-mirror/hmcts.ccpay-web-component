@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Inject } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import type { PaymentLibComponent } from '../../payment-lib.component';
 import { IserviceRequestCardPayment } from '../../interfaces/IserviceRequestCardPayment';
@@ -21,6 +21,7 @@ const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 })
 export class PbaPaymentComponent implements OnInit {
   @Input() pbaPayOrderRef: any;
+  @Input() paymentLibComponent: PaymentLibAlias;
   viewStatus: string;
   pbaAccountList: string[];
   isPBAAccountHold: boolean = false;
@@ -40,8 +41,7 @@ export class PbaPaymentComponent implements OnInit {
   pbaAccountrPaymentResult: any;
   orgName: string = '';
 
-  constructor(@Inject('PAYMENT_LIB') private paymentLibComponent: PaymentLibAlias,
-    private paymentViewService: PaymentViewService) { }
+  constructor(private paymentViewService: PaymentViewService) { }
 
   ngOnInit() {
     this.pbaPayOrderRef = this.paymentLibComponent.pbaPayOrderRef;

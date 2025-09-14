@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PaymentListService } from '../../services/payment-list/payment-list.service';
 import { IPayments } from '../../interfaces/IPayments';
@@ -13,16 +13,16 @@ type PaymentLibAlias = PaymentLibComponent;
     imports: [CommonModule]
 })
 export class PaymentListComponent implements OnInit {
+  @Input() paymentLibComponent: PaymentLibAlias;
   payments: IPayments;
   errorMessage: string;
   code: string;
 
-  constructor(private paymentListService: PaymentListService,
-    @Inject('PAYMENT_LIB') private paymentLibComponent: PaymentLibAlias) {
+  constructor(private paymentListService: PaymentListService) {
   }
 
   ngOnInit() {
-    this.paymentListService.getPaymentByCcdCaseNumber(this.paymentLibComponent.CCD_CASE_NUMBER, this.paymentLibComponent.PAYMENT_METHOD)
+    this.paymentListService.getPaymentByCcdCaseNumber(this.paymentLibComponent?.CCD_CASE_NUMBER || '', this.paymentLibComponent?.PAYMENT_METHOD || '')
       .subscribe(
         payments => this.payments = payments,
         (error: any) => this.errorMessage = <any>error

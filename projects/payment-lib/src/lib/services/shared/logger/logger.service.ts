@@ -14,9 +14,15 @@ export abstract class Logger {
 })
 export class LoggerService implements Logger {
 
-  info: any;
-  warn: any;
-  error: any;
+  info = (message?: any, ...optionalParams: any[]): void => {
+    console.log(message, ...optionalParams);
+  };
+  warn = (message?: any, ...optionalParams: any[]): void => {
+    console.warn(message, ...optionalParams);
+  };
+  error = (message?: any, ...optionalParams: any[]): void => {
+    console.error(message, ...optionalParams);
+  };
 
   invokeConsoleMethod(type: string, args?: any): void {}
 }

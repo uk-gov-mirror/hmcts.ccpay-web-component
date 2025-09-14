@@ -421,6 +421,7 @@
               [FEE_RECORDS_EXISTS]="isFeeRecordsExist"
               (getUnprocessedFeeCount) = "getUnprocessedFeeCount($event)"
               [IS_OS_AMT_AVAILABLE]="isGrpOutstandingAmtPositive"
+              [paymentLibComponent]="paymentLibComponent"
               (selectedUnprocessedFeeEvent) = "selectedUnprocessedFeeEvent($event)">
             </ccpay-app-unprocessed-payments>
           }
@@ -446,6 +447,7 @@
               [ISSFENABLE]="isStrategicFixEnable"
               [FEE_RECORDS_EXISTS]="isFeeRecordsExist"
               [IS_OS_AMT_AVAILABLE]="isGrpOutstandingAmtPositive"
+              [paymentLibComponent]="paymentLibComponent"
               (getUnprocessedFeeCount) = "getUnprocessedFeeCount($event)"
               [PAYMENTSLENGTH]="allPayments?.length"
               [PAYMENTREF]="paymentRef"
@@ -496,6 +498,7 @@
                 [IS_OS_AMT_AVAILABLE]="isGrpOutstandingAmtPositive"
                 [PAYMENTSLENGTH]="allPayments?.length"
                 [PAYMENTREF]="paymentRef"
+                [paymentLibComponent]="paymentLibComponent"
                 (getUnprocessedFeeCount) = "getUnprocessedFeeCount($event)"
                 (selectedUnprocessedFeeEvent) = "selectedUnprocessedFeeEvent($event)">
               </ccpay-app-unprocessed-payments>
@@ -624,6 +627,7 @@
               [FEE_RECORDS_EXISTS]="isFeeRecordsExist"
               (getUnprocessedFeeCount) = "getUnprocessedFeeCount($event)"
               [IS_OS_AMT_AVAILABLE]="isGrpOutstandingAmtPositive"
+              [paymentLibComponent]="paymentLibComponent"
               (selectedUnprocessedFeeEvent) = "selectedUnprocessedFeeEvent($event)">
             </ccpay-app-unprocessed-payments>
           }
@@ -663,6 +667,7 @@
               [isTurnOff]="isTurnOff"
               [orderParty]="orderParty"
               [LOGGEDINUSERROLES]="LOGGEDINUSERROLES"
+              [paymentLibComponent]="paymentLibComponent"
             ></ccpay-refund-status>
           </div>
         }
@@ -775,6 +780,7 @@
                 [ISSFENABLE]="isStrategicFixEnable"
                 [PAYMENTSLENGTH]="allPayments?.length"
                 [PAYMENTREF]="paymentRef"
+                [paymentLibComponent]="paymentLibComponent"
                 (getUnprocessedFeeCount) = "getUnprocessedFeeCount($event)"
                 [FEE_RECORDS_EXISTS]="isAnyFeeGroupAvilable"
                 [IS_OS_AMT_AVAILABLE]="isGrpOutstandingAmtPositive"
@@ -791,6 +797,7 @@
         <ccpay-refund-status
           [ccdCaseNumber]="ccdCaseNumber"
           [orderParty] ="orderParty"
+          [paymentLibComponent]="paymentLibComponent"
         ></ccpay-refund-status>
       </div>
     }
