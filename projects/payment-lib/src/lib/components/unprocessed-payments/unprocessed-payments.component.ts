@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, Input, EventEmitter, Inject } from '@angular/core';
 import { BulkScaningPaymentService } from '../../services/bulk-scaning-payment/bulk-scaning-payment.service';
-import type { PaymentLibComponent } from '../../payment-lib.component';
+import { PaymentLibComponent } from '../../payment-lib.component';
 import { IBSPayments } from '../../interfaces/IBSPayments';
 import { Router } from '@angular/router';
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
@@ -8,11 +8,10 @@ import { OrderslistService } from '../../services/orderslist.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'ccpay-app-unprocessed-payments',
-  templateUrl: './unprocessed-payments.component.html',
-  styleUrls: ['./unprocessed-payments.component.scss'],
-  imports: [CommonModule],
-  standalone: true
+    selector: 'ccpay-app-unprocessed-payments',
+    templateUrl: './unprocessed-payments.component.html',
+    styleUrls: ['./unprocessed-payments.component.scss'],
+    imports: [CommonModule]
 })
 export class UnprocessedPaymentsComponent implements OnInit {
 

@@ -19,29 +19,26 @@ import {ContactDetailsComponent} from '../contact-details/contact-details.compon
 import {NotificationPreviewComponent} from '../notification-preview/notification-preview.component';
 import {CaseTransactionsComponent} from '../case-transactions/case-transactions.component';
 import {CcdHyphensPipe} from '../../pipes/ccd-hyphens.pipe';
-import {CapitalizePipe} from '../../pipes/capitalize.pipe';
 import {RpxTranslationModule} from 'rpx-xui-translation';
 import type { PaymentLibComponent } from '../../payment-lib.component';
 
 type PaymentLibAlias = PaymentLibComponent;
 
 @Component({
-  selector: 'ccpay-service-request',
-  templateUrl: './service-request.component.html',
-  styleUrls: ['./service-request.component.scss'],
-  providers: [{ provide: 'SERVICE_REQUEST', useExisting: forwardRef(() => ServiceRequestComponent) }],
-  imports: [
-    forwardRef(() => AddRemissionComponent),
-    CommonModule,
-    forwardRef(() => PaymentViewComponent),
-    forwardRef(() => ContactDetailsComponent),
-    forwardRef(() => NotificationPreviewComponent),
-    forwardRef(() => CaseTransactionsComponent),
-    CcdHyphensPipe,
-    CapitalizePipe,
-    RpxTranslationModule
-  ],
-  standalone: true
+    selector: 'ccpay-service-request',
+    templateUrl: './service-request.component.html',
+    styleUrls: ['./service-request.component.scss'],
+    providers: [{ provide: 'SERVICE_REQUEST', useExisting: forwardRef(() => ServiceRequestComponent) }],
+    imports: [
+        forwardRef(() => AddRemissionComponent),
+        CommonModule,
+        forwardRef(() => PaymentViewComponent),
+        forwardRef(() => ContactDetailsComponent),
+        forwardRef(() => NotificationPreviewComponent),
+        forwardRef(() => CaseTransactionsComponent),
+        CcdHyphensPipe,
+        RpxTranslationModule
+    ]
 })
 export class ServiceRequestComponent implements OnInit {
   @Input('LOGGEDINUSERROLES') LOGGEDINUSERROLES: string[];

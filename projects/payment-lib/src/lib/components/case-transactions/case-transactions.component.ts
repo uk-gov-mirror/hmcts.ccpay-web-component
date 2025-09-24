@@ -16,7 +16,6 @@ import {CommonModule} from '@angular/common';
 import {AddRemissionComponent} from '../add-remission/add-remission.component';
 import {RefundStatusComponent} from '../refund-status/refund-status.component';
 import {CcdHyphensPipe} from '../../pipes/ccd-hyphens.pipe';
-import {CapitalizePipe} from '../../pipes/capitalize.pipe';
 import {FormsModule} from '@angular/forms';
 import {RpxTranslationModule} from 'rpx-xui-translation';
 import type { PaymentLibComponent } from '../../payment-lib.component';
@@ -26,21 +25,19 @@ type PaymentLibAlias = PaymentLibComponent;
 const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 
 @Component({
-  selector: 'ccpay-case-transactions',
-  templateUrl: './case-transactions.component.html',
-  styleUrls: ['./case-transactions.component.css'],
-  imports: [
-    CommonModule,
-    forwardRef(() => ServiceRequestComponent),
-    forwardRef(() => UnprocessedPaymentsComponent),
-    forwardRef(() => AddRemissionComponent),
-    RefundStatusComponent,
-    CcdHyphensPipe,
-    CapitalizePipe,
-    FormsModule,
-    RpxTranslationModule
-  ],
-  standalone: true
+    selector: 'ccpay-case-transactions',
+    templateUrl: './case-transactions.component.html',
+    styleUrls: ['./case-transactions.component.css'],
+    imports: [
+        CommonModule,
+        forwardRef(() => ServiceRequestComponent),
+        forwardRef(() => UnprocessedPaymentsComponent),
+        forwardRef(() => AddRemissionComponent),
+        RefundStatusComponent,
+        CcdHyphensPipe,
+        FormsModule,
+        RpxTranslationModule
+    ]
 })
 export class CaseTransactionsComponent implements OnInit {
   @Input('LOGGEDINUSERROLES') LOGGEDINUSERROLES: string[];
