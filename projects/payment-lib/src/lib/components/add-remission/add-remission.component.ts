@@ -29,6 +29,7 @@ import {CommonModule} from '@angular/common';
 import {ServiceRequestComponent} from '../service-request/service-request.component';
 import {NotificationPreviewComponent} from '../notification-preview/notification-preview.component';
 import {CcdHyphensPipe} from '../../pipes/ccd-hyphens.pipe';
+import {CapitalizePipe} from '../../pipes/capitalize.pipe';
 import {ContactDetailsComponent} from '../contact-details/contact-details.component';
 import {RpxTranslationModule} from 'rpx-xui-translation';
 import type { PaymentLibComponent } from '../../payment-lib.component';
@@ -39,21 +40,23 @@ const BS_ENABLE_FLAG = 'bulk-scan-enabling-fe';
 const resolvedPromise = Promise.resolve(null);
 
 @Component({
-    selector: 'ccpay-add-remission',
-    templateUrl: './add-remission.component.html',
-    styleUrls: ['./add-remission.component.scss'],
-    providers: [{ provide: 'ADD_REMISSION', useExisting: AddRemissionComponent }],
-    imports: [
-        forwardRef(() => PaymentViewComponent),
-        CommonModule,
-        forwardRef(() => ServiceRequestComponent),
-        forwardRef(() => NotificationPreviewComponent),
-        forwardRef(() => ContactDetailsComponent),
-        CcdHyphensPipe,
-        FormsModule,
-        ReactiveFormsModule,
-        RpxTranslationModule
-    ]
+  selector: 'ccpay-add-remission',
+  templateUrl: './add-remission.component.html',
+  styleUrls: ['./add-remission.component.scss'],
+  providers: [{ provide: 'ADD_REMISSION', useExisting: AddRemissionComponent }],
+  imports: [
+    forwardRef(() => PaymentViewComponent),
+    CommonModule,
+    forwardRef(() => ServiceRequestComponent),
+    forwardRef(() => NotificationPreviewComponent),
+    forwardRef(() => ContactDetailsComponent),
+    CcdHyphensPipe,
+    CapitalizePipe,
+    FormsModule,
+    ReactiveFormsModule,
+    RpxTranslationModule
+  ],
+  standalone: true
 })
 export class AddRemissionComponent implements OnInit {
   @Input() fee: IFee;
