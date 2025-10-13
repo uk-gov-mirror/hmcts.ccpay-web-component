@@ -28,25 +28,18 @@ handleError(err: HttpErrorResponse): Observable<any> {
         // Attempt to parse error as JSON
         const parsedError = typeof err.error === 'string' ? JSON.parse(err.error) : err.error;
         if(parsedError){
-          if (parsedError.statusCode && parsedError.statusCode === 500) {
+          if (parsedError.status && parsedError.status === 500) {
             errorMessage = 'Internal server error';
           } else if (parsedError.message) {
-              if(parsedError.error !=undefined && parsedError.statusCode === 400){
+              if(parsedError.error !=undefined && parsedError.status === 400){
                   errorMessage = parsedError.error;
               }else{
                 errorMessage = parsedError.message;
               }
           } else if (parsedError.error) {
             errorMessage = parsedError.error;
-          } else {
-            const errorMessagePattern = /^\d+\s-\s\"(.+)\"$/;
-            const match = parsedError.err.match(errorMessagePattern);
-            if (match && match[1]) {
-              errorMessage = match[1];
-            } else {
-              // Fallback in case the pattern does not match
-              errorMessage = err.error;
-            }
+          } else if(parsedError.err!=null) {
+              errorMessage = parsedError.err;
           }
         }else{
           errorMessage = 'An unexpected error occurred';
