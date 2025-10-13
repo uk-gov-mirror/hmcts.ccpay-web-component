@@ -6492,7 +6492,7 @@ __metadata:
     local-storage: ^2.0.0
     ng-packagr: ^20.3.0
     protractor: ~7.0.0
-    rpx-xui-translation: 1.1.0
+    rpx-xui-translation: 1.1.2-CME-780-9
     rxjs: ~6.6.7
     rxjs-compat: ^6.6.7
     sass: ^1.64.1
@@ -12954,17 +12954,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rpx-xui-translation@npm:1.1.0":
-  version: 1.1.0
-  resolution: "rpx-xui-translation@npm:1.1.0"
+"rpx-xui-translation@npm:1.1.2-CME-780-9":
+  version: 1.1.2-CME-780-9
+  resolution: "rpx-xui-translation@npm:1.1.2-CME-780-9"
   dependencies:
     dexie: ^3.2.2
     luxon: ^2.4.0
     tslib: ^2.0.0
   peerDependencies:
-    "@angular/common": ^18.2.13
-    "@angular/core": ^18.2.13
-  checksum: d262d8d4cf6ddbcfaf9ae7bc0e6308220b6359c3a2be3c9c5c0c81af0a0f52fc75ccba02a1ddc6b8fd6e099566d9a1fa39910babef6da2584b3767f804fe49a3
+    "@angular/common": ^20.3.1
+    "@angular/core": ^20.3.1
+  checksum: e42437945561e679f9c3cbaf2ac5f0f30445036fe88caa0d0cce43b1bc0b21fa986e777c73f7699d8735166360a1276b60cc04470d039155bb36cedab3155cfc
   languageName: node
   linkType: hard
 
