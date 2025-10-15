@@ -246,7 +246,18 @@ export class FeeSummaryComponent implements OnInit {
   takePayment() {
     this.isConfirmationBtnDisabled = true;
     const requestBody = new PaymentToPayhubRequest(this.ccdCaseNumber, this.outStandingAmount, this.caseType, this.paymentMethod),
-      antennaReqBody = new PayhubAntennaRequest(this.ccdCaseNumber, this.outStandingAmount, this.caseType, this.paymentMethod);
+
+      antennaReqBody = new PayhubAntennaRequest(this.ccdCaseNumber, this.outStandingAmount, this.caseType, this.paymentMethod,
+        this.paymentLibComponent.SELECTED_OPTION,
+        this.paymentLibComponent.DCN_NUMBER,
+        this.paymentLibComponent.TAKEPAYMENT,
+        this.paymentLibComponent.ISBSENABLE.valueOf(),
+        this.isStrategicFixEnable,
+        this.isTurnOff,
+        this.paymentLibComponent.ISPAYMENTSTATUSENABLED.valueOf(),
+        this.paymentLibComponent.EXC_REFERENCE
+      );
+
 
     if (this.platForm === 'Antenna') {
 
