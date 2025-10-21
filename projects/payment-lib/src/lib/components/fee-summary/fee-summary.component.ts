@@ -7,7 +7,7 @@ import {IFee} from '../../interfaces/IFee';
 import {PaymentToPayhubRequest} from '../../interfaces/PaymentToPayhubRequest';
 import {PayhubAntennaRequest} from '../../interfaces/PayhubAntennaRequest';
 import {SafeHtml} from '@angular/platform-browser';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {OrderslistService} from '../../services/orderslist.service';
 import type { PaymentLibComponent } from '../../payment-lib.component';
@@ -57,9 +57,11 @@ export class FeeSummaryComponent implements OnInit {
   isRemissionsExist: Boolean = false;
   isRemissionsMatch = false;
   isStrategicFixEnable: boolean;
+  forceTelephony: null;
 
   constructor(
     private router: Router,
+    private activatedRoute: ActivatedRoute,
     private bulkScaningPaymentService: BulkScaningPaymentService,
     private location: Location,
     private paymentViewService: PaymentViewService,
@@ -71,10 +73,12 @@ export class FeeSummaryComponent implements OnInit {
     this.viewStatus = 'main';
     this.caseType = this.paymentLibComponent.CASETYPE;
     this.bsPaymentDcnNumber = this.paymentLibComponent.bspaymentdcn;
+    this.forceTelephony = this.activatedRoute.snapshot.queryParams['forceTelephony'];
     this.selectedOption = this.paymentLibComponent.SELECTED_OPTION.toLocaleLowerCase();
     this.isStrategicFixEnable = this.paymentLibComponent.ISSFENABLE;
     this.OrderslistService.setCaseType(this.paymentLibComponent.CASETYPE);
     this.isTelephonySelectionEnableNull();
+    this.IsForceTelephonyEnable();
 
 
     this.platForm = 'Antenna';
@@ -318,6 +322,13 @@ export class FeeSummaryComponent implements OnInit {
   isTelephonySelectionEnableNull() {
     if (this.telephonySelectionEnable === null || this.telephonySelectionEnable === undefined) {
       this.telephonySelectionEnable = false;
+    }
+  }
+
+  IsForceTelephonyEnable() {
+
+    if (this.forceTelephony ===  true || this.forceTelephony ===  'true' ) {
+      this.bsPaymentDcnNumber = null;
     }
   }
 }
