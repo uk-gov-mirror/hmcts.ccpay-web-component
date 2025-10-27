@@ -57,7 +57,7 @@ export class FeeSummaryComponent implements OnInit {
   isRemissionsExist: Boolean = false;
   isRemissionsMatch = false;
   isStrategicFixEnable: boolean;
-  forceTelephony: null;
+  forceTelephony: boolean;
 
   constructor(
     private router: Router,
@@ -78,7 +78,7 @@ export class FeeSummaryComponent implements OnInit {
     this.isStrategicFixEnable = this.paymentLibComponent.ISSFENABLE;
     this.OrderslistService.setCaseType(this.paymentLibComponent.CASETYPE);
     this.isTelephonySelectionEnableNull();
-    this.IsForceTelephonyEnable();
+    this.isForceTelephonyEnable();
 
 
     this.platForm = 'Antenna';
@@ -325,9 +325,9 @@ export class FeeSummaryComponent implements OnInit {
     }
   }
 
-  IsForceTelephonyEnable() {
+  isForceTelephonyEnable() {
 
-    if (this.forceTelephony ===  true || this.forceTelephony ===  'true' ) {
+    if (this.forceTelephony !== null && this.forceTelephony === true) {
       this.bsPaymentDcnNumber = null;
     }
   }
