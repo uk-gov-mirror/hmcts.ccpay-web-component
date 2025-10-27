@@ -73,7 +73,7 @@ export class FeeSummaryComponent implements OnInit {
     this.viewStatus = 'main';
     this.caseType = this.paymentLibComponent.CASETYPE;
     this.bsPaymentDcnNumber = this.paymentLibComponent.bspaymentdcn;
-    this.forceTelephony = this.activatedRoute.snapshot.queryParams['forceTelephony'];
+    this.forceTelephony = this.parseBoolean(this.activatedRoute.snapshot.queryParams['forceTelephony']);
     this.selectedOption = this.paymentLibComponent.SELECTED_OPTION.toLocaleLowerCase();
     this.isStrategicFixEnable = this.paymentLibComponent.ISSFENABLE;
     this.OrderslistService.setCaseType(this.paymentLibComponent.CASETYPE);
@@ -330,5 +330,10 @@ export class FeeSummaryComponent implements OnInit {
     if (this.forceTelephony !== null && this.forceTelephony === true) {
       this.bsPaymentDcnNumber = null;
     }
+  }
+
+
+  parseBoolean(value: any): boolean {
+    return String(value).toLowerCase() === 'true';
   }
 }
