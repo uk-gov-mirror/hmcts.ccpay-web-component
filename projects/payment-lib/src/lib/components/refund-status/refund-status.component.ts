@@ -479,4 +479,13 @@ export class RefundStatusComponent implements OnInit {
     this.notificationSentView = false;
   }
 
+    check4AllowedRoles2DisplayEditRefundBtn = (): boolean => {
+      return this.allowedRolesToAccessRefund.some(role =>
+        this.LOGGEDINUSERROLES.indexOf(role) !== -1
+      );
+    };
+
+  onRefundStatusButtonClick(){
+    }
+
 }

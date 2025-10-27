@@ -172,3 +172,14 @@
   background-color: #dee0e2;
   border: 2px solid #0b0c0c;
 }
+
+.refund-status-history-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1em;
+}
+
+.govuk-button--secondary {
+  margin-bottom: 0; /* Remove extra margin */
+}
