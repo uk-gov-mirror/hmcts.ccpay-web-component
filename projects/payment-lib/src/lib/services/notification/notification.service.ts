@@ -44,9 +44,9 @@ export class NotificationService {
 
   getNotificationInstructionType(paymentChannel: string, paymentMethod: string): any {
     if (paymentChannel === 'bulk scan' && paymentMethod === 'postal order') {
-      return 'SendRefund';
+      return 'RefundWhenContacted';
     } else if (paymentChannel === 'bulk scan' && paymentMethod === 'cash') {
-      return 'SendRefund';
+      return 'RefundWhenContacted';
     } else if (paymentChannel === 'online' && paymentMethod === 'card') {
       return 'SendRefund';
     } else if (paymentChannel === 'telephony' && paymentMethod === 'card') {
