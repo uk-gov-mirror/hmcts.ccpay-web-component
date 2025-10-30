@@ -91,6 +91,7 @@ export class RefundStatusComponent implements OnInit {
   notificationPreview: boolean = false;
   notificationSentView: boolean = false;
   allowedRolesToAccessRefund = ['payments-refund-approver', 'payments-refund', 'payments'];
+  isRefundStatusResetBtnDisabled: boolean = false;
 
   constructor(private formBuilder: FormBuilder,
     private refundService: RefundsService,
@@ -488,7 +489,7 @@ export class RefundStatusComponent implements OnInit {
 
 
   displayResetRefundConfirmation(){
-
+    this.isRefundStatusResetBtnDisabled = true;
     this.viewName = 'confirmSubmitResetRefund';
   }
 
