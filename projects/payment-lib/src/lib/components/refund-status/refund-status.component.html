@@ -133,7 +133,7 @@
         <button
           type="button"
           class="govuk-button govuk-button--secondary"
-          (click)="onRefundStatusButtonClick()">
+          (click)="displayResetRefundConfirmation()">
           Reset Refund
         </button>
       </div>
@@ -460,5 +460,57 @@
           Cancel
       </a>
   </p>
+
+</ng-container>
+
+
+<ng-container *ngIf="viewName === 'confirmSubmitResetRefund'">
+
+  <h1 class="govuk-heading-l">Reset Refund</h1>
+
+
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Refund Actions</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: center;
+        font-family: Arial, sans-serif;
+      }
+
+      .refund-list {
+        margin-bottom: 40px;
+        text-align: left;
+      }
+
+      .refund-list ul {
+        list-style-type: disc;
+        padding-left: 20px;
+      }
+    </style>
+  </head>
+  <body>
+  <div class="refund-list">
+    <ul>
+      <li>Close the current Refund {{ refundlist?.refund_reference }}</li>
+      <li>Reissue the refund with a new refund reference</li>
+      <li>Send a new Offer and Contact notification for the issued refund</li>
+    </ul>
+  </div>
+  </body>
+  </html>
+
+  <div class="govuk-button-group">
+    <button (click)="loadRefundListPage()" class="govuk-button"> Continue</button>
+    <button (click)="redirectToRefundListPage()" class="govuk-button govuk-button--secondary"> Cancel</button>
+  </div>
 
 </ng-container>
