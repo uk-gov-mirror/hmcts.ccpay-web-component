@@ -132,6 +132,7 @@
       <div *ngIf="check4AllowedRoles2DisplayEditRefundBtn && refundStatusHistories?.length && refundStatusHistories[0]?.status === 'Expired'">
         <button
           type="button"
+          [disabled]="isRefundStatusResetBtnDisabled"
           class="govuk-button govuk-button--secondary"
           (click)="displayResetRefundConfirmation()">
           Reset Refund
