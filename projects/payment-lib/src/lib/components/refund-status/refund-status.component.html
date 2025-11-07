@@ -129,7 +129,7 @@
     <br />
     <div class="refund-status-history-header govuk-flex">
       <h2 class="govuk-heading-m">Refund status history</h2>
-      <div *ngIf="check4AllowedRoles2DisplayEditRefundBtn && refundStatusHistories?.length && refundStatusHistories[0]?.status === 'Expired'">
+      <div *ngIf="getResetRefundVisibility">
         <button
           type="button"
           [disabled]="isRefundStatusResetBtnDisabled"
@@ -475,28 +475,6 @@
   <head>
     <meta charset="UTF-8">
     <title>Refund Actions</title>
-    <style>
-      body {
-        margin: 0;
-        padding: 0;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-        align-items: center;
-        font-family: Arial, sans-serif;
-      }
-
-      .refund-list {
-        margin-bottom: 40px;
-        text-align: left;
-      }
-
-      .refund-list ul {
-        list-style-type: disc;
-        padding-left: 20px;
-      }
-    </style>
   </head>
   <body>
   <div class="refund-list">
@@ -510,7 +488,7 @@
   </html>
 
   <div class="govuk-button-group">
-    <button (click)="loadRefundListPage()" class="govuk-button"> Continue</button>
+    <button (click)="postResetRefund()" class="govuk-button"> Continue</button>
     <button (click)="redirectToRefundListPage()" class="govuk-button govuk-button--secondary"> Cancel</button>
   </div>
 
