@@ -496,6 +496,36 @@ export class RefundStatusComponent implements OnInit {
 
   redirectToRefundListPage() {
     this.viewName = 'refundview';
+    this.isRefundStatusResetBtnDisabled = false;
     this.paymentLibComponent.viewName = 'refundstatuslist';
   }
+
+
+  postResetRefund() {
+
+    this.refundService.postResetRefund(this.refundlist.refund_reference).subscribe(
+      (response) => {
+        this.isResendOperationSuccess = response;
+        this.loadRefundListPage();
+      },
+      (error: any) => {
+        this.isResendOperationSuccess = false;
+        this.errorMessage = error.replace(/"/g, "");
+      }
+    );
+  }
+
+  getResetRefundVisibility(){
+    console.log('AHHHH' + this.check4AllowedRoles2DisplayEditRefundBtn);
+    console.log('AHHHH' + this.refundStatusHistories?.length);
+    console.log('AHHHH' + this.getCurrentRefundStatusHistoryStatus());
+    this.check4AllowedRoles2DisplayEditRefundBtn && this.refundStatusHistories?.length && this.getCurrentRefundStatusHistoryStatus() === 'Approved'
+  }
+
+  getCurrentRefundStatusHistoryStatus() {
+
+    //TODO find a dinamic way yo find current refund avoid indexes
+    return this.refundStatusHistories[0]?.status
+  }
+
 }
