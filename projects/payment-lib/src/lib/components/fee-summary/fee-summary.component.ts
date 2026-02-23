@@ -21,9 +21,10 @@ const ANTENNA_VALUE = 'Antenna';
 const KERV_VALUE = 'Kerv';
 
 @Component({
-  selector: 'ccpay-fee-summary',
-  templateUrl: './fee-summary.component.html',
-  styleUrls: ['./fee-summary.component.scss']
+    selector: 'ccpay-fee-summary',
+    templateUrl: './fee-summary.component.html',
+    styleUrls: ['./fee-summary.component.scss'],
+    standalone: false
 })
 
 export class FeeSummaryComponent implements OnInit {
@@ -146,7 +147,9 @@ export class FeeSummaryComponent implements OnInit {
     this.paymentViewService.getPaymentGroupDetails(this.paymentGroupRef).subscribe(
       paymentGroup => {
         this.paymentGroup = paymentGroup;
-        this.isPaymentExist = paymentGroup.payments ? paymentGroup.payments.length > 0 : false;
+        this.isPaymentExist = this.paymentGroup?.payments?.some(
+          payment => payment.status?.toLowerCase() !== 'failed'
+        ) ?? false;
         this.isRemissionsExist = paymentGroup.remissions ? paymentGroup.remissions.length > 0 : false;
 
         if (paymentGroup.fees) {

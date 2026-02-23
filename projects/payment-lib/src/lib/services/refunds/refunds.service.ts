@@ -118,6 +118,22 @@ export class RefundsService {
     );
   }
 
+
+  postResetRefund(refund_reference: string): Observable<any> {
+    return this.https.post(`${this.paymentLibService.REFUNDS_API_ROOT}/reissue-expired/${refund_reference}`,null).pipe(
+      catchError(this.errorHandlerService.handleError)
+    );
+  }
+
+  downloadRefundsReport(startDate: string, endDate: string): Observable<any> {
+    return this.https.get(`${this.paymentLibService.REFUNDS_API_ROOT}/refunds-report?date_from=${startDate}&date_to=${endDate}`, {
+      withCredentials: true
+    })
+  .pipe(
+    catchError(this.errorHandlerService.handleError)
+       );
+     }
+
   addHeaders(options: any): any {
     const csrfToken = this.meta.getTag('name=csrf-token');
     const headers = {};
