@@ -1,6 +1,6 @@
 {
   "name": "ccpay-web-component",
-  "version": "6.5.19",
+  "version": "6.5.20",
   "scripts": {
     "ng": "ng",
     "build:library": "ng build payment-lib",
@@ -21,7 +21,7 @@
     "@angular/cdk": "^16.1.6",
     "@angular/common": "^20.3.1",
     "@angular/compiler": "^20.3.1",
-    "@angular/core": "~20.3.1",
+    "@angular/core": "~20.3.16",
     "@angular/forms": "~20.3.1",
     "@angular/material": "^16.1.6",
     "@angular/platform-browser": "~20.3.1",
