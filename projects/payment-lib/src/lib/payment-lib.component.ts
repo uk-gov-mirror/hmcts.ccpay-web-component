@@ -300,6 +300,30 @@ export class PaymentLibComponent implements OnInit {
 
 
   /**
+   * Determines whether the "over payment" panel should be displayed.
+   * If there is a refund in process it will display the overPayment panel.
+   * The panel should be shown only when there is at least one refund and
+   * all refunds are in the same terminal state: either all "Rejected" or all "Accepted".
+   * This method is defensive against null/undefined `refunds` and missing `refund_status`.
+   *
+   * @returns {boolean} true if the over payment panel should be displayed, otherwise false.
+   */
+  shouldItDisplayOverPaymentPanel(): boolean {
+
+    let allRefundsRejected = this.refunds.filter(refund => refund.refund_status.name === 'Rejected');
+    let allRefundsAccepted = this.refunds.filter(refund => refund.refund_status.name === 'Accepted');
+    // all refunds have been rejected.
+    if (this.refunds.length === allRefundsRejected.length) {
+      return true;
+    }
+    // all refunds have been Accepted.
+    if (this.refunds.length === allRefundsAccepted.length) {
+      return true;
+    }
+  }
+
+
+  /**
    * Rounds very small values to zero if they fall below a specified threshold.
    *
    * This is useful for eliminating floating-point precision errors that result in
