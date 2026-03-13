@@ -310,22 +310,12 @@ export class PaymentLibComponent implements OnInit {
    */
   shouldItDisplayOverPaymentPanel(): boolean {
 
-    let allRefundsRejected = this.refunds.filter(refund => refund.refund_status.name === 'Rejected');
-    let allRefundsAccepted = this.refunds.filter(refund => refund.refund_status.name === 'Accepted');
     // it means that all refunds are in the state of Accepted or Rejected
     const areAllRefundsRejectedAndAcceptedOnly = this.refunds.every(refund =>
       refund.refund_status.name === 'Accepted' ||
       refund.refund_status.name === 'Rejected'
     );
 
-    // all refunds have been rejected.
-    if (this.refunds.length === allRefundsRejected.length) {
-      return true;
-    }
-    // all refunds have been Accepted.
-    if (this.refunds.length === allRefundsAccepted.length) {
-      return true;
-    }
     // if any of the refunds is not Accepted or Rejected means that they are in process, hence not overpayment.
     if (!areAllRefundsRejectedAndAcceptedOnly) {
       return false;
