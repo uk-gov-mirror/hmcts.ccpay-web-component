@@ -11,7 +11,7 @@ import { LoggerService } from '../shared/logger/logger.service';
 import {IPaymentGroup} from '../../interfaces/IPaymentGroup';
 import { AddRemissionRequest } from '../../interfaces/AddRemissionRequest';
 import { PaymentToPayhubRequest } from '../../interfaces/PaymentToPayhubRequest';
-import { PayhubAntennaRequest } from '../../interfaces/PayhubAntennaRequest';
+import { TelephonyToPayhubRequest } from '../../interfaces/TelephonyToPayhubRequest';
 import { UnidentifiedPaymentsRequest } from '../../interfaces/UnidentifiedPaymentsRequest';
 import { UnsolicitedPaymentsRequest } from '../../interfaces/UnsolicitedPaymentsRequest';
 import { Meta } from '@angular/platform-browser';
@@ -148,7 +148,7 @@ export class PaymentViewService {
     );
   }
 
-  postPaymentAntennaToPayHub(body: PayhubAntennaRequest, paymentGroupRef: string): Observable<any> {
+  postTelephonyPaymentToPayHub(body: TelephonyToPayhubRequest, paymentGroupRef: string): Observable<any> {
     return this.https.post(`${this.paymentLibService.API_ROOT}/payment-groups/${paymentGroupRef}/telephony-card-payments`, body).pipe(
       catchError(this.errorHandlerService.handleError)
     );

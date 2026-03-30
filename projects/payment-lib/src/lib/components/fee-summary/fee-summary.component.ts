@@ -5,7 +5,7 @@ import {BulkScaningPaymentService} from '../../services/bulk-scaning-payment/bul
 import {IRemission} from '../../interfaces/IRemission';
 import {IFee} from '../../interfaces/IFee';
 import {PaymentToPayhubRequest} from '../../interfaces/PaymentToPayhubRequest';
-import {PayhubAntennaRequest} from '../../interfaces/PayhubAntennaRequest';
+import {TelephonyToPayhubRequest} from '../../interfaces/TelephonyToPayhubRequest';
 import {SafeHtml} from '@angular/platform-browser';
 import {Router} from '@angular/router';
 import {Location} from '@angular/common';
@@ -248,9 +248,9 @@ export class FeeSummaryComponent implements OnInit {
   takePayment() {
     this.isConfirmationBtnDisabled = true;
     const requestBody = new PaymentToPayhubRequest(this.ccdCaseNumber, this.outStandingAmount, this.caseType, this.getKervValue()),
-      antennaReqBody = new PayhubAntennaRequest(this.ccdCaseNumber, this.outStandingAmount, this.caseType, this.getKervValue());
+      telephonyReqBody = new TelephonyToPayhubRequest(this.ccdCaseNumber, this.outStandingAmount, this.caseType, this.getKervValue());
 
-    this.paymentViewService.postPaymentAntennaToPayHub(antennaReqBody, this.paymentGroupRef).subscribe(
+    this.paymentViewService.postTelephonyPaymentToPayHub(telephonyReqBody, this.paymentGroupRef).subscribe(
       response => {
         this.isBackButtonEnable = false;
         window.location.href = '/makePaymentByTelephoneyProvider';
