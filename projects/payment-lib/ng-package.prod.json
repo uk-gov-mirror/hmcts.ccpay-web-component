@@ -3,5 +3,9 @@
   "dest": "../../dist/payment-lib",
   "lib": {
     "entryFile": "src/public_api.ts"
-  }
+  },
+  "allowedNonPeerDependencies": [
+    "exceljs",
+    "file-saver"
+  ]
 }

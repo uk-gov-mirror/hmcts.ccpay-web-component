@@ -1,4 +1,4 @@
-export class PayhubAntennaRequest {
+export class TelephonyToPayhubRequest {
   currency = 'GBP';
   case_type: string;
   ccd_case_number: string;

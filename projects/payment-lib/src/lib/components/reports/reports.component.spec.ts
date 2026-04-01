@@ -6,6 +6,7 @@ import { ErrorHandlerService } from '../../services/shared/error-handler.service
 import { PaymentViewService } from '../../services/payment-view/payment-view.service';
 import { XlFileService } from '../../services/xl-file/xl-file.service';
 import { ReportsComponent } from './reports.component';
+import { RefundsService } from '../../services/refunds/refunds.service';
 
 describe('ReportsComponent', () => {
   let component: ReportsComponent;
@@ -33,6 +34,9 @@ describe('ReportsComponent', () => {
     const xlFileServiceStub = () => ({
       exportAsExcelFile: (arg, arg1) => ({})
     });
+    const refundsServiceStub = () => ({
+      downloadRefundsReport: (selectedStartDate, selectedEndDate) => ({ subscribe: f => f({}) })
+    });
 
     const paymentLibComponentStub = () => ({
       viewName: {}
@@ -50,7 +54,8 @@ describe('ReportsComponent', () => {
         { provide: ErrorHandlerService, useFactory: errorHandlerServiceStub },
         { provide: PaymentViewService, useFactory: paymentViewServiceStub },
         { provide: 'PAYMENT_LIB', useFactory: paymentLibComponentStub },
-        { provide: XlFileService, useFactory: xlFileServiceStub }
+        { provide: XlFileService, useFactory: xlFileServiceStub },
+        { provide: RefundsService, useFactory: refundsServiceStub }
       ]
     });
     fixture = TestBed.createComponent(ReportsComponent);

@@ -1,8 +1,12 @@
 {
   "name": "@hmcts/ccpay-web-component",
-  "version": "6.5.21",
+  "version": "6.5.22",
   "publishConfig": {
     "access": "public"
+  },
+  "dependencies": {
+    "exceljs": "^4.4.0",
+    "file-saver": "^2.0.2"
   },
   "peerDependencies": {
     "@angular/common": "^20.3.1",
@@ -13,6 +17,18 @@
   "description": "Angular web component for displaying payments returned from ccpay api",
   "author": "Mateusz Swirski <mateusz.swirski@hmcts.net>",
   "contributors": [
+    {
+      "name": "Dave Jones",
+      "email": "dave.jones@hmcts.net"
+    },
+    {
+      "name": "Tobias De Rose",
+      "email": "tobias.derose@hmcts.net"
+    },
+    {
+      "name": "Oliver Smith",
+      "email": "oliver.smith@hmcts.net"
+    },
     {
       "name": "Santosh Govindu",
       "email": "santosh.govindu@hmcts.net"

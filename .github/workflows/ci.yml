@@ -32,6 +32,8 @@ jobs:
           npm --version
       - name: Install dependencies (Release)
         run: yarn install --frozen-lockfile
+      - name: Run unit tests
+        run: yarn test --watch=false --browsers=ChromeHeadless --progress=false
       - name: Build library (Release)
         run: yarn run build-prod
       # Determine npm dist-tag

@@ -37,7 +37,7 @@ export * from './IStatusHistories';
 export * from './IStatusHistory';
 export * from './IUnprocessedTransactions';
 export * from './NotificationPreviewRequest';
-export * from './PayhubAntennaRequest';
+export * from './TelephonyToPayhubRequest';
 export * from './PaymentToPayhubRequest';
 export * from './PostIssueRefundRetroRemission';
 export * from './PostRefundRetroRemission';
