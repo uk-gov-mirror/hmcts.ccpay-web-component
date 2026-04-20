@@ -154,6 +154,12 @@
       </select>
   </div> -->
 
+  <div class="govuk-panel govuk-panel-border--remission-added"  *ngIf="!(!isPaymentExist && !isTurnOff) || isThereAnyRemission()">
+    <h1 class="govuk-panel__title">
+      {{ "Remission added" | rpxTranslate }}
+    </h1>
+  </div>
+
   <div class="centerDiv"><strong> What would you like to do next? </strong> </div>
   <div class="centerDiv">
     <button *ngIf="!bsPaymentDcnNumber" type="submit" (click)="takePayment()"
