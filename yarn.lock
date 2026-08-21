@@ -521,17 +521,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular/cdk@npm:^19.2.19":
-  version: 19.2.19
-  resolution: "@angular/cdk@npm:19.2.19"
+"@angular/cdk@npm:^20.2.14":
+  version: 20.2.14
+  resolution: "@angular/cdk@npm:20.2.14"
   dependencies:
-    parse5: ^7.1.2
+    parse5: ^8.0.0
     tslib: ^2.3.0
   peerDependencies:
-    "@angular/common": ^19.0.0 || ^20.0.0
-    "@angular/core": ^19.0.0 || ^20.0.0
+    "@angular/common": ^20.0.0 || ^21.0.0
+    "@angular/core": ^20.0.0 || ^21.0.0
     rxjs: ^6.5.3 || ^7.4.0
-  checksum: 7728a7ebf34fa1a7d97135b96be91d07d69d7e76adc86427f6683e783b7b124266074f6fc78ee9b065e6e1891be793afef963493011a1c645fd27a6ace6f070a
+  checksum: 5c2f178fe019a97b8e878ff245eb41676f1a687910a93f698ecef041d8353dc6eaddaf29361dabbdc06a264f9c3256bf50786629e6ba5a024d0d65c3a58498e5
   languageName: node
   linkType: hard
 
@@ -648,19 +648,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular/material@npm:^19.2.19":
-  version: 19.2.19
-  resolution: "@angular/material@npm:19.2.19"
+"@angular/material@npm:^20.2.14":
+  version: 20.2.14
+  resolution: "@angular/material@npm:20.2.14"
   dependencies:
     tslib: ^2.3.0
   peerDependencies:
-    "@angular/cdk": 19.2.19
-    "@angular/common": ^19.0.0 || ^20.0.0
-    "@angular/core": ^19.0.0 || ^20.0.0
-    "@angular/forms": ^19.0.0 || ^20.0.0
-    "@angular/platform-browser": ^19.0.0 || ^20.0.0
+    "@angular/cdk": 20.2.14
+    "@angular/common": ^20.0.0 || ^21.0.0
+    "@angular/core": ^20.0.0 || ^21.0.0
+    "@angular/forms": ^20.0.0 || ^21.0.0
+    "@angular/platform-browser": ^20.0.0 || ^21.0.0
     rxjs: ^6.5.3 || ^7.4.0
-  checksum: c1591501736f3ee61e2452682c7dcafd8dfb89a680a478d518f0df565ee8fc096dabfaa51f5bd620c12b91173f42dc0be2dbc08aa2b1ee237349b58c1513b51c
+  checksum: 3042cc2180244881e7e734d864b65130ed1b0f7bc52394e5b2ca22119594c54b962dc5d0cfc490fbb24a5751786b116acd470c4994d5c1faf9200fd2367ee58d
   languageName: node
   linkType: hard
 
@@ -5684,7 +5684,7 @@ __metadata:
     "@angular-eslint/schematics": 20.3.0
     "@angular-eslint/template-parser": 20.3.0
     "@angular/animations": ^20.3.1
-    "@angular/cdk": ^19.2.19
+    "@angular/cdk": ^20.2.14
     "@angular/cli": ~20.3.3
     "@angular/common": ^20.3.1
     "@angular/compiler": ^20.3.1
@@ -5692,7 +5692,7 @@ __metadata:
     "@angular/core": ~20.3.16
     "@angular/forms": ~20.3.1
     "@angular/language-service": ~20.3.1
-    "@angular/material": ^19.2.19
+    "@angular/material": ^20.2.14
     "@angular/platform-browser": ~20.3.1
     "@angular/platform-browser-dynamic": ~20.3.1
     "@angular/router": ~20.3.1
@@ -10892,15 +10892,6 @@ __metadata:
   dependencies:
     parse5: ^8.0.0
   checksum: 050593edc8f0241f0971d824dd80fbfff3c2f8d4981420fa688ee47fca79e6b73d8c6bfb85fa059ac27718662e87dcaffa538189f4319422e7fdd2dff40bc9a4
-  languageName: node
-  linkType: hard
-
-"parse5@npm:^7.1.2":
-  version: 7.3.0
-  resolution: "parse5@npm:7.3.0"
-  dependencies:
-    entities: ^6.0.0
-  checksum: ffd040c4695d93f0bc370e3d6d75c1b352178514af41be7afa212475ea5cead1d6e377cd9d4cec6a5e2bcf497ca50daf9e0088eadaa37dbc271f60def08fdfcd
   languageName: node
   linkType: hard
 
