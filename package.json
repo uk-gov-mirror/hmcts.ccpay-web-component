@@ -1,6 +1,6 @@
 {
   "name": "ccpay-web-component",
-  "version": "6.5.28-v1",
+  "version": "6.5.28-v2",
   "scripts": {
     "ng": "ng",
     "build:library": "ng build payment-lib",
@@ -27,7 +27,6 @@
     "@angular/platform-browser": "~20.3.1",
     "@angular/platform-browser-dynamic": "~20.3.1",
     "@angular/router": "~20.3.1",
-    "@hmcts/frontend": "^0.0.34-alpha",
     "acorn": "^8.8.0",
     "core-js": "^2.6.3",
     "exceljs": "^4.4.0",
