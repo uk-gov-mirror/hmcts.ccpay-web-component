@@ -1,6 +1,6 @@
 {
   "name": "ccpay-web-component",
-  "version": "6.5.28-cme-1118-v1",
+  "version": "6.5.28",
   "scripts": {
     "ng": "ng",
     "build:library": "ng build payment-lib",
@@ -57,7 +57,7 @@
     "@types/file-saver": "^2.0.5",
     "@types/jasmine": "~3.6.0",
     "@types/jasminewd2": "~2.0.6",
-    "@types/node": "^18.3",
+    "@types/node": "^22.0.0",
     "@typescript-eslint/eslint-plugin": "8",
     "@typescript-eslint/parser": "8",
     "eslint": "^8.44.0",
